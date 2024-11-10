@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# 执行 commitlint 命令行工具，并使用 --edit 选项，从一个文件里提取 commit 内容来进行校验。校验规则由 commitlint.config.js 配置文件来指定，
+echo commitlint 🚀🚀🚀
+npx --no -- commitlint  --edit ${1}

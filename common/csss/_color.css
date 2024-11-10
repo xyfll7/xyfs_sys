@@ -1,0 +1,97 @@
+
+.sticky-top {
+  position: sticky;
+  top: 0rem;
+}
+
+.bborder {
+  border-top: 1rpx solid rgba(207, 207, 207, 0.1) !important;
+  border-bottom: 1rpx solid rgba(207, 207, 207, 0.1) !important;
+  border-right: 1rpx solid rgba(207, 207, 207, 0.1) !important;
+  border-left: 1rpx solid rgba(207, 207, 207, 0.1) !important;
+  background-color: var(--color_border) !important;
+}
+
+.cccwhite {
+  color: var(--color_white) !important;
+}
+
+.cccplh {
+  color: var(--color_plh) !important;
+}
+
+.cccprice {
+  color: var(--color_price) !important;
+}
+
+.cccgreen {
+  color: var(--color_green) !important;
+}
+
+.cccyellow {
+  color: var(--color_yellow) !important;
+}
+
+.bccback {
+  background-color: var(--color_back) !important;
+}
+
+.bccred {
+  background-color: var(--color_red) !important;
+}
+
+.bccplh {
+  background-color: var(--color_plh) !important;
+}
+
+.bccgreen {
+  background-color: var(--color_green) !important;
+}
+
+.bccprice {
+  background-color: var(--color_price) !important;
+}
+
+.bccyellow {
+  background-color: var(--color_yellow) !important;
+  color: #1b1b1b !important;
+}
+
+.bccyellowtab {
+  background-color: var(--color_yellow) !important;
+}
+
+.bcctrans {
+  background-color: var(--color_trans);
+}
+.bcctrans01-dark {
+  background-color: var(--color_trans01_dark);
+}
+
+
+.bcctrans03 {
+  background-color: var(--color_trans03);
+}
+.bcctrans03-dark {
+  background-color: var(--color_trans03_dark);
+}
+.bcctrans05 {
+  background-color: var(--color_trans05);
+}
+.bcctrans05-dark {
+  background-color: var(--color_trans05_dark);
+}
+.bcctrans07-dark {
+  background-color: var(--color_trans07_dark);
+}
+.bccwhite {
+  background-color: var(--color_white) !important;
+}
+
+.cccwhitee {
+  color: var(--color_whiteO) !important;
+}
+
+.bccbacktab {
+  background-color: var(--color_back_tab) !important;
+}

@@ -1,0 +1,35 @@
+{
+  "name": "@xyfs/csss",
+  "version": "2.2.39",
+  "description": "",
+  "files": [
+    "index.css"
+  ],
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "postcss -o index.css rem___.css",
+    "test": "postcss -o test.css test___.css"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cssnano": "^6.1.2",
+    "postcss": "^8.4.38",
+    "postcss-at-rules-variables": "^0.3.0",
+    "postcss-calc": "^9.0.1",
+    "postcss-cli": "^11.0.0",
+    "postcss-each": "^1.1.0",
+    "postcss-import": "^16.1.0",
+    "postcss-load-config": "^5.0.3",
+    "postcss-nested": "^6.0.1",
+    "postcss-preset-env": "^9.5.5",
+    "postcss-simple-vars": "^7.0.1"
+  },
+  "dependencies": {
+    "install": "^0.13.0"
+  }
+}

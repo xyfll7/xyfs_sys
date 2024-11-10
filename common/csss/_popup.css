@@ -1,0 +1,70 @@
+@keyframes popup-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes popup-show {
+  from {
+    transform: scale(0.5);
+  }
+
+  to {
+
+    transform: scale(1);
+  }
+}
+
+@keyframes popup-up-back {
+  0% {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  to {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+@keyframes popup-down-back {
+  0% {
+    opacity: 1;
+
+    visibility: visible;
+  }
+
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes popup-up {
+  0% {
+    transform: translateY(100%);
+    visibility: hidden;
+  }
+
+  to {
+    transform: translateY(0);
+    visibility: visible;
+  }
+}
+
+@keyframes popup-down {
+  0% {
+
+    transform: translateY(0);
+    visibility: visible;
+  }
+
+  to {
+    transform: translateY(100%);
+    visibility: hidden;
+  }
+}

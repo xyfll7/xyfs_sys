@@ -1,0 +1,17 @@
+{
+  "git": {
+    "commitMessage": "config(project): 🚀release v${version}",
+    "commit": true,
+    "tag": true,
+    "push": true
+  },
+  "hooks": {
+    "before:git:release": "pnpm run release:version:sync && git add ."
+  },
+  "github": {
+    "release": false
+  },
+  "npm": {
+    "publish": false
+  }
+}

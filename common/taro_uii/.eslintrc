@@ -1,0 +1,22 @@
+{
+  "extends": [
+    "taro/react"
+  ],
+  "rules": {
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
+    "react-hooks/exhaustive-deps": "error",
+    "import/no-commonjs": "off",
+    "react/jsx-closing-bracket-location": [
+      2,
+      "after-props"
+    ],
+    "react/jsx-indent-props": [
+      "error",
+      2
+    ]
+  },
+  "parserOptions": {
+    "requireConfigFile": false
+  }
+}

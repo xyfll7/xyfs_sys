@@ -1,0 +1,9 @@
+<image-cropper imgSrc="{{cfg.imgSrc}}" bind:imageload="onImageLoad" bind:load="onLoad" id="image-cropper" />
+<view style="position: absolute; z-index: 2; bottom: 0rpx; height: 10vh; width: 100vw; padding-bottom: 3vh; display: flex; flex-direction: column;">
+  <view style="display: flex; justify-content: space-between; padding-top:0.5rem">
+    <button bind:tap="onUploadImage">载入</button>
+    <button bind:tap="onSetAngle">旋转</button>
+    <button bind:tap="onImgReset">重置</button>
+    <button bind:tap="onGetImg">裁剪</button>
+  </view>
+</view>

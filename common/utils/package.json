@@ -1,0 +1,53 @@
+{
+  "name": "@xyfs/utils",
+  "version": "2.2.39",
+  "description": "团长助手",
+  "author": "小洋粉",
+  "type": "module",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    "./util": {
+      "types": "./src/util.ts",
+      "import": "./src/util.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./src/*"
+      ]
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --skipLibCheck --noEmit",
+    "fix": "eslint src --fix",
+    "lint-staged": "lint-staged",
+    "build": "rollup -c ./rollup.config.ts --configPlugin typescript"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@types/node": "^20.10.6",
+    "@typescript-eslint/parser": "^6.17.0",
+    "eslint": "8.53.0",
+    "lint-staged": "^15.2.0",
+    "rollup": "^4.13.0",
+    "ts-node": "^10.9.2",
+    "tslib": "^2.6.2",
+    "typescript": "^5.3.3"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "eslint"
+    ]
+  },
+  "dependencies": {
+    "date-fns": "^2.30.0",
+    "install": "^0.13.0"
+  }
+}

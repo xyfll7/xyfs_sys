@@ -1,0 +1,6 @@
+{
+  "publicComponents": {
+    "image-cropper": "components/image-cropper/image-cropper"
+  },
+  "main": "index.js"
+}

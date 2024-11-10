@@ -1,0 +1,214 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "--bud:build->upload->xyfs_admin",
+      "type": "shell",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "--N:npm: build:weapp - packages/xyfs_admin",
+        "--N:npm: upload:xyfs_admin - ci___"
+      ],
+      "runOptions": {},
+      "problemMatcher": []
+    },
+    {
+      "label": "--bud:build->upload->xyfs_client",
+      "type": "shell",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "--N:npm: build:weapp - packages/xyfs_client",
+        "--N:npm: upload:xyfs_client - ci___"
+      ],
+      "runOptions": {},
+      "problemMatcher": []
+    },
+    {
+      "label": "--N:npm: upload:xyfs_admin - ci___",
+      "type": "npm",
+      "script": "upload:xyfs_admin",
+      "path": "ci___",
+      "problemMatcher": [],
+      "detail": "node index.mjs xyfs_admin"
+    },
+    {
+      "label": "--N:npm: upload:xyfs_client - ci___",
+      "type": "npm",
+      "script": "upload:xyfs_client",
+      "path": "ci___",
+      "problemMatcher": [],
+      "detail": "node index.mjs xyfs_client"
+    },
+    {
+      "label": "--N:npm: build:weapp - packages/xyfs_admin",
+      "type": "npm",
+      "script": "build:weapp",
+      "path": "packages/xyfs_admin",
+      "group": "build",
+      "problemMatcher": [],
+      "detail": "taro build --type weapp"
+    },
+    {
+      "label": "--N:npm: build:weapp - packages/xyfs_client",
+      "type": "npm",
+      "script": "build:weapp",
+      "path": "packages/xyfs_client",
+      "group": "build",
+      "problemMatcher": [],
+      "detail": "taro build --type weapp"
+    },
+    {
+      "label": "--run:npm: dev:weapp - packages/xyfs_client",
+      "type": "npm",
+      "script": "dev:weapp",
+      "path": "packages/xyfs_client",
+      "problemMatcher": [],
+      "detail": "npm run build:weapp -- --watch"
+    },
+    {
+      "label": "--run:npm: dev:weapp - packages/xyfs_admin",
+      "type": "npm",
+      "script": "dev:weapp",
+      "path": "packages/xyfs_admin",
+      "problemMatcher": [],
+      "detail": "npm run build:weapp -- --watch"
+    },
+    {
+      "label": "--pre:auto-preview:xyfs_admin",
+      "type": "shell",
+      "command": "./run.sh xyfs_admin",
+      "problemMatcher": []
+    },
+    {
+      "label": "--pre:auto-preview:xyfs_client",
+      "type": "shell",
+      "command": "./run.sh xyfs_client",
+      "problemMatcher": []
+    },
+    {
+      "label": "--S:git:cz",
+      "type": "shell",
+      "command": "npx cz && git push",
+      "problemMatcher": [],
+      "presentation": {
+        "focus": true
+      }
+    },
+    {
+      "label": "--S:gitt:up",
+      "type": "shell",
+      "command": "git add . && git commit -m 'wip(project): 🚧 update' && git push",
+      "problemMatcher": [],
+      "presentation": {
+        "focus": true
+      }
+    },
+    {
+      "label": "--S:gitt:czz",
+      "type": "shell",
+      "command": "git add . && npx cz && git push",
+      "problemMatcher": [],
+      "presentation": {
+        "focus": true
+      }
+    },
+    {
+      "label": "--S:amend",
+      "type": "shell",
+      "command": "git commit --amend --no-edit && git push -f",
+      "problemMatcher": []
+    },
+    {
+      "label": "--S:amendd",
+      "type": "shell",
+      "command": "git add . && git commit --amend --no-edit && git push -f",
+      "problemMatcher": []
+    },
+    {
+      "label": "env:yun:develop",
+      "type": "shell",
+      "osx": {
+        "command": "gsed -i '/const ___envSimulate/s/.*/const ___envSimulate = \"develop\";/' ./common/taro_uii/src/env.ts && gsed -i '/export const base_url/s/.*/export const base_url: string = \"\";/' ./common/taro_uii/src/env.ts",
+      },
+      "windows": {
+        "command": "sed -i '/const ___envSimulate/s/.*/const ___envSimulate = \"develop\";/' ./common/taro_uii/src/env.ts && sed -i '/export const base_url/s/.*/export const base_url: string = \"\";/' ./common/taro_uii/src/env.ts"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "focus": false
+      }
+    },
+    {
+      "label": "env:yun:release",
+      "type": "shell",
+      "osx": {
+        "command": "gsed -i '/const ___envSimulate/s/.*/const ___envSimulate = \"release\";/' ./common/taro_uii/src/env.ts && gsed -i '/export const base_url/s/.*/export const base_url: string = \"\";/' ./common/taro_uii/src/env.ts",
+      },
+      "windows": {
+        "command": "sed -i '/const ___envSimulate/s/.*/const ___envSimulate = \"release\";/' ./common/taro_uii/src/env.ts && sed -i '/export const base_url/s/.*/export const base_url: string = \"\";/' ./common/taro_uii/src/env.ts"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "focus": false
+      }
+    },
+    {
+      "label": "env:rh56:---",
+      "type": "shell",
+      "osx": {
+        "command": "gsed -i '/const ___envSimulate/s/.*/const ___envSimulate = \"develop\";/' ./common/taro_uii/src/env.ts && gsed -i '/export const base_url/s/.*/export const base_url: string = \"http:\\/\\/192.169.1.56:8080\";/' ./common/taro_uii/src/env.ts",
+      },
+      "windows": {
+        "command": "sed -i '/const ___envSimulate/s/.*/const ___envSimulate = \"develop\";/' ./common/taro_uii/src/env.ts && sed -i '/export const base_url/s/.*/export const base_url: string = \"http:\\/\\/192.169.1.56:8080\";/' ./common/taro_uii/src/env.ts"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "focus": false
+      }
+    },
+    {
+      "label": "env:rh59:---",
+      "type": "shell",
+      "osx": {
+        "command": "gsed -i '/const ___envSimulate/s/.*/const ___envSimulate = \"develop\";/' ./common/taro_uii/src/env.ts && gsed -i '/export const base_url/s/.*/export const base_url: string = \"http:\\/\\/192.169.1.59:8080\";/' ./common/taro_uii/src/env.ts",
+      },
+      "windows": {
+        "command": "sed -i '/const ___envSimulate/s/.*/const ___envSimulate = \"develop\";/' ./common/taro_uii/src/env.ts && sed -i '/export const base_url/s/.*/export const base_url: string = \"http:\\/\\/192.169.1.59:8080\";/' ./common/taro_uii/src/env.ts"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "focus": false
+      }
+    },
+    {
+      "label": "env:sl:---",
+      "type": "shell",
+      "osx": {
+        "command": "gsed -i '/const ___envSimulate/s/.*/const ___envSimulate = \"develop\";/' ./common/taro_uii/src/env.ts && gsed -i '/export const base_url/s/.*/export const base_url: string = \"http:\\/\\/192.169.1.57:8080\";/' ./common/taro_uii/src/env.ts",
+      },
+      "windows": {
+        "command": "sed -i '/const ___envSimulate/s/.*/const ___envSimulate = \"develop\";/' ./common/taro_uii/src/env.ts && sed -i '/export const base_url/s/.*/export const base_url: string = \"http:\\/\\/192.169.1.57:8080\";/' ./common/taro_uii/src/env.ts"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "focus": false
+      }
+    },
+    {
+      "label": "env:wo:---",
+      "type": "shell",
+      "osx": {
+        "command": "gsed -i '/const ___envSimulate/s/.*/const ___envSimulate = \"develop\";/' ./common/taro_uii/src/env.ts && gsed -i '/export const base_url/s/.*/export const base_url: string = \"http:\\/\\/127.0.0.1:8080\";/' ./common/taro_uii/src/env.ts",
+      },
+      "windows": {
+        "command": "sed -i '/const ___envSimulate/s/.*/const ___envSimulate = \"develop\";/' ./common/taro_uii/src/env.ts && sed -i '/export const base_url/s/.*/export const base_url: string = \"http:\\/\\/127.0.0.1:8080\";/' ./common/taro_uii/src/env.ts"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "focus": false
+      }
+    },
+  ]
+}

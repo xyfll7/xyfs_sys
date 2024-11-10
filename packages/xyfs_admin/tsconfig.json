@@ -1,0 +1,41 @@
+{
+  "extends": "../../.vscode/tsconfig.json",
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "commonjs",
+    "removeComments": false,
+    "preserveConstEnums": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "noImplicitAny": false,
+    "allowSyntheticDefaultImports": true,
+    "outDir": "lib",
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "strictNullChecks": true,
+    "sourceMap": true,
+    // "rootDir": ".",
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "paths": {
+      // TS5090 leading './'
+      // "@/*": [
+      //   "./src/*"
+      // ],
+      "@xyfs/taro_uii/*": [
+        "../../common/taro_uii/*"
+      ]
+    }
+  },
+  "include": [
+    "./src",
+    "./types",
+    "./config",
+    "../../common/taro_uii/*"
+  ],
+  "compileOnSave": false
+}

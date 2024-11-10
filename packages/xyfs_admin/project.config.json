@@ -1,0 +1,34 @@
+{
+  "miniprogramRoot": "dist/",
+  "description": "小象心选_管理端",
+  "setting": {
+    "urlCheck": true,
+    "es6": true,
+    "enhance": true,
+    "compileHotReLoad": false,
+    "postcss": false,
+    "minified": false,
+    "swc": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "coverView": false,
+    "showShadowRootInWxmlPanel": false,
+    "packNpmRelationList": [],
+    "ignoreUploadUnusedFiles": true
+  },
+  "compileType": "miniprogram",
+  "srcMiniprogramRoot": "dist/",
+  "condition": {},
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
+  },
+  "appid": "wxc6ff511796ec714a",
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  }
+}

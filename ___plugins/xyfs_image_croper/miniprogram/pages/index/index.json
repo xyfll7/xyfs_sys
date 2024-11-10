@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "image-cropper": "plugin://xyfs-plugin/image-cropper"
+  },
+  "navigationStyle": "custom",
+  "disableScroll": true
+}

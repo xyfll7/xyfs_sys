@@ -1,0 +1,73 @@
+{
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "editor.suggestSelection": "recentlyUsed",
+  "editor.quickSuggestions": {
+    "comments": "on",
+    "strings": "on",
+    "other": "on"
+  },
+  "editor.tabSize": 2,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit",
+    "source.fixAll": "explicit"
+  },
+  "workbench.editorAssociations": {
+    "*.md": "default"
+  },
+  "editor.fontSize": 14,
+  "editor.lineHeight": 19,
+  "editor.formatOnSave": true,
+  "terminal.integrated.defaultProfile.windows": "Git Bash",
+  "files.autoSave": "off",
+  "git.confirmSync": false,
+  "git.enableSmartCommit": true,
+  "window.commandCenter": true,
+  "explorer.confirmDelete": false,
+  "javascript.format.semicolons": "insert",
+  "typescript.format.semicolons": "insert",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "javascript.preferences.quoteStyle": "single",
+  "html.completion.attributeDefaultValue": "singlequotes",
+  "npm.packageManager": "pnpm",
+  "editor.linkedEditing": true,
+  "files.trimTrailingWhitespace": true,
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/___plugins": true,
+    // "**/css": true,
+    // "**/types": true,
+    // "**/docs": true,
+    // "**/config": true,
+    // "**/cloud_base_run": true,
+    // "**/ci___": true,
+    // "**/*.code-search": true,
+    "**/*.json": true,
+    "**/*.yaml": true,
+    "**/*.yml": true,
+    "**/*.svg": true,
+    "**/*.csv": true,
+    // "**/*.html": true,
+    // "**/*.code-profile": true,
+    // "**/*.code-snippets": true,
+    // "**/*.eslintrc": true,
+    // "**/*.gitignore": true,
+    // "**/*.md": true,
+    // "**/*LICENSE": true,
+  }
+}

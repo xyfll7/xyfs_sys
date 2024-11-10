@@ -1,0 +1,282 @@
+{
+  "description": "项目私有配置文件。此文件中的内容将覆盖 project.config.json 中的相同字段。项目的改动优先同步到此文件中。详见文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html",
+  "projectname": "xyfs_client",
+  "setting": {
+    "compileHotReLoad": false,
+    "urlCheck": false,
+    "bigPackageSizeSupport": true
+  },
+  "condition": {
+    "miniprogram": {
+      "list": [
+        {
+          "name": "pages_user/user_bring_goods",
+          "pathName": "pages_user/user_bring_goods",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_user/user_orders",
+          "pathName": "pages_user/user_orders",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_user/user_bring_goods",
+          "pathName": "pages_user/user_bring_goods",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_user/user_scaner",
+          "pathName": "pages_user/user_scaner",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_comm/comm__product_dryclean",
+          "pathName": "pages_comm/comm__product_dryclean",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_comm/comm__product_dryclean",
+          "pathName": "pages_comm/comm__product_dryclean",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_comm/comm__product_express",
+          "pathName": "pages_comm/comm__product_express",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_user/user_orders",
+          "pathName": "pages_user/user_orders",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_user/user_orders",
+          "pathName": "pages_user/user_orders",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_user/user_orders",
+          "pathName": "pages_user/user_orders",
+          "query": "order_ST=1",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_user/user_orders",
+          "pathName": "pages_user/user_orders",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/index/index",
+          "pathName": "pages/index/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_user/user_bring_goods",
+          "pathName": "pages_user/user_bring_goods",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_user/user_bring_goods",
+          "pathName": "pages_user/user_bring_goods",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/test/ctest_index",
+          "pathName": "pages/test/ctest_index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_comm/comm__product_express",
+          "pathName": "pages_comm/comm__product_express",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_user/user_bring_goods",
+          "pathName": "pages_user/user_bring_goods",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_comm/comm__product_dryclean",
+          "pathName": "pages_comm/comm__product_dryclean",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_user/user_bring_goods",
+          "pathName": "pages_user/user_bring_goods",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_user/user_bring_goods",
+          "pathName": "pages_user/user_bring_goods",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_user/user_bring_goods",
+          "pathName": "pages_user/user_bring_goods",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_user/user_assist_detail",
+          "pathName": "pages_user/user_assist_detail",
+          "query": "assist_item_id=18",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_user/user_bring_goods",
+          "pathName": "pages_user/user_bring_goods",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_user/user_bring_goods",
+          "pathName": "pages_user/user_bring_goods",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/test/ctest_display",
+          "pathName": "pages/test/ctest_display",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_user/user_bring_goods",
+          "pathName": "pages_user/user_bring_goods",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_user/user_bring_goods",
+          "pathName": "pages_user/user_bring_goods",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_user/user_assist_detail",
+          "pathName": "pages_user/user_assist_detail",
+          "query": "assist_item_id=18",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_comm/comm__publisher",
+          "pathName": "pages_comm/comm__publisher",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_user/user_assist_home",
+          "pathName": "pages_user/user_assist_home",
+          "query": "user_id=oGwbL5PVdCTyoE2sYHAq2bdNA9BY",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_user/user_assist_detail",
+          "pathName": "pages_user/user_assist_detail",
+          "query": "assist_item_id=14",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_user/user_assist_detail",
+          "pathName": "pages_user/user_assist_detail",
+          "query": "assist_item_id=17",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_user/user_assist_home",
+          "pathName": "pages_user/user_assist_home",
+          "query": "user_id=oGwbL5PVdCTyoE2sYHAq2bdNA9BY",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_user/user_assist_home",
+          "pathName": "pages_user/user_assist_home",
+          "query": "user_id=oGwbL5PVdCTyoE2sYHAq2bdNA9BY",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_comm/comm__publisher",
+          "pathName": "pages_comm/comm__publisher",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/test/ctest_index",
+          "pathName": "pages/test/ctest_index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_comm/comm__product_express",
+          "pathName": "pages_comm/comm__product_express",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_user/user_regiment_list_map",
+          "pathName": "pages_user/user_regiment_list_map",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        }
+      ]
+    }
+  },
+  "libVersion": "3.5.8"
+}

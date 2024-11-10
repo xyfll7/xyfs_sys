@@ -1,0 +1,181 @@
+
+
+.flx1 {
+  flex: 1;
+}
+
+.dy {
+  display: flex !important;
+  align-items: center;
+}
+
+.dsl {
+  display: flex !important;
+  flex-direction: column;
+}
+
+.dbase {
+  display: flex;
+  align-items: baseline !important;
+}
+
+.dll {
+  display: flex !important;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.dcl {
+  display: flex !important;
+  align-items: center;
+  flex-direction: column;
+}
+
+.drl {
+  display: flex !important;
+  align-items: flex-end;
+  flex-direction: column;
+}
+
+.dbtt {
+  display: flex !important;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.dbtc {
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dbtb {
+  display: flex !important;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+
+.dbtl {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.dbtcv {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dbtr {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+
+.dtl {
+  display: flex !important;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.dbl {
+  display: flex !important;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.dbr {
+  display: flex !important;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.dtr {
+  display: flex !important;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.drc {
+  display: flex !important;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.dtc {
+  display: flex !important;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.dbc {
+  display: flex !important;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.dlc {
+  display: flex !important;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+
+.dsn {
+  display: none !important;
+}
+
+.dwp {
+  flex-wrap: wrap;
+}
+
+.ds {
+  display: flex !important;
+  justify-content: flex-start;
+}
+
+.dx {
+  display: flex !important;
+  justify-content: center;
+}
+
+.dr {
+  display: flex !important;
+  justify-content: flex-end;
+}
+
+
+
+.dxy {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
+
+.dxyl {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.slr {
+  align-self: flex-end;
+  margin-left: auto !important;
+}
+
+image,
+.dbb {
+  display: block !important;
+}
+
+.scc {
+  align-self: center;
+}
+

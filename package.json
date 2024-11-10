@@ -1,0 +1,36 @@
+{
+  "name": "@xyfs/main",
+  "version": "2.2.39",
+  "private": true,
+  "description": "小象心选·团购真的省",
+  "author": {
+    "name": "xyfll7",
+    "email": "l.7@qq.com",
+    "url": "https://gitee.com/xyfll7/xyfs_sys"
+  },
+  "scripts": {
+    "typecheck": "pnpm --filter @xyfs/* typecheck",
+    "release:version:sync": "pnpm --parallel -r --aggregate-output --filter @xyfs/* --filter @work/* --filter @ci/*  exec npm version %npm_package_version%",
+    "iit": "release-it",
+    "update:project": "pnpm --filter @xyfs/taro_* --filter @xyfs/xyfs_* exec taro update project 4.0.6",
+    "clean": "pnpm rimraf --glob pnpm-lock.yaml ci___/node_modules common/**/node_modules common/**/dist* packages*/**/node_modules packages*/**/dist* packages*/**/build* packages*/**/.swc && rimraf node_modules",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.9",
+    "@commitlint/cli": "^18.6.1",
+    "@commitlint/config-conventional": "^18.6.3",
+    "@types/node": "^20.17.6",
+    "commitizen": "^4.3.1",
+    "git-cz": "^4.9.0",
+    "husky": "^8.0.3",
+    "release-it": "^17.10.0",
+    "rimraf": "^5.0.10",
+    "zx": "^8.2.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "git-cz"
+    }
+  }
+}
