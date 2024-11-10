@@ -10,7 +10,6 @@
   },
   "scripts": {
     "typecheck": "pnpm --filter @xyfs/* typecheck",
-    "release:version:sync": "pnpm --parallel -r --aggregate-output --filter @xyfs/* --filter @work/* --filter @ci/*  exec npm version ${npm_package_version}",
     "iit": "release-it",
     "update:project": "pnpm --filter @xyfs/taro_* --filter @xyfs/xyfs_* exec taro update project 4.0.6",
     "clean": "pnpm rimraf --glob pnpm-lock.yaml ci___/node_modules common/**/node_modules common/**/dist* packages*/**/node_modules packages*/**/dist* packages*/**/build* packages*/**/.swc && rimraf node_modules",
