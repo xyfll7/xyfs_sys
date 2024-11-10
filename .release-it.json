@@ -6,7 +6,7 @@
     "push": true
   },
   "hooks": {
-    "before:git:release": "pnpm --parallel -r --aggregate-output --filter @xyfs/* --filter @work/* --filter @ci/*  exec npm version ${npm_package_version} && git add ."
+    "before:git:release": "pnpm --parallel -r --aggregate-output --filter @xyfs/* --filter @work/* --filter @ci/*  exec pnpm version ${npm_package_version} && git add ."
   },
   "github": {
     "release": false
