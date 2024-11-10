@@ -57,7 +57,7 @@
     // "**/cloud_base_run": true,
     // "**/ci___": true,
     // "**/*.code-search": true,
-    "**/*.json": true,
+    "**/*.json": false,
     "**/*.yaml": true,
     "**/*.yml": true,
     "**/*.svg": true,
