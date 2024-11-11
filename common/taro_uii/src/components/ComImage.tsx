@@ -4,20 +4,22 @@ import { FC } from "react";
 
 
 
-export const ComImage: FC<Omit<ImageProps, "style" | "src"> & { icon?: string; style?: React.CSSProperties; src?: string; }> = ({
+export const ComImage: FC<Omit<ImageProps, "style" | "src"> & { crop?: string, icon?: string; style?: React.CSSProperties; src?: string; }> = ({
   icon = "icon-logo",
   style,
   src,
   mode = "aspectFill",
+  crop = "",
   ...props
 }) => {
 
   let { height, width } = style || {};
   width = width || "calc(2 * var(--rem_base))";
+  const ___crop = crop ? `/crop/${crop}x${crop}/gravity/center` : "";
   return (
     <Image
       {...props}
-      src={src ?? ""}
+      src={src ? `${src}?imageMogr2/format/webp${___crop}` : ""}
       className={`${props.className} ${icon} bccbacktab transall ovh ioo`}
       style={{
         ...style,
@@ -49,7 +51,7 @@ export const ComImageStack: FC<Omit<ViewProps, "style"> & { avatars: string[]; o
   return (
     <View {...props} className={`dy ${props.className}`} style={{ ...props.style, paddingRight: `${offset}`, zIndex: -1 }} >
       {avatars.slice(0, length).map((e, i) =>
-        <ComImage className='oo ovh' style={{ marginRight: `calc(-1 * ${offset}) `, zIndex: `-${i}`, border: "4rpx solid var(--color_white)" }} src={e} key={i} />)}
+        <ComImage className='oo ovh' crop='100' style={{ marginRight: `calc(-1 * ${offset}) `, zIndex: `-${i}`, border: "4rpx solid var(--color_white)" }} src={e} key={i} />)}
     </View>
   );
 };

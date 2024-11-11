@@ -15,8 +15,12 @@ const PublishCard: FC<ViewProps & { data: any; onMai?: (e: any) => void; }> = ({
     <View className='mb10 dbase'>
       <Text className='cccprice fs08 '>¥</Text>
       <Text className='cccprice fs13 fwb '>{data.price}</Text>
+      <Text className='cccplh fs08 dbase '>/{data.saleStock} 已售</Text>
     </View>
-    <IIIPhotoAlbumNew className='mb10' attachUrl={data.attachUrl} />
+    <View className='dy mb10'>
+      {data.attachUrl.split(",")?.slice(0, 3).map((e, i) =>
+        <ComImage style={{ width: "28vw" }} crop='200' className='mr4 ioo ovh' key={i} src={e} />)}
+    </View>
     <View className='ww dbtc'>
       {Boolean(data.assistList?.length) ? <View className='dy'>
         <ComImageStack className='mb10 mr6' length={6} avatars={data.assistList.map((e: any) => e.regimentAvatar)}
@@ -62,11 +66,7 @@ const CPRegimentAssist = {
 
 export default CPRegimentAssist;
 const IIIPhotoAlbumNew = ({ attachUrl, ...props }: ViewProps & { attachUrl: string; }) => {
-  const pictureUrls = attachUrl.split(",");
   return <View className={props.className} {...props}>
-    <View className='dy'>
-      {pictureUrls?.slice(0, 3).map((e, i) =>
-        <ComImage style={{ width: "28vw" }} className='mr4 ioo ovh' key={i} src={e} />)}
-    </View>
+
   </View>;
 };

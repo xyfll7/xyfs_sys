@@ -10,6 +10,20 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages_merchant/merchant_product_list",
+          "pathName": "pages_merchant/merchant_product_list",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_merchant/merchant_product_list",
+          "pathName": "pages_merchant/merchant_product_list",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages_regiment/regiment_collection_record",
           "pathName": "pages_regiment/regiment_collection_record",
           "query": "",
