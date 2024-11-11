@@ -39,7 +39,6 @@ export function ComButton({
       } else if (utils_str_includes(["bccyellow", "bccgreen"], props.className)) {
         return "bccwhite cccplh";
       } else {
-        console.log("pppp", props.disabled, props.hoverClass);
         return props.hoverClass ?? "bccbacktab";
       }
     })()}

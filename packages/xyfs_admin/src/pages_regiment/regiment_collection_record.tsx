@@ -31,6 +31,7 @@ const Index: FC<{}> = ({ }) => {
   const _OPENID = options.OPENID ?? selfInfo_S?.OPENID;
   const _name = options.regimentName ?? selfInfo_S?.name;
 
+
   const [paymentDetailSomeDay, setPaymentDetailSomeDay] = useState<any | null>(null);
 
   const [page_paymentList, setPage_paymentList] = useState<any[] | null>(null);
@@ -46,7 +47,7 @@ const Index: FC<{}> = ({ }) => {
       ...p,
       date: format(coo___ios_date(), "yyyy-MM-dd"), type: 1
     }), []);
-  const { page: page_paymentDetail, } = useHook_pageListNew(___page_getter, { pageSize: 10 });
+  const { page: page_paymentDetail, page_loading, } = useHook_pageListNew(___page_getter, { pageSize: 10 });
 
   return <MMMAAPage>
     <ComNav>
@@ -89,10 +90,10 @@ const Index: FC<{}> = ({ }) => {
       {_OPENID &&
         <>
           <IIIWallet />
-          {(page_paymentList === null || page_paymentDetail.list === null) && <ComLoading className='mb10'></ComLoading>}
-          {(page_paymentList !== null && page_paymentDetail.list !== null) && <>
+          {(page_paymentList === null || page_loading) && <ComLoading className='mb10'></ComLoading>}
+          {(page_paymentList !== null && !page_loading) && <>
             <ComButton className='cccplh mb10 bccback'>今天</ComButton>
-            <IIIPaymentDetailToday className='mb10' paymentDetailToday={page_paymentDetail.list!} />
+            <IIIPaymentDetailToday className='mb10 bccwhite' paymentDetailToday={page_paymentDetail.list!} />
             <IIIPaymentList onSetPaymentDetailSomeDay={(e) => setPaymentDetailSomeDay(e)} page_paymentList={page_paymentList!} />
           </>}
         </>

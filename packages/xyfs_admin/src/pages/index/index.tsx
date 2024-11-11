@@ -26,6 +26,7 @@ definePageConfig({
 });
 
 export default function COMSELFWarp() { return <ComSELFView isRefreshSelfInfo_SEveryTime><Index></Index></ComSELFView>; };
+
 const Index: FC = () => {
   return <MMMAAPage
     isNeedRegiment={false}>
@@ -39,14 +40,6 @@ const Index: FC = () => {
     <ComScrollView className='IOO'>
       {roo___has_role(useSTSelf.getState().selfInfo!, ["REGIMENT"]) && <IIImmmREGIMENT />}
       {roo___has_role(useSTSelf.getState().selfInfo!, ["MERCHANT"]) && <IIImmmMERCHANT className='mb10' />}
-      {roo___has_role(useSTSelf.getState().selfInfo!, ["REGIMENT"]) && <>
-        <ComButton className='mb10 cccplh bccback'>团长/配置</ComButton>
-        <View className='dy dwp'>
-          <ComButton className='mb10 bccwhite nw mr10' url='/pages_regiment/regiment_bind_cloudPrinter'>云打印机</ComButton>
-          <ComButton className='mb10 bccwhite nw mr10' url='/pages_comm/icomm_printer'>蓝牙设备</ComButton>
-          <ComButton className='mb10 bccwhite nw mr10' url='/pages_regiment/regiment_collection_record'>收款记录</ComButton>
-        </View>
-      </>}
       {roo___has_role(useSTSelf.getState().selfInfo!, ["AGENT"]) && <IIImmmAGENT />}
       {roo___has_role(useSTSelf.getState().selfInfo!, ["DRIVER"]) && <IIImmmDRIVER />}
       {roo___has_role(useSTSelf.getState().selfInfo!, ["SUPPLIER"]) && <IIImmmSUPPLIER />}
@@ -179,8 +172,12 @@ const IIImmmREGIMENT = ({ ...props }: ViewProps) => {
         </View>
       </View>
     }
-
-
+    <ComButton className='mb10 cccplh bccback'>团长/配置</ComButton>
+    <View className='dy dwp'>
+      <ComButton className='mb10 bccwhite nw mr10' url='/pages_regiment/regiment_bind_cloudPrinter'>云打印机</ComButton>
+      <ComButton className='mb10 bccwhite nw mr10' url='/pages_comm/icomm_printer'>蓝牙设备</ComButton>
+      <ComButton className='mb10 bccwhite nw mr10' url='/pages_regiment/regiment_collection_record'>收款记录</ComButton>
+    </View>
   </>;
 };
 const IIImmmSUPPLIER = ({ ...props }: ViewProps) => {
@@ -225,15 +222,22 @@ const IIImmmTest = ({ ...props }: ViewProps) => {
   </View>;
 };
 const IIImmmMERCHANT = ({ ...props }: ViewProps) => {
-  return <View className={`bccwhite ww dll pt10 prl10 IOO ${props.className}`}>
-    <View className='dbtc ww'>
-      <ComButton ll className='mb10 cccplh bccwhite mr10'>商家</ComButton>
-      <ComButton rr className='bccyellow mb10 ml10' url='/pages_comm/comm__publisher'>+商品</ComButton>
+  return <>
+    <View className={`bccwhite ww dll pt10 prl10 IOO ${props.className}`}>
+      <View className='dbtc ww'>
+        <ComButton ll className='mb10 cccplh bccwhite mr10'>商家</ComButton>
+        <ComButton rr className='bccyellow mb10 ml10' url='/pages_comm/comm__publisher'>+商品</ComButton>
+      </View>
+      <View className='dy dwp'>
+        <ComButton ll className=' nw mb10 mr10 bborder' url={`/pages_comm/icomm_orders_groupbuying?order_ST=${Order_ST.已付款}`}>已付款 </ComButton>
+        <ComButton ll className=' nw mb10 mr10 bborder' url={`/pages_comm/icomm_orders_groupbuying?order_ST=${Order_ST.已退款}`}>已退款 </ComButton>
+      </View>
+      <ComButton ll className='bborder mb10' url='/pages_merchant/merchant_product_list'>商品列表</ComButton>
     </View>
+    <ComButton className='mb10 cccplh bccback'>商家/配置</ComButton>
     <View className='dy dwp'>
-      <ComButton ll className=' nw mb10 mr10 bborder' url={`/pages_comm/icomm_orders_groupbuying?order_ST=${Order_ST.已付款}`}>已付款 </ComButton>
-      <ComButton ll className=' nw mb10 mr10 bborder' url={`/pages_comm/icomm_orders_groupbuying?order_ST=${Order_ST.已退款}`}>已退款 </ComButton>
+      <ComButton className='mb10 bccwhite nw mr10' url='/pages_regiment/regiment_collection_record'>收款记录</ComButton>
     </View>
-    <ComButton ll className='bborder mb10' url='/pages_merchant/merchant_product_list'>商品列表</ComButton>
-  </View>;
+  </>;
+
 };

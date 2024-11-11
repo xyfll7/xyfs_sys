@@ -29,3 +29,7 @@ declare namespace NodeJS {
 }
 
 
+interface Object {
+  lgg<T>(e?: string): T;
+}
+
