@@ -56,7 +56,7 @@ const Index: FC = () => {
           <View className='mb10 dbtc prl10 transall' style={{ paddingRight: false ? `${capRight}px` : "0px", opacity: false ? "0" : "1", height: false ? "0rem" : "calc(2 * var(--rem_base)) !important", }}>
             <ComAddressSwitchor className='bcctrans01-dark mr10' title='团长:' isShort isIcon address={roo___role_regiment(selfInfo_S)} url='/pages_user/user_regiment_list_map' />
             <View className='dy'>
-              <ComButton className='bcctrans01-dark mr10 nw' url='/pages_user/user_orders'>订单</ComButton>
+              <ComButton className='bcctrans01-dark mr10 nw cccplh' url='/pages_user/user_orders'>订单</ComButton>
               {getMyEnv().isUseInDev && <ComButton className='bccyellow nw fwb' url='/pages_comm/comm__publisher'>
                 <Text className='cccgreen'>+</Text>发布
               </ComButton>

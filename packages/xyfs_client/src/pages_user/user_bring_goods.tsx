@@ -177,6 +177,7 @@ function IIIGoodCard({ className, data, onAdd, onSub, cart }: { cart?: GoodsCart
         <ComButton className='bcctrans03-dark ioo' hoverClass='none'>
           <View className='dll'>
             <View className='cccwhitee fwb'>{data.name}</View>
+            <View className='cccwhitee fwb'>{data.intro}</View>
             <View className='dbase cccprice fwb'>
               <Text className='fs08'>￥</Text>
               <Text>{data.price}元</Text>

@@ -18,10 +18,10 @@ export const ComAddressSwitchor: FC<ViewProps & MyButtonProps & {
     return <ComButton className={`${className}`} onClick={onClick} url={url} {...props}>
       <View className='dll ww'>
         <View className='dbtc ww'>
-          <View className='dy h1rem' style={{ maxHeight: "var(--rem_base)", lineHeight: "var(--rem_base)" }}>
+          <View className='dy h1rem cccplh' style={{ maxHeight: "var(--rem_base)", lineHeight: "var(--rem_base)" }}>
             <Text className='cccplh nw'>{title}</Text>
             <Text className={`nw1 wm6rem ${address?.name ?? "cccplh"}`}>{address?.name ?? "暂无"}</Text>
-            <Text className='nw1 mr6'>{address?.mobile}</Text>
+            <Text className='nw1 mr6 '>{address?.mobile}</Text>
             {isIcon && <ComSquare className='icon-chevron-right' />}
           </View>
           <View className='cccplh fs08 nw'>{time}</View>
