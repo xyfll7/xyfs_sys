@@ -52,7 +52,7 @@ const Index: FC = () => {
           <ComButton className='bccback mb10 cccplh'>我</ComButton>
           <View className='dy'>
             <ComButton className='dbtc mb10 mr10  bccwhite' url={`/pages_user/sub_user_register?parentId=${useSTSelf.getState().selfInfo!.parentId}`}>
-              <ComImage className='mr10 oo ovh' src={useSTSelf.getState().selfInfo?.avatar} />
+              <ComImage compress className='mr10 oo ovh' src={useSTSelf.getState().selfInfo?.avatar} />
               <View className='nw1 wm5rem mr10'>{useSTSelf.getState().selfInfo!.name}</View>
               {useSTSelf.getState().selfInfo!.mobile}
               <View className='cccgreen ml10'>修改</View>
@@ -98,7 +98,7 @@ const IIImmmREGIMENT = ({ ...props }: ViewProps) => {
   return <>
     <View className='pr ww mb10 bccwhite IOO ovh'>
       <View className=' hh ww pa drc pr15' style={{ top: "0rem" }}>
-        <ComImage className='bcctrans' icon style={{ width: "20vw", height: "20vw" }} mode='aspectFit' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/express.png' />
+        <ComImage compress className='bcctrans' icon style={{ width: "20vw", height: "20vw" }} mode='aspectFit' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/express.png' />
       </View>
       <View className='pt10 prl10  ww  dll ' >
         <ComButton ll className='mb10 cccplh' >团长/快递业务</ComButton>
@@ -124,7 +124,7 @@ const IIImmmREGIMENT = ({ ...props }: ViewProps) => {
 
     <View className='pr ww mb10 bccwhite IOO ovh'>
       <View className=' hh ww pa drc' style={{ top: "0rem" }}>
-        <ComImage className='bcctrans' style={{ width: "25vw", height: "15vw" }} icon mode='aspectFit' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/dryclean.png' />
+        <ComImage compress className='bcctrans' style={{ width: "25vw", height: "15vw" }} icon mode='aspectFit' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/dryclean.png' />
       </View>
       <View className='pt10 prl10  ww  dll ' >
         <ComButton ll className='mb10 cccplh '>团长/干洗业务</ComButton>
@@ -141,7 +141,7 @@ const IIImmmREGIMENT = ({ ...props }: ViewProps) => {
     </View>
     <View className='pr ww mb10 bccwhite IOO ovh'>
       <View className=' hh ww pa drc' style={{ top: "0rem" }}>
-        <ComImage className='bcctrans' style={{ width: "30vw", height: "15vw" }} mode='aspectFit' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/shaoping_bag.png' />
+        <ComImage compress className='bcctrans' style={{ width: "30vw", height: "15vw" }} mode='aspectFit' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/shaoping_bag.png' />
       </View>
       <View className='pt10 prl10  ww  dll ' >
         <ComButton ll className='mb10 cccplh '>团长/团购业务/订单</ComButton>
@@ -154,7 +154,7 @@ const IIImmmREGIMENT = ({ ...props }: ViewProps) => {
     {getMyEnv().isUseInDev &&
       <View className='pr ww mb10 bccwhite IOO ovh'>
         <View className=' hh ww pa drc pr17' style={{ top: "0rem" }}>
-          <ComImage className='bcctrans' style={{ width: "20vw", height: "15vw" }} mode='aspectFit' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/helps.png' />
+          <ComImage compress className='bcctrans' style={{ width: "20vw", height: "15vw" }} mode='aspectFit' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/helps.png' />
         </View>
         <View className='pt10 prl10 ww dll'>
           <ComButton ll className='mb10 cccplh'>团长/帮忙业务</ComButton>
