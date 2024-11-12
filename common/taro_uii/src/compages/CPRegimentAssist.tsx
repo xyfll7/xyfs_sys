@@ -19,7 +19,7 @@ const PublishCard: FC<ViewProps & { data: any; onMai?: (e: any) => void; }> = ({
     </View>
     <View className='dy mb10'>
       {data.attachUrl.split(",")?.slice(0, 3).map((e, i) =>
-        <ComImage style={{ width: "28vw" }} crop='200' className='mr4 ioo ovh' key={i} src={e} />)}
+        <ComImage style={{ width: "28vw" }} compress='200' className='mr4 ioo ovh' key={i} src={e} />)}
     </View>
     <View className='ww dbtc'>
       {Boolean(data.assistList?.length) ? <View className='dy'>

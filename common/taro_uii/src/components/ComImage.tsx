@@ -5,20 +5,18 @@ import { utils_str_includes } from "../utils/util";
 
 
 
-export const ComImage: FC<Omit<ImageProps, "style" | "src"> & { isCompress?: boolean, crop?: string, icon?: string | boolean; style?: React.CSSProperties; src?: string; }> = ({
+export const ComImage: FC<Omit<ImageProps, "style" | "src"> & { compress?: boolean | string, icon?: string | boolean; style?: React.CSSProperties; src?: string; }> = ({
   icon = "icon-logo",
   style,
   src,
   mode = "aspectFill",
-  crop = "",
-  isCompress = false,
+  compress = false,
   ...props
 }) => {
-
   let { height, width } = style || {};
   width = width || "calc(2 * var(--rem_base))";
-  const ___crop = crop ? `/crop/${crop}x${crop}/gravity/center` : "";
-  const ___comp = (isCompress || crop) ? "imageMogr2/format/webp" : "";
+  const ___crop = typeof compress === "string" ? `/crop/${compress}x${compress}/gravity/center` : "";
+  const ___comp = Boolean(compress) ? "imageMogr2/format/webp" : "";
   return (
     <Image
       {...props}
@@ -63,7 +61,7 @@ export const ComImageStack: FC<Omit<ViewProps, "style"> & { avatars: string[]; o
   return (
     <View {...props} className={`dy ${props.className}`} style={{ ...props.style, paddingRight: `${offset}`, zIndex: -1 }} >
       {avatars.slice(0, length).map((e, i) =>
-        <ComImage className='oo ovh' crop='100' style={{ marginRight: `calc(-1 * ${offset}) `, zIndex: `-${i}`, border: "4rpx solid var(--color_white)" }} src={e} key={i} />)}
+        <ComImage className='oo ovh' compress='100' style={{ marginRight: `calc(-1 * ${offset}) `, zIndex: `-${i}`, border: "4rpx solid var(--color_white)" }} src={e} key={i} />)}
     </View>
   );
 };
