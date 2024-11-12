@@ -68,7 +68,7 @@ export const CPPublisher: FC = () => {
         return [...res_cloud_files.map(ee => ee.fileID)];
       }} />
       <ComButton className='bccbacktab mb10 dy' hoverClass='none'>
-        <Text className='nw'> 价格：</Text>
+        <Text className='nw cccplh'> 价格：</Text>
         <ComInput className='cccprice' type='digit' confirmType='done' value={form.price} placeholder='请输入价格' onBlur={() => { form.price === "" && setForm({ price: "0.00" }); }}
           onFocus={() => { form.price === "0.00" && setForm({ price: "" }); }}
           onInput={(e) => setForm({ price: coo___get_price(e.detail.value, form.price) })} />
