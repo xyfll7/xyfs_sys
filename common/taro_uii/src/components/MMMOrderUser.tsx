@@ -9,21 +9,18 @@ export const MMMOrderUser = ({ order, showUser = "user", ...props }: ViewProps &
   const isClient = getMyEnv().appId === "wxbd3ffb2bc1deb654";
   const user = (() => {
     if (showUser === "regiment") {
-      console.log("uux:111");
       return {
         avatar: order.regimentAvatar,
         name: order.regimentName,
         isRegiment: true,
       };
     } else if (isClient) {
-      console.log("uux:222");
       return {
         avatar: order.regimentAvatar,
         name: order.regimentName,
         isRegiment: true,
       };
     } else {
-      console.log("uux:333");
       return {
         avatar: order.userAvatar,
         name: order.userName,
