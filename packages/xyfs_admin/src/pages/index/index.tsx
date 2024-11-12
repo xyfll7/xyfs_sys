@@ -1,5 +1,5 @@
 // :: pages/index/index
-import { Image, Text, View, ViewProps } from "@tarojs/components";
+import { Text, View, ViewProps } from "@tarojs/components";
 import { ComBanner } from "@xyfs/taro_uii/components/ComBanner";
 import { ComButton, ComButtonOpen } from '@xyfs/taro_uii/components/ComButton';
 import { ComImage } from "@xyfs/taro_uii/components/ComImage";
@@ -98,7 +98,7 @@ const IIImmmREGIMENT = ({ ...props }: ViewProps) => {
   return <>
     <View className='pr ww mb10 bccwhite IOO ovh'>
       <View className=' hh ww pa drc pr15' style={{ top: "0rem" }}>
-        <ComImage className='bcctrans' icon style={{ width: "20vw", }} mode='widthFix' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/express.png' />
+        <ComImage className='bcctrans' icon style={{ width: "20vw", height: "20vw" }} mode='aspectFit' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/express.png' />
       </View>
       <View className='pt10 prl10  ww  dll ' >
         <ComButton ll className='mb10 cccplh' >团长/快递业务</ComButton>
@@ -124,7 +124,7 @@ const IIImmmREGIMENT = ({ ...props }: ViewProps) => {
 
     <View className='pr ww mb10 bccwhite IOO ovh'>
       <View className=' hh ww pa drc' style={{ top: "0rem" }}>
-        <Image className='' style={{ width: "20vw", height: "15vw" }} mode='heightFix' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/dryclean.png' />
+        <ComImage className='bcctrans' style={{ width: "25vw", height: "15vw" }} icon mode='aspectFit' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/dryclean.png' />
       </View>
       <View className='pt10 prl10  ww  dll ' >
         <ComButton ll className='mb10 cccplh '>团长/干洗业务</ComButton>
@@ -141,7 +141,7 @@ const IIImmmREGIMENT = ({ ...props }: ViewProps) => {
     </View>
     <View className='pr ww mb10 bccwhite IOO ovh'>
       <View className=' hh ww pa drc' style={{ top: "0rem" }}>
-        <Image className='' style={{ width: "20vw", height: "15vw" }} mode='heightFix' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/shaoping_bag.png' />
+        <ComImage className='bcctrans' style={{ width: "30vw", height: "15vw" }} mode='aspectFit' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/shaoping_bag.png' />
       </View>
       <View className='pt10 prl10  ww  dll ' >
         <ComButton ll className='mb10 cccplh '>团长/团购业务/订单</ComButton>
@@ -154,7 +154,7 @@ const IIImmmREGIMENT = ({ ...props }: ViewProps) => {
     {getMyEnv().isUseInDev &&
       <View className='pr ww mb10 bccwhite IOO ovh'>
         <View className=' hh ww pa drc pr17' style={{ top: "0rem" }}>
-          <Image className='' style={{ width: "20vw", height: "15vw" }} mode='heightFix' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/helps.png' />
+          <ComImage className='bcctrans' style={{ width: "20vw", height: "15vw" }} mode='aspectFit' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/helps.png' />
         </View>
         <View className='pt10 prl10 ww dll'>
           <ComButton ll className='mb10 cccplh'>团长/帮忙业务</ComButton>

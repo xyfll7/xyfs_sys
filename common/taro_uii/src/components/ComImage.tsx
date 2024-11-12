@@ -37,9 +37,18 @@ export const ComImage: FC<Omit<ImageProps, "style" | "src"> & { isCompress?: boo
             };
           }
         })(),
-        width: mode === "heightFix" ? undefined : width,
-        maxWidth: mode === "heightFix" ? undefined : width,
-        minWidth: mode === "heightFix" ? undefined : width,
+        ...(() => {
+          if (mode === "heightFix") {
+            return {};
+          } else {
+            return {
+              width: width,
+              maxWidth: width,
+              minWidth: width,
+            };
+          }
+        })(),
+
 
       }}
       mode={mode} />
