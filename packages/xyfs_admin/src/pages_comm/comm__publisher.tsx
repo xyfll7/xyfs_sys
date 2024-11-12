@@ -68,7 +68,7 @@ export const CPPublisher: FC = () => {
     <ComScrollView>
       <ComButton className='bccbacktab mb10 ww pbt10' hoverClass='none'>
         <View className='ww '>
-          <ComTextarea className='ww' minHeight='calc(2 * var(--rem_base))' confirmType='return' value={form.str} placeholder='简单介绍一下吧 ～'
+          <ComTextarea className='ww ' minHeight='calc(2 * var(--rem_base))' confirmType='return' value={form.str} placeholder='简单介绍一下吧 ～'
             onInputText={(e) => { setForm({ str: e }); }} />
           <View className='fs08 cccplh'>注：点击换行后，第一行为标题</View>
         </View>

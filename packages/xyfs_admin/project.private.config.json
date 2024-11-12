@@ -10,6 +10,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages_comm/comm__publisher",
+          "pathName": "pages_comm/comm__publisher",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages_merchant/merchant_product_list",
           "pathName": "pages_merchant/merchant_product_list",
           "query": "",

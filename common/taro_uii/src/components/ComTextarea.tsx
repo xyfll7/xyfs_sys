@@ -6,7 +6,7 @@ export const ComTextarea: FC<TextareaProps & { minHeight?: string, onInputText?:
     className={` ${props.className}`}
     style={{
       maxHeight: "calc(5 * var(--rem_base))",
-      minHeight: minHeight
+      minHeight: minHeight,
     }}
     autoHeight
     placeholderClass='cccplh'

@@ -29,7 +29,7 @@ export const ComImageUploader: FC<{
           Taro.previewMedia({ current: i, sources: _images.map(ee => ({ url: ee })) });
         }}></ComImage>}
         {e && !utils_str_includes(["http://", "wxfile://"], e) &&
-          <View className='pa z1 bccyellow' onClick={() => { onSetImages(_images.filter(eee => eee !== e)); }} style={{ top: '0rem', right: '0rem' }}>
+          <View className='pa z1 ' onClick={() => { onSetImages(_images.filter(eee => eee !== e)); }} style={{ top: '0rem', right: '0rem' }}>
             {deleteView ? deleteView : <View className='bccred dxy cccwhite o6' style={{ minWidth: "calc(1.2 * var(--rem_base))", minHeight: "calc(1.2 * var(--rem_base))" }}>
               <View className='fs07'>删</View>
             </View>
