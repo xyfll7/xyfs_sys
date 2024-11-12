@@ -40,6 +40,7 @@ export async function Api_goods_publish_ctn(params: {
 export async function Api_goods_list_ctn(params: Pick<Pagination<any>, "keyword" | "pageNum" | "pageSize"> & {
   date?: string,
   type?: 1 | 2;
+  sort?: "asc" | "desc";
 }): Promise<Pagination<any>> {
   const res = await wx_call_container<Promise<Pagination<any>>>({
     path: "/goods/list",

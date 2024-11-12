@@ -237,7 +237,7 @@ const IIImmmMERCHANT = ({ ...props }: ViewProps) => {
     <ComButton className='mb10 cccplh bccback'>商家/配置</ComButton>
     <View className='dy dwp'>
       <ComButton className='mb10 bccwhite nw mr10' url='/pages_regiment/regiment_collection_record'>收款记录</ComButton>
+      <ComButton className='mb10 bccwhite nw mr10' url='/pages_comm/icomm_printer'>蓝牙设备</ComButton>
     </View>
   </>;
-
 };

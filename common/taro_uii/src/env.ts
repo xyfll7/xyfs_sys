@@ -2,7 +2,7 @@ import Taro from "@tarojs/taro";
 import Package from "../package.json";
 import { Environment, EnvVersion } from "../types/type_index";
 
-export const base_url: string = "";
+export const base_url: string = "http://192.169.1.59:8080";
 
 const ___envSimulate = "develop";
 
@@ -29,7 +29,7 @@ const OPENID_DEV___ =
 
   // "oGwbL5FchK3nw0rvAJOb-PY-11iE" ||  // 猪儿 揽收员
   // "oGwbL5Lak_bditPcNT7qnmgmWHeo" ||  // 狗子 司机
-  "oGwbL5PVdCTyoE2sYHAq2bdNA9BY" ||  // 王理代 商家
+  // "oGwbL5PVdCTyoE2sYHAq2bdNA9BY" ||  // 王理代 商家
 
   // "oGwbL5PA_c0S56GYdqE_62bGnNDQ" ||  // 猴猴 注册新用户测试
   "";
