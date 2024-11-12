@@ -12,12 +12,16 @@
     "./util": {
       "types": "./src/util.ts",
       "import": "./src/util.ts"
+    },
+    "./init": {
+      "import": "./src/init.ts"
     }
   },
   "typesVersions": {
     "*": {
       "*": [
-        "./src/*"
+        "./src/*",
+        "./types/index.d.ts"
       ]
     }
   },

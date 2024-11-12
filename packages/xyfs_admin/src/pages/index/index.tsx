@@ -98,7 +98,7 @@ const IIImmmREGIMENT = ({ ...props }: ViewProps) => {
   return <>
     <View className='pr ww mb10 bccwhite IOO ovh'>
       <View className=' hh ww pa drc pr15' style={{ top: "0rem" }}>
-        <Image className='' style={{ width: "20vw", height: "20vw" }} mode='heightFix' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/express.png' />
+        <ComImage className='bcctrans' icon style={{ width: "20vw", }} mode='widthFix' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/express.png' />
       </View>
       <View className='pt10 prl10  ww  dll ' >
         <ComButton ll className='mb10 cccplh' >团长/快递业务</ComButton>

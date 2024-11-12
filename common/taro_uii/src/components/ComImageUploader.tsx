@@ -1,10 +1,11 @@
-import { Image, View } from '@tarojs/components';
+import { View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 
 
 import { FC, } from 'react';
 import { try_Taro_chooseMedia } from '../utils/try_catch';
 import { utils_str_includes } from '../utils/util';
+import { ComImage } from './ComImage';
 
 export const ComImageUploader: FC<{
   className?: string;
@@ -17,16 +18,16 @@ export const ComImageUploader: FC<{
   folder?: string;
   count?: number;
   sourceType?: (keyof Taro.chooseMedia.sourceType)[],
-}> = ({ count = 9, deleteView, className, images, sourceType = ["album", "camera"], addTitle = "好物配好图", size = "calc(4 * var(--rem_base))", onSetImages, upLoader }) => {
+}> = ({ count = 9, deleteView, className, images, sourceType = ["album", "camera"], addTitle = "好物配好图", size = "calc(5 * var(--rem_base))", onSetImages, upLoader }) => {
   const _images = images.split(",").filter(e => e !== "");
   const isLoading = _images.find(e => utils_str_includes(["http://", "wxfile://"], e));
   return <View className={`ds dwp ${className}`}>
     {[..._images, ""].slice(0, count).map((e, i) => {
       return <View className='bccbacktab  mb10 mr10 ioo ovh pr' key={i}
         style={{ width: size, height: size, border: "1rpx solid var(--color_back)" }}>
-        {e && <Image className='ww hh ioo ovh' mode='aspectFill' src={e} onClick={() => {
+        {e && <ComImage className='ww hh ioo ovh' style={{ width: size }} crop='300' mode='aspectFill' src={e} onClick={() => {
           Taro.previewMedia({ current: i, sources: _images.map(ee => ({ url: ee })) });
-        }}></Image>}
+        }}></ComImage>}
         {e && !utils_str_includes(["http://", "wxfile://"], e) &&
           <View className='pa z1 bccyellow' onClick={() => { onSetImages(_images.filter(eee => eee !== e)); }} style={{ top: '0rem', right: '0rem' }}>
             {deleteView ? deleteView : <View className='bccred dxy cccwhite o6' style={{ minWidth: "calc(1.2 * var(--rem_base))", minHeight: "calc(1.2 * var(--rem_base))" }}>

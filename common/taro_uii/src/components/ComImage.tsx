@@ -1,10 +1,11 @@
 
 import { Image, ImageProps, View, ViewProps } from "@tarojs/components";
 import { FC } from "react";
+import { utils_str_includes } from "../utils/util";
 
 
 
-export const ComImage: FC<Omit<ImageProps, "style" | "src"> & { isCompress?: boolean, crop?: string, icon?: string; style?: React.CSSProperties; src?: string; }> = ({
+export const ComImage: FC<Omit<ImageProps, "style" | "src"> & { isCompress?: boolean, crop?: string, icon?: string | boolean; style?: React.CSSProperties; src?: string; }> = ({
   icon = "icon-logo",
   style,
   src,
@@ -22,7 +23,7 @@ export const ComImage: FC<Omit<ImageProps, "style" | "src"> & { isCompress?: boo
     <Image
       {...props}
       src={src ? `${src}?${___comp}${___crop}` : ""}
-      className={`${props.className} ${icon} bccbacktab transall ovh ioo`}
+      className={`${props.className} ${icon === true ? "" : icon} ${utils_str_includes(["bcc"], props.className) ? "" : "bccbacktab"} transall ovh ioo`}
       style={{
         ...style,
         ...(() => {

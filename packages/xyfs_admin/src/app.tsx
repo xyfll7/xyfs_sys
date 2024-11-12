@@ -3,15 +3,11 @@
 import '@xyfs/csss/index.css';
 import { useSTDicts, useSTSelf } from '@xyfs/taro_uii/store/store';
 import { useHook_Error } from '@xyfs/taro_uii/utils/useHooks';
+import "@xyfs/utils/init";
 import React from "react";
 import "./app_test.css";
 
 
-Object.prototype.lgg = function <T>(str: string): T {
-  console.info(`::==${str}`, this);
-  return this as T;
-};
-Object.defineProperty(Object.prototype, 'lgg', { "enumerable": false });
 
 
 async function run() {
