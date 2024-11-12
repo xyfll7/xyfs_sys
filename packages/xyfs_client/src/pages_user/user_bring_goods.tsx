@@ -171,7 +171,7 @@ function IIIGoodCard({ className, data, onAdd, onSub, cart }: { cart?: GoodsCart
   return <View className={`dll ww bccwhite IOO ${className}`}>
     <View className='ww  IOO mb10 ovh'>
       <View className='dxy ww  bccbacktab' >
-        <ComImage src={data.attachUrl?.split(",")[0]} style={{ height: "57vw", width: "100%" }} mode='aspectFill' />
+        <ComImage compress src={data.attachUrl?.split(",")[0]} style={{ height: "57vw", width: "100%" }} mode='aspectFill' />
       </View>
       <View className='ww z1 dbtl pr10 pt10 pa hh pl10' style={{ top: "0", }}>
         <ComButton className='bcctrans03-dark ioo' hoverClass='none'>
