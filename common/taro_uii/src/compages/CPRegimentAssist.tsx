@@ -65,8 +65,3 @@ const CPRegimentAssist = {
 };
 
 export default CPRegimentAssist;
-const IIIPhotoAlbumNew = ({ attachUrl, ...props }: ViewProps & { attachUrl: string; }) => {
-  return <View className={props.className} {...props}>
-
-  </View>;
-};
