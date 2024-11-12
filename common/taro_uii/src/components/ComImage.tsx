@@ -4,22 +4,24 @@ import { FC } from "react";
 
 
 
-export const ComImage: FC<Omit<ImageProps, "style" | "src"> & { crop?: string, icon?: string; style?: React.CSSProperties; src?: string; }> = ({
+export const ComImage: FC<Omit<ImageProps, "style" | "src"> & { isCompress?: boolean, crop?: string, icon?: string; style?: React.CSSProperties; src?: string; }> = ({
   icon = "icon-logo",
   style,
   src,
   mode = "aspectFill",
   crop = "",
+  isCompress = false,
   ...props
 }) => {
 
   let { height, width } = style || {};
   width = width || "calc(2 * var(--rem_base))";
   const ___crop = crop ? `/crop/${crop}x${crop}/gravity/center` : "";
+  const ___comp = (isCompress || crop) ? "imageMogr2/format/webp" : "";
   return (
     <Image
       {...props}
-      src={src ? `${src}?imageMogr2/format/webp${___crop}` : ""}
+      src={src ? `${src}?${___comp}${___crop}` : ""}
       className={`${props.className} ${icon} bccbacktab transall ovh ioo`}
       style={{
         ...style,
