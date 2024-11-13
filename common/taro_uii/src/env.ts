@@ -30,7 +30,7 @@ const OPENID_DEV___ =
 
   // "oGwbL5FchK3nw0rvAJOb-PY-11iE" ||  // 猪儿 揽收员
   // "oGwbL5Lak_bditPcNT7qnmgmWHeo" ||  // 狗子 司机
-  // "oGwbL5PVdCTyoE2sYHAq2bdNA9BY" ||  // 王理代 商家
+  "oGwbL5PVdCTyoE2sYHAq2bdNA9BY" ||  // 王理代 商家
 
   // "oGwbL5PA_c0S56GYdqE_62bGnNDQ" ||  // 猴猴 注册新用户测试
   "";
@@ -50,10 +50,13 @@ export function getMyEnv(env?: EnvVersion): Environment {
   const _envVersion = env ?? envVersion;
   version && (envObj[_envVersion].version = version);
   (envObj[_envVersion].appId = appId);
-  console.log(appId);
-  appId.lgg("那个端");
+
+  if (appId === process.env.TARO_APP_CLIENT) { // 如果是顾客端，不模拟用户登录
+    delete envObj[_envVersion].OPENID;
+  }
+
   envObj[_envVersion].envVersion = _envVersion;
-  return envObj[_envVersion];
+  return envObj[_envVersion].lgg();
 }
 
 export function get_dev_value<T>(value: T, dev_value?: T) {
