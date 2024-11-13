@@ -51,7 +51,7 @@ export function getMyEnv(env?: EnvVersion): Environment {
   version && (envObj[_envVersion].version = version);
   (envObj[_envVersion].appId = appId);
 
-  if (appId === process.env.TARO_APP_CLIENT) { // 如果是顾客端，不模拟用户登录
+  if (appId === process.env.TARO_APP_CLIENT) { // 顾客端，不模拟用户登录
     delete envObj[_envVersion].OPENID;
   }
 
