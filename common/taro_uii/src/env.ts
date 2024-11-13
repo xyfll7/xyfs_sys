@@ -1,4 +1,5 @@
 import Taro from "@tarojs/taro";
+import "@xyfs/utils/init";
 import Package from "../package.json";
 import { Environment, EnvVersion } from "../types/type_index";
 
@@ -49,6 +50,8 @@ export function getMyEnv(env?: EnvVersion): Environment {
   const _envVersion = env ?? envVersion;
   version && (envObj[_envVersion].version = version);
   (envObj[_envVersion].appId = appId);
+  console.log(appId);
+  appId.lgg("那个端");
   envObj[_envVersion].envVersion = _envVersion;
   return envObj[_envVersion];
 }

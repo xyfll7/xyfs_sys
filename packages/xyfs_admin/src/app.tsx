@@ -3,12 +3,8 @@
 import '@xyfs/csss/index.css';
 import { useSTDicts, useSTSelf } from '@xyfs/taro_uii/store/store';
 import { useHook_Error } from '@xyfs/taro_uii/utils/useHooks';
-import "@xyfs/utils/init";
 import React from "react";
 import "./app_test.css";
-
-
-
 
 async function run() {
   // await 确保login接口是第一个被调用的
