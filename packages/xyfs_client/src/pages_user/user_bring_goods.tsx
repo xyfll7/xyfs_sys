@@ -37,7 +37,7 @@ const Index: FC = () => {
   const ___page_getter = useCallback(async (p: Pagination<unknown>) =>
     await Api_goods_list_ctn({
       ...p,
-      sort: "asc",
+      sort: "desc",
       keyword: "",
     }), []);
   const { page, page_loading, } = useHook_pageListNew(___page_getter,);
