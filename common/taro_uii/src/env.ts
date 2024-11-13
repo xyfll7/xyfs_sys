@@ -56,7 +56,7 @@ export function getMyEnv(env?: EnvVersion): Environment {
   }
 
   envObj[_envVersion].envVersion = _envVersion;
-  return envObj[_envVersion].lgg();
+  return envObj[_envVersion];
 }
 
 export function get_dev_value<T>(value: T, dev_value?: T) {
