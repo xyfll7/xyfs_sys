@@ -21,7 +21,6 @@ export async function Api_common_batchGenerateCode(params: { batchNumber: number
   });
   return res;
 }
-
 export async function Api_common_taskList(params: Pick<Pagination<unknown>, "pageNum" | "pageSize">) {
   const res = await wx_call_container<Promise<Pagination<any>>>({
     path: "/common/taskList",
@@ -186,7 +185,6 @@ export async function Api_user_savePrinter_ctn(params: {
   return res;
 
 }
-// /api/user/print/captcha
 export async function Api_user_print_captcha_ctn(params: {
   printerId: string;
 }) {
@@ -197,7 +195,6 @@ export async function Api_user_print_captcha_ctn(params: {
   return res;
 
 }
-// /api/user/printer/bind
 export async function Api_user_printer_bind_ctn(params: {
   printerId: string;
   captcha: string;

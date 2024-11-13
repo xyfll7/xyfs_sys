@@ -1,10 +1,3 @@
-// /api/goods/publish
-
-// /api/goods/list
-
-
-
-
 import { AddressInfo, Pagination } from "../../types";
 import { wx_call_container } from "./wx_call";
 
@@ -48,7 +41,6 @@ export async function Api_goods_list_ctn(params: Pick<Pagination<any>, "keyword"
   });
   return res;
 }
-// /api/goods/remove
 export async function Api_goods_remove_ctn(params: { id: string, }): Promise<Pagination<any>> {
   const res = await wx_call_container<Promise<Pagination<any>>>({
     path: "/goods/remove",
@@ -56,9 +48,6 @@ export async function Api_goods_remove_ctn(params: { id: string, }): Promise<Pag
   });
   return res;
 }
-
-
-// /api/goodsCart/add
 export async function Api_goodsCart_add_ctn<T>(params: {
   "goodsId": string,
   "id": string,
@@ -71,8 +60,6 @@ export async function Api_goodsCart_add_ctn<T>(params: {
   });
   return res;
 }
-
-// /api/goodsCart/clear
 export async function Api_goodsCart_clear_ctn(params: {
   attachUrl?: string;
 }): Promise<any> {
@@ -82,7 +69,6 @@ export async function Api_goodsCart_clear_ctn(params: {
   });
   return res;
 }
-// /api/goodsCart/query
 export async function Api_goodsCart_query_ctn(): Promise<any> {
   const res = await wx_call_container<any>({
     path: "/goodsCart/query",
@@ -90,7 +76,6 @@ export async function Api_goodsCart_query_ctn(): Promise<any> {
   });
   return res;
 }
-// /api/goodsCart/preOrder
 export async function Api_goodsCart_preOrder_ctn(params: {
   "cartItemIds": number[],
   "goodsCartId": number, // 0,

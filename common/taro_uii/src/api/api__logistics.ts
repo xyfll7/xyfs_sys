@@ -81,7 +81,6 @@ export async function Api_logistic_count_ctn() {
   });
   return res;
 }
-
 export async function Api_logistic_remove_ctn(params: { id?: string, }) {
   const res = await wx_call_container<{ description: string, time: string; }[]>({
     path: "/logistic/remove",

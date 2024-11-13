@@ -169,10 +169,6 @@ export async function Api_order_incrPrintTimes_ctn(params: { orderId: string; or
   });
   return res;
 }
-
-
-
-// /api/order/assistOrder
 export async function Api_order_assistOrder_ctn(params: {
   mobile: string,
   productList: [{
@@ -189,7 +185,6 @@ export async function Api_order_assistOrder_ctn(params: {
   });
   return res;
 }
-// /api/order/confirm
 export async function Api_order_confirm_ctn(params: {
   orderId: string,
 }): Promise<any> {
@@ -199,7 +194,6 @@ export async function Api_order_confirm_ctn(params: {
   });
   return res;
 }
-// /api/order/orderProductCode
 export async function Api_order_orderProductCode_ctn(params: {
   code: string;// "string",
   orderId: string;// "string",

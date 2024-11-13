@@ -61,7 +61,6 @@ export async function wx_call_container<OUT = void>({ path, data, params, method
     throw new Error("云托管初始化失败");
   }
 }
-
 let ___ctn: Taro.Cloud;
 export async function get_Taro_ctn() {
   if (___ctn) {
@@ -81,7 +80,6 @@ export async function get_Taro_ctn() {
     }
   }
 }
-
 export async function try_Taro_login() {
   try {
     const res = await Taro.login();
@@ -94,7 +92,6 @@ export async function try_Taro_login() {
     throw new ErrorR(err);
   }
 }
-
 async function ___try_Taro_request<T>(option: Taro.request.Option<any, any>) {
   try {
     return await Taro.request<T>(option);

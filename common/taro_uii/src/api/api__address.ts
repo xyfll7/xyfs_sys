@@ -3,8 +3,6 @@ import { AddressInfo } from "../../types/type_user";
 import { Address_T } from "../config";
 import { wx_call_container } from "./wx_call";
 
-
-
 export async function Api_userAddress_add_ctn(params: AddressInfo): Promise<AddressInfo> {
 
   const res = await wx_call_container<AddressInfo>({

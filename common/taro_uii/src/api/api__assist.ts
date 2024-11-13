@@ -32,8 +32,6 @@ export async function Api_assist_publish_ctn(params: {
   });
   return res;
 }
-
-// /api/assist/explore
 export async function Api_assist_explore_ctn(params: Pick<Pagination<any>, "keyword" | "pageNum" | "pageSize"> & { type: string; }): Promise<Pagination<any>> {
   const res = await wx_call_container<Promise<Pagination<any>>>({
     path: "/assist/explore",
@@ -41,7 +39,6 @@ export async function Api_assist_explore_ctn(params: Pick<Pagination<any>, "keyw
   });
   return res;
 }
-// /api/assist/list
 export async function Api_assist_list_ctn(params: Pick<Pagination<any>, "keyword" | "pageNum" | "pageSize"> & { userId?: string; orderStatus?: Order_ST; }): Promise<Pagination<any>> {
   const res = await wx_call_container<Promise<Pagination<any>>>({
     path: "/assist/list",
@@ -49,7 +46,6 @@ export async function Api_assist_list_ctn(params: Pick<Pagination<any>, "keyword
   });
   return res;
 }
-// /api/assist/increase
 export async function Api_assist_increase_ctn(params: { assistId: string, regimentId?: string; }): Promise<any> {
   const res = await wx_call_container<Promise<any>>({
     path: "/assist/increase",
@@ -57,7 +53,6 @@ export async function Api_assist_increase_ctn(params: { assistId: string, regime
   });
   return res;
 }
-// /api/assist/info
 export async function Api_assist_info_ctn(params: {}): Promise<any> {
   const res = await wx_call_container<Promise<any>>({
     path: "/assist/info",
