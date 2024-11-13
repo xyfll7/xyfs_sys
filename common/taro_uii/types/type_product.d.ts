@@ -84,6 +84,7 @@ interface Product_Dryclean extends ProductBase {
   totalPrice?: number; //49;
   typeId?: null;
   userId?: string;// "oGwbL5MUeSNxxA4o0oOmb_FUjE7g";
+  merchantAddress?: AddressInfo;
 }
 
 // https://juejin.cn/post/7250299528925675579

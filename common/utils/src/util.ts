@@ -152,3 +152,8 @@ export function coo___obj_to_enum<T extends Record<any, any>>(obj: T) {
   console.log(_obj);
   return _obj;
 }
+
+
+export function coo___privacy_phone(mobile?: string) {
+  return mobile ? `${mobile?.slice(0, 3)}****${mobile?.slice(-4)}` : "***空号***";
+}

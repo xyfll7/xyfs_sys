@@ -1,6 +1,6 @@
 import Taro from "@tarojs/taro";
 
-import { coo___JSON_str_code, coo___async_sleep, coo___divide_array_to_n_parts, coo___ios_date } from "@xyfs/utils/util";
+import { coo___JSON_str_code, coo___async_sleep, coo___divide_array_to_n_parts, coo___ios_date, coo___privacy_phone } from "@xyfs/utils/util";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import { PreBarCodeDryclean } from "../../../types/type_index";
@@ -10,7 +10,7 @@ import { Api_order_incrPrintTimes_ctn, Api_order_print_ctn } from "../../api/api
 import { getMyEnv } from "../../env";
 import { useSTBlueDevices, useSTSelf } from "../../store/store";
 import { try_Taro_navigateTo, try_Taro_showActionSheet, try_Taro_showModal } from "../try_catch";
-import { utils_get_cloud_printer, utils_str_includes } from "../util";
+import { utils_addressInfoToString, utils_get_cloud_printer, utils_str_includes } from "../util";
 import { Blue___closeBluetoothAdapter, Blue___openBluetoothAdapter, Blue_connect_closeBLEConnection, Blue_connect_createBLEConnection, Blue_connect_getBLEDeviceCharacteristics, Blue_connect_getBLEDeviceServices, Blue_connect_writeBLECharacteristicValue, Blue_getBluetoothAdapterState, Blue_getBluetoothDevices, Blue_getConnectedBluetoothDevices, Blue_onBluetoothAdapterStateChange, Blue_startBluetoothDevicesDiscovery, Blue_stopBluetoothDevicesDiscovery } from "./bluetooth";
 import GBK from "./gbk.min";
 
@@ -291,7 +291,7 @@ export function on_get_cpcl_str_order_express(_order: OrderInfo<Product_Express>
     `SETMAG 2 2`,
     `${T_0} 0 ${X0} ${Y_ += 10} 收`,
     `SETMAG 0 0`,
-    `${T_0} 0 ${X0 + 60} ${Y_} ${_order.productList?.[0]?.recMan?.name} ${_order.productList?.[0]?.recMan?.mobile?.slice(0, 3)}****${_order.productList?.[0]?.recMan?.mobile?.slice(-4)}`,
+    `${T_0} 0 ${X0 + 60} ${Y_} ${_order.productList?.[0]?.recMan?.name} ${coo___privacy_phone(_order.productList?.[0]?.recMan?.mobile)}`,
     ...(() => coo___divide_array_to_n_parts(recAddr.split(""), 20)
       .map(e => e.join(""))
       .map(e => `${T_0} 0 ${X0 + 60} ${Y_ += 30} ${e}`)
@@ -336,10 +336,16 @@ export function on_get_cpcl_str_order_bing_goods(_order: OrderInfo<Product_Drycl
   const P_w = ((76 - 5) * 8);
   const P_h = (130 - 5) * 8;
 
-  const recAddr = `${_order.userAddress?.province} ${_order.userAddress?.city} ${_order.userAddress?.area} ${_order.userAddress?.address}`;
-  const recManName = `${_order.userAddress?.name} ${_order.userAddress?.mobile}`.slice(0, 20);
-  const sendAddr = `测试地址`;
-  const sendManName = ``.slice(0, 20);
+
+  const ___rec = _order.userAddress; // 用户地址
+  const recName = `${___rec?.name} ${coo___privacy_phone(___rec?.mobile)}`.slice(0, 20);
+  const recAddr = utils_addressInfoToString(___rec);
+  const ___regiment = _order.regimentAddress; // 团长地址
+  const regimentName = `${___regiment?.name}  ${___regiment?.mobile}`.slice(0, 20);
+  const regimentAddr = utils_addressInfoToString(___regiment, true);
+  const ___merchant = _order.productList?.[0]?.merchantAddress; // 商家地址
+  const merchantName = `${___merchant?.name} ${___merchant?.mobile}`.slice(0, 20);
+  const merchantAddr = utils_addressInfoToString(___merchant, true);
   const arr_content = [
     `PW ${P_w}`,
     `CONTRAST 3`,
@@ -357,18 +363,28 @@ export function on_get_cpcl_str_order_bing_goods(_order: OrderInfo<Product_Drycl
     `SETMAG 2 2`,
     `${T_0} 0 ${X0} ${Y_ += 10} 收`,
     `SETMAG 0 0`,
-    `${T_0} 0 ${X0 + 60} ${Y_} ${recManName}`,
-    ...(() => coo___divide_array_to_n_parts(recAddr.split(""), 20)
+    `${T_0} 0 ${X0 + 60} ${Y_} ${recName}`,
+    ...(() => coo___divide_array_to_n_parts(recAddr?.split(""), 20)
       .map(e => e.join(""))
       .map(e => `${T_0} 0 ${X0 + 60} ${Y_ += 30} ${e}`)
     )(),
     `LINE ${X0} ${Y_ += 30} ${P_w} ${Y_} ${L_H}`, // -----------
 
     `SETMAG 2 2`,
-    `${T_0} 0 ${X0} ${Y_ += 10} 寄`,
+    `${T_0} 0 ${X0} ${Y_ += 10} 团`,
     `SETMAG 0 0`,
-    `${T_0} 0 ${X0 + 60} ${Y_} ${sendManName}`,
-    ...(() => coo___divide_array_to_n_parts(sendAddr.split(""), 20)
+    `${T_0} 0 ${X0 + 60} ${Y_} ${regimentName}`,
+    ...(() => coo___divide_array_to_n_parts(regimentAddr?.split(""), 20)
+      .map(e => e.join(""))
+      .map(e => `${T_0} 0 ${X0 + 60} ${Y_ += 30} ${e}`)
+    )(),
+    `LINE ${X0} ${Y_ += 30} ${P_w} ${Y_} ${L_H}`, // -----------
+
+    `SETMAG 2 2`,
+    `${T_0} 0 ${X0} ${Y_ += 10} 商`,
+    `SETMAG 0 0`,
+    `${T_0} 0 ${X0 + 60} ${Y_} ${merchantName}`,
+    ...(() => coo___divide_array_to_n_parts(merchantAddr?.split(""), 20)
       .map(e => e.join(""))
       .map(e => `${T_0} 0 ${X0 + 60} ${Y_ += 30} ${e}`)
     )(),

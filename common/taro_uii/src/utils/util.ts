@@ -59,9 +59,9 @@ export function utils_addressInfoToString(addr?: AddressInfo | BaseUserInfo | nu
     `${addr?.province ?? ""} ${addr?.city ?? ""} ${addr?.area ?? ""} ${addr?.address ?? ""}`;
   if (addr) {
     const res = (str.trim() ? str : undefined);
-    return res;
+    return res ?? "";
   } else {
-    return;
+    return "";
   }
 }
 

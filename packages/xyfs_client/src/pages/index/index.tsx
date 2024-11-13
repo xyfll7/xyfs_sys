@@ -82,7 +82,7 @@ const Index: FC = () => {
 
 const IIIBanner = ({ ...props }: ViewProps) => {
   return <View className={`ww ${props.className}`} onClick={async () => { await try_Taro_navigateTo({ url: "/pages_user/user_bring_goods" }); }}>
-    <View className=' ww ovh IOO' style={{ height: "120vw", }}>
+    <View className=' ww ovh IOO' style={{ height: "100vw", }}>
       <View style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
         <ComImage src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/client_index_banner.png' style={{ width: "100vw", }} mode='widthFix' />
       </View>
