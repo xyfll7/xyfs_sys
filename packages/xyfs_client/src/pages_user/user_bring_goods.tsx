@@ -31,6 +31,7 @@ const Index: FC = () => {
   const [isHeaderBack, setIsHeaderBack] = useState(false);
 
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
+
   const [address, setAddress] = useState<AddressInfo | undefined>(selfInfo_S.defaultRecManAddress);
   const [cart, setCart, getCart] = useCart();
 
@@ -95,7 +96,7 @@ const Index: FC = () => {
       </View>
 
       <View className='ww dbtc'>
-        <ComAddressSwitchor className='bccback mb10 mr10' isShort isIcon title='团长:' address={roo___role_regiment(selfInfo_S)} url='/pages_user/user_regiment_list_map' />
+        <ComAddressSwitchor className='bccback mb10 mr10' isShort isIcon title={`${selfInfo_S?.regimentInfo?.roles?.[0]?.roleName}:`} address={roo___role_regiment(selfInfo_S)} url='/pages_user/user_regiment_list_map' />
         <ComButton className='bccyellow fwb mb10' disabled={!Boolean(cart?.itemList.length) || !Boolean(address) || !Boolean(selfInfo_S.mobile)} onClickO={async () => {
           if (!selfInfo_S.mobile) { throw new ErrorR("请先“手机号快捷登录”", true); }
           if (!Boolean(cart?.itemList?.length)) { throw new ErrorR("购物车为空", true); }

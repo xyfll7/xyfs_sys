@@ -22,7 +22,7 @@ export const ComAddressSwitchor: FC<ViewProps & MyButtonProps & {
             <Text className='cccplh nw'>{title}</Text>
             <Text className={`nw1 wm6rem ${address?.name ?? "cccplh"}`}>{address?.name ?? "暂无"}</Text>
             <Text className='nw1 mr6 '>{address?.mobile}</Text>
-            {isIcon && <ComSquare className='icon-chevron-right' />}
+            {isIcon && url && <ComSquare className='icon-chevron-right' />}
           </View>
           <View className='cccplh fs08 nw'>{time}</View>
         </View>

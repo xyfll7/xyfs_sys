@@ -32,7 +32,6 @@ export default function COMSELFWarp() { return <ComSELFView isRefreshSelfInfo_SE
 
 const Index: FC = () => {
   const selfInfo_S = useSTSelf(e => e.selfInfo);
-  selfInfo_S?.lgg("看看");
   return <MMMAAPage
     isNeedRegiment={false}>
     <ComNav isRight>
