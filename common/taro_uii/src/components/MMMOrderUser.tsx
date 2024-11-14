@@ -6,7 +6,7 @@ import { ComButton } from "./ComButton";
 import { ComImage } from "./ComImage";
 
 export const MMMOrderUser = ({ order, showUser = "user", ...props }: ViewProps & { order: OrderInfo<any>; showUser?: "regiment" | "user"; }) => {
-  const isClient = getMyEnv().appId === "wxbd3ffb2bc1deb654";
+  const isClient = getMyEnv().appId === process.env.TARO_APP_CLIENT;
   const user = (() => {
     if (showUser === "regiment") {
       return {

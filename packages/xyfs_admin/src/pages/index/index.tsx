@@ -4,6 +4,8 @@ import { ComBanner } from "@xyfs/taro_uii/components/ComBanner";
 import { ComButton, ComButtonOpen } from '@xyfs/taro_uii/components/ComButton';
 import { ComImage } from "@xyfs/taro_uii/components/ComImage";
 import { ComNav } from '@xyfs/taro_uii/components/ComNav';
+import { ComNavBarB } from "@xyfs/taro_uii/components/ComNavBarB";
+import { ComPopupNew } from "@xyfs/taro_uii/components/ComPopupNew";
 import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { MMMFooter } from "@xyfs/taro_uii/components/MMMFooter";
@@ -13,8 +15,9 @@ import { getMyEnv } from "@xyfs/taro_uii/src/env";
 import { roo___has_role } from "@xyfs/taro_uii/src/roles";
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
 import { try_Taro_navigateToMiniProgram } from '@xyfs/taro_uii/utils/try_catch';
+import { utils_get_qrcode } from "@xyfs/taro_uii/utils/util";
 import { coo___objToUrl } from "@xyfs/utils/util";
-import { FC } from 'react';
+import { FC, useState } from 'react';
 
 
 
@@ -28,33 +31,36 @@ definePageConfig({
 export default function COMSELFWarp() { return <ComSELFView isRefreshSelfInfo_SEveryTime><Index></Index></ComSELFView>; };
 
 const Index: FC = () => {
+  const selfInfo_S = useSTSelf(e => e.selfInfo);
+  selfInfo_S?.lgg("看看");
   return <MMMAAPage
     isNeedRegiment={false}>
     <ComNav isRight>
       <View className='ds flx1 ww mb10 '>
         <ComBanner isHeaderBack />
         <MMMLogo className='ml10' />
-        <ComButton ll className='mr10 cccplh bcctrans' ><Text className='wm6rem nw1'>{useSTSelf.getState().selfInfo!.name}</Text> </ComButton>
+        <ComButton ll className='mr10 cccplh bcctrans' ><Text className='wm6rem nw1'>{selfInfo_S!.name}</Text> </ComButton>
       </View>
     </ComNav>
     <ComScrollView className='IOO'>
-      {roo___has_role(useSTSelf.getState().selfInfo!, ["REGIMENT"]) && <IIImmmREGIMENT />}
-      {roo___has_role(useSTSelf.getState().selfInfo!, ["MERCHANT"]) && <IIImmmMERCHANT className='mb10' />}
-      {roo___has_role(useSTSelf.getState().selfInfo!, ["AGENT"]) && <IIImmmAGENT />}
-      {roo___has_role(useSTSelf.getState().selfInfo!, ["DRIVER"]) && <IIImmmDRIVER />}
-      {roo___has_role(useSTSelf.getState().selfInfo!, ["SUPPLIER"]) && <IIImmmSUPPLIER />}
-      {roo___has_role(useSTSelf.getState().selfInfo!, ["SCANNER"]) && <IIImmmSCANNER />}
-      {roo___has_role(useSTSelf.getState().selfInfo!, ["AGENT", "REGIMENT"]) && <>
+      {roo___has_role(selfInfo_S!, ["REGIMENT"]) && <IIImmmREGIMENT />}
+      {roo___has_role(selfInfo_S!, ["MERCHANT"]) && <IIImmmMERCHANT className='mb10' />}
+      {roo___has_role(selfInfo_S!, ["AGENT"]) && <IIImmmAGENT />}
+      {roo___has_role(selfInfo_S!, ["DRIVER"]) && <IIImmmDRIVER />}
+      {roo___has_role(selfInfo_S!, ["SUPPLIER"]) && <IIImmmSUPPLIER />}
+      {roo___has_role(selfInfo_S!, ["SCANNER"]) && <IIImmmSCANNER />}
+      {roo___has_role(selfInfo_S!, ["GUIDE"]) && <IIImmmGUIDE />}
+      {roo___has_role(selfInfo_S!, ["AGENT", "REGIMENT"]) && <>
         <ComButton className='bccwhite mb10' url='/pages_comm/icomm_download_list' >下载任务列表</ComButton>
       </>}
-      {useSTSelf.getState().selfInfo!.parentId && useSTSelf.getState().selfInfo!.mobile &&
+      {selfInfo_S!.parentId && selfInfo_S!.mobile &&
         <View className='dll ww'>
           <ComButton className='bccback mb10 cccplh'>我</ComButton>
           <View className='dy'>
-            <ComButton className='dbtc mb10 mr10  bccwhite' url={`/pages_user/sub_user_register?parentId=${useSTSelf.getState().selfInfo!.parentId}`}>
-              <ComImage compress className='mr10 oo ovh' src={useSTSelf.getState().selfInfo?.avatar} />
-              <View className='nw1 wm5rem mr10'>{useSTSelf.getState().selfInfo!.name}</View>
-              {useSTSelf.getState().selfInfo!.mobile}
+            <ComButton className='dbtc mb10 mr10  bccwhite' url={`/pages_user/sub_user_register?parentId=${selfInfo_S!.parentId}`}>
+              <ComImage compress className='mr10 oo ovh' src={selfInfo_S?.avatar} />
+              <View className='nw1 wm5rem mr10'>{selfInfo_S!.name}</View>
+              {selfInfo_S!.mobile}
               <View className='cccgreen ml10'>修改</View>
             </ComButton>
           </View>
@@ -70,6 +76,7 @@ const Index: FC = () => {
 
 
 const IIImmmAGENT = ({ ...props }: ViewProps) => {
+  const selfInfo_S = useSTSelf(e => e.selfInfo);
   return <>
     <ComButton className='mb10 cccplh mr10 bccback' >代理</ComButton>
     <View className='dy dwp'>
@@ -86,15 +93,16 @@ const IIImmmAGENT = ({ ...props }: ViewProps) => {
         子用户
       </ComButton>
       <ComButtonOpen className='bccwhite mb10 mr10' id='invite'
-        shareTitle={`${useSTSelf.getState().selfInfo!.name ?? "代理"} 邀请您注册子用户`}
+        shareTitle={`${selfInfo_S!.name ?? "代理"} 邀请您注册子用户`}
         openType='share'
-        sharePath={`/pages_user/sub_user_register?${coo___objToUrl({ parentId: useSTSelf.getState().selfInfo!.OPENID! })}`}>
+        sharePath={`/pages_user/sub_user_register?${coo___objToUrl({ parentId: selfInfo_S!.OPENID! })}`}>
         邀请注册
       </ComButtonOpen>
     </View>
   </>;
 };
 const IIImmmREGIMENT = ({ ...props }: ViewProps) => {
+  const selfInfo_S = useSTSelf(e => e.selfInfo);
   return <>
     <View className='pr ww mb10 bccwhite IOO ovh'>
       <View className=' hh ww pa drc pr15' style={{ top: "0rem" }}>
@@ -107,7 +115,7 @@ const IIImmmREGIMENT = ({ ...props }: ViewProps) => {
           <ComButton ll className='mb10  dy bborder' onClick={async () =>
             try_Taro_navigateToMiniProgram({
               appId: process.env.TARO_APP_CLIENT,
-              path: `/pages_regiment/regiment_invitor?${coo___objToUrl({ regimentId: useSTSelf.getState().selfInfo!.OPENID })}`,
+              path: `/pages_regiment/regiment_invitor?${coo___objToUrl({ regimentId: selfInfo_S!.OPENID })}`,
               noRelaunchIfPathUnchanged: false,
             })}>
             分享邀请：<Text className='cccgreen'>小象心选顾客端</Text>
@@ -162,7 +170,7 @@ const IIImmmREGIMENT = ({ ...props }: ViewProps) => {
             <ComButton ll className='mb10 dy bborder fwb' onClick={async () => {
               await try_Taro_navigateToMiniProgram({
                 appId: process.env.TARO_APP_CLIENT,
-                path: `/pages_regiment/regiment_assist?${coo___objToUrl({ regimentId: useSTSelf.getState().selfInfo!.OPENID })}`,
+                path: `/pages_regiment/regiment_assist?${coo___objToUrl({ regimentId: selfInfo_S!.OPENID })}`,
                 noRelaunchIfPathUnchanged: false,
               });
             }}>
@@ -181,6 +189,7 @@ const IIImmmREGIMENT = ({ ...props }: ViewProps) => {
   </>;
 };
 const IIImmmSUPPLIER = ({ ...props }: ViewProps) => {
+  const selfInfo_S = useSTSelf(e => e.selfInfo);
   return <>
     <ComButton className='mb10 cccplh bccback'>供应商</ComButton>
     <View className='dy'>
@@ -189,9 +198,9 @@ const IIImmmSUPPLIER = ({ ...props }: ViewProps) => {
     <View className='dy'>
       <ComButton className='bccwhite  fwb mb10 mr10' url='/pages_comm/comm__product_dryclean'>干洗商品</ComButton>
       <ComButtonOpen ll className='bccwhite mb10 mr10' id='invite'
-        shareTitle={`供应商：${useSTSelf.getState().selfInfo!.name} 邀请您注册员工`}
+        shareTitle={`供应商：${selfInfo_S!.name} 邀请您注册员工`}
         openType='share'
-        sharePath={`/pages_user/sub_user_register?${coo___objToUrl({ parentId: useSTSelf.getState().selfInfo!.OPENID! })}`}>
+        sharePath={`/pages_user/sub_user_register?${coo___objToUrl({ parentId: selfInfo_S!.OPENID! })}`}>
         邀请注册-员工
       </ComButtonOpen>
       <ComButton ll className='bccwhite mb10 mr10' url='/pages_user/sub_user_list'>子用户</ComButton>
@@ -238,6 +247,41 @@ const IIImmmMERCHANT = ({ ...props }: ViewProps) => {
     <View className='dy dwp'>
       <ComButton className='mb10 bccwhite nw mr10' url='/pages_regiment/regiment_collection_record'>收款记录</ComButton>
       <ComButton className='mb10 bccwhite nw mr10' url='/pages_comm/icomm_printer'>蓝牙设备</ComButton>
+    </View>
+  </>;
+};
+const IIImmmGUIDE = ({ ...props }: ViewProps) => {
+  const selfInfo_S = useSTSelf(e => e.selfInfo);
+  const [qrcode, setQrcode] = useState<string | null>(null);
+  return <>
+    <View className={`bccwhite ww dll mb10 pt10 prl10 IOO ${props.className}`}>
+      <ComButton ll className='mb10 cccplh bccwhite mr10'>导游/带货</ComButton>
+      <View className='dy dwp'>
+        <ComButton ll className=' nw mb10 mr10 bborder' url={`/pages_comm/icomm_orders_groupbuying?order_ST=${Order_ST.已付款}`}>已付款 </ComButton>
+        <ComButton ll className=' nw mb10 mr10 bborder' url={`/pages_comm/icomm_orders_groupbuying?order_ST=${Order_ST.已退款}`}>已退款 </ComButton>
+      </View>
+    </View>
+    <ComButton className='mb10 cccplh bccback'>导游/配置</ComButton>
+    <View className='dy dwp'>
+      <ComButton className='mb10 bccwhite nw mr10' onClick={async () => {
+        const _src = await utils_get_qrcode({
+          appid: process.env.TARO_APP_CLIENT,
+          page: "pages/index/index",
+          scene: coo___objToUrl({ R_D: Number(selfInfo_S!.mobile).toString(36), }),
+        });
+        setQrcode(_src);
+      }}>推广二维码</ComButton>
+      <ComButton className='mb10 bccwhite nw mr10' url='/pages_regiment/regiment_collection_record'>收款记录</ComButton>
+    </View>
+    <View>
+      {Boolean(qrcode) &&
+        <ComPopupNew className=' ww' >
+          <View className='ww dll prl10'>
+            <ComNavBarB className='mb10 ww' onClose={() => { setQrcode(null); }}><ComButton className='fwb bccback'>二维码</ComButton></ComNavBarB>
+            <ComImage className='mb10 scc' style={{ width: "calc(10 * var(--rem_base))" }} src={qrcode!} />
+          </View>
+        </ComPopupNew>
+      }
     </View>
   </>;
 };

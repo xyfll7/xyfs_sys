@@ -29,7 +29,7 @@ export const MMMFooter: FC<{ className?: string; isShowMore?: boolean, isLoadMor
         });
       }}>{selfInfo_S?.OPENID}</View>
     }
-    <View className='dy'>{{ "wxc6ff511796ec714a": "陕ICP备2022014426号-5X", "wxbd3ffb2bc1deb654": "陕ICP备2022014426号-2X" }[env.appId]}  <View onClick={() => Taro.openPrivacyContract?.({})}>《隐私政策》</View></View>
+    <View className='dy'>{{ [process.env.TARO_APP_ADMIN]: "陕ICP备2022014426号-5X", [process.env.TARO_APP_CLIENT]: "陕ICP备2022014426号-2X" }[env.appId]}  <View onClick={() => Taro.openPrivacyContract?.({})}>《隐私政策》</View></View>
     <Text className='dy'>环境:{`${env?.envSimulate} ${env?.ctnId?.split("-")[0]} ${env?.version}`}</Text>
     <View className='dy mb10'>
       {selfInfo_S?.theme === "light" ? "浅色模式" : "深色模式"}

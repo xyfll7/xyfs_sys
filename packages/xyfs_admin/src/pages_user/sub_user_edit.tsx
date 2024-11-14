@@ -27,7 +27,6 @@ definePageConfig({
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC<{}> = ({ }) => {
   const selfInfo_S = useSTSelf(e => e.selfInfo);
-
   return <MMMAAPage>
     <ComNav>
       <View className='ww'>
@@ -67,9 +66,9 @@ const IIImyUserEditorAGENT: FC = () => {
 
       <View className='cccplh mb10 '>{utils_addressInfoToString(userInfo)}</View>
       <View className='ww dll'>
-        <ComButton className='cccplh mb10  bccwhite' ll >指定角色</ComButton>
+        <ComButton className='cccplh mb10  bccwhite' ll >指定角色1</ComButton>
         <View className='dy dwp'>
-          {dicts_roles?.filter((e) => ["REGIMENT", "SUPPLIER", "DRIVER", "MERCHANT"].includes(e.roleKey)).map((e, i) => {
+          {dicts_roles?.filter((e) => ["REGIMENT", "SUPPLIER", "DRIVER", "MERCHANT", "GUIDE"].includes(e.roleKey)).map((e, i) => {
 
             return <ComButton ll key={i} className={`bborder mb10 ${userInfo.roles?.some(ee => ee.roleKey === e.roleKey) ? 'cccgreen' : ''}`}
               onClick={async () => {
