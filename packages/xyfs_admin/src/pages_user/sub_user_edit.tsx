@@ -66,7 +66,7 @@ const IIImyUserEditorAGENT: FC = () => {
 
       <View className='cccplh mb10 '>{utils_addressInfoToString(userInfo)}</View>
       <View className='ww dll'>
-        <ComButton className='cccplh mb10  bccwhite' ll >指定角色1</ComButton>
+        <ComButton className='cccplh mb10  bccwhite' ll >指定角色</ComButton>
         <View className='dy dwp'>
           {dicts_roles?.filter((e) => ["REGIMENT", "SUPPLIER", "DRIVER", "MERCHANT", "GUIDE"].includes(e.roleKey)).map((e, i) => {
 
