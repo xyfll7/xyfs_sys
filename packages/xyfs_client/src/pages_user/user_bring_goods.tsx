@@ -16,7 +16,7 @@ import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
 import { ComSquare } from "@xyfs/taro_uii/components/ComSquare";
 import { ComSELFView, MMMAAPage } from "@xyfs/taro_uii/components/MMMAAPage";
 import { ErrorR, Order_ST } from "@xyfs/taro_uii/src/config";
-import { roo___role_regiment } from "@xyfs/taro_uii/src/roles";
+import { roo___role_getRoleName, roo___role_regiment } from "@xyfs/taro_uii/src/roles";
 import { useSTSelf } from "@xyfs/taro_uii/store/store";
 import { AddressInfo } from "@xyfs/taro_uii/type_user";
 import { Taro_getCurrentInstance, try_Taro_chooseAddress, try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
@@ -63,8 +63,8 @@ const Index: FC = () => {
       <View style={{ height: "25vh" }} >
         <View className='sticky-top dll pt20 pb10 pl10'>
           <ComButton className='cccwhite bcctrans03-dark dll' hoverClass='none'>
-            <View className='lh100 fs19 fwb'>今日随机免15单</View>
-            <View className='lh100'>Today&#39;s random 15 free orders</View>
+            <View className='lh100 fs19 fwb'>延安苹果</View>
+            <View className='lh100'>绿色种植，天然健康，产地直供，品质保证</View>
           </ComButton>
         </View>
       </View>
@@ -96,7 +96,7 @@ const Index: FC = () => {
       </View>
 
       <View className='ww dbtc'>
-        <ComAddressSwitchor className='bccback mb10 mr10' isShort isIcon title={`${selfInfo_S?.regimentInfo?.roles?.[0]?.roleName}:`} address={roo___role_regiment(selfInfo_S)} url='/pages_user/user_regiment_list_map' />
+        <ComAddressSwitchor className='bccback mb10 mr10' isShort isIcon title={`${roo___role_getRoleName(selfInfo_S)}:`} address={roo___role_regiment(selfInfo_S)} url='/pages_user/user_regiment_list_map' />
         <ComButton className='bccyellow fwb mb10' disabled={!Boolean(cart?.itemList.length) || !Boolean(address) || !Boolean(selfInfo_S.mobile)} onClickO={async () => {
           if (!selfInfo_S.mobile) { throw new ErrorR("请先“手机号快捷登录”", true); }
           if (!Boolean(cart?.itemList?.length)) { throw new ErrorR("购物车为空", true); }

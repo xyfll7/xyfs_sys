@@ -80,4 +80,12 @@ export function roo___role_getRoleInfo(userInfo: BaseUserInfo, roleName: ROLE_NA
   return userInfo?.roles?.filter(e => e.roleName === roleName)[0];
 }
 
-
+export function roo___role_getRoleName(userInfo: BaseUserInfo) {
+  const roles = userInfo?.regimentInfo?.roles;
+  if (roles) {
+    const [user] = roles?.filter(e => e.roleKey === "REGIMENT" || e.roleKey === "GUIDE");
+    return user ? user.roleName : "**错误**";
+  } else {
+    return "**错误**";
+  }
+}
