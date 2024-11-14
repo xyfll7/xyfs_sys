@@ -132,6 +132,7 @@ interface OrderInfo<T> {
   pickUpDate?: string;
   pickUpRange?: string;
   __isEdit?: number;
+  __index?: number;
 }
 
 

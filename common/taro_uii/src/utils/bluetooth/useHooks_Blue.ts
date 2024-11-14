@@ -346,6 +346,10 @@ export function on_get_cpcl_str_order_bing_goods(_order: OrderInfo<Product_Drycl
   const ___merchant = _order.productList?.[0]?.merchantAddress; // 商家地址
   const merchantName = `${___merchant?.name} ${___merchant?.mobile}`.slice(0, 20);
   const merchantAddr = utils_addressInfoToString(___merchant, true);
+
+  const ___intro = _order.productList?.[0]?.intro ?? ""; // 商品简介
+  const ___length = _order.productList?.length; // 商品简介
+
   const arr_content = [
     `PW ${P_w}`,
     `CONTRAST 3`,
@@ -354,12 +358,9 @@ export function on_get_cpcl_str_order_bing_goods(_order: OrderInfo<Product_Drycl
     `${T_0} 0 ${X0} ${Y_ = 60} ${format(coo___ios_date(_order?.lastPrintTime ?? coo___ios_date().getTime()), "yyyy-MM-dd HH:mm:ss")}`,
     `LINE ${X0} ${Y_ += 26} ${P_w} ${Y_} ${L_H}`, // -----------
 
-    `CENTER`,
     `BARCODE 128 2 2 80 ${X0} ${Y_ += 10} ${_order.outTradeNo?.toUpperCase()}`,
     `${T_0} 0 ${X0} ${Y_ += 80 + 10} ${_order.outTradeNo?.toUpperCase()}`,
     `LINE ${X0} ${Y_ += 30} ${P_w} ${Y_} ${L_H}`, // -----------
-
-    `LEFT`,
     `SETMAG 2 2`,
     `${T_0} 0 ${X0} ${Y_ += 10} 收`,
     `SETMAG 0 0`,
@@ -390,13 +391,15 @@ export function on_get_cpcl_str_order_bing_goods(_order: OrderInfo<Product_Drycl
     )(),
     `LINE ${X0} ${Y_ += 30} ${P_w} ${Y_} ${L_H}`, // -----------
 
-    `CENTER`,
-    `BARCODE 128 2 2 80 ${X0} ${Y_ += 10} ${_order.outTradeNo?.toUpperCase()}`,
-    `${T_0} 0 ${X0} ${Y_ += 80 + 10} ${_order.outTradeNo?.toUpperCase()}`,
+    `BARCODE 128 1 1 80 ${X0} ${Y_ += 10} ${_order.outTradeNo?.toUpperCase()}`,
 
-    `LEFT ${P_w}`,
-    `${T_0} 0 ${X0} ${Y_ += 60} 团长：${_order.regimentName ?? '无'}`,
-    `${T_0} 0 ${X0} ${Y_ += 40} 品名：${_order.productList?.[0]?.name}`,
+    `${T_0} 0 ${X0} ${Y_ += 80 + 10} ${_order.outTradeNo?.toUpperCase()}`,
+    `${T_0} 0 ${X0} ${Y_ += 40} 团长：${_order.regimentName ?? '无'}`,
+    `${T_0} 0 ${X0} ${Y_ += 40} 品名：${_order.productList?.[0]?.name} ${_order.__index}/${___length}`,
+    ...(() => coo___divide_array_to_n_parts(___intro?.split(""), 20)
+      .map(e => e.join(""))
+      .map(e => `${T_0} 0 ${X0} ${Y_ += 30} ${e}`)
+    )(),
     `FORM`,
     `PRINT`,
   ];

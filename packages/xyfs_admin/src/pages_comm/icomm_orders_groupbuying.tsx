@@ -82,7 +82,7 @@ const Index: FC<{}> = ({ }) => {
               }
               {_order1.orderStatus === 2 && <ComButton rr className='cccgreen ml10 bborder mb10 nw' onClick={async () => {
                 await on_start_print((blue_device) => {
-                  return _order1.productList!.map(eee => on_get_cpcl_str_order_bing_goods({ ..._order1, productList: [eee], }, blue_device));
+                  return _order1.productList!.map((eee, index) => on_get_cpcl_str_order_bing_goods({ ..._order1, productList: [eee], __index: index, }, blue_device));
                 }, { orderId: _order1.id, selfInfo_S });
               }}>打印</ComButton>
               }
