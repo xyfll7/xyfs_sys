@@ -6,7 +6,7 @@
     "push": true
   },
   "hooks": {
-    "before:git:release": "pnpm --parallel -r --aggregate-output --filter @xyfs/* --filter @work/* --filter @ci/*  exec pnpm version ${version} && git add ."
+    "before:git:release": "export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7890 && pnpm --parallel -r --aggregate-output --filter @xyfs/* --filter @work/* --filter @ci/*  exec pnpm version ${version} && git add ."
   },
   "github": {
     "release": false
