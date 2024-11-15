@@ -40,11 +40,12 @@ const OPENID_DEV___ =
 
 process.env.NODE_ENV === "development" && Taro.clearStorageSync();
 const ___isUseInDev = true; // false; // /// 这个没问题，只有dev环境才有这个参数，不用删除
+const ___isDeveloping = true; // false; // /// 这个没问题，只有dev环境才有这个参数，不用删除
 // Package.version = "1.0.47";
 const envObj: Record<EnvVersion, Environment> = {
   release: { ctnId: process.env.TARO_APP_CTN_PRO, envSimulate: "release", version: Package.version, appId: "" },
   trial: { ctnId: process.env.TARO_APP_CTN_PRO, envSimulate: "trial", version: Package.version, appId: "" },
-  develop: { ctnId: process.env.TARO_APP_CTN_DEV, envSimulate: ___envSimulate, version: Package.version, appId: "", OPENID: OPENID_DEV___ ? OPENID_DEV___ : undefined, isUseInDev: ___isUseInDev },
+  develop: { ctnId: process.env.TARO_APP_CTN_DEV, envSimulate: ___envSimulate, version: Package.version, appId: "", OPENID: OPENID_DEV___ ? OPENID_DEV___ : undefined, isUseInDev: ___isUseInDev, isDeveloping: ___isDeveloping },
 };
 
 export function getMyEnv(env?: EnvVersion): Environment {

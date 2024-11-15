@@ -30,6 +30,7 @@ type Environment = {
   version: string;
   OPENID?: string;
   isUseInDev?: boolean;
+  isDeveloping?: boolean;
 };
 interface Events<T> {
   func: string;
