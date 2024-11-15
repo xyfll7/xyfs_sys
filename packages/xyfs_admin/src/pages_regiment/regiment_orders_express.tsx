@@ -108,8 +108,7 @@ const Index: FC<{}> = ({ }) => {
               }));
             }}
 
-            onDeleteOrder={() => { page_list_update(p => ({ ...p, list: p.list!.filter(item => item.id !== ee1.id) })); }}
-            onUpdateOrderList={() => { page_init(); }} />
+            onDeleteOrder={() => { page_list_update(p => ({ ...p, list: p.list!.filter(item => item.id !== ee1.id) })); }} />
         </View>;
       })}
       <ComLoading className='mb10' isLastPage={page?.isLastPage} loading={page_loading} onLoadMore={() => page_list_get(page)}></ComLoading>
@@ -125,10 +124,9 @@ const IIIOrderExpressOperation: FC<{
   onSetShowQRCode: (e: boolean) => void;
   orderType: Order_ST;
   order: OrderInfo<Product_Express>;
-  onUpdateOrderList: () => void;
   onDeleteOrder: () => void;
   onPrint?: (e: OrderInfo<Product_Express>) => Promise<void>;
-}> = ({ onSetShowQRCode, onDeleteOrder, orderType, order, onPrint, onUpdateOrderList, }) => {
+}> = ({ onSetShowQRCode, onDeleteOrder, orderType, order, onPrint, }) => {
   return (
     <View className='prl10'>
       {(orderType == Order_ST.待付款) && (
@@ -164,8 +162,8 @@ const IIIOrderExpressOperation: FC<{
               // 吊起微信支付 -> 打开支付成功弹窗
               Taro.showLoading({ mask: true, title: "支付...", });
               await try_Taro_requestPayment({ ...res_pay, package: res_pay.packageStr });
-              Taro.hideLoading();
-              onUpdateOrderList();
+              Taro.showToast({ icon: "none", title: `支付成功,订单移入"已付款"` });
+              onDeleteOrder();
             }}>
             <ComSquare className='icon-wxpay mr4' style={{ width: "calc(1.3 * var(--rem_base))" }} />
             <Text className='nw'>支付</Text>
@@ -214,15 +212,13 @@ const IIIOrderExpressOperation: FC<{
           {order.refundStatus === Refund_ST.失败 ? <View className='cccprice'>退款失败，请手动重试</View> : (
 
             (order.productList?.[0]?.waybillId ?
-              <ComButton rr className='cccgreen bborder'
-                onClick={() => onPrint?.(order)}>
+              <ComButton rr className='cccgreen bborder' onClick={() => { onPrint?.(order); }}>
                 打印{order.printTimes ?? 0}次
               </ComButton> :
               <ComButton rr className='cccgreen bborder' onClick={async () => {
                 Taro.showLoading({ mask: true, title: "获取面单号...", });
                 const [res_waybill] = await Api_logistic_waybill_ctn({ orderId: order.id!, });
                 Taro.showToast({ icon: "none", title: "获取成功", });
-                onUpdateOrderList();
                 // 打印
                 await onPrint?.({
                   ...order,

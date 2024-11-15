@@ -157,6 +157,36 @@ const IIImyUserEditorAGENT: FC = () => {
 
         </>
       }
+      {roo___has_role(userInfo, ["MERCHANT"]) &&
+        <>
+          <ComButton className='cccplh mb10 bccwhite' ll >快递账号配置</ComButton>
+          <View className='dy'>
+            {dicts_delivery?.map(e => <ComButton ll className={`bborder mb10 ${userInfo.logistics?.find(ee => ee.deliveryId === e.deliveryId) ? "cccgreen" : ""}`} key={e.bizId}
+              onClick={async () => {
+                if (userInfo.logistics?.find(ee => ee.deliveryId === e.deliveryId)) { // 减配
+
+                  if (await try_Taro_showModal({ title: "提示", content: "您确定要取消该团长的的面单号？", confirmText: "取消授权" })) {
+                    Taro.showLoading({ mask: true, title: "取消中..." });
+                    const res_userInfo = await Api_user_edit_ctn({ userId: userInfo.id!, logistics_: userInfo.logistics?.filter(ee => ee.dictId !== e.id).map(ee => ee.dictId ?? ee.id!), });
+                    setUserInfo(res_userInfo);
+                    Taro.hideLoading();
+                  } else {
+                    throw new Error("取消");
+                  }
+                } else { // 增配
+                  if (await try_Taro_showModal({ title: "提示", content: "您确认要授权面单号给该团长?", confirmText: "确认授权" })) {
+                    Taro.showLoading({ mask: true, title: "授权中..." });
+                    const res_userInfo = await Api_user_edit_ctn({ userId: userInfo.id!, logistics_: [...(userInfo.logistics ?? []), e].map(ee => ee.dictId ?? ee.id!), });
+                    setUserInfo(res_userInfo);
+                    Taro.hideLoading();
+                  } else {
+                    throw new Error("取消");
+                  }
+                }
+              }}>{e.deliveryName?.slice(0, 2)}</ComButton>)}
+          </View>
+        </>
+      }
     </View>
     }
   </>;

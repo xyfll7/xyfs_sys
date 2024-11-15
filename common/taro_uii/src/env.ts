@@ -44,7 +44,7 @@ const ___isDeveloping = true; // false; // /// 这个没问题，只有dev环境
 // Package.version = "1.0.47";
 const envObj: Record<EnvVersion, Environment> = {
   release: { ctnId: process.env.TARO_APP_CTN_PRO, envSimulate: "release", version: Package.version, appId: "" },
-  trial: { ctnId: process.env.TARO_APP_CTN_PRO, envSimulate: "trial", version: Package.version, appId: "" },
+  trial: { ctnId: process.env.TARO_APP_CTN_PRO, envSimulate: "release", version: Package.version, appId: "" },
   develop: { ctnId: process.env.TARO_APP_CTN_DEV, envSimulate: ___envSimulate, version: Package.version, appId: "", OPENID: OPENID_DEV___ ? OPENID_DEV___ : undefined, isUseInDev: ___isUseInDev, isDeveloping: ___isDeveloping },
 };
 

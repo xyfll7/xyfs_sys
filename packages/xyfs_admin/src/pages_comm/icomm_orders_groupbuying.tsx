@@ -84,7 +84,7 @@ const Index: FC<{}> = ({ }) => {
                 await on_start_print((blue_device) => {
                   return _order1.productList!.map((eee, index) => on_get_cpcl_str_order_bing_goods({ ..._order1, productList: [eee], __index: index, }, blue_device));
                 }, { orderId: _order1.id, selfInfo_S });
-              }}>打印</ComButton>
+              }}>打印{_order1.printTimes ?? 0}次</ComButton>
               }
             </View>
           </View>;
