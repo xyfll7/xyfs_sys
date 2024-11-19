@@ -27,6 +27,17 @@ export async function Api_common_taskList(params: Pick<Pagination<unknown>, "pag
     data: { ...params },
   });
   return res;
+}
+
+export async function Api_common_jtsd(params: {
+  /**1 标准快递 ，2 兔优达  */
+  expressType: 1 | 2;
+}) {
+  const res = await wx_call_container<Promise<Pagination<any>>>({
+    path: "/common/jtsd",
+    data: { ...params },
+  });
+  return res;
 
 }
 export async function Api_common_idCardOCR_ctn(params: { imgUrl?: string; }): Promise<{
