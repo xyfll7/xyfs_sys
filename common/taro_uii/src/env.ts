@@ -3,15 +3,15 @@ import "@xyfs/utils/init";
 import Package from "../package.json";
 import { Environment, EnvVersion } from "../types/type_index";
 
-export const base_url: string = "http://192.169.1.59:8080";
+export const base_url: string = "";
 
-const ___envSimulate = "develop";
+const ___envSimulate = "release";
 
 // cSpell: disable;
 const OPENID_DEV___ =
   // @ts-ignore
   // "oGwbL5M6S3RGvuqPK5HbIQx7V37k" ||  // 曹小强❤️
-  // "oGwbL5J-wihmVkT8ma6CblWyKBVE" ||  //
+  // "oGwbL5G2_jpjBICYtJZSMIAYOb2U" ||  //
   ////////////////////////////////////////////////
   // "oGwbL5D1WtsGTuLhWneaepYuHW3k" ||  // 何旭东
   // "oGwbL5OLhRpOKRWrkVNSMqXuGPaE" ||  // 我妈
@@ -22,7 +22,7 @@ const OPENID_DEV___ =
   // "oGwbL5CEoFe5T1fqyAQUu0ohSLSM" ||  // 王红霞
   // "oGwbL5CmzeeKG-X9tmDg90rE1bdo" ||  // 嘉丰智慧社区服务站48 李建梅
   // "oGwbL5EtVeoi3OOYhzu2x-0eH2ho" ||  // 司机 苏新宇
-  "oGwbL5MStl5pETsgOH-AF_7DyFAs" ||  // 工厂揽收员 郝晶晶
+  // "oGwbL5MStl5pETsgOH-AF_7DyFAs" ||  // 工厂揽收员 郝晶晶
 
   /////////////////////////////////////////////////
   // "oGwbL5MUeSNxxA4o0oOmb_FUjE7g" ||  // 王肇ATD
