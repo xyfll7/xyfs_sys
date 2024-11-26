@@ -46,10 +46,9 @@ export async function Api_cart_delete_ctn(params: { id: string; }): Promise<any>
   });
   return res;
 }
-export async function Api_cart_clear_ctn(params: { cartId: number; }): Promise<any> {
+export async function Api_cart_clear_ctn(): Promise<any> {
   const res = await wx_call_container<any>({
     path: "/cart/clear",
-    params: { ...params }
   });
   return res;
 }

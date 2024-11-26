@@ -1,7 +1,7 @@
 // :: pages_comm/comm__product_dryclean
 import { Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
-import { Api_cart_delete_ctn, Api_cart_list_ctn, Api_cart_preOrder_ctn } from '@xyfs/taro_uii/api/api__shop';
+import { Api_cart_clear_ctn, Api_cart_delete_ctn, Api_cart_list_ctn, Api_cart_preOrder_ctn } from '@xyfs/taro_uii/api/api__shop';
 import CPDryclean from '@xyfs/taro_uii/compages/CPDryclean';
 import { ComButton } from '@xyfs/taro_uii/components/ComButton';
 import { ComInput } from '@xyfs/taro_uii/components/ComInput';
@@ -30,7 +30,7 @@ const Index: FC<{}> = ({ }) => {
 
   const { options } = Taro_getCurrentInstance<{ order_info: string; }>();
   const _order: OrderInfo<Product_Dryclean> | undefined = options.order_info && JSON.parse(decodeURIComponent(decodeURIComponent(options.order_info)));
-
+  console.log("ooooodddder", _order);
   const [cartItem, setCartItem] = useState<Product_Dryclean | null>(null);
   const [user, setUser] = useState({
     name: _order?.userAddress?.name ?? "",
@@ -39,10 +39,15 @@ const Index: FC<{}> = ({ }) => {
   const [cart, setCart] = useState<Product_Dryclean[]>([]);
   useEffect(() => {
     (async () => {
-      const res = await Api_cart_list_ctn();
-      setCart(res);
+      if (options.order_info) {
+        await Api_cart_clear_ctn();
+        setCart([]);
+      } else {
+        const res = await Api_cart_list_ctn();
+        setCart(res);
+      }
     })();
-  }, []);
+  }, [options.order_info]);
 
 
   const __isShare = Boolean(cart.length) && /^(1)\d{10}$/.test(user.mobile);
