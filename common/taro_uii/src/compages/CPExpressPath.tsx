@@ -38,7 +38,7 @@ const CPExpressPath: FC = () => {
       </ComNavBarA>
     </ComNav>
     <ComScrollView>
-      {order && order.orderType === Product_category_ST.快递 && <View className='bccwhite mb10 IOO'>
+      {order && order.orderType === Product_category_ST.快递 && <View className='bccwhite mb10 ww IOO'>
         <ComCardOrderExpress className='mb10' order={order!} isHidePath />
       </View>
       }

@@ -10,6 +10,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages_comm/comm__express_path",
+          "pathName": "pages_comm/comm__express_path",
+          "query": "express_share_id=1812398384985251840",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages_user/sub_user_edit",
           "pathName": "pages_user/sub_user_edit",
           "query": "userId=oGwbL5PVdCTyoE2sYHAq2bdNA9BY",

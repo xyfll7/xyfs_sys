@@ -32,7 +32,7 @@ const Index: FC<{}> = ({ }) => {
           </View>
         </View>)
       }
-    </ComScrollView>;
+    </ComScrollView>
   </MMMAAPage>;
 };
 
