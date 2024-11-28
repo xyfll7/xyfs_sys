@@ -95,6 +95,17 @@ export async function Api_logistic_refund_ctn(params: { orderId: string, orderPr
   });
   return res;
 }
+export async function Api_logistic_createWaybill_ctn(params: {
+  deliveryId: string,
+  orderId: string,
+  orderProductIds: string[],
+}) {
+  const res = await wx_call_container<any>({
+    path: "/logistic/createWaybill",
+    data: { ...params }
+  });
+  return res;
+}
 export async function Api_logistic_list_ctn<T>(params: Pick<Pagination<unknown>, "keyword" | "pageNum" | "pageSize"> &
 {
   status?: 0 | 1;

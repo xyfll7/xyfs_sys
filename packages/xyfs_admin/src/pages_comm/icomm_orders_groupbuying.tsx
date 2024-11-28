@@ -2,6 +2,7 @@
 import { View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { OrderInfo, Pagination, Product_Dryclean } from "@xyfs/taro_uii";
+import { Api_logistic_createWaybill_ctn } from "@xyfs/taro_uii/api/api__logistics";
 import { Api_order_cancel_ctn, Api_order_list_ctn, Api_order_remove_ctn } from '@xyfs/taro_uii/api/api__orders';
 import { ComButton } from "@xyfs/taro_uii/components/ComButton";
 import { ComCardOrderBringGoods } from '@xyfs/taro_uii/components/ComCardOrder';
@@ -80,7 +81,14 @@ const Index: FC<{}> = ({ }) => {
                 }
               }}>退款</ComButton>
               }
-              {_order1.orderStatus === 2 && <ComButton rr className='cccgreen ml10 bborder mb10 nw' onClick={async () => {
+              {true && <ComButton className='mb10 ml10 bborder' onClick={async () => {
+                const res = await Api_logistic_createWaybill_ctn({
+                  deliveryId: selfInfo_S.logistics?.[0]?.deliveryId!,
+                  orderId: _order1.id!,
+                  orderProductIds: _order1.productList?.map(e => e.id!)!,
+                });
+              }}>获取面单</ComButton>}
+              {_order1.orderStatus === 2 && roo___has_role(selfInfo_S, ['MERCHANT']) && <ComButton rr className='cccgreen ml10 bborder mb10 nw' onClick={async () => {
                 await on_start_print((blue_device) => {
                   return _order1.productList!.map((eee, index) => on_get_cpcl_str_order_bing_goods({ ..._order1, productList: [eee], __index: index, }, blue_device));
                 }, { orderId: _order1.id, selfInfo_S });

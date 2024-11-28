@@ -26,9 +26,9 @@
     "tabIndent": "insertSpaces",
     "tabSize": 2
   },
-  "appid": "wxc6ff511796ec714a",
   "packOptions": {
     "ignore": [],
     "include": []
-  }
+  },
+  "appid": "wxc6ff511796ec714a"
 }
