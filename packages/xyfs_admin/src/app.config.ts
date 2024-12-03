@@ -19,6 +19,7 @@ export default defineAppConfig({
         "icomm_orders_groupbuying",
         "icomm_printer",
         "icomm_scaner",
+        "comm__realName",
       ],
     },
     {
