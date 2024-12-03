@@ -153,6 +153,7 @@ const IIIUserHasNoRole: FC<{ className: string; }> = ({ className }) => {
           {selfInfo_S.registStatus === 1 &&
             <View>您的注册申请已经提交，请耐心等待管理员审核，有任何问题请联系管理员 </View>
           }
+
         </View>
       </ComButton>
       <ComButton className='mb10 cccplh' onClick={() => { Taro.makePhoneCall({ phoneNumber: "16609119888" }); }}>
