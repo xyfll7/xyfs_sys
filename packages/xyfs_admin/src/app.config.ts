@@ -48,6 +48,7 @@ export default defineAppConfig({
     {
       root: "pages_user",
       pages: [
+        "sub_user_dept",
         "sub_user_edit",
         "sub_user_list",
         "sub_user_register",

@@ -183,7 +183,7 @@
       }
     },
     {
-      "label": "env:sl:---",
+      "label": "env:sl57:---",
       "type": "shell",
       "osx": {
         "command": "gsed -i '/const ___envSimulate/s/.*/const ___envSimulate = \"develop\";/' ./common/taro_uii/src/env.ts && gsed -i '/export const base_url/s/.*/export const base_url: string = \"http:\\/\\/192.169.1.57:8080\";/' ./common/taro_uii/src/env.ts",

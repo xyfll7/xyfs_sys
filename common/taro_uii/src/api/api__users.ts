@@ -229,3 +229,65 @@ export async function Api_user_realNameAuth_ctn(params: {
   });
   return res;
 }
+export async function Api_dept_add_ctn(params: {
+  ancestors: string,
+  createBy: string,
+  createTime: string,
+  delFlag: string,
+  deptId: string,
+  deptName: string,
+  email: string,
+  leader: string,
+  orderNum: string,
+  parentId: string,
+  phone: string,
+  status: string,
+  updateBy: string,
+  updateTime: string,
+  userId: string;
+}) {
+  const res = await wx_call_container<Printer_Info>({
+    path: "/dept/add",
+    data: { ...params },
+  });
+  return res;
+}
+export async function Api_dept_del_ctn(params: {
+  deptId: string,
+}) {
+  const res = await wx_call_container<Printer_Info>({
+    path: "/dept/del",
+    data: { ...params },
+  });
+  return res;
+}
+export async function Api_dept_list_ctn(params: {}) {
+  const res = await wx_call_container<Printer_Info>({
+    path: "/dept/list",
+    data: { ...params },
+  });
+  return res;
+}
+export async function Api_dept_update_ctn(params: {
+  ancestors: string,
+  createBy: string,
+  createTime: string,
+  delFlag: string,
+  deptId: string,
+  deptName: string,
+  email: string,
+  leader: string,
+  orderNum: string,
+  parentId: string,
+  phone: string,
+  status: string,
+  updateBy: string,
+  updateTime: string,
+  userId: string;
+}) {
+  const res = await wx_call_container<Printer_Info>({
+    path: "/dept/update",
+    data: { ...params },
+  });
+  return res;
+}

@@ -91,6 +91,9 @@ const IIImmmAGENT = ({ ...props }: ViewProps) => {
       <ComButton className='bccwhite mb10 mr10' url='/pages_user/sub_user_list'>
         子用户
       </ComButton>
+      <ComButton className='bccwhite mb10 mr10' url='/pages_user/sub_user_dept'>
+        部门管理
+      </ComButton>
       <ComButtonOpen className='bccwhite mb10 mr10' id='invite'
         shareTitle={`${selfInfo_S!.name ?? "代理"} 邀请您注册子用户`}
         openType='share'

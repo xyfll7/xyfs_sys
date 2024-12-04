@@ -152,7 +152,7 @@ const IIIOrderExpressOperation: FC<{
           }} >修改订单</ComButton>
         </View>
       )}
-      {order.userId === order?.regimentId && orderType === Order_ST.待付款 && (
+      {order.userId === order?.regimentId && (
         <View className='dbtc mb10 ww'>
           <ComButton ll className='cccplh'>下单人：团长自己</ComButton>
           <ComButton rr ll className='bccyellow'

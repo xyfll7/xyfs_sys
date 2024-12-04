@@ -82,6 +82,7 @@ interface Product_Dryclean extends ProductBase {
   createTime?: string;//  "2024-04-17 20:02:52";
   timestamp?: string;//  "2024-04-17 20:02:52";
   totalPrice?: number; //49;
+  waybillId?: string; //49;
   typeId?: null;
   userId?: string;// "oGwbL5MUeSNxxA4o0oOmb_FUjE7g";
   merchantAddress?: AddressInfo;

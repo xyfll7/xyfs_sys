@@ -10,6 +10,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages_user/sub_user_dept",
+          "pathName": "pages_user/sub_user_dept",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages/index/index",
           "pathName": "pages/index/index",
           "query": "",
