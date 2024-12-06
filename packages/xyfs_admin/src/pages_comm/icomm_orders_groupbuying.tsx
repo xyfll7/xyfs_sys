@@ -19,6 +19,7 @@ import { useSTSelf } from '@xyfs/taro_uii/store/store';
 import { on_get_cpcl_str_order_bing_goods, on_start_print } from "@xyfs/taro_uii/utils/bluetooth/useHooks_Blue";
 import { Taro_getCurrentInstance, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
 import { useHook_pageListNew, useHook_Reducer } from '@xyfs/taro_uii/utils/useHooks';
+import { utils_arr_includes } from "@xyfs/taro_uii/utils/util";
 import { FC, useCallback, useState } from "react";
 
 definePageConfig({ navigationStyle: "custom", enableShareAppMessage: true, disableScroll: true, });
@@ -52,50 +53,9 @@ const Index: FC<{}> = ({ }) => {
     <ComScrollView>
       {page.list?.map((order) => {
         if (order.orderType === Product_category_ST.团购) {
-          const _order1 = order as OrderInfo<Product_Dryclean>;
-          return <View className='dll ww mb10 bccwhite ioo' key={order.id}>
-            <ComCardOrderBringGoods className='ww mb10' key={_order1.id} order={_order1} />
-            <View className='dr prl10 ww dwp'>
-              {_order1.orderStatus === 1 &&
-                <ComButton rr className='cccplh mb10 bborder nw' onClick={async () => {
-                  const res_modal = await try_Taro_showModal({ title: "提示", content: "您确定要删除该订单吗?", confirmText: "删除" });
-                  if (res_modal) {
-                    Taro.showLoading({ mask: true, title: "删除中..." });
-                    await Api_order_remove_ctn({ orderId: order.id!, });
-                    page_list_update(p => ({ ...p, list: p.list.filter(ee => ee.id !== order.id) }));
-                    Taro.showToast({ icon: "none", title: "删除成功" });
-                  } else {
-                    throw new Error("取消");
-                  }
-                }}>删除</ComButton>
-              }
-              {_order1.orderStatus === 2 && <ComButton rr className='cccplh bborder mb10 nw' onClick={async () => {
-                if (await try_Taro_showModal({ content: "您确定要退款?", confirmText: "确认退款", })) {
-                  Taro.showLoading({ mask: true, title: "退款中...", });
-                  await Api_order_cancel_ctn({ orderId: order.id!, });
-                  page_list_update(p => ({ ...p, list: p.list.filter(ee => ee.id !== order.id) }));
-                  Taro.hideLoading();
-                  try_Taro_showModal({ title: "退款操作成功", content: `订单移入"已退款"`, showCancel: false, });
-                } else {
-                  throw new Error("取消");
-                }
-              }}>退款</ComButton>
-              }
-              {true && <ComButton className='mb10 ml10 bborder' onClick={async () => {
-                const res = await Api_logistic_createWaybill_ctn({
-                  deliveryId: selfInfo_S.logistics?.[0]?.deliveryId!,
-                  orderId: _order1.id!,
-                  orderProductIds: _order1.productList?.map(e => e.id!)!,
-                });
-              }}>获取面单</ComButton>}
-              {_order1.orderStatus === 2 && roo___has_role(selfInfo_S, ['MERCHANT']) && <ComButton rr className='cccgreen ml10 bborder mb10 nw' onClick={async () => {
-                await on_start_print((blue_device) => {
-                  return _order1.productList!.map((eee, index) => on_get_cpcl_str_order_bing_goods({ ..._order1, productList: [eee], __index: index, }, blue_device));
-                }, { orderId: _order1.id, selfInfo_S });
-              }}>打印{_order1.printTimes ?? 0}次</ComButton>
-              }
-            </View>
-          </View>;
+          return <IIIOrderCard order={order} key={order.id}
+            onDeleteOrderItem={(eee) => { page_list_update(p => ({ ...p, list: p.list.filter(ee => ee.id !== eee.id) })); }}
+            onUpdateOrderItem={(eee) => { page_list_update(p => ({ ...p, list: p.list.map(ee => ee.id == eee.id ? eee : ee) })); }} />;
         } else {
           return null;
         }
@@ -107,7 +67,64 @@ const Index: FC<{}> = ({ }) => {
 
 
 
+const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: OrderInfo<Product_Dryclean>; onUpdateOrderItem: (e: OrderInfo<Product_Dryclean>) => void, onDeleteOrderItem: (e: OrderInfo<Product_Dryclean>) => void; }) => {
+  const selfInfo_S = useSTSelf(s => s.selfInfo!);
+  const [products, setProducts] = useState(order.productList?.filter(e => !e.waybillId) ?? []);
+  console.log(products);
+  return <View className='dll ww mb10 bccwhite ioo' key={order.id}>
+    <ComCardOrderBringGoods className='ww mb10' isShowSelector={roo___has_role(selfInfo_S, ['MERCHANT'])} key={order.id} products={products} order={order} onSelectOrder={(e) => {
 
+      if (utils_arr_includes([e.id!], products.map(ee => ee.id!))) {
+        setProducts(products.filter(ee => ee.id !== e.id));
+      } else {
+        setProducts([...products, e]);
+      }
+    }} />
+    <View className='dr prl10 ww dwp'>
+      {order.orderStatus === 1 &&
+        <ComButton rr className='cccplh mb10 bborder nw' onClick={async () => {
+          const res_modal = await try_Taro_showModal({ title: "提示", content: "您确定要删除该订单吗?", confirmText: "删除" });
+          if (res_modal) {
+            Taro.showLoading({ mask: true, title: "删除中..." });
+            await Api_order_remove_ctn({ orderId: order.id!, });
+            onDeleteOrderItem(order);
+            Taro.showToast({ icon: "none", title: "删除成功" });
+          } else {
+            throw new Error("取消");
+          }
+        }}>删除</ComButton>
+      }
+      {order.orderStatus === 2 && <ComButton rr className='cccplh bborder mb10 nw' onClick={async () => {
+        if (await try_Taro_showModal({ content: "您确定要退款?", confirmText: "确认退款", })) {
+          Taro.showLoading({ mask: true, title: "退款中...", });
+          await Api_order_cancel_ctn({ orderId: order.id!, });
+          onDeleteOrderItem(order);
+          Taro.hideLoading();
+          try_Taro_showModal({ title: "退款操作成功", content: `订单移入"已退款"`, showCancel: false, });
+        } else {
+          throw new Error("取消");
+        }
+      }}>退款</ComButton>
+      }
+      {true && <ComButton className='mb10 ml10 bborder' onClick={async () => {
+        if (!products.length) { Taro.showToast({ icon: "none", title: "至少选择一件商品" }); return; }
+        const res = await Api_logistic_createWaybill_ctn({
+          deliveryId: selfInfo_S.logistics?.[0]?.deliveryId!,
+          orderId: order.id!,
+          orderProductIds: products.map(e => e.id!),
+        });
+        onUpdateOrderItem(res);
+        Taro.showToast({ icon: "none", title: "成功" });
+      }}>获取面单</ComButton>}
+      {order.orderStatus === 2 && roo___has_role(selfInfo_S, ['MERCHANT']) && <ComButton rr className='cccgreen ml10 bborder mb10 nw' onClick={async () => {
+        await on_start_print((blue_device) => {
+          return order.productList!.map((eee, index) => on_get_cpcl_str_order_bing_goods({ ...order, productList: [eee], __index: index, }, blue_device));
+        }, { orderId: order.id, selfInfo_S });
+      }}>打印{order.printTimes ?? 0}次</ComButton>
+      }
+    </View>
+  </View>;
+}
 
 
 

@@ -21,7 +21,7 @@ const Index: FC<{}> = ({ }) => {
     <ComNav>
       <View className='ww'>
         <ComNavBarA className='mb10 pl10'>
-          <ComButton ll className='bcctrans cccplh ml10' >修改配置1</ComButton>
+          <ComButton ll className='bcctrans cccplh ml10' >修改配置</ComButton>
         </ComNavBarA>
       </View>
     </ComNav>

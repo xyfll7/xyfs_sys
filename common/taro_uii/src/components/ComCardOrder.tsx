@@ -6,6 +6,7 @@ import React, { FC } from "react";
 import { OrderInfo, Product_Dryclean, Product_Express } from "../../types/type_product";
 import { Order_ST, PickUp_ST, Product_category_ST } from "../config";
 import { try_Taro_navigateTo, try_Taro_setClipboardData } from "../utils/try_catch";
+import { utils_arr_includes } from "../utils/util";
 import { ComAddressSwitchor } from "./ComAddressSwitchor";
 import { ComButton } from "./ComButton";
 import { ComImage } from "./ComImage";
@@ -179,7 +180,10 @@ export const ComCardOrderDryclean: FC<{
 export const ComCardOrderBringGoods: FC<{
   className?: string;
   order: OrderInfo<Product_Dryclean>;
-}> = ({ order, className = "", }) => {
+  products?: Product_Dryclean[];
+  isShowSelector?: boolean;
+  onSelectOrder?: (e: Product_Dryclean) => void;
+}> = ({ order, className = "", products, onSelectOrder, isShowSelector = false }) => {
   return <View className={`bccwhite prl10 ioo pt10 ww ${className}`}>
     <View className='dbtc ww mb10'>
       <MMMOrderUser order={order} />
@@ -190,23 +194,31 @@ export const ComCardOrderBringGoods: FC<{
 
     <View className='ww'>
       {order?.productList?.map((e, i) => {
-        return <View className='dtl ww ' key={i}>
+        return <View className='dtl ww bccback mb10 ioo pr' key={i}>
+          {!e.waybillId && isShowSelector &&
+            <View className='pa z1 ' style={{ top: '0rem', left: '0rem' }} onClick={() => { onSelectOrder?.(e); }} >
+              <View className={`${utils_arr_includes([e.id!], (products?.map(ee => ee.id!) ?? []),) ? 'bccred' : 'bccback '} dxy cccwhite o6`} style={{ minWidth: "calc(1.2 * var(--rem_base))", minHeight: "calc(1.2 * var(--rem_base))" }}>
+                <View className='fs07'>{i + 1}</View>
+              </View>
+            </View>
+          }
           <ComImage className='mr10' src={e.pictureUrl!} style={{ width: "4rem" }} />
           <View className='ww'>
             <View className='dbtc ww'>
-              <ComButton ll className='mr10'>
+              <ComButton ll className='bccback'>
                 <View className='nw1'>{e?.name}</View>
               </ComButton>
-              <ComButton rr className=''>
+              <ComButton rr className='bccback'>
                 <ComPrice price={Number(e?.totalPrice)} />
               </ComButton>
             </View>
-            <View className='cccplh nw1' onClick={() => try_Taro_setClipboardData({ data: e?.waybillId ? e?.waybillId : '' })}>运单号:{e?.waybillId}</View>
+            {e?.waybillId && <View className='cccplh nw1' onClick={() => try_Taro_setClipboardData({ data: e.waybillId! })}>运单号:{e?.waybillId}</View>}
+
           </View>
         </View>;
       })}
       <View className='dr'>
-        <ComButton rr className=''>
+        <ComButton rr className='bborder'>
           <Text className='mr2'>订单总价</Text> <ComPrice price={Number(order?.totalPrice) / 100} />
         </ComButton>
       </View>

@@ -167,7 +167,7 @@ export const utils_show_button = <T,>(boo: boolean, cb: T): T | undefined => boo
 // 判断字符串中是否包含数组中指定的项目
 export const utils_str_includes = (arr: string[], name?: string,): boolean => arr.reduce((boo, e) => { name?.includes(e) && (boo = true); return boo; }, false);
 // 判断数组中是否包含数组中指定的项目
-export const utils_arr_includes = (arr: string[], arr0: string[]): boolean => arr.some(e => arr0.some(ee => ee === e));
+export const utils_arr_includes = (arra: string[], arrb: string[]): boolean => arra.some(e => arrb.some(ee => ee === e));
 
 // 判断一个对象是否为空
 export function utils_isEmpty(obj: object) {
