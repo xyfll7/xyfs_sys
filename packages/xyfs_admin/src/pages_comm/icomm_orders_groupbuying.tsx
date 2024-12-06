@@ -70,10 +70,10 @@ const Index: FC<{}> = ({ }) => {
 const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: OrderInfo<Product_Dryclean>; onUpdateOrderItem: (e: OrderInfo<Product_Dryclean>) => void, onDeleteOrderItem: (e: OrderInfo<Product_Dryclean>) => void; }) => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const [products, setProducts] = useState(order.productList?.filter(e => !e.waybillId) ?? []);
-  console.log(products);
+
+
   return <View className='dll ww mb10 bccwhite ioo' key={order.id}>
     <ComCardOrderBringGoods className='ww mb10' isShowSelector={roo___has_role(selfInfo_S, ['MERCHANT'])} key={order.id} products={products} order={order} onSelectOrder={(e) => {
-
       if (utils_arr_includes([e.id!], products.map(ee => ee.id!))) {
         setProducts(products.filter(ee => ee.id !== e.id));
       } else {
@@ -106,17 +106,19 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
         }
       }}>退款</ComButton>
       }
-      {true && <ComButton className='mb10 ml10 bborder' onClick={async () => {
+      {Boolean(order.productList?.filter(e => !e.waybillId)?.length) && <ComButton className='mb10 ml10 bborder' onClick={async () => {
         if (!products.length) { Taro.showToast({ icon: "none", title: "至少选择一件商品" }); return; }
+        Taro.showLoading({ mask: true, title: "获取中..." });
         const res = await Api_logistic_createWaybill_ctn({
           deliveryId: selfInfo_S.logistics?.[0]?.deliveryId!,
           orderId: order.id!,
           orderProductIds: products.map(e => e.id!),
         });
+        setProducts(res.productList?.filter(e => !e.waybillId) ?? []);
         onUpdateOrderItem(res);
         Taro.showToast({ icon: "none", title: "成功" });
       }}>获取面单</ComButton>}
-      {order.orderStatus === 2 && roo___has_role(selfInfo_S, ['MERCHANT']) && <ComButton rr className='cccgreen ml10 bborder mb10 nw' onClick={async () => {
+      {!Boolean(order.productList?.filter(e => !e.waybillId)?.length) && order.orderStatus === 2 && roo___has_role(selfInfo_S, ['MERCHANT']) && <ComButton rr className='cccgreen ml10 bborder mb10 nw' onClick={async () => {
         await on_start_print((blue_device) => {
           return order.productList!.map((eee, index) => on_get_cpcl_str_order_bing_goods({ ...order, productList: [eee], __index: index, }, blue_device));
         }, { orderId: order.id, selfInfo_S });

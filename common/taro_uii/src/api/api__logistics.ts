@@ -1,5 +1,5 @@
 
-import { OrderInfo, Pagination, Product_Express } from "../../types";
+import { OrderInfo, Pagination, Product_Dryclean, Product_Express } from "../../types";
 import { wx_call_container } from "./wx_call";
 
 export async function Api_logistic_check_ctn(params: OrderInfo<Product_Express>): Promise<void> {
@@ -100,7 +100,7 @@ export async function Api_logistic_createWaybill_ctn(params: {
   orderId: string,
   orderProductIds: string[],
 }) {
-  const res = await wx_call_container<any>({
+  const res = await wx_call_container<OrderInfo<Product_Dryclean>>({
     path: "/logistic/createWaybill",
     data: { ...params }
   });
