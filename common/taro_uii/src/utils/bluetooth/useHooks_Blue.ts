@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { PreBarCodeDryclean } from "../../../types/type_index";
 import { OrderInfo, Product_Dryclean, Product_Express } from "../../../types/type_product";
 import { BaseUserInfo } from "../../../types/type_user";
-import { Api_order_incrPrintTimes_ctn, Api_order_print_ctn } from "../../api/api__orders";
+import { Api_order_print_ctn } from "../../api/api__orders";
 import { getMyEnv } from "../../env";
 import { useSTBlueDevices, useSTSelf } from "../../store/store";
 import { try_Taro_navigateTo, try_Taro_showActionSheet, try_Taro_showModal } from "../try_catch";
@@ -132,14 +132,8 @@ export async function on_start_print(___cb: (blue_device: Taro.onBluetoothDevice
     Taro.showLoading({ mask: true, title: "打印中...", });
     const reporter = await ___startBluePrinterPrint(_blue_device, ___cb(_blue_device));
 
-
-    if (reporter?.errMsg.includes("ok") && options?.orderId) {
-      Taro.showLoading({ mask: true, title: "更新订单..." });
-      await Api_order_incrPrintTimes_ctn({ orderId: options?.orderId, }); // 增加打印次数
+    if (reporter?.errMsg.includes("ok")) {
       Taro.showToast({ icon: "none", title: "打印完成", });
-      return;
-    } else if (reporter?.errMsg.includes("ok")) {
-      Taro.showToast({ icon: "none", title: "测试打印提交成功", });
       return;
     } else {
       throw new Error("打印错误");

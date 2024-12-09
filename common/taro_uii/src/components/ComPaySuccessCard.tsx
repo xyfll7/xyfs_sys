@@ -2,7 +2,7 @@ import { Text, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { coo___objToUrl } from "@xyfs/utils/util";
 import { Api_logistic_waybill_ctn } from "../api/api__logistics";
-import { Api_order_pay_ctn } from "../api/api__orders";
+import { Api_order_incrPrintTimes_ctn, Api_order_pay_ctn } from "../api/api__orders";
 import { Order_ST } from "../config";
 import { useSTExpress, useSTSelf } from "../store/store";
 import { on_get_cpcl_str_order_express, on_start_print } from "../utils/bluetooth/useHooks_Blue";
@@ -98,14 +98,20 @@ export function ComPaySuccessCard() {
                       const _order = useSTExpress.getState().express!;
                       await on_start_print((blue_device) => {
                         return _order.productList!.map(eee => on_get_cpcl_str_order_express({ ..._order, productList: [eee], }, blue_device));
-                      }, { orderId: _order.id, selfInfo_S });
+                      }, { selfInfo_S });
+                      Taro.showLoading({ mask: true, title: "更新打印次数..." });
+                      await Api_order_incrPrintTimes_ctn({ orderId: _order.id!, }); // 增加打印次数
+                      Taro.showToast({ icon: "none", title: "打印完成", });
                       useSTExpress.getState().sett({ printTimes: (express_S.printTimes ?? 0) + 1 });
                     }}>获取单号→打印</ComButton> :
                   <ComButton className='bccyellow ' onClick={async () => {
                     const _order = express_S;
                     await on_start_print((blue_device) => {
                       return _order.productList!.map(eee => on_get_cpcl_str_order_express({ ..._order, productList: [eee], }, blue_device));
-                    }, { orderId: _order.id, selfInfo_S });
+                    }, { selfInfo_S });
+                    Taro.showLoading({ mask: true, title: "更新打印次数..." });
+                    await Api_order_incrPrintTimes_ctn({ orderId: _order.id!, }); // 增加打印次数
+                    Taro.showToast({ icon: "none", title: "打印完成", });
                     useSTExpress.getState().sett({ printTimes: (express_S.printTimes ?? 0) + 1 });
                   }}>打印 {express_S?.printTimes ?? 0} 次
                   </ComButton>

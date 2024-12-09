@@ -3,7 +3,7 @@ import { Picker, Text, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { OrderInfo, Pagination, Product_Express } from "@xyfs/taro_uii";
 import { Api_logistic_waybill_ctn } from '@xyfs/taro_uii/api/api__logistics';
-import { Api_order_cancel_ctn, Api_order_list_ctn, Api_order_pay_ctn, Api_order_remove_ctn } from '@xyfs/taro_uii/api/api__orders';
+import { Api_order_cancel_ctn, Api_order_incrPrintTimes_ctn, Api_order_list_ctn, Api_order_pay_ctn, Api_order_remove_ctn } from '@xyfs/taro_uii/api/api__orders';
 import { ComButton } from '@xyfs/taro_uii/components/ComButton';
 import { ComCardOrderExpress } from '@xyfs/taro_uii/components/ComCardOrder';
 import { ComListTypeSelectorNew } from "@xyfs/taro_uii/components/ComListTypeSelectorNew";
@@ -106,6 +106,9 @@ const Index: FC<{}> = ({ }) => {
                 ...p,
                 list: p.list!.map(item => item.id === ee.id ? { ...ee, printTimes: coo___isNumber(ee.printTimes) ? ee.printTimes! + 1 : 1 } : item)
               }));
+              Taro.showLoading({ mask: true, title: "更新打印次数..." });
+              await Api_order_incrPrintTimes_ctn({ orderId: _order.id!, }); // 增加打印次数
+              Taro.showToast({ icon: "none", title: "打印完成", });
             }}
 
             onDeleteOrder={() => { page_list_update(p => ({ ...p, list: p.list!.filter(item => item.id !== ee1.id) })); }} />

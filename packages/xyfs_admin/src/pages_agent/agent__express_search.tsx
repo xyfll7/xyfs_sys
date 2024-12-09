@@ -1,7 +1,8 @@
 // :: pages_agent/agent__express_search
 import { View } from "@tarojs/components";
+import Taro from "@tarojs/taro";
 
-import { Api_order_list_ctn } from '@xyfs/taro_uii/api/api__orders';
+import { Api_order_incrPrintTimes_ctn, Api_order_list_ctn } from '@xyfs/taro_uii/api/api__orders';
 import { ComButton } from '@xyfs/taro_uii/components/ComButton';
 import { ComCardOrderExpress } from '@xyfs/taro_uii/components/ComCardOrder';
 import { ComLoading } from '@xyfs/taro_uii/components/ComLoading';
@@ -61,8 +62,11 @@ const Index: FC = () => {
                       const _order = ee;
                       await on_start_print((blue_device) => {
                         return _order.productList!.map(eee => on_get_cpcl_str_order_express({ ..._order, productList: [eee], }, blue_device));
-                      }, { orderId: _order.id, selfInfo_S: useSTSelf.getState().selfInfo });
+                      }, { selfInfo_S: useSTSelf.getState().selfInfo });
                       page_list_update((p) => ({ ...p, list: p.list!.map(item => item.id === ee.id ? { ...ee, printTimes: coo___isNumber(ee.printTimes) ? ee.printTimes! + 1 : 1 } : item) }));
+                      Taro.showLoading({ mask: true, title: "更新打印次数..." });
+                      await Api_order_incrPrintTimes_ctn({ orderId: _order.id!, }); // 增加打印次数
+                      Taro.showToast({ icon: "none", title: "打印完成", });
                     }}>
                     打印{ee.printTimes ? ee.printTimes : "0"}次
                   </ComButton>

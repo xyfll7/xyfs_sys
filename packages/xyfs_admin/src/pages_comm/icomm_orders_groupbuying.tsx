@@ -3,7 +3,7 @@ import { View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { OrderInfo, Pagination, Product_Dryclean } from "@xyfs/taro_uii";
 import { Api_logistic_createWaybill_ctn } from "@xyfs/taro_uii/api/api__logistics";
-import { Api_order_cancel_ctn, Api_order_list_ctn, Api_order_remove_ctn } from '@xyfs/taro_uii/api/api__orders';
+import { Api_order_cancel_ctn, Api_order_incrPrintTimes_ctn, Api_order_list_ctn, Api_order_remove_ctn } from '@xyfs/taro_uii/api/api__orders';
 import { ComButton } from "@xyfs/taro_uii/components/ComButton";
 import { ComCardOrderBringGoods } from '@xyfs/taro_uii/components/ComCardOrder';
 import { ComListTypeSelectorNew } from "@xyfs/taro_uii/components/ComListTypeSelectorNew";
@@ -139,7 +139,10 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
         if (!products.length) { Taro.showToast({ icon: "none", title: "至少选择一件商品" }); return; }
         await on_start_print((blue_device) => {
           return products!.map((eee, index) => on_get_cpcl_str_order_bing_goods({ ...order, productList: [eee], __index: index, }, blue_device));
-        }, { orderId: order.id, selfInfo_S });
+        }, { selfInfo_S });
+        Taro.showLoading({ mask: true, title: "更新打印次数..." });
+        await Api_order_incrPrintTimes_ctn({ orderId: order.id!, }); // 增加打印次数
+        Taro.showToast({ icon: "none", title: "打印完成", });
       }}>
         <View className='cccprice'>{products?.map(e => order.productList?.findIndex(ee => ee.waybillId === e.waybillId)! + 1).join(",")}</View>
         <View className='cccgreen'>打印</View>
