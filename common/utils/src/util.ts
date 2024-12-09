@@ -157,3 +157,16 @@ export function coo___obj_to_enum<T extends Record<any, any>>(obj: T) {
 export function coo___privacy_phone(mobile?: string) {
   return mobile ? `${mobile?.slice(0, 3)}****${mobile?.slice(-4)}` : "***空号***";
 }
+
+
+export function coo___unique_arr<T extends Record<string, any>>(arr: T[], key: string) {
+  const uniqueArr = arr.reduce((prev: T[], cur) => {
+    if (!prev.some(item => item[key] === cur[key])) {
+      prev.push(cur);
+    }
+    return prev;
+  }, []);
+  return uniqueArr;
+}
+
+

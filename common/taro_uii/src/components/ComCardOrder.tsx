@@ -196,10 +196,17 @@ export const ComCardOrderBringGoods: FC<{
     <View className='ww'>
       {order?.productList?.map((e, i) => {
         return <View className='dtl ww bccback mb10 ioo pr' key={i}>
-          {model && isShowSelector && order.orderStatus == 2 &&
+          {model === "waybill" && isShowSelector && order.orderStatus == 2 &&
             <View className='pa z1 ' style={{ top: { "waybill": "0rem", "print": "auto" }[model], bottom: { "waybill": "auto", "print": "0rem" }[model], left: '0rem' }} onClick={() => { onSelectOrder?.(e); }} >
-              <View className={`${utils_arr_includes([e.id!], (products?.map(ee => ee.id!) ?? []),) ? 'bccred' : 'bccback '} dxy cccwhite o6`} style={{ minWidth: "calc(1.2 * var(--rem_base))", minHeight: "calc(1.2 * var(--rem_base))" }}>
+              <View className={`${utils_arr_includes([e.id!], (products?.map(ee => ee.id!)!),) ? 'bccred' : 'bccback '} dxy cccwhite o6`} style={{ minWidth: "calc(1.2 * var(--rem_base))", minHeight: "calc(1.2 * var(--rem_base))" }}>
                 <View className='fs07'>{i + 1}</View>
+              </View>
+            </View>
+          }
+          {model === "print" && isShowSelector && order.orderStatus == 2 &&
+            <View className='pa z1 ' style={{ top: { "waybill": "0rem", "print": "auto" }[model], bottom: { "waybill": "auto", "print": "0rem" }[model], left: '0rem' }} onClick={() => { onSelectOrder?.(e); }} >
+              <View className={`${utils_arr_includes([e.waybillId!], (products?.map(ee => ee.waybillId!)!),) ? 'bccred' : 'bccback '} dxy cccwhite o6`} style={{ minWidth: "calc(1.2 * var(--rem_base))", minHeight: "calc(1.2 * var(--rem_base))" }}>
+                <View className='fs07'>{order?.productList?.findIndex(ee => ee.waybillId === e.waybillId)! + 1}</View>
               </View>
             </View>
           }

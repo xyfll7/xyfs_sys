@@ -20,6 +20,7 @@ import { on_get_cpcl_str_order_bing_goods, on_start_print } from "@xyfs/taro_uii
 import { Taro_getCurrentInstance, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
 import { useHook_pageListNew, useHook_Reducer } from '@xyfs/taro_uii/utils/useHooks';
 import { utils_arr_includes } from "@xyfs/taro_uii/utils/util";
+import { coo___unique_arr } from "@xyfs/utils/util";
 import { FC, useCallback, useState } from "react";
 
 definePageConfig({ navigationStyle: "custom", enableShareAppMessage: true, disableScroll: true, });
@@ -76,16 +77,15 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
 
   const [products, setProducts] = useState({
     "waybill": () => order.productList?.filter(e => !e.waybillId)!,
-    "print": () => order.productList!
+    "print": () => coo___unique_arr(order.productList!, "waybillId")
   }[model]);
-
-
-
 
   return <View className='dll ww mb10 bccwhite ioo' key={order.id}>
     <ComCardOrderBringGoods className='ww mb10' model={model} isShowSelector={roo___has_role(selfInfo_S, ['MERCHANT'])} key={order.id} products={products} order={order} onSelectOrder={(e) => {
-      if (utils_arr_includes([e.id!], products.map(ee => ee.id!))) {
+      if (model === "waybill" && utils_arr_includes([e.id!], products.map(ee => ee.id!))) {
         setProducts(products.filter(ee => ee.id !== e.id));
+      } else if (model === "print" && utils_arr_includes([e.waybillId!], products.map(ee => ee.waybillId!))) {
+        setProducts(products.filter(ee => ee.waybillId !== e.waybillId));
       } else {
         setProducts([...products, e]);
       }
@@ -129,7 +129,6 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
           "waybill": () => { setProducts(res.productList?.filter(e => !e.waybillId)!); },
           "print": () => { setProducts(res.productList!); },
         })[model_new]();
-
         onUpdateOrderItem(res);
         Taro.showToast({ icon: "none", title: "成功" });
       }}>
