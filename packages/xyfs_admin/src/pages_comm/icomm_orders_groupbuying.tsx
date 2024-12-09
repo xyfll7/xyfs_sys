@@ -139,9 +139,9 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
         if (!products.length) { Taro.showToast({ icon: "none", title: "至少选择一件商品" }); return; }
         await on_start_print((blue_device) => {
           return products!.map((eee, index) => on_get_cpcl_str_order_bing_goods({ ...order, productList: [eee], __index: index, }, blue_device));
-        }, { selfInfo_S });
+        }, {orderId: order.id!, selfInfo_S });
         Taro.showLoading({ mask: true, title: "更新打印次数..." });
-        await Api_order_incrPrintTimes_ctn({ orderId: order.id!, }); // 增加打印次数
+        await Api_order_incrPrintTimes_ctn({ orderId: order.id!, orderProductIds: [] }); // 增加打印次数
         Taro.showToast({ icon: "none", title: "打印完成", });
       }}>
         <View className='cccprice'>{products?.map(e => order.productList?.findIndex(ee => ee.waybillId === e.waybillId)! + 1).join(",")}</View>

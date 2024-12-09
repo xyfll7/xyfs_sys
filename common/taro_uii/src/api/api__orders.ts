@@ -162,7 +162,7 @@ export async function Api_order_billVerify_ctn(params: { billExcelUrl: string; }
   });
   return res;
 }
-export async function Api_order_incrPrintTimes_ctn(params: { orderId: string; orderProductId?: string; }): Promise<string> {
+export async function Api_order_incrPrintTimes_ctn(params: { orderId: string; orderProductId?: string; orderProductIds?: string[]; }): Promise<string> {
   const res = await wx_call_container<string>({
     path: "/order/incrPrintTimes",
     data: { ...params }

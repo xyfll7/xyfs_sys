@@ -62,7 +62,7 @@ const Index: FC = () => {
                       const _order = ee;
                       await on_start_print((blue_device) => {
                         return _order.productList!.map(eee => on_get_cpcl_str_order_express({ ..._order, productList: [eee], }, blue_device));
-                      }, { selfInfo_S: useSTSelf.getState().selfInfo });
+                      }, { orderId: _order.id!, selfInfo_S: useSTSelf.getState().selfInfo });
                       page_list_update((p) => ({ ...p, list: p.list!.map(item => item.id === ee.id ? { ...ee, printTimes: coo___isNumber(ee.printTimes) ? ee.printTimes! + 1 : 1 } : item) }));
                       Taro.showLoading({ mask: true, title: "更新打印次数..." });
                       await Api_order_incrPrintTimes_ctn({ orderId: _order.id!, }); // 增加打印次数

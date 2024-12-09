@@ -98,7 +98,7 @@ export function ComPaySuccessCard() {
                       const _order = useSTExpress.getState().express!;
                       await on_start_print((blue_device) => {
                         return _order.productList!.map(eee => on_get_cpcl_str_order_express({ ..._order, productList: [eee], }, blue_device));
-                      }, { selfInfo_S });
+                      }, { orderId: _order.id!, selfInfo_S });
                       Taro.showLoading({ mask: true, title: "更新打印次数..." });
                       await Api_order_incrPrintTimes_ctn({ orderId: _order.id!, }); // 增加打印次数
                       Taro.showToast({ icon: "none", title: "打印完成", });
@@ -108,7 +108,7 @@ export function ComPaySuccessCard() {
                     const _order = express_S;
                     await on_start_print((blue_device) => {
                       return _order.productList!.map(eee => on_get_cpcl_str_order_express({ ..._order, productList: [eee], }, blue_device));
-                    }, { selfInfo_S });
+                    }, { orderId: _order.id!, selfInfo_S });
                     Taro.showLoading({ mask: true, title: "更新打印次数..." });
                     await Api_order_incrPrintTimes_ctn({ orderId: _order.id!, }); // 增加打印次数
                     Taro.showToast({ icon: "none", title: "打印完成", });
