@@ -87,7 +87,7 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
       } else if (model === "print" && utils_arr_includes([e.waybillId!], products.map(ee => ee.waybillId!))) {
         setProducts(products.filter(ee => ee.waybillId !== e.waybillId));
       } else {
-        setProducts([...products, e]);
+        setProducts([...products, e].sort((a, b) => Number(a.id) - Number(b.id)));
       }
     }} />
     <View className='dr prl10 ww dwp'>
@@ -141,7 +141,7 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
           return products!.map((eee, index) => on_get_cpcl_str_order_bing_goods({ ...order, productList: [eee], __index: index, }, blue_device));
         }, { orderId: order.id, selfInfo_S });
       }}>
-        <View className='cccprice'>{products?.map(e => order.productList?.findIndex(ee => ee.id === e.id)! + 1).join(",")}</View>
+        <View className='cccprice'>{products?.map(e => order.productList?.findIndex(ee => ee.waybillId === e.waybillId)! + 1).join(",")}</View>
         <View className='cccgreen'>打印</View>
       </ComButton>
       }
