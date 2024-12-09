@@ -39,6 +39,8 @@ const Index: FC<{}> = ({ }) => {
       roleId: roo___role_getRoleInfo(useSTSelf.getState().selfInfo!, "商家")?.id
     }), [orderType, searchValue]);
   const { page, page_loading, page_list_get, page_list_update, page_init } = useHook_pageListNew(___page_getter);
+  console.log(page);
+  console.log(page.list);
   return <MMMAAPage>
     <ComNav className='prl10'>
       <ComNavBarA className='mb10 '>
@@ -69,11 +71,19 @@ const Index: FC<{}> = ({ }) => {
 
 const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: OrderInfo<Product_Dryclean>; onUpdateOrderItem: (e: OrderInfo<Product_Dryclean>) => void, onDeleteOrderItem: (e: OrderInfo<Product_Dryclean>) => void; }) => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
-  const [products, setProducts] = useState(order.productList?.filter(e => !e.waybillId) ?? []);
+
+  const model = Boolean(order.productList?.filter(e => !e.waybillId)?.length) ? "waybill" : "print";
+
+  const [products, setProducts] = useState({
+    "waybill": () => order.productList?.filter(e => !e.waybillId)!,
+    "print": () => order.productList!
+  }[model]);
+
+
 
 
   return <View className='dll ww mb10 bccwhite ioo' key={order.id}>
-    <ComCardOrderBringGoods className='ww mb10' isShowSelector={roo___has_role(selfInfo_S, ['MERCHANT'])} key={order.id} products={products} order={order} onSelectOrder={(e) => {
+    <ComCardOrderBringGoods className='ww mb10' model={model} isShowSelector={roo___has_role(selfInfo_S, ['MERCHANT'])} key={order.id} products={products} order={order} onSelectOrder={(e) => {
       if (utils_arr_includes([e.id!], products.map(ee => ee.id!))) {
         setProducts(products.filter(ee => ee.id !== e.id));
       } else {
@@ -106,7 +116,7 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
         }
       }}>退款</ComButton>
       }
-      {Boolean(order.productList?.filter(e => !e.waybillId)?.length) && <ComButton className='mb10 ml10 bborder' onClick={async () => {
+      {model === "waybill" && <ComButton className='mb10 ml10 bborder' onClick={async () => {
         if (!products.length) { Taro.showToast({ icon: "none", title: "至少选择一件商品" }); return; }
         Taro.showLoading({ mask: true, title: "获取中..." });
         const res = await Api_logistic_createWaybill_ctn({
@@ -114,15 +124,27 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
           orderId: order.id!,
           orderProductIds: products.map(e => e.id!),
         });
-        setProducts(res.productList?.filter(e => !e.waybillId) ?? []);
+        const model_new = Boolean(res.productList?.filter(e => !e.waybillId)?.length) ? "waybill" : "print";
+        ({
+          "waybill": () => { setProducts(res.productList?.filter(e => !e.waybillId)!); },
+          "print": () => { setProducts(res.productList!); },
+        })[model_new]();
+
         onUpdateOrderItem(res);
         Taro.showToast({ icon: "none", title: "成功" });
-      }}>获取面单</ComButton>}
-      {!Boolean(order.productList?.filter(e => !e.waybillId)?.length) && order.orderStatus === 2 && roo___has_role(selfInfo_S, ['MERCHANT']) && <ComButton rr className='cccgreen ml10 bborder mb10 nw' onClick={async () => {
+      }}>
+        <View className='cccprice'>{products?.map(e => order.productList?.findIndex(ee => ee.id === e.id)! + 1).join(",")}</View>
+        <View className='cccgreen'>获取面单</View>
+      </ComButton>}
+      {model === "print" && order.orderStatus === 2 && roo___has_role(selfInfo_S, ['MERCHANT']) && <ComButton rr className='ml10 bborder mb10 nw' onClick={async () => {
+        if (!products.length) { Taro.showToast({ icon: "none", title: "至少选择一件商品" }); return; }
         await on_start_print((blue_device) => {
-          return order.productList!.map((eee, index) => on_get_cpcl_str_order_bing_goods({ ...order, productList: [eee], __index: index, }, blue_device));
+          return products!.map((eee, index) => on_get_cpcl_str_order_bing_goods({ ...order, productList: [eee], __index: index, }, blue_device));
         }, { orderId: order.id, selfInfo_S });
-      }}>打印{order.printTimes ?? 0}次</ComButton>
+      }}>
+        <View className='cccprice'>{products?.map(e => order.productList?.findIndex(ee => ee.id === e.id)! + 1).join(",")}</View>
+        <View className='cccgreen'>打印</View>
+      </ComButton>
       }
     </View>
   </View>;
