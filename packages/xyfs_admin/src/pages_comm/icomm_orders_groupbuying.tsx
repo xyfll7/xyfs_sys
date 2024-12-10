@@ -16,7 +16,6 @@ import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { Order_ST, Product_category_ST } from "@xyfs/taro_uii/src/config";
 import { roo___has_role, roo___role_getRoleInfo } from "@xyfs/taro_uii/src/roles";
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
-import { on_get_cpcl_str_order_bing_goods, on_start_print } from "@xyfs/taro_uii/utils/bluetooth/useHooks_Blue";
 import { Taro_getCurrentInstance, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
 import { useHook_pageListNew, useHook_Reducer } from '@xyfs/taro_uii/utils/useHooks';
 import { utils_arr_includes } from "@xyfs/taro_uii/utils/util";
@@ -40,8 +39,6 @@ const Index: FC<{}> = ({ }) => {
       roleId: roo___role_getRoleInfo(useSTSelf.getState().selfInfo!, "商家")?.id
     }), [orderType, searchValue]);
   const { page, page_loading, page_list_get, page_list_update, page_init } = useHook_pageListNew(___page_getter);
-  console.log(page);
-  console.log(page.list);
   return <MMMAAPage>
     <ComNav className='prl10'>
       <ComNavBarA className='mb10 '>
@@ -79,6 +76,10 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
     "waybill": () => order.productList?.filter(e => !e.waybillId)!,
     "print": () => coo___unique_arr(order.productList!, "waybillId")
   }[model]);
+
+
+
+  console.log("products::1", order.productList?.filter(e => products.some(ee => ee.waybillId === e.waybillId)));
 
   return <View className='dll ww mb10 bccwhite ioo' key={order.id}>
     <ComCardOrderBringGoods className='ww mb10' model={model} isShowSelector={roo___has_role(selfInfo_S, ['MERCHANT'])} key={order.id} products={products} order={order} onSelectOrder={(e) => {
@@ -137,11 +138,12 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
       </ComButton>}
       {model === "print" && order.orderStatus === 2 && roo___has_role(selfInfo_S, ['MERCHANT']) && <ComButton rr className='ml10 bborder mb10 nw' onClick={async () => {
         if (!products.length) { Taro.showToast({ icon: "none", title: "至少选择一件商品" }); return; }
-        await on_start_print((blue_device) => {
-          return products!.map((eee, index) => on_get_cpcl_str_order_bing_goods({ ...order, productList: [eee], __index: index, }, blue_device));
-        }, {orderId: order.id!, selfInfo_S });
+        // await on_start_print((blue_device) => {
+        //   return products!.map((eee, index) => on_get_cpcl_str_order_bing_goods({ ...order, productList: [eee], __index: index, }, blue_device));
+        // }, { orderId: order.id!, selfInfo_S });
         Taro.showLoading({ mask: true, title: "更新打印次数..." });
-        await Api_order_incrPrintTimes_ctn({ orderId: order.id!, orderProductIds: [] }); // 增加打印次数
+        const print_orders = order.productList?.filter(e => products.some(ee => ee.waybillId === e.waybillId));
+        await Api_order_incrPrintTimes_ctn({ orderId: order.id!, orderProductIds: print_orders?.map(e => e.id!) }); // 增加打印次数
         Taro.showToast({ icon: "none", title: "打印完成", });
       }}>
         <View className='cccprice'>{products?.map(e => order.productList?.findIndex(ee => ee.waybillId === e.waybillId)! + 1).join(",")}</View>

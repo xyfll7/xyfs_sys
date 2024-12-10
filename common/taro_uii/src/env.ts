@@ -5,7 +5,7 @@ import { Environment, EnvVersion } from "../types/type_index";
 
 export const base_url: string = "";
 
-const ___envSimulate = "develop";
+const ___envSimulate = "release";
 
 // cSpell: disable;
 const OPENID_DEV___ =
@@ -16,7 +16,7 @@ const OPENID_DEV___ =
   // "oGwbL5OLhRpOKRWrkVNSMqXuGPaE" ||  // 我妈
   // "oHt125JZ0IV1XI_y8iOt0wTR8P-M" ||  // (顾客端)王肇
   ////////////////////////////////////////////////
-  // "oGwbL5IZEq-8Op4CvUTNodRKdOB0" ||  // 冯强
+  "oGwbL5IZEq-8Op4CvUTNodRKdOB0" ||  // 冯强
   // "oGwbL5CEoFe5T1fqyAQUu0ohSLSM" ||  // 王红霞
   // "oGwbL5HudJXb6ztDzUtEmpd41v1c" ||  // 王红霞2
   // "oGwbL5CmzeeKG-X9tmDg90rE1bdo" ||  // 嘉丰智慧社区服务站48 李建梅
@@ -29,7 +29,7 @@ const OPENID_DEV___ =
 
   // "oGwbL5FchK3nw0rvAJOb-PY-11iE" ||  // 猪儿 揽收员
   // "oGwbL5Lak_bditPcNT7qnmgmWHeo" ||  // 狗子 司机
-  "oGwbL5PVdCTyoE2sYHAq2bdNA9BY" ||  // 王理代 商家
+  // "oGwbL5PVdCTyoE2sYHAq2bdNA9BY" ||  // 王理代 商家
   // "oGwbL5FKCrALVPc-XBeBspHo_gMw" ||  // 熊猫 导游
 
   // "oGwbL5PA_c0S56GYdqE_62bGnNDQ" ||  // 猴猴 注册新用户测试

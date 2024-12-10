@@ -40,7 +40,7 @@ const Index: FC<{}> = ({ }) => {
       </View>
     </ComNav>
     <ComScrollView onScrollToLower={async () => { page_list_get(page); }}>
-      {page.list && [...page.list, ...page.list, ...page.list].map(e => {
+      {page.list && [...page.list].map(e => {
         const file_name = `${e.endDate?.slice(0, 7).split("-")[0] ?? ""}年${e.endDate?.slice(0, 7).split("-")[1] ?? ""}月_${e.name}`;
         return <View className='dll mb10 bccwhite pt10 ioo ww prl10' key={e.id}>
           <ComButton ll className='' onClick={async () => {
