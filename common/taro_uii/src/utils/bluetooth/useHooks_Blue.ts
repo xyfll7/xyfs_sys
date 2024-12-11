@@ -2,7 +2,7 @@ import Taro from "@tarojs/taro";
 
 import { coo___JSON_str_code, coo___async_sleep, coo___divide_array_to_n_parts, coo___ios_date, coo___privacy_phone } from "@xyfs/utils/util";
 import { format } from "date-fns";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { PreBarCodeDryclean } from "../../../types/type_index";
 import { OrderInfo, Product_Dryclean, Product_Express } from "../../../types/type_product";
 import { BaseUserInfo } from "../../../types/type_user";
@@ -11,7 +11,7 @@ import { getMyEnv } from "../../env";
 import { useSTBlueDevices, useSTSelf } from "../../store/store";
 import { try_Taro_navigateTo, try_Taro_showActionSheet, try_Taro_showModal } from "../try_catch";
 import { utils_addressInfoToString, utils_get_cloud_printer, utils_str_includes } from "../util";
-import { Blue___closeBluetoothAdapter, Blue___openBluetoothAdapter, Blue_connect_closeBLEConnection, Blue_connect_createBLEConnection, Blue_connect_getBLEDeviceCharacteristics, Blue_connect_getBLEDeviceServices, Blue_connect_writeBLECharacteristicValue, Blue_getBluetoothAdapterState, Blue_getBluetoothDevices, Blue_getConnectedBluetoothDevices, Blue_onBluetoothAdapterStateChange, Blue_startBluetoothDevicesDiscovery, Blue_stopBluetoothDevicesDiscovery } from "./bluetooth";
+import { Blue___closeBluetoothAdapter, Blue___openBluetoothAdapter, Blue_connect_closeBLEConnection, Blue_connect_createBLEConnection, Blue_connect_getBLEDeviceCharacteristics, Blue_connect_getBLEDeviceServices, Blue_connect_writeBLECharacteristicValue, Blue_getBluetoothDevices, Blue_getConnectedBluetoothDevices, Blue_onBluetoothAdapterStateChange, Blue_startBluetoothDevicesDiscovery, Blue_stopBluetoothDevicesDiscovery } from "./bluetooth";
 import GBK from "./gbk.min";
 
 /**
@@ -30,10 +30,36 @@ const SERVICE_UUID = "49535343-FE7D-4AE5-8FA9-9FAFD205E455";
 const CHARACTERISTIC_UUID = "49535343-8841-43F4-A8D4-ECBE34729BB3";
 
 
+const bluetoothAdapterState_Store = {
+  status: {
+    available: false,
+    discovering: false,
+  } as Taro.onBluetoothAdapterStateChange.CallbackResult,
+  sub(cb: () => void) {
+    // (async () => {
+    //   const res = await Blue_getBluetoothAdapterState();
+    //   bluetoothAdapterState_Store.status = {
+    //     available: res.available,
+    //     discovering: res.discovering
+    //   };
+    //   cb();
+    // })();
+
+    Blue_onBluetoothAdapterStateChange(e => {
+      bluetoothAdapterState_Store.status = {
+        available: e.available,
+        discovering: e.discovering
+      };
+      cb();
+    });
+
+    return () => { };
+  },
+};
 
 export function useINHooks_Blue_devices() {
   const [devices, setDevices] = useState<Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice[]>();
-  const [state] = useINHooks_Blue_state(devices);
+  const state = useSyncExternalStore(bluetoothAdapterState_Store.sub, () => bluetoothAdapterState_Store.status);
   console.log("查找到的蓝牙设备列表:", devices);
   const startBlue = async () => {
     setDevices(undefined);
@@ -93,22 +119,10 @@ export function useINHooks_Blue_devices() {
   }
   return { devices, state, startBlue, stopBlue, addPrinter };
 }
-export function useINHooks_Blue_state(devices?: Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice[]) {
-  const [state, setState] = useState<Taro.onBluetoothAdapterStateChange.CallbackResult>();
-  console.log("状态", state);
-  useEffect(() => {
-    if (devices) {
-      (async () => {
-        const res = await Blue_getBluetoothAdapterState();
-        setState(res);
-        Blue_onBluetoothAdapterStateChange(e => {
-          setState(e);
-        });
-      })();
-    }
-  }, [devices]);
-  return [state];
-}
+
+
+
+
 
 export async function on_start_print(___cb: (blue_device: Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice) => string[], options?: { orderId?: string, selfInfo_S?: BaseUserInfo | null; }): Promise<void> {
   const tapIndex = await (async () => {

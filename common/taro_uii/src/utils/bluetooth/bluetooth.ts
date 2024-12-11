@@ -118,7 +118,7 @@ export async function Blue_stopBluetoothDevicesDiscovery() {
       throw new Error("停止发现附近蓝牙设备失败");
     }
   } catch (err) {
-    throw new ErrorR(err);
+    throw new ErrorR("蓝牙设备已关闭", true);
   }
 }
 
