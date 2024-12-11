@@ -134,6 +134,7 @@ interface OrderInfo<T> {
   pickUpRange?: string;
   __isEdit?: number;
   __index?: number;
+  __count?: number;
 }
 
 

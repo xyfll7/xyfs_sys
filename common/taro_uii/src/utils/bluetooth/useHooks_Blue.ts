@@ -348,14 +348,12 @@ export function on_get_cpcl_str_order_bing_goods(_order: OrderInfo<Product_Drycl
   const recName = `${___rec?.name} ${coo___privacy_phone(___rec?.mobile)}`.slice(0, 20);
   const recAddr = utils_addressInfoToString(___rec);
   const ___regiment = _order.regimentAddress; // 团长地址
-  const regimentName = `${___regiment?.name}  ${___regiment?.mobile}`.slice(0, 20);
-  const regimentAddr = utils_addressInfoToString(___regiment, true);
+
   const ___merchant = _order.productList?.[0]?.merchantAddress; // 商家地址
   const merchantName = `${___merchant?.name} ${___merchant?.mobile}`.slice(0, 20);
   const merchantAddr = utils_addressInfoToString(___merchant, true);
 
   const ___intro = _order.productList?.[0]?.intro ?? ""; // 商品简介
-  const ___length = _order.productList?.length; // 商品简介
 
   const arr_content = [
     `PW ${P_w}`,
@@ -379,16 +377,6 @@ export function on_get_cpcl_str_order_bing_goods(_order: OrderInfo<Product_Drycl
     `LINE ${X0} ${Y_ += 30} ${P_w} ${Y_} ${L_H}`, // -----------
 
     `SETMAG 2 2`,
-    `${T_0} 0 ${X0} ${Y_ += 10} 团`,
-    `SETMAG 0 0`,
-    `${T_0} 0 ${X0 + 60} ${Y_} ${regimentName}`,
-    ...(() => coo___divide_array_to_n_parts(regimentAddr?.split(""), 20)
-      .map(e => e.join(""))
-      .map(e => `${T_0} 0 ${X0 + 60} ${Y_ += 30} ${e}`)
-    )(),
-    `LINE ${X0} ${Y_ += 30} ${P_w} ${Y_} ${L_H}`, // -----------
-
-    `SETMAG 2 2`,
     `${T_0} 0 ${X0} ${Y_ += 10} 商`,
     `SETMAG 0 0`,
     `${T_0} 0 ${X0 + 60} ${Y_} ${merchantName}`,
@@ -401,8 +389,76 @@ export function on_get_cpcl_str_order_bing_goods(_order: OrderInfo<Product_Drycl
     `BARCODE 128 1 1 80 ${X0 + 30} ${Y_ += 10} ${_order.outTradeNo?.toUpperCase()}`,
     `${T_0} 0 ${X0 + 60} ${Y_ += 80 + 10} ${_order.outTradeNo?.toUpperCase()}`,
 
-    `${T_0} 0 ${X0} ${Y_ += 30} 团长：${_order.regimentName ?? '无'}`,
-    `${T_0} 0 ${X0} ${Y_ += 30} 品名：${_order.productList?.[0]?.name} ${_order.__index}/${___length}`,
+    `${T_0} 0 ${X0} ${Y_ += 30} 团长：${___regiment?.name?.slice(0, 10)}  ${___regiment?.mobile}`,
+    `${T_0} 0 ${X0} ${Y_ += 30} 品名：${_order.productList?.[0]?.name}`,
+    `${T_0} 0 ${X0} ${Y_ += 30} 商品总数量 共${_order.__count}件`,
+    ...(() => coo___divide_array_to_n_parts(___intro?.split(""), 20)
+      .map(e => e.join(""))
+      .map(e => `${T_0} 0 ${X0} ${Y_ += 30} ${e}`)
+    )(),
+    `FORM`,
+    `PRINT`,
+  ];
+  const arr_page = [`! 0 200 200 ${P_h} 1`];
+  return [...arr_page, ...arr_content].reduce((str, e) => `${str}\r\n${e}`);
+}
+export function on_get_cpcl_str_order_bing_goods_waybill(_order: OrderInfo<Product_Dryclean>, blue_device: Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice) {
+  _order = JSON.parse(JSON.stringify(_order, coo___JSON_str_code));
+  const T_0 = utils_str_includes(["快递100"], blue_device.name) ? "TEXT 0" : "TEXT 1";
+  const L_H = 3;
+  const X0 = 5;
+  let Y_ = 0;
+  const P_w = ((76 - 5) * 8);
+  const P_h = (130 - 5) * 8;
+
+
+  const ___rec = _order.userAddress; // 用户地址
+  const recName = `${___rec?.name} ${coo___privacy_phone(___rec?.mobile)}`.slice(0, 20);
+  const recAddr = utils_addressInfoToString(___rec);
+  const ___regiment = _order.regimentAddress; // 团长地址
+  const ___merchant = _order.productList?.[0]?.merchantAddress; // 商家地址
+  const merchantName = `${___merchant?.name} ${___merchant?.mobile}`.slice(0, 20);
+  const merchantAddr = utils_addressInfoToString(___merchant);
+
+  const ___intro = _order.productList?.[0]?.intro ?? ""; // 商品简介
+
+  const arr_content = [
+    `PW ${P_w}`,
+    `CONTRAST 3`,
+
+    `LEFT`,
+    `${T_0} 0 ${X0} ${Y_ = 60} ${format(coo___ios_date(_order?.lastPrintTime ?? coo___ios_date().getTime()), "yyyy-MM-dd HH:mm:ss")}`,
+    `LINE ${X0} ${Y_ += 26} ${P_w} ${Y_} ${L_H}`, // -----------
+
+    `BARCODE 128 1 1 80 ${X0 + 30} ${Y_ += 10} ${_order.productList?.[0].waybillId?.toUpperCase()}`,
+    `${T_0} 0 ${X0 + 60} ${Y_ += 80 + 10} ${_order.productList?.[0].waybillId?.toUpperCase()}`,
+    `LINE ${X0} ${Y_ += 30} ${P_w} ${Y_} ${L_H}`, // -----------
+    `SETMAG 2 2`,
+    `${T_0} 0 ${X0} ${Y_ += 10} 收`,
+    `SETMAG 0 0`,
+    `${T_0} 0 ${X0 + 60} ${Y_} ${recName}`,
+    ...(() => coo___divide_array_to_n_parts(recAddr?.split(""), 20)
+      .map(e => e.join(""))
+      .map(e => `${T_0} 0 ${X0 + 60} ${Y_ += 30} ${e}`)
+    )(),
+    `LINE ${X0} ${Y_ += 30} ${P_w} ${Y_} ${L_H}`, // -----------
+
+    `SETMAG 2 2`,
+    `${T_0} 0 ${X0} ${Y_ += 10} 寄`,
+    `SETMAG 0 0`,
+    `${T_0} 0 ${X0 + 60} ${Y_} ${merchantName}`,
+    ...(() => coo___divide_array_to_n_parts(merchantAddr?.split(""), 20)
+      .map(e => e.join(""))
+      .map(e => `${T_0} 0 ${X0 + 60} ${Y_ += 30} ${e}`)
+    )(),
+    `LINE ${X0} ${Y_ += 30} ${P_w} ${Y_} ${L_H}`, // -----------
+
+    `BARCODE 128 1 1 80 ${X0 + 30} ${Y_ += 10} ${_order.productList?.[0].waybillId?.toUpperCase()}`,
+    `${T_0} 0 ${X0 + 60} ${Y_ += 80 + 10} ${_order.productList?.[0].waybillId?.toUpperCase()}`,
+
+    `${T_0} 0 ${X0} ${Y_ += 30} 团长：${___regiment?.name?.slice(0, 10)} ${___regiment?.mobile}`,
+    `${T_0} 0 ${X0} ${Y_ += 30} 品名：${_order.productList?.[0]?.name}`,
+    `${T_0} 0 ${X0} ${Y_ += 30} 商品总数量 共${_order.__count}件`,
     ...(() => coo___divide_array_to_n_parts(___intro?.split(""), 20)
       .map(e => e.join(""))
       .map(e => `${T_0} 0 ${X0} ${Y_ += 30} ${e}`)

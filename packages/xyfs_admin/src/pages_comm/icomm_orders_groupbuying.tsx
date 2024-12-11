@@ -16,7 +16,7 @@ import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { Order_ST, Product_category_ST } from "@xyfs/taro_uii/src/config";
 import { roo___has_role, roo___role_getRoleInfo } from "@xyfs/taro_uii/src/roles";
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
-import { on_get_cpcl_str_order_bing_goods, on_start_print } from "@xyfs/taro_uii/utils/bluetooth/useHooks_Blue";
+import { on_get_cpcl_str_order_bing_goods, on_get_cpcl_str_order_bing_goods_waybill, on_start_print } from "@xyfs/taro_uii/utils/bluetooth/useHooks_Blue";
 import { Taro_getCurrentInstance, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
 import { useHook_pageListNew, useHook_Reducer } from '@xyfs/taro_uii/utils/useHooks';
 import { utils_arr_includes } from "@xyfs/taro_uii/utils/util";
@@ -136,7 +136,15 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
       {model === "print" && order.orderStatus === 2 && roo___has_role(selfInfo_S, ['MERCHANT']) && <ComButton rr className='ml10 bborder mb10 nw' onClick={async () => {
         if (!products.length) { Taro.showToast({ icon: "none", title: "至少选择一件商品" }); return; }
         await on_start_print((blue_device) => {
-          return products!.map((eee, index) => on_get_cpcl_str_order_bing_goods({ ...order, productList: [eee], __index: index, }, blue_device));
+          return products!.map((eee, index) => {
+            const count = order.productList?.filter(e => e.waybillId === eee.waybillId).length;
+            if (eee.waybillId) {
+              return on_get_cpcl_str_order_bing_goods_waybill({ ...order, productList: [eee], __index: index, __count: count }, blue_device);
+            } else {
+              return on_get_cpcl_str_order_bing_goods({ ...order, productList: [eee], __index: index, __count: count }, blue_device);
+            }
+
+          });
         }, { orderId: order.id!, selfInfo_S });
         Taro.showLoading({ mask: true, title: "更新打印次数..." });
         const print_orders = order.productList?.filter(e => products.some(ee => ee.waybillId === e.waybillId));
