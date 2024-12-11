@@ -73,7 +73,7 @@ const Index: FC<{}> = ({ }) => {
             <ComCardOrderDryclean className='ww' key={_order1.id} order={_order1}
               onBindCode={async (e) => {
                 Taro.showLoading({ mask: true, title: "扫码中...", });
-                const res_code = getMyEnv().isUseInDev ? "789585303762" : await try_Taro_scanCode<string>({ type: "CODE_128", scanType: ["barCode"] });
+                const res_code = getMyEnv().isUseInDev ? "7308009" : await try_Taro_scanCode<string>({ type: "CODE_128", scanType: ["barCode"] });
                 console.log("绑码:", res_code);
                 Taro.showLoading({ mask: true, title: "绑定中...", });
                 const res = await Api_order_orderProductCode_ctn({
