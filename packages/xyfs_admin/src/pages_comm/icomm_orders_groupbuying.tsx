@@ -78,6 +78,7 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
     "print": () => coo___unique_arr(order.productList!, "waybillId")
   }[model]);
 
+  console.log("PPP::::", products);
   return <View className='dll ww mb10 bccwhite ioo' key={order.id}>
     <ComCardOrderBringGoods className='ww mb10' model={model} isShowSelector={roo___has_role(selfInfo_S, ['MERCHANT'])} key={order.id} products={products} order={order} onSelectOrder={(e) => {
       if (model === "waybill" && utils_arr_includes([e.id!], products.map(ee => ee.id!))) {
@@ -114,7 +115,7 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
         }
       }}>退款</ComButton>
       }
-      {model === "waybill" && <ComButton className='mb10 ml10 bborder' onClick={async () => {
+      {model === "waybill" && order.orderStatus === 2 && roo___has_role(selfInfo_S, ['MERCHANT']) && <ComButton className='mb10 ml10 bborder' onClick={async () => {
         if (!products.length) { Taro.showToast({ icon: "none", title: "至少选择一件商品" }); return; }
         Taro.showLoading({ mask: true, title: "获取中..." });
         const res = await Api_logistic_createWaybill_ctn({
@@ -143,12 +144,18 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
             } else {
               return on_get_cpcl_str_order_bing_goods({ ...order, productList: [eee], __index: index, __count: count }, blue_device);
             }
-
           });
         }, { orderId: order.id!, selfInfo_S });
         Taro.showLoading({ mask: true, title: "更新打印次数..." });
-        const print_orders = order.productList?.filter(e => products.some(ee => ee.waybillId === e.waybillId));
-        await Api_order_incrPrintTimes_ctn({ orderId: order.id!, orderProductIds: print_orders?.map(e => e.id!) }); // 增加打印次数
+        const print_orders = order.productList?.filter(e => products.some(ee => ee.waybillId === e.waybillId))?.map(e => e.id!);
+        await Api_order_incrPrintTimes_ctn({ orderId: order.id!, orderProductIds: print_orders }); // 增加打印次数
+        // 更新本地打印次数
+        onUpdateOrderItem({
+          ...order,
+          productList: order.productList?.map(ee => print_orders?.some(eee => eee === ee.id) ? ({ ...ee, printTimes: ee.printTimes! += 1 }) : ee)
+        });
+        // 反选
+        setProducts(order.productList?.filter(ee => !print_orders?.some(eee => eee === ee.id))!);
         Taro.showToast({ icon: "none", title: "打印完成", });
       }}>
         <View className='cccprice'>{products?.map(e => order.productList?.findIndex(ee => ee.waybillId === e.waybillId)! + 1).join(",")}</View>
