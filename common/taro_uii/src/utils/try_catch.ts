@@ -16,7 +16,7 @@ async function try_Taro_scanCode<T>(params?: Taro.scanCode.Option & { type?: key
     if (!type) { return res as any; }
     if (res.scanType === "QR_CODE" && type === "QR_CODE") {
       return res.result as T;
-    } else if (res.scanType === "CODE_128" && type === "CODE_128") {
+    } else if (res.scanType.includes("CODE") && (type === "CODE_128" || type === "CODABAR")) {
       return res.result as T;
     } else if (res.scanType === "WX_CODE") {
       return coo___urlToObj<T>(res.path);
