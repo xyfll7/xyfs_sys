@@ -149,7 +149,7 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
         Taro.showLoading({ mask: true, title: "更新打印次数..." });
         const print_orders = order.productList?.filter(e => products.some(ee => ee.waybillId === e.waybillId))?.map(e => e.id!);
         await Api_order_incrPrintTimes_ctn({ orderId: order.id!, orderProductIds: print_orders }); // 增加打印次数
-        // 更新本地打印次数
+        // 本地更新打印次数
         onUpdateOrderItem({
           ...order,
           productList: order.productList?.map(ee => print_orders?.some(eee => eee === ee.id) ? ({ ...ee, printTimes: ee.printTimes! += 1 }) : ee)
