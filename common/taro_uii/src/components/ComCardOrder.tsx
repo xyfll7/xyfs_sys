@@ -220,8 +220,14 @@ export const ComCardOrderBringGoods: FC<{
                 <ComPrice price={Number(e?.totalPrice)} />
               </ComButton>
             </View>
-            {e?.waybillId && <View className='cccplh dy ww' onClick={() => try_Taro_setClipboardData({ data: e.waybillId! })}>
-              <Text className='nw1'>运单号:{e?.waybillId}</Text>  <Text className='nw'>/{e.printTimes ?? 0}</Text>
+            {e?.waybillId && <View className='cccplh dy ww' >
+              <Text className='nw1' onClick={() => try_Taro_setClipboardData({ data: e.waybillId! })}>运单号:{e?.waybillId}</Text>  <Text className='nw'>/{e.printTimes ?? 0}</Text>
+
+              <Text className='cccgreen bborder prl10'
+                onClick={async () => {
+                  await try_Taro_navigateTo({ url: `/pages_comm/comm__express_path?${coo___objToUrl({ express_share_id: order.id })}` });
+                }}>轨迹</Text>
+
             </View>}
           </View>
         </View>;
