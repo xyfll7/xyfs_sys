@@ -126,7 +126,7 @@ export function useINHooks_Blue_devices() {
 
 export async function on_start_print(___cb: (blue_device: Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice) => string[], options?: { orderId?: string, selfInfo_S?: BaseUserInfo | null; }): Promise<void> {
   const tapIndex = await (async () => {
-    if (options?.selfInfo_S && options.selfInfo_S.printers && options.selfInfo_S.printers.length && !options.orderId) {
+    if (options?.selfInfo_S && options.selfInfo_S.printers && options.selfInfo_S.printers.length && options.orderId) {
       const [res_index] = await try_Taro_showActionSheet({
         alertText: "请选择打印方式", itemList: ["蓝牙打印(免费)", "云打印(每单扣费0.057元)"]
       });
