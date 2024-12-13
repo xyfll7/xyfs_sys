@@ -44,7 +44,7 @@ const CPExpressPath: FC = () => {
       </View>
       }
       {order && order.orderType === Product_category_ST.干洗 && <ComCardOrderDryclean className='mb10' order={order!} />}
-      {order && order.orderType === Product_category_ST.团购 && <View >fasdfsadf</View>}
+      {order && order.orderType === Product_category_ST.团购 && <ComButton className='mb10'>{}</ComButton>}
       {path === null && <ComLoading className='mb10' />}
       {path?.length === 0 &&
         <ComLoading className='mb10' isEmpty>待揽件</ComLoading>
