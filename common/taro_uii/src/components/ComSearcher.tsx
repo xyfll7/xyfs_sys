@@ -31,10 +31,10 @@ export const ComSearcher: FC<ViewProps & InputProps & {
           onClear?.();
         }}>清空</ComButton>}
       {isShowScan && <ComButton rr className='cccgreen ml10 bccwhite' onClick={async () => {
-        const res = await try_Taro_scanCode<string>({ type: "CODE_128" });
-        console.log("sss:", res);
-        setValue(res);
-        onSetSearchValue(res.trim());
+        const res_code = await try_Taro_scanCode<string>({ type: "CODE_128" });
+        console.log("sss:", res_code);
+        setValue(res_code);
+        onSetSearchValue(res_code.trim());
       }}>扫码</ComButton>}
       {props.children}
       <ComButton className='cccgreen ml10 bccwhite'

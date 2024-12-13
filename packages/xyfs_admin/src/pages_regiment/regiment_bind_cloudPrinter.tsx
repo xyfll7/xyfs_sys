@@ -30,8 +30,8 @@ const Index: FC<{}> = ({ }) => {
           <ComButton
             className='cccgreen bccwhite nw mb10'
             onClick={async () => {
-              const code = await try_Taro_scanCode<string>({ type: "QR_CODE" });
-              const { siid } = coo___urlToObj<{ siid: string; }>(code);
+              const res_code = await try_Taro_scanCode<string>({ type: "QR_CODE" });
+              const { siid } = coo___urlToObj<{ siid: string; }>(res_code);
               if (!siid) { throw new ErrorR("没有识别到siid", true); }
               if (selfInfo_S?.printers?.find((e) => e.siid === siid)) {
                 Taro.showToast({ icon: "none", title: "您已经添加过该打印机,请勿重复添加", });
@@ -49,10 +49,10 @@ const Index: FC<{}> = ({ }) => {
           <ComButton
             className='cccgreen bccwhite nw mb10'
             onClick={async () => {
-              const printerId = await try_Taro_scanCode<string>({ type: "CODE_128" });
+              const res_code = await try_Taro_scanCode<string>({ type: "CODE_128" });
               Taro.showLoading({ mask: true, title: "打印验证码..." });
-              await Api_user_print_captcha_ctn({ printerId: printerId, });
-              setPrinterIdDYY(printerId);
+              await Api_user_print_captcha_ctn({ printerId: res_code, });
+              setPrinterIdDYY(res_code);
               Taro.showToast({ icon: "none", title: "打印成功", });
             }}>
             打印猿：添加云打印机
@@ -63,9 +63,9 @@ const Index: FC<{}> = ({ }) => {
           </ComButton>
           <ComButton className={`mb10  ${printerIdDYY ? 'cccgreen' : 'cccplh'}`} onClick={async () => {
             if (!printerIdDYY) { throw new ErrorR("请先扫打印机码", true); }
-            const captcha = await try_Taro_scanCode<string>({ type: "CODE_128" });
+            const res_code = await try_Taro_scanCode<string>({ type: "CODE_128" });
             Taro.showLoading({ mask: true, title: "绑定打印机..." });
-            const res = await Api_user_printer_bind_ctn({ printerId: printerIdDYY, captcha: captcha });
+            const res = await Api_user_printer_bind_ctn({ printerId: printerIdDYY, captcha: res_code });
             console.log("绑定成功", res);
             Taro.showToast({ icon: "none", title: "绑定成功", });
           }}>

@@ -12,7 +12,7 @@ async function try_Taro_scanCode<T>(params?: Taro.scanCode.Option & { type?: key
   try {
     const { type, ..._params } = params || {};
     const res = await Taro.scanCode({ onlyFromCamera: false, ..._params });
-    console.info("扫描结果s：", res);
+    console.info("扫描结果：", res);
     if (!type) { return res as any; }
     if (res.scanType === "QR_CODE" && type === "QR_CODE") {
       return res.result as T;

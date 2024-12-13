@@ -74,7 +74,6 @@ const Index: FC<{}> = ({ }) => {
               onBindCode={async (e) => {
                 Taro.showLoading({ mask: true, title: "扫码中...", });
                 const res_code = getMyEnv().isUseInDev ? "7308020" : await try_Taro_scanCode<string>({ type: "CODABAR", scanType: ["barCode"] });
-                console.log("绑码:", res_code);
                 Taro.showLoading({ mask: true, title: "绑定中...", });
                 const res = await Api_order_orderProductCode_ctn({
                   code: res_code,
