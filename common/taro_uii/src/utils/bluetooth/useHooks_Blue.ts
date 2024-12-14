@@ -125,6 +125,7 @@ export function useINHooks_Blue_devices() {
 
 
 export async function on_start_print(___cb: (blue_device: Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice) => string[], options?: { orderId?: string, selfInfo_S?: BaseUserInfo | null; }): Promise<void> {
+
   const tapIndex = await (async () => {
     if (options?.selfInfo_S && options.selfInfo_S.printers && options.selfInfo_S.printers.length && options.orderId) {
       const [res_index] = await try_Taro_showActionSheet({
@@ -152,7 +153,7 @@ export async function on_start_print(___cb: (blue_device: Taro.onBluetoothDevice
     } else {
       throw new Error("打印错误");
     }
-  } else if (tapIndex === 0 && options?.orderId) { // 云打印
+  } else if (tapIndex === 1 && options?.orderId) { // 云打印
     //选择云打印机
     const res_cloud_printer = await utils_get_cloud_printer(useSTSelf.getState().selfInfo!);
     if (res_cloud_printer) {
