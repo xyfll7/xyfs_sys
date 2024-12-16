@@ -4,7 +4,7 @@ import { OrderInfo, ProductBase } from "../../types/type_product";
 import { Api_logistic_query_ctn } from "../api/api__logistics";
 import { Api_order_query_ctn } from "../api/api__orders";
 import { ComButton } from "../components/ComButton";
-import { ComCardOrderDryclean, ComCardOrderExpress } from "../components/ComCardOrder";
+import { ComCardOrderBringGoods, ComCardOrderDryclean, ComCardOrderExpress } from "../components/ComCardOrder";
 import { ComLoading } from "../components/ComLoading";
 import { ComNav } from "../components/ComNav";
 import { ComNavBarA } from "../components/ComNavBarA";
@@ -44,7 +44,7 @@ const CPExpressPath: FC = () => {
       </View>
       }
       {order && order.orderType === Product_category_ST.干洗 && <ComCardOrderDryclean className='mb10' order={order!} />}
-      {order && order.orderType === Product_category_ST.团购 && <ComButton className='mb10'>{}</ComButton>}
+      {order && order.orderType === Product_category_ST.团购 && <ComCardOrderBringGoods className='mb10 pb10' order={order} ></ComCardOrderBringGoods>}
       {path === null && <ComLoading className='mb10' />}
       {path?.length === 0 &&
         <ComLoading className='mb10' isEmpty>待揽件</ComLoading>
