@@ -1,5 +1,7 @@
 import { BaseEventOrig, ScrollView, ScrollViewProps, View } from "@tarojs/components";
 import { useRef, useState } from "react";
+import { getMyEnv } from "../env";
+import { useSTSelf } from "../store/store";
 import { ComTabBarLine } from "./ComTabBarLine";
 
 export const ComScrollView = (
@@ -63,6 +65,7 @@ export const ComScrollView = (
         {props.children}
       </View>
     </ScrollView>
-    <ComTabBarLine className='mt6 mb6' />
+    {process.env.TARO_APP_ADMIN === getMyEnv().appId && <View className='fs06 prl20  ww pbt6 cccplh'>MOBILE:{useSTSelf.getState().selfInfo?.mobile}</View>}
+    {process.env.TARO_APP_CLIENT === getMyEnv().appId && <ComTabBarLine className='mt6 mb6' />}
   </View>;
 };

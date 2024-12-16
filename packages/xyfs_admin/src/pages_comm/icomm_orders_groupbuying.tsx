@@ -77,8 +77,6 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
     "waybill": () => order.productList?.filter(e => !e.waybillId)!,
     "print": () => coo___unique_arr(order.productList!, "waybillId")
   }[model]);
-
-  console.log("PPP::::", products);
   return <View className='dll ww mb10 bccwhite ioo' key={order.id}>
     <ComCardOrderBringGoods className='ww mb10' model={model} isShowSelector={roo___has_role(selfInfo_S, ['MERCHANT'])} key={order.id} products={products} order={order} onSelectOrder={(e) => {
       if (model === "waybill" && utils_arr_includes([e.id!], products.map(ee => ee.id!))) {

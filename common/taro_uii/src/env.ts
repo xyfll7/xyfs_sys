@@ -5,12 +5,12 @@ import { Environment, EnvVersion } from "../types/type_index";
 
 export const base_url: string = "";
 
-const ___envSimulate = "release";
+const ___envSimulate = "develop";
 
 // cSpell: disable;
 const OPENID_DEV___ =
   // @ts-ignore
-  "oGwbL5G9lIOcFJcAUTnpCwcY-cPA" ||  // ❤️
+  // "oGwbL5G9lIOcFJcAUTnpCwcY-cPA" ||  // ❤️
   ////////////////////////////////////////////////
   // "oGwbL5D1WtsGTuLhWneaepYuHW3k" ||  // 何旭东
   // "oGwbL5OLhRpOKRWrkVNSMqXuGPaE" ||  // 我妈
@@ -29,7 +29,7 @@ const OPENID_DEV___ =
 
   // "oGwbL5FchK3nw0rvAJOb-PY-11iE" ||  // 猪儿 揽收员
   // "oGwbL5Lak_bditPcNT7qnmgmWHeo" ||  // 狗子 司机
-  "oGwbL5PVdCTyoE2sYHAq2bdNA9BY" ||  // 王理代 商家
+  // "oGwbL5PVdCTyoE2sYHAq2bdNA9BY" ||  // 王理代 商家
   // "oGwbL5FKCrALVPc-XBeBspHo_gMw" ||  // 熊猫 导游
 
   // "oGwbL5PA_c0S56GYdqE_62bGnNDQ" ||  // 猴猴 注册新用户测试

@@ -45,7 +45,7 @@ export const MMMAAPage: FC<{
     if (isNoHeader) {
       _childrens = [<></>, ...(_childrens ?? [])];
     }
-    switch (Taro.getAccountInfoSync().miniProgram.appId) {
+    switch (getMyEnv().appId) {
       case process.env.TARO_APP_ADMIN: isNeedRegiment = false; break; // 管理端 关闭团长限制
       case process.env.TARO_APP_CLIENT: isNeedAnyRole = false; break; // 顾客端 关闭权限限制
     }
