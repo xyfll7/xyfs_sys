@@ -31,7 +31,6 @@ const CPExpressPath: FC = () => {
       }
     })();
   }, [options.express_share_id]);
-  console.log("ooooder:", order);
   return <MMMAAPage>
     <ComNav>
       <ComNavBarA className='mb10 pl10'>
