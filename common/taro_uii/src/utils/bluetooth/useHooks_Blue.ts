@@ -457,9 +457,9 @@ export function on_get_cpcl_str_order_bing_goods_waybill(_order: OrderInfo<Produ
 
     `${T_0} 0 ${X0} ${Y_ += 30} 团长：${___regiment?.name?.slice(0, 10)} ${___regiment?.mobile}`,
     `${T_0} 0 ${X0} ${Y_ += 30} 商品总数量 共${_order.__count}件`,
-    ...(() => _order.productList?.filter(e => e.waybillId === _order.__product?.waybillId)?.map(e => [
-      `${T_0} 0 ${X0} ${Y_ += 30} 品名：${e.name?.substring(0, 16)} ${_order.__index}/${_order.__count}`,
-      `${T_0} 0 ${X0} ${Y_ += 30} 简介：${e.intro?.substring(0, 17)}`]).flat()!
+    ...(() => _order.productList?.filter((e) => e.waybillId === _order.__product?.waybillId)?.map((e, i) => [
+      `${T_0} 0 ${X0} ${Y_ += 30} ${i + 1}/${_order.__count}${e.name?.substring(0, 10)}_${e.intro}`.substring(0, 20),
+    ]).flat()!
     )(),
 
     `FORM`,
