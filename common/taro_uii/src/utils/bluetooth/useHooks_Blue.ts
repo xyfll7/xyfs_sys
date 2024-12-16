@@ -430,7 +430,7 @@ export function on_get_cpcl_str_order_bing_goods_waybill(_order: OrderInfo<Produ
     `LINE ${X0} ${Y_ += 26} ${P_w} ${Y_} ${L_H}`, // -----------
 
     `BARCODE 128 1 1 80 ${X0 + 30} ${Y_ += 10} ${_order.__product?.waybillId?.toUpperCase()}`,
-    `${T_0} 0 ${X0 + 60} ${Y_ += 80 + 10} ${_order.__product?.waybillId?.toUpperCase()}`,
+    `${T_0} 0 ${X0 + 30} ${Y_ += 80 + 10} ${_order.__product?.waybillId?.toUpperCase()}`,
     `LINE ${X0} ${Y_ += 30} ${P_w} ${Y_} ${L_H}`, // -----------
     `SETMAG 2 2`,
     `${T_0} 0 ${X0} ${Y_ += 10} 收`,
@@ -453,12 +453,12 @@ export function on_get_cpcl_str_order_bing_goods_waybill(_order: OrderInfo<Produ
     `LINE ${X0} ${Y_ += 30} ${P_w} ${Y_} ${L_H}`, // -----------
 
     `BARCODE 128 1 1 80 ${X0 + 30} ${Y_ += 10} ${_order.__product?.waybillId?.toUpperCase()}`,
-    `${T_0} 0 ${X0 + 60} ${Y_ += 80 + 10} ${_order.__product?.waybillId?.toUpperCase()}`,
+    `${T_0} 0 ${X0 + 30} ${Y_ += 80 + 10} ${_order.__product?.waybillId?.toUpperCase()}`,
 
     `${T_0} 0 ${X0} ${Y_ += 30} 团长：${___regiment?.name?.slice(0, 10)} ${___regiment?.mobile}`,
     `${T_0} 0 ${X0} ${Y_ += 30} 商品总数量 共${_order.__count}件`,
     ...(() => _order.productList?.filter((e) => e.waybillId === _order.__product?.waybillId)?.map((e, i) => [
-      `${T_0} 0 ${X0} ${Y_ += 30} ${i + 1}/${_order.__count}${e.name?.substring(0, 10)}_${e.intro}`.substring(0, 20),
+      `${T_0} 0 ${X0} ${Y_ += 30} ${i + 1}/${_order.__count}${e.name?.substring(0, 10)}/${e.intro}`.substring(0, 20),
     ]).flat()!
     )(),
 
