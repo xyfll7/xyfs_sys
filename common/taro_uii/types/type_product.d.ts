@@ -135,6 +135,7 @@ interface OrderInfo<T> {
   __isEdit?: number;
   __index?: number;
   __count?: number;
+  __product?: T;
 }
 
 

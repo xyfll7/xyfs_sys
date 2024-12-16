@@ -100,7 +100,7 @@ const Index: FC<{}> = ({ }) => {
             onPrint={async (ee) => {
               const _order = ee;
               await on_start_print((blue_device) => {
-                return _order.productList!.map(eee => on_get_cpcl_str_order_express({ ..._order, productList: [eee], }, blue_device));
+                return _order.productList!.map(eee => on_get_cpcl_str_order_express({ ..._order, __product: eee, }, blue_device));
               }, { orderId: _order.id!, selfInfo_S: useSTSelf.getState().selfInfo });
               page_list_update((p) => ({
                 ...p,

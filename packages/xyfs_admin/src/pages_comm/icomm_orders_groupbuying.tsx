@@ -77,6 +77,7 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
     "waybill": () => order.productList?.filter(e => !e.waybillId)!,
     "print": () => coo___unique_arr(order.productList!, "waybillId")
   }[model]);
+
   return <View className='dll ww mb10 bccwhite ioo' key={order.id}>
     <ComCardOrderBringGoods className='ww mb10' model={model} isShowSelector={roo___has_role(selfInfo_S, ['MERCHANT'])} key={order.id} products={products} order={order} onSelectOrder={(e) => {
       if (model === "waybill" && utils_arr_includes([e.id!], products.map(ee => ee.id!))) {
@@ -138,9 +139,9 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
           return products!.map((eee, index) => {
             const count = order.productList?.filter(e => e.waybillId === eee.waybillId).length;
             if (eee.waybillId) {
-              return on_get_cpcl_str_order_bing_goods_waybill({ ...order, productList: [eee], __index: index, __count: count }, blue_device);
+              return on_get_cpcl_str_order_bing_goods_waybill({ ...order, __product: eee, __index: index, __count: count }, blue_device);
             } else {
-              return on_get_cpcl_str_order_bing_goods({ ...order, productList: [eee], __index: index, __count: count }, blue_device);
+              return on_get_cpcl_str_order_bing_goods({ ...order, __product: eee, __index: index, __count: count }, blue_device);
             }
           });
         }, { orderId: order.id!, selfInfo_S });

@@ -92,7 +92,7 @@ const Index: FC = () => {
             }}>删除</ComButton>
             {(_order1.eventType === 3 || (_order1.orderStatus === Order_ST.已退款 && _order1.eventType === 2)) && <ComButton rr className='mb10 bborder cccgreen ml10' onClick={async () => {
               await on_start_print((blue_device) => {
-                return _order1.productList!.map(eee => on_get_cpcl_str_order_dryclean_out_factory({ ..._order1, }, blue_device));
+                return _order1.productList!.map(eee => on_get_cpcl_str_order_dryclean_out_factory({ ..._order1, __product: eee }, blue_device));
               }, { orderId: order.id!, selfInfo_S: useSTSelf.getState().selfInfo });
               Taro.showLoading({ mask: true, title: "订单出厂" });
               await Api_logistic_refund_ctn({ orderProductId: _order1.productList![0]!.id!, orderId: _order1.id! });
@@ -181,7 +181,7 @@ const IIIUploadedOrder: FC<{ onClose: () => void; }> = ({ onClose }) => {
             }}>轨迹</ComButton>
             {(_order1.eventType === 3 || (_order1.orderStatus === Order_ST.已退款 && _order1.eventType === 2)) && <ComButton rr className='mb10 bborder cccgreen ml10' onClick={async () => {
               await on_start_print((blue_device) => {
-                return _order1.productList!.map(eee => on_get_cpcl_str_order_dryclean_out_factory({ ..._order1, }, blue_device));
+                return _order1.productList!.map(eee => on_get_cpcl_str_order_dryclean_out_factory({ ..._order1, __product: eee }, blue_device));
               }, { selfInfo_S: useSTSelf.getState().selfInfo });
               await Api_order_incrPrintTimes_ctn({ orderId: _order1.id!, orderProductId: _order1.productList?.[0]?.id });
               page_list_update(p => ({ ...p, list: p.list.map(ee => ee.id === _order1.id ? { ...ee, productList: [{ ...ee.productList?.[0], printTimes: ee.productList![0]!.printTimes! + 1 }] } : ee) }));

@@ -270,9 +270,9 @@ export function on_get_cpcl_str_order_express(_order: OrderInfo<Product_Express>
   const P_w = ((76 - 5) * 8);
   const P_h = (130 - 5) * 8;
 
-  const recAddr = `${_order.productList?.[0]?.recMan?.province} ${_order.productList?.[0]?.recMan?.city} ${_order.productList?.[0]?.recMan?.area} ${_order.productList?.[0]?.recMan?.address}`;
-  const sendAddr = `${_order.productList?.[0]?.sendMan?.province} ${_order.productList?.[0]?.sendMan?.city} ${_order.productList?.[0]?.sendMan?.area} ${_order.productList?.[0]?.sendMan?.address}`;
-  const sendManName = `${_order.productList?.[0]?.sendMan?.realName?.charAt(0)}* ${_order.productList?.[0]?.sendMan?.mobile?.slice(0, 3)}****${_order.productList?.[0]?.sendMan?.mobile?.slice(-4)}`.slice(0, 20);
+  const recAddr = `${_order.__product?.recMan?.province} ${_order.__product?.recMan?.city} ${_order.__product?.recMan?.area} ${_order.__product?.recMan?.address}`;
+  const sendAddr = `${_order.__product?.sendMan?.province} ${_order.__product?.sendMan?.city} ${_order.__product?.sendMan?.area} ${_order.__product?.sendMan?.address}`;
+  const sendManName = `${_order.__product?.sendMan?.realName?.charAt(0)}* ${_order.__product?.sendMan?.mobile?.slice(0, 3)}****${_order.__product?.sendMan?.mobile?.slice(-4)}`.slice(0, 20);
   const arr_content = [
     `PW ${P_w}`,
     `CONTRAST 3`,
@@ -282,24 +282,24 @@ export function on_get_cpcl_str_order_express(_order: OrderInfo<Product_Express>
     `LINE ${X0} ${Y_ += 26} ${P_w} ${Y_} ${L_H}`, // -----------
 
     `CENTER`,
-    `BARCODE 128 2 2 80 ${X0} ${Y_ += 10} ${_order.productList?.[0]?.waybillId}`,
-    `${T_0} 0 ${X0} ${Y_ += 80 + 10} ${_order.productList?.[0]?.waybillId}`,
+    `BARCODE 128 2 2 80 ${X0} ${Y_ += 10} ${_order.__product?.waybillId}`,
+    `${T_0} 0 ${X0} ${Y_ += 80 + 10} ${_order.__product?.waybillId}`,
     `LINE ${X0} ${Y_ += 40} ${P_w} ${Y_} ${L_H}`, // -----------
 
     `SETMAG 2 2`,
-    `${T_0} 0 ${X0} ${Y_ += 10} ${_order.productList?.[0]?.bigWord ?? ""}`,
+    `${T_0} 0 ${X0} ${Y_ += 10} ${_order.__product?.bigWord ?? ""}`,
     `LINE ${X0} ${Y_ += 60} ${P_w} ${Y_} ${L_H}`, // -----------
 
     `LEFT ${P_w}`,
     `${T_0} 0 ${X0} ${Y_ += 10} 集`,
-    `${T_0} 0 ${X0 + 60} ${Y_} ${_order.productList?.[0]?.packagePlace ?? ""}`,
+    `${T_0} 0 ${X0 + 60} ${Y_} ${_order.__product?.packagePlace ?? ""}`,
     `SETMAG 0 0`,
     `LINE ${X0} ${Y_ += 60} ${P_w} ${Y_} ${L_H}`, // -----------
 
     `SETMAG 2 2`,
     `${T_0} 0 ${X0} ${Y_ += 10} 收`,
     `SETMAG 0 0`,
-    `${T_0} 0 ${X0 + 60} ${Y_} ${_order.productList?.[0]?.recMan?.name} ${coo___privacy_phone(_order.productList?.[0]?.recMan?.mobile)}`,
+    `${T_0} 0 ${X0 + 60} ${Y_} ${_order.__product?.recMan?.name} ${coo___privacy_phone(_order.__product?.recMan?.mobile)}`,
     ...(() => coo___divide_array_to_n_parts(recAddr.split(""), 20)
       .map(e => e.join(""))
       .map(e => `${T_0} 0 ${X0 + 60} ${Y_ += 30} ${e}`)
@@ -317,17 +317,17 @@ export function on_get_cpcl_str_order_express(_order: OrderInfo<Product_Express>
     `LINE ${X0} ${Y_ += 40} ${P_w} ${Y_} ${L_H}`, // -----------
 
     `CENTER`,
-    `BARCODE 128 2 2 80 ${X0} ${Y_ += 10} ${_order.productList?.[0]?.waybillId}`,
-    `${T_0} 0 ${X0} ${Y_ += 80 + 10} ${_order.productList?.[0]?.waybillId}`,
+    `BARCODE 128 2 2 80 ${X0} ${Y_ += 10} ${_order.__product?.waybillId}`,
+    `${T_0} 0 ${X0} ${Y_ += 80 + 10} ${_order.__product?.waybillId}`,
 
     `LEFT ${P_w}`,
     `SETMAG 2 2`,
-    `${T_0} 0 ${X0} ${Y_ += 40} 重量：${_order.productList?.[0]?.weight} 公斤`,
+    `${T_0} 0 ${X0} ${Y_ += 40} 重量：${_order.__product?.weight} 公斤`,
     `SETMAG 0 0`,
     `LEFT ${P_w}`,
     `${T_0} 0 ${X0} ${Y_ += 60} 团长：${_order.regimentName ?? '无'}`,
-    `${T_0} 0 ${X0} ${Y_ += 40} 品名：${_order.productList?.[0]?.itemType}`,
-    `${T_0} 0 ${X0} ${Y_ += 40} 备注：${_order.productList?.[0]?.itemNotes ?? "无"}`,
+    `${T_0} 0 ${X0} ${Y_ += 40} 品名：${_order.__product?.itemType}`,
+    `${T_0} 0 ${X0} ${Y_ += 40} 备注：${_order.__product?.itemNotes ?? "无"}`,
     `FORM`,
     `PRINT`,
   ];
@@ -350,11 +350,11 @@ export function on_get_cpcl_str_order_bing_goods(_order: OrderInfo<Product_Drycl
   const recAddr = utils_addressInfoToString(___rec);
   const ___regiment = _order.regimentAddress; // 团长地址
 
-  const ___merchant = _order.productList?.[0]?.merchantAddress; // 商家地址
+  const ___merchant = _order.__product?.merchantAddress; // 商家地址
   const merchantName = `${___merchant?.name} ${___merchant?.mobile}`.slice(0, 20);
   const merchantAddr = utils_addressInfoToString(___merchant, true);
 
-  const ___intro = _order.productList?.[0]?.intro ?? ""; // 商品简介
+  const ___intro = _order.__product?.intro ?? ""; // 商品简介
 
   const arr_content = [
     `PW ${P_w}`,
@@ -391,7 +391,7 @@ export function on_get_cpcl_str_order_bing_goods(_order: OrderInfo<Product_Drycl
     `${T_0} 0 ${X0 + 60} ${Y_ += 80 + 10} ${_order.outTradeNo?.toUpperCase()}`,
 
     `${T_0} 0 ${X0} ${Y_ += 30} 团长：${___regiment?.name?.slice(0, 10)}  ${___regiment?.mobile}`,
-    `${T_0} 0 ${X0} ${Y_ += 30} 品名：${_order.productList?.[0]?.name}`,
+    `${T_0} 0 ${X0} ${Y_ += 30} 品名：${_order.__product?.name}`,
     `${T_0} 0 ${X0} ${Y_ += 30} 商品总数量 共${_order.__count}件`,
     ...(() => coo___divide_array_to_n_parts(___intro?.split(""), 20)
       .map(e => e.join(""))
@@ -417,11 +417,9 @@ export function on_get_cpcl_str_order_bing_goods_waybill(_order: OrderInfo<Produ
   const recName = `${___rec?.name} ${coo___privacy_phone(___rec?.mobile)}`.slice(0, 20);
   const recAddr = utils_addressInfoToString(___rec);
   const ___regiment = _order.regimentAddress; // 团长地址
-  const ___merchant = _order.productList?.[0]?.merchantAddress; // 商家地址
+  const ___merchant = _order.__product?.merchantAddress; // 商家地址
   const merchantName = `${___merchant?.name} ${___merchant?.mobile}`.slice(0, 20);
   const merchantAddr = utils_addressInfoToString(___merchant);
-
-  const ___intro = _order.productList?.[0]?.intro ?? ""; // 商品简介
 
   const arr_content = [
     `PW ${P_w}`,
@@ -431,8 +429,8 @@ export function on_get_cpcl_str_order_bing_goods_waybill(_order: OrderInfo<Produ
     `${T_0} 0 ${X0} ${Y_ = 60} ${format(coo___ios_date(_order?.lastPrintTime ?? coo___ios_date().getTime()), "yyyy-MM-dd HH:mm:ss")}`,
     `LINE ${X0} ${Y_ += 26} ${P_w} ${Y_} ${L_H}`, // -----------
 
-    `BARCODE 128 1 1 80 ${X0 + 30} ${Y_ += 10} ${_order.productList?.[0].waybillId?.toUpperCase()}`,
-    `${T_0} 0 ${X0 + 60} ${Y_ += 80 + 10} ${_order.productList?.[0].waybillId?.toUpperCase()}`,
+    `BARCODE 128 1 1 80 ${X0 + 30} ${Y_ += 10} ${_order.__product?.waybillId?.toUpperCase()}`,
+    `${T_0} 0 ${X0 + 60} ${Y_ += 80 + 10} ${_order.__product?.waybillId?.toUpperCase()}`,
     `LINE ${X0} ${Y_ += 30} ${P_w} ${Y_} ${L_H}`, // -----------
     `SETMAG 2 2`,
     `${T_0} 0 ${X0} ${Y_ += 10} 收`,
@@ -454,16 +452,16 @@ export function on_get_cpcl_str_order_bing_goods_waybill(_order: OrderInfo<Produ
     )(),
     `LINE ${X0} ${Y_ += 30} ${P_w} ${Y_} ${L_H}`, // -----------
 
-    `BARCODE 128 1 1 80 ${X0 + 30} ${Y_ += 10} ${_order.productList?.[0].waybillId?.toUpperCase()}`,
-    `${T_0} 0 ${X0 + 60} ${Y_ += 80 + 10} ${_order.productList?.[0].waybillId?.toUpperCase()}`,
+    `BARCODE 128 1 1 80 ${X0 + 30} ${Y_ += 10} ${_order.__product?.waybillId?.toUpperCase()}`,
+    `${T_0} 0 ${X0 + 60} ${Y_ += 80 + 10} ${_order.__product?.waybillId?.toUpperCase()}`,
 
     `${T_0} 0 ${X0} ${Y_ += 30} 团长：${___regiment?.name?.slice(0, 10)} ${___regiment?.mobile}`,
-    `${T_0} 0 ${X0} ${Y_ += 30} 品名：${_order.productList?.[0]?.name}`,
     `${T_0} 0 ${X0} ${Y_ += 30} 商品总数量 共${_order.__count}件`,
-    ...(() => coo___divide_array_to_n_parts(___intro?.split(""), 20)
-      .map(e => e.join(""))
-      .map(e => `${T_0} 0 ${X0} ${Y_ += 30} ${e}`)
+    ...(() => _order.productList?.filter(e => e.waybillId === _order.__product?.waybillId)?.map(e => [
+      `${T_0} 0 ${X0} ${Y_ += 30} 品名：${e.name?.substring(0, 16)} ${_order.__index}/${_order.__count}`,
+      `${T_0} 0 ${X0} ${Y_ += 30} 简介：${e.intro?.substring(0, 17)}`]).flat()!
     )(),
+
     `FORM`,
     `PRINT`,
   ];
@@ -491,7 +489,7 @@ export function on_get_cpcl_str_order_dryclean_out_factory(_order: OrderInfo<Pro
     `CONTRAST 3`,
 
     `LEFT`,
-    `${T_0} 0 ${X0} ${Y_} ${format(coo___ios_date(_order?.lastPrintTime ?? coo___ios_date().getTime()), "yyyy-MM-dd HH:mm:ss")} 码: ${_order.productList?.[0]?.code}`,
+    `${T_0} 0 ${X0} ${Y_} ${format(coo___ios_date(_order?.lastPrintTime ?? coo___ios_date().getTime()), "yyyy-MM-dd HH:mm:ss")} 码: ${_order.__product?.code}`,
     `LINE ${X0} ${Y_ += 25} ${P_w} ${Y_} ${L_H}`, // -----------
 
     `SETMAG 2 2`,
@@ -499,7 +497,7 @@ export function on_get_cpcl_str_order_dryclean_out_factory(_order: OrderInfo<Pro
     `SETMAG 0 0`,
 
     `LEFT`,
-    `BARCODE 128 2 2 60 ${X0 + 60} ${Y_} ${_order.productList?.[0]?.code}`,
+    `BARCODE 128 2 2 60 ${X0 + 60} ${Y_} ${_order.__product?.code}`,
     `LINE ${X0} ${Y_ += 60 + 5} ${P_w} ${Y_} ${L_H}`, // -----------
     `LEFT`,
     `SETMAG 2 2`,
