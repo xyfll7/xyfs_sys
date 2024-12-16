@@ -10,6 +10,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages_regiment/regiment_orders_express",
+          "pathName": "pages_regiment/regiment_orders_express",
+          "query": "order_ST=2",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages_comm/icomm_orders_groupbuying",
           "pathName": "pages_comm/icomm_orders_groupbuying",
           "query": "order_ST=2",
@@ -523,5 +530,5 @@
       ]
     }
   },
-  "libVersion": "3.6.3"
+  "libVersion": "3.7.1"
 }
