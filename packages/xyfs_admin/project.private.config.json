@@ -10,6 +10,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages_comm/comm__express_path",
+          "pathName": "pages_comm/comm__express_path",
+          "query": "express_share_id=1840587353384153088",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages_regiment/regiment_orders_express",
           "pathName": "pages_regiment/regiment_orders_express",
           "query": "order_ST=2",

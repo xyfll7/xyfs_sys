@@ -19,7 +19,7 @@ import { Taro_getCurrentInstance } from "../utils/try_catch";
 const CPExpressPath: FC = () => {
   const { options } = Taro_getCurrentInstance<{ express_share_id?: string; }>();
   const [order, setOrder] = useState<OrderInfo<ProductBase> | null>(null);
-  const [path, setPath] = useState<{ description: string, time: string; }[] | null>(null);
+  const [path, setPath] = useState<{ waybillId: string; path: { description: string, time: string; }[]; }[] | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -27,7 +27,7 @@ const CPExpressPath: FC = () => {
         const _order = await Api_order_query_ctn({ orderId: options?.express_share_id?.trim() });
         setOrder(_order);
         const res = await Api_logistic_query_ctn({ orderId: _order.id!, });
-        setPath(res);
+        setPath([...res]);
       }
     })();
   }, [options.express_share_id]);
@@ -50,25 +50,27 @@ const CPExpressPath: FC = () => {
       }
       {Boolean(path?.length) &&
         <>
-          <View className='bccwhite IOO pt10 mb10 dll ww'>
-            <View>
-              {path?.map((e) => {
-                return (
-                  <View key={e.time} className='ds prl10 '>
+          {path?.map((e) => {
+            return <View key={e.waybillId} >
+              <ComButton className='bcctrans mb10 cccplh' hoverClass='none'>运单号：{e.waybillId}</ComButton>
+              <View className='bccwhite IOO pt10 mb10 dll ww'>
+                {e.path.map(ee => {
+                  return <View key={ee.time} className='ds prl10 '>
                     <ComSquare className='mr10 dxy bcctrans' style={{ height: "calc(1.4 * var(--rem_base))" }}>
                       <ComSquare className='oo bccgreen' style={{ width: "calc(0.5625 * var(--rem_base))" }} />
                     </ComSquare>
                     <ComButton ll className='mb10 ww'>
                       <View>
-                        <View>{e.description.replace(/【/g, "[").replace(/】/g, "] ")}</View>
-                        <View className='cccplh fs08'>{e.time}</View>
+                        <View>{ee.description.replace(/【/g, "[").replace(/】/g, "] ")}</View>
+                        <View className='cccplh fs08'>{ee.time}</View>
                       </View>
                     </ComButton>
-                  </View>
-                );
-              })}
-            </View>
-          </View>
+                  </View>;
+                })}
+              </View>
+
+            </View>;
+          })}
           <MMMAdBanner className='mb10' />
         </>
       }

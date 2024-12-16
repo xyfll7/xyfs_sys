@@ -50,7 +50,7 @@ export async function Api_logistic_queryStock_ctn(params: { deliveryId: string, 
   return res;
 }
 export async function Api_logistic_query_ctn(params: { orderId?: string, outTradeNo?: string; }) {
-  const res = await wx_call_container<{ description: string, time: string; }[]>({
+  const res = await wx_call_container<{ waybillId: string; path: { description: string, time: string; }[]; }[]>({
     path: "/logistic/query",
     data: { ...params }
   });
