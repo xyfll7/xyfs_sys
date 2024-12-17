@@ -41,7 +41,6 @@ const CPAddressList: FC = () => {
     }), [addressType, searchValue, selfInfo_S.OPENID]);
   const { page, page_loading, page_list_get, page_list_update, page_init } = useHook_pageListNew(___page_getter);
 
-  console.log("UUOOO::", page);
   const [initProvinceCityArea, setInitProvinceCityArea] = useState<{ province: string, city: string, area: string; } | null>(null);
 
   const [initAddress, setInitAddress] = useState<AddressInfo | null>(null);
