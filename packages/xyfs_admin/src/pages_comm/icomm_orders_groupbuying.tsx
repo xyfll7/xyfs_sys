@@ -51,7 +51,7 @@ const Index: FC<{}> = ({ }) => {
       <ComListTypeSelectorNew className='' disabled={page_loading} enumData={Order_ST} typeList={[Order_ST.已付款, Order_ST.已退款]} tabType={orderType} setTab={(e) => { page_init(); setOrderType(e); }}></ComListTypeSelectorNew>
       <ComSearcher className='mb10' onSetSearchValue={(e) => { page_init(); setSearchValue(e); }} ></ComSearcher>
     </ComNav>
-    <ComScrollView>
+    <ComScrollView onScrollToLower={async () => { await page_list_get(page); }}>
       {page.list?.map((order) => {
         if (order.orderType === Product_category_ST.团购) {
           return <IIIOrderCard order={order} key={order.id}
