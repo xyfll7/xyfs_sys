@@ -10,7 +10,7 @@ import { ComNavBarA } from "@xyfs/taro_uii/components/ComNavBarA";
 import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
 import { ComSELFView, MMMAAPage } from "@xyfs/taro_uii/components/MMMAAPage";
 import { useHook_pageListNew } from "@xyfs/taro_uii/utils/useHooks";
-import { utils_open_excle } from "@xyfs/taro_uii/utils/util";
+import { utils_open_excel } from "@xyfs/taro_uii/utils/util";
 import { coo___ios_date } from "@xyfs/utils/util";
 import { differenceInMinutes, format } from "date-fns";
 import { FC, useCallback } from "react";
@@ -51,7 +51,7 @@ const Index: FC<{}> = ({ }) => {
 
             if (e.url) {
               Taro.showLoading({ mask: true, title: "下载中..." });
-              await utils_open_excle({ url: e.url, file_name: `${file_name}_对账单_${format(coo___ios_date(e.createTime), "yyyy_MM_dd_HH_mm_ss")}.xlsx` });
+              await utils_open_excel({ url: e.url, file_name: `${file_name}_对账单_${format(coo___ios_date(e.createTime), "yyyy_MM_dd_HH_mm_ss")}.xlsx` });
               Taro.showToast({ icon: "none", title: "下载成功" });
             } else {
               throw new Error("正在下载，请稍后");
