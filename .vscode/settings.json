@@ -69,5 +69,8 @@
     // "**/*.gitignore": true,
     // "**/*.md": true,
     // "**/*LICENSE": true,
-  }
+  },
+  "cSpell.words": [
+    "CODABAR"
+  ]
 }
