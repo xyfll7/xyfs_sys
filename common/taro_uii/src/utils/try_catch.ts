@@ -5,6 +5,7 @@ import { AddressInfo } from "../../types/type_user";
 import { get_Taro_ctn } from "../api/wx_call";
 import { ErrorR } from "../config";
 import { getMyEnv } from "../env";
+import { utils_str_includes } from "./util";
 
 
 
@@ -16,7 +17,7 @@ async function try_Taro_scanCode<T>(params?: Taro.scanCode.Option & { type?: key
     if (!type) { return res as any; }
     if (res.scanType === "QR_CODE" && type === "QR_CODE") {
       return res.result as T;
-    } else if (res.scanType.includes("CODE") && (type === "CODE_128" || type === "CODABAR")) {
+    } else if (utils_str_includes(["CODABAR", "CODE_128"], res.scanType) && (type === "CODE_128" || type === "CODABAR")) {
       return res.result as T;
     } else if (res.scanType === "WX_CODE") {
       return coo___urlToObj<T>(res.path);
