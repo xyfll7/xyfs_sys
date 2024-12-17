@@ -174,11 +174,11 @@ export async function try_Taro_openDocument(params: Taro.openDocument.Option) {
     throw new Error("打开文件失败");
   }
 }
-export async function try_Taro_showActionSheet(option: Taro.showActionSheet.Option & { suffix?: string; }): Promise<[number, string]> {
+export async function try_Taro_showActionSheet<T>(option: Taro.showActionSheet.Option & { suffix?: string; }): Promise<[number, T]> {
   try {
     const res_action = await Taro.showActionSheet({ ...option, itemList: option.itemList.map(e => `${e}${option.suffix ?? ""}`) });
     if (res_action.errMsg == "showActionSheet:ok") {
-      return [res_action.tapIndex, option.itemList[res_action.tapIndex]!];
+      return [res_action.tapIndex, option.itemList[res_action.tapIndex]! as T];
     } else {
       throw new Error(`取消`);
     }

@@ -196,10 +196,20 @@ export async function Api_user_savePrinter_ctn(params: {
   return res;
 
 }
+export async function Api_user_print_ctn(params: {
+  "id": 0,
+  "waybillPrinterData": string;
+}) {
+  const res = await wx_call_container<void>({
+    path: "/user/print",
+    data: { ...params },
+  });
+  return res;
+}
 export async function Api_user_print_captcha_ctn(params: {
   printerId: string;
 }) {
-  const res = await wx_call_container<Printer_Info>({
+  const res = await wx_call_container<void>({
     path: "/user/print/captcha",
     data: { ...params },
   });

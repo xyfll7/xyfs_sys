@@ -10,6 +10,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages_regiment/regiment_bind_cloudPrinter",
+          "pathName": "pages_regiment/regiment_bind_cloudPrinter",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages_comm/comm__express_path",
           "pathName": "pages_comm/comm__express_path",
           "query": "express_share_id=1840587353384153088",

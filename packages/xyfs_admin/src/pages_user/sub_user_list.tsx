@@ -131,7 +131,7 @@ const IIImyUserCardAGENT: FC<{ myUser: BaseUserInfo; }> = ({ myUser }) => {
             }
           }
 
-          const [, res_item] = await try_Taro_showActionSheet({ alertText: "清选择要打印的张数", itemList: ["1", "20", "50", "100", "150", "200"], suffix: "张" });
+          const [, res_item] = await try_Taro_showActionSheet<string>({ alertText: "清选择要打印的张数", itemList: ["1", "20", "50", "100", "150", "200"], suffix: "张" });
 
           Taro.showLoading({ mask: true, title: "获取中..." });
           const res_list = await Api_common_batchGenerateCode({ batchNumber: Number(res_item), regimentId: myUser.id! });
