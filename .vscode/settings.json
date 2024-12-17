@@ -70,7 +70,4 @@
     // "**/*.md": true,
     // "**/*LICENSE": true,
   },
-  "cSpell.words": [
-    "CODABAR"
-  ]
 }
