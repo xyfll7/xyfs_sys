@@ -222,10 +222,9 @@ export const ComCardOrderBringGoods: FC<{
             </View>
             {e?.waybillId && <View className='cccplh dy ww' >
               <Text className='nw1' onClick={() => try_Taro_setClipboardData({ data: e.waybillId! })}>运单号:{e?.waybillId}</Text>  <Text className='nw'>/{e.printTimes ?? 0}</Text>
-              <Text className='cccgreen  prl10'
-                onClick={async () => {
-                  await try_Taro_navigateTo({ url: `/pages_comm/comm__express_path?${coo___objToUrl({ express_share_id: order.id })}` });
-                }}>轨迹</Text>
+              <Text className='cccgreen prl10' onClick={async () => {
+                await try_Taro_navigateTo({ url: `/pages_comm/comm__express_path?${coo___objToUrl({ express_share_id: order.id })}` });
+              }}>轨迹</Text>
             </View>}
           </View>
         </View>;
