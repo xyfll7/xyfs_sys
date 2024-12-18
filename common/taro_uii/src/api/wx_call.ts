@@ -61,7 +61,7 @@ export async function wx_call_container<OUT = void>({ path, data, params, method
     throw new Error("云托管初始化失败");
   }
 }
-let ___ctn: Taro.Cloud;
+let ___ctn: Taro.Cloud | undefined;
 export async function get_Taro_ctn() {
   if (___ctn) {
     return ___ctn;
