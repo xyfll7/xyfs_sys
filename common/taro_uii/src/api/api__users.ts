@@ -271,8 +271,8 @@ export async function Api_dept_del_ctn(params: {
   });
   return res;
 }
-export async function Api_dept_list_ctn(params: {}) {
-  const res = await wx_call_container<Printer_Info>({
+export async function Api_dept_list_ctn(params?: {}) {
+  const res = await wx_call_container<any[]>({
     path: "/dept/list",
     data: { ...params },
   });
