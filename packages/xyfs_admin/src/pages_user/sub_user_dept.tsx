@@ -1,14 +1,19 @@
 // :: pages_user/sub_user_dept
 import { Text, View } from "@tarojs/components";
-import { Api_dept_list_ctn } from "@xyfs/taro_uii/api/api__users";
+import Taro from "@tarojs/taro";
+import { Api_dept_add_ctn, Api_dept_del_ctn, Api_dept_list_ctn } from "@xyfs/taro_uii/api/api__users";
 import { ComButton } from '@xyfs/taro_uii/components/ComButton';
 import { ComInput } from "@xyfs/taro_uii/components/ComInput";
 import { ComLoading } from "@xyfs/taro_uii/components/ComLoading";
 import { ComNav } from '@xyfs/taro_uii/components/ComNav';
 import { ComNavBarA } from '@xyfs/taro_uii/components/ComNavBarA';
+import { ComNavBarB } from "@xyfs/taro_uii/components/ComNavBarB";
+import { ComPopupNew } from "@xyfs/taro_uii/components/ComPopupNew";
 import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
+import { try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
+import { useHook_Reducer } from "@xyfs/taro_uii/utils/useHooks";
 import { FC, useEffect, useState } from "react";
 
 definePageConfig({
@@ -22,12 +27,16 @@ const Index: FC<{}> = ({ }) => {
   const selfInfo_S = useSTSelf(e => e.selfInfo);
 
   const [depts, setDepts] = useState<any[]>();
-  useEffect(() => {
-    (async () => {
-      const res = await Api_dept_list_ctn();
-      setDepts(res);
-    })();
-  }, []);
+  useEffect(() => { ___Api_dept_list_ctn(); }, []);
+  async function ___Api_dept_list_ctn() {
+    setDepts(undefined);
+    const res = await Api_dept_list_ctn();
+    setDepts(res);
+  }
+  const [dept, setDept] = useState<any>(null);
+
+
+
 
   return <MMMAAPage>
     <ComNav>
@@ -36,23 +45,51 @@ const Index: FC<{}> = ({ }) => {
           <ComButton ll className='bcctrans cccplh ml10' >修改配置</ComButton>
         </ComNavBarA>
       </View>
-      <View className='mb10 ww dy'>
-        <ComButton className='bccbacktab ww mr10'>
-          <ComInput placeholder='请填写部门名称'></ComInput>
-        </ComButton>
-        <ComButton className='nw' onClick={async()=> {
-
-        }}>新增</ComButton>
-      </View>
     </ComNav>
     <ComScrollView>
       {depts === undefined && <ComLoading />}
       {depts?.length === 0 && <ComButton>没有数据</ComButton>}
-      {depts?.map(e => <View className='bccwhite ioo ovh pt10 dll ww mb10' key={e.id}>
-        <ComButton className='mb10'> <Text className='cccplh '>部门名称：</Text> {e.deptName}</ComButton>
+      {depts?.map(e => <View className='bccwhite ioo ovh pt10 dll ww mb10 ' key={e.id}>
+        <ComButton className='mb10 '>
+          <View className='nw1'><Text className='cccplh '>部门名称：</Text> {e.deptName}</View>
+        </ComButton>
+        <View className='ww dr pr10'>
+          <ComButton rr className='mb10 cccplh bborder' onClick={async () => {
+            const res = await try_Taro_showModal({ title: "提示", content: "您确定要删除该部门？" });
+            if (res) {
+              Taro.showLoading({ mask: true, title: "删除中" });
+              await Api_dept_del_ctn({ deptId: e.deptId });
+              Taro.showToast({ icon: "none", title: "成功" });
+              await ___Api_dept_list_ctn();
+            }
+          }}>删除</ComButton>
+          <ComButton rr className='ml10 mb10 bborder' onClick={() => { setDept(e); }}>添加</ComButton>
+        </View>
+
       </View>)}
     </ComScrollView>
+    {dept && <ComPopupNew onClose={() => setDept(null)}>
+      <View className='dll prl10' style={{ height: "70vh" }}>
+        <ComNavBarB className='mb10' onClose={() => setDept(null)}>
+          <View className='dy'><ComButton className='fwb bccback'>实名认证</ComButton></View>
+        </ComNavBarB>
+        <IIIAddDept dept={dept} onSuccess={() => { setDept(null); ___Api_dept_list_ctn(); }}></IIIAddDept>
+      </View>
+    </ComPopupNew>}
   </MMMAAPage>;
 };
 
-
+const IIIAddDept = ({ dept, onSuccess }: { dept: any; onSuccess: () => void; }) => {
+  const [form, setForm] = useHook_Reducer({ deptName: "" });
+  return <View className='mb10 ww dy'>
+    <ComButton className='bccbacktab ww mr10'>
+      <ComInput placeholder='请填写部门名称' value={form.deptName} onInput={(e) => setForm({ deptName: e.detail.value })}></ComInput>
+    </ComButton>
+    <ComButton className='nw' onClick={async () => {
+      Taro.showLoading({ mask: true, title: "新增中..." });
+      await Api_dept_add_ctn({ deptName: form.deptName, parentId: dept.deptId });
+      Taro.showToast({ icon: "none", title: "成功" });
+      onSuccess();
+    }}>新增</ComButton>
+  </View>;
+};
