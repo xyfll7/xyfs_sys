@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-
+import GBK from "@xyfs/utils/gbk";
 import { coo___JSON_str_code, coo___async_sleep, coo___divide_array_to_n_parts, coo___ios_date, coo___privacy_phone } from "@xyfs/utils/util";
 import { format } from "date-fns";
 import { useEffect, useState, useSyncExternalStore } from "react";
@@ -12,7 +12,6 @@ import { useSTBlueDevices, useSTSelf } from "../../store/store";
 import { try_Taro_navigateTo, try_Taro_showActionSheet, try_Taro_showModal } from "../try_catch";
 import { utils_addressInfoToString, utils_get_cloud_printer, utils_str_includes } from "../util";
 import { Blue___closeBluetoothAdapter, Blue___openBluetoothAdapter, Blue_connect_closeBLEConnection, Blue_connect_createBLEConnection, Blue_connect_getBLEDeviceCharacteristics, Blue_connect_getBLEDeviceServices, Blue_connect_writeBLECharacteristicValue, Blue_getBluetoothDevices, Blue_getConnectedBluetoothDevices, Blue_onBluetoothAdapterStateChange, Blue_startBluetoothDevicesDiscovery, Blue_stopBluetoothDevicesDiscovery } from "./bluetooth";
-import GBK from "./gbk.min";
 
 /**
  * @汉印 https://www.docin.com/p-2160105026.html?docfrom=rrela

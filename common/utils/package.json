@@ -9,6 +9,10 @@
     "access": "public"
   },
   "exports": {
+    "./gbk": {
+      "types": "./src/gbk.ts",
+      "import": "./src/gbk.ts"
+    },
     "./util": {
       "types": "./src/util.ts",
       "import": "./src/util.ts"
