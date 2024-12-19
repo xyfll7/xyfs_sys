@@ -240,7 +240,7 @@ export function on_get_cpcl_str_test(blue_device: Taro.onBluetoothDeviceFound.Ca
       `SIZE 110 mm,30 mm`,
       `GAP 0 mm,0 mm`,  //
       `SET CUTTER BATCH`, // 在 PRINT 命令结束后切纸
-      `FEED 10`,
+      `FEED 10`, // 该指令用于将标签纸向前推送指定的长度
       `CLS`, // 清除缓冲区数据
       `BAR 10,75,455,5`, // 该指令用于在标签上画线 BAR x,y,width,height 单位 dot  1 mm = 8 dots
       `TEXT 10,20,"TSS24.BF2",0,2,2,"打印测试TSPL"`,
@@ -260,78 +260,95 @@ export function on_get_cpcl_str_test(blue_device: Taro.onBluetoothDeviceFound.Ca
   throw new Error("不支持该打印机2");
 }
 
-export function on_get_printer_str_order_express(_order: OrderInfo<Product_Express>, blue_device: Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice) {
+export function on_get_printer_str_order_express(_order: OrderInfo<Product_Express>, blue_device: Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice, type: "cpcl" | "tspl") {
   _order = JSON.parse(JSON.stringify(_order, coo___JSON_str_code));
-  const T_0 = utils_str_includes(["快递100"], blue_device.name) ? "TEXT 0" : "TEXT 1";
-  const L_H = 3;
-  const X0 = 5;
-  let Y_ = 0;
-  const P_w = ((76 - 5) * 8);
-  const P_h = (130 - 5) * 8;
-
   const recAddr = `${_order.__product?.recMan?.province} ${_order.__product?.recMan?.city} ${_order.__product?.recMan?.area} ${_order.__product?.recMan?.address}`;
   const sendAddr = `${_order.__product?.sendMan?.province} ${_order.__product?.sendMan?.city} ${_order.__product?.sendMan?.area} ${_order.__product?.sendMan?.address}`;
   const sendManName = `${_order.__product?.sendMan?.realName?.charAt(0)}* ${_order.__product?.sendMan?.mobile?.slice(0, 3)}****${_order.__product?.sendMan?.mobile?.slice(-4)}`.slice(0, 20);
-  const arr_content = [
-    `PW ${P_w}`,
-    `CONTRAST 3`,
 
-    `LEFT`,
-    `${T_0} 0 ${X0} ${Y_ = 60} ${format(coo___ios_date(_order?.lastPrintTime ?? coo___ios_date().getTime()), "yyyy-MM-dd HH:mm:ss")}`,
-    `LINE ${X0} ${Y_ += 26} ${P_w} ${Y_} ${L_H}`, // -----------
+  if (type === "cpcl") {
+    const T_0 = utils_str_includes(["快递100"], blue_device.name) ? "TEXT 0" : "TEXT 1";
+    const L_H = 3;
+    const X0 = 5;
+    let Y_ = 0;
+    const P_w = ((76 - 5) * 8);
+    const P_h = (130 - 5) * 8;
+    const arr_page = [`! 0 200 200 ${P_h} 1`];
+    const arr_content = [
+      `PW ${P_w}`,
+      `CONTRAST 3`,
 
-    `CENTER`,
-    `BARCODE 128 2 2 80 ${X0} ${Y_ += 10} ${_order.__product?.waybillId}`,
-    `${T_0} 0 ${X0} ${Y_ += 80 + 10} ${_order.__product?.waybillId}`,
-    `LINE ${X0} ${Y_ += 40} ${P_w} ${Y_} ${L_H}`, // -----------
+      `LEFT`,
+      `${T_0} 0 ${X0} ${Y_ = 60} ${format(coo___ios_date(_order?.lastPrintTime ?? coo___ios_date().getTime()), "yyyy-MM-dd HH:mm:ss")}`,
+      `LINE ${X0} ${Y_ += 26} ${P_w} ${Y_} ${L_H}`, // -----------
 
-    `SETMAG 2 2`,
-    `${T_0} 0 ${X0} ${Y_ += 10} ${_order.__product?.bigWord ?? ""}`,
-    `LINE ${X0} ${Y_ += 60} ${P_w} ${Y_} ${L_H}`, // -----------
+      `CENTER`,
+      `BARCODE 128 2 2 80 ${X0} ${Y_ += 10} ${_order.__product?.waybillId}`,
+      `${T_0} 0 ${X0} ${Y_ += 80 + 10} ${_order.__product?.waybillId}`,
+      `LINE ${X0} ${Y_ += 40} ${P_w} ${Y_} ${L_H}`, // -----------
 
-    `LEFT ${P_w}`,
-    `${T_0} 0 ${X0} ${Y_ += 10} 集`,
-    `${T_0} 0 ${X0 + 60} ${Y_} ${_order.__product?.packagePlace ?? ""}`,
-    `SETMAG 0 0`,
-    `LINE ${X0} ${Y_ += 60} ${P_w} ${Y_} ${L_H}`, // -----------
+      `SETMAG 2 2`,
+      `${T_0} 0 ${X0} ${Y_ += 10} ${_order.__product?.bigWord ?? ""}`,
+      `LINE ${X0} ${Y_ += 60} ${P_w} ${Y_} ${L_H}`, // -----------
 
-    `SETMAG 2 2`,
-    `${T_0} 0 ${X0} ${Y_ += 10} 收`,
-    `SETMAG 0 0`,
-    `${T_0} 0 ${X0 + 60} ${Y_} ${_order.__product?.recMan?.name} ${coo___privacy_phone(_order.__product?.recMan?.mobile)}`,
-    ...(() => coo___divide_array_to_n_parts(recAddr.split(""), 20)
-      .map(e => e.join(""))
-      .map(e => `${T_0} 0 ${X0 + 60} ${Y_ += 30} ${e}`)
-    )(),
-    `LINE ${X0} ${Y_ += 40} ${P_w} ${Y_} ${L_H}`, // -----------
+      `LEFT ${P_w}`,
+      `${T_0} 0 ${X0} ${Y_ += 10} 集`,
+      `${T_0} 0 ${X0 + 60} ${Y_} ${_order.__product?.packagePlace ?? ""}`,
+      `SETMAG 0 0`,
+      `LINE ${X0} ${Y_ += 60} ${P_w} ${Y_} ${L_H}`, // -----------
 
-    `SETMAG 2 2`,
-    `${T_0} 0 ${X0} ${Y_ += 10} 寄`,
-    `SETMAG 0 0`,
-    `${T_0} 0 ${X0 + 60} ${Y_} ${sendManName}`,
-    ...(() => coo___divide_array_to_n_parts(sendAddr.split(""), 20)
-      .map(e => e.join(""))
-      .map(e => `${T_0} 0 ${X0 + 60} ${Y_ += 30} ${e}`)
-    )(),
-    `LINE ${X0} ${Y_ += 40} ${P_w} ${Y_} ${L_H}`, // -----------
+      `SETMAG 2 2`,
+      `${T_0} 0 ${X0} ${Y_ += 10} 收`,
+      `SETMAG 0 0`,
+      `${T_0} 0 ${X0 + 60} ${Y_} ${_order.__product?.recMan?.name} ${coo___privacy_phone(_order.__product?.recMan?.mobile)}`,
+      ...(() => coo___divide_array_to_n_parts(recAddr.split(""), 20)
+        .map(e => e.join(""))
+        .map(e => `${T_0} 0 ${X0 + 60} ${Y_ += 30} ${e}`)
+      )(),
+      `LINE ${X0} ${Y_ += 40} ${P_w} ${Y_} ${L_H}`, // -----------
 
-    `CENTER`,
-    `BARCODE 128 2 2 80 ${X0} ${Y_ += 10} ${_order.__product?.waybillId}`,
-    `${T_0} 0 ${X0} ${Y_ += 80 + 10} ${_order.__product?.waybillId}`,
+      `SETMAG 2 2`,
+      `${T_0} 0 ${X0} ${Y_ += 10} 寄`,
+      `SETMAG 0 0`,
+      `${T_0} 0 ${X0 + 60} ${Y_} ${sendManName}`,
+      ...(() => coo___divide_array_to_n_parts(sendAddr.split(""), 20)
+        .map(e => e.join(""))
+        .map(e => `${T_0} 0 ${X0 + 60} ${Y_ += 30} ${e}`)
+      )(),
+      `LINE ${X0} ${Y_ += 40} ${P_w} ${Y_} ${L_H}`, // -----------
 
-    `LEFT ${P_w}`,
-    `SETMAG 2 2`,
-    `${T_0} 0 ${X0} ${Y_ += 40} 重量：${_order.__product?.weight} 公斤`,
-    `SETMAG 0 0`,
-    `LEFT ${P_w}`,
-    `${T_0} 0 ${X0} ${Y_ += 60} 团长：${_order.regimentName ?? '无'}`,
-    `${T_0} 0 ${X0} ${Y_ += 40} 品名：${_order.__product?.itemType}`,
-    `${T_0} 0 ${X0} ${Y_ += 40} 备注：${_order.__product?.itemNotes ?? "无"}`,
-    `FORM`,
-    `PRINT`,
-  ];
-  const arr_page = [`! 0 200 200 ${P_h} 1`];
-  return [...arr_page, ...arr_content].reduce((str, e) => `${str}\r\n${e}`);
+      `CENTER`,
+      `BARCODE 128 2 2 80 ${X0} ${Y_ += 10} ${_order.__product?.waybillId}`,
+      `${T_0} 0 ${X0} ${Y_ += 80 + 10} ${_order.__product?.waybillId}`,
+
+      `LEFT ${P_w}`,
+      `SETMAG 2 2`,
+      `${T_0} 0 ${X0} ${Y_ += 40} 重量：${_order.__product?.weight} 公斤`,
+      `SETMAG 0 0`,
+      `LEFT ${P_w}`,
+      `${T_0} 0 ${X0} ${Y_ += 60} 团长：${_order.regimentName ?? '无'}`,
+      `${T_0} 0 ${X0} ${Y_ += 40} 品名：${_order.__product?.itemType}`,
+      `${T_0} 0 ${X0} ${Y_ += 40} 备注：${_order.__product?.itemNotes ?? "无"}`,
+      `FORM`,
+      `PRINT`,
+    ];
+    return [...arr_page, ...arr_content].reduce((str, e) => `${str}\r\n${e}`);
+  } else if (type === "tspl") {
+    return [
+      `SIZE 72 mm, 127 mm`,
+      `CODEPAGE 437`, // 该指令用于选择对应的国际代码页  437:UnitedStates
+      `DENSITY 8`, // 该指令用于控制打印时的浓度
+      `CLS`, // 该指令用于清除图像缓冲区（image buffer)的数据
+      `CODEPAGE 936`, // 该指令用于选择对应的国际代码页  936:Chinese
+      `DIRECTION  0`, // 该指令用于定义打印时出纸和打印字体的方向
+      `TEXT 206,12,"0",0,1,1,"验证码 啊哈哈哈"`,
+      `PRINT 1,1` //该指令用于打印出存储于影像缓冲区内的数据
+    ].join("\r\n");
+  } else {
+    throw new Error("不支持该打机语法");
+  }
+
+
 }
 
 export function on_get_printer_str_order_bing_goods(_order: OrderInfo<Product_Dryclean>, blue_device: Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice) {
