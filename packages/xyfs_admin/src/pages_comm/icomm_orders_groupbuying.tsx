@@ -16,7 +16,7 @@ import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { Order_ST, Product_category_ST } from "@xyfs/taro_uii/src/config";
 import { roo___has_role, roo___role_getRoleInfo } from "@xyfs/taro_uii/src/roles";
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
-import { on_get_cpcl_str_order_bing_goods, on_get_cpcl_str_order_bing_goods_waybill, on_start_print } from "@xyfs/taro_uii/utils/bluetooth/useHooks_Blue";
+import { on_get_printer_str_order_bing_goods, on_get_printer_str_order_bing_goods_waybill, on_start_print } from "@xyfs/taro_uii/utils/bluetooth/useHooks_Blue";
 import { Taro_getCurrentInstance, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
 import { useHook_pageListNew, useHook_Reducer } from '@xyfs/taro_uii/utils/useHooks';
 import { utils_arr_includes } from "@xyfs/taro_uii/utils/util";
@@ -140,9 +140,9 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
             cpcl: products!.map((eee, index) => {
               const count = order.productList?.filter(e => e.waybillId === eee.waybillId).length;
               if (eee.waybillId) {
-                return on_get_cpcl_str_order_bing_goods_waybill({ ...order, __product: eee, __index: index, __count: count }, blue_device);
+                return on_get_printer_str_order_bing_goods_waybill({ ...order, __product: eee, __index: index, __count: count }, blue_device);
               } else {
-                return on_get_cpcl_str_order_bing_goods({ ...order, __product: eee, __index: index, __count: count }, blue_device);
+                return on_get_printer_str_order_bing_goods({ ...order, __product: eee, __index: index, __count: count }, blue_device);
               }
             })
           };

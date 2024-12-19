@@ -260,7 +260,7 @@ export function on_get_cpcl_str_test(blue_device: Taro.onBluetoothDeviceFound.Ca
   throw new Error("不支持该打印机2");
 }
 
-export function on_get_cpcl_str_order_express(_order: OrderInfo<Product_Express>, blue_device: Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice) {
+export function on_get_printer_str_order_express(_order: OrderInfo<Product_Express>, blue_device: Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice) {
   _order = JSON.parse(JSON.stringify(_order, coo___JSON_str_code));
   const T_0 = utils_str_includes(["快递100"], blue_device.name) ? "TEXT 0" : "TEXT 1";
   const L_H = 3;
@@ -334,7 +334,7 @@ export function on_get_cpcl_str_order_express(_order: OrderInfo<Product_Express>
   return [...arr_page, ...arr_content].reduce((str, e) => `${str}\r\n${e}`);
 }
 
-export function on_get_cpcl_str_order_bing_goods(_order: OrderInfo<Product_Dryclean>, blue_device: Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice) {
+export function on_get_printer_str_order_bing_goods(_order: OrderInfo<Product_Dryclean>, blue_device: Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice) {
   _order = JSON.parse(JSON.stringify(_order, coo___JSON_str_code));
   const T_0 = utils_str_includes(["快递100"], blue_device.name) ? "TEXT 0" : "TEXT 1";
   const L_H = 3;
@@ -402,7 +402,7 @@ export function on_get_cpcl_str_order_bing_goods(_order: OrderInfo<Product_Drycl
   const arr_page = [`! 0 200 200 ${P_h} 1`];
   return [...arr_page, ...arr_content].reduce((str, e) => `${str}\r\n${e}`);
 }
-export function on_get_cpcl_str_order_bing_goods_waybill(_order: OrderInfo<Product_Dryclean>, blue_device: Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice) {
+export function on_get_printer_str_order_bing_goods_waybill(_order: OrderInfo<Product_Dryclean>, blue_device: Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice) {
   _order = JSON.parse(JSON.stringify(_order, coo___JSON_str_code));
   const T_0 = utils_str_includes(["快递100"], blue_device.name) ? "TEXT 0" : "TEXT 1";
   const L_H = 3;
@@ -469,7 +469,7 @@ export function on_get_cpcl_str_order_bing_goods_waybill(_order: OrderInfo<Produ
 }
 
 
-export function on_get_cpcl_str_order_dryclean_out_factory(_order: OrderInfo<Product_Dryclean>, blue_device: Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice) {
+export function on_get_printer_str_order_dryclean_out_factory(_order: OrderInfo<Product_Dryclean>, blue_device: Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice) {
   _order = JSON.parse(JSON.stringify(_order, coo___JSON_str_code));
   const T_0 = utils_str_includes(["快递100"], blue_device.name) ? "TEXT 0" : "TEXT 1";
   const L_H = 3;
@@ -528,7 +528,7 @@ export function on_get_cpcl_str_order_dryclean_out_factory(_order: OrderInfo<Pro
 
 
 
-export function on_get_cpcl_str_order_dryclean_pre_barcodes(_order: PreBarCodeDryclean, blue_device: Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice) {
+export function on_get_printer_str_order_dryclean_pre_barcodes(_order: PreBarCodeDryclean, blue_device: Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice) {
   if (utils_str_includes(["Printer_"], blue_device.name)) {
     const is_DEV = getMyEnv().envVersion === "develop";
     let Y_ = 150; // +左 -右

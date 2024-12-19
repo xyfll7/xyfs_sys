@@ -17,7 +17,7 @@ import { roo___role_getRoleInfo } from "@xyfs/taro_uii/src/roles";
 import { useSTSelf } from "@xyfs/taro_uii/store/store";
 import { Pagination } from "@xyfs/taro_uii/type_index";
 import { OrderInfo, Product_Express } from "@xyfs/taro_uii/type_product";
-import { on_get_cpcl_str_order_express, on_start_print } from "@xyfs/taro_uii/utils/bluetooth/useHooks_Blue";
+import { on_get_printer_str_order_express, on_start_print } from "@xyfs/taro_uii/utils/bluetooth/useHooks_Blue";
 import { useHook_pageListNew, useHook_Reducer } from '@xyfs/taro_uii/utils/useHooks';
 import { coo___isNumber } from "@xyfs/utils/util";
 import { FC, useCallback } from "react";
@@ -61,7 +61,7 @@ const Index: FC = () => {
                     onClick={async () => {
                       const _order = ee;
                       await on_start_print((blue_device) => {
-                        return { cpcl: _order.productList!.map(eee => on_get_cpcl_str_order_express({ ..._order, __product: eee, }, blue_device)) };
+                        return { cpcl: _order.productList!.map(eee => on_get_printer_str_order_express({ ..._order, __product: eee, }, blue_device)) };
                       }, { orderId: _order.id!, selfInfo_S: useSTSelf.getState().selfInfo });
                       page_list_update((p) => ({ ...p, list: p.list!.map(item => item.id === ee.id ? { ...ee, printTimes: coo___isNumber(ee.printTimes) ? ee.printTimes! + 1 : 1 } : item) }));
                       Taro.showLoading({ mask: true, title: "更新打印次数..." });

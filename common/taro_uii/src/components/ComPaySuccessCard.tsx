@@ -5,7 +5,7 @@ import { Api_logistic_waybill_ctn } from "../api/api__logistics";
 import { Api_order_incrPrintTimes_ctn, Api_order_pay_ctn } from "../api/api__orders";
 import { Order_ST } from "../config";
 import { useSTExpress, useSTSelf } from "../store/store";
-import { on_get_cpcl_str_order_express, on_start_print } from "../utils/bluetooth/useHooks_Blue";
+import { on_get_printer_str_order_express, on_start_print } from "../utils/bluetooth/useHooks_Blue";
 import { try_Taro_requestPayment, try_Taro_setClipboardData } from "../utils/try_catch";
 import { ComButton } from "./ComButton";
 import { ComNavBarB } from "./ComNavBarB";
@@ -97,7 +97,7 @@ export function ComPaySuccessCard() {
 
                       const _order = useSTExpress.getState().express!;
                       await on_start_print((blue_device) => {
-                        return { cpcl: _order.productList!.map(eee => on_get_cpcl_str_order_express({ ..._order, __product: eee }, blue_device)) };
+                        return { cpcl: _order.productList!.map(eee => on_get_printer_str_order_express({ ..._order, __product: eee }, blue_device)) };
                       }, { orderId: _order.id!, selfInfo_S });
                       Taro.showLoading({ mask: true, title: "更新打印次数..." });
                       await Api_order_incrPrintTimes_ctn({ orderId: _order.id!, }); // 增加打印次数
@@ -107,7 +107,7 @@ export function ComPaySuccessCard() {
                   <ComButton className='bccyellow ' onClick={async () => {
                     const _order = express_S;
                     await on_start_print((blue_device) => {
-                      return { cpcl: _order.productList!.map(eee => on_get_cpcl_str_order_express({ ..._order, __product: eee }, blue_device)) };
+                      return { cpcl: _order.productList!.map(eee => on_get_printer_str_order_express({ ..._order, __product: eee }, blue_device)) };
                     }, { orderId: _order.id!, selfInfo_S });
                     Taro.showLoading({ mask: true, title: "更新打印次数..." });
                     await Api_order_incrPrintTimes_ctn({ orderId: _order.id!, }); // 增加打印次数

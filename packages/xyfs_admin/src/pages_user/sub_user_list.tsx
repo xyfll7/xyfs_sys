@@ -16,7 +16,7 @@ import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { getMyEnv } from "@xyfs/taro_uii/src/env";
 import { roo___has_role } from "@xyfs/taro_uii/src/roles";
 import { useSTBlueDevices, useSTDicts, useSTSelf } from '@xyfs/taro_uii/store/store';
-import { on_get_cpcl_str_order_dryclean_pre_barcodes, on_start_print } from "@xyfs/taro_uii/utils/bluetooth/useHooks_Blue";
+import { on_get_printer_str_order_dryclean_pre_barcodes, on_start_print } from "@xyfs/taro_uii/utils/bluetooth/useHooks_Blue";
 import { try_Taro_navigateTo, try_Taro_showActionSheet, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
 import { useHook_pageListNew, useHook_Reducer } from '@xyfs/taro_uii/utils/useHooks';
 import { utils_addressInfoToString, utils_get_start_end_date, utils_str_includes } from "@xyfs/taro_uii/utils/util";
@@ -138,7 +138,7 @@ const IIImyUserCardAGENT: FC<{ myUser: BaseUserInfo; }> = ({ myUser }) => {
           Taro.showLoading({ mask: true, title: "生成中..." });
           const arr_new: PreBarCodeDryclean[] = res_list.map((ee,) => ({ mobile: myUser.mobile!, name: myUser.name!, code: ee }));
           Taro.showLoading({ mask: true, title: "开始打印..." });
-          await on_start_print((blue_device) => ({ cpcl: arr_new.map(eee => on_get_cpcl_str_order_dryclean_pre_barcodes({ ...eee }, blue_device)) }));
+          await on_start_print((blue_device) => ({ cpcl: arr_new.map(eee => on_get_printer_str_order_dryclean_pre_barcodes({ ...eee }, blue_device)) }));
         }}>生成干洗条码</ComButton>
         }
 

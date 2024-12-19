@@ -18,7 +18,7 @@ import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { Order_ST, Refund_ST } from "@xyfs/taro_uii/src/config";
 import { IM_线上_收款码 } from "@xyfs/taro_uii/src/image";
 import { useSTSelf } from "@xyfs/taro_uii/store/store";
-import { on_get_cpcl_str_order_express, on_start_print } from "@xyfs/taro_uii/utils/bluetooth/useHooks_Blue";
+import { on_get_printer_str_order_express, on_start_print } from "@xyfs/taro_uii/utils/bluetooth/useHooks_Blue";
 import { Taro_getCurrentInstance, try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
 import { useHook_pageListNew, useHook_Reducer } from '@xyfs/taro_uii/utils/useHooks';
 import { coo___ios_date, coo___isNumber } from "@xyfs/utils/util";
@@ -100,7 +100,10 @@ const Index: FC<{}> = ({ }) => {
             onPrint={async (ee) => {
               const _order = ee;
               await on_start_print((blue_device) => {
-                return { cpcl: _order.productList!.map(eee => on_get_cpcl_str_order_express({ ..._order, __product: eee, }, blue_device)) };
+                return {
+                  cpcl: _order.productList!.map(eee => on_get_printer_str_order_express({ ..._order, __product: eee, }, blue_device)),
+                  tspl: _order.productList!.map(eee => on_get_printer_str_order_express({ ..._order, __product: eee, }, blue_device)),
+                };
               }, { orderId: _order.id!, selfInfo_S: useSTSelf.getState().selfInfo });
               page_list_update((p) => ({
                 ...p,
