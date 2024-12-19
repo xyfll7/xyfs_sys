@@ -46,7 +46,7 @@ const Index: FC = () => {
         <View className='prl10 mb10 dbtc ww'>
           <ComButton className='cccplh' >我的打印机设备</ComButton>
           <ComButton className='cccgreen  bccwhite ' onClick={async () => {
-            await on_start_print((blue_device) => [on_get_cpcl_str_test(blue_device)]);
+            await on_start_print((blue_device) => ({ cpcl: [on_get_cpcl_str_test(blue_device)] }));
             Taro.showToast({ icon: "none", title: "打印任务提交成功", });
           }}>打印测试
           </ComButton>

@@ -138,9 +138,8 @@ const IIImyUserCardAGENT: FC<{ myUser: BaseUserInfo; }> = ({ myUser }) => {
           Taro.showLoading({ mask: true, title: "生成中..." });
           const arr_new: PreBarCodeDryclean[] = res_list.map((ee,) => ({ mobile: myUser.mobile!, name: myUser.name!, code: ee }));
           Taro.showLoading({ mask: true, title: "开始打印..." });
-          await on_start_print((blue_device) => arr_new.map(eee => on_get_cpcl_str_order_dryclean_pre_barcodes({ ...eee }, blue_device)));
+          await on_start_print((blue_device) => ({ cpcl: arr_new.map(eee => on_get_cpcl_str_order_dryclean_pre_barcodes({ ...eee }, blue_device)) }));
         }}>生成干洗条码</ComButton>
-
         }
 
         <ComButton rr className='cccgreen bborder mb10 ml10' url={`/pages_user/sub_user_edit?userId=${myUser.id}`}>修改配置</ComButton>

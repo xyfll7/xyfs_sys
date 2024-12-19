@@ -41,13 +41,14 @@ const Index: FC<{}> = ({ }) => {
         id: "309",
         waybillPrinterData: [
           `SIZE 72 mm, 127 mm`,
-          `CODEPAGE 437`,
-          `DENSITY 8`,
-          `CLS`,
-          `CODEPAGE 936`,
-          `DIRECTION  0`,
+          `CODEPAGE 437`, // 该指令用于选择对应的国际代码页  437:UnitedStates
+          `DENSITY 8`, // 该指令用于控制打印时的浓度
+          `CLS`, // 该指令用于清除图像缓冲区（image buffer)的数据
+          `CODEPAGE 936`, // 该指令用于选择对应的国际代码页  936:Chinese
+          `DIRECTION  0`, // 该指令用于定义打印时出纸和打印字体的方向
           `TEXT 206,12,"0",0,1,1,"验证码 啊哈哈哈"`,
-          `PRINT 1,1`].join("\n")
+          `PRINT 1,1` //该指令用于打印出存储于影像缓冲区内的数据
+        ].join("\n")
       });
     }}>打印猿打印测试</ComButton>
   </View>;

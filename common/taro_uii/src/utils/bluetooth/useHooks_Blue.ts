@@ -123,7 +123,7 @@ export function useINHooks_Blue_devices() {
 
 
 
-export async function on_start_print(___cb: (blue_device: Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice) => string[], options?: { orderId?: string, selfInfo_S?: BaseUserInfo | null; }): Promise<void> {
+export async function on_start_print(___cb: (blue_device: Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice) => { cpcl: string[], tspl?: string[]; }, options?: { orderId?: string, selfInfo_S?: BaseUserInfo | null; }): Promise<void> {
 
   const tapIndex = await (async () => {
     if (options?.selfInfo_S && options.selfInfo_S.printers && options.selfInfo_S.printers.length && options.orderId) {
@@ -144,7 +144,7 @@ export async function on_start_print(___cb: (blue_device: Taro.onBluetoothDevice
 
 
     Taro.showLoading({ mask: true, title: "打印中...", });
-    const reporter = await ___startBluePrinterPrint(_blue_device, ___cb(_blue_device));
+    const reporter = await ___startBluePrinterPrint(_blue_device, ___cb(_blue_device).cpcl);
 
     if (reporter?.errMsg.includes("ok")) {
       Taro.showToast({ icon: "none", title: "打印完成", });

@@ -136,14 +136,16 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
       {model === "print" && order.orderStatus === 2 && roo___has_role(selfInfo_S, ['MERCHANT']) && <ComButton rr className='ml10 bborder mb10 nw' onClick={async () => {
         if (!products.length) { Taro.showToast({ icon: "none", title: "至少选择一件商品" }); return; }
         await on_start_print((blue_device) => {
-          return products!.map((eee, index) => {
-            const count = order.productList?.filter(e => e.waybillId === eee.waybillId).length;
-            if (eee.waybillId) {
-              return on_get_cpcl_str_order_bing_goods_waybill({ ...order, __product: eee, __index: index, __count: count }, blue_device);
-            } else {
-              return on_get_cpcl_str_order_bing_goods({ ...order, __product: eee, __index: index, __count: count }, blue_device);
-            }
-          });
+          return {
+            cpcl: products!.map((eee, index) => {
+              const count = order.productList?.filter(e => e.waybillId === eee.waybillId).length;
+              if (eee.waybillId) {
+                return on_get_cpcl_str_order_bing_goods_waybill({ ...order, __product: eee, __index: index, __count: count }, blue_device);
+              } else {
+                return on_get_cpcl_str_order_bing_goods({ ...order, __product: eee, __index: index, __count: count }, blue_device);
+              }
+            })
+          };
         }, { orderId: order.id!, selfInfo_S });
         Taro.showLoading({ mask: true, title: "更新打印次数..." });
         const print_orders = order.productList?.filter(e => products.some(ee => ee.waybillId === e.waybillId))?.map(e => e.id!);
