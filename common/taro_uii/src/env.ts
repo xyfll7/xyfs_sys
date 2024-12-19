@@ -3,14 +3,14 @@ import "@xyfs/utils/init";
 import Package from "../package.json";
 import { Environment, EnvVersion } from "../types/type_index";
 
-export const base_url: string = "";
+export const base_url: string = "http://192.168.60.229:8080";
 
 const ___envSimulate = "develop";
 
 // cSpell: disable;
 const OPENID_DEV___ =
   // @ts-ignore
-  // "oGwbL5G2_jpjBICYtJZSMIAYOb2U" ||  // 🚀
+  // "oGwbL5EQR6BDwKoPCf02_1zJ00Kg" ||  // 🚀
   ////////////////////////////////////////////////
   // "oGwbL5D1WtsGTuLhWneaepYuHW3k" ||  // 何旭东
   // "oGwbL5OLhRpOKRWrkVNSMqXuGPaE" ||  // 我妈
@@ -37,7 +37,7 @@ const OPENID_DEV___ =
 // cSpell: enable;
 
 process.env.NODE_ENV === "development" && Taro.clearStorageSync();
-const ___isUseInDev = false; // false; // 仅开发环境使用的功能 /// 这个没问题，只有dev环境才有这个参数，不用删除
+const ___isUseInDev = true; // false; // 仅开发环境使用的功能 /// 这个没问题，只有dev环境才有这个参数，不用删除
 const ___isDeveloping = true; // false; // 开发中的功能 /// 这个没问题，只有dev环境才有这个参数，不用删除
 // Package.version = "1.0.47";
 const envObj: Record<EnvVersion, Environment> = {

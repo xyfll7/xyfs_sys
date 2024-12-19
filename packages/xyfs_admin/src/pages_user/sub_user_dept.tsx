@@ -79,6 +79,35 @@ const Index: FC<{}> = ({ }) => {
   </MMMAAPage>;
 };
 
+const IIITree = ({ depts, onAdd, onDel }: { depts: any[]; onAdd: (dept: any) => void; onDel: (dept: any) => void; }) => {
+  return;
+  {
+    depts?.map(e => <View key={e.id}> <View className='bccwhite ioo ovh pt10 dll ww mb10 ' >
+      <ComButton className='mb10 '>
+        <View className='nw1'><Text className='cccplh '>部门名称：</Text> {e.deptName}</View>
+      </ComButton>
+      <View className='ww dr pr10'>
+        <ComButton rr className='mb10 cccplh bborder' onClick={async () => {
+          const res = await try_Taro_showModal({ title: "提示", content: "您确定要删除该部门？" });
+          if (res) {
+            Taro.showLoading({ mask: true, title: "删除中" });
+            await Api_dept_del_ctn({ deptId: e.deptId });
+            Taro.showToast({ icon: "none", title: "成功" });
+            onDel(e);
+          }
+        }}>删除</ComButton>
+        <ComButton rr className='ml10 mb10 bborder' onClick={() => { onAdd(e); }}>添加</ComButton>
+      </View>
+    </View>
+      {/* <IIITree depts={e.children} onAdd={onAdd} onDel={onDel}></IIITree> */}
+    </View>
+    );
+  }
+
+  ;
+
+};
+
 const IIIAddDept = ({ dept, onSuccess }: { dept: any; onSuccess: () => void; }) => {
   const [form, setForm] = useHook_Reducer({ deptName: "" });
   return <View className='mb10 ww dy'>
