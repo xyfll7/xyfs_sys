@@ -3,7 +3,6 @@ import { View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { Api_common_jtsd, Api_user_print_ctn } from "@xyfs/taro_uii/api/api__users";
 import { ComButton } from "@xyfs/taro_uii/components/ComButton";
-import GBK from "@xyfs/utils/gbk";
 import { FC } from "react";
 
 definePageConfig({
@@ -39,17 +38,18 @@ const Index: FC<{}> = ({ }) => {
     </View>
     <ComButton className='' onClick={async () => {
       await Api_user_print_ctn({
-        id: "863130068480947", waybillPrinterData:
-          GBK.encode(`SIZE 72 mm, 127 mm
-CODEPAGE 437
-DENSITY 8
-CLS
-CODEPAGE 936
-DIRECTION  0
-TEXT 206,12,"0",0,1,1,"验证码 {&captcha}"
-PRINT 1,1`).toString()
+        id: "309",
+        waybillPrinterData: [
+          `SIZE 72 mm, 127 mm`,
+          `CODEPAGE 437`,
+          `DENSITY 8`,
+          `CLS`,
+          `CODEPAGE 936`,
+          `DIRECTION  0`,
+          `TEXT 206,12,"0",0,1,1,"验证码 啊哈哈哈"`,
+          `PRINT 1,1`].join("\n")
       });
-    }}>测试</ComButton>
+    }}>打印猿打印测试</ComButton>
   </View>;
 };
 
