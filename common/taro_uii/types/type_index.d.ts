@@ -14,6 +14,7 @@ export type Printer_Info = {
   delFlag: string;
   lastUpdateTime: string; // "2024-03-06T11:08:23.080Z",
   name: string;
+  shareCode?: string;
   remark: string;
   status: string;
   updateBy: string;

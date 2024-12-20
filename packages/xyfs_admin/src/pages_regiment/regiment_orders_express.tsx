@@ -219,7 +219,7 @@ const IIIOrderExpressOperation: FC<{
 
             (order.productList?.[0]?.waybillId ?
               <ComButton rr className='cccgreen bborder' onClick={() => { onPrint?.(order); }}>
-                打印{order.printTimes ?? 0}次1
+                打印{order.printTimes ?? 0}次
               </ComButton> :
               <ComButton rr className='cccgreen bborder' onClick={async () => {
                 Taro.showLoading({ mask: true, title: "获取面单号...", });

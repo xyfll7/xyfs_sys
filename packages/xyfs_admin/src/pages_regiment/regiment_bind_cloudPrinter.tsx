@@ -62,7 +62,7 @@ const Index: FC<{}> = ({ }) => {
               await add_da_yin_yuan();
             }
           }}>
-            添加云打印机 {printerType && <View>：{printerType}</View>}
+            添加云打印机 {printerType && printerIdDYY && <View>：{printerType}</View>}
           </ComButton>
           {printerType === "打印猿" &&
             <>
@@ -72,7 +72,7 @@ const Index: FC<{}> = ({ }) => {
               </ComButton>
               <ComButton className={`mb10  ${printerIdDYY ? 'cccgreen' : 'cccplh'}`} onClick={async () => {
                 if (!printerIdDYY) { throw new ErrorR("请先扫打印机码", true); }
-                const res_code = await try_Taro_scanCode<string>({ type: "CODE_128" });
+                const res_code = await try_Taro_scanCode<string>({ type: "QR_CODE" });
                 Taro.showLoading({ mask: true, title: "绑定打印机..." });
                 const res = await Api_user_printer_bind_ctn({ printerId: printerIdDYY, captcha: res_code });
                 console.log("绑定成功", res);
@@ -82,10 +82,7 @@ const Index: FC<{}> = ({ }) => {
               </ComButton>
             </>
           }
-
         </View>
-
-
       </View>
     </ComNav>
     <ComScrollView>
@@ -94,19 +91,16 @@ const Index: FC<{}> = ({ }) => {
   </MMMAAPage>;
 };
 
-
-
 const IIIBindAccountList: FC<{}> = ({ }) => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   return <>
     {(!selfInfo_S.printers || selfInfo_S?.printers?.length == 0) && <ComLoading className='mb10' isEmpty>您没还有添加打印机</ComLoading>}
     {selfInfo_S.printers?.map((printer) => {
-      const printerType = printer.siid.includes("KX100") ? "快递100" : "打印猿";
       return (
         <View className='prl10 pt10 ioo bccwhite mb10 dll ww' key={printer.siid}>
           <ComButton ll className='cccplh'>打印机ID {printer.name} {printer.siid}</ComButton>
           <View className='dbtc mb10 ww'>
-            <ComButton ll className='cccplh'> 打印机类型： {printerType}</ComButton>
+            <ComButton ll className='cccplh'> 打印机类型： {printer.shareCode ? "打印猿" : "快递100"}</ComButton>
             <ComButton rr className='cccplh bborder'
               onClick={async () => {
                 if (await try_Taro_showModal({ title: "提示", content: "您确定要删除该打印机?", })) {

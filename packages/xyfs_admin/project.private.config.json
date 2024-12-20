@@ -10,6 +10,20 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages_regiment/regiment_bind_cloudPrinter",
+          "pathName": "pages_regiment/regiment_bind_cloudPrinter",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_regiment/regiment_orders_express",
+          "pathName": "pages_regiment/regiment_orders_express",
+          "query": "order_ST=2",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages_regiment/regiment_orders_express",
           "pathName": "pages_regiment/regiment_orders_express",
           "query": "order_ST=2",

@@ -23,14 +23,14 @@ const Index: FC<{}> = ({ }) => {
     <View className='h20rem dxy'>
       <ComButton onClick={async () => {
         Taro.showLoading({ title: "切换中..." });
-        const res = await Api_common_jtsd({ expressType: 1 });
+        await Api_common_jtsd({ expressType: 1 });
         Taro.showToast({ icon: "none", title: "切换成功" });
       }}>
         极兔-标准快递
       </ComButton>
       <ComButton onClick={async () => {
         Taro.showLoading({ title: "切换中..." });
-        const res = await Api_common_jtsd({ expressType: 2 });
+        await Api_common_jtsd({ expressType: 2 });
         Taro.showToast({ icon: "none", title: "切换成功" });
       }}>
         极兔-兔优达
@@ -48,7 +48,7 @@ const Index: FC<{}> = ({ }) => {
           `DIRECTION  0`, // 该指令用于定义打印时出纸和打印字体的方向
           `TEXT 206,12,"0",0,1,1,"验证码 啊哈哈哈ooo"`,
           `PRINT 1,1` //该指令用于打印出存储于影像缓冲区内的数据
-        ].join("\r\n")
+        ].join("\n")
       });
     }}>打印猿打印测试1</ComButton>
   </View>;
