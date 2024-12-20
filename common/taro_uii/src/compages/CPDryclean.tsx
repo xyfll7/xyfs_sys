@@ -45,7 +45,7 @@ function cartMerge(cart: Product_Dryclean[]) {
 }
 
 
-const ShopCart: FC<PropsWithChildren & { children: ReactElement | ReactElement[], onCartEdit: (e: Product_Dryclean) => void; cart: Product_Dryclean[], onToggle: () => void; onCartDel: (e: Product_Dryclean) => void; }> = ({ cart, onCartEdit, onToggle, onCartDel, ...props }) => {
+const ShopCart: FC<PropsWithChildren & { onCartEdit: (e: Product_Dryclean) => void; cart: Product_Dryclean[], onToggle: () => void; onCartDel: (e: Product_Dryclean) => void; }> = ({ cart, onCartEdit, onToggle, onCartDel, ...props }) => {
   let _children_ShopCartTabBarUser: ReactElement | null = null;
   let _children_ShopCartTabBarRegiment: ReactElement | null = null;
   let _children_RecManInfo: ReactElement | null = null;
