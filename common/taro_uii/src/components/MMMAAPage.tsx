@@ -64,7 +64,7 @@ export const MMMAAPage: FC<{
       {!isLoading && !isSystemUpdate && !___is_required_role(selfInfo_S, isNeedAnyRole) && <IIIUserHasNoRole className='prl10' />}
       {!isLoading && !isSystemUpdate && !___is_page_access(isPageAccess) && <IIIPageAccess />}
       {!isLoading && !isSystemUpdate && ___is_page_access(isPageAccess) && ___is_required_role(selfInfo_S, isNeedAnyRole) && ___is_required_regiment(selfInfo_S, isNeedRegiment) &&
-        <View className={`safe-bottom ${isHideRL ? "" : "prl10"}`} style={{
+        <View className={`${isHideRL ? "" : "prl10"}`} style={{
           display: "flex",
           flexDirection: "column",
           height: heightV,
@@ -79,6 +79,9 @@ export const MMMAAPage: FC<{
           {_childrens?.[0]}
           {_childrens?.[1]}
           <View>{_childrens?.slice(2)}</View>
+          <View className='safe-height'>
+            {process.env.TARO_APP_ADMIN === getMyEnv().appId && <View className='fs06 prl20  ww pbt6 cccplh fwl'>MOBILE:{useSTSelf.getState().selfInfo?.mobile} v:{getMyEnv().version}</View>}
+          </View>
         </View>
       }
     </View>);
