@@ -197,7 +197,7 @@ export async function Api_user_savePrinter_ctn(params: {
 
 }
 export async function Api_user_print_ctn(params: {
-  "id": string,
+  "id": number,
   "waybillPrinterData": string;
 }) {
   const res = await wx_call_container<void>({

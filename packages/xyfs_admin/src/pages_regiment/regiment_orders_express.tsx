@@ -101,8 +101,8 @@ const Index: FC<{}> = ({ }) => {
               const _order = ee;
               await on_start_print((blue_device) => {
                 return {
-                  cpcl: _order.productList!.map(eee => on_get_printer_str_order_express({ ..._order, __product: eee, }, blue_device, "cpcl")),
-                  tspl: _order.productList!.map(eee => on_get_printer_str_order_express({ ..._order, __product: eee, }, blue_device, "tspl")),
+                  cpcl: _order.productList!.map(eee => on_get_printer_str_order_express({ ..._order, __product: eee, }, "cpcl", blue_device)),
+                  tspl: _order.productList!.map(eee => on_get_printer_str_order_express({ ..._order, __product: eee, }, "tspl", blue_device)),
                 };
               }, { orderId: _order.id!, selfInfo_S: useSTSelf.getState().selfInfo });
               page_list_update((p) => ({

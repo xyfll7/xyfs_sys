@@ -38,7 +38,7 @@ const Index: FC<{}> = ({ }) => {
     </View>
     <ComButton className='' onClick={async () => {
       await Api_user_print_ctn({
-        id: "309",
+        id: 309,
         waybillPrinterData: [
           `SIZE 72 mm, 127 mm`,
           `CODEPAGE 437`, // 该指令用于选择对应的国际代码页  437:UnitedStates

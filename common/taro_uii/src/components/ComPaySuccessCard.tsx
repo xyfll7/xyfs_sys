@@ -97,7 +97,7 @@ export function ComPaySuccessCard() {
 
                       const _order = useSTExpress.getState().express!;
                       await on_start_print((blue_device) => {
-                        return { cpcl: _order.productList!.map(eee => on_get_printer_str_order_express({ ..._order, __product: eee }, blue_device)) };
+                        return { cpcl: _order.productList!.map(eee => on_get_printer_str_order_express({ ..._order, __product: eee }, "cpcl", blue_device)) };
                       }, { orderId: _order.id!, selfInfo_S });
                       Taro.showLoading({ mask: true, title: "更新打印次数..." });
                       await Api_order_incrPrintTimes_ctn({ orderId: _order.id!, }); // 增加打印次数
@@ -107,7 +107,7 @@ export function ComPaySuccessCard() {
                   <ComButton className='bccyellow ' onClick={async () => {
                     const _order = express_S;
                     await on_start_print((blue_device) => {
-                      return { cpcl: _order.productList!.map(eee => on_get_printer_str_order_express({ ..._order, __product: eee }, blue_device)) };
+                      return { cpcl: _order.productList!.map(eee => on_get_printer_str_order_express({ ..._order, __product: eee }, "cpcl", blue_device)) };
                     }, { orderId: _order.id!, selfInfo_S });
                     Taro.showLoading({ mask: true, title: "更新打印次数..." });
                     await Api_order_incrPrintTimes_ctn({ orderId: _order.id!, }); // 增加打印次数
