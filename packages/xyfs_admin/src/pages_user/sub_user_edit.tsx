@@ -2,12 +2,14 @@
 import { View } from "@tarojs/components";
 import Taro from '@tarojs/taro';
 import { BaseUserInfo } from "@xyfs/taro_uii";
-import { Api_user_edit_ctn, Api_user_info_ctn } from '@xyfs/taro_uii/api/api__users';
+import { Api_dept_list_ctn, Api_user_edit_ctn, Api_user_info_ctn } from '@xyfs/taro_uii/api/api__users';
 import { ComButton } from '@xyfs/taro_uii/components/ComButton';
 import { ComImage } from '@xyfs/taro_uii/components/ComImage';
 import { ComLoading } from '@xyfs/taro_uii/components/ComLoading';
 import { ComNav } from '@xyfs/taro_uii/components/ComNav';
 import { ComNavBarA } from '@xyfs/taro_uii/components/ComNavBarA';
+import { ComNavBarB } from "@xyfs/taro_uii/components/ComNavBarB";
+import { ComPopupNew } from "@xyfs/taro_uii/components/ComPopupNew";
 import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { ROLE_ST } from "@xyfs/taro_uii/src/config";
@@ -52,6 +54,7 @@ const IIImyUserEditorAGENT: FC = () => {
       setUserInfo(res);
     })();
   }, [options.userId]);
+  const [show, setShow] = useState(false);
   return <>
     {!userInfo && <ComLoading className='mb10'></ComLoading>}
     {userInfo && <View key={userInfo.id} className='mb10 ww dll ww prl10 pt10 ioo bccwhite'>
@@ -65,6 +68,23 @@ const IIImyUserEditorAGENT: FC = () => {
       </View>
 
       <View className='cccplh mb10 '>{utils_addressInfoToString(userInfo)}</View>
+      <View className='ww'>
+        <View className='ww dbtc'>
+          <ComButton ll className='cccplh bccwhite mb10'>部门</ComButton>
+          <ComButton rr className='cccgreen mb10 bborder' onClick={() => setShow(e => !e)}>指定</ComButton>
+        </View>
+        {show && <ComPopupNew onClose={() => setShow(e => !e)}>
+          <View className='dll prl10' style={{ height: "70vh" }}>
+            <ComNavBarB className='mb10' onClose={() => setShow(e => !e)}>
+              <View className='dy'><ComButton className='fwb bccback'>指定部门</ComButton></View>
+            </ComNavBarB>
+            <IIIDeptList></IIIDeptList>
+          </View>
+        </ComPopupNew>
+        }
+      </View>
+
+
       <View className='ww dll'>
         <ComButton className='cccplh mb10  bccwhite' ll >指定角色</ComButton>
         <View className='dy dwp'>
@@ -97,6 +117,7 @@ const IIImyUserEditorAGENT: FC = () => {
           })}
         </View>
       </View>
+
       {roo___has_role(userInfo, ["SUPPLIER"]) &&
         <>
           <ComButton ll className='cccplh bccwhite mb10'>供应商类别</ComButton>
@@ -237,4 +258,50 @@ const IIImyUserEditorSUPPLIER: FC = () => {
     </View>
     }
   </>;
+};
+
+
+const IIIDeptList = () => {
+  const [depts, setDepts] = useState<any[]>();
+  useEffect(() => { ___Api_dept_list_ctn(); }, []);
+  async function ___Api_dept_list_ctn() {
+    setDepts(undefined);
+    const res = await Api_dept_list_ctn();
+    setDepts(res);
+  }
+  return <>
+    {depts === undefined && <ComLoading />}
+    {depts?.length === 0 && <ComButton>没有数据</ComButton>}
+    {depts && <IIITree depts={depts}
+      onAdd={(e) => { }}
+      onDel={async (e) => { }}></IIITree>}
+  </>;
+};
+
+const IIITree = ({ depts, onAdd, onDel }: { depts: any[]; onAdd: (dept: any) => void; onDel: (dept: any) => void; }) => {
+  const [show, setShow] = useState(true);
+  return depts?.map(e => <View key={e.id} className='ww '>
+    <View className='bccwhite ioo ovh pt10 dbtc ww mb10 ww' >
+      <ComButton className='mb10 ww'>
+        <View className='nw1'>{e.deptName}</View>
+      </ComButton>
+      <View className='dr pr10'>
+        <ComButton rr className='ml10 mb10 cccgreen bborder nw' onClick={() => { onAdd(e); }}>指定</ComButton>
+      </View>
+    </View>
+    {e.children &&
+      <View className='dll ww'>
+        <View className='ds ww'>
+          <View className='dll pl10'>
+            <View className='hh mb10 bccbacktab' style={{ width: "1rpx", }}></View>
+          </View>
+          <View className='pl10 dll ww'>
+            <ComButton className='bccback cccplh mb10 ww' onClick={() => setShow(ee => !ee)}>下级部门<View style={{ transform: show ? "" : "rotate(180deg)" }}>↡</View></ComButton>
+            {show && <IIITree depts={e.children} onAdd={onAdd} onDel={onDel}></IIITree>}
+          </View>
+        </View>
+      </View>
+    }
+  </View>
+  );
 };

@@ -11,7 +11,6 @@ import { ComNavBarB } from "@xyfs/taro_uii/components/ComNavBarB";
 import { ComPopupNew } from "@xyfs/taro_uii/components/ComPopupNew";
 import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
-import { useSTSelf } from '@xyfs/taro_uii/store/store';
 import { try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
 import { useHook_Reducer } from "@xyfs/taro_uii/utils/useHooks";
 import { FC, useEffect, useState } from "react";
@@ -24,8 +23,6 @@ definePageConfig({
 });
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC<{}> = ({ }) => {
-  const selfInfo_S = useSTSelf(e => e.selfInfo);
-
   const [depts, setDepts] = useState<any[]>();
   useEffect(() => { ___Api_dept_list_ctn(); }, []);
   async function ___Api_dept_list_ctn() {
@@ -42,11 +39,11 @@ const Index: FC<{}> = ({ }) => {
     <ComNav>
       <View className='ww'>
         <ComNavBarA className='mb10 pl10'>
-          <ComButton ll className='bcctrans cccplh ml10' >修改配置</ComButton>
+          <ComButton ll className='bcctrans cccplh ml10'>部门管理</ComButton>
         </ComNavBarA>
       </View>
     </ComNav>
-    <ComScrollView className='bccgreen'>
+    <ComScrollView className=''>
       {depts === undefined && <ComLoading />}
       {depts?.length === 0 && <ComButton>没有数据</ComButton>}
       {depts && <IIITree depts={depts}
@@ -64,7 +61,7 @@ const Index: FC<{}> = ({ }) => {
     {dept && <ComPopupNew onClose={() => setDept(null)}>
       <View className='dll prl10' style={{ height: "70vh" }}>
         <ComNavBarB className='mb10' onClose={() => setDept(null)}>
-          <View className='dy'><ComButton className='fwb bccback'>添加部门</ComButton></View>
+          <View className='dy'><ComButton className='fwb bccback'>添加子部门</ComButton></View>
         </ComNavBarB>
         <IIIAddDept dept={dept} onSuccess={() => { setDept(null); ___Api_dept_list_ctn(); }}></IIIAddDept>
       </View>
@@ -93,13 +90,12 @@ const IIITree = ({ depts, onAdd, onDel }: { depts: any[]; onAdd: (dept: any) => 
       </View>
     </View>
     {e.children &&
-      <View className=' dll ww'>
-        <View className='ds ww  bccyellow'>
-          <View>
-            <View className='bccred' style={{ width: "1rpx" }}></View>
+      <View className='dll ww'>
+        <View className='ds ww'>
+          <View className='dll pl10'>
+            <View className='hh mb10 bccbacktab' style={{ width: "1rpx", }}></View>
           </View>
-
-          <View className='pl10 pl15 dll ww'>
+          <View className='pl10 dll ww'>
             <ComButton className='bccback cccplh mb10 ww' onClick={() => setShow(ee => !ee)}>下级部门<View style={{ transform: show ? "" : "rotate(180deg)" }}>↡</View></ComButton>
             {show && <IIITree depts={e.children} onAdd={onAdd} onDel={onDel}></IIITree>}
           </View>
