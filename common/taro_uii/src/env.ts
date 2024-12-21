@@ -10,7 +10,7 @@ const ___envSimulate = "develop";
 // cSpell: disable;
 const OPENID_DEV___ =
   // @ts-ignore
-  // "oGwbL5EQR6BDwKoPCf02_1zJ00Kg" ||  // 🚀
+  // "oGwbL5DzItCwSPJVrQcGYfDdu3JA" ||  // 🚀
   ////////////////////////////////////////////////
   // "oGwbL5D1WtsGTuLhWneaepYuHW3k" ||  // 何旭东
   // "oGwbL5OLhRpOKRWrkVNSMqXuGPaE" ||  // 我妈

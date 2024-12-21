@@ -51,24 +51,26 @@ const CPExpressPath: FC = () => {
       {Boolean(path?.length) &&
         <>
           {path?.map((e) => {
-            return <View key={e.waybillId} >
+            return <View key={e.waybillId} className='ww dll'>
               <ComButton className='bcctrans mb10 cccplh' hoverClass='none'>运单号：{e.waybillId}</ComButton>
-              <View className='bccwhite IOO pt10 mb10 dll ww'>
-                {e.path.map(ee => {
-                  return <View key={ee.time} className='ds prl10 '>
-                    <ComSquare className='mr10 dxy bcctrans' style={{ height: "calc(1.4 * var(--rem_base))" }}>
-                      <ComSquare className='oo bccgreen' style={{ width: "calc(0.5625 * var(--rem_base))" }} />
-                    </ComSquare>
-                    <ComButton ll className='mb10 ww'>
-                      <View>
-                        <View>{ee.description.replace(/【/g, "[").replace(/】/g, "] ")}</View>
-                        <View className='cccplh fs08'>{ee.time}</View>
-                      </View>
-                    </ComButton>
-                  </View>;
-                })}
-              </View>
-
+              {e.path && e.path?.length === 0 && <ComLoading className='mb10' isEmpty>待揽件</ComLoading>}
+              {e.path && e.path?.length !== 0 &&
+                <View className='bccwhite IOO pt10 mb10 dll ww'>
+                  {e.path.map(ee => {
+                    return <View key={ee.time} className='ds prl10 '>
+                      <ComSquare className='mr10 dxy bcctrans' style={{ height: "calc(1.4 * var(--rem_base))" }}>
+                        <ComSquare className='oo bccgreen' style={{ width: "calc(0.5625 * var(--rem_base))" }} />
+                      </ComSquare>
+                      <ComButton ll className='mb10 ww'>
+                        <View>
+                          <View>{ee.description.replace(/【/g, "[").replace(/】/g, "] ")}</View>
+                          <View className='cccplh fs08'>{ee.time}</View>
+                        </View>
+                      </ComButton>
+                    </View>;
+                  })}
+                </View>
+              }
             </View>;
           })}
           <MMMAdBanner className='mb10' />

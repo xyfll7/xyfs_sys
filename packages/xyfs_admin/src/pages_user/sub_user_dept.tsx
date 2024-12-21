@@ -1,5 +1,5 @@
 // :: pages_user/sub_user_dept
-import { Text, View } from "@tarojs/components";
+import { View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { Api_dept_add_ctn, Api_dept_del_ctn, Api_dept_list_ctn } from "@xyfs/taro_uii/api/api__users";
 import { ComButton } from '@xyfs/taro_uii/components/ComButton';
@@ -14,7 +14,7 @@ import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
 import { try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
 import { useHook_Reducer } from "@xyfs/taro_uii/utils/useHooks";
-import { FC, PropsWithChildren, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 definePageConfig({
   navigationStyle: "custom", disableScroll: true,
@@ -46,10 +46,20 @@ const Index: FC<{}> = ({ }) => {
         </ComNavBarA>
       </View>
     </ComNav>
-    <ComScrollView>
+    <ComScrollView className='bccgreen'>
       {depts === undefined && <ComLoading />}
       {depts?.length === 0 && <ComButton>没有数据</ComButton>}
-      {depts && <IIITree depts={depts} onAdd={() => { }} onDel={() => { }}></IIITree>}
+      {depts && <IIITree depts={depts}
+        onAdd={(e) => { setDept(e); }}
+        onDel={async (e) => {
+          const res = await try_Taro_showModal({ title: "提示", content: "您确定要删除该部门？" });
+          if (res) {
+            Taro.showLoading({ mask: true, title: "删除中" });
+            await Api_dept_del_ctn({ deptId: e.deptId });
+            Taro.showToast({ icon: "none", title: "成功" });
+            await ___Api_dept_list_ctn();
+          }
+        }}></IIITree>}
     </ComScrollView>
     {dept && <ComPopupNew onClose={() => setDept(null)}>
       <View className='dll prl10' style={{ height: "70vh" }}>
@@ -62,15 +72,15 @@ const Index: FC<{}> = ({ }) => {
   </MMMAAPage>;
 };
 
-const IIITree = ({ children, depts, onAdd, onDel }: PropsWithChildren & { depts: any[]; onAdd: (dept: any) => void; onDel: (dept: any) => void; }) => {
+const IIITree = ({ depts, onAdd, onDel }: { depts: any[]; onAdd: (dept: any) => void; onDel: (dept: any) => void; }) => {
   const [show, setShow] = useState(true);
-  return depts?.map(e => <View key={e.id} className='ww'>
-    <View className='bccwhite ioo ovh pt10 dll ww mb10 ww' >
-      <ComButton className='mb10 '>
-        <View className='nw1'><Text className='cccplh '>部门名称：</Text> {e.deptName}</View>
+  return depts?.map(e => <View key={e.id} className='ww '>
+    <View className='bccwhite ioo ovh pt10 dbtc ww mb10 ww' >
+      <ComButton className='mb10 ww'>
+        <View className='nw1'>{e.deptName}</View>
       </ComButton>
-      <View className='ww dr pr10'>
-        <ComButton rr className='mb10 cccplh bborder' onClick={async () => {
+      <View className='dr pr10'>
+        <ComButton rr className='ml10 mb10 cccplh bborder nw' onClick={async () => {
           const res = await try_Taro_showModal({ title: "提示", content: "您确定要删除该部门？" });
           if (res) {
             Taro.showLoading({ mask: true, title: "删除中" });
@@ -79,13 +89,21 @@ const IIITree = ({ children, depts, onAdd, onDel }: PropsWithChildren & { depts:
             onDel(e);
           }
         }}>删除</ComButton>
-        <ComButton rr className='ml10 mb10 bborder' onClick={() => { onAdd(e); }}>添加</ComButton>
+        <ComButton rr className='ml10 mb10 bborder nw' onClick={() => { onAdd(e); }}>添加</ComButton>
       </View>
     </View>
     {e.children &&
-      <View className='pl10 pl15 dll'>
-        <ComButton className='bccback cccplh mb10' onClick={() => setShow(ee => !ee)}>下级部门 {show ? "↓↓" : "↑↑"}</ComButton>
-        {show && <IIITree depts={e.children} onAdd={onAdd} onDel={onDel}></IIITree>}
+      <View className=' dll ww'>
+        <View className='ds ww  bccyellow'>
+          <View>
+            <View className='bccred' style={{ width: "1rpx" }}></View>
+          </View>
+
+          <View className='pl10 pl15 dll ww'>
+            <ComButton className='bccback cccplh mb10 ww' onClick={() => setShow(ee => !ee)}>下级部门<View style={{ transform: show ? "" : "rotate(180deg)" }}>↡</View></ComButton>
+            {show && <IIITree depts={e.children} onAdd={onAdd} onDel={onDel}></IIITree>}
+          </View>
+        </View>
       </View>
     }
   </View>
