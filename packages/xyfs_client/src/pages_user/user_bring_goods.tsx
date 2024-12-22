@@ -86,16 +86,16 @@ const Index: FC = () => {
     <View className='pt10 dll  ww'>
       <ComMobileLogin className=' mb10' />
       <View className='ww dbtc '>
-        <ComAddressSwitchor className='bccback mb10 ww' style={{ minWidth: "50%" }} isShort isIcon title='收货人:' addressLess='请选择收货地址' address={address} onClick={async () => {
+        <ComAddressSwitchor className='bccback mb10 ww' style={{ minWidth: "50%" }} isShort isIcon title='收货人:' addressPlaceholder='请选择收货地址' address={address} onClick={async () => {
           const res_address = await try_Taro_chooseAddress();
           setAddress(res_address);
         }} />
-        <ComCartPrice className='mb10' totalPrice={cart?.totalPrice} num={cart?.num} />
+        <ComCartPrice className='mb10 ml10' totalPrice={cart?.totalPrice} num={cart?.num} />
       </View>
 
       <View className='ww dbtc'>
-        <ComAddressSwitchor className='bccback mb10 mr10' isShort isIcon title={`${roo___role_getRoleName(selfInfo_S)}:`} address={roo___role_regiment(selfInfo_S)} url='/pages_user/user_regiment_list_map' />
-        <ComButton className='bccyellow fwb mb10' disabled={!Boolean(cart?.itemList.length) || !Boolean(address) || !Boolean(selfInfo_S.mobile)} onClickO={async () => {
+        <ComAddressSwitchor className='bccback mb10 ww' isShort isIcon title={`${roo___role_getRoleName(selfInfo_S)}:`} address={roo___role_regiment(selfInfo_S)} url='/pages_user/user_regiment_list_map' />
+        <ComButton className='bccyellow fwb mb10 ml10' disabled={!Boolean(cart?.itemList.length) || !Boolean(address) || !Boolean(selfInfo_S.mobile)} onClickO={async () => {
           if (!selfInfo_S.mobile) { throw new ErrorR("请先“手机号快捷登录”", true); }
           if (!Boolean(cart?.itemList?.length)) { throw new ErrorR("购物车为空", true); }
           if (!Boolean(address)) { throw new ErrorR("请选择收货地址", true); }
