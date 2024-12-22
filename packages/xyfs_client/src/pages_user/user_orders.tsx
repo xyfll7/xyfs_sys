@@ -208,6 +208,7 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
         }
         if (Number(order.orderType) === Product_category_ST.团购) {
           const _order2 = order as OrderInfo<any>;
+
           return <View className='dll ww  mb10 bccwhite ioo' key={order.id}>
             <ComCardOrderBringGoods className='ww mb10' key={_order2.id} order={_order2} />
             <View className='dr dwp prl10 ww'>
@@ -224,11 +225,15 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
                   }
                 }}>删除</ComButton>
               }
-              {_order2.orderStatus === 2 && <View>
+              {_order2.orderStatus === 2 && _order2.productList?.filter(e => e.waybillId).length === _order2.productList?.length &&
                 <ComButton rr className='mb10 bborder' onClick={async () => {
-                  const res = await Api_order_confirm_ctn({ orderId: _order2.id! });
+                  Taro.showLoading({ mask: true, title: "确认收货...", });
+                  await Api_order_confirm_ctn({ orderId: _order2.id! });
+                  Taro.showToast({ icon: "none", title: "确认收货成功" });
                 }}>确认收货</ComButton>
-              </View>
+              }
+              {_order2.orderStatus === 2 && _order2.productList?.filter(e => e.waybillId).length !== _order2.productList?.length &&
+                <ComButton rr className='mb10 bborder'>待发货</ComButton>
               }
               {Boolean(_order2.productList?.length) && orderType === Order_ST.待付款 &&
                 <ComButton rr className='mb10  bccyellow ml10'

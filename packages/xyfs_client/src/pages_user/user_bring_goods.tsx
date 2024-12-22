@@ -19,15 +19,13 @@ import { ErrorR, Order_ST } from "@xyfs/taro_uii/src/config";
 import { roo___role_getRoleName, roo___role_regiment } from "@xyfs/taro_uii/src/roles";
 import { useSTSelf } from "@xyfs/taro_uii/store/store";
 import { AddressInfo } from "@xyfs/taro_uii/type_user";
-import { Taro_getCurrentInstance, try_Taro_chooseAddress, try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
+import { try_Taro_chooseAddress, try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
 import { useHook_pageListNew } from "@xyfs/taro_uii/utils/useHooks";
 import { FC, useCallback, useEffect, useState } from "react";
 
 definePageConfig({ enableShareAppMessage: true, navigationStyle: "custom", disableScroll: true, });
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC = () => {
-
-  const { options } = Taro_getCurrentInstance<{ user_id: string; }>();
   const [isHeaderBack, setIsHeaderBack] = useState(false);
 
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
@@ -88,7 +86,7 @@ const Index: FC = () => {
     <View className='pt10 dll  ww'>
       <ComMobileLogin className=' mb10' />
       <View className='ww dbtc '>
-        <ComAddressSwitchor className='bccback mb10' style={{ minWidth: "50%" }} isShort isIcon title='收货人:' addressLess='请选择收货地址' address={address} onClick={async () => {
+        <ComAddressSwitchor className='bccback mb10 ww' style={{ minWidth: "50%" }} isShort isIcon title='收货人:' addressLess='请选择收货地址' address={address} onClick={async () => {
           const res_address = await try_Taro_chooseAddress();
           setAddress(res_address);
         }} />

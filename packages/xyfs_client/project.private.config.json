@@ -6,6 +6,18 @@
     "urlCheck": false,
     "bigPackageSizeSupport": true
   },
-  "condition": {},
+  "condition": {
+    "miniprogram": {
+      "list": [
+        {
+          "name": "pages_user/user_bring_goods",
+          "pathName": "pages_user/user_bring_goods",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        }
+      ]
+    }
+  },
   "libVersion": "3.5.8"
 }
