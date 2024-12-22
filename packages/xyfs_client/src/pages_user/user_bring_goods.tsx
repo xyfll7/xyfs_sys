@@ -39,7 +39,7 @@ const Index: FC = () => {
       sort: "desc",
       keyword: "",
     }), []);
-  const { page, page_loading, } = useHook_pageListNew(___page_getter,);
+  const { page, page_loading, page_list_get } = useHook_pageListNew(___page_getter,);
   return <MMMAAPage>
     <View className='ww'>
       <ComBanner isHeaderBack={isHeaderBack} src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/back_image_35.jpg' />
@@ -57,7 +57,8 @@ const Index: FC = () => {
       className='IOO'
       upperThreshold={100}
       onScroll={(e, top) => { if (e.detail.scrollTop > top) { setIsHeaderBack(true); } }}
-      onScrollToUpper={() => { setIsHeaderBack(false); }}>
+      onScrollToUpper={() => { setIsHeaderBack(false); }}
+      onScrollToLower={() => { page_list_get(page); }}>
       <View style={{ height: "25vh" }} >
         <View className='sticky-top dll pt20 pb10 pl10'>
           <ComButton className='cccwhite bcctrans03-dark dll' hoverClass='none'>
@@ -81,7 +82,7 @@ const Index: FC = () => {
             Taro.hideLoading();
           }} />;
       })}
-      <ComLoading className='mb10' isLastPage={page?.isLastPage} loading={page_loading} onLoadMore={() => { }} />
+      <ComLoading className='mb10' isLastPage={page?.isLastPage} loading={page_loading} onLoadMore={() => { page_list_get(page); }} />
     </ComScrollView>
     <View className='pt10 dll  ww'>
       <ComMobileLogin className=' mb10' />
