@@ -70,7 +70,7 @@ const IIImyUserEditorAGENT: FC = () => {
       <View className='cccplh mb10 '>{utils_addressInfoToString(userInfo)}</View>
       <View className='ww'>
         <View className='ww dbtc'>
-          <ComButton ll className='cccplh bccwhite mb10'>部门</ComButton>
+          <ComButton ll className='cccplh bccwhite mb10'>部门{userInfo.deptId}</ComButton>
           <ComButton rr className='cccgreen mb10 bborder' onClick={() => setShow(e => !e)}>指定</ComButton>
         </View>
         {show && <ComPopupNew onClose={() => setShow(e => !e)}>
@@ -78,12 +78,11 @@ const IIImyUserEditorAGENT: FC = () => {
             <ComNavBarB className='mb10' onClose={() => setShow(e => !e)}>
               <View className='dy'><ComButton className='fwb bccback'>指定部门</ComButton></View>
             </ComNavBarB>
-            <IIIDeptList></IIIDeptList>
+            <IIIDeptList userInfo={userInfo} onUpdateUserInfo={(e) => setUserInfo(e)}></IIIDeptList>
           </View>
         </ComPopupNew>
         }
       </View>
-
 
       <View className='ww dll'>
         <ComButton className='cccplh mb10  bccwhite' ll >指定角色</ComButton>
@@ -261,7 +260,7 @@ const IIImyUserEditorSUPPLIER: FC = () => {
 };
 
 
-const IIIDeptList = () => {
+const IIIDeptList = ({ userInfo, onUpdateUserInfo }: { userInfo: BaseUserInfo; onUpdateUserInfo: (e: BaseUserInfo) => void; }) => {
   const [depts, setDepts] = useState<any[]>();
   useEffect(() => { ___Api_dept_list_ctn(); }, []);
   async function ___Api_dept_list_ctn() {
@@ -273,7 +272,12 @@ const IIIDeptList = () => {
     {depts === undefined && <ComLoading />}
     {depts?.length === 0 && <ComButton>没有数据</ComButton>}
     {depts && <IIITree depts={depts}
-      onAdd={(e) => { }}
+      onAdd={async (e) => {
+        Taro.showLoading({ mask: true, title: "更新中..." });
+        const res = await Api_user_edit_ctn({ deptId: e.deptId, userId: userInfo.id! });
+        onUpdateUserInfo(res);
+        Taro.showToast({ icon: "none", title: "更新成功" });
+      }}
       onDel={async (e) => { }}></IIITree>}
   </>;
 };

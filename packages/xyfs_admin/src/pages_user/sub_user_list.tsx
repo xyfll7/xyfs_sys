@@ -1,9 +1,9 @@
 // :: pages_user/sub_user_list
 import { Picker, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
-import { BaseUserInfo, Pagination, PreBarCodeDryclean } from "@xyfs/taro_uii";
+import { BaseUserInfo, Pagination } from "@xyfs/taro_uii";
 import { Api_order_paymentExport_ctn } from "@xyfs/taro_uii/api/api__orders";
-import { Api_common_batchGenerateCode, Api_user_myUserList_ctn } from '@xyfs/taro_uii/api/api__users';
+import { Api_user_myUserList_ctn } from '@xyfs/taro_uii/api/api__users';
 import { ComButton } from '@xyfs/taro_uii/components/ComButton';
 import { ComImage } from '@xyfs/taro_uii/components/ComImage';
 import { ComListTypeSelectorNew } from "@xyfs/taro_uii/components/ComListTypeSelectorNew";
@@ -13,11 +13,9 @@ import { ComNavBarA } from '@xyfs/taro_uii/components/ComNavBarA';
 import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
 import { ComSearcher } from '@xyfs/taro_uii/components/ComSearcher';
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
-import { getMyEnv } from "@xyfs/taro_uii/src/env";
 import { roo___has_role } from "@xyfs/taro_uii/src/roles";
-import { useSTBlueDevices, useSTDicts, useSTSelf } from '@xyfs/taro_uii/store/store';
-import { on_get_printer_str_order_dryclean_pre_barcodes, on_start_print } from "@xyfs/taro_uii/utils/bluetooth/useHooks_Blue";
-import { try_Taro_navigateTo, try_Taro_showActionSheet, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
+import { useSTDicts, useSTSelf } from '@xyfs/taro_uii/store/store';
+import { try_Taro_navigateTo, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
 import { useHook_pageListNew, useHook_Reducer } from '@xyfs/taro_uii/utils/useHooks';
 import { utils_addressInfoToString, utils_get_start_end_date, utils_str_includes } from "@xyfs/taro_uii/utils/util";
 import { coo___ios_date } from "@xyfs/utils/util";
@@ -119,8 +117,9 @@ const IIImyUserCardAGENT: FC<{ myUser: BaseUserInfo; }> = ({ myUser }) => {
       <View className='ds dwp'>
         {myUser.roles?.map(e => <ComButton ll className='cccplh bborder mb10' key={e.id}>{e.roleName}</ComButton>)}
       </View>
-      <View className='dr dwp ww '>
-        {roo___has_role(myUser, ["REGIMENT"]) && <ComButton rr className='mb10 bborder ml10' onClick={async () => {
+      <View className='dr dwp ww'>
+        {/* {roo___has_role(myUser, ["REGIMENT"]) &&
+        <ComButton rr className='mb10 bborder ml10' onClick={async () => {
 
           if (useSTBlueDevices.getState().blueDevices.length === 0 && getMyEnv().envVersion !== "develop") {       //  开发环境不执行该检查  没有蓝牙打印机 - 弹窗提示用户去配置蓝牙打印机
             if (await try_Taro_showModal({ title: "提示", content: "您还没有配置蓝牙打印机", showCancel: false, confirmText: "去配置", })) {
@@ -140,7 +139,7 @@ const IIImyUserCardAGENT: FC<{ myUser: BaseUserInfo; }> = ({ myUser }) => {
           Taro.showLoading({ mask: true, title: "开始打印..." });
           await on_start_print((blue_device) => ({ cpcl: arr_new.map(eee => on_get_printer_str_order_dryclean_pre_barcodes({ ...eee }, blue_device)) }));
         }}>生成干洗条码</ComButton>
-        }
+        } */}
 
         <ComButton rr className='cccgreen bborder mb10 ml10' url={`/pages_user/sub_user_edit?userId=${myUser.id}`}>修改配置</ComButton>
       </View>
