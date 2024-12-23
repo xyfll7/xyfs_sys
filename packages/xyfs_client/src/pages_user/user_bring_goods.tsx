@@ -3,6 +3,7 @@ import { Text, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { Pagination } from "@xyfs/taro_uii";
 import { Api_goods_list_ctn, Api_goodsCart_add_ctn, Api_goodsCart_preOrder_ctn, Api_goodsCart_query_ctn } from "@xyfs/taro_uii/api/api__goods";
+import { Api_user_edit_ctn } from "@xyfs/taro_uii/api/api__users";
 import { ComAddressSwitchor } from "@xyfs/taro_uii/components/ComAddressSwitchor";
 import { ComBanner } from "@xyfs/taro_uii/components/ComBanner";
 import { ComButton } from "@xyfs/taro_uii/components/ComButton";
@@ -96,7 +97,14 @@ const Index: FC = () => {
 
       <View className='ww dbtc'>
         <ComAddressSwitchor className='bccback mb10 ww' isShort isIcon title={`${roo___role_getRoleName(selfInfo_S)}:`} address={roo___role_regiment(selfInfo_S)} url='/pages_user/user_regiment_list_map' />
-        <ComButton className='bccyellow fwb mb10 ml10' disabled={!Boolean(cart?.itemList.length) || !Boolean(address) || !Boolean(selfInfo_S.mobile)} onClickO={async () => {
+        <ComButton className='bccyellow fwb mb10 ml10' onClickO={async () => {
+          // 如果个人信息中没有默认的用户收件地址，则更新用户收件地址
+          if (!selfInfo_S.defaultRecManAddress) {
+            await Api_user_edit_ctn({ defaultRecManAddress: address });
+          }
+          console.log("selfInfo_S", selfInfo_S);
+          throw new ErrorR("请先“手机号快捷登录”", true);
+
           if (!selfInfo_S.mobile) { throw new ErrorR("请先“手机号快捷登录”", true); }
           if (!Boolean(cart?.itemList?.length)) { throw new ErrorR("购物车为空", true); }
           if (!Boolean(address)) { throw new ErrorR("请选择收货地址", true); }
@@ -114,12 +122,17 @@ const Index: FC = () => {
             if (await try_Taro_showModal({ title: "支付完成", content: `订单移到"已支付"列表`, confirmText: "查看订单", cancelText: "留在本页" })) {
               try_Taro_navigateTo({ url: `/pages_user/user_orders?order_ST=${Order_ST.已付款}` });
             }
+
           } catch (err) {
             if (await try_Taro_showModal({ title: "取消支付", content: `订单移到"待支付"列表`, confirmText: "查看订单", cancelText: "留在本页" })) {
               try_Taro_navigateTo({ url: `/pages_user/user_orders?order_ST=${Order_ST.待付款}` });
             }
           } finally {
             await getCart();
+            // 如果个人信息中没有默认的用户收件地址，则更新用户收件地址
+            if (!selfInfo_S.defaultRecManAddress) {
+              await Api_user_edit_ctn({ defaultRecManAddress: address });
+            }
           }
         }}>
           <View className='dy'>
