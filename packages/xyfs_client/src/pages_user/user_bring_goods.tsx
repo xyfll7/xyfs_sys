@@ -3,6 +3,7 @@ import { Text, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { Pagination } from "@xyfs/taro_uii";
 import { Api_goods_list_ctn, Api_goodsCart_add_ctn, Api_goodsCart_preOrder_ctn, Api_goodsCart_query_ctn } from "@xyfs/taro_uii/api/api__goods";
+import { Api_user_edit_ctn } from "@xyfs/taro_uii/api/api__users";
 import { ComAddressSwitchor } from "@xyfs/taro_uii/components/ComAddressSwitchor";
 import { ComBanner } from "@xyfs/taro_uii/components/ComBanner";
 import { ComButton } from "@xyfs/taro_uii/components/ComButton";
@@ -19,15 +20,13 @@ import { ErrorR, Order_ST } from "@xyfs/taro_uii/src/config";
 import { roo___role_getRoleName, roo___role_regiment } from "@xyfs/taro_uii/src/roles";
 import { useSTSelf } from "@xyfs/taro_uii/store/store";
 import { AddressInfo } from "@xyfs/taro_uii/type_user";
-import { Taro_getCurrentInstance, try_Taro_chooseAddress, try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
+import { try_Taro_chooseAddress, try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
 import { useHook_pageListNew } from "@xyfs/taro_uii/utils/useHooks";
 import { FC, useCallback, useEffect, useState } from "react";
 
 definePageConfig({ enableShareAppMessage: true, navigationStyle: "custom", disableScroll: true, });
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC = () => {
-
-  const { options } = Taro_getCurrentInstance<{ user_id: string; }>();
   const [isHeaderBack, setIsHeaderBack] = useState(false);
 
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
@@ -41,7 +40,7 @@ const Index: FC = () => {
       sort: "desc",
       keyword: "",
     }), []);
-  const { page, page_loading, } = useHook_pageListNew(___page_getter,);
+  const { page, page_loading, page_list_get } = useHook_pageListNew(___page_getter,);
   return <MMMAAPage>
     <View className='ww'>
       <ComBanner isHeaderBack={isHeaderBack} src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/back_image_35.jpg' />
@@ -59,7 +58,8 @@ const Index: FC = () => {
       className='IOO'
       upperThreshold={100}
       onScroll={(e, top) => { if (e.detail.scrollTop > top) { setIsHeaderBack(true); } }}
-      onScrollToUpper={() => { setIsHeaderBack(false); }}>
+      onScrollToUpper={() => { setIsHeaderBack(false); }}
+      onScrollToLower={() => { page_list_get(page); }}>
       <View style={{ height: "25vh" }} >
         <View className='sticky-top dll pt20 pb10 pl10'>
           <ComButton className='cccwhite bcctrans03-dark dll' hoverClass='none'>
@@ -83,21 +83,28 @@ const Index: FC = () => {
             Taro.hideLoading();
           }} />;
       })}
-      <ComLoading className='mb10' isLastPage={page?.isLastPage} loading={page_loading} onLoadMore={() => { }} />
+      <ComLoading className='mb10' isLastPage={page?.isLastPage} loading={page_loading} onLoadMore={() => { page_list_get(page); }} />
     </ComScrollView>
     <View className='pt10 dll  ww'>
       <ComMobileLogin className=' mb10' />
       <View className='ww dbtc '>
-        <ComAddressSwitchor className='bccback mb10' style={{ minWidth: "50%" }} isShort isIcon title='收货人:' addressLess='请选择收货地址' address={address} onClick={async () => {
+        <ComAddressSwitchor className='bccback mb10 ww' style={{ minWidth: "50%" }} isShort isIcon title='收货人:' addressPlaceholder='请选择收货地址' address={address} onClick={async () => {
           const res_address = await try_Taro_chooseAddress();
           setAddress(res_address);
         }} />
-        <ComCartPrice className='mb10' totalPrice={cart?.totalPrice} num={cart?.num} />
+        <ComCartPrice className='mb10 ml10' totalPrice={cart?.totalPrice} num={cart?.num} />
       </View>
 
       <View className='ww dbtc'>
-        <ComAddressSwitchor className='bccback mb10 mr10' isShort isIcon title={`${roo___role_getRoleName(selfInfo_S)}:`} address={roo___role_regiment(selfInfo_S)} url='/pages_user/user_regiment_list_map' />
-        <ComButton className='bccyellow fwb mb10' disabled={!Boolean(cart?.itemList.length) || !Boolean(address) || !Boolean(selfInfo_S.mobile)} onClickO={async () => {
+        <ComAddressSwitchor className='bccback mb10 ww' isShort isIcon title={`${roo___role_getRoleName(selfInfo_S)}:`} address={roo___role_regiment(selfInfo_S)} url='/pages_user/user_regiment_list_map' />
+        <ComButton className='bccyellow fwb mb10 ml10' onClickO={async () => {
+          // 如果个人信息中没有默认的用户收件地址，则更新用户收件地址
+          if (!selfInfo_S.defaultRecManAddress) {
+            await Api_user_edit_ctn({ defaultRecManAddress: address });
+          }
+          console.log("selfInfo_S", selfInfo_S);
+          throw new ErrorR("请先“手机号快捷登录”", true);
+
           if (!selfInfo_S.mobile) { throw new ErrorR("请先“手机号快捷登录”", true); }
           if (!Boolean(cart?.itemList?.length)) { throw new ErrorR("购物车为空", true); }
           if (!Boolean(address)) { throw new ErrorR("请选择收货地址", true); }
@@ -115,12 +122,17 @@ const Index: FC = () => {
             if (await try_Taro_showModal({ title: "支付完成", content: `订单移到"已支付"列表`, confirmText: "查看订单", cancelText: "留在本页" })) {
               try_Taro_navigateTo({ url: `/pages_user/user_orders?order_ST=${Order_ST.已付款}` });
             }
+
           } catch (err) {
             if (await try_Taro_showModal({ title: "取消支付", content: `订单移到"待支付"列表`, confirmText: "查看订单", cancelText: "留在本页" })) {
               try_Taro_navigateTo({ url: `/pages_user/user_orders?order_ST=${Order_ST.待付款}` });
             }
           } finally {
             await getCart();
+            // 如果个人信息中没有默认的用户收件地址，则更新用户收件地址
+            if (!selfInfo_S.defaultRecManAddress) {
+              await Api_user_edit_ctn({ defaultRecManAddress: address });
+            }
           }
         }}>
           <View className='dy'>
