@@ -351,11 +351,11 @@ export function on_get_printer_str_order_express(_order: OrderInfo<Product_Expre
       `TEXT ${X_},${Y_ = 60},"${font_0}",${rotation_0},1,1,"${format(coo___ios_date(_order?.lastPrintTime ?? coo___ios_date().getTime()), "yyyy-MM-dd HH:mm:ss")}"`,
       `LINE ${X_} ${Y_ += 26} ${P_w} ${Y_} ${L_H}`, // -----------
 
-      `BARCODE ${X_},${Y_ += 10},"128",${80},1,${rotation_0},2,2,"${_order.__product?.waybillId}"`,
+      `BARCODE ${X_},${Y_ += 10},"128",${80},1,${rotation_0},3,3,"${_order.__product?.waybillId}"`,
       `TEXT ${X_},${Y_ += 80 + 10},"${font_0}",${rotation_0},1,1,"${_order.__product?.waybillId}"`,
       `LINE ${X_} ${Y_ += 40} ${P_w} ${Y_} ${L_H}`, // -----------
 
-      `TEXT ${X_},${Y_ += 10},"${font_3}",${rotation_0},1,1,"啊 ${_order.__product?.bigWord ?? ""}"`,
+      `TEXT ${X_},${Y_ += 10},"${font_3}",${rotation_0},1,1,"${_order.__product?.bigWord ?? ""}"`,
       `LINE ${X_} ${Y_ += 60} ${P_w} ${Y_} ${L_H}`, // -----------
 
       `TEXT ${X_},${Y_ += 10},"${font_3}",${rotation_0},1,1,"集"`,
@@ -378,7 +378,7 @@ export function on_get_printer_str_order_express(_order: OrderInfo<Product_Expre
       )(),
       `LINE ${X_} ${Y_ += 40} ${P_w} ${Y_} ${L_H}`, // -----------
 
-      `BARCODE ${X_},${Y_ += 10},"128",${80},1,${rotation_0},2,2,"${_order.__product?.waybillId}"`,
+      `BARCODE ${X_},${Y_ += 10},"128",${80},1,${rotation_0},3,3,"${_order.__product?.waybillId}"`,
       `TEXT ${X_},${Y_ += 80 + 10},"${font_0}",${rotation_0},1,1,"${_order.__product?.waybillId}"`,
 
       `TEXT ${X_},${Y_ += 40},"${font_3}",${rotation_0},1,1,"重量：${_order.__product?.weight} 公斤"`,
