@@ -76,6 +76,9 @@ const Index: FC<{}> = ({ }) => {
                 Taro.showLoading({ mask: true, title: "绑定打印机..." });
                 const res = await Api_user_printer_bind_ctn({ printerId: printerIdDYY, captcha: res_code });
                 console.log("绑定成功", res);
+                useSTSelf.getState().sett();
+                setPrinterIdDYY("");
+                setPrinterType(undefined);
                 Taro.showToast({ icon: "none", title: "绑定成功", });
               }}>
                 扫验证码
