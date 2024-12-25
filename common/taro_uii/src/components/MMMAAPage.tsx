@@ -19,6 +19,7 @@ import { MMMLogo } from "./MMMLogo";
 export const MMMAAPage: FC<{
   isNeedRegiment?: boolean;
   isNeedAnyRole?: boolean;
+  isNeedAnyDept?: boolean;
   isLoading?: boolean;
   isPageAccess?: boolean | null; // 页面访问权
   shareMenuToPage?: string;
@@ -26,9 +27,9 @@ export const MMMAAPage: FC<{
   isNoHeader?: boolean;
   isHideRL?: boolean;
 } & ViewProps> = ({
-
   isNeedRegiment = true,
   isNeedAnyRole = true,
+  isNeedAnyDept = true,
   isPageAccess = null,
   isLoading = false,
   isShowBackImage = false,
@@ -38,6 +39,7 @@ export const MMMAAPage: FC<{
 }) => {
 
     const selfInfo_S = useSTSelf(s => s.selfInfo!);
+    selfInfo_S.deptId = "";
     useHook_shareAppMessage({ page: props.shareMenuToPage });
 
     const env = getMyEnv();
@@ -47,7 +49,9 @@ export const MMMAAPage: FC<{
     }
     switch (getMyEnv().appId) {
       case process.env.TARO_APP_ADMIN: isNeedRegiment = false; break; // 管理端 关闭团长限制
+
       case process.env.TARO_APP_CLIENT: isNeedAnyRole = false; break; // 顾客端 关闭权限限制
+      case process.env.TARO_APP_CLIENT: isNeedAnyDept = false; break; // 管理端 关闭团长限制
     }
 
     const isSystemUpdate = Number(env.version.replaceAll(".", "")) < Number(selfInfo_S.serveVersion?.replaceAll(".", ""));
@@ -61,9 +65,10 @@ export const MMMAAPage: FC<{
       {isLoading && <ComNav className='prl10'><ComLoading /></ComNav>}
       {!isLoading && isSystemUpdate && <IIISystemUPdate />}
       {!isLoading && !isSystemUpdate && !___is_required_regiment(selfInfo_S, isNeedRegiment) && <IIIUserHasNoRegiment className='prl10' />}
+      {!isLoading && !isSystemUpdate && !___is_required_dept(selfInfo_S, isNeedAnyDept) && <IIIUserHasNoDept className='prl10' />}
       {!isLoading && !isSystemUpdate && !___is_required_role(selfInfo_S, isNeedAnyRole) && <IIIUserHasNoRole className='prl10' />}
       {!isLoading && !isSystemUpdate && !___is_page_access(isPageAccess) && <IIIPageAccess />}
-      {!isLoading && !isSystemUpdate && ___is_page_access(isPageAccess) && ___is_required_role(selfInfo_S, isNeedAnyRole) && ___is_required_regiment(selfInfo_S, isNeedRegiment) &&
+      {!isLoading && !isSystemUpdate && ___is_page_access(isPageAccess) && ___is_required_role(selfInfo_S, isNeedAnyRole) && ___is_required_dept(selfInfo_S, isNeedAnyDept) && ___is_required_regiment(selfInfo_S, isNeedRegiment) &&
         <View className={`${isHideRL ? "" : "prl10"}`} style={{
           display: "flex",
           flexDirection: "column",
@@ -130,6 +135,15 @@ function ___is_required_role(selfInfoS: BaseUserInfo, isNeedAnyRole: boolean = t
   }
 }
 
+// 管理端-验证当前页面必须有权限才能访问否则只能注册
+function ___is_required_dept(selfInfoS: BaseUserInfo, isNeedAnyDept: boolean = true) {
+  if (isNeedAnyDept) {
+    return Boolean(selfInfoS.deptId);
+  } else {
+    return true;
+  }
+}
+
 const IIIUserHasNoRegiment: FC<{ className: string; }> = ({ className }) => {
   return <View className={`${className}`}>
     <ComNav>
@@ -148,6 +162,27 @@ const IIIUserHasNoRegiment: FC<{ className: string; }> = ({ className }) => {
   </View>;
 };
 
+const IIIUserHasNoDept: FC<{ className: string; }> = ({ className }) => {
+  return <View className={`${className} ww `}>
+    <ComNav>
+      <MMMLogo className='mb10' />
+    </ComNav>
+    <View className='dll ww'>
+      <ComButton className='mb10 fwb bccback' hoverClass='none'>欢迎访问小象心选管理端</ComButton>
+      <ComButton className='mb10 cccplh  ww bccback' hoverClass='none'  >
+        <View className='dll ww'>
+          <View className='ww'>您还没有加入任何部门</View>
+        </View>
+      </ComButton>
+      <ComButton className='mb10 cccplh'
+        onClick={() => try_Taro_navigateToMiniProgram({ appId: process.env.TARO_APP_CLIENT, path: "/pages_comm/comm__product_express", })}>
+        快递下单请访问:<Text className='cccgreen'>小象心选顾客端</Text>
+      </ComButton>
+      <ComButton className='mb10' >🌠🎇🌁...</ComButton>
+    </View>
+    <MMMFooter></MMMFooter>
+  </View>;
+};
 const IIIUserHasNoRole: FC<{ className: string; }> = ({ className }) => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   return <View className={`${className} ww `}>

@@ -22,10 +22,9 @@ definePageConfig({ disableScroll: true, navigationStyle: "custom", });
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC = () => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
-  // selfInfo_S!.parentId = "oGwbL5MUeSNxxA4o0oOmb_FUjE7g";
   const { options } = Taro_getCurrentInstance<{ parentId?: string; }>();
   const parentInfo = useHook_userInfo(selfInfo_S?.parentId ?? options.parentId ?? "");
-  return <MMMAAPage isNeedAnyRole={false}>
+  return <MMMAAPage isNeedAnyRole={false} isNeedAnyDept={false}>
     <ComNav>
       <ComNavBarA className='mb10 pl10'>
         <ComButton ll className='bcctrans cccplh ml10' >

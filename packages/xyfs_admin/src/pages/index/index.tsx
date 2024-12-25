@@ -32,8 +32,7 @@ export default function COMSELFWarp() { return <ComSELFView isRefreshSelfInfo_SE
 
 const Index: FC = () => {
   const selfInfo_S = useSTSelf(e => e.selfInfo);
-  return <MMMAAPage
-    isNeedRegiment={false}>
+  return <MMMAAPage>
     <ComNav isRight>
       <View className='ds flx1 ww mb10 '>
         <ComBanner isHeaderBack />
