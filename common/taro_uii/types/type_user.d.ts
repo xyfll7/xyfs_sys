@@ -67,7 +67,8 @@ export interface BaseUserInfo extends AddressInfo, Regiment_UIF, Servicer_UIF, U
   selfRegiment?: BaseUserInfo,
   is_silence_color?: boolean; // 默哀色
   registStatus: 0 | 1 | 2; // 0 未注册 1 提交申请 2 审核通过
-  deptId: string;
+  deptId?: string;
+  deptName?: string;
 }
 
 

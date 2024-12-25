@@ -1,8 +1,8 @@
 // :: pages_user/sub_user_edit
-import { View } from "@tarojs/components";
+import { Text, View } from "@tarojs/components";
 import Taro from '@tarojs/taro';
 import { BaseUserInfo } from "@xyfs/taro_uii";
-import { Api_dept_list_ctn, Api_user_edit_ctn, Api_user_info_ctn } from '@xyfs/taro_uii/api/api__users';
+import { Api_dept_dept_ctn, Api_dept_list_ctn, Api_user_edit_ctn, Api_user_info_ctn } from '@xyfs/taro_uii/api/api__users';
 import { ComButton } from '@xyfs/taro_uii/components/ComButton';
 import { ComImage } from '@xyfs/taro_uii/components/ComImage';
 import { ComLoading } from '@xyfs/taro_uii/components/ComLoading';
@@ -70,8 +70,23 @@ const IIImyUserEditorAGENT: FC = () => {
       <View className='cccplh mb10 '>{utils_addressInfoToString(userInfo)}</View>
       <View className='ww'>
         <View className='ww dbtc'>
-          <ComButton ll className='cccplh bccwhite mb10'>部门{userInfo.deptId}</ComButton>
-          <ComButton rr className='cccgreen mb10 bborder' onClick={() => setShow(e => !e)}>指定</ComButton>
+          <View className='dy mb10'> <Text className='cccplh'>当前部门</Text>
+            {userInfo.deptName ? <ComButton ll className='bborder ml10'>{userInfo.deptName}</ComButton> : <ComButton ll className='ml10 cccplh'>未指定</ComButton>}
+          </View>
+          <View className='dy mb10'>
+            {userInfo.deptName && <ComButton rr className='cccgreen bborder' onClick={async () => {
+              const res_modal = await try_Taro_showModal({ title: "提示", content: "您确定要移出该部门？" });
+              if (res_modal) {
+                Taro.showLoading({ mask: true, title: "移出中..." });
+                await Api_dept_dept_ctn({ id: userInfo.id!, });
+                const res = await Api_user_info_ctn({ userId: options.userId! });
+                setUserInfo(res);
+                Taro.showToast({ icon: "none", title: "完成" });
+              }
+            }
+            }>移出</ComButton>}
+            <ComButton rr className='cccgreen bborder ml10' onClick={() => setShow(e => !e)}>指定</ComButton>
+          </View>
         </View>
         {show && <ComPopupNew onClose={() => setShow(e => !e)}>
           <View className='dll prl10' style={{ height: "70vh" }}>

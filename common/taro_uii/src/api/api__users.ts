@@ -283,12 +283,12 @@ export async function Api_dept_update_ctn(params: {
   // createBy: string,
   // createTime: string,
   // delFlag: string,
-  // deptId: string,
+  deptId: string,
   deptName: string,
   email?: string,
   leader?: string,
   // orderNum: string,
-  parentId?: string,
+  // parentId?: string,
   phone?: string,
   // status: string,
   // updateBy: string,
@@ -297,6 +297,16 @@ export async function Api_dept_update_ctn(params: {
 }) {
   const res = await wx_call_container<Printer_Info>({
     path: "/dept/update",
+    data: { ...params },
+  });
+  return res;
+}
+export async function Api_dept_dept_ctn(params: {
+  id: string, // userId;
+  deptId?: string; // 传空为移出部门
+}) {
+  const res = await wx_call_container<Printer_Info>({
+    path: "/user/dept",
     data: { ...params },
   });
   return res;
