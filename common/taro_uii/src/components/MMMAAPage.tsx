@@ -39,7 +39,6 @@ export const MMMAAPage: FC<{
 }) => {
 
     const selfInfo_S = useSTSelf(s => s.selfInfo!);
-    selfInfo_S.deptId = "";
     useHook_shareAppMessage({ page: props.shareMenuToPage });
 
     const env = getMyEnv();
@@ -51,7 +50,7 @@ export const MMMAAPage: FC<{
       case process.env.TARO_APP_ADMIN: isNeedRegiment = false; break; // 管理端 关闭团长限制
 
       case process.env.TARO_APP_CLIENT: isNeedAnyRole = false; break; // 顾客端 关闭权限限制
-      case process.env.TARO_APP_CLIENT: isNeedAnyDept = false; break; // 管理端 关闭团长限制
+      case process.env.TARO_APP_CLIENT: isNeedAnyDept = false; break; // 管理端 关闭部门限制
     }
 
     const isSystemUpdate = Number(env.version.replaceAll(".", "")) < Number(selfInfo_S.serveVersion?.replaceAll(".", ""));
