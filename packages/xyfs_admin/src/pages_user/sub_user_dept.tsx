@@ -84,6 +84,7 @@ const IIITree = ({ depts, onAdd, onDel, onEdit }: { depts: any[]; onEdit: (dept:
             onDel(e);
           }
         }}>删除</ComButton>
+        <ComButton rr className='ml10 mb10 bborder ww nw' onClick={() => { onEdit(e); }}>查看</ComButton>
         <ComButton rr className='ml10 mb10 bborder ww nw' onClick={() => { onEdit(e); }}>修改</ComButton>
         <ComButton rr className='ml10 mb10 bborder ww nw' onClick={() => { onAdd(e); }}>添加</ComButton>
       </View>

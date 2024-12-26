@@ -30,6 +30,7 @@ type Environment = {
   envSimulate: EnvVersion;
   version: string;
   OPENID?: string;
+  DEPTID?: string;
   isUseInDev?: boolean;
   isDeveloping?: boolean;
 };

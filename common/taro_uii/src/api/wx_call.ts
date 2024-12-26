@@ -21,6 +21,7 @@ export async function wx_call_container<OUT = void>({ path, data, params, method
       url: `${base_url}/api${_path}`,
       header: {
         "OPENID": (env.envVersion === "develop" && env.OPENID) ? env.OPENID : Taro_getStorageSync<string>("OPENID", getMyEnv()) ?? "",
+        "DEPTID": (env.envVersion === "develop" && env.DEPTID) ? env.DEPTID : Taro_getStorageSync<string>("DEPTID", getMyEnv()) ?? "",
         "APPID": env.appId,
         "ENV-Simulate": env.envSimulate,
         "ENV-Version": env.envVersion,

@@ -110,6 +110,7 @@ export async function Api_login_rqs(): Promise<BaseUserInfo> {
     }
   });
   Taro.setStorageSync("OPENID", res?.OPENID);
+  Taro.setStorageSync("DEPTID", res?.deptId);
   return res;
 
 }
