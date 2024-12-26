@@ -49,7 +49,7 @@ export const MMMAAPage: FC<{
     switch (getMyEnv().appId) {
       case process.env.TARO_APP_ADMIN:
         isNeedRegiment = false; // 管理端 关闭团长限制
-        // isNeedAnyDept = false;// 管理端 关闭部门限制
+        isNeedAnyDept = false;// 管理端 关闭部门限制
         break;
 
       case process.env.TARO_APP_CLIENT:

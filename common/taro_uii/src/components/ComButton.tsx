@@ -43,6 +43,8 @@ export function ComButton({
       }
     })()}
     style={{
+      wordBreak: "break-all",
+      wordWrap: "break-word",
       minHeight: "calc(2 * var(--rem_base)) !important",
       ...style,
     }} onClick={async (e) => {

@@ -312,3 +312,14 @@ export async function Api_dept_dept_ctn(params: {
   });
   return res;
 }
+
+// /api/dept/userList
+export async function Api_dept_userList_ctn(params: {
+  "deptId": string,
+}) {
+  const res = await wx_call_container<any[]>({
+    path: "/dept/userList",
+    data: { ...params },
+  });
+  return res;
+}

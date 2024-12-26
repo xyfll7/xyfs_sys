@@ -1,7 +1,7 @@
 // :: pages_user/sub_user_dept
 import { Text, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
-import { Api_dept_add_ctn, Api_dept_del_ctn, Api_dept_list_ctn, Api_dept_update_ctn } from "@xyfs/taro_uii/api/api__users";
+import { Api_dept_add_ctn, Api_dept_del_ctn, Api_dept_list_ctn, Api_dept_update_ctn, Api_dept_userList_ctn } from "@xyfs/taro_uii/api/api__users";
 import { ComButton } from '@xyfs/taro_uii/components/ComButton';
 import { ComInput } from "@xyfs/taro_uii/components/ComInput";
 import { ComLoading } from "@xyfs/taro_uii/components/ComLoading";
@@ -31,9 +31,9 @@ const Index: FC<{}> = ({ }) => {
     setDepts(res);
   }
   const [dept, setDept] = useState<any>(null);
-  const [mode, setMode] = useState<"add" | "edit">("add");
+  const [mode, setMode] = useState<"add" | "edit">();
 
-
+  const [deptUserList, setDeptUserList] = useState<any[] | null>(null);
 
   return <MMMAAPage>
     <ComNav>
@@ -46,50 +46,70 @@ const Index: FC<{}> = ({ }) => {
     <ComScrollView className=''>
       {depts === undefined && <ComLoading />}
       {depts?.length === 0 && <ComButton>没有数据</ComButton>}
-      {depts && <IIITree depts={depts}
-        onAdd={(e) => { setDept(e); setMode("add"); }}
-        onEdit={(e) => { setDept(e); setMode("edit"); }}
-        onDel={async (e) => {
-          const res = await try_Taro_showModal({ title: "提示", content: "您确定要删除该部门？" });
-          if (res) {
-            Taro.showLoading({ mask: true, title: "删除中" });
-            await Api_dept_del_ctn({ deptId: e.deptId });
-            Taro.showToast({ icon: "none", title: "成功" });
-            await ___Api_dept_list_ctn();
-          }
-        }}></IIITree>}
+      {depts && <IIITree list={depts} >
+        {(e) =>
+          <View className='bccwhite  ioo ovh pt10 dbtc ww mb10 ww' >
+            <ComButton className='mb10 ww '>
+              <View className='nw1'>{e.deptName}</View>
+            </ComButton>
+            <View className='pr10 ww  dy'>
+              <ComButton rr className='ml10 mb10 cccplh bborder ww nw' onClick={async () => {
+                const res = await try_Taro_showModal({ title: "提示", content: "您确定要删除该部门？" });
+                if (res) {
+                  Taro.showLoading({ mask: true, title: "删除中" });
+                  await Api_dept_del_ctn({ deptId: e.deptId });
+                  Taro.showToast({ icon: "none", title: "成功" });
+                  await ___Api_dept_list_ctn();
+                }
+              }}>删除</ComButton>
+              <ComButton rr className='ml10 mb10 bborder ww nw' onClick={async () => {
+                Taro.showLoading({ mask: true, title: "加载中" });
+                const res = await Api_dept_userList_ctn({ deptId: e.deptId });
+                setDeptUserList(res);
+                setDept(e);
+                Taro.hideLoading();
+              }}>成员</ComButton>
+              <ComButton rr className='ml10 mb10 bborder ww nw' onClick={() => { setDept(e); setMode("edit"); }}>修改</ComButton>
+              <ComButton rr className='ml10 mb10 bborder ww nw' onClick={() => { setDept(e); setMode("add"); }}>添加</ComButton>
+            </View>
+          </View>
+        }
+      </IIITree>}
     </ComScrollView>
-    {dept && <ComPopupNew onClose={() => setDept(null)}>
+    {dept && mode && <ComPopupNew onClose={() => setDept(null)}>
       <View className='dll prl10' style={{ height: "50vh" }}>
         <IIIAddDept dept={dept} mode={mode} onSuccess={() => { setDept(null); ___Api_dept_list_ctn(); }} onClose={() => { setDept(null); }}></IIIAddDept>
+      </View>
+    </ComPopupNew>}
+    {deptUserList && <ComPopupNew onClose={() => setDept(null)}>
+      <View className='dll prl10' style={{ height: "70vh" }}>
+        <ComNavBarB className='mb10' onClose={() => setDeptUserList(null)}>
+          <View className='dy'><ComButton className='fwb bccback'>部门用户</ComButton></View>
+        </ComNavBarB>
+        <ComButton className='mb10 bcctrans' hoverClass='none'> <Text className='cccplh'>所属部门：</Text> {dept.deptName}</ComButton>
+        <ComScrollView className=''>
+          {deptUserList.map(e => {
+            return <View key={e.id} className='ww ioo bccwhite mb10 pt10'>
+              <ComButton className='mb10 nw1 ' onClick={() => { Taro.makePhoneCall({ phoneNumber: e.mobile }); }}>
+                <View className=' ww'>
+                  <View className='nw1'>{e.name}</View>
+                  <View className='nw1 cccplh'>{e.mobile} <Text className='cccgreen'>拨打</Text> </View>
+                </View>
+              </ComButton>
+            </View>;
+          })}
+        </ComScrollView>
       </View>
     </ComPopupNew>}
   </MMMAAPage>;
 };
 
-const IIITree = ({ depts, onAdd, onDel, onEdit }: { depts: any[]; onEdit: (dept: any) => void; onAdd: (dept: any) => void; onDel: (dept: any) => void; }) => {
+
+function IIITree<T extends { id: string, children: T[]; }>({ list, children }: { children: (e: T) => React.ReactNode; list: T[]; }) {
   const [show, setShow] = useState(true);
-  return depts?.map(e => <View key={e.id} className='ww dll' >
-    <View className='bccwhite  ioo ovh pt10 dbtc ww mb10 ww' >
-      <ComButton className='mb10 ww '>
-        <View className='nw1'>{e.deptName}</View>
-      </ComButton>
-      <View className='pr10 ww  dy'>
-        <ComButton rr className='ml10 mb10 cccplh bborder ww nw' onClick={async () => {
-          const res = await try_Taro_showModal({ title: "提示", content: "您确定要删除该部门？" });
-          if (res) {
-            Taro.showLoading({ mask: true, title: "删除中" });
-            await Api_dept_del_ctn({ deptId: e.deptId });
-            Taro.showToast({ icon: "none", title: "成功" });
-            onDel(e);
-          }
-        }}>删除</ComButton>
-        <ComButton rr className='ml10 mb10 bborder ww nw' onClick={() => { onEdit(e); }}>查看</ComButton>
-        <ComButton rr className='ml10 mb10 bborder ww nw' onClick={() => { onEdit(e); }}>修改</ComButton>
-        <ComButton rr className='ml10 mb10 bborder ww nw' onClick={() => { onAdd(e); }}>添加</ComButton>
-      </View>
-    </View>
-    {e.children &&
+  return list?.map(item => <View key={item.id} className='ww dll'>
+    {children(item)}
+    {item.children &&
       <View className='dll ww'>
         <View className='ds ww'>
           <View className='dll pl10'>
@@ -97,7 +117,7 @@ const IIITree = ({ depts, onAdd, onDel, onEdit }: { depts: any[]; onEdit: (dept:
           </View>
           <View className='pl10 dll ww'>
             <ComButton className='bccback cccplh mb10 ww' onClick={() => setShow(ee => !ee)}>下级部门<View style={{ transform: show ? "" : "rotate(180deg)" }}>↡</View></ComButton>
-            {show && <IIITree depts={e.children} onEdit={onEdit} onAdd={onAdd} onDel={onDel}></IIITree>}
+            {show && <IIITree list={item.children}>{children}</IIITree>}
           </View>
         </View>
       </View>
@@ -105,6 +125,9 @@ const IIITree = ({ depts, onAdd, onDel, onEdit }: { depts: any[]; onEdit: (dept:
   </View>
   );
 };
+
+
+
 
 const IIIAddDept = ({ dept, onSuccess, mode, onClose }: { mode: "edit" | "add", dept: any; onSuccess: () => void; onClose: () => void; }) => {
   console.log("IIIAddDept", dept);
