@@ -48,10 +48,19 @@ const Index: FC<{}> = ({ }) => {
     }), [searchValue, selfInfo_S?.OPENID, userRole]);
   const { page, page_loading, page_list_get, page_init } = useHook_pageListNew(___page_getter,);
 
+  const ____arr: { id: string, count: 0; }[] = [];
 
-  console.log("page", page);
+  page.list?.map((e, index) => {
+    if (!____arr.find(ee => ee.id == e.id)) {
+      ____arr.push({ id: e.id!, count: 0 });
+    }
+    if (____arr.find(ee => ee.id == e.id)) {
+      const ind = ____arr.findIndex(ee => ee.id == e.id);
+      ____arr[ind]!.count++;
+    }
+  });
+  console.log(____arr);
 
-  console.log("===>", page.list);
 
   console.log(";;", coo___unique_arr(page.list, "id"));
   const [date, setDate] = useState<string>(format(coo___ios_date(), "yyyy-MM-dd"));

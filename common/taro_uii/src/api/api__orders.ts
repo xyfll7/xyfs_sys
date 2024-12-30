@@ -206,3 +206,10 @@ export async function Api_order_orderProductCode_ctn(params: {
   });
   return res;
 }
+export async function Api_order_writeWeight_ctn(params: { url: string; }): Promise<any> {
+  const res = await wx_call_container<Promise<any>>({
+    path: "/order/writeWeight",
+    data: { ...params },
+  });
+  return res;
+}

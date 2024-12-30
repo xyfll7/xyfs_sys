@@ -58,18 +58,29 @@ const Index: FC<{}> = ({ }) => {
                 throw new Error("正在下载，请稍后");
               }
             }}>
-              {differenceInMinutes(coo___ios_date(), coo___ios_date(e.createTime)) > ___time * 60 * 2 ? <Text className='cccplh'>该文件已过时，请去下载最新文件</Text> :
-                <View className='dy'>
-                  {e.url && <><Text className='wm15rem nw1'> {file_name}</Text><Text>_对账单</Text></>}
-                  {!e.url && <><Text className='wm15rem nw1'>{file_name}</Text><Text>_下载中...</Text></>}
-                </View>
-              }
+              {e.type === 1 && <>
+                {differenceInMinutes(coo___ios_date(), coo___ios_date(e.createTime)) > ___time * 60 * 2 ? <Text className='cccplh'>该文件已过时，请去下载最新文件</Text> :
+                  <View className='dy'>
+                    {e.url && <><Text className='wm15rem nw1 '> {file_name}</Text><Text className='cccgreen'>  _完成</Text></>}
+                    {!e.url && <><Text className='wm15rem nw1'>{file_name}</Text><Text>_下载中...</Text></>}
+                  </View>
+                }
+              </>}
+              {e.type === 3 && <>
+                {differenceInMinutes(coo___ios_date(), coo___ios_date(e.createTime)) > ___time * 60 * 2 ? <Text className='cccplh'>该文件已过时，请去下载最新文件</Text> :
+                  <View className='dy'>
+                    {e.status == 1 && <><Text className='wm15rem nw1'>写入任务</Text><Text className='cccgreen'>_完成</Text></>}
+                    {e.status != 1 && <><Text className='wm15rem nw1'>写入任务</Text><Text>_执行中...</Text></>}
+                  </View>
+                }
+              </>}
             </ComButton>
             <ComButton rr ll>{i + 1}</ComButton>
           </View>
           <View className='cccplh fs08'>开始下载时间： {e.createTime}  </View>
           <View className='cccplh fs08'>结束下载时间： {e.updateTime ?? '下载中...'} </View>
-          <View className='cccplh fs08 mb10'>{e.updateTime ? "下载用时：" : "已用时："} {differenceInMinutes(coo___ios_date(e.updateTime ? e.updateTime : undefined), coo___ios_date(e.createTime))} 分钟  </View>
+          {e.type === 3 && <View className='cccplh fs08'>任务详情： {e.url} </View>}
+          <View className='cccplh fs08 mb10'>{e.updateTime ? "任务用时：" : "已用时："} {differenceInMinutes(coo___ios_date(e.updateTime ? e.updateTime : undefined), coo___ios_date(e.createTime))} 分钟  </View>
         </View>;
       })
       }

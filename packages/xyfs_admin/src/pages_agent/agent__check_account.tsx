@@ -1,6 +1,6 @@
 // :: pages_agent/agent__check_account
 import Taro from '@tarojs/taro';
-import { Api_order_billVerify_ctn } from '@xyfs/taro_uii/api/api__orders';
+import { Api_order_billVerify_ctn, Api_order_writeWeight_ctn } from '@xyfs/taro_uii/api/api__orders';
 import { ComButton } from '@xyfs/taro_uii/components/ComButton';
 import { ComNav } from '@xyfs/taro_uii/components/ComNav';
 import { ComNavBarA } from '@xyfs/taro_uii/components/ComNavBarA';
@@ -34,7 +34,7 @@ const Index: FC = () => {
       </ComButton>
       {fileID && <ComButton className='mb10 cccplh' >{fileID}</ComButton>}
       {fileID && <ComButton className='mb10 cccgreen' onClick={async () => {
-        Taro.showLoading({ mask: true, title: "下载中..." });
+        Taro.showLoading({ mask: true, title: "提交任务..." });
         await Api_order_billVerify_ctn({ billExcelUrl: fileID });
         Taro.hideLoading();
         if (await try_Taro_showModal({
@@ -45,6 +45,19 @@ const Index: FC = () => {
           await try_Taro_navigateTo({ url: "/pages_comm/icomm_download_list" });
         }
       }}>下载对账结果</ComButton>
+      }
+      {fileID && <ComButton className='mb10 cccgreen' onClick={async () => {
+        Taro.showLoading({ mask: true, title: "提交任务..." });
+        await Api_order_writeWeight_ctn({ url: fileID });
+        Taro.hideLoading();
+        if (await try_Taro_showModal({
+          title: "提交成功",
+          content: "请到下载任务列表查看对账单",
+          confirmText: "去查看"
+        })) {
+          await try_Taro_navigateTo({ url: "/pages_comm/icomm_download_list" });
+        }
+      }}>写入重量、超重金额</ComButton>
       }
     </ComScrollView>
   </MMMAAPage>;
