@@ -31,5 +31,8 @@
     "commitizen": {
       "path": "git-cz"
     }
+  },
+  "dependencies": {
+    "node-xlsx": "^0.24.0"
   }
 }

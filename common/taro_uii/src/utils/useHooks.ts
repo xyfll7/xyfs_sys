@@ -168,6 +168,7 @@ export function useHook_pageListNew<P, T extends Pagination<P[]>>(cb: (a: Pagina
     nextPage: 0,
     isLastPage: undefined,
     list: [] as P[],
+    total: 0,
   } as T);
   function page_init() {
     setPage(() => ({
@@ -199,6 +200,7 @@ export function useHook_pageListNew<P, T extends Pagination<P[]>>(cb: (a: Pagina
         nextPage: res.nextPage,
         isLastPage: res.isLastPage,
         list: [...e.list!, ...res.list!] as P[],
+        total: res.total,
       } as T));
     }
     ___isLoading.current = false;

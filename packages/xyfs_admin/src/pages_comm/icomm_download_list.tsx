@@ -40,30 +40,33 @@ const Index: FC<{}> = ({ }) => {
       </View>
     </ComNav>
     <ComScrollView onScrollToLower={async () => { page_list_get(page); }}>
-      {page.list && [...page.list].map(e => {
+      {page.list && [...page.list].map((e, i) => {
         const file_name = `${e.endDate?.slice(0, 7).split("-")[0] ?? ""}年${e.endDate?.slice(0, 7).split("-")[1] ?? ""}月_${e.name}`;
         return <View className='dll mb10 bccwhite pt10 ioo ww prl10' key={e.id}>
-          <ComButton ll className='' onClick={async () => {
+          <View className='dbtc ww'>
+            <ComButton ll className='' onClick={async () => {
 
-            if (differenceInMinutes(coo___ios_date(), coo___ios_date(e.createTime)) > ___time * 60 * 2) {
-              throw new Error("该文件已过时，请去下载最新文件");
-            }
+              if (differenceInMinutes(coo___ios_date(), coo___ios_date(e.createTime)) > ___time * 60 * 2) {
+                throw new Error("该文件已过时，请去下载最新文件");
+              }
 
-            if (e.url) {
-              Taro.showLoading({ mask: true, title: "下载中..." });
-              await utils_open_excel({ url: e.url, file_name: `${file_name}_对账单_${format(coo___ios_date(e.createTime), "yyyy_MM_dd_HH_mm_ss")}.xlsx` });
-              Taro.showToast({ icon: "none", title: "下载成功" });
-            } else {
-              throw new Error("正在下载，请稍后");
-            }
-          }}>
-            {differenceInMinutes(coo___ios_date(), coo___ios_date(e.createTime)) > ___time * 60 * 2 ? <Text className='cccplh'>该文件已过时，请去下载最新文件</Text> :
-              <View className='dy'>
-                {e.url && <><Text className='wm15rem nw1'> {file_name}</Text><Text>_对账单</Text></>}
-                {!e.url && <><Text className='wm15rem nw1'>{file_name}</Text><Text>_下载中...</Text></>}
-              </View>
-            }
-          </ComButton>
+              if (e.url) {
+                Taro.showLoading({ mask: true, title: "下载中..." });
+                await utils_open_excel({ url: e.url, file_name: `${file_name}_对账单_${format(coo___ios_date(e.createTime), "yyyy_MM_dd_HH_mm_ss")}.xlsx` });
+                Taro.showToast({ icon: "none", title: "下载成功" });
+              } else {
+                throw new Error("正在下载，请稍后");
+              }
+            }}>
+              {differenceInMinutes(coo___ios_date(), coo___ios_date(e.createTime)) > ___time * 60 * 2 ? <Text className='cccplh'>该文件已过时，请去下载最新文件</Text> :
+                <View className='dy'>
+                  {e.url && <><Text className='wm15rem nw1'> {file_name}</Text><Text>_对账单</Text></>}
+                  {!e.url && <><Text className='wm15rem nw1'>{file_name}</Text><Text>_下载中...</Text></>}
+                </View>
+              }
+            </ComButton>
+            <ComButton rr ll>{i + 1}</ComButton>
+          </View>
           <View className='cccplh fs08'>开始下载时间： {e.createTime}  </View>
           <View className='cccplh fs08'>结束下载时间： {e.updateTime ?? '下载中...'} </View>
           <View className='cccplh fs08 mb10'>{e.updateTime ? "下载用时：" : "已用时："} {differenceInMinutes(coo___ios_date(e.updateTime ? e.updateTime : undefined), coo___ios_date(e.createTime))} 分钟  </View>

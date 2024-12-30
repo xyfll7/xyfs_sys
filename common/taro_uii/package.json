@@ -88,6 +88,7 @@
 		"@babel/preset-react": "^7.24.1",
 		"@tarojs/cli": "4.0.8",
 		"@tarojs/vite-runner": "4.0.8",
+		"@types/node": "^22.10.2",
 		"@types/react": "^18.0.0",
 		"@vitejs/plugin-react": "^4.3.0",
 		"@vitejs/plugin-react-swc": "^3.7.0",

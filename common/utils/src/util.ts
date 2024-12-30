@@ -158,7 +158,7 @@ export function coo___privacy_phone(mobile?: string) {
   return mobile ? `${mobile?.slice(0, 3)}****${mobile?.slice(-4)}` : "***空号***";
 }
 
-
+// 对象数组去重值
 export function coo___unique_arr<T extends Record<string, any>>(arr: T[], key: string) {
   const uniqueArr = arr.reduce((prev: T[], cur) => {
     if (!prev.some(item => item[key] === cur[key])) {

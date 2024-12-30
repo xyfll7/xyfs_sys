@@ -56,7 +56,6 @@ export const MMMAAPage: FC<{
         isNeedAnyRole = false;// 顾客端 关闭权限限制
         isNeedAnyDept = false;// 顾客端 关闭部门限制
         break;
-      case process.env.TARO_APP_CLIENT: isNeedAnyDept = false; break; // 管理端 关闭部门限制
     }
 
     console.log("isNeedRegiment", isNeedAnyDept);
