@@ -3,20 +3,38 @@ import "@xyfs/utils/init";
 import Package from "../package.json";
 import { Environment, EnvVersion } from "../types/type_index";
 
-export const base_url: string = "";
+export const base_url: string = "http://192.168.60.229:8080";
 
-const ___envSimulate = "release";
+const ___envSimulate = "develop";
 
 // cSpell: disable;
 const OPENID_DEV___ =
   // @ts-ignore
-  // "oGwbL5BF-W3LalUua-8ItKptM3Y8" ||  // 🚀
+
+  // "oGwbL5HudJXb6ztDzUtEmpd41v1c" ||
+  // "oGwbL5Awtcl9F8EGfF4TRN9AJDrI" ||
+  // "oGwbL5G2_jpjBICYtJZSMIAYOb2U" ||
+  // "oGwbL5Ft8eJNyS_8cpbKAfJG6XuE" ||
+  // "oGwbL5GxDPFm8a1j1b1UfiPWZlRw" ||
+  // "oGwbL5DzItCwSPJVrQcGYfDdu3JA" ||
+  // "oGwbL5N_xHceDTweeY3W0NGG7l0A" ||
+  // "oGwbL5A07y0YBSbRQQ0Sv_1lSckE" ||
+  // "oGwbL5DlRbsYB__m2aoBCgNSGduM" ||
+  // "oGwbL5ENjFmjV7Y5jmTCRdXwR25k" ||
+  // "oGwbL5CEoFe5T1fqyAQUu0ohSLSM" ||
+  // "oGwbL5BF-W3LalUua-8ItKptM3Y8" ||
+  // "oGwbL5O_FBTl9622gKF8ZraYSiPA" ||
+  // "oGwbL5GxLipX-B4MppH1YedmznqY" ||
+  // "oGwbL5I6ATu_7kwydZHQ5C9ePxWk" ||
+  // "oGwbL5LkzeHawClZeaJJg94j93vI" ||
+  // "oGwbL5LPQ35WTFuCtrd6DIFAXD2Q" ||
+  // "oGwbL5Ft8eJNyS_8cpbKAfJG6XuE" ||  // 🚀
   ////////////////////////////////////////////////
   // "oGwbL5D1WtsGTuLhWneaepYuHW3k" ||  // 何旭东
   // "oGwbL5OLhRpOKRWrkVNSMqXuGPaE" ||  // 我妈
   // "oHt125JZ0IV1XI_y8iOt0wTR8P-M" ||  // (顾客端)王肇
   ////////////////////////////////////////////////
-  "oGwbL5IZEq-8Op4CvUTNodRKdOB0" ||  // 冯强
+  // "oGwbL5IZEq-8Op4CvUTNodRKdOB0" ||  // 冯强
   // "oGwbL5CEoFe5T1fqyAQUu0ohSLSM" ||  // 王红霞
   // "oGwbL5HudJXb6ztDzUtEmpd41v1c" ||  // 王红霞2
   // "oGwbL5CmzeeKG-X9tmDg90rE1bdo" ||  // 嘉丰智慧社区服务站48 李建梅

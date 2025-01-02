@@ -77,7 +77,7 @@ const Index: FC<{}> = ({ }) => {
           setSearchValue(`${e}`);
         }} />
         <View className='cccplh ww dbtc mb10'>
-          <ComButton>共{page.total}个子用户</ComButton>
+          <ComButton>共{page.total ? page.total : "..."}个子用户</ComButton>
           <Picker
             className='slr'
             header-text='请选择账单月份'

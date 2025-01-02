@@ -365,13 +365,13 @@ const ShopCartTabBarRegiment: FC<PropsWithChildren & { children?: ReactElement |
     <View className='dbtc ww'>
       <ComAddressSwitchor className='mb10 bccback ww mr10' isShort title='团:' address={roo___role_regiment(useSTSelf.getState().selfInfo!)} />
 
-      <View className='ioo dy bccbacktab mb10 '>
+      <View className='ioo dy  mb10 '>
         <ComCartPrice totalPrice={___get_cart_total_price(cart)} num={String(cart.length)} onClick={onToggle} />
-        <ComButton className='nw bccyellow' disabled={isPay} onClickO={() => onPay?.()}>
+        <ComButton className='nw bccyellow ml10' disabled={isPay} onClickO={() => onPay?.()}>
           <ComSquare style={{ width: "calc(1.3 * var(--rem_base))" }} className='icon-wxpay mr4' />
           <Text className='fwb'>付</Text>
         </ComButton>
-        <ComSquare className='icon-chevron-right mrl10' style={{ transform: "rotate(0deg)" }} onClick={onToggle} />
+        {/* <ComSquare className='icon-chevron-right mrl10' style={{ transform: "rotate(0deg)" }} onClick={onToggle} /> */}
       </View>
     </View>
   </View>;

@@ -10,6 +10,20 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages_comm/icomm_orders_dryclean",
+          "pathName": "pages_comm/icomm_orders_dryclean",
+          "query": "order_ST=2",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_comm/comm__product_dryclean",
+          "pathName": "pages_comm/comm__product_dryclean",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages_agent/agent__check_account",
           "pathName": "pages_agent/agent__check_account",
           "query": "",
