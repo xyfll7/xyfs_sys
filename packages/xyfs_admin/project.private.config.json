@@ -10,6 +10,27 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages_user/sub_user_dept",
+          "pathName": "pages_user/sub_user_dept",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_user/sub_user_edit",
+          "pathName": "pages_user/sub_user_edit",
+          "query": "userId=oGwbL5PVdCTyoE2sYHAq2bdNA9BY",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_user/sub_user_dept",
+          "pathName": "pages_user/sub_user_dept",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages_comm/icomm_orders_dryclean",
           "pathName": "pages_comm/icomm_orders_dryclean",
           "query": "order_ST=2",

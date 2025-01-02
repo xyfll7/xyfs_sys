@@ -102,8 +102,6 @@ const Index: FC = () => {
           if (!selfInfo_S.defaultRecManAddress) {
             await Api_user_edit_ctn({ defaultRecManAddress: address });
           }
-          console.log("selfInfo_S", selfInfo_S);
-          throw new ErrorR("请先“手机号快捷登录”", true);
 
           if (!selfInfo_S.mobile) { throw new ErrorR("请先“手机号快捷登录”", true); }
           if (!Boolean(cart?.itemList?.length)) { throw new ErrorR("购物车为空", true); }

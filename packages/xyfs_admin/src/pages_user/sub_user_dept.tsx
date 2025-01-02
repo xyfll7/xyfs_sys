@@ -13,7 +13,8 @@ import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
 import { useHook_Reducer } from "@xyfs/taro_uii/utils/useHooks";
-import { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
+
 
 definePageConfig({
   navigationStyle: "custom", disableScroll: true,
@@ -105,26 +106,28 @@ const Index: FC<{}> = ({ }) => {
 };
 
 
-function IIITree<T extends { id: string, children: T[]; }>({ list, children }: { children: (e: T) => React.ReactNode; list: T[]; }) {
-  const [show, setShow] = useState(true);
-  return list?.map(item => <View key={item.id} className='ww dll'>
+function IIITree<T extends { deptId: string, children: T[]; }>({ list, children }: { children: (e: T) => React.ReactNode; list: T[]; }) {
+  return list?.map(item => <View key={item.deptId} className='ww dll'>
     {children(item)}
-    {item.children &&
-      <View className='dll ww'>
-        <View className='ds ww'>
-          <View className='dll pl10'>
-            <View className='hh mb10 bccbacktab' style={{ width: "1rpx", }}></View>
-          </View>
-          <View className='pl10 dll ww'>
-            <ComButton className='bccback cccplh mb10 ww' onClick={() => setShow(ee => !ee)}>下级部门<View style={{ transform: show ? "" : "rotate(180deg)" }}>↡</View></ComButton>
-            {show && <IIITree list={item.children}>{children}</IIITree>}
-          </View>
-        </View>
-      </View>
-    }
+    {item.children && <IIITreeChild list={item.children}>{children}</IIITreeChild>}
   </View>
   );
 };
+
+function IIITreeChild<T extends { deptId: string, children: T[]; }>({ list, children }: { children: (e: T) => React.ReactNode; list: T[]; }) {
+  const [show, setShow] = useState(false);
+  return <View className='dll ww'>
+    <View className='ds ww'>
+      <View className='dll pl10'>
+        <View className='hh mb10 bccbacktab' style={{ width: "1rpx", }}></View>
+      </View>
+      <View className='pl10 dll ww'>
+        <ComButton className='bccback cccplh mb10 ww' onClick={() => setShow(e => !e)}>下级部门<View style={{ transform: show ? "" : "rotate(180deg)" }}>↡</View></ComButton>
+        {show && <IIITree list={list}>{children}</IIITree>}
+      </View>
+    </View>
+  </View>;
+}
 
 
 

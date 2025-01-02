@@ -91,9 +91,11 @@ const IIImyUserEditorAGENT: FC = () => {
         {show && <ComPopupNew onClose={() => setShow(e => !e)}>
           <View className='dll prl10' style={{ height: "70vh" }}>
             <ComNavBarB className='mb10' onClose={() => setShow(e => !e)}>
-              <View className='dy'><ComButton className='fwb bccback'>指定部门</ComButton></View>
+              <View className='dy'><ComButton className='fwb bccback'>指定部门1</ComButton></View>
             </ComNavBarB>
-            <IIIDeptList userInfo={userInfo} onUpdateUserInfo={(e) => setUserInfo(e)}></IIIDeptList>
+            <ComScrollView className=''>
+              <IIIDeptList userInfo={userInfo} onUpdateUserInfo={(e) => setUserInfo(e)}></IIIDeptList>
+            </ComScrollView>
           </View>
         </ComPopupNew>
         }

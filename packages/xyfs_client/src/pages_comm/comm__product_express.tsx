@@ -141,7 +141,7 @@ const IIIOrderPayUser: FC<{}> = ({ }) => {
         <ComAddressSwitchor className='bccback mr10 ww' isShort isIcon address={roo___role_regiment(selfInfo_S)} url='/pages_user/user_regiment_list_map' />
         <ComButton className='bccyellow fwb nw'
           onClick={async () => {
-            if (!selfInfo_S?.mobile) { throw new ErrorR("请先“手机号快捷登录”", true); }
+            if (!selfInfo_S?.mobile) { throw new ErrorR("请先“手机号快捷登录”!", true); }
             // 用户下单没有指定具体快递公司,不检查快递可达性
             await utils_validate_express("rec", express_S?.productList?.[0]?.recMan!);
             await utils_validate_express("send", express_S?.productList?.[0]?.sendMan!);
