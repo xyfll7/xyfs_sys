@@ -59,10 +59,7 @@ const Index: FC<{}> = ({ }) => {
       ____arr[ind]!.count++;
     }
   });
-  console.log(____arr);
 
-
-  console.log(";;", coo___unique_arr(page.list, "id"));
   const [date, setDate] = useState<string>(format(coo___ios_date(), "yyyy-MM-dd"));
   return <MMMAAPage>
     <ComNav>
@@ -125,40 +122,45 @@ const Index: FC<{}> = ({ }) => {
 
 const IIImyUserCardAGENT: FC<{ myUser: BaseUserInfo; }> = ({ myUser }) => {
   const [date, setDate] = useState<string>(format(coo___ios_date(), "yyyy-MM-dd"));
+  console.log("myUser", myUser);
   return <>
     <View key={myUser.id} className='mb10 ww dll ww prl10 pt10 ioo bccwhite'>
-      <View className='dy mb10 ww'>
-        <ComImage className='mr10' src={myUser.avatar ?? ""} />
-        <ComButton ll className='cccplh bccwhite'>
-          <View className='wm8rem nw1 mr4'>{myUser.name}</View>
-        </ComButton>
-
-        <Picker
-          className='slr'
-          header-text='请选择账单月份'
-          value={date}
-          end={format(coo___ios_date(), "yyyy-MM-dd")}
-          mode='date'
-          fields='month'
-          onChange={async (e) => {
-            Taro.showLoading({ mask: true, title: "下载中...", });
-            const _date = `${e.detail.value}-01`;
-            setDate(_date);
-            const dateRes = utils_get_start_end_date(_date);
-            await Api_order_paymentExport_ctn({
-              subUserId: myUser.OPENID!,
-              startDate: dateRes.firstDateOfMonth,
-              endDate: dateRes.lastDateOfMonth,
-            });
-            Taro.hideLoading();
-            if (await try_Taro_showModal({ title: "提交成功", content: "请到下载任务列表查看对账单", confirmText: "去查看" })) {
-              await try_Taro_navigateTo({ url: "/pages_comm/icomm_download_list" });
-            }
-          }}>
-          <ComButton rr className='cccgreen bborder'>对账单</ComButton>
-        </Picker>
+      <View className='dbtc mb10 ww'>
+        <View className='dy'>
+          <ComImage className='mr10' src={myUser.avatar ?? ""} />
+          <ComButton ll className='cccplh bccwhite'>
+            <View className='wm8rem nw1 mr4'>{myUser.name}</View>
+          </ComButton>
+        </View>
+        <View className='dy'>
+          <ComButton>{myUser.deptId}</ComButton>
+          <Picker
+            className='slr'
+            header-text='请选择账单月份'
+            value={date}
+            end={format(coo___ios_date(), "yyyy-MM-dd")}
+            mode='date'
+            fields='month'
+            onChange={async (e) => {
+              Taro.showLoading({ mask: true, title: "下载中...", });
+              const _date = `${e.detail.value}-01`;
+              setDate(_date);
+              const dateRes = utils_get_start_end_date(_date);
+              await Api_order_paymentExport_ctn({
+                subUserId: myUser.OPENID!,
+                startDate: dateRes.firstDateOfMonth,
+                endDate: dateRes.lastDateOfMonth,
+              });
+              Taro.hideLoading();
+              if (await try_Taro_showModal({ title: "提交成功", content: "请到下载任务列表查看对账单", confirmText: "去查看" })) {
+                await try_Taro_navigateTo({ url: "/pages_comm/icomm_download_list" });
+              }
+            }}>
+            <ComButton rr className='cccgreen bborder'>对账单</ComButton>
+          </Picker>
+        </View>
       </View>
-      <View className='cccplh mb10 '>{utils_addressInfoToString(myUser)}</View>
+      <View className='cccplh mb10 '>{utils_addressInfoToString(myUser)}  </View>
       <View className='ds dwp'>
         {myUser.roles?.map(e => <ComButton ll className='cccplh bborder mb10' key={e.id}>{e.roleName}</ComButton>)}
       </View>
