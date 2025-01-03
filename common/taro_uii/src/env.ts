@@ -3,7 +3,7 @@ import "@xyfs/utils/init";
 import Package from "../package.json";
 import { Environment, EnvVersion } from "../types/type_index";
 
-export const base_url: string = "http://192.168.60.233:8080";
+export const base_url: string = "";
 
 const ___envSimulate = "develop";
 
@@ -11,24 +11,8 @@ const ___envSimulate = "develop";
 const OPENID_DEV___ =
   // @ts-ignore
 
-  // "oGwbL5HudJXb6ztDzUtEmpd41v1c" ||
-  // "oGwbL5Awtcl9F8EGfF4TRN9AJDrI" ||
-  // "oGwbL5G2_jpjBICYtJZSMIAYOb2U" ||
-  // "oGwbL5Ft8eJNyS_8cpbKAfJG6XuE" ||
-  // "oGwbL5GxDPFm8a1j1b1UfiPWZlRw" ||
-  // "oGwbL5DzItCwSPJVrQcGYfDdu3JA" ||
-  // "oGwbL5N_xHceDTweeY3W0NGG7l0A" ||
-  // "oGwbL5A07y0YBSbRQQ0Sv_1lSckE" ||
-  // "oGwbL5DlRbsYB__m2aoBCgNSGduM" ||
-  // "oGwbL5ENjFmjV7Y5jmTCRdXwR25k" ||
-  // "oGwbL5CEoFe5T1fqyAQUu0ohSLSM" ||
-  // "oGwbL5BF-W3LalUua-8ItKptM3Y8" ||
-  // "oGwbL5O_FBTl9622gKF8ZraYSiPA" ||
-  // "oGwbL5GxLipX-B4MppH1YedmznqY" ||
-  // "oGwbL5I6ATu_7kwydZHQ5C9ePxWk" ||
-  // "oGwbL5LkzeHawClZeaJJg94j93vI" ||
-  // "oGwbL5LPQ35WTFuCtrd6DIFAXD2Q" ||
-  // "oGwbL5Ft8eJNyS_8cpbKAfJG6XuE" ||  // 🚀
+
+  // "oGwbL5DzItCwSPJVrQcGYfDdu3JA" ||  // 🚀
   ////////////////////////////////////////////////
   // "oGwbL5D1WtsGTuLhWneaepYuHW3k" ||  // 何旭东
   // "oGwbL5OLhRpOKRWrkVNSMqXuGPaE" ||  // 我妈
@@ -47,7 +31,7 @@ const OPENID_DEV___ =
 
   // "oGwbL5FchK3nw0rvAJOb-PY-11iE" ||  // 猪儿 揽收员
   // "oGwbL5Lak_bditPcNT7qnmgmWHeo" ||  // 狗子 司机
-  "oGwbL5PVdCTyoE2sYHAq2bdNA9BY" ||  // 王理代 商家
+  // "oGwbL5PVdCTyoE2sYHAq2bdNA9BY" ||  // 王理代 商家
   // "oGwbL5FKCrALVPc-XBeBspHo_gMw" ||  // 熊猫 导游
 
   // "oGwbL5PA_c0S56GYdqE_62bGnNDQ" ||  // 猴猴 注册新用户测试
@@ -63,6 +47,7 @@ const envObj: Record<EnvVersion, Environment> = {
   trial: { ctnId: process.env.TARO_APP_CTN_PRO, envSimulate: "release", version: Package.version, appId: "" },
   develop: { ctnId: process.env.TARO_APP_CTN_DEV, envSimulate: ___envSimulate, version: Package.version, appId: "", OPENID: OPENID_DEV___ ? OPENID_DEV___ : undefined, isUseInDev: ___isUseInDev, isDeveloping: ___isDeveloping },
 };
+
 
 export function getMyEnv(env?: EnvVersion): Environment {
   const { miniProgram: { envVersion, version, appId } } = Taro.getAccountInfoSync();

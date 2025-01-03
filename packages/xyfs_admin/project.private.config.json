@@ -17,6 +17,13 @@
           "scene": null
         },
         {
+          "name": "pages_user/sub_user_dept",
+          "pathName": "pages_user/sub_user_dept",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages_user/sub_user_edit",
           "pathName": "pages_user/sub_user_edit",
           "query": "userId=oGwbL5PVdCTyoE2sYHAq2bdNA9BY",

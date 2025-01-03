@@ -120,12 +120,12 @@ const Index: FC = () => {
             if (await try_Taro_showModal({ title: "支付完成", content: `订单移到"已支付"列表`, confirmText: "查看订单", cancelText: "留在本页" })) {
               try_Taro_navigateTo({ url: `/pages_user/user_orders?order_ST=${Order_ST.已付款}` });
             }
-
           } catch (err) {
             if (await try_Taro_showModal({ title: "取消支付", content: `订单移到"待支付"列表`, confirmText: "查看订单", cancelText: "留在本页" })) {
               try_Taro_navigateTo({ url: `/pages_user/user_orders?order_ST=${Order_ST.待付款}` });
             }
           } finally {
+            Taro.hideLoading();
             await getCart();
             // 如果个人信息中没有默认的用户收件地址，则更新用户收件地址
             if (!selfInfo_S.defaultRecManAddress) {

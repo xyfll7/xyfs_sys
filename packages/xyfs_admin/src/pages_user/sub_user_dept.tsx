@@ -10,11 +10,11 @@ import { ComNavBarA } from '@xyfs/taro_uii/components/ComNavBarA';
 import { ComNavBarB } from "@xyfs/taro_uii/components/ComNavBarB";
 import { ComPopupNew } from "@xyfs/taro_uii/components/ComPopupNew";
 import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
+import { ComTree } from "@xyfs/taro_uii/components/ComTree";
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
 import { useHook_Reducer } from "@xyfs/taro_uii/utils/useHooks";
-import React, { FC, useEffect, useState } from "react";
-
+import { FC, useEffect, useState } from "react";
 
 definePageConfig({
   navigationStyle: "custom", disableScroll: true,
@@ -36,6 +36,7 @@ const Index: FC<{}> = ({ }) => {
 
   const [deptUserList, setDeptUserList] = useState<any[] | null>(null);
 
+  console.log("depts", deptUserList);
   return <MMMAAPage>
     <ComNav>
       <View className='ww'>
@@ -47,7 +48,7 @@ const Index: FC<{}> = ({ }) => {
     <ComScrollView className=''>
       {depts === undefined && <ComLoading />}
       {depts?.length === 0 && <ComButton>没有数据</ComButton>}
-      {depts && <IIITree list={depts} >
+      {depts && <ComTree list={depts} keyName='deptId'>
         {(e) =>
           <View className='bccwhite  ioo ovh pt10 dbtc ww mb10 ww' >
             <ComButton className='mb10 ww '>
@@ -75,7 +76,7 @@ const Index: FC<{}> = ({ }) => {
             </View>
           </View>
         }
-      </IIITree>}
+      </ComTree>}
     </ComScrollView>
     {dept && mode && <ComPopupNew onClose={() => setDept(null)}>
       <View className='dll prl10' style={{ height: "50vh" }}>
@@ -91,10 +92,10 @@ const Index: FC<{}> = ({ }) => {
         <ComScrollView className=''>
           {deptUserList.map(e => {
             return <View key={e.id} className='ww ioo bccwhite mb10 pt10'>
-              <ComButton className='mb10 nw1 ' onClick={() => { Taro.makePhoneCall({ phoneNumber: e.mobile }); }}>
+              <ComButton className='mb10 nw1'>
                 <View className=' ww'>
-                  <View className='nw1'>{e.name}</View>
-                  <View className='nw1 cccplh'>{e.mobile} <Text className='cccgreen'>拨打</Text> </View>
+                  <View className='nw1 ww dbtc'>{e.name} <Text className='cccplh'> {e.roles.map((ee) => ee.roleName).join("/")}</Text></View>
+                  <View className='nw1 cccplh' onClick={() => { Taro.makePhoneCall({ phoneNumber: e.mobile }); }}>{e.mobile} <Text className='cccgreen'>拨打</Text> </View>
                 </View>
               </ComButton>
             </View>;
@@ -105,29 +106,6 @@ const Index: FC<{}> = ({ }) => {
   </MMMAAPage>;
 };
 
-
-function IIITree<T extends { deptId: string, children: T[]; }>({ list, children }: { children: (e: T) => React.ReactNode; list: T[]; }) {
-  return list?.map(item => <View key={item.deptId} className='ww dll'>
-    {children(item)}
-    {item.children && <IIITreeChild list={item.children}>{children}</IIITreeChild>}
-  </View>
-  );
-};
-
-function IIITreeChild<T extends { deptId: string, children: T[]; }>({ list, children }: { children: (e: T) => React.ReactNode; list: T[]; }) {
-  const [show, setShow] = useState(false);
-  return <View className='dll ww'>
-    <View className='ds ww'>
-      <View className='dll pl10'>
-        <View className='hh mb10 bccbacktab' style={{ width: "1rpx", }}></View>
-      </View>
-      <View className='pl10 dll ww'>
-        <ComButton className='bccback cccplh mb10 ww' onClick={() => setShow(e => !e)}>下级部门<View style={{ transform: show ? "" : "rotate(180deg)" }}>↡</View></ComButton>
-        {show && <IIITree list={list}>{children}</IIITree>}
-      </View>
-    </View>
-  </View>;
-}
 
 
 

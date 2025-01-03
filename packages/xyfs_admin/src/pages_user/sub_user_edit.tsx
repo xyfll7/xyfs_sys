@@ -11,6 +11,7 @@ import { ComNavBarA } from '@xyfs/taro_uii/components/ComNavBarA';
 import { ComNavBarB } from "@xyfs/taro_uii/components/ComNavBarB";
 import { ComPopupNew } from "@xyfs/taro_uii/components/ComPopupNew";
 import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
+import { ComTree } from "@xyfs/taro_uii/components/ComTree";
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { ROLE_ST } from "@xyfs/taro_uii/src/config";
 import { roo___has_role } from "@xyfs/taro_uii/src/roles";
@@ -91,7 +92,7 @@ const IIImyUserEditorAGENT: FC = () => {
         {show && <ComPopupNew onClose={() => setShow(e => !e)}>
           <View className='dll prl10' style={{ height: "70vh" }}>
             <ComNavBarB className='mb10' onClose={() => setShow(e => !e)}>
-              <View className='dy'><ComButton className='fwb bccback'>指定部门1</ComButton></View>
+              <View className='dy'><ComButton className='fwb bccback'>指定部门</ComButton></View>
             </ComNavBarB>
             <ComScrollView className=''>
               <IIIDeptList userInfo={userInfo} onUpdateUserInfo={(e) => setUserInfo(e)}></IIIDeptList>
@@ -288,41 +289,21 @@ const IIIDeptList = ({ userInfo, onUpdateUserInfo }: { userInfo: BaseUserInfo; o
   return <>
     {depts === undefined && <ComLoading />}
     {depts?.length === 0 && <ComButton>没有数据</ComButton>}
-    {depts && <IIITree depts={depts}
-      onAdd={async (e) => {
-        Taro.showLoading({ mask: true, title: "更新中..." });
-        const res = await Api_user_edit_ctn({ deptId: e.deptId, userId: userInfo.id! });
-        onUpdateUserInfo(res);
-        Taro.showToast({ icon: "none", title: "更新成功" });
-      }}
-      onDel={async (e) => { }}></IIITree>}
-  </>;
-};
-
-const IIITree = ({ depts, onAdd, onDel }: { depts: any[]; onAdd: (dept: any) => void; onDel: (dept: any) => void; }) => {
-  const [show, setShow] = useState(true);
-  return depts?.map(e => <View key={e.id} className='ww '>
-    <View className='bccwhite ioo ovh pt10 dbtc ww mb10 ww' >
-      <ComButton className='mb10 ww'>
-        <View className='nw1'>{e.deptName}</View>
-      </ComButton>
-      <View className='dr pr10'>
-        <ComButton rr className='ml10 mb10 cccgreen bborder nw' onClick={() => { onAdd(e); }}>指定</ComButton>
-      </View>
-    </View>
-    {e.children &&
-      <View className='dll ww'>
-        <View className='ds ww'>
-          <View className='dll pl10'>
-            <View className='hh mb10 bccbacktab' style={{ width: "1rpx", }}></View>
-          </View>
-          <View className='pl10 dll ww'>
-            <ComButton className='bccback cccplh mb10 ww' onClick={() => setShow(ee => !ee)}>下级部门<View style={{ transform: show ? "" : "rotate(180deg)" }}>↡</View></ComButton>
-            {show && <IIITree depts={e.children} onAdd={onAdd} onDel={onDel}></IIITree>}
-          </View>
+    {depts && <ComTree list={depts} keyName='deptId'>
+      {(e) => <View className='bccwhite ioo ovh pt10 dbtc ww mb10 ww' >
+        <ComButton className='mb10 ww'>
+          <View className='nw1'>{e.deptName}</View>
+        </ComButton>
+        <View className='dr pr10'>
+          <ComButton rr className='ml10 mb10 cccgreen bborder nw' onClick={async () => {
+            Taro.showLoading({ mask: true, title: "更新中..." });
+            const res = await Api_user_edit_ctn({ deptId: e.deptId, userId: userInfo.id! });
+            onUpdateUserInfo(res);
+            Taro.showToast({ icon: "none", title: "更新成功" });
+          }}>指定</ComButton>
         </View>
       </View>
-    }
-  </View>
-  );
+      }
+    </ComTree>}
+  </>;
 };
