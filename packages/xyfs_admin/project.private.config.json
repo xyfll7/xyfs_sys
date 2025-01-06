@@ -10,6 +10,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages_agent/agent__express_search",
+          "pathName": "pages_agent/agent__express_search",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages_user/sub_user_list",
           "pathName": "pages_user/sub_user_list",
           "query": "",

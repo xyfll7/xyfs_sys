@@ -68,7 +68,7 @@ const Index: FC<{}> = ({ }) => {
             src: IM_线上_收款码
           }} isShow={showQRCode} onClose={() => { setShowQRCode(!showQRCode); }} onClick={() => setShowQRCode(!showQRCode)}></ComQRCode>
         </View>
-        <ComSearcher className='mb10' date={date} disabled={Boolean(page_loading)} isShowScan={[Order_ST.已付款, Order_ST.已退款].includes(tabIndex)}
+        <ComSearcher className='mb10' isShowSearcher date={date} disabled={Boolean(page_loading)} isShowScan={[Order_ST.已付款, Order_ST.已退款].includes(tabIndex)}
           onClear={() => setDate("")}
           onSetSearchValue={(e) => {
             setDate("");

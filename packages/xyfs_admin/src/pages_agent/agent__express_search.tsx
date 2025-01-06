@@ -39,13 +39,19 @@ const Index: FC = () => {
     <ComNav>
       <View className='ww prl10'>
         <ComNavBarA className='mb10 '>
-          <ComButton ll className='bcctrans cccplh ml10' >快递综合查询</ComButton>
+          <ComButton ll className='bcctrans cccplh ml10' >订单综合查询</ComButton>
         </ComNavBarA>
-        <ComSearcher className='mb10' disabled={page_loading} isShowScan onSetSearchValue={(e) => {
-          console.log("eeee", e);
-          setSearchValue(e);
-          page_init();
-        }} />
+        <ComSearcher className='mb10' placeholder='快递单号' disabled={page_loading} onSetSearchValue={(e) => { setSearchValue(e); }} />
+        <ComSearcher className='mb10' placeholder='干洗条码' disabled={page_loading} onSetSearchValue={(e) => { setSearchValue(e); }} />
+        <View className='dy mb10'>
+          <ComSearcher placeholder='手机号' disabled={page_loading} onSetSearchValue={(e) => { setSearchValue(e); }} />
+          <ComButton className='ml10 nw'>快递</ComButton>
+          <ComButton className='ml10 nw'>干洗</ComButton>
+        </View>
+        <View className='dr mb10'>
+          <ComButton className='ml10 nw'>清空</ComButton>
+          <ComButton className='ml10 nw prl30 bccgreen cccwhite'>搜索</ComButton>
+        </View>
       </View>
     </ComNav>
     <ComScrollView onScrollToLower={async () => { page_list_get(page); }}>

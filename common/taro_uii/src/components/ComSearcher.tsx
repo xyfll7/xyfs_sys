@@ -8,10 +8,11 @@ import { ComInput } from "./ComInput";
 
 export const ComSearcher: FC<ViewProps & InputProps & {
   isShowScan?: boolean,
+  isShowSearcher?: boolean,
   date?: string;
   onSetSearchValue: (str: string) => void;
   onClear?: () => void;
-}> = ({ onSetSearchValue, className = "", date, isShowScan = false, placeholder, disabled, onClear, ...props }) => {
+}> = ({ onSetSearchValue, className = "", date, isShowScan = false, isShowSearcher = false, placeholder, disabled, onClear, ...props }) => {
 
   const [value, setValue] = useState("");
   return <View className={`${className} dy   ww dbtc`}>
@@ -32,13 +33,12 @@ export const ComSearcher: FC<ViewProps & InputProps & {
         }}>清空</ComButton>}
       {isShowScan && <ComButton rr className='cccgreen ml10 bccwhite' onClick={async () => {
         const res_code = await try_Taro_scanCode<string>({ type: "CODE_128" });
-        console.log("sss:", res_code);
         setValue(res_code);
         onSetSearchValue(res_code.trim());
       }}>扫码</ComButton>}
       {props.children}
-      <ComButton className='cccgreen ml10 bccwhite'
-        onClick={() => { if (disabled) { return; } onSetSearchValue(value.trim()); }}>搜索</ComButton>
+      {isShowSearcher && <ComButton className='cccgreen ml10 bccwhite'
+        onClick={() => { if (disabled) { return; } onSetSearchValue(value.trim()); }}>搜索</ComButton>}
     </View>
   </View>;
 };

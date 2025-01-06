@@ -79,7 +79,7 @@ const IIImmmAGENT = ({ ...props }: ViewProps) => {
     <ComButton className='mb10 cccplh mr10 bccback' >代理</ComButton>
     <View className='dy dwp'>
       <ComButton className='bccwhite mb10 mr10' url='/pages_agent/agent__express_search'>
-        快递查询
+        订单综合查询
       </ComButton>
       <ComButton className='bccwhite mb10 mr10' url='/pages_agent/agent__account'>
         面单账号

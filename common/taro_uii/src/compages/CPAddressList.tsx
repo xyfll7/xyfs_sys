@@ -62,7 +62,7 @@ const CPAddressList: FC = () => {
             </ComButton>
           )}
         </View>
-        <ComSearcher className='mb10' placeholder='输入姓名/电话搜索' disabled={page_loading}
+        <ComSearcher className='mb10' placeholder='输入姓名/电话搜索' isShowSearcher disabled={page_loading}
           onSetSearchValue={(e) => { setSearchValue(e); page_init(); }} ></ComSearcher>
       </View>
     </ComNav>

@@ -69,7 +69,7 @@ const Index: FC<{}> = ({ }) => {
         </ComNavBarA>
         {dicts_roles && roo___has_role(selfInfo_S, ["AGENT"]) && <ComListTypeSelectorNew disabled={page_loading} data={[{ id: 0, roleName: "全部", }, ...dicts_roles].filter(e => !utils_str_includes(["用户", "员工"], e.roleName))} label='roleName' value='id' tabType={userRole}
           setTab={(e) => { page_init(); setUserRole(e); }} />}
-        <ComSearcher className='mb10 ' disabled={page_loading} onSetSearchValue={(e) => {
+        <ComSearcher className='mb10' isShowSearcher disabled={page_loading} onSetSearchValue={(e) => {
           page_init();
           setSearchValue(`${e}`);
         }} />
