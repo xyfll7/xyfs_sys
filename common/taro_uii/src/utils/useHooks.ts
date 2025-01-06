@@ -107,58 +107,6 @@ export function useHook_Error(params?: { isShowBug?: boolean; isLogBug?: boolean
   });
 }
 
-type CB<P, T> = (p: P & { pageSize: number, pageNum: number; }) => Promise<Pagination<T[]>>;
-export function useHook_PageList<T, P extends { keyword?: any; } = any, C extends CB<P, T> = CB<P, T>>(p: P, cb: C, options?: { isCanStart?: boolean, isLoadFirstRun?: boolean, pageSize?: number; }): [Partial<Pagination<T[] | null> & { loading: boolean; }>, (e: "loadMore" | "refresh") => void, (up: (list: T[]) => T[]) => void] {
-  options = {
-    isCanStart: true,
-    isLoadFirstRun: true,
-    pageSize: 5,
-    ...options
-  };
-
-  const isFirstRun = useRef(options.isLoadFirstRun);
-  const [page, setPage] = useState<Partial<Pagination<T[] | null> & { loading: boolean; refreshTime: number; }>>({ pageNum: 1, list: null, loading: !options.isLoadFirstRun ? false : true, refreshTime: coo___ios_date().getTime() });
-  const __search_str = JSON.stringify(p);
-  const __get_page_list = useCallback(async () => {
-    if (!options.isCanStart) { return; }
-    if (!isFirstRun.current) {
-      isFirstRun.current = true;
-      return;
-    }
-    const __search = JSON.parse(__search_str) as P;
-    const res = await cb({
-      pageNum: page?.pageNum ?? 1,
-      pageSize: options?.pageSize ?? 5,
-      ...__search,
-      keyword: __search.keyword?.split("#")[0],
-    });
-
-    setPage((e) => ({ ...res, list: [...(e.list ?? []), ...res.list!] as T[], loading: false, refreshTime: page.refreshTime }));
-
-  }, [__search_str, cb, page?.pageNum, page.refreshTime, options.pageSize, options.isCanStart]);
-  function updatePage(e: "loadMore" | "refresh") {
-    switch (e) {
-      case "loadMore":
-        if (!page?.isLastPage && !page?.loading) {
-          setPage(ee => ({ ...ee, pageNum: ee.pageNum! + 1, loading: true, refreshTime: coo___ios_date().getTime() }));
-        }
-        break;
-      case "refresh":
-        setPage(ee => ({ ...ee, pageNum: 1, isLastPage: false, list: null, loading: true, refreshTime: coo___ios_date().getTime() }));
-        break;
-      default:
-        throw new Error("请指定加载方式");
-    }
-  }
-  function updateList(up: (list: T[]) => T[]) {
-    setPage(e => ({ ...e, list: up(page.list!) }));
-  }
-  useEffect(() => { __get_page_list(); }, [__get_page_list]);
-  return [page, updatePage, updateList];
-}
-
-
-
 export function useHook_pageListNew<P, T extends Pagination<P[]>>(cb: (a: Pagination<unknown>) => Promise<T | null>, options?: { isLoadFirstRun?: boolean, pageSize?: number; }) {
   const ___options = { isLoadFirstRun: true, ...options };
   const [pageLoading, setPageLoading] = useState(!___options.isLoadFirstRun ? false : true);
@@ -182,11 +130,13 @@ export function useHook_pageListNew<P, T extends Pagination<P[]>>(cb: (a: Pagina
 
   function page_list_update(up: (page: T) => T) { setPage((e) => up(e)); }
   const isFirstRun = useRef(___options.isLoadFirstRun);
+  const loadTimes = useRef(0);
   const ___isLoading = useRef(false);
   const page_list_get = useCallback(async (_page?: T) => {
     if (!isFirstRun.current) { isFirstRun.current = true; return; }
     if (_page?.isLastPage) { return; }
     if (___isLoading.current) { return; }
+    loadTimes.current++;
     ___isLoading.current = true;
     setPageLoading(true);
     const res = await cb({
@@ -210,6 +160,7 @@ export function useHook_pageListNew<P, T extends Pagination<P[]>>(cb: (a: Pagina
   return {
     page_loading: pageLoading,
     page,
+    loadTimes,
     page_init,
     page_list_get,
     page_list_update

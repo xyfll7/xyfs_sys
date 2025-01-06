@@ -62,6 +62,26 @@ export async function Api_order_list_ctn(params: Pick<Pagination<unknown>, "keyw
   });
   return res;
 }
+
+
+export async function Api_order_aggregateQuery_ctn(params: Pick<Pagination<unknown>, "keyword" | "pageNum" | "pageSize"> &
+{
+  // orderDate?: string;
+  // orderStatus?: Order_ST;
+  orderType?: 0 | 1 | 2 | 3; // 全部0, 快递1 干洗2 未知3
+  roleId?: number; // 角色id
+  "barCode": string;
+  "phoneNumber": string;
+  "waybillId": string;
+}
+): Promise<Pagination<OrderInfo<ProductBase>[]>> {
+
+  const res = await wx_call_container<Promise<Pagination<OrderInfo<ProductBase>[]>>>({
+    path: "/order/aggregateQuery",
+    data: { ...params }
+  });
+  return res;
+}
 export async function Api_order_logisticsOrder_ctn(params: Pick<Pagination<unknown>, "keyword" | "pageNum" | "pageSize"> &
 {
   orderStatus?: Order_ST;

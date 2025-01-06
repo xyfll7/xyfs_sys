@@ -58,7 +58,6 @@ export const MMMAAPage: FC<{
         break;
     }
 
-    console.log("isNeedRegiment", isNeedAnyDept);
     const isSystemUpdate = Number(env.version.replaceAll(".", "")) < Number(selfInfo_S.serveVersion?.replaceAll(".", ""));
     const heightV = "100vh";
     const widthV = "100vw";

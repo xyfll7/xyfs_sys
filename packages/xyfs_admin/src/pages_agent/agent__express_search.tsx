@@ -1,16 +1,15 @@
 // :: pages_agent/agent__express_search
 import { View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
-
-import { Api_order_incrPrintTimes_ctn, Api_order_list_ctn } from '@xyfs/taro_uii/api/api__orders';
+import { Api_order_aggregateQuery_ctn, Api_order_incrPrintTimes_ctn } from '@xyfs/taro_uii/api/api__orders';
 import { ComButton } from '@xyfs/taro_uii/components/ComButton';
 import { ComCardOrderExpress } from '@xyfs/taro_uii/components/ComCardOrder';
+import { ComInput } from "@xyfs/taro_uii/components/ComInput";
 import { ComLoading } from '@xyfs/taro_uii/components/ComLoading';
 import { ComNav } from '@xyfs/taro_uii/components/ComNav';
 import { ComNavBarA } from '@xyfs/taro_uii/components/ComNavBarA';
 import { ComPaySuccessCard } from '@xyfs/taro_uii/components/ComPaySuccessCard';
 import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
-import { ComSearcher } from '@xyfs/taro_uii/components/ComSearcher';
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { Product_category_ST } from "@xyfs/taro_uii/src/config";
 import { roo___role_getRoleInfo } from "@xyfs/taro_uii/src/roles";
@@ -25,32 +24,54 @@ import { FC, useCallback } from "react";
 definePageConfig({ navigationStyle: "custom", enableShareAppMessage: true, disableScroll: true, });
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC = () => {
-  const [searchValue, setSearchValue] = useHook_Reducer("");
+  const [form, setForm] = useHook_Reducer({
+    orderType: 0 as 0 | 1 | 2 | 3,
+    barCode: "",
+    phoneNumber: "",
+    waybillId: "",
+  });
+  const [searchValue, setSearchValue] = useHook_Reducer<{
+    orderType: 0 | 1 | 2 | 3;
+    barCode: string;
+    phoneNumber: string;
+    waybillId: string;
+  } | null>(null);
   const ___page_getter = useCallback(async (p: Pagination<unknown>) =>
-    await Api_order_list_ctn({
+    await Api_order_aggregateQuery_ctn({
       ...p,
       roleId: roo___role_getRoleInfo(useSTSelf.getState().selfInfo!, "代理")?.id,
-      orderType: 1, // 全部0, 快递1 干洗2 未知3
-      keyword: searchValue,
+      ...searchValue!,
     }), [searchValue]);
-  const { page, page_loading, page_list_get, page_list_update, page_init } = useHook_pageListNew(___page_getter, { isLoadFirstRun: false });
-
+  const { page, page_loading, loadTimes, page_list_get, page_list_update, page_init } = useHook_pageListNew(___page_getter, { isLoadFirstRun: false });
   return <MMMAAPage>
     <ComNav>
       <View className='ww prl10'>
         <ComNavBarA className='mb10 '>
           <ComButton ll className='bcctrans cccplh ml10' >订单综合查询</ComButton>
         </ComNavBarA>
-        <ComSearcher className='mb10' placeholder='快递单号' disabled={page_loading} onSetSearchValue={(e) => { setSearchValue(e); }} />
-        <ComSearcher className='mb10' placeholder='干洗条码' disabled={page_loading} onSetSearchValue={(e) => { setSearchValue(e); }} />
-        <View className='dy mb10'>
-          <ComSearcher placeholder='手机号' disabled={page_loading} onSetSearchValue={(e) => { setSearchValue(e); }} />
-          <ComButton className='ml10 nw'>快递</ComButton>
-          <ComButton className='ml10 nw'>干洗</ComButton>
+        <ComButton className='flx1 bccbacktab mb10' hoverClass='none'>
+          <ComInput className='' value={form.waybillId} placeholder='快递单号' disabled={page_loading} onInput={(e) => { setForm({ waybillId: e.detail.value }); }} />
+        </ComButton>
+        <ComButton className='flx1 bccbacktab mb10' hoverClass='none'>
+          <ComInput className='' value={form.barCode} placeholder='干洗条码' disabled={page_loading} onInput={(e) => { setForm({ barCode: e.detail.value }); }} />
+        </ComButton>
+        <View className='dy'>
+          <ComButton className='flx1 bccbacktab mb10' hoverClass='none'>
+            <ComInput placeholder='手机号' value={form.phoneNumber} disabled={page_loading} onInput={(e) => { setForm({ phoneNumber: e.detail.value }); }} />
+          </ComButton>
         </View>
         <View className='dr mb10'>
-          <ComButton className='ml10 nw'>清空</ComButton>
-          <ComButton className='ml10 nw prl30 bccgreen cccwhite'>搜索</ComButton>
+          <ComButton className='ml10 nw' onClick={() => { setForm(null); setSearchValue(null); }}>清空</ComButton>
+          <ComButton className='ml10 nw prl30 bccgreen cccwhite' onClick={() => {
+            setForm({ orderType: 1 });
+            page_init();
+            setSearchValue({ ...form, orderType: 1 });
+          }}>搜快递</ComButton>
+          <ComButton className='ml10 nw prl30 bccgreen cccwhite' onClick={() => {
+            setForm({ orderType: 2 });
+            page_init();
+            setSearchValue({ ...form, orderType: 2 });
+          }}>搜干洗</ComButton>
         </View>
       </View>
     </ComNav>
@@ -83,9 +104,10 @@ const Index: FC = () => {
             return null;
         }
       })}
-      {searchValue &&
+      {loadTimes.current !== 0 &&
         <ComLoading className='mb10' isLastPage={page.isLastPage} loading={page_loading} onLoadMore={() => page_list_get(page)} />
       }
+
     </ComScrollView>
     <ComPaySuccessCard></ComPaySuccessCard>
   </MMMAAPage >;
