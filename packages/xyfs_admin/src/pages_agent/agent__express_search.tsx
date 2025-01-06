@@ -47,18 +47,18 @@ const Index: FC = () => {
   return <MMMAAPage>
     <ComNav>
       <View className='ww prl10'>
-        <ComNavBarA className='mb10 '>
+        <ComNavBarA className='mb10'>
           <ComButton ll className='bcctrans cccplh ml10' >订单综合查询</ComButton>
         </ComNavBarA>
         <ComButton className='flx1 bccbacktab mb10' hoverClass='none'>
-          <ComInput className='' value={form.waybillId} placeholder='快递单号' disabled={page_loading} onInput={(e) => { setForm({ waybillId: e.detail.value }); }} />
+          <ComInput className='' value={form.waybillId} placeholder='快递单号' disabled={page_loading} onInput={(e) => { setForm({ orderType: 0, waybillId: e.detail.value }); }} />
         </ComButton>
         <ComButton className='flx1 bccbacktab mb10' hoverClass='none'>
-          <ComInput className='' value={form.barCode} placeholder='干洗条码' disabled={page_loading} onInput={(e) => { setForm({ barCode: e.detail.value }); }} />
+          <ComInput className='' value={form.barCode} placeholder='干洗条码' disabled={page_loading} onInput={(e) => { setForm({ orderType: 0, barCode: e.detail.value }); }} />
         </ComButton>
         <View className='dy'>
           <ComButton className='flx1 bccbacktab mb10' hoverClass='none'>
-            <ComInput placeholder='手机号' value={form.phoneNumber} disabled={page_loading} onInput={(e) => { setForm({ phoneNumber: e.detail.value }); }} />
+            <ComInput placeholder='手机号' value={form.phoneNumber} disabled={page_loading} onInput={(e) => { setForm({ orderType: 0, phoneNumber: e.detail.value }); }} />
           </ComButton>
         </View>
         <View className='dr mb10'>
