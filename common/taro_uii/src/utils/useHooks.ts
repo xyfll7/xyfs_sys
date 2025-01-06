@@ -118,7 +118,12 @@ export function useHook_pageListNew<P, T extends Pagination<P[]>>(cb: (a: Pagina
     list: [] as P[],
     total: 0,
   } as T);
-  function page_init() {
+  function page_init(isStop: boolean = false) {
+    if (isStop) {
+      isFirstRun.current = false;
+      loadTimes.current = 0;
+    }
+
     setPage(() => ({
       pageNum: 0,
       nextPage: 0,
@@ -160,6 +165,7 @@ export function useHook_pageListNew<P, T extends Pagination<P[]>>(cb: (a: Pagina
   return {
     page_loading: pageLoading,
     page,
+    isFirstRun,
     loadTimes,
     page_init,
     page_list_get,
