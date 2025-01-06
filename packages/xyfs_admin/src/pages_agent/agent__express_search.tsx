@@ -63,12 +63,12 @@ const Index: FC = () => {
         </View>
         <View className='dr mb10'>
           <ComButton className='ml10 nw' onClick={() => { setForm(null); setSearchValue(null); page_init(true); }}>清空</ComButton>
-          <ComButton className='ml10 nw prl30 bccgreen cccwhite' onClick={() => {
+          <ComButton className={`ml10 nw prl30 ${form.orderType == 1 ? "bccgreen cccwhite" : "cccgreen"}`} onClick={() => {
             setForm({ orderType: 1 });
             page_init();
             setSearchValue({ ...form, orderType: 1 });
           }}>搜快递</ComButton>
-          <ComButton className='ml10 nw prl30 bccgreen cccwhite' onClick={() => {
+          <ComButton className={`ml10 nw prl30 ${form.orderType == 2 ? "bccgreen cccwhite" : "cccgreen"}`} onClick={() => {
             setForm({ orderType: 2 });
             page_init();
             setSearchValue({ ...form, orderType: 2 });
