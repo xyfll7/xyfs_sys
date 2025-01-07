@@ -48,6 +48,7 @@ const Index: FC<{}> = ({ }) => {
     }), [searchValue, selfInfo_S?.OPENID, userRole]);
   const { page, page_loading, page_list_get, page_init } = useHook_pageListNew(___page_getter,);
 
+
   const ____arr: { id: string, count: 0; }[] = [];
 
   page.list?.map((e, index) => {
@@ -122,7 +123,6 @@ const Index: FC<{}> = ({ }) => {
 
 const IIImyUserCardAGENT: FC<{ myUser: BaseUserInfo; }> = ({ myUser }) => {
   const [date, setDate] = useState<string>(format(coo___ios_date(), "yyyy-MM-dd"));
-  console.log("myUser", myUser);
   return <>
     <View key={myUser.id} className='mb10 ww dll ww prl10 pt10 ioo bccwhite'>
       <View className='dbtc mb10 ww'>

@@ -22,6 +22,93 @@ import { useHook_pageListNew, useHook_Reducer } from '@xyfs/taro_uii/utils/useHo
 import { coo___isNumber, coo___objToUrl } from "@xyfs/utils/util";
 import { FC, useCallback } from "react";
 
+
+
+const arr = [
+  "JT0014825160061",
+  "JT0014826785051",
+  "JT0014829970992",
+  "JT0014827982757",
+  "JT0014829909518",
+  "JT0014833080819",
+  "JT0014831895773",
+  "JT3104578014395",
+  "JT0014837229340",
+  "JT0014840531346",
+  "JT0014837762141",
+  "JT0014821723480",
+  "JT0014846043051",
+  "JT0014840260182",
+  "JT0014846943085",
+  "JT5340892147838",
+  "JT0014840612853",
+  "JT0014845702323",
+  "JT0014840418693",
+  "JT0014848684658",
+  "JT0014850797388",
+  "JT0014846420342",
+  "JT0014844826414",
+  "JT0014849935315",
+  "JT0014853601536",
+  "JT0014853626533",
+  "JT0014854759810",
+  "JT0014856081813",
+  "JT5340242637733",
+  "JT5340270975792",
+  "JT0014857744297",
+  "JT0014855172198",
+  "JT0014859031407",
+  "JT0014860650243",
+  "JT0014858990649",
+  "JT0014860572755",
+  "JT0014860845589",
+  "JT0014862282032",
+  "JT0014849372196",
+  "JT0014864769533",
+  "JT0014866095176",
+  "JT0014866110083",
+  "JT0014868188498",
+  "JT0014853052558",
+  "JT0014868690569",
+  "JT0014856021589",
+  "JT0014871690336",
+  "JT3104891046353",
+  "JT0014874785789",
+  "JT0014872494451",
+  "JT5341448192900",
+  "JT0014876458203",
+  "JT0014879399129",
+  "JT0014876617364",
+  "JT0014879875471",
+  "JT0014878679646",
+  "JT0014881958058",
+  "JT0014882963559",
+  "JT0014882146996",
+  "JT0014876194193",
+  "JT0014884086752",
+  "JT0014868399424",
+  "JT3104993910339",
+  "JT3104993038767",
+  "JT3104993380871",
+  "JT0014881508179",
+  "JT0014878804770",
+  "JT0014882378245",
+  "JT0014886145381",
+  "JT0014887877179",
+  "JT0014883528021",
+  "JT0014879815147",
+  "JT0014886539354",
+  "JT0014887460263",
+  "JT0014889079231",
+  "JT5341085454670",
+  "JT0014888288586",
+  "JT0014886766958",
+  "JT3105012394417",
+  "JT0014889304719",
+  "JT0014886797422",
+  "JT0014888133726",
+];
+
 definePageConfig({ navigationStyle: "custom", enableShareAppMessage: true, disableScroll: true, });
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC = () => {
@@ -73,6 +160,26 @@ const Index: FC = () => {
             page_init();
             setSearchValue({ ...form, orderType: 2 });
           }}>搜干洗</ComButton>
+        </View>
+        <View className='dr'>
+          <ComButton className=' mb10' onClick={async () => {
+            const arrr: any[] = [];
+            for (let i = 0; i < arr.length; i++) {
+              const res = await Api_order_aggregateQuery_ctn({
+                barCode: "",
+                orderType: 1,
+                pageNum: 1,
+                pageSize: 5,
+                phoneNumber: "",
+                roleId: 1,
+                waybillId: arr[i]!,
+              });
+              arrr.push(res);
+            }
+            console.log(JSON.stringify(arrr));
+          }} >
+            批量查询
+          </ComButton>
         </View>
       </View>
     </ComNav>

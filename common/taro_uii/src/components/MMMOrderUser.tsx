@@ -5,6 +5,9 @@ import { getMyEnv } from "../env";
 import { ComButton } from "./ComButton";
 import { ComImage } from "./ComImage";
 
+
+
+
 export const MMMOrderUser = ({ order, showUser = "user", ...props }: ViewProps & { order: OrderInfo<any>; showUser?: "regiment" | "user"; }) => {
   const isClient = getMyEnv().appId === process.env.TARO_APP_CLIENT;
   const user = (() => {
@@ -32,7 +35,12 @@ export const MMMOrderUser = ({ order, showUser = "user", ...props }: ViewProps &
     <ComImage className='mr10' src={user.avatar} />
     <ComButton ll className='dy cccplh'>
       {user.isRegiment && <Text>团:</Text>}
-      <Text className='wm5rem nw1' onClick={() => Taro.showToast({ icon: "none", title: user.name ? user.name : "无" })}>
+      <Text className='wm5rem nw1' onClick={() => {
+        Taro.setClipboardData({
+          data: user.name ? user.name : "无",
+          success: () => { Taro.showToast({ icon: "none", title: user.name ? user.name : "无" }); }
+        });
+      }}>
         {user.name}
       </Text>
     </ComButton>
