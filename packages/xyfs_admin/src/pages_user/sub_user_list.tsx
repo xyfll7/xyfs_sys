@@ -130,6 +130,7 @@ const IIImyUserCardAGENT: FC<{ myUser: BaseUserInfo; }> = ({ myUser }) => {
           <ComImage className='mr10' src={myUser.avatar ?? ""} />
           <ComButton ll className='cccplh bccwhite'>
             <View className='wm8rem nw1 mr4'>{myUser.name}</View>
+            {myUser.deptName && <View className='wm8rem nw1 mr4'>/{myUser.deptName}</View>}
           </ComButton>
         </View>
         <View className='dy'>
@@ -177,6 +178,7 @@ const IIImyUserCardSUPPLIER: FC<{ myUser: BaseUserInfo; }> = ({ myUser }) => {
         <ComImage className='mr10' src={myUser.avatar ?? ""} />
         <ComButton ll className='cccplh bccwhite'>
           <View className='wm8rem nw1 mr4'>{myUser.name}</View>
+          {myUser.deptName && <View className='wm8rem nw1 mr4'>/{myUser.deptName}</View>}
           <View className='nw1'>({myUser.mobile})</View>
         </ComButton>
       </View>

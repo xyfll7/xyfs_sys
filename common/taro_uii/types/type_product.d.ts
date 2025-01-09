@@ -106,6 +106,7 @@ interface OrderInfo<T> {
   mobile?: string;
   printTimes?: number;  // 打印次数
   orderType?: Product_category_ST; // 供应商类型
+  payStatus?: 0 | 1; // 供应商类型
   regimentId?: string; // 团长OPENID 该商品由该团长卖出
   totalPrice?: string;
   userId?: string; // 购买者OPENID

@@ -95,7 +95,6 @@ const Index: FC<{}> = ({ }) => {
           <ComCardOrderExpress key={e.id} className='mb10' order={ee1} />
           <IIIOrderExpressOperation
             onSetShowQRCode={(ee) => setShowQRCode(ee)}
-            orderType={tabIndex}
             order={ee1}
             onPrint={async (ee) => {
               const _order = ee;
@@ -128,14 +127,13 @@ const Index: FC<{}> = ({ }) => {
 
 const IIIOrderExpressOperation: FC<{
   onSetShowQRCode: (e: boolean) => void;
-  orderType: Order_ST;
   order: OrderInfo<Product_Express>;
   onDeleteOrder: () => void;
   onPrint?: (e: OrderInfo<Product_Express>) => Promise<void>;
-}> = ({ onSetShowQRCode, onDeleteOrder, orderType, order, onPrint, }) => {
+}> = ({ onSetShowQRCode, onDeleteOrder, order, onPrint, }) => {
   return (
     <View className='prl10'>
-      {(orderType == Order_ST.待付款) && (
+      {(order.orderStatus == Order_ST.待付款) && (
         <View className='dbtc mb10 ww'>
           <ComButton ll className='cccplh bborder'
             onClick={async () => {
@@ -158,7 +156,7 @@ const IIIOrderExpressOperation: FC<{
           }} >修改订单</ComButton>
         </View>
       )}
-      {order.userId === order?.regimentId && (
+      {order.payStatus === 0 && (
         <View className='dbtc mb10 ww'>
           <ComButton ll className='cccplh'>下单人：团长自己</ComButton>
           <ComButton rr ll className='bccyellow'
@@ -176,7 +174,7 @@ const IIIOrderExpressOperation: FC<{
           </ComButton>
         </View>
       )}
-      {order.userId !== order?.regimentId && orderType === Order_ST.待付款 && (
+      {order.userId !== order?.regimentId && order.orderStatus === Order_ST.待付款 && (
         <View className=' dbtc ww mb10'>
           <ComButton ll className='cccplh'>下单人：用户</ComButton>
           {order.productList?.[0]?.weight && <ComButton rr className='bccyellow'
@@ -185,7 +183,7 @@ const IIIOrderExpressOperation: FC<{
           </ComButton>}
         </View>
       )}
-      {orderType == Order_ST.已付款 && (
+      {order.orderStatus == Order_ST.已付款 && (
         <View className='ww dbtc mb10 ww'>
           {(order.refundStatus !== Refund_ST.失败 && order.productList?.[0]?.waybillId) ?
             <ComButton ll className='cccplh bborder'

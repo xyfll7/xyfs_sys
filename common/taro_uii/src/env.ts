@@ -3,15 +3,13 @@ import "@xyfs/utils/init";
 import Package from "../package.json";
 import { Environment, EnvVersion } from "../types/type_index";
 
-export const base_url: string = "http://192.168.60.229:8080";
+export const base_url: string = "";
 
 const ___envSimulate = "develop";
 
 // cSpell: disable;
 const OPENID_DEV___ =
   // @ts-ignore
-
-
 
   ////////////////////////////////////////////////
   // "oGwbL5D1WtsGTuLhWneaepYuHW3k" ||  // 何旭东
