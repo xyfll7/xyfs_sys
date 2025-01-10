@@ -53,6 +53,7 @@ export async function Api_order_list_ctn(params: Pick<Pagination<unknown>, "keyw
   orderStatus?: Order_ST;
   orderType?: 1 | 2 | 3 | 4; // 全部0, 快递1 干洗2 未知3
   roleId?: number, // 角色id
+  queryType?: 0 | 1; //0 默认， 1 按部门查询
 }
 ): Promise<Pagination<OrderInfo<ProductBase>[]>> {
 

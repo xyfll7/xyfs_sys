@@ -157,7 +157,7 @@ const IIImyUserCardAGENT: FC<{ myUser: BaseUserInfo; }> = ({ myUser }) => {
                 await try_Taro_navigateTo({ url: "/pages_comm/icomm_download_list" });
               }
             }}>
-            <ComButton rr className='cccgreen bborder'>对账单</ComButton>
+            <ComButton rr className='cccgreen bborder nw'>对账单</ComButton>
           </Picker>
         </View>
       </View>

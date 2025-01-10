@@ -40,6 +40,7 @@ const Index: FC<{}> = ({ }) => {
   const [tabIndex, setTabIndex] = useState<Order_ST>(Number(options.order_ST ?? Order_ST.待付款));
 
   const [searchValue, setSearchValue] = useHook_Reducer("");
+  const [queryType, setQueryType] = useState<0 | 1>(0); //0 默认， 1 按部门查询
 
   const ___page_getter = useCallback(async (p: Pagination<unknown>) =>
     await Api_order_list_ctn({
@@ -47,26 +48,34 @@ const Index: FC<{}> = ({ }) => {
       orderDate: date,
       orderStatus: tabIndex,
       orderType: 1, // 全部0, 快递1 干洗2 未知3
+      queryType: queryType,
       keyword: searchValue,
-    }), [tabIndex, searchValue, date]);
+    }), [tabIndex, searchValue, queryType, date]);
   const { page, page_loading, page_list_get, page_list_update, page_init } = useHook_pageListNew(___page_getter);
+
+
+
 
   return <MMMAAPage>
     <ComNav>
       <View className='ww prl10'>
         <ComNavBarA className='mb10 '>
           <ComButton ll className='bcctrans cccplh ml10' >快递订单(团长)</ComButton>
-        </ComNavBarA>
-        <View className='dbtc '>
-          <ComListTypeSelectorNew
-            className='ww' disabled={page_loading} enumData={Order_ST} typeList={[Order_ST.待付款, Order_ST.已付款, Order_ST.已退款]}
-            tabType={tabIndex} setTab={(e) => { page_init(); setTabIndex(e); }} />
-          <ComQRCode className='mb10  bccwhite cccgreen' params={{
+          <ComQRCode ll className='bccwhite cccgreen' params={{
             buttonText: "收款码",
             title: "请顾客扫此二维码支付",
             desc: ["可将此二维码保存打印", "顾客扫此二维码打开“待付款”订单列表"],
             src: IM_线上_收款码
           }} isShow={showQRCode} onClose={() => { setShowQRCode(!showQRCode); }} onClick={() => setShowQRCode(!showQRCode)}></ComQRCode>
+        </ComNavBarA>
+        <View className='dbtc '>
+          <ComListTypeSelectorNew
+            className='ww' disabled={page_loading} enumData={Order_ST} typeList={[Order_ST.待付款, Order_ST.已付款, Order_ST.已退款]}
+            tabType={tabIndex} setTab={(e) => { page_init(); setTabIndex(e); }} />
+          <ComButton className={`nw mb10  ${queryType === 0 ? 'cccplh' : "bccyellow"}`} onClick={() => {
+            page_init();
+            setQueryType(queryType === 0 ? 1 : 0);
+          }}>部门</ComButton>
         </View>
         <ComSearcher className='mb10' isShowSearcher date={date} disabled={Boolean(page_loading)} isShowScan={[Order_ST.已付款, Order_ST.已退款].includes(tabIndex)}
           onClear={() => setDate("")}
