@@ -26,6 +26,7 @@ type User_UIF = {
   defaultRecManAddressId?: string; // 默认收货地址id
   regimentId?: string; // 我的团长OPENID
   regimentInfo?: BaseUserInfo | null; // 我的团长信息
+  deptInfo?: BaseUserInfo | null; // 我的团长信息
   // regimentInfo__: number[]; // 更新我的团长信息
   parentInfo?: BaseUserInfo | null; // 我的上级信息 - 代理/工厂
   serveVersion?: string; // 服务版本
@@ -62,6 +63,16 @@ interface Regiment_UIF extends User_UIF, Servicer_UIF {
 
 
 export interface BaseUserInfo extends AddressInfo, Regiment_UIF, Servicer_UIF, Update_UIF {
+  id?: string;
+  theme?: string;
+  selfRegiment?: BaseUserInfo,
+  is_silence_color?: boolean; // 默哀色
+  registStatus: 0 | 1 | 2; // 0 未注册 1 提交申请 2 审核通过
+  deptId?: string;
+  deptName?: string;
+}
+
+export interface DeptInfo extends AddressInfo, Regiment_UIF, Servicer_UIF, Update_UIF {
   id?: string;
   theme?: string;
   selfRegiment?: BaseUserInfo,

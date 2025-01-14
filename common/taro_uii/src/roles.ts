@@ -1,5 +1,5 @@
 
-import { BaseUserInfo } from "../types/type_user";
+import { BaseUserInfo, DeptInfo } from "../types/type_user";
 import { ROLE_KEY, ROLE_NAME, ROLE_ST } from './config';
 
 
@@ -67,8 +67,8 @@ export function roo___role_sub(userInfo: BaseUserInfo | null, roles: ROLE_ST[],)
 }
 
 // 获取团长身份信息
-export function roo___role_regiment(userInfo: BaseUserInfo) {
-  return userInfo?.regimentInfo ?? null;
+export function roo___my_dept(userInfo: DeptInfo) {
+  return userInfo?.deptInfo ?? null;
 }
 
 // 将权数字列表转化为汉字权限列表

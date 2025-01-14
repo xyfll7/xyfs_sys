@@ -8,7 +8,7 @@ import { AddressInfo, BaseUserInfo } from "../../types/type_user";
 import { Api_common_list, Api_login_rqs } from '../api/api__users';
 import { Order_ST, PickUp_ST, Product_category_ST, ROLE_ST } from "../config";
 import { getMyEnv } from "../env";
-import { roo___has_role, roo___role_regiment } from "../roles";
+import { roo___has_role, roo___my_dept } from "../roles";
 import { Taro_getStorageSync } from "../utils/try_catch";
 import { utils_order_merge_servicer_info } from '../utils/util';
 
@@ -110,7 +110,7 @@ export const useSTExpress = create<State_Express>((set, _, state) => ({
         ...s.express,
         productList: [{
           ...s.express?.productList?.[0],
-          logisticPriceSchemeId: roo___role_regiment(selfInfo_S)?.logisticPriceSchemeId
+          logisticPriceSchemeId: roo___my_dept(selfInfo_S)?.logisticPriceSchemeId
         }],
       };
       // 如果只有一个快递公司默认选择

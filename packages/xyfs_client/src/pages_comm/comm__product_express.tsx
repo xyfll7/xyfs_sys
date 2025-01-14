@@ -17,7 +17,7 @@ import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
 import { ComSELFView, MMMAAPage } from "@xyfs/taro_uii/components/MMMAAPage";
 import { ComProvinceCityArea, initAddressData, MMMAddress } from "@xyfs/taro_uii/components/MMMAddress";
 import { Address_T, ErrorR, Order_ST } from "@xyfs/taro_uii/src/config";
-import { roo___has_role, roo___role_regiment } from "@xyfs/taro_uii/src/roles";
+import { roo___has_role, roo___my_dept } from "@xyfs/taro_uii/src/roles";
 import { useSTExpress, useSTSelf } from "@xyfs/taro_uii/store/store";
 import { AddressInfo } from "@xyfs/taro_uii/type_user";
 import { try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
@@ -138,7 +138,7 @@ const IIIOrderPayUser: FC<{}> = ({ }) => {
       }} />
       <View className='mb10 dbtc ww '>
         {/* 团长信息 */}
-        <ComAddressSwitchor className='bccback mr10 ww' isShort isIcon address={roo___role_regiment(selfInfo_S)} url='/pages_user/user_regiment_list_map' />
+        <ComAddressSwitchor className='bccback mr10 ww' isShort isIcon address={roo___my_dept(selfInfo_S)} url='/pages_user/user_regiment_list_map' />
         <ComButton className='bccyellow fwb nw'
           onClick={async () => {
             if (!selfInfo_S?.mobile) { throw new ErrorR("请先“手机号快捷登录”!", true); }

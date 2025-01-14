@@ -13,7 +13,7 @@ import { ComScrollView } from '@xyfs/taro_uii/components/ComScrollView';
 import { ComTabBarLine } from '@xyfs/taro_uii/components/ComTabBarLine';
 import { ComSELFView } from '@xyfs/taro_uii/components/MMMAAPage';
 import { IM_locate, IM_logo_33x33 } from '@xyfs/taro_uii/src/image';
-import { roo___role_regiment } from '@xyfs/taro_uii/src/roles';
+import { roo___my_dept } from '@xyfs/taro_uii/src/roles';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
 import { BaseUserInfo } from '@xyfs/taro_uii/type_user';
 import { useHook_getLocation, useHook_pageListNew } from '@xyfs/taro_uii/utils/useHooks';
@@ -54,7 +54,7 @@ const IIIRegimentList = () => {
   const MAP_ID = "myMap";
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const { locate } = useHook_getLocation();
-  const [selected_regiment, setSelected_regiment] = useState<BaseUserInfo | null>(roo___role_regiment(selfInfo_S));
+  const [selected_regiment, setSelected_regiment] = useState<BaseUserInfo | null>(roo___my_dept(selfInfo_S));
 
 
   const ___page_getter = useCallback(async (p: Pagination<unknown>) =>
@@ -74,7 +74,9 @@ const IIIRegimentList = () => {
     }
   }, [selected_regiment]);
 
-  let __regiment_list = page.list ? [...(roo___role_regiment(selfInfo_S) ? [roo___role_regiment(selfInfo_S)!] : []), ...page.list] : null;
+  console.log("page", page);
+
+  let __regiment_list = page.list ? [...(roo___my_dept(selfInfo_S) ? [roo___my_dept(selfInfo_S)!] : []), ...page.list] : null;
   const [toggle, setToggle] = useState(false);
   return <>
     {locate && <Map className='ovh' id='myMap' layerStyle={Taro.getAppBaseInfo().theme === "dark" ? 0 : 1}
@@ -128,7 +130,7 @@ const IIIRegimentCard: FC<{ regiment: BaseUserInfo, selected_regiment: BaseUserI
         <ComButton ll className={`bborder fwb  wm7rem ${selected_regiment?.OPENID === regiment.id ? 'cccgreen' : ''}`}>
           <View className='nw1'>{regiment.name}</View>
         </ComButton>
-        {regiment.id === roo___role_regiment(selfInfo_S)?.id && <ComButton ll className='cccgreen nw1 bborder'>当前团长</ComButton>}
+        {regiment.id === roo___my_dept(selfInfo_S)?.id && <ComButton ll className='cccgreen nw1 bborder'>当前团长</ComButton>}
       </View>
       <ComButton rr className='cccgreen bborder' onClick={onClick_select_regiment}>选这个</ComButton>
     </View>

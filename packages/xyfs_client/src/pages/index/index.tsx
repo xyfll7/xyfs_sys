@@ -14,7 +14,7 @@ import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { MMMFooter } from '@xyfs/taro_uii/components/MMMFooter';
 import { MMMLogo } from '@xyfs/taro_uii/components/MMMLogo';
 import { getMyEnv } from '@xyfs/taro_uii/src/env';
-import { roo___has_role, roo___role_regiment } from '@xyfs/taro_uii/src/roles';
+import { roo___has_role, roo___my_dept } from '@xyfs/taro_uii/src/roles';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
 import { try_Taro_navigateTo } from '@xyfs/taro_uii/utils/try_catch';
 import { useHook_pageListNew } from '@xyfs/taro_uii/utils/useHooks';
@@ -55,7 +55,7 @@ const Index: FC = () => {
 
           {roo___has_role(selfInfo_S!.regimentInfo!, ["REGIMENT"]) &&
             <View className='mb10 dbtc prl10 transall' style={{ paddingRight: false ? `${capRight}px` : "0px", opacity: false ? "0" : "1", height: false ? "0rem" : "calc(2 * var(--rem_base)) !important", }}>
-              <ComAddressSwitchor className='bcctrans01-dark mr10' title='团长:' isShort isIcon address={roo___role_regiment(selfInfo_S)} url='/pages_user/user_regiment_list_map' />
+              <ComAddressSwitchor className='bcctrans01-dark mr10' title='团长:' isShort isIcon address={roo___my_dept(selfInfo_S)} url='/pages_user/user_regiment_list_map' />
               <View className='dy'>
                 <ComButton className='bcctrans01-dark mr10 nw cccplh' url='/pages_user/user_orders'>订单</ComButton>
                 {getMyEnv().isDeveloping && <ComButton className='bccyellow nw fwb' url='/pages_comm/comm__publisher'>
@@ -67,7 +67,7 @@ const Index: FC = () => {
           }
           {roo___has_role(selfInfo_S!.regimentInfo!, ["GUIDE"]) &&
             <View className='mb10 dbtc prl10 transall' style={{ paddingRight: false ? `${capRight}px` : "0px", opacity: false ? "0" : "1", height: false ? "0rem" : "calc(2 * var(--rem_base)) !important", }}>
-              <ComAddressSwitchor className='bcctrans01-dark mr10 ww' title='导游:' isShort isIcon address={roo___role_regiment(selfInfo_S)} />
+              <ComAddressSwitchor className='bcctrans01-dark mr10 ww' title='导游:' isShort isIcon address={roo___my_dept(selfInfo_S)} />
               <View className='dy'>
                 <ComButton className='bcctrans01-dark nw cccplh' url='/pages_user/user_orders'>订单</ComButton>
               </View>

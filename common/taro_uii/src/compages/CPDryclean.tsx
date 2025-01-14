@@ -20,7 +20,7 @@ import { ComQRCode } from "../components/ComQRCode";
 import { ComScrollView } from "../components/ComScrollView";
 import { ComSquare } from "../components/ComSquare";
 import { get_dev_value } from "../env";
-import { roo___has_role, roo___role_regiment } from "../roles";
+import { roo___has_role, roo___my_dept } from "../roles";
 import { useSTSelf } from "../store/store";
 import { try_Taro_chooseAddress, try_Taro_cloud_uploadFile, try_Taro_navigateToMiniProgram } from "../utils/try_catch";
 
@@ -363,7 +363,7 @@ const ShopCartTabBarRegiment: FC<PropsWithChildren & { children?: ReactElement |
     {_childrens}
     {_children_Sharer}
     <View className='dbtc ww'>
-      <ComAddressSwitchor className='mb10 bccback ww mr10' isShort title='团:' address={roo___role_regiment(useSTSelf.getState().selfInfo!)} />
+      <ComAddressSwitchor className='mb10 bccback ww mr10' isShort title='团:' address={roo___my_dept(useSTSelf.getState().selfInfo!)} />
 
       <View className='ioo dy  mb10 '>
         <ComCartPrice totalPrice={___get_cart_total_price(cart)} num={String(cart.length)} onClick={onToggle} />

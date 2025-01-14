@@ -3,7 +3,7 @@ import { Text, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { FC } from "react";
 import { getMyEnv } from "../env";
-import { roo___has_role, roo___role_number2str, roo___role_regiment } from "../roles";
+import { roo___has_role, roo___my_dept, roo___role_number2str } from "../roles";
 import { useSTSelf } from "../store/store";
 
 export const MMMFooter: FC<{ className?: string; isShowMore?: boolean, isLoadMore?: boolean | null; }> = ({ className = "" }) => {
@@ -14,7 +14,7 @@ export const MMMFooter: FC<{ className?: string; isShowMore?: boolean, isLoadMor
     <View className='pr10 oo cccplh '>
       <View className='dy'>
         {!roo___has_role(selfInfo_S, ["REGIMENT"]) && <Text className='mr6'>{selfInfo_S.name ? selfInfo_S.name : "匿名"}</Text>}
-        {roo___has_role(selfInfo_S, ["REGIMENT"]) && <Text className='dy mr6'>团长\\{roo___role_regiment(selfInfo_S)?.name}</Text>}
+        {roo___has_role(selfInfo_S, ["REGIMENT"]) && <Text className='dy mr6'>团长\\{roo___my_dept(selfInfo_S)?.name}</Text>}
         {selfInfo_S?.parentInfo?.name && <Text className='dy mr6'>上级\\{selfInfo_S?.parentInfo?.name}</Text>}
         <View className='dy mr6'>
           角色\{selfInfo_S.roles?.length ? "" : "暂无"}{roo___role_number2str(selfInfo_S)?.map(e => <Text className='dy' key={e}>\{e}</Text>)}

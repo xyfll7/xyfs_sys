@@ -24,7 +24,7 @@ import { MMMPoster, MMMPosterExpress } from "@xyfs/taro_uii/components/MMMPoster
 import { Address_T, ErrorR, Order_ST, PickUp_ST } from "@xyfs/taro_uii/src/config";
 import { get_dev_value } from "@xyfs/taro_uii/src/env";
 import { IM_线上_收款码 } from "@xyfs/taro_uii/src/image";
-import { roo___has_role, roo___role_regiment } from "@xyfs/taro_uii/src/roles";
+import { roo___has_role, roo___my_dept } from "@xyfs/taro_uii/src/roles";
 import { useSTExpress, useSTSelf } from "@xyfs/taro_uii/store/store";
 import { AddressInfo } from "@xyfs/taro_uii/type_user";
 import { try_Taro_requestPayment } from "@xyfs/taro_uii/utils/try_catch";
@@ -296,7 +296,7 @@ const IIIOrderPayRegiment: FC<{}> = ({ }) => {
         }}>获取价格</ComButton>
       </View>
       <View className='ww mb10 dbtc'>
-        <ComAddressSwitchor className='bccback mr10' isShort title='团:' address={roo___role_regiment(selfInfo_S)} />
+        <ComAddressSwitchor className='bccback mr10' isShort title='团:' address={roo___my_dept(selfInfo_S)} />
 
         <ComButton ll rr={Boolean(express_S.__isEdit)}
           className='bccyellow fwb'

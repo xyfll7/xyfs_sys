@@ -17,7 +17,7 @@ import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
 import { ComSquare } from "@xyfs/taro_uii/components/ComSquare";
 import { ComSELFView, MMMAAPage } from "@xyfs/taro_uii/components/MMMAAPage";
 import { ErrorR, Order_ST } from "@xyfs/taro_uii/src/config";
-import { roo___role_getRoleName, roo___role_regiment } from "@xyfs/taro_uii/src/roles";
+import { roo___my_dept, roo___role_getRoleName } from "@xyfs/taro_uii/src/roles";
 import { useSTSelf } from "@xyfs/taro_uii/store/store";
 import { AddressInfo } from "@xyfs/taro_uii/type_user";
 import { try_Taro_chooseAddress, try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
@@ -96,7 +96,7 @@ const Index: FC = () => {
       </View>
 
       <View className='ww dbtc'>
-        <ComAddressSwitchor className='bccback mb10 ww' isShort isIcon title={`${roo___role_getRoleName(selfInfo_S)}:`} address={roo___role_regiment(selfInfo_S)} url='/pages_user/user_regiment_list_map' />
+        <ComAddressSwitchor className='bccback mb10 ww' isShort isIcon title={`${roo___role_getRoleName(selfInfo_S)}:`} address={roo___my_dept(selfInfo_S)} url='/pages_user/user_regiment_list_map' />
         <ComButton className='bccyellow fwb mb10 ml10' onClickO={async () => {
           // 如果个人信息中没有默认的用户收件地址，则更新用户收件地址
           if (!selfInfo_S.defaultRecManAddress) {

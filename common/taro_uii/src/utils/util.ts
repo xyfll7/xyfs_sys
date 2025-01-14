@@ -6,11 +6,11 @@ import { Api_qrcode_ctn } from "../api/api__users";
 import { try_Taro_chooseMessageFile, try_Taro_downloadFile, try_Taro_getFileSystemManager_readFile, try_Taro_getFileSystemManager_saveFile, try_Taro_getFileSystemManager_writeFile, try_Taro_openDocument, try_Taro_showActionSheet } from "./try_catch";
 
 import { AddressInfo, BaseUserInfo, OrderInfo, Printer_Info, ProductBase } from "../../types";
-import { roo___role_regiment } from "../roles";
+import { roo___my_dept } from "../roles";
 
 // 订单信息中合并入团长信息
 export function utils_order_merge_servicer_info(selfInfo_S: BaseUserInfo): OrderInfo<ProductBase> {
-  const _regiment = roo___role_regiment(selfInfo_S);
+  const _regiment = roo___my_dept(selfInfo_S);
   return {
     fromAppid: Taro.getAccountInfoSync().miniProgram.appId,
     parentId: _regiment?.parentId,     // 代理OPENID
@@ -143,7 +143,7 @@ export async function utils_import_excel(): Promise<string> {
 
 // 选择打印机
 export async function utils_get_cloud_printer(selfInfo_S: BaseUserInfo): Promise<Printer_Info | null> {
-  const printers = roo___role_regiment(selfInfo_S)?.printers ?? [];
+  const printers = roo___my_dept(selfInfo_S)?.printers ?? [];
   if (printers.length === 0) {
     return null;
   } else if (printers.length === 1) {
