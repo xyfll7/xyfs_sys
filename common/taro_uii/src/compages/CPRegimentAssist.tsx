@@ -39,9 +39,7 @@ const PublishCard: FC<ViewProps & { data: any; onMai?: (e: any) => void; }> = ({
 
         {selfInfo_S.selfRegiment && <>
           <ComButtonOpen rr className='bccgreen mb10 ml10'
-            onClick={async (_e) => {
-              // const res = await Api_assist_increase_ctn({ assistId: data.id, regimentId: selfInfo_S.selfRegiment?.id ?? selfInfo_S.id });
-            }}
+            onClick={async (_e) => { }}
             id={data.id}
             shareTitle='我分享给你的'
             openType='share'
