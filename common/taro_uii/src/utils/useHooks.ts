@@ -149,6 +149,7 @@ export function useHook_pageListNew<P, T extends Pagination<P[]>>(cb: (a: Pagina
       pageNum: _page?.nextPage ?? 1,
       refreshTime: refreshTime,
     } as T);
+    console.log("res________", res);
     if (res) {
       setPage((e) => ({
         pageNum: res.pageNum,

@@ -15,13 +15,12 @@ import { ComSELFView } from '@xyfs/taro_uii/components/MMMAAPage';
 import { IM_locate, IM_logo_33x33 } from '@xyfs/taro_uii/src/image';
 import { roo___my_dept } from '@xyfs/taro_uii/src/roles';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
-import { BaseUserInfo } from '@xyfs/taro_uii/type_user';
+import { BaseUserInfo, DeptInfo } from '@xyfs/taro_uii/type_user';
+import { try_Taro_navigateBack } from '@xyfs/taro_uii/utils/try_catch';
 import { useHook_getLocation, useHook_pageListNew } from '@xyfs/taro_uii/utils/useHooks';
 import { utils_addressInfoToString } from '@xyfs/taro_uii/utils/util';
 
 import { FC, useCallback, useEffect, useState } from 'react';
-
-
 
 definePageConfig({ navigationStyle: "custom" });
 export default function COMSELFWarp() {
@@ -49,34 +48,30 @@ const Index: FC<{}> = ({ }) => {
     </View>
   </ScrollView>;
 };
-
+const MAP_ID = "myMap";
 const IIIRegimentList = () => {
-  const MAP_ID = "myMap";
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const { locate } = useHook_getLocation();
-  const [selected_regiment, setSelected_regiment] = useState<BaseUserInfo | null>(roo___my_dept(selfInfo_S));
-
-
+  const [selected_dept, setSelected_dep] = useState<BaseUserInfo | null>(roo___my_dept(selfInfo_S));
   const ___page_getter = useCallback(async (p: Pagination<unknown>) =>
     await Api_user_nearbyRegimentList_ctn({
       ...p,
-      longitude: locate?.longitude!, latitude: locate?.latitude!, keyword: "", userId: selfInfo_S.OPENID!
-    }), [locate?.latitude, locate?.longitude, selfInfo_S.OPENID]);
+      longitude: locate?.longitude!, latitude: locate?.latitude!, keyword: ""
+    }), [locate?.latitude, locate?.longitude]);
   const { page, page_loading, page_list_get, } = useHook_pageListNew(___page_getter, { isLoadFirstRun: false });
   useINHook_map_init(page.list!, locate, MAP_ID);
   useEffect(() => {
-    if (selected_regiment) {
+    if (selected_dept) {
       const _map = Taro.createMapContext(MAP_ID);
       _map.moveToLocation({
-        longitude: selected_regiment.longitude,
-        latitude: selected_regiment.latitude,
+        longitude: selected_dept.longitude,
+        latitude: selected_dept.latitude,
       });
     }
-  }, [selected_regiment]);
+  }, [selected_dept]);
 
-  console.log("page", page);
-
-  let __regiment_list = page.list ? [...(roo___my_dept(selfInfo_S) ? [roo___my_dept(selfInfo_S)!] : []), ...page.list] : null;
+  let __dept_list = (page.list ? [...(roo___my_dept(selfInfo_S) ? [roo___my_dept(selfInfo_S)!] : []), ...page.list] : null);
+  console.log("pageppp", __dept_list);
   const [toggle, setToggle] = useState(false);
   return <>
     {locate && <Map className='ovh' id='myMap' layerStyle={Taro.getAppBaseInfo().theme === "dark" ? 0 : 1}
@@ -96,16 +91,16 @@ const IIIRegimentList = () => {
         </View>
         <ComScrollView onScrollToLower={async () => { page_list_get(page); }} >
           <View className='dll ww ' >
-            {__regiment_list?.filter((e, i, arr) => arr.findIndex(ee => ee.id === e.id) === i).map((e, i) => {
-              return <IIIRegimentCard regiment={e} key={i} selected_regiment={selected_regiment}
-                onClick_move_to_regiment={() => { setSelected_regiment(e); }}
+            {__dept_list?.filter((e, i, arr) => arr.findIndex(ee => ee.id === e.id) === i).map((e, i) => {
+              return <IIIDeptCard dept={e} key={i} selected_dept={selected_dept}
+                onClick_move_to_regiment={() => { setSelected_dep(e); }}
                 onClick_select_regiment={async () => {
                   Taro.showLoading({ mask: true, title: "更新中...", });
-                  const res_userInfo = await Api_user_edit_ctn({ regimentId: e?.OPENID, });
+                  const res_userInfo = await Api_user_edit_ctn({ deptId: e.deptId });
                   useSTSelf.getState().sett(res_userInfo);
                   Taro.hideLoading();
-                  Taro.navigateBack();
-                }}></IIIRegimentCard>;
+                  try_Taro_navigateBack();
+                }}></IIIDeptCard>;
             })}
             <ComLoading className='mb10' isLastPage={page?.isLastPage} loading={page_loading} onLoadMore={() => page_list_get(page)}></ComLoading>
           </View>
@@ -120,21 +115,21 @@ const IIIRegimentList = () => {
 
 
 
-const IIIRegimentCard: FC<{ regiment: BaseUserInfo, selected_regiment: BaseUserInfo | null; onClick_move_to_regiment?: (event: BaseEventOrig<any>) => void; onClick_select_regiment?: (event: BaseEventOrig<any>) => void; }> = ({ regiment, selected_regiment, onClick_move_to_regiment, onClick_select_regiment }) => {
+const IIIDeptCard: FC<{ dept: DeptInfo, selected_dept: BaseUserInfo | null; onClick_move_to_regiment?: (event: BaseEventOrig<any>) => void; onClick_select_regiment?: (event: BaseEventOrig<any>) => void; }> = ({ dept, selected_dept, onClick_move_to_regiment, onClick_select_regiment }) => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   return <View className='bccwhite ww mb10 dbtc ioo pbt8 prl10 dll'
     onClick={onClick_move_to_regiment}>
     <View className='mb10 dbtc ww'>
       <View className='dy'>
-        <ComImage className='mr10' src={regiment.avatar ?? ""} />
-        <ComButton ll className={`bborder fwb  wm7rem ${selected_regiment?.OPENID === regiment.id ? 'cccgreen' : ''}`}>
-          <View className='nw1'>{regiment.name}</View>
+        <ComImage className='mr10' src={dept.avatar ?? ""} />
+        <ComButton ll className={`bborder fwb  wm7rem ${selected_dept?.id === dept.id ? 'cccgreen' : ''}`}>
+          <View className='nw1'>{dept.name}</View>
         </ComButton>
-        {regiment.id === roo___my_dept(selfInfo_S)?.id && <ComButton ll className='cccgreen nw1 bborder'>当前团长</ComButton>}
+        {dept.id === roo___my_dept(selfInfo_S)?.id && <ComButton ll className='cccgreen nw1 bborder'>当前团长</ComButton>}
       </View>
       <ComButton rr className='cccgreen bborder' onClick={onClick_select_regiment}>选这个</ComButton>
     </View>
-    <View className='cccplh nw2 ww'>{utils_addressInfoToString(regiment)}</View>
+    <View className='cccplh nw2 ww'>{utils_addressInfoToString(dept)}</View>
   </View>;
 };
 

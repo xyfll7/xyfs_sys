@@ -1,4 +1,3 @@
-
 import Taro from "@tarojs/taro";
 import { AddressInfo, BaseUserInfo, DICTS_KEYS, Pagination, Printer_Info } from "../../types";
 import { getMyEnv } from "../env";
@@ -28,7 +27,6 @@ export async function Api_common_taskList(params: Pick<Pagination<unknown>, "pag
   });
   return res;
 }
-
 export async function Api_common_jtsd(params: {
   /**1 标准快递 ，2 兔优达  */
   expressType: 1 | 2;
@@ -132,7 +130,6 @@ export async function Api_getNumber_ctn(params: { code: string; encryptedData: s
 export async function Api_user_nearbyRegimentList_ctn(params: Pick<Pagination<unknown>, "keyword" | "pageNum" | "pageSize"> & {
   latitude: number; // 0,
   longitude: number; // 0,
-  userId: string;
 }) {
   params = {
     ...params,
@@ -163,7 +160,6 @@ export async function Api_user_edit_ctn(params: Partial<BaseUserInfo>): Promise<
     data: { ...params },
   });
   return res;
-
 }
 export async function Api_user_myUserList_ctn(params: Pick<Pagination<unknown>, "keyword" | "pageNum" | "pageSize"> & {
   agentOpenid?: string;
@@ -303,7 +299,7 @@ export async function Api_dept_update_ctn(params: {
   return res;
 }
 export async function Api_dept_dept_ctn(params: {
-  id: string, // userId;
+  id?: string, // userId;
   deptId?: string; // 传空为移出部门
 }) {
   const res = await wx_call_container<Printer_Info>({
@@ -312,8 +308,6 @@ export async function Api_dept_dept_ctn(params: {
   });
   return res;
 }
-
-// /api/dept/userList
 export async function Api_dept_userList_ctn(params: {
   "deptId": string,
 }) {
