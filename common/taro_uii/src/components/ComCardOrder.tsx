@@ -87,7 +87,7 @@ export const ComCardOrderExpress: FC<{
                     await try_Taro_navigateTo({ url: `/pages_comm/comm__express_path?${coo___objToUrl({ express_share_id: order.id })}` });
                   }}>轨迹</ComButton> : null
               }
-              <MMMShare rr orderType='快递' className='bborder' id={order.id!} name={order.regimentName!} ></MMMShare>
+              <MMMShare rr orderType='快递' className='bborder' id={order.id!} name={order.deptName!} ></MMMShare>
             </View>
           }
         </View>

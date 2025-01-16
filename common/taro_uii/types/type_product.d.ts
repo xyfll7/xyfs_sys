@@ -116,7 +116,7 @@ interface OrderInfo<T> {
   latestEventType?: 1 | 2 | 3 | 4;// 团1、厂2、厂3、团4
   regimentAddress?: AddressInfo;
   officialAccountOpenid?: string; // 团长公众号OPENID
-  regimentName?: string;
+  deptName?: string;
   userName?: string;
   lastPrintTime?: string;
   lastUpdateTime?: string;

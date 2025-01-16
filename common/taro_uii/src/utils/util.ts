@@ -1,23 +1,20 @@
 import Taro from "@tarojs/taro";
-
 import { coo___ios_date } from "@xyfs/utils/util";
 import { format, lastDayOfMonth, startOfMonth } from "date-fns";
-import { Api_qrcode_ctn } from "../api/api__users";
-import { try_Taro_chooseMessageFile, try_Taro_downloadFile, try_Taro_getFileSystemManager_readFile, try_Taro_getFileSystemManager_saveFile, try_Taro_getFileSystemManager_writeFile, try_Taro_openDocument, try_Taro_showActionSheet } from "./try_catch";
-
 import { AddressInfo, BaseUserInfo, OrderInfo, Printer_Info, ProductBase } from "../../types";
+import { Api_qrcode_ctn } from "../api/api__users";
 import { roo___my_dept } from "../roles";
+import { try_Taro_chooseMessageFile, try_Taro_downloadFile, try_Taro_getFileSystemManager_readFile, try_Taro_getFileSystemManager_saveFile, try_Taro_getFileSystemManager_writeFile, try_Taro_openDocument, try_Taro_showActionSheet } from "./try_catch";
 
 // 订单信息中合并入团长信息
 export function utils_order_merge_servicer_info(selfInfo_S: BaseUserInfo): OrderInfo<ProductBase> {
-  const _regiment = roo___my_dept(selfInfo_S);
+  const __dept = roo___my_dept(selfInfo_S);
   return {
     fromAppid: Taro.getAccountInfoSync().miniProgram.appId,
-    parentId: _regiment?.parentId,     // 代理OPENID
-    officialAccountOpenid: _regiment?.officialAccountOpenid,
-    regimentId: _regiment?.OPENID,   // 团长OPENID+个人信息
-    regimentName: _regiment?.name,
-    userId: selfInfo_S.OPENID,   // 下单人OPENID
+    parentId: __dept?.parentId,     // 代理OPENID
+    officialAccountOpenid: __dept?.officialAccountOpenid,
+    deptId: __dept?.deptId,   // 团长OPENID+个人信息
+    deptName: __dept?.deptName,
     mobile: selfInfo_S?.mobile,
   } as OrderInfo<ProductBase>;
 }

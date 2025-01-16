@@ -147,6 +147,7 @@ const IIIOrderPayUser: FC<{}> = ({ }) => {
             await utils_validate_express("send", express_S?.productList?.[0]?.sendMan!);
             if (!express_S?.productList?.[0]?.itemType) { throw new ErrorR("请输入品名", true); }
             Taro.showLoading({ mask: true, title: "提交中...", });
+            console.log("xxxxxxxxxxxxxxxxx", useSTExpress.getState().express);
             await Api_order_pre_ctn({ ...useSTExpress.getState().express, nowPay: false });
             Taro.hideLoading();
 

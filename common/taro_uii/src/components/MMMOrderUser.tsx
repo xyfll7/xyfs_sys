@@ -14,13 +14,13 @@ export const MMMOrderUser = ({ order, showUser = "user", ...props }: ViewProps &
     if (showUser === "regiment") {
       return {
         avatar: order.regimentAvatar,
-        name: order.regimentName,
+        name: order.deptName,
         isRegiment: true,
       };
     } else if (isClient) {
       return {
         avatar: order.regimentAvatar,
-        name: order.regimentName,
+        name: order.deptName,
         isRegiment: true,
       };
     } else {

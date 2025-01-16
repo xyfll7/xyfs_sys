@@ -10,6 +10,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages_user/sub_user_dept",
+          "pathName": "pages_user/sub_user_dept",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages_regiment/regiment_orders_express",
           "pathName": "pages_regiment/regiment_orders_express",
           "query": "order_ST=2",
