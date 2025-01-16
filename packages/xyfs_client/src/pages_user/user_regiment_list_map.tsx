@@ -90,8 +90,8 @@ const IIIRegimentList = () => {
           </View>
         </View>
         <ComScrollView onScrollToLower={async () => { page_list_get(page); }} >
-          <View className='dll ww ' >
-            {__dept_list?.filter((e, i, arr) => arr.findIndex(ee => ee.id === e.id) === i).map((e, i) => {
+          <View className='dll ww'>
+            {__dept_list?.filter((e, i, arr) => arr.findIndex(ee => ee.deptId === e.deptId) === i).map((e, i) => {
               return <IIIDeptCard dept={e} key={i} selected_dept={selected_dept}
                 onClick_move_to_regiment={() => { setSelected_dep(e); }}
                 onClick_select_regiment={async () => {
@@ -122,10 +122,10 @@ const IIIDeptCard: FC<{ dept: DeptInfo, selected_dept: BaseUserInfo | null; onCl
     <View className='mb10 dbtc ww'>
       <View className='dy'>
         <ComImage className='mr10' src={dept.avatar ?? ""} />
-        <ComButton ll className={`bborder fwb  wm7rem ${selected_dept?.id === dept.id ? 'cccgreen' : ''}`}>
-          <View className='nw1'>{dept.name}</View>
+        <ComButton ll className={`bborder fwb  wm7rem ${selected_dept?.deptId === dept.deptId ? 'cccgreen' : ''}`}>
+          <View className='nw1'>{dept.deptName}</View>
         </ComButton>
-        {dept.id === roo___my_dept(selfInfo_S)?.id && <ComButton ll className='cccgreen nw1 bborder'>当前团长</ComButton>}
+        {dept.deptId === roo___my_dept(selfInfo_S)?.deptId && <ComButton ll className='cccgreen nw1 bborder'>当前团长</ComButton>}
       </View>
       <ComButton rr className='cccgreen bborder' onClick={onClick_select_regiment}>选这个</ComButton>
     </View>
