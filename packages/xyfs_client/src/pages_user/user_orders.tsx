@@ -83,7 +83,7 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
         if (Number(order.orderType) === Product_category_ST.快递) {
           const _order0 = order as OrderInfo<Product_Express>;
           return <View className='dll ww  mb10 bccwhite ioo' key={order.id}>
-            <ComCardOrderExpress className=' ww' key={order.id} order={_order0} />
+            <ComCardOrderExpress className='mb10 ww' key={order.id} order={_order0} />
             <View className='dr dwp  ww prl10'>
               {orderType === Order_ST.待付款 &&
                 <ComButton rr

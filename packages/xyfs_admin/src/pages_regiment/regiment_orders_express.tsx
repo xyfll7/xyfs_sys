@@ -165,7 +165,7 @@ const IIIOrderExpressOperation: FC<{
           }} >修改订单</ComButton>
         </View>
       )}
-      {order.payStatus === 0 && (
+      {order.payStatus === 0 && Boolean(order.totalPrice) && (
         <View className='dbtc mb10 ww'>
           <ComButton ll className='cccplh'>下单人：团长自己</ComButton>
           <ComButton rr ll className='bccyellow'

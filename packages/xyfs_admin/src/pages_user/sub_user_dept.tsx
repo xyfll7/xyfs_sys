@@ -1,7 +1,7 @@
 // :: pages_user/sub_user_dept
 import { Text, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
-import { Api_dept_add_ctn, Api_dept_del_ctn, Api_dept_list_ctn, Api_dept_update_ctn, Api_dept_userList_ctn } from "@xyfs/taro_uii/api/api__users";
+import { Api_dept_add_ctn, Api_dept_del_ctn, Api_dept_list_ctn, Api_dept_removeUser_ctn, Api_dept_update_ctn, Api_dept_userList_ctn } from "@xyfs/taro_uii/api/api__users";
 import { ComButton } from '@xyfs/taro_uii/components/ComButton';
 import { ComInput } from "@xyfs/taro_uii/components/ComInput";
 import { ComLoading } from "@xyfs/taro_uii/components/ComLoading";
@@ -91,13 +91,29 @@ const Index: FC<{}> = ({ }) => {
         <ComButton className='mb10 bcctrans' hoverClass='none'> <Text className='cccplh'>所属部门：</Text> {dept.deptName}</ComButton>
         <ComScrollView className=''>
           {deptUserList.map(e => {
-            return <View key={e.id} className='ww ioo bccwhite mb10 pt10'>
-              <ComButton className='mb10 nw1'>
-                <View className=' ww'>
-                  <View className='nw1 ww dbtc'>{e.name} <Text className='cccplh'> {e.roles.map((ee) => ee.roleName).join("/")}</Text></View>
+            return <View key={e.id} className='ww ioo bccwhite mb10 prl10 pt10'>
+              <ComButton ll className='mb10 nw1' hoverClass='none' >
+                <View className=' ww '>
+                  <View className='nw1 ww dbtc'>
+                    <Text > {e.name}</Text>
+                    <Text className='cccplh'> {e.roles.map((ee) => ee.roleName).join("/")}</Text>
+                  </View>
                   <View className='nw1 cccplh' onClick={() => { Taro.makePhoneCall({ phoneNumber: e.mobile }); }}>{e.mobile} <Text className='cccgreen'>拨打</Text> </View>
                 </View>
               </ComButton>
+              <View className='dr mb10'>
+                <ComButton rr className='cccplh bborder' onClick={async () => {
+                  const res = await try_Taro_showModal({ title: '提示', content: "您确定要删除该部门成员吗？" });
+                  if (res) {
+                    Taro.showLoading({ mask: true, title: "删除中..." });
+                    await Api_dept_removeUser_ctn({ deptId: dept.deptId, userId: e.id });
+                    Taro.showLoading({ mask: true, title: "加载中" });
+                    const res_userList = await Api_dept_userList_ctn({ deptId: e.deptId });
+                    setDeptUserList(res_userList);
+                    Taro.showToast({ icon: "none", title: "删除成功" });
+                  }
+                }}>删除</ComButton>
+              </View>
             </View>;
           })}
         </ComScrollView>

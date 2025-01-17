@@ -56,7 +56,7 @@ export const ComCardOrderExpress: FC<{
           </>
         </ComButton>
         <ComButton rr
-          className='cccgreen bborder mb10'
+          className='cccgreen bborder'
           onClick={async () => {
             await try_Taro_navigateTo({
               url: "/pages_comm/comm__product_express",

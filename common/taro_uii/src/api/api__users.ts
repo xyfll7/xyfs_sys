@@ -317,3 +317,13 @@ export async function Api_dept_userList_ctn(params: {
   });
   return res;
 }
+export async function Api_dept_removeUser_ctn(params: {
+  "deptId": string,
+  "userId": string,
+}) {
+  const res = await wx_call_container<any[]>({
+    path: "/dept/removeUser",
+    data: { ...params },
+  });
+  return res;
+}
