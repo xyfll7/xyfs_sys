@@ -10,6 +10,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages_user/user_orders",
+          "pathName": "pages_user/user_orders",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages_user/user_regiment_list_map",
           "pathName": "pages_user/user_regiment_list_map",
           "query": "",

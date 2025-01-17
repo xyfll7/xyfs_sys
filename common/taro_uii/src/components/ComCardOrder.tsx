@@ -40,7 +40,7 @@ export const ComCardOrderExpress: FC<{
         onClick={() => {
           Taro.showToast({ icon: "none", title: `${order.productList?.[0]?.sendMan?.address}` });
         }} />
-      <View className='dbtc ww'>
+      <View className={`dbtc ww ${order.productList?.[0]?.deliveryId ? "mb10" : ""}`}>
         <ComButton ll className='dy ' onClick={() => {
           Taro.showToast({ icon: "none", title: `${order.productList?.[0]?.itemType}${order.productList?.[0]?.itemNotes ? `/${order.productList?.[0]?.itemNotes}` : ""}` });
         }}>
