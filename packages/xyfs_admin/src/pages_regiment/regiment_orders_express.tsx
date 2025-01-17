@@ -165,33 +165,32 @@ const IIIOrderExpressOperation: FC<{
           }} >修改订单</ComButton>
         </View>
       )}
-      {order.payStatus === 0 && Boolean(order.totalPrice) && (
-        <View className='dbtc mb10 ww'>
-          <ComButton ll className='cccplh'>下单人：团长自己</ComButton>
-          <ComButton rr ll className='bccyellow'
-            onClick={async () => {
-              Taro.showLoading({ mask: true, title: "获取支付参数...", });
-              const res_pay = await Api_order_pay_ctn({ orderId: order.id!, });
-              // 吊起微信支付 -> 打开支付成功弹窗
-              Taro.showLoading({ mask: true, title: "支付...", });
-              await try_Taro_requestPayment({ ...res_pay, package: res_pay.packageStr });
-              Taro.showToast({ icon: "none", title: `支付成功,订单移入"已付款"` });
-              onDeleteOrder();
-            }}>
-            <ComSquare className='icon-wxpay mr4' style={{ width: "calc(1.3 * var(--rem_base))" }} />
-            <Text className='nw'>支付</Text>
-          </ComButton>
-        </View>
-      )}
-      {order.userId !== order?.regimentId && order.orderStatus === Order_ST.待付款 && (
-        <View className=' dbtc ww mb10'>
-          <ComButton ll className='cccplh'>下单人：用户</ComButton>
-          {order.productList?.[0]?.weight && <ComButton rr className='bccyellow'
+
+      <View className='dbtc mb10 ww'>
+        <ComButton ll className='cccplh nw '>下单人: {order.appid == process.env.TARO_APP_CLIENT ? "用户" : "团长"} </ComButton>
+        <View className='dy'>
+          {order.productList?.[0]?.weight && order.orderStatus === Order_ST.待付款 && <ComButton rr className='bccyellow'
             onClick={() => onSetShowQRCode(true)} >
             收款码
           </ComButton>}
+          {order.orderStatus === Order_ST.待付款 && Boolean(order.totalPrice) && (
+            <ComButton rr ll className='bccyellow ml10'
+              onClick={async () => {
+                Taro.showLoading({ mask: true, title: "获取支付参数...", });
+                const res_pay = await Api_order_pay_ctn({ orderId: order.id!, });
+                // 吊起微信支付 -> 打开支付成功弹窗
+                Taro.showLoading({ mask: true, title: "支付...", });
+                await try_Taro_requestPayment({ ...res_pay, package: res_pay.packageStr });
+                Taro.showToast({ icon: "none", title: `支付成功,订单移入"已付款"` });
+                onDeleteOrder();
+              }}>
+              <ComSquare className='icon-wxpay mr4' style={{ width: "calc(1.3 * var(--rem_base))" }} />
+              <Text className='nw'>支付</Text>
+            </ComButton>
+          )}
         </View>
-      )}
+      </View>
+
       {order.orderStatus == Order_ST.已付款 && (
         <View className='ww dbtc mb10 ww'>
           {(order.refundStatus !== Refund_ST.失败 && order.productList?.[0]?.waybillId) ?

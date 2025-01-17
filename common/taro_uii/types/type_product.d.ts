@@ -103,6 +103,7 @@ interface OrderInfo<T> {
   productList?: T[];
   parentId?: string; // 代理OPENID
   fromAppid?: string;
+  appid?: string;
   mobile?: string;
   printTimes?: number;  // 打印次数
   orderType?: Product_category_ST; // 供应商类型
