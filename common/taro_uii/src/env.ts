@@ -3,9 +3,9 @@ import "@xyfs/utils/init";
 import Package from "../package.json";
 import { Environment, EnvVersion } from "../types/type_index";
 
-export const base_url: string = "http://192.168.60.229:8888";
+export const base_url: string = "";
 
-const ___envSimulate = "develop";
+const ___envSimulate = "release";
 
 // cSpell: disable;
 const OPENID_DEV___ =
@@ -16,7 +16,7 @@ const OPENID_DEV___ =
   // "oGwbL5OLhRpOKRWrkVNSMqXuGPaE" ||  // 我妈
   // "oHt125JZ0IV1XI_y8iOt0wTR8P-M" ||  // (顾客端)王肇
   ////////////////////////////////////////////////
-  // "oGwbL5IZEq-8Op4CvUTNodRKdOB0" ||  // 冯强
+  "oGwbL5IZEq-8Op4CvUTNodRKdOB0" ||  // 冯强
   // "oGwbL5CEoFe5T1fqyAQUu0ohSLSM" ||  // 王红霞
   // "oGwbL5HudJXb6ztDzUtEmpd41v1c" ||  // 王红霞2
   // "oGwbL5EtVeoi3OOYhzu2x-0eH2ho" ||  // 司机 苏新宇
