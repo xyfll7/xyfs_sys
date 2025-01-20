@@ -11,7 +11,7 @@ const ___envSimulate = "develop";
 const OPENID_DEV___ =
   // @ts-ignore
 
-  // "oGwbL5Ik6N77gAnLvNFh1BXP3lqc" ||
+
   ////////////////////////////////////////////////
   // "oGwbL5D1WtsGTuLhWneaepYuHW3k" ||  // 何旭东
   // "oGwbL5OLhRpOKRWrkVNSMqXuGPaE" ||  // 我妈

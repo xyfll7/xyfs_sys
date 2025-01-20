@@ -207,7 +207,7 @@ const IIIPaymentDetailItem: FC<{ index?: number, item: any; isShowRefundTime?: b
 const IIIWallet = () => {
   const [showWithdraw, setShowWithdraw] = useState(false);
   return <>
-    <View className='dll ww bccwhite ioo mb10 pt10 prl10'>
+    <View className='dll ww bccwhite IOO mb10 pt10 prl10'>
       <ComButton ll className='cccplh mb10'>当前余额</ComButton>
       <View className='dbtc ww'>
         <ComButton ll className='mb10 fwb fs13'>
