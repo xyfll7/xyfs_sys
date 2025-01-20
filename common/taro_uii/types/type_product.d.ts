@@ -5,14 +5,10 @@ import { AddressInfo } from './type_user';
 
 export type AddressManType = "rec" | "send";
 
-
 interface Time_Base {
   lastUpdateTime?: string; // 更新时间
   orderTimeFormat?: string;
 }
-
-
-
 
 type Send_type = '自提' | '包邮';
 type Rec_type = '自送' | '上门取货';
@@ -49,11 +45,6 @@ export interface Product_Publish extends ProductBase, Time_Base {
   currentPrice: string;
 }
 
-// color: cartItem.colorOptions ?? [],
-// serve: cartItem.serveOptions ?? [],
-// defec: cartItem.defectOptions ?? [], // 瑕疵
-// affix: cartItem.affixOptions ?? [],
-// price: cartItem.serveOptions ?? [],
 export type DrycleanNotesType = { type: "color" | "serve" | "defec" | "affix", id: string, label: string, price: string, color: string; };
 
 interface Product_Dryclean extends ProductBase {
@@ -142,24 +133,6 @@ interface OrderInfo<T> {
 
 
 
-// 退款
-export interface RefundEvent_sub {
-  "sp_mchid": string; // "1635060558",
-  "sub_mchid": string; //  "1635798777",
-  "out_trade_no": string; //  "MUeSNxxA4o0oOmb_FUjE7g1gkqgs44l", // cSpell: ignore gkqgs
-  "transaction_id": string; //  "4200001663202212219334102450",
-  "out_refund_no": string; //  订单id
-  "refund_id": string; //  "50301804212022122328916290994",
-  "refund_status": string; //  "SUCCESS",
-  "success_time": string; //  "2022-12-23T10:55:21+08:00",
-  "amount": {
-    "total": number; //  1,
-    "refund": number; //1,
-    "payer_total": number; // 1,
-    "payer_refund": number; // 1
-  },
-  "user_received_account": string; //  "招商银行借记卡8343"
-}
 
 
 
