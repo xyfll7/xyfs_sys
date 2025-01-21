@@ -98,7 +98,7 @@ const Index: FC<{}> = ({ }) => {
               {Boolean(order.productList?.length) && _order1.orderStatus !== 1 && <ComButton rr className='slr cccgreen bborder mb10 ml10' onClick={async () => {
                 await try_Taro_navigateTo({ url: `/pages_comm/comm__express_path?${coo___objToUrl({ express_share_id: order.id })}` });
               }}>轨迹</ComButton>}
-              {Boolean(order.productList?.length) && order.orderStatus === 2 && <MMMShare rr orderType='干洗' className='bborder mb10 ml10' id={order.id!} name={order.regimentName!} ></MMMShare>}
+              {Boolean(order.productList?.length) && order.orderStatus === 2 && <MMMShare rr orderType='干洗' className='bborder mb10 ml10' id={order.id!} name={order.deptName!} ></MMMShare>}
               {_order1.orderStatus === 1 && <ComButton rr className='cccplh mb10 bborder ml10' onClick={async () => {
                 const res_modal = await try_Taro_showModal({ title: "提示", content: "您确定要删除该订单吗?", confirmText: "删除" });
                 if (res_modal) {

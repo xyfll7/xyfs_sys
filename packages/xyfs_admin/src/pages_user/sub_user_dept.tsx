@@ -135,7 +135,7 @@ const IIIAddDept = ({ dept, onSuccess, mode, onClose }: { mode: "edit" | "add", 
     </ComNavBarB>
     <ComButton className='mb10 bcctrans' hoverClass='none'> <Text className='cccplh'>{mode === "add" ? "上级部门：" : "部门名称："} </Text> {dept.deptName}</ComButton>
     <View className='mb10 ww dy'>
-      <ComButton className='bccbacktab ww mr10'>
+      <ComButton className='bccbacktab ww mr10' hoverClass='none'>
         <ComInput placeholder={mode === "add" ? '请填写子部门名称' : '请填写新的部门名称'} value={form.deptName} onInput={(e) => setForm({ deptName: e.detail.value })}></ComInput>
       </ComButton>
 
