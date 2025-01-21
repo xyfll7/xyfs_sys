@@ -1,7 +1,6 @@
 import { Text, View, ViewProps } from "@tarojs/components";
-import { coo___objToUrl } from "@xyfs/utils/util";
 import { FC } from "react";
-import { ComButton, ComButtonOpen } from "../components/ComButton";
+import { ComButton } from "../components/ComButton";
 import { ComImage, ComImageStack } from "../components/ComImage";
 import { useSTSelf } from "../store/store";
 
@@ -35,21 +34,6 @@ const PublishCard: FC<ViewProps & { data: any; onMai?: (e: any) => void; }> = ({
             ee.stopPropagation();
             onMai?.(data);
           }}><Text className='cccgreen'>+</Text>买</ComButton>
-        }
-
-        {selfInfo_S.selfRegiment && <>
-          <ComButtonOpen rr className='bccgreen mb10 ml10'
-            onClick={async (_e) => { }}
-            id={data.id}
-            shareTitle='我分享给你的'
-            openType='share'
-            sharePath={`/pages_comm/comm__express_path?${coo___objToUrl({ R_D: Number(useSTSelf.getState().selfInfo!.mobile).toString(36), H_D: data.id })}`}>
-            <Text className='cccyellow'>⤻</Text><Text className='' style={{ color: 'white' }}>帮</Text>
-          </ComButtonOpen>
-
-        </>
-
-
         }
       </View>
     </View>

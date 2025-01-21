@@ -18,27 +18,27 @@ import { FC, useEffect, useState } from 'react';
 definePageConfig({ enableShareAppMessage: true, navigationStyle: "custom", disableScroll: true, });
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC = () => {
-  const { options } = Taro_getCurrentInstance<{ regimentId: string, }>();
-  const regimentInfo = useHook_userInfo(options.regimentId);
+  const { options } = Taro_getCurrentInstance<{ deptId: string, }>();
+  const dept = useHook_userInfo(options.deptId);
   return <MMMAAPage
     isNeedRegiment={false}
-    isLoading={!options.regimentId ? Boolean(options.regimentId) : !regimentInfo}
-    isPageAccess={roo___has_role(regimentInfo, ["REGIMENT"])}>
+    isLoading={!options.deptId ? Boolean(options.deptId) : !dept}
+    isPageAccess={roo___has_role(dept, ["REGIMENT"])}>
     <ComNav>
       <ComNavBarA backText='首页' onClickBack={async () => { await try_Taro_navigateBack(); }} className='mb10 pl10'>
         <ComButton ll className='bcctrans cccplh ml10' >分享邀请</ComButton>
       </ComNavBarA>
     </ComNav>
     <ComScrollView>
-      {regimentInfo &&
+      {dept &&
 
         <View className='dll ww'>
           <View className='dy'>
             <ComButton className='mb10 mr10' onClick={() => { Taro.navigateBackMiniProgram({}); }}>返回→管理端</ComButton>
-            <ComButton ll className='mb10 cccplh'> <View className='wm7rem'>{regimentInfo?.name}</View> (团长) 您好 👋 </ComButton>
+            <ComButton ll className='mb10 cccplh'> <View className='wm7rem'>{dept?.name}</View> (团长) 您好 👋 </ComButton>
           </View>
-          <IIIExpress regimentInfo={regimentInfo}></IIIExpress>
-          <IIIDryclean regimentInfo={regimentInfo}></IIIDryclean>
+          <IIIExpress deptInfo={dept}></IIIExpress>
+          <IIIDryclean deptInfo={dept}></IIIDryclean>
         </View>
       }
     </ComScrollView>
@@ -46,7 +46,7 @@ const Index: FC = () => {
 };
 
 
-const IIIExpress: FC<{ regimentInfo: BaseUserInfo; }> = ({ regimentInfo }) => {
+const IIIExpress: FC<{ deptInfo: BaseUserInfo; }> = ({ deptInfo }) => {
   return <View className='mb10 dy bccwhite ww ioo pt10 prl10'>
     <ComButton ll className='nw bccwhite mr10 bccwhite mb10'>快递</ComButton>
     {/* <ComQRCode rr className='cccgreen mb10 slr' params={{
@@ -54,18 +54,18 @@ const IIIExpress: FC<{ regimentInfo: BaseUserInfo; }> = ({ regimentInfo }) => {
       title: "团长专属",
       desc: ["快递下单快捷小程序码"],
       page: "pages_comm/comm__product_express",
-      scene: coo___objToUrl({ R_D: Number(regimentInfo.mobile).toString(36) }),
+      scene: coo___objToUrl({ R_D: Number(deptInfo.mobile).toString(36) }),
     }} /> */}
     <ComButtonOpen rr className='cccgreen bccwhite bborder mb10 slr' id='send_express'
-      shareTitle={`${regimentInfo?.name} 团长 邀您6元起寄快递`}
+      shareTitle={`${deptInfo?.name} 团长 邀您6元起寄快递`}
       openType='share'
-      sharePath={`/pages_comm/comm__product_express?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ R_D: Number(regimentInfo.mobile).toString(36) })) })}`}>
+      sharePath={`/pages_comm/comm__product_express?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ R_D: Number(deptInfo.mobile).toString(36) })) })}`}>
       邀请下单(快递)
     </ComButtonOpen>
   </View>;
 };
 
-const IIIDryclean: FC<{ regimentInfo: BaseUserInfo; }> = ({ regimentInfo }) => {
+const IIIDryclean: FC<{ deptInfo: BaseUserInfo; }> = ({ deptInfo }) => {
   const [order, setOrder] = useState<OrderInfo<ProductBase> | null>(null);
   const { options } = Taro_getCurrentInstance<{ scene?: string; }>();
   const { S_D } = coo___urlToObj<{ S_D?: string; }>(options.scene);
@@ -82,9 +82,9 @@ const IIIDryclean: FC<{ regimentInfo: BaseUserInfo; }> = ({ regimentInfo }) => {
       <View className='dy ww prl10'>
         <ComButton ll className='nw bccwhite mr10 bccwhite mb10'>干洗</ComButton>
         <ComButtonOpen rr className='cccgreen bborder mb10 slr' id='send_dryclean'
-          shareTitle={`${regimentInfo?.name} 团长 邀您支付快递订单`}
+          shareTitle={`${deptInfo?.name} 团长 邀您支付快递订单`}
           openType='share'
-          sharePath={`/pages_user/user_orders?${coo___objToUrl({ scene: `${encodeURIComponent(coo___objToUrl({ R_D: Number(regimentInfo.mobile).toString(36), S_D: S_D }))}` })}`}>
+          sharePath={`/pages_user/user_orders?${coo___objToUrl({ scene: `${encodeURIComponent(coo___objToUrl({ R_D: Number(deptInfo.mobile).toString(36), S_D: S_D }))}` })}`}>
           邀请下单(干洗)
         </ComButtonOpen>
       </View>

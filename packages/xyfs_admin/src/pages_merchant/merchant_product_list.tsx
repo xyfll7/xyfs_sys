@@ -23,7 +23,7 @@ import { FC, useCallback, useState } from "react";
 definePageConfig({ enableShareAppMessage: true, navigationStyle: "custom", disableScroll: true, });
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC = () => {
-  // regimentId=oGwbL5MUeSNxxA4o0oOmb_FUjE7g
+  // deptId=oGwbL5MUeSNxxA4o0oOmb_FUjE7g
   const [qrcode, setQrcode] = useState<string | null>(null);
   const ___page_getter = useCallback(async (p: Pagination<unknown>) =>
     await Api_goods_list_ctn({

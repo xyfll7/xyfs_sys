@@ -123,7 +123,7 @@ const IIImyUserEditorAGENT: FC = () => {
                     userId: userInfo.id!,
                     roles_: _roles.map(ee => ee.id),
                     registStatus: 2,
-                    ...(_roles.find(ee => ee.roleKey === "REGIMENT") ? { regimentId: userInfo.id } : null)  //
+                    ...(_roles.find(ee => ee.roleKey === "REGIMENT") ? { deptId: userInfo.id } : null)  //
                   });
                   Taro.showToast({ icon: "none", title: "更新成功" });
                   setUserInfo(res_userInfo);
@@ -192,7 +192,6 @@ const IIImyUserEditorAGENT: FC = () => {
               </ComButton>;
             })}
           </View>
-
         </>
       }
       {roo___has_role(userInfo, ["MERCHANT"]) &&

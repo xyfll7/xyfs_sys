@@ -53,7 +53,7 @@ const Index: FC = () => {
             </View>
           </View>
 
-          {roo___has_role(selfInfo_S!.regimentInfo!, ["REGIMENT"]) &&
+          {roo___has_role(selfInfo_S!.deptInfo!, ["REGIMENT"]) &&
             <View className='mb10 dbtc prl10 transall' style={{ paddingRight: false ? `${capRight}px` : "0px", opacity: false ? "0" : "1", height: false ? "0rem" : "calc(2 * var(--rem_base)) !important", }}>
               <ComAddressSwitchor className='bcctrans01-dark mr10' title='团长:' isShort isIcon address={roo___my_dept(selfInfo_S)} url='/pages_user/user_regiment_list_map' />
               <View className='dy'>
@@ -65,7 +65,7 @@ const Index: FC = () => {
               </View>
             </View>
           }
-          {roo___has_role(selfInfo_S!.regimentInfo!, ["GUIDE"]) &&
+          {roo___has_role(selfInfo_S!.deptInfo!, ["GUIDE"]) &&
             <View className='mb10 dbtc prl10 transall' style={{ paddingRight: false ? `${capRight}px` : "0px", opacity: false ? "0" : "1", height: false ? "0rem" : "calc(2 * var(--rem_base)) !important", }}>
               <ComAddressSwitchor className='bcctrans01-dark mr10 ww' title='导游:' isShort isIcon address={roo___my_dept(selfInfo_S)} />
               <View className='dy'>
@@ -81,7 +81,7 @@ const Index: FC = () => {
       onScroll={(e, top) => { if (e.detail.scrollTop > top) { setIsHeaderBack(true); } }}
       onScrollToUpper={() => { setIsHeaderBack(false); }}>
 
-      {roo___has_role(selfInfo_S!.regimentInfo!, ["REGIMENT"]) && <IIIMainNavigator className='mb10  ' />}
+      {roo___has_role(selfInfo_S!.deptInfo!, ["REGIMENT"]) && <IIIMainNavigator className='mb10  ' />}
 
       <IIIBanner className='mb10' />
 

@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import { AddressInfo, BaseUserInfo, DICTS_KEYS, Pagination, Printer_Info } from "../../types";
+import { AddressInfo, BaseUserInfo, DeptInfo, DICTS_KEYS, Pagination, Printer_Info } from "../../types";
 import { getMyEnv } from "../env";
 import { Taro_getStorageSync } from "../utils/try_catch";
 import { try_Taro_login, wx_call_container } from "./wx_call";
@@ -12,7 +12,7 @@ export async function Api_common_list<T>(dictKey: DICTS_KEYS) {
   });
   return res;
 }
-export async function Api_common_batchGenerateCode(params: { batchNumber: number; regimentId: string; }) {
+export async function Api_common_batchGenerateCode(params: { batchNumber: number; deptId: string; }) {
   const res = await wx_call_container<string[]>({
     path: "/common/batchGenerateCode",
     params: { ...params },
@@ -154,9 +154,25 @@ export async function Api_user_info_ctn(params: { userId: string; }): Promise<Ba
   return res;
 
 }
+export async function Api_dept_info_ctn(params: { deptId: string; }): Promise<DeptInfo> {
+  const res = await wx_call_container<DeptInfo>({
+    path: "/dept/info",
+    params: { ...params },
+    method: "GET"
+  });
+  return res;
+
+}
 export async function Api_user_edit_ctn(params: Partial<BaseUserInfo>): Promise<BaseUserInfo> {
   const res = await wx_call_container<BaseUserInfo>({
     path: "/user/edit",
+    data: { ...params },
+  });
+  return res;
+}
+export async function Api_dept_edit_ctn(params: Partial<DeptInfo>): Promise<DeptInfo> {
+  const res = await wx_call_container<DeptInfo>({
+    path: "/dept/edit",
     data: { ...params },
   });
   return res;

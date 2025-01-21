@@ -1,7 +1,8 @@
 // :: pages_user/sub_user_dept
 import { Text, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
-import { Api_dept_add_ctn, Api_dept_del_ctn, Api_dept_list_ctn, Api_dept_removeUser_ctn, Api_dept_update_ctn, Api_dept_userList_ctn } from "@xyfs/taro_uii/api/api__users";
+import { DeptInfo } from "@xyfs/taro_uii";
+import { Api_dept_add_ctn, Api_dept_del_ctn, Api_dept_edit_ctn, Api_dept_info_ctn, Api_dept_list_ctn, Api_dept_removeUser_ctn, Api_dept_userList_ctn } from "@xyfs/taro_uii/api/api__users";
 import { ComButton } from '@xyfs/taro_uii/components/ComButton';
 import { ComInput } from "@xyfs/taro_uii/components/ComInput";
 import { ComLoading } from "@xyfs/taro_uii/components/ComLoading";
@@ -12,6 +13,9 @@ import { ComPopupNew } from "@xyfs/taro_uii/components/ComPopupNew";
 import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
 import { ComTree } from "@xyfs/taro_uii/components/ComTree";
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
+import { ROLE_ST } from "@xyfs/taro_uii/src/config";
+import { roo___has_role } from "@xyfs/taro_uii/src/roles";
+import { useSTDicts } from "@xyfs/taro_uii/store/store";
 import { try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
 import { useHook_Reducer } from "@xyfs/taro_uii/utils/useHooks";
 import { FC, useEffect, useState } from "react";
@@ -36,7 +40,6 @@ const Index: FC<{}> = ({ }) => {
 
   const [deptUserList, setDeptUserList] = useState<any[] | null>(null);
 
-  console.log("depts", deptUserList);
   return <MMMAAPage>
     <ComNav>
       <View className='ww'>
@@ -79,7 +82,7 @@ const Index: FC<{}> = ({ }) => {
       </ComTree>}
     </ComScrollView>
     {dept && mode && <ComPopupNew onClose={() => setDept(null)}>
-      <View className='dll prl10' style={{ height: "50vh" }}>
+      <View className='dll prl10' style={{ height: "80vh" }}>
         <IIIAddDept dept={dept} mode={mode} onSuccess={() => { setDept(null); ___Api_dept_list_ctn(); }} onClose={() => { setDept(null); }}></IIIAddDept>
       </View>
     </ComPopupNew>}
@@ -127,33 +130,120 @@ const Index: FC<{}> = ({ }) => {
 
 
 const IIIAddDept = ({ dept, onSuccess, mode, onClose }: { mode: "edit" | "add", dept: any; onSuccess: () => void; onClose: () => void; }) => {
-  console.log("IIIAddDept", dept);
+  const { dicts_roles, dicts_delivery, dicts_logisticPricescheme, dicts_product_category } = useSTDicts(state => state);
   const [form, setForm] = useHook_Reducer({ deptName: "" });
-  return <View className='ww'>
+  const [deptInfo, setDeptInfo] = useState<DeptInfo | null>(null);
+  useEffect(() => {
+    (async () => {
+      const res = await Api_dept_info_ctn({ deptId: dept.deptId! });
+      setDeptInfo(res);
+    })();
+  }, [dept]);
+
+  return <View className='ww dll'>
     <ComNavBarB className='mb10' onClose={onClose}>
       <View className='dy'><ComButton className='fwb bccback'>{mode === "add" ? "添加子部门" : "修改部门"} </ComButton></View>
     </ComNavBarB>
     <ComButton className='mb10 bcctrans' hoverClass='none'> <Text className='cccplh'>{mode === "add" ? "上级部门：" : "部门名称："} </Text> {dept.deptName}</ComButton>
-    <View className='mb10 ww dy'>
-      <ComButton className='bccbacktab ww mr10' hoverClass='none'>
-        <ComInput placeholder={mode === "add" ? '请填写子部门名称' : '请填写新的部门名称'} value={form.deptName} onInput={(e) => setForm({ deptName: e.detail.value })}></ComInput>
-      </ComButton>
-
-      {mode === "add" &&
-        <ComButton className='nw' onClick={async () => {
+    {!deptInfo && <ComLoading className='mb10'></ComLoading>}
+    {deptInfo && <View className='ww mb10 dll'>
+      <View className='mb10 ww dy'>
+        <ComButton className='bccbacktab ww mr10' hoverClass='none'>
+          <ComInput placeholder={mode === "add" ? '请填写子部门名称' : '请填写新的部门名称'} value={form.deptName} onInput={(e) => setForm({ deptName: e.detail.value })}></ComInput>
+        </ComButton>
+        {mode === "add" &&
+          <ComButton className='nw' onClick={async () => {
+            Taro.showLoading({ mask: true, title: "新增中..." });
+            await Api_dept_add_ctn({ deptName: form.deptName, parentId: dept.deptId });
+            Taro.showToast({ icon: "none", title: "成功" });
+            onSuccess();
+          }}>新增</ComButton>
+        }
+        {mode === "edit" && <ComButton className='nw' onClick={async () => {
           Taro.showLoading({ mask: true, title: "新增中..." });
-          await Api_dept_add_ctn({ deptName: form.deptName, parentId: dept.deptId });
+          const res_deptInfo = await Api_dept_edit_ctn({ deptId: deptInfo?.deptId!, deptName: form.deptName, });
           Taro.showToast({ icon: "none", title: "成功" });
+          Taro.showToast({ icon: "none", title: "更新成功" });
+          setDeptInfo(res_deptInfo);
           onSuccess();
-        }}>新增</ComButton>
-      }
-      {mode === "edit" && <ComButton className='nw' onClick={async () => {
-        Taro.showLoading({ mask: true, title: "新增中..." });
-        await Api_dept_update_ctn({ deptName: form.deptName, deptId: dept.deptId });
-        Taro.showToast({ icon: "none", title: "成功" });
-        onSuccess();
-      }}>修改</ComButton>}
+        }}>修改</ComButton>
+        }
+      </View>
+      <View className='ww dll '>
+        <ComButton className='cccplh mb10 bccback'  >指定部门角色</ComButton>
+        <View className='dy dwp'>
+          {dicts_roles?.filter((e) => ["REGIMENT", "SUPPLIER", "DRIVER", "MERCHANT", "GUIDE"].includes(e.roleKey)).map((e, i) => {
+            return <ComButton rr className={` mb10 ${deptInfo?.roles?.some(ee => ee.roleKey === e.roleKey) ? 'cccgreen' : ''}`}
+              onClick={async () => {
+                const isHasRole = deptInfo?.roles?.some(ee => ee.roleKey === e.roleKey);
+                let _roles: ROLE_ST[];
 
+                if (isHasRole) {
+                  _roles = deptInfo?.roles?.filter(ee => ee.roleKey !== e.roleKey)!;
+                } else {
+                  _roles = [...(deptInfo?.roles ?? []), e] as ROLE_ST[];
+                }
+                if (await try_Taro_showModal({ title: isHasRole ? "删除角色" : "新增角色", content: isHasRole ? "点击确定删除该角色" : "点击确定新增该角色", })) {
+                  Taro.showLoading({ mask: true, title: "更新中..." });
+                  const res_deptInfo = await Api_dept_edit_ctn({
+                    deptId: deptInfo?.deptId!,
+                    roles_: _roles.map(ee => ee.id),
+                    registStatus: 2,
+                    ...(_roles.find(ee => ee.roleKey === "REGIMENT") ? { deptId: deptInfo?.id } : null)  //
+                  });
+                  Taro.showToast({ icon: "none", title: "更新成功" });
+                  setDeptInfo(res_deptInfo);
+                } else {
+                  throw new Error("取消");
+                }
+              }} key={i}>{e.roleName}</ComButton>;
+          })}
+        </View>
+      </View>
+      {roo___has_role(deptInfo, ["REGIMENT"]) &&
+        <>
+          <ComButton className='cccplh mb10 bccback'  >快递账号配置</ComButton>
+          <View className='dy'>
+            {dicts_delivery?.map(e => <ComButton className={`bccwhite mb10 ${deptInfo.logistics?.find(ee => ee.deliveryId === e.deliveryId) ? "cccgreen" : ""}`} key={e.bizId}
+              onClick={async () => {
+                if (deptInfo.logistics?.find(ee => ee.deliveryId === e.deliveryId)) { // 减配
+
+                  if (await try_Taro_showModal({ title: "提示", content: "您确定要取消该团长的的面单号？", confirmText: "取消授权" })) {
+                    Taro.showLoading({ mask: true, title: "取消中..." });
+                    const res_userInfo = await Api_dept_edit_ctn({ deptId: deptInfo?.deptId!, logistics_: deptInfo.logistics?.filter(ee => ee.dictId !== e.id).map(ee => ee.dictId ?? ee.id!), });
+                    setDeptInfo(res_userInfo);
+                    Taro.hideLoading();
+                  } else {
+                    throw new Error("取消");
+                  }
+                } else { // 增配
+                  if (await try_Taro_showModal({ title: "提示", content: "您确认要授权面单号给该团长?", confirmText: "确认授权" })) {
+                    Taro.showLoading({ mask: true, title: "授权中..." });
+                    const res_userInfo = await Api_dept_edit_ctn({ deptId: deptInfo?.deptId!, logistics_: [...(deptInfo.logistics ?? []), e].map(ee => ee.dictId ?? ee.id!), });
+                    setDeptInfo(res_userInfo);
+                    Taro.hideLoading();
+                  } else {
+                    throw new Error("取消");
+                  }
+                }
+              }}>{e.deliveryName?.slice(0, 2)}</ComButton>)}
+          </View>
+          <ComButton className='mb10 bccback cccplh'>快递价格方案</ComButton>
+          <View className='dy mb10'>
+            {dicts_logisticPricescheme?.map(e => {
+              return <ComButton className={`bccwhite ${deptInfo?.logisticPriceSchemeId == e.id ? 'cccgreen' : ''}`} key={e.id} onClick={async () => {
+                Taro.showLoading({ mask: true, "title": "更新中..." });
+                const res_userInfo = await Api_dept_edit_ctn({ deptId: deptInfo?.deptId!, logisticPriceSchemeId: e.id, });
+                setDeptInfo(res_userInfo);
+                Taro.showToast({ icon: "none", title: "更新成功" });
+              }}>
+                {e.name}
+              </ComButton>;
+            })}
+          </View>
+        </>
+      }
     </View>
+    }
   </View>;
 };

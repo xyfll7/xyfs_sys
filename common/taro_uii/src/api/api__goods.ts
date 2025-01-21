@@ -11,7 +11,7 @@ export async function Api_goods_publish_ctn(params: {
   name?: string;
   lastUpdateTime?: string; // "2024-06-19T02:51:21.906Z",
   price?: number; // 0,
-  regimentId?: string;
+  deptId?: string;
   regimentMobile?: string;
   regimentName?: string;
   remark?: string;

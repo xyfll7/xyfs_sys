@@ -17,9 +17,9 @@ import { FC, useCallback } from "react";
 definePageConfig({ enableShareAppMessage: true, navigationStyle: "custom", disableScroll: true, });
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC = () => {
-  // regimentId=oGwbL5MUeSNxxA4o0oOmb_FUjE7g
-  const { options } = Taro_getCurrentInstance<{ regimentId: string, }>();
-  const regimentInfo = useHook_userInfo(options.regimentId);
+  // deptId=oGwbL5MUeSNxxA4o0oOmb_FUjE7g
+  const { options } = Taro_getCurrentInstance<{ deptId: string, }>();
+  const dept = useHook_userInfo(options.deptId);
 
   const ___page_getter = useCallback(async (p: Pagination<unknown>) =>
     await Api_assist_list_ctn({
@@ -29,8 +29,8 @@ const Index: FC = () => {
   const { page, } = useHook_pageListNew(___page_getter,);
   return <MMMAAPage
     isNeedRegiment={false}
-    isLoading={!options.regimentId ? Boolean(options.regimentId) : !regimentInfo}
-    isPageAccess={roo___has_role(regimentInfo, ["REGIMENT"])}>
+    isLoading={!options.deptId ? Boolean(options.deptId) : !dept}
+    isPageAccess={roo___has_role(dept, ["REGIMENT"])}>
     <ComNav isRight>
       <ComNavBarA className='mb10 pl10'>
         <ComButton ll className='bcctrans ml10 cccplh'>团长帮忙</ComButton>

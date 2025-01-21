@@ -2,7 +2,7 @@ import { Address_T, ROLE_ST } from "../src/config";
 import { Delivery_Account, PriceScheme_Type, Printer_Info } from "./type_index";
 
 interface Update_UIF {
-  regimentId_new___?: string; // 切换团长时，更新用户信息，传入的新的团长OPENID
+  deptId_new___?: string; // 切换团长时，更新用户信息，传入的新的团长OPENID
   __logistics?: Delivery_Account; // 绑定或者解绑面单账号时传入的面单账号信息
 }
 type User_UIF = {
@@ -24,10 +24,8 @@ type User_UIF = {
   defaultSendManAddressId?: string; // 默认寄件地址id
   defaultRecManAddress?: AddressInfo;
   defaultRecManAddressId?: string; // 默认收货地址id
-  regimentId?: string; // 我的团长OPENID
-  regimentInfo?: BaseUserInfo | null; // 我的团长信息
-  deptInfo?: BaseUserInfo | null; // 我的团长信息
-  // regimentInfo__: number[]; // 更新我的团长信息
+  deptId?: string; // 我的团长OPENID
+  deptInfo?: DeptInfo | null; // 我的团长信息
   parentInfo?: BaseUserInfo | null; // 我的上级信息 - 代理/工厂
   serveVersion?: string; // 服务版本
   lastUpdateTime?: number; // 更新时间
@@ -65,7 +63,7 @@ interface Regiment_UIF extends User_UIF, Servicer_UIF {
 export interface BaseUserInfo extends AddressInfo, Regiment_UIF, Servicer_UIF, Update_UIF {
   id?: string;
   theme?: string;
-  selfRegiment?: BaseUserInfo,
+
   is_silence_color?: boolean; // 默哀色
   registStatus: 0 | 1 | 2; // 0 未注册 1 提交申请 2 审核通过
   deptId?: string;
@@ -75,7 +73,6 @@ export interface BaseUserInfo extends AddressInfo, Regiment_UIF, Servicer_UIF, U
 export interface DeptInfo extends AddressInfo, Regiment_UIF, Servicer_UIF, Update_UIF {
   id?: string;
   theme?: string;
-  selfRegiment?: BaseUserInfo,
   is_silence_color?: boolean; // 默哀色
   registStatus: 0 | 1 | 2; // 0 未注册 1 提交申请 2 审核通过
   deptId?: string;

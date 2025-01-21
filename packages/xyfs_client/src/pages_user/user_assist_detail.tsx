@@ -23,9 +23,9 @@ const ___avatar = "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/c
 definePageConfig({ enableShareAppMessage: true, navigationStyle: "custom", disableScroll: true, });
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC = () => {
-  // regimentId=oGwbL5MUeSNxxA4o0oOmb_FUjE7g
+  // deptId=oGwbL5MUeSNxxA4o0oOmb_FUjE7g
 
-  const { options } = Taro_getCurrentInstance<{ assist_item_id: string; regimentId: string; }>();
+  const { options } = Taro_getCurrentInstance<{ assist_item_id: string; deptId: string; }>();
 
   const [data, setData] = useState<any>(null);
   const [isHeaderBack, setIsHeaderBack] = useState(false);

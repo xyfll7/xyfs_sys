@@ -115,9 +115,9 @@ function ___is_page_access(isPageAccess: boolean | null) {
 }
 
 // 顾客端-验证当前页面是否需要用户选择团长才能访问
-function ___is_required_regiment(selfInfoS: BaseUserInfo, isNeedRegiment: boolean = true) {
-  if (isNeedRegiment) {
-    if (selfInfoS.regimentInfo) {
+function ___is_required_regiment(selfInfoS: BaseUserInfo, isNeedDept: boolean = true) {
+  if (isNeedDept) {
+    if (selfInfoS.deptInfo) {
       return true;
     } else {
       return false;
@@ -313,7 +313,7 @@ export function ComSELFView({ isRefreshSelfInfo_SEveryTime, ...props }: ViewProp
     });
   });
 
-  if (roo___has_role(selfInfo_S, ["REGIMENT"]) && selfInfo_S?.OPENID !== selfInfo_S?.regimentId) {
+  if (roo___has_role(selfInfo_S, ["REGIMENT"]) && selfInfo_S?.deptId !== selfInfo_S?.deptId) {
     return <ComNav className='prl10'>
       <View className='dll prl10'>
         <ComButton className='cccprice mb10'>错误!</ComButton>
@@ -361,17 +361,17 @@ const useHook_selfInfo_show = ({ isRefreshSelfInfo_SEveryTime = false, }: { isRe
   useDidShow(async () => {
     if (_R_D && process.env.TARO_APP_CLIENT === Taro.getAccountInfoSync().miniProgram.appId) { // 只有顾客端用户才能切换团长
       const res_selfInfo = await Api_login_rqs();
-      if (res_selfInfo.regimentInfo?.mobile === _R_D) { // 如果用户已经有团长，并且就是分享团长本人就不去切换用户的团长了
+      if (res_selfInfo.deptInfo?.mobile === _R_D) { // 如果用户已经有团长，并且就是分享团长本人就不去切换用户的团长了
         useSTSelf.getState().sett(res_selfInfo);
       } else {
-        const res_userInfo = await Api_user_edit_ctn({ regimentId: _R_D });
+        const res_userInfo = await Api_user_edit_ctn({ deptId: _R_D });
         useSTSelf.getState().sett(res_userInfo);
       }
     } else if (isRefreshSelfInfo_SEveryTime || !selfInfo) { // 每次DidShow都去获取用户信息
       await useSTSelf.getState().sett();
     }
   });
-  return _R_D ? [selfInfo?.regimentId ? selfInfo : null] : [selfInfo];
+  return _R_D ? [selfInfo?.deptId ? selfInfo : null] : [selfInfo];
 }
 
 

@@ -89,7 +89,7 @@ export async function Api_cart_add_ctn(params: {
   // marketPrice: 120,
   // name: "string",
   // pricePerUnit: 0,
-  // regimentId: "string",
+  // deptId: "string",
   // sketch: "string",
   // status: "string",
   // tags: "string",

@@ -14,7 +14,7 @@ export async function Api_assist_publish_ctn(params: {
   name?: string;
   lastUpdateTime?: string; // "2024-06-19T02:51:21.906Z",
   price?: number; // 0,
-  regimentId?: string;
+  deptId?: string;
   regimentMobile?: string;
   regimentName?: string;
   remark?: string;
@@ -46,7 +46,7 @@ export async function Api_assist_list_ctn(params: Pick<Pagination<any>, "keyword
   });
   return res;
 }
-export async function Api_assist_increase_ctn(params: { assistId: string, regimentId?: string; }): Promise<any> {
+export async function Api_assist_increase_ctn(params: { assistId: string, deptId?: string; }): Promise<any> {
   const res = await wx_call_container<Promise<any>>({
     path: "/assist/increase",
     data: { ...params },

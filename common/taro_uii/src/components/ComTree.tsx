@@ -11,7 +11,7 @@ export function ComTree<T extends { children: T[]; }>({ list, keyName, children 
 };
 
 function IIITreeChild<T extends { children: T[]; }>({ list, keyName, children }: { children: (e: T) => React.ReactNode; list: T[]; keyName: string; }) {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
   return <View className='dll ww'>
     <View className='ds ww'>
       <View className='dll pl10'>

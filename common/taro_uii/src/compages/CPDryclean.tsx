@@ -293,12 +293,12 @@ const ProductCategoryCard: FC<{ productCategory: Record<string, Product_Dryclean
 
 const RecManInfo: FC = () => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
-  const regiment = selfInfo_S.regimentInfo;
+  const dept = selfInfo_S.deptInfo;
   return <View className='prl10 pt10'>
     <ComButton className='mb10 ww bccback' >
       <View className='dll'>
-        <View className='nw'>团长：<Text className='wm4rem mr6 nw1'>{regiment?.name}</Text>{regiment?.mobile}</View>
-        <View className='nw1 wm19rem cccplh fs08'>{regiment?.address}</View>
+        <View className='nw'>团长：<Text className='wm4rem mr6 nw1'>{dept?.deptName}</Text>{dept?.mobile}</View>
+        <View className='nw1 wm19rem cccplh fs08'>{dept?.address}</View>
       </View>
     </ComButton>
     {selfInfo_S.defaultRecManAddress ?
@@ -379,7 +379,7 @@ const ShopCartTabBarRegiment: FC<PropsWithChildren & { children?: ReactElement |
 
 
 export async function dryclean_sharer(shareCode: string) {
-  const url = `/pages_regiment/regiment_invitor?${coo___objToUrl({ regimentId: useSTSelf.getState().selfInfo!.OPENID, scene: encodeURIComponent(coo___objToUrl({ S_D: String(shareCode) })) })}`;
+  const url = `/pages_regiment/regiment_invitor?${coo___objToUrl({ deptId: useSTSelf.getState().selfInfo!.OPENID, scene: encodeURIComponent(coo___objToUrl({ S_D: String(shareCode) })) })}`;
   try_Taro_navigateToMiniProgram({
     appId: process.env.TARO_APP_CLIENT,
     path: url,
