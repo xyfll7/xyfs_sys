@@ -92,7 +92,7 @@ interface OrderInfo<T> {
   orderId?: string;
   pickUpType?: PickUp_ST;
   productList?: T[];
-  parentId?: string; // 代理OPENID
+  parentDeptId?: string; // 代理OPENID
   fromAppid?: string;
   appid?: string;
   mobile?: string;

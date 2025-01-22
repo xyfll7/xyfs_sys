@@ -22,8 +22,8 @@ definePageConfig({ disableScroll: true, navigationStyle: "custom", });
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC = () => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
-  const { options } = Taro_getCurrentInstance<{ parentId?: string; }>();
-  const parentInfo = useHook_userInfo(selfInfo_S?.parentId ?? options.parentId ?? "");
+  const { options } = Taro_getCurrentInstance<{ parentDeptId?: string; }>();
+  const parentInfo = useHook_userInfo(selfInfo_S?.parentDeptId ?? options.parentDeptId ?? "");
   return <MMMAAPage isNeedAnyRole={false} isNeedAnyDept={false}>
     <ComNav>
       <ComNavBarA className='mb10 pl10'>
@@ -142,11 +142,11 @@ const IIIRegister: FC<{}> = ({ }) => {
           onClick={async () => {
             await utils_validate_register(userForm);
             Taro.showLoading({ mask: true, title: "提交中...", });
-            const { options } = Taro_getCurrentInstance<{ parentId?: string; }>();
+            const { options } = Taro_getCurrentInstance<{ parentDeptId?: string; }>();
             const res_userInfo = await Api_user_edit_ctn({
               ...userForm,
               registStatus: !selfInfo_S?.registStatus ? 1 : selfInfo_S?.registStatus,
-              parentId: selfInfo_S?.parentId ? selfInfo_S?.parentId : options.parentId,
+              parentDeptId: selfInfo_S?.parentDeptId ? selfInfo_S?.parentDeptId : options.parentDeptId,
             });
             useSTSelf.getState().sett(res_userInfo);
             Taro.showToast({ icon: "none", title: "提交成功", });

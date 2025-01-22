@@ -11,7 +11,7 @@ export function utils_order_merge_servicer_info(selfInfo_S: BaseUserInfo): Order
   const __dept = roo___my_dept(selfInfo_S);
   return {
     fromAppid: Taro.getAccountInfoSync().miniProgram.appId,
-    parentId: __dept?.parentId,     // 代理OPENID
+    parentDeptId: __dept?.parentDeptId,     // 代理OPENID
     officialAccountOpenid: __dept?.officialAccountOpenid,
     deptId: __dept?.deptId,   // 团长OPENID+个人信息
     deptName: __dept?.deptName,

@@ -254,20 +254,11 @@ export async function Api_user_realNameAuth_ctn(params: {
 }
 export async function Api_dept_add_ctn(params: {
   ancestors?: string,
-  // createBy: string,
-  // createTime: string,
-  // delFlag: string,
-  // deptId: string,
   deptName: string,
   email?: string,
   leader?: string,
-  // orderNum: string,
   parentId?: string,
   phone?: string,
-  // status: string,
-  // updateBy: string,
-  // updateTime: string,
-  // userId: string;
 }) {
   const res = await wx_call_container<Printer_Info>({
     path: "/dept/add",
@@ -301,7 +292,7 @@ export async function Api_dept_update_ctn(params: {
   email?: string,
   leader?: string,
   // orderNum: string,
-  // parentId?: string,
+
   phone?: string,
   // status: string,
   // updateBy: string,

@@ -28,8 +28,7 @@ const Index: FC<{}> = ({ }) => {
         <ComNavBarA className='pl10' />
         {selfInfo_S?.avatar &&
           <ComImage className='ml10 ' src={selfInfo_S?.avatar} />}
-
-        <ComButton ll className='ml10 dbtc bcctrans' url={selfInfo_S.parentId ? '/pages_user/sub_user_register' : undefined}>
+        <ComButton ll className='ml10 dbtc bcctrans' url={selfInfo_S.parentDeptId ? '/pages_user/sub_user_register' : undefined}>
           <View className='nw1 ww wm5rem cccplh'>{selfInfo_S.name}</View>
           <View className='cccgreen ml10 nw'>修改</View>
         </ComButton>

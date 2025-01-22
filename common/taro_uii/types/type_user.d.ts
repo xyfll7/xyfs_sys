@@ -40,7 +40,7 @@ type User_UIF = {
  * 6、不可以将团员的用户信息直接替换为上级团长的身份信息，否则他们就无法作为普通用户。
  */
 interface Servicer_UIF {
-  parentId?: string;  // 发布者（团长）的上级代理OPENID
+  parentDeptId?: string;  // 发布者（团长）的上级代理OPENID
 }
 
 interface Regiment_UIF extends User_UIF, Servicer_UIF {
