@@ -51,20 +51,17 @@ const Index: FC = () => {
       {roo___has_role(selfInfo_S!, ["AGENT", "REGIMENT"]) && <>
         <ComButton className='bccwhite mb10' url='/pages_comm/icomm_download_list' >下载任务列表</ComButton>
       </>}
-      {selfInfo_S!.parentDeptId && selfInfo_S!.mobile &&
-        <View className='dll ww'>
-          <ComButton className='bccback mb10 cccplh'>我</ComButton>
-          <View className='dy'>
-            <ComButton className='dbtc mb10 mr10  bccwhite' url={`/pages_user/sub_user_register?parentDeptId=${selfInfo_S!.parentDeptId}`}>
-              <ComImage compress className='mr10 oo ovh' src={selfInfo_S?.avatar} />
-              <View className='nw1 wm5rem mr10'>{selfInfo_S!.name}</View>
-              {selfInfo_S!.mobile}
-              <View className='cccgreen ml10'>修改</View>
-            </ComButton>
-          </View>
-
+      <View className='dll ww'>
+        <ComButton className='bccback mb10 cccplh'>我</ComButton>
+        <View className='dy'>
+          <ComButton className='dbtc mb10 mr10  bccwhite' url='/pages_user/sub_user_register'>
+            <ComImage compress className='mr10 oo ovh' src={selfInfo_S?.avatar} />
+            <View className='nw1 wm5rem mr10'>{selfInfo_S!.name}</View>
+            {selfInfo_S!.mobile}
+            <View className='cccgreen ml10'>修改</View>
+          </ComButton>
         </View>
-      }
+      </View>
       {getMyEnv().isUseInDev && <IIImmmTest />}
       <MMMFooter className='mb10' />
     </ComScrollView>
@@ -96,7 +93,7 @@ const IIImmmAGENT = ({ ...props }: ViewProps) => {
       <ComButtonOpen className='bccwhite mb10 mr10' id='invite'
         shareTitle={`${selfInfo_S!.name ?? "代理"} 邀请您注册子用户`}
         openType='share'
-        sharePath={`/pages_user/sub_user_register?${coo___objToUrl({ parentDeptId: selfInfo_S!.parentDeptId! })}`}>
+        sharePath='/pages_user/sub_user_register'>
         邀请注册
       </ComButtonOpen>
     </View>
@@ -201,7 +198,7 @@ const IIImmmSUPPLIER = ({ ...props }: ViewProps) => {
       <ComButtonOpen ll className='bccwhite mb10 mr10' id='invite'
         shareTitle={`供应商：${selfInfo_S!.name} 邀请您注册员工`}
         openType='share'
-        sharePath={`/pages_user/sub_user_register?${coo___objToUrl({ parentDeptId: selfInfo_S!.parentDeptId! })}`}>
+        sharePath='/pages_user/sub_user_register'>
         邀请注册-员工
       </ComButtonOpen>
       <ComButton ll className='bccwhite mb10 mr10' url='/pages_user/sub_user_list'>子用户</ComButton>

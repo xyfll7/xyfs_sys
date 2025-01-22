@@ -5,7 +5,6 @@ import { BaseUserInfo } from "@xyfs/taro_uii";
 import { Api_getNumber_ctn, Api_user_edit_ctn } from '@xyfs/taro_uii/api/api__users';
 import { ComButton, ComButtonOpen } from '@xyfs/taro_uii/components/ComButton';
 import { ComImage } from '@xyfs/taro_uii/components/ComImage';
-import { ComLoading } from '@xyfs/taro_uii/components/ComLoading';
 import { ComNav } from '@xyfs/taro_uii/components/ComNav';
 import { ComNavBarA } from '@xyfs/taro_uii/components/ComNavBarA';
 import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
@@ -13,7 +12,6 @@ import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { roo___has_role } from "@xyfs/taro_uii/src/roles";
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
 import { Taro_getCurrentInstance, try_Taro_chooseAddress, try_Taro_chooseLocation, try_Taro_cloud_uploadFile } from '@xyfs/taro_uii/utils/try_catch';
-import { useHook_userInfo } from '@xyfs/taro_uii/utils/useHooks';
 import { utils_addressInfoToString } from "@xyfs/taro_uii/utils/util";
 import { utils_validate_register } from '@xyfs/taro_uii/utils/validator';
 import { FC, useState } from "react";
@@ -22,8 +20,6 @@ definePageConfig({ disableScroll: true, navigationStyle: "custom", });
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC = () => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
-  const { options } = Taro_getCurrentInstance<{ parentDeptId?: string; }>();
-  const parentInfo = useHook_userInfo(selfInfo_S?.parentDeptId ?? options.parentDeptId ?? "");
   return <MMMAAPage isNeedAnyRole={false} isNeedAnyDept={false}>
     <ComNav>
       <ComNavBarA className='mb10 pl10'>
@@ -33,14 +29,14 @@ const Index: FC = () => {
       </ComNavBarA>
     </ComNav>
     <ComScrollView>
-      {parentInfo && selfInfo_S &&
+      {selfInfo_S &&
         <IIIRegister></IIIRegister>
       }
-      {parentInfo && selfInfo_S?.registStatus === 1 &&
+      {selfInfo_S?.registStatus === 1 &&
         <ComButton className='mb10 cccplh bccback cccprice' hoverClass='none'> <View>您的注册申请已经提交，请耐心等待管理员审核，有任何问题请联系管理员</View> </ComButton>
       }
-      {parentInfo === null && <ComLoading className='mb10'></ComLoading>}
-      {parentInfo && <View className='mb10 pl10 cccplh bccback' >
+      {/* {<ComLoading className='mb10'></ComLoading>} */}
+      {/* {<View className='mb10 pl10 cccplh bccback' >
         <View>
           <View>上级姓名：{parentInfo.name}</View>
           <View className='dy'>联系电话：<View className='cccgreen' onClick={() => {
@@ -49,7 +45,7 @@ const Index: FC = () => {
           <View>联系地址：{utils_addressInfoToString(parentInfo)}</View>
         </View>
       </View>
-      }
+      } */}
     </ComScrollView>
   </MMMAAPage>;
 };
@@ -130,12 +126,12 @@ const IIIRegister: FC<{}> = ({ }) => {
             }
           }}> {userForm.mobile ? userForm.mobile : "请授权手机号"}</ComButtonOpen>
         </View>
-        <View className='dy mb10'>
+        {/* <View className='dy mb10'>
           <ComButton ll className='nw w4rem bccwhite'>角色</ComButton>
           <View className='ds'>
             {selfInfo_S?.roles?.map((e, i) => `${e.roleName}`).join("/")}
           </View>
-        </View>
+        </View> */}
       </View>
       <View className='dr ww'>
         <ComButton className='bccgreen cccwhite mb10'

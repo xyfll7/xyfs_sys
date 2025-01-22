@@ -161,8 +161,14 @@ export async function Api_dept_info_ctn(params: { deptId: string; }): Promise<De
     method: "GET"
   });
   return res;
-
 }
+
+// deptId
+// mobile
+// name
+// userId(给某用户指定部门)
+// openId
+// /user/edit
 export async function Api_user_edit_ctn(params: Partial<BaseUserInfo>): Promise<BaseUserInfo> {
   const res = await wx_call_container<BaseUserInfo>({
     path: "/user/edit",

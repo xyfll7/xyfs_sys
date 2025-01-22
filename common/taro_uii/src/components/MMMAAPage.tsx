@@ -195,15 +195,15 @@ const IIIUserHasNoRole: FC<{ className: string; }> = ({ className }) => {
     </ComNav>
     <View className='dll ww'>
       <ComButton className='mb10 fwb bccback' hoverClass='none'>欢迎访问小象心选管理端</ComButton>
-      <ComButton className='mb10 cccplh  ww bccback' hoverClass='none'  >
-        <View className='dll ww'>
-          {(!selfInfo_S.registStatus || selfInfo_S.roles?.length === 0) && <View className='ww'>抱歉，您暂无权访问该小程序，本小程序实行邀请注册制。如果您想成为“团长”、”供应商”、“工作人员”，请联系工作人员，为您开通相应的访问权限。</View>}
-          {selfInfo_S.registStatus === 1 &&
-            <View>您的注册申请已经提交，请耐心等待管理员审核，有任何问题请联系管理员 </View>
-          }
 
-        </View>
-      </ComButton>
+      {(!selfInfo_S.registStatus || selfInfo_S.roles?.length === 0) && <>
+        <ComButton className='mb10 cccplh  ww bccback' hoverClass='none'  >
+          小像心选，团长招募中...
+        </ComButton>
+        <ComButton className='bccyellow mb10 fwb' url='/pages_user/sub_user_register'>立即报名成为团长</ComButton>
+      </>
+      }
+
       <ComButton className='mb10 cccplh' onClick={() => { Taro.makePhoneCall({ phoneNumber: "16609119888" }); }}>
         <>联系电话:<View className='cccgreen'>16609119888</View> </>
       </ComButton>
