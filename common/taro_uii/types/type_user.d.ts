@@ -3,21 +3,6 @@ import { Delivery_Account, PriceScheme_Type, Printer_Info } from "./type_index";
 
 
 
-
-interface Dept_UIF {
-  distance?: number;  // 距离
-  longitude: number;
-  latitude: number;
-  locationName?: string;
-  logistics?: Delivery_Account[]; // 绑定的快递账号列表
-  logistics_?: number[]; // 绑定的快递账号列表
-  printers?: Printer_Info[]; // 绑定的打印机列表
-  printers_?: number[]; // 绑定的打印机列表
-  // 额外信息
-  logisticPriceScheme?: PriceScheme_Type; // 价格方案
-  logisticPriceSchemeId?: number; // 价格方案
-}
-
 export interface BaseUserInfo {
   id?: string;
   registStatus: 0 | 1 | 2; // 0 未注册 1 提交申请 2 审核通过
@@ -51,6 +36,19 @@ export interface DeptInfo extends BaseUserInfo, AddressInfo {
   parentInfo?: DeptInfo | null; // 我的上级信息 - 代理/工厂
   serveVersion?: string; // 服务版本
   lastUpdateTime?: number; // 更新时间
+
+
+  distance?: number;  // 距离
+  longitude: number;
+  latitude: number;
+  locationName?: string;
+  logistics?: Delivery_Account[]; // 绑定的快递账号列表
+  logistics_?: number[]; // 绑定的快递账号列表
+  printers?: Printer_Info[]; // 绑定的打印机列表
+  printers_?: number[]; // 绑定的打印机列表
+  // 额外信息
+  logisticPriceScheme?: PriceScheme_Type; // 价格方案
+  logisticPriceSchemeId?: number; // 价格方案
 }
 
 
