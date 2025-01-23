@@ -15,7 +15,7 @@ import { ComSELFView } from '@xyfs/taro_uii/components/MMMAAPage';
 import { IM_locate, IM_logo_33x33 } from '@xyfs/taro_uii/src/image';
 import { roo___my_dept } from '@xyfs/taro_uii/src/roles';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
-import { BaseUserInfo, DeptInfo } from '@xyfs/taro_uii/type_user';
+import { DeptInfo } from '@xyfs/taro_uii/type_user';
 import { try_Taro_navigateBack } from '@xyfs/taro_uii/utils/try_catch';
 import { useHook_getLocation, useHook_pageListNew } from '@xyfs/taro_uii/utils/useHooks';
 import { utils_addressInfoToString } from '@xyfs/taro_uii/utils/util';
@@ -52,7 +52,7 @@ const MAP_ID = "myMap";
 const IIIRegimentList = () => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const { locate } = useHook_getLocation();
-  const [selected_dept, setSelected_dep] = useState<BaseUserInfo | null>(roo___my_dept(selfInfo_S));
+  const [selected_dept, setSelected_dep] = useState<DeptInfo | null>(roo___my_dept(selfInfo_S));
   const ___page_getter = useCallback(async (p: Pagination<unknown>) =>
     await Api_user_nearbyRegimentList_ctn({
       ...p,
@@ -115,7 +115,7 @@ const IIIRegimentList = () => {
 
 
 
-const IIIDeptCard: FC<{ dept: DeptInfo, selected_dept: BaseUserInfo | null; onClick_move_to_regiment?: (event: BaseEventOrig<any>) => void; onClick_select_regiment?: (event: BaseEventOrig<any>) => void; }> = ({ dept, selected_dept, onClick_move_to_regiment, onClick_select_regiment }) => {
+const IIIDeptCard: FC<{ dept: DeptInfo, selected_dept: DeptInfo | null; onClick_move_to_regiment?: (event: BaseEventOrig<any>) => void; onClick_select_regiment?: (event: BaseEventOrig<any>) => void; }> = ({ dept, selected_dept, onClick_move_to_regiment, onClick_select_regiment }) => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   return <View className='bccwhite ww mb10 dbtc ioo pbt8 prl10 dll'
     onClick={onClick_move_to_regiment}>
@@ -138,7 +138,7 @@ const IIIDeptCard: FC<{ dept: DeptInfo, selected_dept: BaseUserInfo | null; onCl
 
 
 
-function useINHook_map_init(regiment_list: BaseUserInfo[] | null, locate: Taro.getLocation.SuccessCallbackResult | null, map_id: string) {
+function useINHook_map_init(regiment_list: DeptInfo[] | null, locate: Taro.getLocation.SuccessCallbackResult | null, map_id: string) {
   useEffect(() => {
     if (locate && map_id && regiment_list) {
       (async () => {

@@ -60,17 +60,21 @@ interface Regiment_UIF extends User_UIF, Servicer_UIF {
 
 
 
-export interface BaseUserInfo extends AddressInfo, Regiment_UIF, Servicer_UIF, Update_UIF {
+export interface BaseUserInfo {
   id?: string;
   theme?: string;
 
   is_silence_color?: boolean; // 默哀色
   registStatus: 0 | 1 | 2; // 0 未注册 1 提交申请 2 审核通过
+  OPENID?: string;
   deptId?: string;
-  deptName?: string;
+  mobile?: string;
+  name?: string;
+  userId?: string;
+  openId?: string;
 }
 
-export interface DeptInfo extends AddressInfo, Regiment_UIF, Servicer_UIF, Update_UIF {
+export interface DeptInfo extends BaseUserInfo, AddressInfo, Regiment_UIF, Servicer_UIF, Update_UIF {
   id?: string;
   theme?: string;
   is_silence_color?: boolean; // 默哀色

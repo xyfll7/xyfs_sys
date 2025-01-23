@@ -1,7 +1,7 @@
 // :: pages_user/sub_user_edit
 import { Text, View } from "@tarojs/components";
 import Taro from '@tarojs/taro';
-import { BaseUserInfo } from "@xyfs/taro_uii";
+import { DeptInfo } from "@xyfs/taro_uii";
 import { Api_dept_dept_ctn, Api_dept_list_ctn, Api_user_edit_ctn, Api_user_info_ctn } from '@xyfs/taro_uii/api/api__users';
 import { ComButton } from '@xyfs/taro_uii/components/ComButton';
 import { ComImage } from '@xyfs/taro_uii/components/ComImage';
@@ -30,6 +30,7 @@ definePageConfig({
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC<{}> = ({ }) => {
   const selfInfo_S = useSTSelf(e => e.selfInfo);
+
   return <MMMAAPage>
     <ComNav>
       <View className='ww'>
@@ -48,7 +49,7 @@ const Index: FC<{}> = ({ }) => {
 const IIImyUserEditorAGENT: FC = () => {
   const { options } = Taro_getCurrentInstance<{ userId?: string; }>();
   const { dicts_roles, dicts_delivery, dicts_logisticPricescheme, dicts_product_category } = useSTDicts(state => state);
-  const [userInfo, setUserInfo] = useState<BaseUserInfo | null>(null);
+  const [userInfo, setUserInfo] = useState<DeptInfo | null>(null);
   useEffect(() => {
     (async () => {
       const res = await Api_user_info_ctn({ userId: options.userId! });
@@ -231,7 +232,7 @@ const IIImyUserEditorAGENT: FC = () => {
 const IIImyUserEditorSUPPLIER: FC = () => {
   const { options } = Taro_getCurrentInstance<{ userId?: string; }>();
   const { dicts_roles } = useSTDicts(state => state);
-  const [userInfo, setUserInfo] = useState<BaseUserInfo | null>(null);
+  const [userInfo, setUserInfo] = useState<DeptInfo | null>(null);
   useEffect(() => {
     (async () => {
       const res = await Api_user_info_ctn({ userId: options.userId! });
@@ -277,7 +278,7 @@ const IIImyUserEditorSUPPLIER: FC = () => {
 };
 
 
-const IIIDeptList = ({ userInfo, onUpdateUserInfo }: { userInfo: BaseUserInfo; onUpdateUserInfo: (e: BaseUserInfo) => void; }) => {
+const IIIDeptList = ({ userInfo, onUpdateUserInfo }: { userInfo: DeptInfo; onUpdateUserInfo: (e: DeptInfo) => void; }) => {
   const [depts, setDepts] = useState<any[]>();
   useEffect(() => { ___Api_dept_list_ctn(); }, []);
   async function ___Api_dept_list_ctn() {

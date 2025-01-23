@@ -54,7 +54,7 @@ const ShopCart: FC<PropsWithChildren & { onCartEdit: (e: Product_Dryclean) => vo
 
 
   const _childrens: ReactNode[] = [];
-  React.Children.forEach(props.children, (e: ReactElement) => {
+  React.Children.forEach(props.children as ReactElement, (e: ReactElement) => {
     if (typeof e.type === "string") {
       _childrens.push(e);
     } else if (typeof e.type === "function" && e.key === "IIIShopCartTabBarUser") {

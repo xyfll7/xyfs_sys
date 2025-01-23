@@ -5,7 +5,7 @@ import { format } from "date-fns";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { PreBarCodeDryclean } from "../../../types/type_index";
 import { OrderInfo, Product_Dryclean, Product_Express } from "../../../types/type_product";
-import { BaseUserInfo } from "../../../types/type_user";
+import { DeptInfo } from "../../../types/type_user";
 import { Api_order_print_ctn } from "../../api/api__orders";
 import { Api_user_print_ctn } from "../../api/api__users";
 import { getMyEnv } from "../../env";
@@ -120,7 +120,7 @@ export function useINHooks_Blue_devices() {
   return { devices, state, startBlue, stopBlue, addPrinter };
 }
 
-export async function on_start_print(___cb: (blue_device?: Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice) => { cpcl: string[], tspl?: string[]; }, options?: { orderId?: string, selfInfo_S?: BaseUserInfo | null; }): Promise<void> {
+export async function on_start_print(___cb: (blue_device?: Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice) => { cpcl: string[], tspl?: string[]; }, options?: { orderId?: string, selfInfo_S?: DeptInfo | null; }): Promise<void> {
   const tapIndex = await (async () => {
     if (options?.selfInfo_S && options.selfInfo_S.printers && options.selfInfo_S.printers.length && options.orderId) {
       const [res_index] = await try_Taro_showActionSheet({
@@ -325,7 +325,7 @@ export function on_get_printer_str_order_express(_order: OrderInfo<Product_Expre
       `${T_0} 0 ${X_} ${Y_ += 40} 重量：${_order.__product?.weight} 公斤`,
       `SETMAG 0 0`,
       `LEFT ${P_w}`,
-      `${T_0} 0 ${X_} ${Y_ += 60} 团长：${_order.regimentName ?? '无'}`,
+      `${T_0} 0 ${X_} ${Y_ += 60} 团长：${_order.deptName ?? '无'}`,
       `${T_0} 0 ${X_} ${Y_ += 40} 品名：${_order.__product?.itemType}`,
       `${T_0} 0 ${X_} ${Y_ += 40} 备注：${_order.__product?.itemNotes ?? "无"}`,
       `FORM`,
@@ -383,7 +383,7 @@ export function on_get_printer_str_order_express(_order: OrderInfo<Product_Expre
 
       `TEXT ${X_},${Y_ += 40},"${font_3}",${rotation_0},1,1,"重量：${_order.__product?.weight} 公斤"`,
 
-      `TEXT ${X_},${Y_ += 60},"${font_0}",${rotation_0},1,1,"团长：${_order.regimentName ?? '无'}"`,
+      `TEXT ${X_},${Y_ += 60},"${font_0}",${rotation_0},1,1,"团长：${_order.deptName ?? '无'}"`,
       `TEXT ${X_},${Y_ += 40},"${font_0}",${rotation_0},1,1,"品名：${_order.__product?.itemType}"`,
       `TEXT ${X_},${Y_ += 40},"${font_0}",${rotation_0},1,1,"备注：${_order.__product?.itemNotes ?? "无"}"`,
 

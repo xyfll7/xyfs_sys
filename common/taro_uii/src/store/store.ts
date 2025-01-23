@@ -4,7 +4,7 @@ import throttle from 'just-throttle';
 import { create } from 'zustand';
 import { Delivery_Account, PriceScheme_Type, ProductCategory_DICT } from "../../types/type_index";
 import { OrderInfo, Product_Express } from "../../types/type_product";
-import { AddressInfo, BaseUserInfo } from "../../types/type_user";
+import { AddressInfo, DeptInfo } from "../../types/type_user";
 import { Api_common_list, Api_login_rqs } from '../api/api__users';
 import { Order_ST, PickUp_ST, Product_category_ST, ROLE_ST } from "../config";
 import { getMyEnv } from "../env";
@@ -41,8 +41,8 @@ export const useSTDicts = create<State_Dicts>((set) => ({
 }));
 
 interface State_SelfInfo {
-  selfInfo: BaseUserInfo | null;
-  sett: (selfInfo?: BaseUserInfo) => Promise<BaseUserInfo>;
+  selfInfo: DeptInfo | null;
+  sett: (selfInfo?: DeptInfo) => Promise<DeptInfo>;
   setSelfInfoTheme: (theme: keyof Taro.onThemeChange.ITheme) => void;
 }
 const login = throttle(Api_login_rqs, 3000, { leading: true });
@@ -57,7 +57,7 @@ export const useSTSelf = create<State_SelfInfo>((set, get) => ({
       return { theme, ...get().selfInfo, ...selfInfo, };
     } else {
       const res_selfInfo = await login();
-      if (res_selfInfo && res_selfInfo?.OPENID) { // 这里不能删，因为throttle截流 被拦截了的调用会返回 undefined
+      if (res_selfInfo && res_selfInfo?.deptId) { // 这里不能删，因为throttle截流 被拦截了的调用会返回 undefined
         if (JSON.stringify(get().selfInfo) !== JSON.stringify(res_selfInfo)) { // 如果获取的数据和本地数据一样则不刷新
           set((s) => ({ selfInfo: { theme, ...s.selfInfo, ...res_selfInfo, } }));
         }

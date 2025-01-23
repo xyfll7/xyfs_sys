@@ -1,18 +1,16 @@
 // :: pages_user/sub_user_register
 import { View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
-import { BaseUserInfo } from "@xyfs/taro_uii";
+import { DeptInfo } from "@xyfs/taro_uii";
 import { Api_getNumber_ctn, Api_user_edit_ctn } from '@xyfs/taro_uii/api/api__users';
 import { ComButton, ComButtonOpen } from '@xyfs/taro_uii/components/ComButton';
-import { ComImage } from '@xyfs/taro_uii/components/ComImage';
 import { ComNav } from '@xyfs/taro_uii/components/ComNav';
 import { ComNavBarA } from '@xyfs/taro_uii/components/ComNavBarA';
 import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { roo___has_role } from "@xyfs/taro_uii/src/roles";
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
-import { Taro_getCurrentInstance, try_Taro_chooseAddress, try_Taro_chooseLocation, try_Taro_cloud_uploadFile } from '@xyfs/taro_uii/utils/try_catch';
-import { utils_addressInfoToString } from "@xyfs/taro_uii/utils/util";
+import { Taro_getCurrentInstance, try_Taro_chooseAddress } from '@xyfs/taro_uii/utils/try_catch';
 import { utils_validate_register } from '@xyfs/taro_uii/utils/validator';
 import { FC, useState } from "react";
 
@@ -52,15 +50,14 @@ const Index: FC = () => {
 
 const IIIRegister: FC<{}> = ({ }) => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
-  const [userForm, setUserForm] = useState<BaseUserInfo>({
+  const [userForm, setUserForm] = useState<DeptInfo>({
     ...selfInfo_S!,
   });
-  console.log("userForm", userForm);
   return (
     <>
 
       <View className='ioo bccwhite pt10 dll mb10 prl10 ww'>
-        <View className='ww mb10 dy'>
+        {/* <View className='ww mb10 dy'>
           <View className='w4rem'><ComImage src={userForm?.avatar ?? ""} /></View>
           <ComButtonOpen ll className='cccplh bccback' openType='chooseAvatar' onChooseAvatar={async (e) => {
             Taro.showLoading({ mask: true, title: "上传中..." });
@@ -69,9 +66,9 @@ const IIIRegister: FC<{}> = ({ }) => {
             setUserForm(res_userInfo);
             Taro.showToast({ icon: "none", title: "上传成功", });
           }}>更换头像</ComButtonOpen>
-        </View>
+        </View> */}
         <View className='ww mb10 dy' >
-          <ComButton ll className='w4rem bccwhite'>名称</ComButton>
+          <ComButton ll className='w4rem bccwhite'>姓名</ComButton>
           <ComButton ll className='flx1 cccplh bccback' onClick={async () => {
             const res_address = await try_Taro_chooseAddress();
             setUserForm({
@@ -82,13 +79,13 @@ const IIIRegister: FC<{}> = ({ }) => {
             });
           }} >{userForm.name ?? '请输入名称'}</ComButton>
         </View>
-        <View className='ww mb10 dy' >
+        {/* <View className='ww mb10 dy' >
           <ComButton ll className='w4rem bccwhite'>地址</ComButton>
           <ComButton className='ww cccplh bccback' ll >
             {userForm.address ? utils_addressInfoToString(userForm) : "请填写详细地址信息"}
           </ComButton>
-        </View>
-        <View className='ww mb10 dy'>
+        </View> */}
+        {/* <View className='ww mb10 dy'>
           <ComButton ll className='w4rem bccwhite'>坐标</ComButton>
           <ComButton className='cccgreen bccback ww' ll onClick={async () => {
             const res = await try_Taro_chooseLocation();
@@ -104,7 +101,7 @@ const IIIRegister: FC<{}> = ({ }) => {
               <View className='fs08 cccplh  nw2 '>{userForm.locationName}</View>
             </View>
           </ComButton>
-        </View>
+        </View> */}
         <View className='dy ww mb10'>
           <ComButton ll className='w4rem bccwhite'>手机号</ComButton>
           <ComButtonOpen ll className='cccplh dy bccback ww' id='getPhoneNumber' openType='getPhoneNumber' onClick={() => {
@@ -115,7 +112,7 @@ const IIIRegister: FC<{}> = ({ }) => {
             const { code, iv, encryptedData, errMsg } = e.detail;
             if (code && errMsg === "getPhoneNumber:ok") {
               const res = await Api_getNumber_ctn({ code, iv, encryptedData, });
-              setUserForm((ee): BaseUserInfo => ({ ...ee, mobile: res }));
+              setUserForm((ee): DeptInfo => ({ ...ee, mobile: res }));
               Taro.hideLoading();
             } else if (errMsg === "getPhoneNumber:fail user deny") {
               Taro.hideLoading();
@@ -142,9 +139,8 @@ const IIIRegister: FC<{}> = ({ }) => {
             const res_userInfo = await Api_user_edit_ctn({
               ...userForm,
               registStatus: !selfInfo_S?.registStatus ? 1 : selfInfo_S?.registStatus,
-              parentDeptId: selfInfo_S?.parentDeptId ? selfInfo_S?.parentDeptId : options.parentDeptId,
             });
-            useSTSelf.getState().sett(res_userInfo);
+            useSTSelf.getState().sett({ ...res_userInfo });
             Taro.showToast({ icon: "none", title: "提交成功", });
           }}>
           {!selfInfo_S?.registStatus ? '提交申请' : '确认修改'}

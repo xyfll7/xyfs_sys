@@ -1,13 +1,13 @@
 import Taro from "@tarojs/taro";
 import { coo___ios_date } from "@xyfs/utils/util";
 import { format, lastDayOfMonth, startOfMonth } from "date-fns";
-import { AddressInfo, BaseUserInfo, OrderInfo, Printer_Info, ProductBase } from "../../types";
+import { AddressInfo, DeptInfo, OrderInfo, Printer_Info, ProductBase } from "../../types";
 import { Api_qrcode_ctn } from "../api/api__users";
 import { roo___my_dept } from "../roles";
 import { try_Taro_chooseMessageFile, try_Taro_downloadFile, try_Taro_getFileSystemManager_readFile, try_Taro_getFileSystemManager_saveFile, try_Taro_getFileSystemManager_writeFile, try_Taro_openDocument, try_Taro_showActionSheet } from "./try_catch";
 
 // 订单信息中合并入团长信息
-export function utils_order_merge_servicer_info(selfInfo_S: BaseUserInfo): OrderInfo<ProductBase> {
+export function utils_order_merge_servicer_info(selfInfo_S: DeptInfo): OrderInfo<ProductBase> {
   const __dept = roo___my_dept(selfInfo_S);
   return {
     fromAppid: Taro.getAccountInfoSync().miniProgram.appId,
@@ -50,7 +50,7 @@ export const utils_get_capsule = (reTry: boolean = true) => {
 };
 
 // 地址信息字符串化
-export function utils_addressInfoToString(addr?: AddressInfo | BaseUserInfo | null, isShort = false) {
+export function utils_addressInfoToString(addr?: AddressInfo | DeptInfo | null, isShort = false) {
   const str = isShort ?
     `${addr?.address ?? ""}` :
     `${addr?.province ?? ""} ${addr?.city ?? ""} ${addr?.area ?? ""} ${addr?.address ?? ""}`;
@@ -139,7 +139,7 @@ export async function utils_import_excel(): Promise<string> {
 }
 
 // 选择打印机
-export async function utils_get_cloud_printer(selfInfo_S: BaseUserInfo): Promise<Printer_Info | null> {
+export async function utils_get_cloud_printer(selfInfo_S: DeptInfo): Promise<Printer_Info | null> {
   const printers = roo___my_dept(selfInfo_S)?.printers ?? [];
   if (printers.length === 0) {
     return null;

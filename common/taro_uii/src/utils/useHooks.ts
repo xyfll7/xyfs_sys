@@ -2,7 +2,7 @@ import Taro, { useError, useShareAppMessage, useUnhandledRejection } from "@taro
 import { coo___ios_date } from "@xyfs/utils/util";
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { Pagination } from "../../types/type_index";
-import { BaseUserInfo } from "../../types/type_user";
+import { DeptInfo } from "../../types/type_user";
 import { Api_user_info_ctn } from "../api/api__users";
 import { ErrorR } from "../config";
 import { getMyEnv } from "../env";
@@ -22,7 +22,7 @@ export function useHook_Reducer<T>(data: T): [T, React.Dispatch<Partial<T> | nul
 
 
 export function useHook_userInfo(OPENID_user___: string) {
-  const [userInfo, setUserInfo] = useState<BaseUserInfo | null>(null);
+  const [userInfo, setUserInfo] = useState<DeptInfo | null>(null);
   useEffect(() => {
     if (OPENID_user___) {
       (async () => {

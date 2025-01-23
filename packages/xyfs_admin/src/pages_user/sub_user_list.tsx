@@ -1,7 +1,7 @@
 // :: pages_user/sub_user_list
 import { Picker, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
-import { BaseUserInfo, Pagination } from "@xyfs/taro_uii";
+import { DeptInfo, Pagination } from "@xyfs/taro_uii";
 import { Api_order_paymentExport_ctn } from "@xyfs/taro_uii/api/api__orders";
 import { Api_user_myUserList_ctn } from '@xyfs/taro_uii/api/api__users';
 import { ComButton } from '@xyfs/taro_uii/components/ComButton';
@@ -121,7 +121,7 @@ const Index: FC<{}> = ({ }) => {
 };
 
 
-const IIImyUserCardAGENT: FC<{ myUser: BaseUserInfo; }> = ({ myUser }) => {
+const IIImyUserCardAGENT: FC<{ myUser: DeptInfo; }> = ({ myUser }) => {
   const [date, setDate] = useState<string>(format(coo___ios_date(), "yyyy-MM-dd"));
   return <>
     <View key={myUser.id} className='mb10 ww dll ww prl10 pt10 ioo bccwhite'>
@@ -171,7 +171,7 @@ const IIImyUserCardAGENT: FC<{ myUser: BaseUserInfo; }> = ({ myUser }) => {
     </View >
   </>;
 };
-const IIImyUserCardSUPPLIER: FC<{ myUser: BaseUserInfo; }> = ({ myUser }) => {
+const IIImyUserCardSUPPLIER: FC<{ myUser: DeptInfo; }> = ({ myUser }) => {
   return <>
     <View key={myUser.id} className='mb10 ww dll ww prl10 pt10 ioo bccwhite'>
       <View className='dy mb10 ww'>

@@ -2,7 +2,7 @@ import { Text, View, ViewProps } from "@tarojs/components";
 import Taro, { useDidShow, useLoad } from "@tarojs/taro";
 import { coo___urlToObj } from "@xyfs/utils/util";
 import React, { CSSProperties, FC, useEffect, useState, useSyncExternalStore } from "react";
-import { BaseUserInfo } from "../../types/type_user";
+import { BaseUserInfo, DeptInfo } from "../../types/type_user";
 import { Api_login_rqs, Api_user_edit_ctn } from "../api/api__users";
 import { getMyEnv } from "../env";
 import { roo___has_role } from "../roles";
@@ -115,7 +115,7 @@ function ___is_page_access(isPageAccess: boolean | null) {
 }
 
 // 顾客端-验证当前页面是否需要用户选择团长才能访问
-function ___is_required_regiment(selfInfoS: BaseUserInfo, isNeedDept: boolean = true) {
+function ___is_required_regiment(selfInfoS: DeptInfo, isNeedDept: boolean = true) {
   if (isNeedDept) {
     if (selfInfoS.deptInfo) {
       return true;
@@ -128,7 +128,7 @@ function ___is_required_regiment(selfInfoS: BaseUserInfo, isNeedDept: boolean = 
 }
 
 // 管理端-验证当前页面必须有权限才能访问否则只能注册
-function ___is_required_role(selfInfoS: BaseUserInfo, isNeedAnyRole: boolean = true) {
+function ___is_required_role(selfInfoS: DeptInfo, isNeedAnyRole: boolean = true) {
   if (selfInfoS.registStatus !== 2 && isNeedAnyRole === true) {
     return false;
   }
@@ -353,7 +353,7 @@ export function ComSELFView({ isRefreshSelfInfo_SEveryTime, ...props }: ViewProp
 
 
 
-const useHook_selfInfo_show = ({ isRefreshSelfInfo_SEveryTime = false, }: { isRefreshSelfInfo_SEveryTime?: boolean; } = {}): [BaseUserInfo | null] => {
+const useHook_selfInfo_show = ({ isRefreshSelfInfo_SEveryTime = false, }: { isRefreshSelfInfo_SEveryTime?: boolean; } = {}): [DeptInfo | null] => {
   const { options } = Taro_getCurrentInstance<{ scene?: string; }>();
   const { R_D } = coo___urlToObj<{ R_D?: string; }>(options.scene);
   const _R_D = R_D ? String(parseInt(R_D, 36)) : undefined;

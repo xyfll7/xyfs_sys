@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import { AddressInfo, BaseUserInfo, DeptInfo, DICTS_KEYS, Pagination, Printer_Info } from "../../types";
+import { AddressInfo, DeptInfo, DICTS_KEYS, Pagination, Printer_Info } from "../../types";
 import { getMyEnv } from "../env";
 import { Taro_getStorageSync } from "../utils/try_catch";
 import { try_Taro_login, wx_call_container } from "./wx_call";
@@ -100,8 +100,8 @@ export async function Api_common_textOCR_ctn(params: { imgUrl?: string; text?: s
     text: res.text
   };
 }
-export async function Api_login_rqs(): Promise<BaseUserInfo> {
-  const res = await wx_call_container<BaseUserInfo>({
+export async function Api_login_rqs(): Promise<DeptInfo> {
+  const res = await wx_call_container<DeptInfo>({
     path: "/login",
     data: {
       code: await (async () => { return Taro_getStorageSync<string>("OPENID", getMyEnv()) ? "" : await try_Taro_login(); })()
@@ -136,7 +136,7 @@ export async function Api_user_nearbyRegimentList_ctn(params: Pick<Pagination<un
     latitude: Number(params.latitude?.toFixed(5)),
     longitude: Number(params.longitude?.toFixed(5))
   };
-  const res = await wx_call_container<Pagination<BaseUserInfo[]>>({
+  const res = await wx_call_container<Pagination<DeptInfo[]>>({
     path: "/user/nearbyRegimentList",
     data: {
       ...params,
@@ -145,8 +145,8 @@ export async function Api_user_nearbyRegimentList_ctn(params: Pick<Pagination<un
   return res;
 
 }
-export async function Api_user_info_ctn(params: { userId: string; }): Promise<BaseUserInfo> {
-  const res = await wx_call_container<BaseUserInfo>({
+export async function Api_user_info_ctn(params: { userId: string; }): Promise<DeptInfo> {
+  const res = await wx_call_container<DeptInfo>({
     path: "/user/info",
     params: { ...params },
     method: "GET"
@@ -169,8 +169,8 @@ export async function Api_dept_info_ctn(params: { deptId: string; }): Promise<De
 // userId(给某用户指定部门)
 // openId
 // /user/edit
-export async function Api_user_edit_ctn(params: Partial<BaseUserInfo>): Promise<BaseUserInfo> {
-  const res = await wx_call_container<BaseUserInfo>({
+export async function Api_user_edit_ctn(params: Partial<DeptInfo>): Promise<DeptInfo> {
+  const res = await wx_call_container<DeptInfo>({
     path: "/user/edit",
     data: { ...params },
   });
@@ -188,8 +188,8 @@ export async function Api_user_myUserList_ctn(params: Pick<Pagination<unknown>, 
   regimentOpenid?: string;
   userId?: string;
   roleId?: number;
-}): Promise<Pagination<BaseUserInfo[]>> {
-  const res = await wx_call_container<Pagination<BaseUserInfo[]>>({
+}): Promise<Pagination<DeptInfo[]>> {
+  const res = await wx_call_container<Pagination<DeptInfo[]>>({
     path: "/user/myUserList",
     data: { ...params },
   });

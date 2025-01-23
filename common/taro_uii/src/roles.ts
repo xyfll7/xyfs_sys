@@ -1,12 +1,12 @@
 
-import { BaseUserInfo, DeptInfo } from "../types/type_user";
+import { DeptInfo } from "../types/type_user";
 import { ROLE_KEY, ROLE_NAME, ROLE_ST } from './config';
 
 
 
 
 // 角色判断函数
-export function roo___has_role(userInfo: BaseUserInfo | null, _roles: ROLE_KEY[] = [], mode: "or" | "and" | "only" = "or"): boolean {
+export function roo___has_role(userInfo: DeptInfo | null, _roles: ROLE_KEY[] = [], mode: "or" | "and" | "only" = "or"): boolean {
   // 检测团长的团长是否为团长自己
   const roles = userInfo?.roles ?? [];
 
@@ -29,7 +29,7 @@ export function roo___has_role(userInfo: BaseUserInfo | null, _roles: ROLE_KEY[]
     throw new Error(`请设置角色权限标签值"`);
   }
 }
-export function roo___has_permi(_roles: string[] = [], userInfo: BaseUserInfo | null,) {
+export function roo___has_permi(_roles: string[] = [], userInfo: DeptInfo | null,) {
   const permissions = userInfo?.permissions ?? [];
   if (_roles && _roles instanceof Array && _roles.length > 0) {
     const permissionFlag = _roles;
@@ -49,7 +49,7 @@ export function roo___has_permi(_roles: string[] = [], userInfo: BaseUserInfo | 
 }
 
 // 新增角色
-export function roo___role_add(userInfo: BaseUserInfo | null, roles: ROLE_ST[],): ROLE_ST[] {
+export function roo___role_add(userInfo: DeptInfo | null, roles: ROLE_ST[],): ROLE_ST[] {
   if (userInfo && userInfo.roles) {
     return [...new Set([...userInfo.roles, ...roles])];
   } else {
@@ -58,7 +58,7 @@ export function roo___role_add(userInfo: BaseUserInfo | null, roles: ROLE_ST[],)
 }
 
 // 删除角色
-export function roo___role_sub(userInfo: BaseUserInfo | null, roles: ROLE_ST[],): ROLE_ST[] {
+export function roo___role_sub(userInfo: DeptInfo | null, roles: ROLE_ST[],): ROLE_ST[] {
   if (userInfo && userInfo.roles) {
     return userInfo.roles?.filter(e => !roles.find(ee => ee === e));
   } else {
@@ -72,15 +72,15 @@ export function roo___my_dept(userInfo: DeptInfo) {
 }
 
 // 将权数字列表转化为汉字权限列表
-export function roo___role_number2str(userInfo: BaseUserInfo) {
+export function roo___role_number2str(userInfo: DeptInfo) {
   return userInfo?.roles?.map(e => { return e.roleName; });
 }
 
-export function roo___role_getRoleInfo(userInfo: BaseUserInfo, roleName: ROLE_NAME) {
+export function roo___role_getRoleInfo(userInfo: DeptInfo, roleName: ROLE_NAME) {
   return userInfo?.roles?.filter(e => e.roleName === roleName)[0];
 }
 
-export function roo___role_getRoleName(userInfo: BaseUserInfo) {
+export function roo___role_getRoleName(userInfo: DeptInfo) {
   const roles = userInfo?.deptInfo?.roles;
   if (roles) {
     const [user] = roles?.filter(e => e.roleKey === "REGIMENT" || e.roleKey === "GUIDE");

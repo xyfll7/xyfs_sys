@@ -6,7 +6,7 @@ import Taro from "@tarojs/taro";
 
 import { coo___ios_date } from "@xyfs/utils/util";
 import { FC, useState } from "react";
-import { AddressInfo, BaseUserInfo } from "../../types/type_user";
+import { AddressInfo, DeptInfo } from "../../types/type_user";
 import { Api_common_idCardOCR_ctn, Api_user_realNameAuth_ctn } from "../api/api__users";
 import { roo___has_role } from "../roles";
 import { useSTExpress, useSTSelf } from "../store/store";
@@ -19,7 +19,7 @@ export const MMMRealName: FC<{ onClose?: () => void; address?: AddressInfo | nul
 
   const ___selfInfo = useSTSelf.getState().selfInfo;
 
-  const [form, setForm] = useState<Partial<BaseUserInfo>>({
+  const [form, setForm] = useState<Partial<DeptInfo>>({
     realName: (___selfInfo?.realName && roo___has_role(___selfInfo, ["USER"])) ? ___selfInfo?.realName ?? "" : "",
     realId: (___selfInfo?.realId && roo___has_role(___selfInfo, ["USER"])) ? ___selfInfo?.realId ?? "" : "",
     mobile: address?.mobile ?? "" // 如果有mobile 就是团长给用户实名

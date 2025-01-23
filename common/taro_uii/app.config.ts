@@ -12,7 +12,7 @@ export const pages_comm: string[] = [
 ];
 
 
-export const AppConfig: Taro.Config = {
+export const AppConfig: Taro.AppConfig = {
   plugins: {
     xyfsPlugin: {
       version: process.env.NODE_ENV === "production" ? "1.0.2" : "1.0.2",
