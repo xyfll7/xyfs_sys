@@ -81,28 +81,28 @@ const Index: FC = () => {
             <ComButton ll className='bccback mb10 prl10'>部门信息</ComButton>
             <View className='ioo bccwhite pt10 dll mb10 prl10 ww'>
               <View className='ww mb10 dy' >
-                <ComButton ll className='w5rem bccwhite nw'>当前部门</ComButton>
-                <ComButton ll className='flx1 cccplh bccback'>{selfInfo_S.deptName}</ComButton>
+                <ComButton ll className='w5rem bccwhite nw' hoverClass='none'>当前部门</ComButton>
+                <ComButton ll className='flx1 cccplh ' hoverClass='none'>{selfInfo_S.deptName}</ComButton>
               </View>
               <View className='ww mb10 dy' >
-                <ComButton ll className='w5rem bccwhite nw'>部门电话</ComButton>
-                <ComButton ll className='flx1 cccplh bccback'>{selfInfo_S.deptInfo?.mobile}</ComButton>
+                <ComButton ll className='w5rem bccwhite nw' hoverClass='none'>部门电话</ComButton>
+                <ComButton ll className='flx1 cccplh ' hoverClass='none'>{selfInfo_S.deptInfo?.mobile}</ComButton>
               </View>
               <View className='ww mb10 dy' >
-                <ComButton ll className='w5rem bccwhite nw'>所属部门</ComButton>
-                <ComButton ll className='flx1 cccplh bccback'>{selfInfo_S.deptName}</ComButton>
+                <ComButton ll className='w5rem bccwhite nw' hoverClass='none'>部门地址</ComButton>
+                <ComButton ll className='flx1 cccplh ' hoverClass='none'>{selfInfo_S.deptInfo?.address}</ComButton>
               </View>
               <View className='ww mb10 dy' >
-                <ComButton ll className='w5rem bccwhite nw'>部门权限</ComButton>
-                <ComButton ll className='flx1 cccplh bccback'>{selfInfo_S.roles?.map(e => e.roleName).join('/')}</ComButton>
+                <ComButton ll className='w5rem bccwhite nw' hoverClass='none'>部门权限</ComButton>
+                <ComButton ll className='flx1 cccplh ' hoverClass='none'>{selfInfo_S.roles?.map(e => e.roleName).join('/')}</ComButton>
               </View>
               <View className='ww mb10 dy' >
-                <ComButton ll className='w5rem bccwhite nw'>价格方案</ComButton>
-                <ComButton ll className='flx1 cccplh bccback'>{selfInfo_S.logisticPriceScheme?.name}</ComButton>
+                <ComButton ll className='w5rem bccwhite nw' hoverClass='none'>价格方案</ComButton>
+                <ComButton ll className='flx1 cccplh ' hoverClass='none'>{selfInfo_S.logisticPriceScheme?.name}</ComButton>
               </View>
               <View className='ww mb10 dy' >
-                <ComButton ll className='w5rem bccwhite nw'>授权快递</ComButton>
-                <ComButton ll className='flx1 cccplh bccback'>{selfInfo_S.logistics?.map(e => e.deliveryName).join('/')}</ComButton>
+                <ComButton ll className='w5rem bccwhite nw' hoverClass='none'>授权快递</ComButton>
+                <ComButton ll className='flx1 cccplh ' hoverClass='none'>{selfInfo_S.logistics?.map(e => e.deliveryName).join('/')}</ComButton>
               </View>
             </View>
           </>
@@ -112,12 +112,16 @@ const Index: FC = () => {
               <ComButton ll className='bccback mb10 prl10'>上级部门信息</ComButton>
               <View className='ioo bccwhite pt10 dll mb10 prl10 ww'>
                 <View className='ww mb10 dy' >
-                  <ComButton ll className='w5rem bccwhite nw'>部门名称</ComButton>
-                  <ComButton ll className='flx1 cccplh bccback'>{selfInfo_S.parentDeptInfo.deptName}</ComButton>
+                  <ComButton ll className='w5rem bccwhite nw' hoverClass='none'>部门名称</ComButton>
+                  <ComButton ll className='flx1 cccplh ' hoverClass='none'>{selfInfo_S.parentDeptInfo.deptName}</ComButton>
                 </View>
                 <View className='ww mb10 dy' >
-                  <ComButton ll className='w5rem bccwhite nw'>部门电话</ComButton>
-                  <ComButton ll className='flx1 cccplh bccback'>{selfInfo_S.parentDeptInfo.mobile}</ComButton>
+                  <ComButton ll className='w5rem bccwhite nw' hoverClass='none'>部门电话</ComButton>
+                  <ComButton ll className='flx1 cccplh ' hoverClass='none'>{selfInfo_S.parentDeptInfo.mobile}</ComButton>
+                </View>
+                <View className='ww mb10 dy' >
+                  <ComButton ll className='w5rem bccwhite nw' hoverClass='none'>部门电话</ComButton>
+                  <ComButton ll className='flx1 cccplh ' hoverClass='none'>{selfInfo_S.parentDeptInfo.address}</ComButton>
                 </View>
               </View>
             </>
