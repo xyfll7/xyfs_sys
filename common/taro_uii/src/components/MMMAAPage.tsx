@@ -2,7 +2,7 @@ import { Text, View, ViewProps } from "@tarojs/components";
 import Taro, { useDidShow, useLoad } from "@tarojs/taro";
 import { coo___urlToObj } from "@xyfs/utils/util";
 import React, { CSSProperties, FC, useEffect, useState, useSyncExternalStore } from "react";
-import { BaseUserInfo, DeptInfo } from "../../types/type_user";
+import { DeptInfo } from "../../types/type_user";
 import { Api_login_rqs, Api_user_edit_ctn } from "../api/api__users";
 import { getMyEnv } from "../env";
 import { roo___has_role } from "../roles";
@@ -140,7 +140,7 @@ function ___is_required_role(selfInfoS: DeptInfo, isNeedAnyRole: boolean = true)
 }
 
 // 管理端-验证当前页面必须有权限才能访问否则只能注册
-function ___is_required_dept(selfInfoS: BaseUserInfo, isNeedAnyDept: boolean = true) {
+function ___is_required_dept(selfInfoS: DeptInfo, isNeedAnyDept: boolean = true) {
   if (isNeedAnyDept) {
     return Boolean(selfInfoS.deptId);
   } else {

@@ -1,7 +1,7 @@
 // :: pages_regiment/regiment_invitor
 import { View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
-import { BaseUserInfo, OrderInfo, ProductBase } from '@xyfs/taro_uii';
+import { DeptInfo, OrderInfo, ProductBase } from '@xyfs/taro_uii';
 import { Api_order_query_ctn } from '@xyfs/taro_uii/api/api__orders';
 import { ComButton, ComButtonOpen } from '@xyfs/taro_uii/components/ComButton';
 import { ComCardOrderDryclean } from '@xyfs/taro_uii/components/ComCardOrder';
@@ -46,7 +46,7 @@ const Index: FC = () => {
 };
 
 
-const IIIExpress: FC<{ deptInfo: BaseUserInfo; }> = ({ deptInfo }) => {
+const IIIExpress: FC<{ deptInfo: DeptInfo; }> = ({ deptInfo }) => {
   return <View className='mb10 dy bccwhite ww ioo pt10 prl10'>
     <ComButton ll className='nw bccwhite mr10 bccwhite mb10'>快递</ComButton>
     {/* <ComQRCode rr className='cccgreen mb10 slr' params={{
@@ -65,7 +65,7 @@ const IIIExpress: FC<{ deptInfo: BaseUserInfo; }> = ({ deptInfo }) => {
   </View>;
 };
 
-const IIIDryclean: FC<{ deptInfo: BaseUserInfo; }> = ({ deptInfo }) => {
+const IIIDryclean: FC<{ deptInfo: DeptInfo; }> = ({ deptInfo }) => {
   const [order, setOrder] = useState<OrderInfo<ProductBase> | null>(null);
   const { options } = Taro_getCurrentInstance<{ scene?: string; }>();
   const { S_D } = coo___urlToObj<{ S_D?: string; }>(options.scene);

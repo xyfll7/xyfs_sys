@@ -89,7 +89,7 @@ const IIIRegister: FC<{}> = ({ }) => {
           <ComButton ll className='w4rem bccwhite'>坐标</ComButton>
           <ComButton className='cccgreen bccback ww' ll onClick={async () => {
             const res = await try_Taro_chooseLocation();
-            setUserForm((ee): BaseUserInfo => ({
+            setUserForm((ee): DeptInfo => ({
               ...ee,
               locationName: `${res.address}-${res.name}`,
               longitude: res.longitude,
