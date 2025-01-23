@@ -15,7 +15,7 @@ export const MMMFooter: FC<{ className?: string; isShowMore?: boolean, isLoadMor
       <View className='dy'>
         {!roo___has_role(selfInfo_S, ["REGIMENT"]) && <Text className='mr6'>{selfInfo_S.name ? selfInfo_S.name : "匿名"}</Text>}
         {roo___has_role(selfInfo_S, ["REGIMENT"]) && <Text className='dy mr6'>团长\\{roo___my_dept(selfInfo_S)?.name}</Text>}
-        {selfInfo_S?.parentInfo?.name && <Text className='dy mr6'>上级\\{selfInfo_S?.parentInfo?.name}</Text>}
+        {selfInfo_S?.parentDeptInfo?.name && <Text className='dy mr6'>上级\\{selfInfo_S?.parentDeptInfo?.name}</Text>}
         <View className='dy mr6'>
           角色\{selfInfo_S.roles?.length ? "" : "暂无"}{roo___role_number2str(selfInfo_S)?.map(e => <Text className='dy' key={e}>\{e}</Text>)}
         </View>

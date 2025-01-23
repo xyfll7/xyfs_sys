@@ -1,7 +1,29 @@
 import { Address_T, ROLE_ST } from "../src/config";
 import { Delivery_Account, PriceScheme_Type, Printer_Info } from "./type_index";
 
+export type AddressInfo = {
+  id?: string;
+  avatar?: string; // 头像
+  postCode?: string;
+  from?: "WX" | "CP" | "OCR";  // 微信 | 粘贴
+  type?: Address_T;  // 收件地址 | 寄件地址
+  isDefault?: 1 | 0;
 
+  name?: string;
+  mobile?: string;
+  province?: string;
+  city?: string;
+  area?: string;
+  town?: string;
+  address?: string;
+
+  company?: string;
+  code?: string;
+  country?: string;
+
+  realName?: string; // 实名姓名
+  realId?: string;  // 实名身份证号
+};
 
 export interface BaseUserInfo {
   id?: string;
@@ -33,7 +55,7 @@ export interface DeptInfo extends BaseUserInfo, AddressInfo {
   defaultRecManAddressId?: string; // 默认收货地址id
   deptId?: string; // 我的团长OPENID
   deptInfo?: DeptInfo | null; // 我的团长信息
-  parentInfo?: DeptInfo | null; // 我的上级信息 - 代理/工厂
+  parentDeptInfo?: DeptInfo | null;  // 我的上级信息 - 代理/工厂
   serveVersion?: string; // 服务版本
   lastUpdateTime?: number; // 更新时间
 
@@ -50,31 +72,3 @@ export interface DeptInfo extends BaseUserInfo, AddressInfo {
   logisticPriceScheme?: PriceScheme_Type; // 价格方案
   logisticPriceSchemeId?: number; // 价格方案
 }
-
-
-
-
-export type AddressInfo = {
-  id?: string;
-  avatar?: string; // 头像
-  postCode?: string;
-  from?: "WX" | "CP" | "OCR";  // 微信 | 粘贴
-  type?: Address_T;  // 收件地址 | 寄件地址
-  isDefault?: 1 | 0;
-
-  name?: string;
-  mobile?: string;
-  province?: string;
-  city?: string;
-  area?: string;
-  town?: string;
-  address?: string;
-
-
-  company?: string;
-  code?: string;
-  country?: string;
-
-  realName?: string; // 实名姓名
-  realId?: string;  // 实名身份证号
-};

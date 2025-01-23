@@ -163,7 +163,7 @@ const IIIAddDept = ({ dept, onSuccess, mode, onClose }: { mode: "edit" | "add", 
           Taro.showLoading({ mask: true, title: "新增中..." });
           const res_deptInfo = await Api_dept_edit_ctn({ deptId: deptInfo?.deptId!, deptName: form.deptName, });
           Taro.showToast({ icon: "none", title: "成功" });
-          Taro.showToast({ icon: "none", title: "更新成功" });
+          Taro.showToast({ icon: "none", title: "更新完成" });
           setDeptInfo(res_deptInfo);
           onSuccess();
         }}>修改</ComButton>
@@ -191,7 +191,7 @@ const IIIAddDept = ({ dept, onSuccess, mode, onClose }: { mode: "edit" | "add", 
                     registStatus: 2,
                     ...(_roles.find(ee => ee.roleKey === "REGIMENT") ? { deptId: deptInfo?.id } : null)  //
                   });
-                  Taro.showToast({ icon: "none", title: "更新成功" });
+                  Taro.showToast({ icon: "none", title: "更新完成" });
                   setDeptInfo(res_deptInfo);
                 } else {
                   throw new Error("取消");
@@ -235,7 +235,7 @@ const IIIAddDept = ({ dept, onSuccess, mode, onClose }: { mode: "edit" | "add", 
                 Taro.showLoading({ mask: true, "title": "更新中..." });
                 const res_userInfo = await Api_dept_edit_ctn({ deptId: deptInfo?.deptId!, logisticPriceSchemeId: e.id, });
                 setDeptInfo(res_userInfo);
-                Taro.showToast({ icon: "none", title: "更新成功" });
+                Taro.showToast({ icon: "none", title: "更新完成" });
               }}>
                 {e.name}
               </ComButton>;

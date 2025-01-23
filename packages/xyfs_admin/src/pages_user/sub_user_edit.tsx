@@ -126,7 +126,7 @@ const IIImyUserEditorAGENT: FC = () => {
                     registStatus: 2,
                     ...(_roles.find(ee => ee.roleKey === "REGIMENT") ? { deptId: userInfo.id } : null)  //
                   });
-                  Taro.showToast({ icon: "none", title: "更新成功" });
+                  Taro.showToast({ icon: "none", title: "更新完成" });
                   setUserInfo(res_userInfo);
                 } else {
                   throw new Error("取消");
@@ -145,7 +145,7 @@ const IIImyUserEditorAGENT: FC = () => {
                 Taro.showLoading({ mask: true, title: "更新中..." });
                 const res_userInfo = await Api_user_edit_ctn({ userId: userInfo.id!, supplierTypeDictIds: e.dictValue });
                 setUserInfo(res_userInfo);
-                Taro.showToast({ icon: "none", title: "更新成功" });
+                Taro.showToast({ icon: "none", title: "更新完成" });
               }}>{e.dictLabel}</ComButton>;
             })}
           </View>
@@ -187,7 +187,7 @@ const IIImyUserEditorAGENT: FC = () => {
                 Taro.showLoading({ mask: true, "title": "更新中..." });
                 const res_userInfo = await Api_user_edit_ctn({ userId: userInfo.id!, logisticPriceSchemeId: e.id, });
                 setUserInfo(res_userInfo);
-                Taro.showToast({ icon: "none", title: "更新成功" });
+                Taro.showToast({ icon: "none", title: "更新完成" });
               }}>
                 {e.name}
               </ComButton>;
@@ -263,7 +263,7 @@ const IIImyUserEditorSUPPLIER: FC = () => {
                 if (await try_Taro_showModal({ title: isHasRole ? "删除角色" : "新增角色", content: isHasRole ? "点击确定删除该角色" : "点击确定新增该角色", })) {
                   Taro.showLoading({ mask: true, title: "更新中..." });
                   const res_userInfo = await Api_user_edit_ctn({ userId: userInfo.id!, roles_: _roles.map(ee => ee.id), registStatus: 2 });
-                  Taro.showToast({ icon: "none", title: "更新成功" });
+                  Taro.showToast({ icon: "none", title: "更新完成" });
                   setUserInfo(res_userInfo);
                 } else {
                   throw new Error("取消");
@@ -299,7 +299,7 @@ const IIIDeptList = ({ userInfo, onUpdateUserInfo }: { userInfo: DeptInfo; onUpd
             Taro.showLoading({ mask: true, title: "更新中..." });
             const res = await Api_user_edit_ctn({ deptId: e.deptId, userId: userInfo.id! });
             onUpdateUserInfo(res);
-            Taro.showToast({ icon: "none", title: "更新成功" });
+            Taro.showToast({ icon: "none", title: "更新完成" });
           }}>指定</ComButton>
         </View>
       </View>
