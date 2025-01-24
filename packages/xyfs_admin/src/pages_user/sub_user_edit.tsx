@@ -48,7 +48,6 @@ const Index: FC<{}> = ({ }) => {
 
 const IIImyUserEditorAGENT: FC = () => {
   const { options } = Taro_getCurrentInstance<{ userId?: string; }>();
-  const { dicts_roles, dicts_delivery, dicts_logisticPricescheme, dicts_product_category } = useSTDicts(state => state);
   const [userInfo, setUserInfo] = useState<DeptInfo | null>(null);
   useEffect(() => {
     (async () => {
@@ -103,128 +102,7 @@ const IIImyUserEditorAGENT: FC = () => {
         }
       </View>
 
-      <View className='ww dll'>
-        <ComButton className='cccplh mb10  bccwhite' ll >指定角色</ComButton>
-        <View className='dy dwp'>
-          {dicts_roles?.filter((e) => ["REGIMENT", "SUPPLIER", "DRIVER", "MERCHANT", "GUIDE"].includes(e.roleKey)).map((e, i) => {
 
-            return <ComButton ll key={i} className={`bborder mb10 ${userInfo.roles?.some(ee => ee.roleKey === e.roleKey) ? 'cccgreen' : ''}`}
-              onClick={async () => {
-                const isHasRole = userInfo.roles?.some(ee => ee.roleKey === e.roleKey);
-                let _roles: ROLE_ST[];
-
-                if (isHasRole) {
-                  _roles = userInfo.roles?.filter(ee => ee.roleKey !== e.roleKey)!;
-                } else {
-                  _roles = [...(userInfo.roles ?? []), e] as ROLE_ST[];
-                }
-                if (await try_Taro_showModal({ title: isHasRole ? "删除角色" : "新增角色", content: isHasRole ? "点击确定删除该角色" : "点击确定新增该角色", })) {
-                  Taro.showLoading({ mask: true, title: "更新中..." });
-                  const res_userInfo = await Api_user_edit_ctn({
-                    userId: userInfo.id!,
-                    roles_: _roles.map(ee => ee.id),
-                    registStatus: 2,
-                    ...(_roles.find(ee => ee.roleKey === "REGIMENT") ? { deptId: userInfo.id } : null)  //
-                  });
-                  Taro.showToast({ icon: "none", title: "更新完成" });
-                  setUserInfo(res_userInfo);
-                } else {
-                  throw new Error("取消");
-                }
-              }}>{e.roleName}</ComButton>;
-          })}
-        </View>
-      </View>
-
-      {roo___has_role(userInfo, ["SUPPLIER"]) &&
-        <>
-          <ComButton ll className='cccplh bccwhite mb10'>供应商类别</ComButton>
-          <View className='dy mb10'>
-            {dicts_product_category?.map(e => {
-              return <ComButton ll className={`bborder ${e.dictValue === userInfo.supplierTypeDictIds ? 'cccgreen' : ''}`} key={e.dictCode} onClick={async () => {
-                Taro.showLoading({ mask: true, title: "更新中..." });
-                const res_userInfo = await Api_user_edit_ctn({ userId: userInfo.id!, supplierTypeDictIds: e.dictValue });
-                setUserInfo(res_userInfo);
-                Taro.showToast({ icon: "none", title: "更新完成" });
-              }}>{e.dictLabel}</ComButton>;
-            })}
-          </View>
-        </>
-      }
-
-      {roo___has_role(userInfo, ["REGIMENT"]) &&
-        <>
-          <ComButton className='cccplh mb10 bccwhite' ll >快递账号配置</ComButton>
-          <View className='dy'>
-            {dicts_delivery?.map(e => <ComButton ll className={`bborder mb10 ${userInfo.logistics?.find(ee => ee.deliveryId === e.deliveryId) ? "cccgreen" : ""}`} key={e.bizId}
-              onClick={async () => {
-                if (userInfo.logistics?.find(ee => ee.deliveryId === e.deliveryId)) { // 减配
-
-                  if (await try_Taro_showModal({ title: "提示", content: "您确定要取消该团长的的面单号？", confirmText: "取消授权" })) {
-                    Taro.showLoading({ mask: true, title: "取消中..." });
-                    const res_userInfo = await Api_user_edit_ctn({ userId: userInfo.id!, logistics_: userInfo.logistics?.filter(ee => ee.dictId !== e.id).map(ee => ee.dictId ?? ee.id!), });
-                    setUserInfo(res_userInfo);
-                    Taro.hideLoading();
-                  } else {
-                    throw new Error("取消");
-                  }
-                } else { // 增配
-                  if (await try_Taro_showModal({ title: "提示", content: "您确认要授权面单号给该团长?", confirmText: "确认授权" })) {
-                    Taro.showLoading({ mask: true, title: "授权中..." });
-                    const res_userInfo = await Api_user_edit_ctn({ userId: userInfo.id!, logistics_: [...(userInfo.logistics ?? []), e].map(ee => ee.dictId ?? ee.id!), });
-                    setUserInfo(res_userInfo);
-                    Taro.hideLoading();
-                  } else {
-                    throw new Error("取消");
-                  }
-                }
-              }}>{e.deliveryName?.slice(0, 2)}</ComButton>)}
-          </View>
-          <ComButton ll className='mb10 bccwhite cccplh'>快递价格方案</ComButton>
-          <View className='dy mb10'>
-            {dicts_logisticPricescheme?.map(e => {
-              return <ComButton ll className={`bborder ${userInfo?.logisticPriceSchemeId == e.id ? 'cccgreen' : ''}`} key={e.id} onClick={async () => {
-                Taro.showLoading({ mask: true, "title": "更新中..." });
-                const res_userInfo = await Api_user_edit_ctn({ userId: userInfo.id!, logisticPriceSchemeId: e.id, });
-                setUserInfo(res_userInfo);
-                Taro.showToast({ icon: "none", title: "更新完成" });
-              }}>
-                {e.name}
-              </ComButton>;
-            })}
-          </View>
-        </>
-      }
-      {roo___has_role(userInfo, ["MERCHANT"]) &&
-        <>
-          <ComButton className='cccplh mb10 bccwhite' ll >快递账号配置</ComButton>
-          <View className='dy'>
-            {dicts_delivery?.map(e => <ComButton ll className={`bborder mb10 ${userInfo.logistics?.find(ee => ee.deliveryId === e.deliveryId) ? "cccgreen" : ""}`} key={e.bizId}
-              onClick={async () => {
-                if (userInfo.logistics?.find(ee => ee.deliveryId === e.deliveryId)) { // 减配
-
-                  if (await try_Taro_showModal({ title: "提示", content: "您确定要取消该团长的的面单号？", confirmText: "取消授权" })) {
-                    Taro.showLoading({ mask: true, title: "取消中..." });
-                    const res_userInfo = await Api_user_edit_ctn({ userId: userInfo.id!, logistics_: userInfo.logistics?.filter(ee => ee.dictId !== e.id).map(ee => ee.dictId ?? ee.id!), });
-                    setUserInfo(res_userInfo);
-                    Taro.hideLoading();
-                  } else {
-                    throw new Error("取消");
-                  }
-                } else { // 增配
-                  if (await try_Taro_showModal({ title: "提示", content: "您确认要授权面单号给该团长?", confirmText: "确认授权" })) {
-                    Taro.showLoading({ mask: true, title: "授权中..." });
-                    const res_userInfo = await Api_user_edit_ctn({ userId: userInfo.id!, logistics_: [...(userInfo.logistics ?? []), e].map(ee => ee.dictId ?? ee.id!), });
-                    setUserInfo(res_userInfo);
-                    Taro.hideLoading();
-                  } else {
-                    throw new Error("取消");
-                  }
-                }
-              }}>{e.deliveryName?.slice(0, 2)}</ComButton>)}
-          </View>
-        </>
-      }
     </View>
     }
   </>;

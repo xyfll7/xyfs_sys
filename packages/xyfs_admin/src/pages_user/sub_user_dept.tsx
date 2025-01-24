@@ -1,7 +1,8 @@
 // :: pages_user/sub_user_dept
-import { Text, View } from "@tarojs/components";
+import { Picker, Text, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { DeptInfo } from "@xyfs/taro_uii";
+import { Api_order_paymentExport_ctn } from "@xyfs/taro_uii/api/api__orders";
 import { Api_dept_add_ctn, Api_dept_del_ctn, Api_dept_edit_ctn, Api_dept_info_ctn, Api_dept_list_ctn, Api_dept_removeUser_ctn, Api_dept_userList_ctn } from "@xyfs/taro_uii/api/api__users";
 import { ComButton } from '@xyfs/taro_uii/components/ComButton';
 import { ComInput } from "@xyfs/taro_uii/components/ComInput";
@@ -16,8 +17,11 @@ import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { ROLE_ST } from "@xyfs/taro_uii/src/config";
 import { roo___has_role } from "@xyfs/taro_uii/src/roles";
 import { useSTDicts } from "@xyfs/taro_uii/store/store";
-import { try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
+import { try_Taro_navigateTo, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
 import { useHook_Reducer } from "@xyfs/taro_uii/utils/useHooks";
+import { utils_get_start_end_date } from "@xyfs/taro_uii/utils/util";
+import { coo___ios_date } from "@xyfs/utils/util";
+import { format } from "date-fns";
 import { FC, useEffect, useState } from "react";
 
 definePageConfig({
@@ -39,7 +43,7 @@ const Index: FC<{}> = ({ }) => {
   const [mode, setMode] = useState<"add" | "edit">();
 
   const [deptUserList, setDeptUserList] = useState<any[] | null>(null);
-
+  const [date, setDate] = useState<string>(format(coo___ios_date(), "yyyy-MM-dd"));
   return <MMMAAPage>
     <ComNav>
       <View className='ww'>
@@ -52,32 +56,61 @@ const Index: FC<{}> = ({ }) => {
       {depts === undefined && <ComLoading />}
       {depts?.length === 0 && <ComButton>没有数据</ComButton>}
       {depts && <ComTree list={depts} keyName='deptId'>
-        {(e) =>
-          <View className='bccwhite  ioo ovh pt10 dbtc ww mb10 ww' >
+        {(_dept) => <View className='ww dll bccwhite  ioo ovh pt10 mb10 pr10'>
+          <View className='dbtc ww' >
             <ComButton className='mb10 ww '>
-              <View className='nw1'>{e.deptName}</View>
+              <View className='nw1'>{_dept.deptName}</View>
             </ComButton>
-            <View className='pr10 ww  dy'>
+            <View className='ww  dy'>
               <ComButton rr className='ml10 mb10 cccplh bborder ww nw' onClick={async () => {
                 const res = await try_Taro_showModal({ title: "提示", content: "您确定要删除该部门？" });
                 if (res) {
                   Taro.showLoading({ mask: true, title: "删除中" });
-                  await Api_dept_del_ctn({ deptId: e.deptId });
+                  await Api_dept_del_ctn({ deptId: _dept.deptId });
                   Taro.showToast({ icon: "none", title: "成功" });
                   await ___Api_dept_list_ctn();
                 }
               }}>删除</ComButton>
               <ComButton rr className='ml10 mb10 bborder ww nw' onClick={async () => {
                 Taro.showLoading({ mask: true, title: "加载中" });
-                const res = await Api_dept_userList_ctn({ deptId: e.deptId });
+                const res = await Api_dept_userList_ctn({ deptId: _dept.deptId });
                 setDeptUserList(res);
-                setDept(e);
+                setDept(_dept);
                 Taro.hideLoading();
               }}>成员</ComButton>
-              <ComButton rr className='ml10 mb10 bborder ww nw' onClick={() => { setDept(e); setMode("edit"); }}>修改</ComButton>
-              <ComButton rr className='ml10 mb10 bborder ww nw' onClick={() => { setDept(e); setMode("add"); }}>添加</ComButton>
+              <ComButton rr className='ml10 mb10 bborder ww nw' onClick={() => { setDept(_dept); setMode("edit"); }}>修改</ComButton>
+              <ComButton rr className='ml10 mb10 bborder ww nw' onClick={() => { setDept(_dept); setMode("add"); }}>添加</ComButton>
             </View>
           </View>
+          {roo___has_role(_dept, ["REGIMENT"]) &&
+            <View className='ww dr'>
+              <Picker
+                className='slr mb10'
+                header-text='请选择账单月份'
+                value={date}
+                end={format(coo___ios_date(), "yyyy-MM-dd")}
+                mode='date'
+                fields='month'
+                onChange={async (e) => {
+                  Taro.showLoading({ mask: true, title: "下载中...", });
+                  const _date = `${e.detail.value}-01`;
+                  setDate(_date);
+                  const dateRes = utils_get_start_end_date(_date);
+                  await Api_order_paymentExport_ctn({
+                    deptId: _dept.deptId!,
+                    startDate: dateRes.firstDateOfMonth,
+                    endDate: dateRes.lastDateOfMonth,
+                  });
+                  Taro.hideLoading();
+                  if (await try_Taro_showModal({ title: "提交成功", content: "请到下载任务列表查看对账单", confirmText: "去查看" })) {
+                    await try_Taro_navigateTo({ url: "/pages_comm/icomm_download_list" });
+                  }
+                }}>
+                <ComButton rr className='cccgreen bborder nw'>对账单</ComButton>
+              </Picker>
+            </View>
+          }
+        </View>
         }
       </ComTree>}
     </ComScrollView>
@@ -130,7 +163,7 @@ const Index: FC<{}> = ({ }) => {
 
 
 const IIIAddDept = ({ dept, onSuccess, mode, onClose }: { mode: "edit" | "add", dept: any; onSuccess: () => void; onClose: () => void; }) => {
-  const { dicts_roles, dicts_delivery, dicts_logisticPricescheme, dicts_product_category } = useSTDicts(state => state);
+  const { dicts_roles, dicts_delivery, dicts_logisticPricescheme } = useSTDicts(state => state);
   const [form, setForm] = useHook_Reducer({ deptName: "" });
   const [deptInfo, setDeptInfo] = useState<DeptInfo | null>(null);
   useEffect(() => {

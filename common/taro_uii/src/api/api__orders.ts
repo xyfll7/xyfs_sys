@@ -165,7 +165,7 @@ export async function Api_order_paymentList_ctn(params: {
 
 }
 export async function Api_order_paymentExport_ctn(params: {
-  subUserId?: string;
+  deptId?: string;
   startDate: string;
   endDate: string;
 }): Promise<string> {
