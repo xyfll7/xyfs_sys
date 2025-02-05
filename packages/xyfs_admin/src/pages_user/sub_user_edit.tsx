@@ -18,7 +18,6 @@ import { roo___has_role } from "@xyfs/taro_uii/src/roles";
 import { useSTDicts, useSTSelf } from '@xyfs/taro_uii/store/store';
 import { Taro_getCurrentInstance, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
 import { utils_addressInfoToString } from "@xyfs/taro_uii/utils/util";
-import { coo___objToUrl } from "@xyfs/utils/util";
 import { FC, useEffect, useState } from "react";
 
 definePageConfig({
@@ -62,10 +61,6 @@ const IIImyUserEditorAGENT: FC = () => {
       <View className='dy mb10 ww'>
         <ComImage src={userInfo.avatar ?? ""} />
         <ComButton ll className='ml10 cccplh bccwhite' ><View className='wm10rem nw1'> {userInfo.name} </View></ComButton>
-        <ComButton rr className='cccgreen slr bborder'
-          url={`/pages_regiment/regiment_collection_record?${coo___objToUrl({ OPENID: userInfo.OPENID!, regimentName: userInfo.name! })}`}>
-          对账单
-        </ComButton>
       </View>
 
       <View className='cccplh mb10 '>{utils_addressInfoToString(userInfo)}</View>

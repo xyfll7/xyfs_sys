@@ -17,7 +17,7 @@ import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { ROLE_ST } from "@xyfs/taro_uii/src/config";
 import { roo___has_role } from "@xyfs/taro_uii/src/roles";
 import { useSTDicts } from "@xyfs/taro_uii/store/store";
-import { try_Taro_navigateTo, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
+import { try_Taro_navigateTo, try_Taro_showActionSheet, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
 import { useHook_Reducer } from "@xyfs/taro_uii/utils/useHooks";
 import { utils_get_start_end_date } from "@xyfs/taro_uii/utils/util";
 import { coo___ios_date } from "@xyfs/utils/util";
@@ -63,14 +63,20 @@ const Index: FC<{}> = ({ }) => {
             </ComButton>
             <View className='ww  dy'>
               <ComButton rr className='ml10 mb10 cccplh bborder ww nw' onClick={async () => {
-                const res = await try_Taro_showModal({ title: "提示", content: "您确定要删除该部门？" });
-                if (res) {
-                  Taro.showLoading({ mask: true, title: "删除中" });
-                  await Api_dept_del_ctn({ deptId: _dept.deptId });
-                  Taro.showToast({ icon: "none", title: "成功" });
-                  await ___Api_dept_list_ctn();
+                const [res_index] = await try_Taro_showActionSheet({ itemList: ["修改部门", "删除部门"] });
+                if (res_index === 0) {
+                  setDept(_dept);
+                  setMode("edit");
+                } else if (res_index === 1) {
+                  const res = await try_Taro_showModal({ title: "提示", content: "您确定要删除该部门？" });
+                  if (res) {
+                    Taro.showLoading({ mask: true, title: "删除中" });
+                    await Api_dept_del_ctn({ deptId: _dept.deptId });
+                    Taro.showToast({ icon: "none", title: "成功" });
+                    await ___Api_dept_list_ctn();
+                  }
                 }
-              }}>删除</ComButton>
+              }}>更多</ComButton>
               <ComButton rr className='ml10 mb10 bborder ww nw' onClick={async () => {
                 Taro.showLoading({ mask: true, title: "加载中" });
                 const res = await Api_dept_userList_ctn({ deptId: _dept.deptId });
@@ -78,8 +84,7 @@ const Index: FC<{}> = ({ }) => {
                 setDept(_dept);
                 Taro.hideLoading();
               }}>成员</ComButton>
-              <ComButton rr className='ml10 mb10 bborder ww nw' onClick={() => { setDept(_dept); setMode("edit"); }}>修改</ComButton>
-              <ComButton rr className='ml10 mb10 bborder ww nw' onClick={() => { setDept(_dept); setMode("add"); }}>添加</ComButton>
+              <ComButton rr className='ml10 mb10 bborder ww nw cccgreen' onClick={() => { setDept(_dept); setMode("add"); }}>+加</ComButton>
             </View>
           </View>
           {roo___has_role(_dept, ["REGIMENT"]) &&

@@ -48,12 +48,11 @@ const Index: FC<{}> = ({ }) => {
       date: format(coo___ios_date(), "yyyy-MM-dd"), type: 1
     }), []);
   const { page: page_paymentDetail, page_loading, } = useHook_pageListNew(___page_getter, { pageSize: 10 });
-
   return <MMMAAPage>
     <ComNav>
       <View className='ww'>
         <ComNavBarA className='mb10 pl10'>
-          <ComButton ll className='bcctrans cccplh ml10'>收款记录(<Text className='wm6rem nw1'>{_name}</Text>)</ComButton>
+          <ComButton ll className='bcctrans cccplh ml10'>收款记录(<Text className='wm6rem nw1'>{selfInfo_S.deptName}</Text>)</ComButton>
         </ComNavBarA>
         <View className='prl10 dbtc  ww'>
           <ComButton rr className='slr mb10 cccplh mr10' url='/pages_comm/icomm_download_list'>历史下载记录</ComButton>
