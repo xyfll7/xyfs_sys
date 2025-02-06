@@ -84,7 +84,7 @@ const Index: FC<{}> = ({ }) => {
                 setDept(_dept);
                 Taro.hideLoading();
               }}>成员</ComButton>
-              <ComButton rr className='ml10 mb10 bborder ww nw cccgreen' onClick={() => { setDept(_dept); setMode("add"); }}>+加</ComButton>
+              <ComButton rr className='ml10 mb10 bborder ww nw' onClick={() => { setDept(_dept); setMode("add"); }}><Text className='cccgreen'>+</Text>加</ComButton>
             </View>
           </View>
           {roo___has_role(_dept, ["REGIMENT"]) &&

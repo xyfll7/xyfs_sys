@@ -43,11 +43,20 @@ const Index: FC = () => {
     <ComScrollView className='IOO'>
       {roo___has_role(selfInfo_S!, ["REGIMENT"]) && <IIImmmREGIMENT />}
       {roo___has_role(selfInfo_S!, ["MERCHANT"]) && <IIImmmMERCHANT className='mb10' />}
-      {roo___has_role(selfInfo_S!, ["AGENT"]) && <IIImmmAGENT />}
+
       {roo___has_role(selfInfo_S!, ["DRIVER"]) && <IIImmmDRIVER />}
       {roo___has_role(selfInfo_S!, ["SUPPLIER"]) && <IIImmmSUPPLIER />}
       {roo___has_role(selfInfo_S!, ["SCANNER"]) && <IIImmmSCANNER />}
       {roo___has_role(selfInfo_S!, ["GUIDE"]) && <IIImmmGUIDE />}
+      {roo___has_role(selfInfo_S!, ["REGIMENT"]) && <>
+        <ComButton className='mb10 cccplh bccback'>团长/配置</ComButton>
+        <View className='dy dwp'>
+          <ComButton className='mb10 bccwhite nw mr10' url='/pages_regiment/regiment_bind_cloudPrinter'>云打印机</ComButton>
+          <ComButton className='mb10 bccwhite nw mr10' url='/pages_comm/icomm_printer'>蓝牙设备</ComButton>
+          <ComButton className='mb10 bccwhite nw mr10' url='/pages_regiment/regiment_collection_record'>收款记录</ComButton>
+        </View>
+      </>}
+      {roo___has_role(selfInfo_S!, ["AGENT"]) && <IIImmmAGENT />}
       {roo___has_role(selfInfo_S!, ["AGENT", "REGIMENT"]) && <>
         <ComButton className='bccwhite mb10' url='/pages_comm/icomm_download_list' >下载任务列表</ComButton>
       </>}
@@ -178,12 +187,6 @@ const IIImmmREGIMENT = ({ ...props }: ViewProps) => {
         </View>
       </View>
     }
-    <ComButton className='mb10 cccplh bccback'>团长/配置</ComButton>
-    <View className='dy dwp'>
-      <ComButton className='mb10 bccwhite nw mr10' url='/pages_regiment/regiment_bind_cloudPrinter'>云打印机</ComButton>
-      <ComButton className='mb10 bccwhite nw mr10' url='/pages_comm/icomm_printer'>蓝牙设备</ComButton>
-      <ComButton className='mb10 bccwhite nw mr10' url='/pages_regiment/regiment_collection_record'>收款记录</ComButton>
-    </View>
   </>;
 };
 const IIImmmSUPPLIER = ({ ...props }: ViewProps) => {
