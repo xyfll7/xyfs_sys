@@ -135,7 +135,7 @@ const IIImyUserEditorSUPPLIER: FC = () => {
                 }
                 if (await try_Taro_showModal({ title: isHasRole ? "删除角色" : "新增角色", content: isHasRole ? "点击确定删除该角色" : "点击确定新增该角色", })) {
                   Taro.showLoading({ mask: true, title: "更新中..." });
-                  const res_userInfo = await Api_user_edit_ctn({ userId: userInfo.id!, roles_: _roles.map(ee => ee.id), registStatus: 2 });
+                  const res_userInfo = await Api_user_edit_ctn({ userId: userInfo.id!, roles_: _roles.map(ee => ee.id), });
                   Taro.showToast({ icon: "none", title: "更新完成" });
                   setUserInfo(res_userInfo);
                 } else {

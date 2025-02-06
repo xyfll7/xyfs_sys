@@ -131,9 +131,6 @@ function ___is_required_regiment(selfInfoS: DeptInfo, isNeedDept: boolean = true
 
 // 管理端-验证当前页面必须有权限才能访问否则只能注册
 function ___is_required_role(selfInfoS: DeptInfo, isNeedAnyRole: boolean = true) {
-  if (selfInfoS.registStatus !== 2 && isNeedAnyRole === true) {
-    return false;
-  }
   if (isNeedAnyRole) {
     return roo___has_role(selfInfoS, ["*:*:*"]);
   } else {
@@ -198,11 +195,20 @@ const IIIUserHasNoRole: FC<{ className: string; }> = ({ className }) => {
     <View className='dll ww'>
       <ComButton className='mb10 fwb bccback' hoverClass='none'>欢迎访问小象心选管理端</ComButton>
 
-      {(!selfInfo_S.registStatus || selfInfo_S.roles?.length === 0) && <>
+      {!selfInfo_S.deptId && <>
         <ComButton className='mb10 cccplh  ww bccback' hoverClass='none'  >
           小像心选，团长招募中...
         </ComButton>
         <ComButton className='bccyellow mb10 fwb' url='/pages_user/sub_user_register'>立即报名成为团长</ComButton>
+      </>
+      }
+      {selfInfo_S.deptId && <>
+        <ComButton className='mb10 cccplh  ww bccback' hoverClass='none'  >
+          部门: {selfInfo_S.deptName}
+        </ComButton>
+        <ComButton className='mb10 cccplh  ww bccback' hoverClass='none'  >
+          您所在的部门没有任何权限
+        </ComButton>
       </>
       }
 

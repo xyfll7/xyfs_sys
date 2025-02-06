@@ -226,7 +226,6 @@ const IIIAddDept = ({ dept, onSuccess, mode, onClose }: { mode: "edit" | "add", 
                   const res_deptInfo = await Api_dept_edit_ctn({
                     deptId: deptInfo?.deptId!,
                     roles_: _roles.map(ee => ee.id),
-                    registStatus: 2,
                     ...(_roles.find(ee => ee.roleKey === "REGIMENT") ? { deptId: deptInfo?.id } : null)  //
                   });
                   Taro.showToast({ icon: "none", title: "更新完成" });

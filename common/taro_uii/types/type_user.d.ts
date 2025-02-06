@@ -27,7 +27,6 @@ export type AddressInfo = {
 
 export interface BaseUserInfo {
   id?: string;
-  registStatus: 0 | 1 | 2; // 0 未注册 1 提交申请 2 审核通过
   OPENID?: string;
   UNIONID?: string;
   officialAccountOpenid?: string; // 该用的公众号OPENID
