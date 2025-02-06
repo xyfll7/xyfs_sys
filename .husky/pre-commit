@@ -1,12 +1,6 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-https_proxy="http://127.0.0.1:7890"
-http_proxy="http://127.0.0.1:7890"
-all_proxy="socks5://127.0.0.1:7890"
-export https_proxy
-export http_proxy
-export all_proxy
 echo ✔︎ eslint 🌉 🌆 🌠 🌄 🎑
 pnpm --filter @xyfs/* lint-staged --no-stash
 
