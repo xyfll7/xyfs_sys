@@ -91,9 +91,11 @@ export const MMMAAPage: FC<{
           <View className='safe-height'>
             {process.env.TARO_APP_ADMIN === getMyEnv().appId &&
               <View className='fs06 prl20  ww pbt6 cccplh fwl'>
-                <Text className='mr6'>MOBILE:{useSTSelf.getState().selfInfo?.mobile}</Text>
+                <Text className='mr6'>MOBILE:{useSTSelf.getState().selfInfo?.mobile ?? '000'}</Text>
                 <Text className='mr6'>v:{getMyEnv().version}</Text>
-                <Text className='mr6'>当前部门/{useSTSelf.getState().selfInfo?.deptName}</Text>
+                {useSTSelf.getState().selfInfo?.deptName &&
+                  <Text className='mr6'>当前部门/{useSTSelf.getState().selfInfo?.deptName}</Text>
+                }
               </View>
             }
           </View>
@@ -306,7 +308,7 @@ const netWork = {
 export function ComSELFView({ isRefreshSelfInfo_SEveryTime, ...props }: ViewProps & { isRefreshSelfInfo_SEveryTime?: boolean; }) {
   const net = useSyncExternalStore(netWork.sub, () => netWork.status);
   const [selfInfo_S] = useHook_selfInfo_show({ isRefreshSelfInfo_SEveryTime });
-
+  console.log("selfInfo_S111", selfInfo_S);
   useLoad(() => {
     Taro.onThemeChange(({ theme }) => {
       useSTSelf.getState().setSelfInfoTheme(theme);
@@ -371,6 +373,7 @@ const useHook_selfInfo_show = ({ isRefreshSelfInfo_SEveryTime = false, }: { isRe
       await useSTSelf.getState().sett();
     }
   });
+  console.log("selfInfo_S0000", selfInfo);
   return _R_D ? [selfInfo?.deptId ? selfInfo : null] : [selfInfo];
 }
 

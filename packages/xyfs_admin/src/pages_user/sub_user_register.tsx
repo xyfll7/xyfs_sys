@@ -136,7 +136,8 @@ const Index: FC = () => {
 };
 
 const IIIJoinUs = () => {
-  const [userForm, setUserForm] = useHook_Reducer<DeptInfo>({ name: "", mobile: "" } as DeptInfo);
+  const selfInfo_S = useSTSelf(s => s.selfInfo!);
+  const [userForm, setUserForm] = useHook_Reducer<DeptInfo>({ name: selfInfo_S.name, mobile: selfInfo_S.mobile } as DeptInfo);
   return <>
     <ComScrollView>
       <View className='ioo bccwhite pt10 dll mb10 prl10 ww '>
@@ -167,10 +168,16 @@ const IIIJoinUs = () => {
           }}>{userForm.mobile ? userForm.mobile : "请授权手机号"}</ComButtonOpen>
         </View>
       </View>
+      {selfInfo_S.name && selfInfo_S.mobile &&
+        <View className='ww mb10 dll prl10'>
+          <ComButton ll className='cccplh bccback'>您已报名</ComButton>
+          <ComButton ll className='cccplh bccback'>若要修改姓名或电话，请重新提交</ComButton>
+        </View>
+      }
     </ComScrollView>
 
     <View className='dxy ww prl20'>
-      <ComButton className='bccgreen cccwhite mb10 IOO fwb ww dxy' onClick={async () => {
+      <ComButton className='bccyellow cccwhite mb10 fwb ww dxy' onClick={async () => {
         if (!userForm.name) { Taro.showToast({ icon: "none", title: "请输入姓名", }); return; }
         if (!userForm.mobile) { Taro.showToast({ icon: "none", title: "请授权手机号", }); return; }
         Taro.showLoading({ mask: true, title: "提交中...", });
