@@ -328,9 +328,9 @@ export function ComSELFView({ isRefreshSelfInfo_SEveryTime, ...props }: ViewProp
         <View className='prl10 cccplh'>
           <View>团长的团长必须是团长自己</View>
           <View>请联系管理员</View>
-          <View>姓名：{selfInfo_S?.name}</View>
-          <View>地址：{selfInfo_S?.address}</View>
-          <View>ID：{selfInfo_S?.id}</View>
+          <View>姓名:{selfInfo_S?.name}</View>
+          <View>地址:{selfInfo_S?.address}</View>
+          <View>ID:{selfInfo_S?.id}</View>
         </View>
       </View>
     </ComNav>;

@@ -149,7 +149,7 @@ export const ComCardOrderDryclean: FC<{
                 <ComPrice price={e.totalPrice!} />
               </ComButton>
               <ComButton rr className='cccgreen bborder nw' onClick={async () => { Taro.previewMedia({ current: 0, sources: e.img?.split(",").map(ee => ({ url: ee })) ?? [] }); }}>图片</ComButton>
-              {!e.code && order.orderStatus === 2 && onBindCode && <ComButton rr className='cccgreen bborder nw ml10' onClick={async () => onBindCode?.(e)}>绑码1</ComButton>}
+              {!e.code && order.orderStatus === 2 && onBindCode && <ComButton rr className='cccgreen bborder nw ml10' onClick={async () => onBindCode?.(e)}>绑码</ComButton>}
             </View>
           </View>;
         })}

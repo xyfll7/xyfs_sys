@@ -200,8 +200,7 @@ const IIICameraScaner = (prams: { className?: string, onScanCode: (e: string) =>
   return <View className='dcl ww' style={{ height: '210rpx' }}>
     {getMyEnv().isUseInDev && <View className={`mb10 IOO ovh dxy  ${prams.className}`} style={{ height: '190rpx', width: '98vw', boxShadow: "0px 2rpx 8rpx 0px rgba(0, 0, 0, 0.3)", backgroundColor: "rgb(0 0 0 / 50%)" }}
       onClick={() => {
-        //  prams.onScanCode("9999183");
-        prams.onScanCode("7051011");
+        prams.onScanCode("7208041");
       }}>
       模拟扫码
     </View>
@@ -213,7 +212,7 @@ const IIICameraScaner = (prams: { className?: string, onScanCode: (e: string) =>
         onScanCode={async (e) => {
           if (!isLoading.current) {
             isLoading.current = true;
-            console.info("扫码结果：", e);
+            console.info("扫码结果:", e);
             const _e = e as unknown as { mpEvent: { detail: { type: 'barcode', result: string; }; }; };
             if (_e.mpEvent.detail.type === 'barcode') {
               try {

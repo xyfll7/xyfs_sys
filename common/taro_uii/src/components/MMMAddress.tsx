@@ -94,7 +94,7 @@ export const MMMAddress: FC<{
           </View>
 
           <ComButton ll className='flx1 ww mb10 bccbacktab' hoverClass='none'>
-            <ComInput placeholder='联系人：名字'
+            <ComInput placeholder='联系人:名字'
               value={initAddress.name}
               onInput={(e) => {
                 onSetAddress({ ...initAddress, name: e.detail.value });
@@ -106,7 +106,7 @@ export const MMMAddress: FC<{
               className={`ww ${addStr && (utils_get_str_phone(addStr) !== initAddress.mobile) ? "cccprice" : ""} `}
               ref={inputRef}
               type={inputType}
-              placeholder='联系电话：手机号码/固定电话'
+              placeholder='联系电话:手机号码/固定电话'
               value={initAddress.mobile}
               onInput={(e) => {
                 onSetAddress({ ...initAddress, mobile: e.detail.value.replace(/[^0-9|-]/g, "") });
@@ -145,11 +145,11 @@ export const MMMAddress: FC<{
           </View>
           <ComButton ll className='flx1 ww mb10 bccbacktab' hoverClass='none' >
             {addStr && initAddress?.town && !addStr?.includes(initAddress?.town) && <Text className='cccprice'>镇</Text>}
-            <ComTextarea className='ww' value={initAddress.address} placeholder='详细地址：街道门牌信息' onInputText={(e) => { onSetAddress({ ...initAddress, address: e }); }}></ComTextarea>
+            <ComTextarea className='ww' value={initAddress.address} placeholder='详细地址:街道门牌信息' onInputText={(e) => { onSetAddress({ ...initAddress, address: e }); }}></ComTextarea>
           </ComButton>
           <ComButton rr ll className='mb10 ww bccbacktab bborder' hoverClass='none'>
             <View className='dbtc ww dy'>
-              <Text style={{ maxWidth: "76vw" }}><Text className='nw cccplh fwb'>识别结果：</Text><Text className='cccplh' userSelect>{addStr}</Text></Text>
+              <Text style={{ maxWidth: "76vw" }}><Text className='nw cccplh fwb'>识别结果:</Text><Text className='cccplh' userSelect>{addStr}</Text></Text>
               <Text className={`${addStr ? "cccgreen" : "cccplh"}  nw pl10`} onClick={() => setAddStr("")}>清除</Text>
             </View>
           </ComButton>

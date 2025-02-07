@@ -30,7 +30,7 @@ const Index: FC = () => {
       }}>上传对账单</ComButton>
       {!fileID && <ComButton className='mb10'>请先上传对账单</ComButton>}
       <ComButton className='mb10 cccplh'>
-        模版：单号、重量、超重金额
+        模版:单号、重量、超重金额
       </ComButton>
       {fileID && <ComButton className='mb10 cccplh' >{fileID}</ComButton>}
       {fileID && <ComButton className='mb10 cccgreen' onClick={async () => {

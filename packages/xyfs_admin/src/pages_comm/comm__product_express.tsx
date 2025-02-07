@@ -70,9 +70,9 @@ export const Index = () => {
     <ComNav isRight>
       <View className='ww dbtc'>
         <ComNavBarA className='mb10 pl10'>
-          <ComButton ll className='bcctrans cccplh ml10'>快递服务</ComButton>
+          <ComButton ll className='bcctrans cccplh ml10'><Text className='nw1'>快递服务</Text> </ComButton>
         </ComNavBarA>
-        <ComButton rr className='mr10 mb10 cccplh' onClick={async () => {
+        <ComButton rr className='mr10 mb10 cccplh nw' onClick={async () => {
           Taro.showLoading({ mask: true, title: "生成中..." });
           const res = await utils_get_qrcode({
             appid: process.env.TARO_APP_CLIENT,
@@ -82,7 +82,7 @@ export const Index = () => {
           Taro.hideLoading();
           setPosterUrl(res!);
         }
-        }><Text className='cccgreen'>⤻</Text>海报</ComButton>
+        }><Text className='cccgreen '>⤻</Text>海报</ComButton>
       </View>
     </ComNav>
     <ComScrollView className='IOO'>

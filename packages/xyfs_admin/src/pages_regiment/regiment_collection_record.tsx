@@ -29,8 +29,6 @@ const Index: FC<{}> = ({ }) => {
   const { options } = Taro_getCurrentInstance<{ OPENID?: string; regimentName?: string; }>();
   const [date, setDate] = useState<string>(format(coo___ios_date(), "yyyy-MM-dd"));
   const _OPENID = options.OPENID ?? selfInfo_S?.OPENID;
-  const _name = options.regimentName ?? selfInfo_S?.name;
-
 
   const [paymentDetailSomeDay, setPaymentDetailSomeDay] = useState<any | null>(null);
 
@@ -192,7 +190,7 @@ const IIIPaymentList: FC<{
 
 const IIIPaymentDetailItem: FC<{ index?: number, item: any; isShowRefundTime?: boolean; }> = ({ index, item, isShowRefundTime }) => {
   return <ComButton rr ll className='dbtc bccwhite ww' key={item.id} onClick={() =>
-    Taro.showToast({ icon: "none", title: `收款时间：${item.paymentDate}`, })}>
+    Taro.showToast({ icon: "none", title: `收款时间:${item.paymentDate}`, })}>
     <View className='dy'>
       {Number.isInteger(index) && <View className='cccplh w2rem' >{index}.</View>}
       <View className='mr6 w3rem cccplh'> {isShowRefundTime ? format(coo___ios_date(item.refundTime), "HH:mm") : format(coo___ios_date(item.paymentDate), "HH:mm")}</View>

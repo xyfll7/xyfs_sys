@@ -52,7 +52,7 @@ const CPExpressPath: FC = () => {
         <>
           {path?.map((e) => {
             return <View key={e.waybillId} className='ww dll'>
-              <ComButton className='bcctrans mb10 cccplh' hoverClass='none'>运单号：{e.waybillId}</ComButton>
+              <ComButton className='bcctrans mb10 cccplh' hoverClass='none'>运单号:{e.waybillId}</ComButton>
               {e.path && e.path?.length === 0 && <ComLoading className='mb10' isEmpty>待揽件</ComLoading>}
               {e.path && e.path?.length !== 0 &&
                 <View className='bccwhite IOO pt10 mb10 dll ww'>

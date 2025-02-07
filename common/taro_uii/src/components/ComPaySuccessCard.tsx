@@ -74,7 +74,7 @@ export function ComPaySuccessCard() {
                   await try_Taro_setClipboardData({ data: express_S.productList?.[0]?.waybillId });
                   Taro.showToast({ icon: "none", title: "已复制", });
                 }}>
-                  <View className='dy'>单号：{express_S.productList?.[0]?.waybillId ?? "暂无"} {express_S.productList?.[0]?.waybillId && <View className='ml10 cccgreen'>复制</View>} </View>
+                  <View className='dy'>单号:{express_S.productList?.[0]?.waybillId ?? "暂无"} {express_S.productList?.[0]?.waybillId && <View className='ml10 cccgreen'>复制</View>} </View>
                 </ComButton>
                 {express_S.productList?.[0]?.waybillId &&
                   <MMMShare id={express_S?.id} orderType='快递' name={selfInfo_S?.name ?? ""} ></MMMShare>

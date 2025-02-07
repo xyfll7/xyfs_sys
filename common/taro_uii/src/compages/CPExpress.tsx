@@ -156,7 +156,7 @@ const ExpressRecMan: FC<{ onChooseProvinceCityArea: () => void; onSmartPast: (st
       </View>
       <ComButton ll rr className='bccbacktab flx1 mb10 ww dy' hoverClass='none'>
         <ComInput ref={inputRef} className={`${addStr && (utils_get_str_phone(addStr) !== express_S.productList?.[0]?.recMan?.mobile) ? "cccprice" : ""} `}
-          type={inputType} placeholder='联系电话：手机号码/固定电话' value={express_S?.productList?.[0]?.recMan?.mobile}
+          type={inputType} placeholder='联系电话:手机号码/固定电话' value={express_S?.productList?.[0]?.recMan?.mobile}
           onInput={(e) => {
             useSTExpress.getState().sett({ productList: [{ recMan: { mobile: e.detail.value, } }] });
           }} />
@@ -193,7 +193,7 @@ const ExpressRecMan: FC<{ onChooseProvinceCityArea: () => void; onSmartPast: (st
       </View>
       <ComButton ll className='bccbacktab mb10  ww' hoverClass='none' >
         {addStr && express_S.productList?.[0]?.recMan?.town && !addStr?.includes(express_S.productList?.[0]?.recMan?.town) && <Text className='cccprice'>镇</Text>}
-        <ComTextarea className='ww' value={express_S.productList?.[0]?.recMan?.address} placeholder='详细地址：街道门牌信息'
+        <ComTextarea className='ww' value={express_S.productList?.[0]?.recMan?.address} placeholder='详细地址:街道门牌信息'
           onInputText={(e) => {
             useSTExpress.getState().sett({ productList: [{ recMan: { address: e, } }] });
           }} />
@@ -201,7 +201,7 @@ const ExpressRecMan: FC<{ onChooseProvinceCityArea: () => void; onSmartPast: (st
     </View>
     <ComButton rr ll className='mb10 ww bccbacktab bborder' hoverClass='none' >
       <View className='dbtc ww dy'>
-        <Text style={{ maxWidth: "76vw" }}><Text className='nw cccplh fwb' userSelect>识别结果：</Text ><Text className='cccplh' userSelect>{addStr}</Text></Text>
+        <Text style={{ maxWidth: "76vw" }}><Text className='nw cccplh fwb' userSelect>识别结果:</Text ><Text className='cccplh' userSelect>{addStr}</Text></Text>
         <Text className={`${addStr ? "cccgreen" : "cccplh"}  nw pl10`} onClick={() => setAddStr("")}>清除</Text>
       </View>
     </ComButton>
@@ -216,7 +216,7 @@ const ExpressInfo: FC = () => {
     <>
       <View className='dwp bccwhite prl10 pt10 IOO mb10'>
         <View className='dy dwp mb10'>
-          <ComButton rr ll className='fwb bccwhite'>寄件方式：</ComButton>
+          <ComButton rr ll className='fwb bccwhite'>寄件方式:</ComButton>
           {([...(roo___has_role(selfInfo_S, ["REGIMENT"]) ? [PickUp_ST.到店寄件] : [PickUp_ST.上门取件, PickUp_ST.到店寄件])] as PickUp_ST[]).map((e) => (
             // {([PickUp_ST.上门取件, PickUp_ST.到店寄件] as PickUp_ST[]).map((e) => (
             <ComButton ll key={e} className={`bborder ${express_S.pickUpType == e ? "cccgreen" : ""}`}
@@ -226,7 +226,7 @@ const ExpressInfo: FC = () => {
           ))}
         </View>
         <ComButton ll className='bccbacktab mb10 dy' hoverClass='none'>
-          <View className='fwb nw'>品名：</View>
+          <View className='fwb nw'>品名:</View>
           <ComInput placeholder='请输入品名' value={express_S?.productList?.[0]?.itemType} onInput={(e) => {
             useSTExpress.getState().sett({ productList: [{ itemType: e.detail.value }] });
           }} />
@@ -244,7 +244,7 @@ const ExpressInfo: FC = () => {
           ))}
         </View>
         <ComButton ll className='bccbacktab mb10 dy' hoverClass='none' >
-          <View className='fwb nw'>备注：</View>
+          <View className='fwb nw'>备注:</View>
           <ComInput value={express_S.productList?.[0]?.itemNotes} placeholder='给团长捎句话' onInput={(e) => { useSTExpress.getState().sett({ productList: [{ itemNotes: e.detail.value }] }); }} />
         </ComButton>
         <View className='ds dwp'>

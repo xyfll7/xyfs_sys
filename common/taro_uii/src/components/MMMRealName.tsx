@@ -80,7 +80,7 @@ export const MMMRealName: FC<{ onClose?: () => void; address?: AddressInfo | nul
       </View>
     </>
     <View className='prl10 pbt6 mb10 ioo cccplh'>
-      <View>亲爱的用户：</View>
+      <View>亲爱的用户:</View>
       <View style='text-indent: 2em;'>根据国家邮政局《寄件渠道“三个100%”》的要求，请您配合完成实名登记。若不登记，也可在我司业务员上门揽件时，配合出示身份证，谢谢您的配合！</View>
       <View style='text-indent: 2em;'>根据国家法律规定，您已知晓我们收集您的个人身份证信息。</View>
     </View>

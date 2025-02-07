@@ -100,7 +100,7 @@ const IIImmmAGENT = ({ ...props }: ViewProps) => {
         部门管理
       </ComButton>
       <ComButtonOpen className='bccwhite mb10 mr10' id='invite'
-        shareTitle={`${selfInfo_S!.name ?? "代理"} 邀请您注册子用户`}
+        shareTitle={`${selfInfo_S!.name} 邀请您注册`}
         openType='share'
         sharePath='/pages_user/sub_user_register'>
         邀请注册
@@ -125,7 +125,7 @@ const IIImmmREGIMENT = ({ ...props }: ViewProps) => {
               path: `/pages_regiment/regiment_invitor?${coo___objToUrl({ deptId: selfInfo_S!.OPENID })}`,
               noRelaunchIfPathUnchanged: false,
             })}>
-            分享邀请：<Text className='cccgreen'>小象心选顾客端</Text>
+            分享邀请:<Text className='cccgreen'>小象心选顾客端</Text>
           </ComButton>
         </View>
         <View className='dy dwp'>
@@ -199,7 +199,7 @@ const IIImmmSUPPLIER = ({ ...props }: ViewProps) => {
     <View className='dy'>
       <ComButton className='bccwhite  fwb mb10 mr10' url='/pages_comm/comm__product_dryclean'>干洗商品</ComButton>
       <ComButtonOpen ll className='bccwhite mb10 mr10' id='invite'
-        shareTitle={`供应商：${selfInfo_S!.name} 邀请您注册员工`}
+        shareTitle={`供应商:${selfInfo_S!.name} 邀请您注册员工`}
         openType='share'
         sharePath='/pages_user/sub_user_register'>
         邀请注册-员工

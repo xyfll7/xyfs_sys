@@ -84,10 +84,10 @@ const Index: FC<{}> = ({ }) => {
             </ComButton>
             <ComButton rr ll>{i + 1}</ComButton>
           </View>
-          <View className='cccplh fs08'>开始下载时间： {e.createTime}  </View>
-          <View className='cccplh fs08'>结束下载时间： {e.updateTime ?? '下载中...'} </View>
-          {e.type === 3 && <View className='cccplh fs08'>任务详情： {e.url} </View>}
-          <View className='cccplh fs08 mb10'>{e.updateTime ? "任务用时：" : "已用时："} {differenceInMinutes(coo___ios_date(e.updateTime ? e.updateTime : undefined), coo___ios_date(e.createTime))} 分钟  </View>
+          <View className='cccplh fs08'>开始下载时间: {e.createTime}  </View>
+          <View className='cccplh fs08'>结束下载时间: {e.updateTime ?? '下载中...'} </View>
+          {e.type === 3 && <View className='cccplh fs08'>任务详情: {e.url} </View>}
+          <View className='cccplh fs08 mb10'>{e.updateTime ? "任务用时:" : "已用时:"} {differenceInMinutes(coo___ios_date(e.updateTime ? e.updateTime : undefined), coo___ios_date(e.createTime))} 分钟  </View>
         </View>;
       })
       }

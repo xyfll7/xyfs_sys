@@ -70,7 +70,7 @@ export const CPPublisher: FC = () => {
         <View className='ww '>
           <ComTextarea className='ww ' minHeight='calc(2 * var(--rem_base))' confirmType='return' value={form.str} placeholder='简单介绍一下吧 ～'
             onInputText={(e) => { setForm({ str: e }); }} />
-          <View className='fs08 cccplh'>注：点击换行后，第一行为标题</View>
+          <View className='fs08 cccplh'>注:点击换行后，第一行为标题</View>
         </View>
       </ComButton>
       <ComImageUploader images={form.pictureUrl} onSetImages={(e) => { setForm({ pictureUrl: e.join(",") }); }} upLoader={async (e) => {
@@ -80,7 +80,7 @@ export const CPPublisher: FC = () => {
         return [...res_cloud_files.map(ee => ee.fileID)];
       }} />
       <ComButton className='bccbacktab mb10 dy' hoverClass='none'>
-        <Text className='nw cccplh'> 价格：</Text>
+        <Text className='nw cccplh'> 价格:</Text>
         <ComInput className='cccprice' type='digit' confirmType='done' value={form.price} placeholder='请输入价格' onBlur={() => { form.price === "" && setForm({ price: "0.00" }); }}
           onFocus={() => { form.price === "0.00" && setForm({ price: "" }); }}
           onInput={(e) => setForm({ price: coo___get_price(e.detail.value, form.price) })} />

@@ -3,21 +3,22 @@
   "description": "小象心选_顾客端",
   "setting": {
     "urlCheck": true,
-    "es6": true,
+    "es6": false,
     "enhance": true,
     "compileHotReLoad": false,
-    "postcss": false,
-    "minified": false,
-    "swc": true,
+    "postcss": true,
+    "minified": true,
+    "swc": false,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
       "outputPath": ""
     },
-    "coverView": false,
-    "showShadowRootInWxmlPanel": false,
+    "coverView": true,
+    "showShadowRootInWxmlPanel": true,
     "packNpmRelationList": [],
-    "ignoreUploadUnusedFiles": true
+    "ignoreUploadUnusedFiles": true,
+    "useIsolateContext": true
   },
   "compileType": "miniprogram",
   "srcMiniprogramRoot": "dist/",
@@ -25,10 +26,5 @@
   "editorSetting": {
     "tabIndent": "insertSpaces",
     "tabSize": 2
-  },
-  "packOptions": {
-    "ignore": [],
-    "include": []
-  },
-  "appid": "wxbd3ffb2bc1deb654"
+  }
 }

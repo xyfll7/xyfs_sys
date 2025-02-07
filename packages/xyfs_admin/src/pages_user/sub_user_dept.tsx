@@ -129,7 +129,7 @@ const Index: FC<{}> = ({ }) => {
         <ComNavBarB className='mb10' onClose={() => setDeptUserList(null)}>
           <View className='dy'><ComButton className='fwb bccback'>部门用户</ComButton></View>
         </ComNavBarB>
-        <ComButton className='mb10 bcctrans' hoverClass='none'> <Text className='cccplh'>所属部门：</Text> {dept.deptName}</ComButton>
+        <ComButton className='mb10 bcctrans' hoverClass='none'> <Text className='cccplh'>所属部门:</Text> {dept.deptName}</ComButton>
         <ComScrollView className=''>
           {deptUserList.map(e => {
             return <View key={e.id} className='ww ioo bccwhite mb10 prl10 pt10'>
@@ -182,7 +182,7 @@ const IIIAddDept = ({ dept, onSuccess, mode, onClose }: { mode: "edit" | "add", 
     <ComNavBarB className='mb10' onClose={onClose}>
       <View className='dy'><ComButton className='fwb bccback'>{mode === "add" ? "添加子部门" : "修改部门"} </ComButton></View>
     </ComNavBarB>
-    <ComButton className='mb10 bcctrans' hoverClass='none'> <Text className='cccplh'>{mode === "add" ? "上级部门：" : "部门名称："} </Text> {dept.deptName}</ComButton>
+    <ComButton className='mb10 bcctrans' hoverClass='none'> <Text className='cccplh'>{mode === "add" ? "上级部门:" : "部门名称:"} </Text> {dept.deptName}</ComButton>
     {!deptInfo && <ComLoading className='mb10'></ComLoading>}
     {deptInfo && <View className='ww mb10 dll'>
       <View className='mb10 ww dy'>
@@ -210,7 +210,7 @@ const IIIAddDept = ({ dept, onSuccess, mode, onClose }: { mode: "edit" | "add", 
       <View className='ww dll '>
         <ComButton className='cccplh mb10 bccback'  >指定部门角色</ComButton>
         <View className='dy dwp'>
-          {dicts_roles?.filter((e) => ["REGIMENT", "SUPPLIER", "DRIVER", "MERCHANT", "GUIDE"].includes(e.roleKey)).map((e, i) => {
+          {dicts_roles?.filter((e) => ["REGIMENT", "SUPPLIER", "DRIVER", "MERCHANT", "GUIDE", "SCANNER"].includes(e.roleKey)).map((e, i) => {
             return <ComButton rr className={` mb10 ${deptInfo?.roles?.some(ee => ee.roleKey === e.roleKey) ? 'cccgreen' : ''}`}
               onClick={async () => {
                 const isHasRole = deptInfo?.roles?.some(ee => ee.roleKey === e.roleKey);

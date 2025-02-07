@@ -62,7 +62,7 @@ const Index: FC<{}> = ({ }) => {
               await add_da_yin_yuan();
             }
           }}>
-            添加云打印机 {printerType && printerIdDYY && <View>：{printerType}</View>}
+            添加云打印机 {printerType && printerIdDYY && <View>:{printerType}</View>}
           </ComButton>
           {printerType === "打印猿" &&
             <>
@@ -103,7 +103,7 @@ const IIIBindAccountList: FC<{}> = ({ }) => {
         <View className='prl10 pt10 ioo bccwhite mb10 dll ww' key={printer.siid}>
           <ComButton ll className='cccplh'>打印机ID {printer.name} {printer.siid}</ComButton>
           <View className='dbtc mb10 ww'>
-            <ComButton ll className='cccplh'> 打印机类型： {printer.shareCode ? "打印猿" : "快递100"}</ComButton>
+            <ComButton ll className='cccplh'> 打印机类型: {printer.shareCode ? "打印猿" : "快递100"}</ComButton>
             <ComButton rr className='cccplh bborder'
               onClick={async () => {
                 if (await try_Taro_showModal({ title: "提示", content: "您确定要删除该打印机?", })) {

@@ -297,7 +297,7 @@ const RecManInfo: FC = () => {
   return <View className='prl10 pt10'>
     <ComButton className='mb10 ww bccback' >
       <View className='dll'>
-        <View className='nw'>团长：<Text className='wm4rem mr6 nw1'>{dept?.deptName}</Text>{dept?.mobile}</View>
+        <View className='nw'>团长:<Text className='wm4rem mr6 nw1'>{dept?.deptName}</Text>{dept?.mobile}</View>
         <View className='nw1 wm19rem cccplh fs08'>{dept?.address}</View>
       </View>
     </ComButton>
@@ -311,7 +311,7 @@ const RecManInfo: FC = () => {
         Taro.hideLoading();
       }}>
         <View className='dll'>
-          <View className='nw'><Text>收货人：</Text><Text className='mr6'>{selfInfo_S.defaultRecManAddress.name}</Text><Text>{selfInfo_S.defaultRecManAddress.mobile}</Text> </View>
+          <View className='nw'><Text>收货人:</Text><Text className='mr6'>{selfInfo_S.defaultRecManAddress.name}</Text><Text>{selfInfo_S.defaultRecManAddress.mobile}</Text> </View>
           <View className='nw1 wm19rem cccplh fs08'>{selfInfo_S.defaultRecManAddress.address}</View>
         </View>
       </ComButton> :

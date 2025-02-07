@@ -84,11 +84,11 @@ const IIIShopCartTabBarUser: FC<{ onToggle: () => void; onPay?: () => void; }> =
       <ComButton className='mb10 bccback cccplh'>预约上门取衣服(无需添加购物车)</ComButton>
       <ComButton className='bccbacktab mb10 ww' hoverClass='none'>
         <View className='dy ww'>
-          <Text className='nw'>备注：</Text> <ComInput cursorSpacing={100} adjustPosition placeholder='给团长捎句话' onInput={e => setForm({ ...form, remark: e.detail.value })}></ComInput>
+          <Text className='nw'>备注:</Text> <ComInput cursorSpacing={100} adjustPosition placeholder='给团长捎句话' onInput={e => setForm({ ...form, remark: e.detail.value })}></ComInput>
         </View>
       </ComButton>
       <View className='dy prl10 mb10'>
-        <Text className='cccplh'>上门时间：</Text>
+        <Text className='cccplh'>上门时间:</Text>
         <ComButton rr className={`mr10 ${form.pickUpDate ? "" : "cccgreen"}`} onClick={() => setForm({ ...form, pickUpDate: "", pickUpRange: "" })}>尽快</ComButton>
         <ComButton rr className={`${form.pickUpDate === format(subDays(coo___ios_date(), -1), "yyyy-MM-dd") ? "cccgreen" : ""}`} onClick={() => setForm({ ...form, pickUpDate: format(subDays(coo___ios_date(), -1), "yyyy-MM-dd") })}>明天</ComButton>
         <ComButton rr className={`${form.pickUpDate === format(subDays(coo___ios_date(), -2), "yyyy-MM-dd") ? "cccgreen" : ""}`} onClick={() => setForm({ ...form, pickUpDate: format(subDays(coo___ios_date(), -2), "yyyy-MM-dd") })}>后天</ComButton>
