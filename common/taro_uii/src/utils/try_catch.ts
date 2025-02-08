@@ -174,6 +174,12 @@ export async function try_Taro_openDocument(params: Taro.openDocument.Option) {
     throw new Error("打开文件失败");
   }
 }
+export async function try_Taro_shareFileMessage(params: Taro.shareFileMessage.Option) {
+  const res = await Taro.shareFileMessage({ ...params });
+  if (res.errMsg !== "shareFileMessage:ok") {
+    throw new Error("打开文件失败");
+  }
+}
 export async function try_Taro_showActionSheet<T>(option: Taro.showActionSheet.Option & { suffix?: string; }): Promise<[number, T]> {
   try {
     const res_action = await Taro.showActionSheet({ ...option, itemList: option.itemList.map(e => `${e}${option.suffix ?? ""}`) });

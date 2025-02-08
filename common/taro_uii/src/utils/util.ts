@@ -119,6 +119,15 @@ export async function utils_open_excel({ url, file_name }: { url: string, file_n
   });
   await try_Taro_openDocument({ filePath: res_savedFilePath, showMenu: true });
 }
+export async function utils_downloadFile_saveFile({ url, file_name }: { url: string, file_name: string; }) {
+  const res_filePath = await try_Taro_downloadFile({ url });
+  const res_savedFilePath = await try_Taro_getFileSystemManager_saveFile({
+    tempFilePath: res_filePath!,
+    filePath: `${Taro.env.USER_DATA_PATH}/${file_name}`
+  });
+  return res_savedFilePath;
+
+}
 
 // 导入 excel 表格文件
 export async function utils_import_excel(): Promise<string> {

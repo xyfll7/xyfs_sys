@@ -9,8 +9,9 @@ import { ComNav } from "@xyfs/taro_uii/components/ComNav";
 import { ComNavBarA } from "@xyfs/taro_uii/components/ComNavBarA";
 import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
 import { ComSELFView, MMMAAPage } from "@xyfs/taro_uii/components/MMMAAPage";
+import { try_Taro_shareFileMessage, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
 import { useHook_pageListNew } from "@xyfs/taro_uii/utils/useHooks";
-import { utils_open_excel } from "@xyfs/taro_uii/utils/util";
+import { utils_downloadFile_saveFile } from "@xyfs/taro_uii/utils/util";
 import { coo___ios_date } from "@xyfs/utils/util";
 import { differenceInMinutes, format } from "date-fns";
 import { FC, useCallback } from "react";
@@ -44,7 +45,7 @@ const Index: FC<{}> = ({ }) => {
         const file_name = `${e.endDate?.slice(0, 7).split("-")[0] ?? ""}年${e.endDate?.slice(0, 7).split("-")[1] ?? ""}月_${e.name}`;
         return <View className='dll mb10 bccwhite pt10 ioo ww prl10' key={e.id}>
           <View className='dbtc ww'>
-            <ComButton ll className='' onClick={async () => {
+            <ComButton ll className='' onTap={async () => {
 
               if (differenceInMinutes(coo___ios_date(), coo___ios_date(e.createTime)) > ___time * 60 * 2) {
                 throw new Error("该文件已过时，请去下载最新文件");
@@ -52,8 +53,12 @@ const Index: FC<{}> = ({ }) => {
 
               if (e.url) {
                 Taro.showLoading({ mask: true, title: "下载中..." });
-                await utils_open_excel({ url: e.url, file_name: `${file_name}_对账单_${format(coo___ios_date(e.createTime), "yyyy_MM_dd_HH_mm_ss")}.xlsx` });
-                Taro.showToast({ icon: "none", title: "下载成功" });
+                const ___fileName = `${file_name}_对账单_${format(coo___ios_date(e.createTime), "yyyy_MM_dd_HH_mm_ss")}.csv`;
+                const res_savedFilePath = await utils_downloadFile_saveFile({ url: e.url, file_name: ___fileName });
+                await try_Taro_showModal({
+                  title: "下载成功", content: "请保存文件后查看", showCancel: true, confirmText: "保存", cancelText: "取消",
+                  success: async (res) => { if (res.confirm) { await try_Taro_shareFileMessage({ filePath: res_savedFilePath, fileName: ___fileName }); } }
+                });
               } else {
                 throw new Error("正在下载，请稍后");
               }
