@@ -224,9 +224,8 @@ const IIIAddDept = ({ dept, onSuccess, mode, onClose }: { mode: "edit" | "add", 
                 if (await try_Taro_showModal({ title: isHasRole ? "删除角色" : "新增角色", content: isHasRole ? "点击确定删除该角色" : "点击确定新增该角色", })) {
                   Taro.showLoading({ mask: true, title: "更新中..." });
                   const res_deptInfo = await Api_dept_edit_ctn({
-                    deptId: deptInfo?.deptId!,
                     roles_: _roles.map(ee => ee.id),
-                    ...(_roles.find(ee => ee.roleKey === "REGIMENT") ? { deptId: deptInfo?.id } : null)  //
+                    ...(_roles.find(ee => ee.roleKey === "REGIMENT") ? { deptId: deptInfo?.deptId } : null)  //
                   });
                   Taro.showToast({ icon: "none", title: "更新完成" });
                   setDeptInfo(res_deptInfo);
@@ -240,8 +239,8 @@ const IIIAddDept = ({ dept, onSuccess, mode, onClose }: { mode: "edit" | "add", 
       {roo___has_role(deptInfo, ["REGIMENT"]) &&
         <>
           <ComButton className='cccplh mb10 bccback'  >快递账号配置</ComButton>
-          <View className='dy'>
-            {dicts_delivery?.map(e => <ComButton className={`bccwhite mb10 ${deptInfo.logistics?.find(ee => ee.deliveryId === e.deliveryId) ? "cccgreen" : ""}`} key={e.bizId}
+          <View className='ds dwp ww'>
+            {dicts_delivery?.map(e => <ComButton className={`bccwhite mb10 nw ${deptInfo.logistics?.find(ee => ee.deliveryId === e.deliveryId) ? "cccgreen" : ""}`} key={e.bizId}
               onClick={async () => {
                 if (deptInfo.logistics?.find(ee => ee.deliveryId === e.deliveryId)) { // 减配
 
