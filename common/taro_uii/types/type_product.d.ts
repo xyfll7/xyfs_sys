@@ -106,7 +106,7 @@ interface OrderInfo<T> {
   index?: string;// 扫码揽件编号
   eventType?: 1 | 2 | 3 | 4;// 团1、厂2、厂3、团4
   latestEventType?: 1 | 2 | 3 | 4;// 团1、厂2、厂3、团4
-  regimentAddress?: AddressInfo;
+  deptAddress?: AddressInfo;
   officialAccountOpenid?: string; // 团长公众号OPENID
   deptName?: string;
   userName?: string;

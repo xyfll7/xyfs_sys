@@ -98,7 +98,7 @@ const IIIShopCartTabBarUser: FC<{ onToggle: () => void; onPay?: () => void; }> =
           <ComButton rr className={`${form.pickUpRange ? "cccgreen" : ""}`}>{form.pickUpRange ? form.pickUpRange : "几点？"} </ComButton>
         </Picker>
       </View>
-      <ComAddressSwitchor className='bccback mb10' isShort isIcon title='收货人:' address={address!} onClick={async (e) => {
+      <ComAddressSwitchor className='bccback mb10 ww' isShort isIcon title='收货人:' address={address!} onClick={async (e) => {
         const res_address = await try_Taro_chooseAddress();
         setAddress(res_address);
       }} />

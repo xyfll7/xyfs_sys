@@ -410,7 +410,7 @@ export function on_get_printer_str_order_bing_goods(_order: OrderInfo<Product_Dr
   const ___rec = _order.userAddress; // 用户地址
   const recName = `${___rec?.name} ${coo___privacy_phone(___rec?.mobile)}`.slice(0, 20);
   const recAddr = utils_addressInfoToString(___rec);
-  const ___regiment = _order.regimentAddress; // 团长地址
+  const ___regiment = _order.deptAddress; // 团长地址
 
   const ___merchant = _order.__product?.merchantAddress; // 商家地址
   const merchantName = `${___merchant?.name} ${___merchant?.mobile}`.slice(0, 20);
@@ -478,7 +478,7 @@ export function on_get_printer_str_order_bing_goods_waybill(_order: OrderInfo<Pr
   const ___rec = _order.userAddress; // 用户地址
   const recName = `${___rec?.name} ${coo___privacy_phone(___rec?.mobile)}`.slice(0, 20);
   const recAddr = utils_addressInfoToString(___rec);
-  const ___regiment = _order.regimentAddress; // 团长地址
+  const ___regiment = _order.deptAddress; // 团长地址
   const ___merchant = _order.__product?.merchantAddress; // 商家地址
   const merchantName = `${___merchant?.name} ${___merchant?.mobile}`.slice(0, 20);
   const merchantAddr = utils_addressInfoToString(___merchant);
@@ -544,8 +544,8 @@ export function on_get_printer_str_order_dryclean_out_factory(_order: OrderInfo<
   const recAddr = `${_order.userAddress?.address ? _order.userAddress?.address : '---------'}`;
   const recManName = `${_order.userAddress?.name} ${_order.userAddress?.mobile?.slice(0, 3)}****${_order.userAddress?.mobile?.slice(-4)}`.slice(0, 20);
 
-  const sendAddr = `${_order.regimentAddress?.address}`;
-  const sendManName = `${_order.regimentAddress?.name}`.slice(0, 20);
+  const sendAddr = `${_order.deptAddress?.address}`;
+  const sendManName = `${_order.deptAddress?.name}`.slice(0, 20);
   const arr_content = [
     `PW ${P_w}`,
     `CONTRAST 3`,
@@ -595,7 +595,7 @@ export function on_get_printer_str_order_dryclean_pre_barcodes(_order: PreBarCod
   if (utils_str_includes(["Printer_"], blue_device?.name)) {
     const is_DEV = getMyEnv().envVersion === "develop";
     let Y_ = 150; // +左 -右
-    const regimentAddress = `${_order.name}`;
+    const deptAddress = `${_order.name}`;
     const add = 60; // +上 -下
     const rotation = "90"; // 旋转角度
 
@@ -604,7 +604,7 @@ export function on_get_printer_str_order_dryclean_pre_barcodes(_order: PreBarCod
       `SET CUTTER OFF`, // 在 PRINT 命令结束后切纸
       `CLS`, // 清除缓冲区数据
       `TEXT ${Y_},${add},"TSS24.BF2",${rotation},${2},${2},"${_order.code.toUpperCase()}"`,
-      `TEXT ${Y_},${330 + add},"TSS24.BF2",${rotation},${2},${2},"团:${regimentAddress}"`,
+      `TEXT ${Y_},${330 + add},"TSS24.BF2",${rotation},${2},${2},"团:${deptAddress}"`,
       `BARCODE ${Y_ += 105},${add},"128",100,0,${rotation},${4},${4},"${_order.code.toUpperCase()}"`,
       `PRINT 1,1`,
     ];
@@ -615,7 +615,7 @@ export function on_get_printer_str_order_dryclean_pre_barcodes(_order: PreBarCod
     //   // `SET CUTTER BATCH`, // 在 PRINT 命令结束后切纸
     //   `CLS`, // 清除缓冲区数据
     //   `TEXT ${Y_ += 0},${30 + add},"TSS24.BF2",${rotation},${1},${1},"${_order.code.toUpperCase()}"`,
-    //   `TEXT ${Y_ += 0},${270 + add},"TSS24.BF2",${rotation},${1},${1},"团:${regimentAddress}"`,
+    //   `TEXT ${Y_ += 0},${270 + add},"TSS24.BF2",${rotation},${1},${1},"团:${deptAddress}"`,
     //   `BARCODE ${Y_ += 90},${30 + add},"128",83,0,${rotation},${2},${2},"${_order.code.toUpperCase()}"`,
     //   `PRINT 1,1`,
     // ]

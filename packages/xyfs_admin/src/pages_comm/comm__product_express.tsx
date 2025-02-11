@@ -191,7 +191,7 @@ const IIIOrderPayRegiment: FC<{}> = ({ }) => {
     Taro.showLoading({ mask: true, title: "检查地址...", });
     await Api_logistic_check_ctn(useSTExpress.getState().express);
     Taro.showLoading({ mask: true, title: "获取价格...", });
-
+    console.log("express_Sssssssssssssssssss",);
     const res_price = await Api_order_previewPrice_ctn(useSTExpress.getState().express);
     useSTExpress.getState().sett({
       totalPrice: String(res_price.totalPrice) ?? "",
@@ -201,7 +201,7 @@ const IIIOrderPayRegiment: FC<{}> = ({ }) => {
         pickUpPrice: String(res_price.productList?.[0].pickUpPrice),
       }]
     });
-    Taro.showLoading({ mask: true, title: "支付中...", });
+    Taro.showLoading({ mask: true, title: "生成订单...", });
     const res_pay = await Api_order_pre_ctn({ ...useSTExpress.getState().express, nowPay: true, ...get_dev_value({ totalPrice: "1" }) });
     return res_pay;
   }
@@ -211,7 +211,7 @@ const IIIOrderPayRegiment: FC<{}> = ({ }) => {
     <View className='ww pt10' >
       <View className='dy dwp'>
         {[...(selfInfo_S?.logistics ?? [])].map((e, i) => {
-          return <ComButton ll={i !== 0} className={`mb10 bccwhite mr10 ${express_S.productList?.[0]?.deliveryId === e.deliveryId ? 'cccgreen' : ''}`} key={i} onClick={() => {
+          return <ComButton rr ll={i !== 0} className={`mb10 bccwhite mr10 ${express_S.productList?.[0]?.deliveryId === e.deliveryId ? 'cccgreen' : ''}`} key={i} onClick={() => {
             useSTExpress.getState().sett({
               totalPrice: "",
               productList: [{

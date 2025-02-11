@@ -116,9 +116,9 @@ export const ComCardOrderDryclean: FC<{
       onClick={() => {
         Taro.showToast({ icon: "none", title: `${order?.userAddress?.address}` });
       }} />
-    <ComAddressSwitchor ll rr className='mb10 ww' address={order?.regimentAddress} title='团:' time={order.lastPrintTime ? `印${format(coo___ios_date(order.lastPrintTime), "MM/dd HH:mm")}` : ""}
+    <ComAddressSwitchor ll rr className='mb10 ww' address={order?.deptAddress} title='团:' time={order.lastPrintTime ? `印${format(coo___ios_date(order.lastPrintTime), "MM/dd HH:mm")}` : ""}
       onClick={() => {
-        Taro.showToast({ icon: "none", title: `${order?.regimentAddress?.address}` });
+        Taro.showToast({ icon: "none", title: `${order?.deptAddress?.address}` });
       }} />
     <View className='ww'>
       {!Boolean(order.productList?.length) &&
@@ -192,7 +192,7 @@ export const ComCardOrderBringGoods: FC<{
       <ComButton rr className='cccgreen'>{Product_category_ST[order.orderType!]}</ComButton>
     </View>
     <ComAddressSwitchor ll rr className='ww mb10' title='收:' address={order?.userAddress} time={order.orderTimeFormat} />
-    <ComAddressSwitchor ll rr className='ww mb10' title='团:' address={order?.regimentAddress} />
+    <ComAddressSwitchor ll rr className='ww mb10' title='团:' address={order?.deptAddress} />
 
     <View className='ww'>
       {order?.productList?.map((e, i) => {
@@ -253,6 +253,6 @@ export const ComCardOrderSundries: FC<{
       <ComButton rr className='cccgreen'>{Product_category_ST[order.orderType!]}</ComButton>
     </View>
     <ComAddressSwitchor ll rr className='ww mb10' title='收:' address={order?.userAddress} time={format(coo___ios_date(order.orderTime), "MM/dd HH:mm")} />
-    <ComAddressSwitchor ll rr className='ww mb10' title='团:' address={order?.regimentAddress} />
+    <ComAddressSwitchor ll rr className='ww mb10' title='团:' address={order?.deptAddress} />
   </View>;
 };
