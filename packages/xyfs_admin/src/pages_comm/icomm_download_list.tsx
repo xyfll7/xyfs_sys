@@ -9,7 +9,8 @@ import { ComNav } from "@xyfs/taro_uii/components/ComNav";
 import { ComNavBarA } from "@xyfs/taro_uii/components/ComNavBarA";
 import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
 import { ComSELFView, MMMAAPage } from "@xyfs/taro_uii/components/MMMAAPage";
-import { try_Taro_shareFileMessage, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
+import { getMyEnv } from "@xyfs/taro_uii/src/env";
+import { try_Taro_setClipboardData, try_Taro_shareFileMessage, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
 import { useHook_pageListNew } from "@xyfs/taro_uii/utils/useHooks";
 import { utils_downloadFile_saveFile } from "@xyfs/taro_uii/utils/util";
 import { coo___ios_date } from "@xyfs/utils/util";
@@ -48,8 +49,15 @@ const Index: FC<{}> = ({ }) => {
             <ComButton ll className='' onTap={async () => {
 
               if (differenceInMinutes(coo___ios_date(), coo___ios_date(e.createTime)) > ___time * 60 * 2) {
-                throw new Error("该文件已过时，请去下载最新文件");
+                throw new Error("该文件已过期，请去下载最新文件");
               }
+
+
+              if (getMyEnv().envVersion === "develop") {
+                await try_Taro_setClipboardData({ data: e.url });
+                return;
+              }
+
 
               if (e.url) {
                 Taro.showLoading({ mask: true, title: "下载中..." });
