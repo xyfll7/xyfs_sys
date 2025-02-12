@@ -55,6 +55,7 @@ const Index: FC<{}> = ({ }) => {
 
               if (getMyEnv().envVersion === "develop") {
                 await try_Taro_setClipboardData({ data: e.url });
+                Taro.showToast({ icon: "none", title: "已复制下载链接", });
                 return;
               }
 
