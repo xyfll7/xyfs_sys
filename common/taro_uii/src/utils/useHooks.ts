@@ -39,7 +39,7 @@ export function useHook_getLocation() {
   useEffect(() => {
     (async () => {
       const res = await try_Taro_getLocation();
-      setLocate(getMyEnv().isUseInDev ? { ...res, longitude: 109.49303, latitude: 36.59141 } : res);
+      setLocate(getMyEnv().isDevtools ? { ...res, longitude: 109.49303, latitude: 36.59141 } : res);
     })();
   }, []);
   return { locate };

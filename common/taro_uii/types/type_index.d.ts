@@ -31,7 +31,7 @@ type Environment = {
   version: string;
   OPENID?: string;
   DEPTID?: string;
-  isUseInDev?: boolean;
+  isDevtools?: boolean;
   isDeveloping?: boolean;
 };
 interface Events<T> {

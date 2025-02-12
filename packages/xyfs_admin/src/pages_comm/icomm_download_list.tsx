@@ -52,15 +52,12 @@ const Index: FC<{}> = ({ }) => {
                 throw new Error("该文件已过期，请去下载最新文件");
               }
 
-
-              if (getMyEnv().envVersion === "develop") {
-                await try_Taro_setClipboardData({ data: e.url });
-                Taro.showToast({ icon: "none", title: "已复制下载链接", });
-                return;
-              }
-
-
               if (e.url) {
+                if (getMyEnv().isDevtools) {
+                  await try_Taro_setClipboardData({ data: e.url });
+                  Taro.showToast({ icon: "none", title: "已复制下载链接", });
+                  return;
+                }
                 Taro.showLoading({ mask: true, title: "下载中..." });
                 const ___fileName = `${file_name}_对账单_${format(coo___ios_date(e.createTime), "yyyy_MM_dd_HH_mm_ss")}.csv`;
                 const res_savedFilePath = await utils_downloadFile_saveFile({ url: e.url, file_name: ___fileName });

@@ -36,17 +36,17 @@ const OPENID_DEV___ =
 // cSpell: enable;
 
 process.env.NODE_ENV === "development" && Taro.clearStorageSync();
-const ___isUseInDev = true; // false; // 仅开发环境使用的功能 /// 这个没问题，只有dev环境才有这个参数，不用删除
 const ___isDeveloping = true; // false; // 开发中的功能 /// 这个没问题，只有dev环境才有这个参数，不用删除
 // Package.version = "1.0.47";
 const envObj: Record<EnvVersion, Environment> = {
   release: { ctnId: process.env.TARO_APP_CTN_PRO, envSimulate: "release", version: Package.version, appId: "" },
   trial: { ctnId: process.env.TARO_APP_CTN_PRO, envSimulate: "release", version: Package.version, appId: "" },
-  develop: { ctnId: process.env.TARO_APP_CTN_DEV, envSimulate: ___envSimulate, version: Package.version, appId: "", OPENID: OPENID_DEV___ ? OPENID_DEV___ : undefined, isUseInDev: ___isUseInDev, isDeveloping: ___isDeveloping },
+  develop: { ctnId: process.env.TARO_APP_CTN_DEV, envSimulate: ___envSimulate, version: Package.version, appId: "", OPENID: OPENID_DEV___ ? OPENID_DEV___ : undefined, isDeveloping: ___isDeveloping },
 };
 
 
 export function getMyEnv(env?: EnvVersion): Environment {
+  console.log(Taro.getDeviceInfo());
   const { miniProgram: { envVersion, version, appId } } = Taro.getAccountInfoSync();
   const _envVersion = env ?? envVersion;
   version && (envObj[_envVersion].version = version);
@@ -55,7 +55,7 @@ export function getMyEnv(env?: EnvVersion): Environment {
   if (appId === process.env.TARO_APP_CLIENT) { // 顾客端，不模拟用户登录
     delete envObj[_envVersion].OPENID;
   }
-
+  envObj[_envVersion].isDevtools = Taro.getDeviceInfo().platform === "devtools";
   envObj[_envVersion].envVersion = _envVersion;
   return envObj[_envVersion];
 }

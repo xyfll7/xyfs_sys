@@ -209,7 +209,7 @@ export async function try_Taro_chooseAddress(): Promise<Omit<AddressInfo, "id">>
         town: res.streetName ? res.streetName : "",
         address: res.detailInfoNew ? res.detailInfoNew : res.detailInfo,
         from: "WX",
-        ...getMyEnv().isUseInDev ? { mobile: "17709205217" } : null
+        ...getMyEnv().isDevtools ? { mobile: "17709205217" } : null
       };
     } else {
       throw new Error("取消选择地址");
