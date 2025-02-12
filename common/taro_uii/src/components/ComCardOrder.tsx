@@ -19,12 +19,11 @@ export const ComCardOrderExpress: FC<{
   order: OrderInfo<Product_Express>;
   children?: React.ReactNode;
   isHidePath?: boolean;
-  showUser?: "regiment" | "user";
-}> = ({ className = "", order, children, isHidePath, showUser }) => {
+}> = ({ className = "", order, children, isHidePath }) => {
   return (
     <View className={`bccwhite prl10 IOO pt10 dll ww ${className}`}>
       <View className='dbtc ww mb10'>
-        <MMMOrderUser order={order} showUser={showUser} />
+        <MMMOrderUser order={order} />
 
         <View className='dy'>
           {order.orderStatus == Order_ST.待付款 && order.pickUpType == PickUp_ST.上门取件 && <ComButton rr className='cccplh bccyellow ml10' >{PickUp_ST[order.pickUpType!]}</ComButton>}
@@ -99,13 +98,12 @@ export const ComCardOrderExpress: FC<{
 
 export const ComCardOrderDryclean: FC<{
   className?: string;
-  showUser?: "regiment" | "user";
   order: OrderInfo<Product_Dryclean>;
   onBindCode?: (e: Product_Dryclean) => void;
-}> = ({ order, className = "", showUser, onBindCode }) => {
+}> = ({ order, className = "", onBindCode }) => {
   return <View className={`bccwhite prl10 IOO pt10 ww ${className}`}>
     <View className='dbtc ww mb10 '>
-      <MMMOrderUser order={order} showUser={showUser} />
+      <MMMOrderUser order={order} />
       <View className='dy'>
         {order.orderStatus == Order_ST.待付款 && order.pickUpType == PickUp_ST.上门取件 && <ComButton rr className='cccplh bccyellow ml10' >{PickUp_ST[order.pickUpType!]}</ComButton>}
         {order.orderStatus == Order_ST.已退款 && <ComButton rr className='bccprice ml10 cccwhite' hoverClass='none'>已退款</ComButton>}
