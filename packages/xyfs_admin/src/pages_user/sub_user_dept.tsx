@@ -36,9 +36,31 @@ const Index: FC<{}> = ({ }) => {
   useEffect(() => { ___Api_dept_list_ctn(); }, []);
   async function ___Api_dept_list_ctn() {
     setDepts(undefined);
-    const res = await Api_dept_list_ctn();
-    setDepts(res);
+    const res_dept_list = await Api_dept_list_ctn();
+    setDepts(res_dept_list);
   }
+  console.log(depts?.[0]?.children?.[0].children);
+
+
+  useEffect(() => {
+    if (depts?.[0]?.children?.[0].children) {
+
+      (async () => {
+        const ____obj = {};
+        for (const _dept of depts?.[0]?.children?.[0].children) {
+          const res = await Api_dept_userList_ctn({ deptId: _dept.deptId });
+          console.log(res);
+          ____obj[_dept.deptId] = res;
+        }
+        console.log("summarize：", ____obj);
+      })();
+    }
+
+  }, [depts]);
+
+
+
+
   const [dept, setDept] = useState<any>(null);
   const [mode, setMode] = useState<"add" | "edit">();
 
