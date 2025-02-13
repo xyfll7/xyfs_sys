@@ -10,7 +10,7 @@ const ___envSimulate = "develop";
 // cSpell: disable;
 const OPENID_DEV___ =
   // @ts-ignore
-
+  // "oGwbL5B_ls_rfjTFWqXvI3E4NEwc" || // ***
   ////////////////////////////////////////////////
   // "oGwbL5D1WtsGTuLhWneaepYuHW3k" ||  // 何旭东
   // "oGwbL5OLhRpOKRWrkVNSMqXuGPaE" ||  // 我妈
@@ -46,7 +46,6 @@ const envObj: Record<EnvVersion, Environment> = {
 
 
 export function getMyEnv(env?: EnvVersion): Environment {
-  console.log(Taro.getDeviceInfo());
   const { miniProgram: { envVersion, version, appId } } = Taro.getAccountInfoSync();
   const _envVersion = env ?? envVersion;
   version && (envObj[_envVersion].version = version);

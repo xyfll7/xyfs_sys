@@ -32,7 +32,6 @@ export const utils_get_capsule = (reTry: boolean = true) => {
   }
   const ___platforms = ["mac"];
   const deviceInfo = Taro.getDeviceInfo();
-  console.info("deviceInfo", deviceInfo);
   const windowInfo = Taro.getWindowInfo();
   if (___platforms.includes(deviceInfo.platform)) {
     Capsule.top = 0;

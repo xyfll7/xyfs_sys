@@ -12,6 +12,7 @@ import { ComNavBarA } from '@xyfs/taro_uii/components/ComNavBarA';
 import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
 import { ComSearcher } from '@xyfs/taro_uii/components/ComSearcher';
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
+import { getMyEnv } from "@xyfs/taro_uii/src/env";
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
 import { try_Taro_navigateTo, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
 import { useHook_pageListNew, useHook_Reducer } from '@xyfs/taro_uii/utils/useHooks';
@@ -42,17 +43,10 @@ const Index: FC<{}> = ({ }) => {
     }), [searchValue, selfInfo_S?.OPENID]);
   const { page, page_loading, page_list_get, page_init } = useHook_pageListNew(___page_getter,);
 
-  const ____arr: { id: string, count: 0; }[] = [];
 
-  page.list?.map((e, index) => {
-    if (!____arr.find(ee => ee.id == e.id)) {
-      ____arr.push({ id: e.id!, count: 0 });
-    }
-    if (____arr.find(ee => ee.id == e.id)) {
-      const ind = ____arr.findIndex(ee => ee.id == e.id);
-      ____arr[ind]!.count++;
-    }
-  });
+
+  getMyEnv().isDevtools && ____test(page.list ?? []);
+
 
   const [date, setDate] = useState<string>(format(coo___ios_date(), "yyyy-MM-dd"));
   return <MMMAAPage>
@@ -109,6 +103,28 @@ const Index: FC<{}> = ({ }) => {
   </MMMAAPage>;
 };
 
+
+
+
+function ____test(list: any[]) {
+  const ____obj = {};
+  const ____arr: { id: string, count: 0; }[] = [];// 检查是否有重复id的用户
+  list?.map((e, index) => {
+    if (!____obj[e.deptId]) { ____obj[e.deptId] = []; }
+    ____obj[e.deptId].push(e);
+
+    if (!____arr.find(ee => ee.id == e.id)) {
+      ____arr.push({ id: e.id!, count: 0 });
+    }
+    if (____arr.find(ee => ee.id == e.id)) {
+      const ind = ____arr.findIndex(ee => ee.id == e.id);
+      ____arr[ind]!.count++;
+    }
+  });
+  console.log("____obj", ____obj);
+  console.log("____arr", ____arr);
+  console.log("list", list);
+}
 
 const IIImyUserCardAGENT: FC<{ myUser: DeptInfo; }> = ({ myUser }) => {
   return <>
