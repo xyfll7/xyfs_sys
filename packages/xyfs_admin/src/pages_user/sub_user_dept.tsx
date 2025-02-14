@@ -41,22 +41,27 @@ const Index: FC<{}> = ({ }) => {
   }
   console.log(depts?.[0]?.children?.[0].children);
 
+  const leaders = depts?.[0]?.children?.[0]?.children?.map((_dept) => {
+    return _dept.leader;
+  });
+  console.log(leaders);
 
-  useEffect(() => {
-    if (depts?.[0]?.children?.[0].children) {
 
-      (async () => {
-        const ____obj = {};
-        for (const _dept of depts?.[0]?.children?.[0].children) {
-          const res = await Api_dept_userList_ctn({ deptId: _dept.deptId });
-          console.log(res);
-          ____obj[_dept.deptId] = res;
-        }
-        console.log("summarize：", ____obj);
-      })();
-    }
+  // useEffect(() => {
+  //   if (depts?.[0]?.children?.[0].children) {
 
-  }, [depts]);
+  //     (async () => {
+  //       const ____obj = {};
+  //       for (const _dept of depts?.[0]?.children?.[0].children) {
+  //         const res = await Api_dept_userList_ctn({ deptId: _dept.deptId });
+  //         console.log(res);
+  //         ____obj[_dept.deptId] = res;
+  //       }
+  //       console.log("summarize：", ____obj);
+  //     })();
+  //   }
+
+  // }, [depts]);
 
 
 

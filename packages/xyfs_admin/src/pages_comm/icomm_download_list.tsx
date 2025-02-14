@@ -61,6 +61,7 @@ const Index: FC<{}> = ({ }) => {
                 Taro.showLoading({ mask: true, title: "下载中..." });
                 const ___fileName = `${file_name}_对账单_${format(coo___ios_date(e.createTime), "yyyy_MM_dd_HH_mm_ss")}.csv`;
                 const res_savedFilePath = await utils_downloadFile_saveFile({ url: e.url, file_name: ___fileName });
+                Taro.hideLoading();
                 await try_Taro_showModal({
                   title: "下载成功", content: "请保存文件后查看", showCancel: true, confirmText: "保存", cancelText: "取消",
                   success: async (res) => { if (res.confirm) { await try_Taro_shareFileMessage({ filePath: res_savedFilePath, fileName: ___fileName }); } }
