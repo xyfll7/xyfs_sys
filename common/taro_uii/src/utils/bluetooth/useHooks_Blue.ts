@@ -265,6 +265,10 @@ export function on_get_printer_str_order_express(_order: OrderInfo<Product_Expre
   const sendAddr = `${_order.__product?.sendMan?.province} ${_order.__product?.sendMan?.city} ${_order.__product?.sendMan?.area} ${_order.__product?.sendMan?.address}`;
   const sendManName = `${_order.__product?.sendMan?.realName?.charAt(0)}* ${_order.__product?.sendMan?.mobile?.slice(0, 3)}****${_order.__product?.sendMan?.mobile?.slice(-4)}`.slice(0, 20);
 
+
+  const orderUserName = _order.appid == process.env.TARO_APP_CLIENT ? "用户" : `${_order.userName}`;
+
+
   if (type === "cpcl") {
     const T_0 = utils_str_includes(["快递100"], blue_device?.name) ? "TEXT 0" : "TEXT 1";
     const L_H = 3;

@@ -169,4 +169,15 @@ export function coo___unique_arr<T extends Record<string, any>>(arr: T[], key: s
   return uniqueArr;
 }
 
-
+export function coo___privacy_string(name: string) {
+  if (name.length == 2) {
+    name = name.substring(0, 1) + '*'; // 截取name 字符串截取第一个字符，
+    return name; // 张三显示为张*
+  } else if (name.length == 3) {
+    name = name.substring(0, 1) + '*' + name.substring(2, 3); // 截取第一个和第三个字符
+    return name; // 李思思显示为李*思
+  } else if (name.length > 3) {
+    name = name.substring(0, 1) + '*' + '*' + name.substring(3, name.length); // 截取第一个和大于第4个字符
+    return name; // 王五哈哈显示为王**哈
+  }
+}
