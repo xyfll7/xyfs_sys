@@ -2,7 +2,7 @@
 import { Text, View } from "@tarojs/components";
 import Taro from '@tarojs/taro';
 import { DeptInfo } from "@xyfs/taro_uii";
-import { Api_dept_dept_ctn, Api_dept_list_ctn, Api_user_edit_ctn, Api_user_info_ctn } from '@xyfs/taro_uii/api/api__users';
+import { Api_dept_list_ctn, Api_user_dept_ctn, Api_user_edit_ctn, Api_user_info_ctn } from '@xyfs/taro_uii/api/api__users';
 import { ComButton } from '@xyfs/taro_uii/components/ComButton';
 import { ComImage } from '@xyfs/taro_uii/components/ComImage';
 import { ComLoading } from '@xyfs/taro_uii/components/ComLoading';
@@ -74,9 +74,10 @@ const IIImyUserEditorAGENT: FC = () => {
               const res_modal = await try_Taro_showModal({ title: "提示", content: "您确定要移出该部门？" });
               if (res_modal) {
                 Taro.showLoading({ mask: true, title: "移出中..." });
-                await Api_dept_dept_ctn({ id: userInfo.id!, });
+                await Api_user_dept_ctn({ id: userInfo.id!, });
                 const res = await Api_user_info_ctn({ userId: options.userId! });
                 setUserInfo(res);
+
                 Taro.showToast({ icon: "none", title: "完成" });
               }
             }
@@ -90,7 +91,7 @@ const IIImyUserEditorAGENT: FC = () => {
               <View className='dy'><ComButton className='fwb bccback'>指定部门</ComButton></View>
             </ComNavBarB>
             <ComScrollView className=''>
-              <IIIDeptList userInfo={userInfo} onUpdateUserInfo={(e) => setUserInfo(e)}></IIIDeptList>
+              <IIIDeptList userInfo={userInfo} onUpdateUserInfo={(e) => { setUserInfo(e); setShow(false); }}></IIIDeptList>
             </ComScrollView>
           </View>
         </ComPopupNew>

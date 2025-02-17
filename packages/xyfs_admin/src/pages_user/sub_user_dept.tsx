@@ -156,7 +156,12 @@ const Index: FC<{}> = ({ }) => {
         <ComNavBarB className='mb10' onClose={() => setDeptUserList(null)}>
           <View className='dy'><ComButton className='fwb bccback'>部门用户</ComButton></View>
         </ComNavBarB>
-        <ComButton className='mb10 bcctrans' hoverClass='none'> <Text className='cccplh'>所属部门:</Text> {dept.deptName}</ComButton>
+        <ComButton className='mb10 bcctrans' hoverClass='none'>
+          <View className='dy'>
+            <Text className='cccplh nw'>所属部门:</Text>
+            <Text className='nw1'>{dept.deptName}</Text>
+          </View>
+        </ComButton>
         <ComScrollView className=''>
           {deptUserList.map(e => {
             return <View key={e.id} className='ww ioo bccwhite mb10 prl10 pt10'>
@@ -166,7 +171,7 @@ const Index: FC<{}> = ({ }) => {
                     <Text > {e.name}</Text>
                     <Text className='cccplh'> {e.roles.map((ee) => ee.roleName).join("/")}</Text>
                   </View>
-                  <View className='nw1 cccplh' onClick={() => { Taro.makePhoneCall({ phoneNumber: e.mobile }); }}>{e.mobile} <Text className='cccgreen'>拨打</Text> </View>
+                  <View className='nw1 cccplh' onClick={async () => { await Taro.makePhoneCall({ phoneNumber: e.mobile }); }}>{e.mobile} <Text className='cccgreen'>拨打</Text> </View>
                 </View>
               </ComButton>
               <View className='dr mb10'>

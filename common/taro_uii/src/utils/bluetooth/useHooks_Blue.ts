@@ -330,7 +330,7 @@ export function on_get_printer_str_order_express(_order: OrderInfo<Product_Expre
       `SETMAG 0 0`,
       `LEFT ${P_w}`,
       `${T_0} 0 ${X_} ${Y_ += 60} 站点：${_order.deptName ?? '无'}`,
-      `${T_0} 0 ${X_} ${Y_ += 60} 用户：${orderUserName}`,
+      `${T_0} 0 ${X_} ${Y_ += 40} 用户：${orderUserName}`,
       `${T_0} 0 ${X_} ${Y_ += 40} 品名：${_order.__product?.itemType}`,
       `${T_0} 0 ${X_} ${Y_ += 40} 备注：${_order.__product?.itemNotes ?? "无"}`,
       `FORM`,
@@ -389,7 +389,7 @@ export function on_get_printer_str_order_express(_order: OrderInfo<Product_Expre
       `TEXT ${X_},${Y_ += 40},"${font_3}",${rotation_0},1,1,"重量：${_order.__product?.weight} 公斤"`,
 
       `TEXT ${X_},${Y_ += 60},"${font_0}",${rotation_0},1,1,"站点：${_order.deptName ?? '无'}"`,
-      `TEXT ${X_},${Y_ += 60},"${font_0}",${rotation_0},1,1,"用户：${orderUserName}"`,
+      `TEXT ${X_},${Y_ += 40},"${font_0}",${rotation_0},1,1,"用户：${orderUserName}"`,
       `TEXT ${X_},${Y_ += 40},"${font_0}",${rotation_0},1,1,"品名：${_order.__product?.itemType}"`,
       `TEXT ${X_},${Y_ += 40},"${font_0}",${rotation_0},1,1,"备注：${_order.__product?.itemNotes ?? "无"}"`,
 

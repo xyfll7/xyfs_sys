@@ -212,7 +212,7 @@ const IIIUserHasNoRole: FC<{ className: string; }> = ({ className }) => {
       </>
       }
 
-      <ComButton className='mb10 cccplh' onClick={() => { Taro.makePhoneCall({ phoneNumber: "16609119888" }); }}>
+      <ComButton className='mb10 cccplh' onClick={async () => { await Taro.makePhoneCall({ phoneNumber: "16609119888" }); }}>
         <>联系电话:<View className='cccgreen'>16609119888</View> </>
       </ComButton>
       <ComButton className='mb10 cccplh'

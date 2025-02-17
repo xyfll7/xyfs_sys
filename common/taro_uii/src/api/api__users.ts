@@ -311,9 +311,9 @@ export async function Api_dept_update_ctn(params: {
   });
   return res;
 }
-export async function Api_dept_dept_ctn(params: {
+export async function Api_user_dept_ctn(params: {
   id?: string, // userId;
-  deptId?: string; // 传空为移出部门
+  userDeptId?: string; // 传空为移出部门
 }) {
   const res = await wx_call_container<Printer_Info>({
     path: "/user/dept",
