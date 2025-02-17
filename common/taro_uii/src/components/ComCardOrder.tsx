@@ -25,7 +25,7 @@ export const ComCardOrderExpress: FC<{
       <View className='dbtc ww mb10'>
         <MMMOrderUser order={order} />
 
-        <View className='dy'>
+        <View className='dy nw'>
           {order.orderStatus == Order_ST.待付款 && order.pickUpType == PickUp_ST.上门取件 && <ComButton rr className='cccplh bccyellow ml10' >{PickUp_ST[order.pickUpType!]}</ComButton>}
           <ComButton rr className='cccgreen'>{Product_category_ST[order.orderType!]}</ComButton>
         </View>

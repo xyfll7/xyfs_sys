@@ -11,12 +11,14 @@ import { ComImage } from "./ComImage";
 export const MMMOrderUser = ({ order, ...props }: ViewProps & { order: OrderInfo<any>; }) => {
   return <View className={`${props.className} dy`}>
     <ComImage className='mr10' src={order.userAvatar} />
-    <ComButton ll className='dy cccplh'>
-      <Text className='wm8rem nw1' onClick={async () => {
-        await try_Taro_setClipboardData({ data: order.userName ? `${order.userName}/${order.deptName}` : "无" });
-        Taro.showToast({ icon: "none", title: order.userName ? `已复制:${order.userName}/${order.deptName}` : "无" });
-      }}>{order.userName}/{order.deptName}
-      </Text>
+    <ComButton ll className='dy cccplh' onClick={async () => {
+      await try_Taro_setClipboardData({ data: order.userName ? `${order.userName}/${order.deptName}` : "无" });
+      Taro.showToast({ icon: "none", title: order.userName ? `已复制:${order.userName}/${order.deptName}` : "无" });
+    }}>
+      <View className="dy">
+        <Text className='wm8rem nw1' >{order.userName}</Text>/
+        <Text className='wm8rem nw1' >{order.deptName}</Text>
+      </View>
     </ComButton>
   </View>;
 };

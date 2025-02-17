@@ -6,6 +6,18 @@
     "urlCheck": false,
     "bigPackageSizeSupport": true
   },
-  "condition": {},
+  "condition": {
+    "miniprogram": {
+      "list": [
+        {
+          "name": "pages_regiment/regiment_orders_express",
+          "pathName": "pages_regiment/regiment_orders_express",
+          "query": "order_ST=2",
+          "launchMode": "default",
+          "scene": null
+        }
+      ]
+    }
+  },
   "libVersion": "3.7.7"
 }
