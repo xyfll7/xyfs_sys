@@ -388,7 +388,7 @@ export function on_get_printer_str_order_express(_order: OrderInfo<Product_Expre
       `TEXT ${X_},${Y_ += 40},"${font_0}",${rotation_0},1,1,"备注：${_order.__product?.itemNotes ?? "无"}"`,
 
       `PRINT 1,1`, //该指令用于打印出存储于影像缓冲区内的数据
-    ].lgg<string[]>().join("\r\n");
+    ].join("\r\n");
 
   } else {
     throw new Error("不支持该打机语法");
