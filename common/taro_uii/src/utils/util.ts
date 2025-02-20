@@ -19,10 +19,7 @@ export function utils_order_merge_servicer_info(selfInfo_S: DeptInfo): OrderInfo
   } as OrderInfo<ProductBase>;
 }
 
-// 对象数组去重
-export function utils_uniqByKey<T, K extends keyof T>(arr: T[], key: K): T[] {
-  return [...new Map(arr.map((item) => [item[key], item])).values()];
-}
+
 
 // 获取药丸信息
 export const utils_get_capsule = (reTry: boolean = true) => {

@@ -160,15 +160,10 @@ export function coo___privacy_phone(mobile?: string) {
 
 // 对象数组去重值
 export function coo___unique_arr<T extends Record<string, any>>(arr: T[], key: string) {
-  const uniqueArr = arr.reduce((prev: T[], cur) => {
-    if (!prev.some(item => item[key] === cur[key])) {
-      prev.push(cur);
-    }
-    return prev;
-  }, []);
-  return uniqueArr;
+  return [...new Map(arr.map((item) => [item[key], item])).values()];
 }
 
+// 隐私字符串
 export function coo___privacy_string(name: string) {
   if (name.length == 2) {
     name = name.substring(0, 1) + '*'; // 截取name 字符串截取第一个字符，

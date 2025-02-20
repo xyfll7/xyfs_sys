@@ -39,29 +39,9 @@ const Index: FC<{}> = ({ }) => {
     const res_dept_list = await Api_dept_list_ctn();
     setDepts(res_dept_list);
   }
-  console.log(depts?.[0]?.children?.[0].children);
-
-  const leaders = depts?.[0]?.children?.[0]?.children?.map((_dept) => {
-    return _dept.leader;
-  });
-  console.log(leaders);
 
 
-  // useEffect(() => {
-  //   if (depts?.[0]?.children?.[0].children) {
-
-  //     (async () => {
-  //       const ____obj = {};
-  //       for (const _dept of depts?.[0]?.children?.[0].children) {
-  //         const res = await Api_dept_userList_ctn({ deptId: _dept.deptId });
-  //         console.log(res);
-  //         ____obj[_dept.deptId] = res;
-  //       }
-  //       console.log("summarize：", ____obj);
-  //     })();
-  //   }
-
-  // }, [depts]);
+  // useTest(depts); // 查看部门成员数量
 
 
 
@@ -195,6 +175,23 @@ const Index: FC<{}> = ({ }) => {
   </MMMAAPage>;
 };
 
+
+function useTest(depts) {
+  useEffect(() => {
+    if (depts?.[0]?.children?.[0].children) {
+
+      (async () => {
+        const ____obj = {};
+        for (const _dept of depts?.[0]?.children?.[0].children) {
+          const res = await Api_dept_userList_ctn({ deptId: _dept.deptId });
+          console.log(res);
+          ____obj[_dept.deptId] = res;
+        }
+        console.log("summarize：", ____obj);
+      })();
+    }
+  }, [depts]);
+}
 
 
 
