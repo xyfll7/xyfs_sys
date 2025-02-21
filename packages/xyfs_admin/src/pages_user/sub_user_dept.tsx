@@ -253,9 +253,10 @@ const IIIAddDept = ({ dept, onSuccess, mode, onClose }: { mode: "edit" | "add", 
                   }
                   if (await try_Taro_showModal({ title: isHasRole ? "删除角色" : "新增角色", content: isHasRole ? "点击确定删除该角色" : "点击确定新增该角色", })) {
                     Taro.showLoading({ mask: true, title: "更新中..." });
+                    console.log(deptInfo);
                     const res_deptInfo = await Api_dept_edit_ctn({
                       roles_: _roles.map(ee => ee.id),
-                      ...(_roles.find(ee => ee.roleKey === "REGIMENT") ? { deptId: deptInfo?.deptId } : null)  //
+                      deptId: deptInfo?.deptId
                     });
                     Taro.showToast({ icon: "none", title: "更新完成" });
                     setDeptInfo(res_deptInfo);
