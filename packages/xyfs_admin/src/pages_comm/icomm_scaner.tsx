@@ -199,9 +199,7 @@ const IIICameraScaner = (prams: { className?: string, onScanCode: (e: string) =>
 
   return <View className='dcl ww' style={{ height: '210rpx' }}>
     {getMyEnv().isDevtools && <View className={`mb10 IOO ovh dxy  ${prams.className}`} style={{ height: '190rpx', width: '98vw', boxShadow: "0px 2rpx 8rpx 0px rgba(0, 0, 0, 0.3)", backgroundColor: "rgb(0 0 0 / 50%)" }}
-      onClick={() => {
-        prams.onScanCode("7208041");
-      }}>
+      onClick={() => { prams.onScanCode("1000003"); }}>
       模拟扫码
     </View>
     }

@@ -2,7 +2,7 @@
 import { View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { DeptInfo } from "@xyfs/taro_uii";
-import { Api_getNumber_ctn, Api_user_edit_ctn } from '@xyfs/taro_uii/api/api__users';
+import { Api_dept_userList_ctn, Api_getNumber_ctn, Api_user_edit_ctn } from '@xyfs/taro_uii/api/api__users';
 import { ComButton, ComButtonOpen } from '@xyfs/taro_uii/components/ComButton';
 import { ComInput } from "@xyfs/taro_uii/components/ComInput";
 import { ComNav } from '@xyfs/taro_uii/components/ComNav';
@@ -11,13 +11,30 @@ import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
 import { useHook_Reducer } from "@xyfs/taro_uii/utils/useHooks";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 
 definePageConfig({ disableScroll: true, navigationStyle: "custom", });
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC = () => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const [userForm, setUserForm] = useHook_Reducer<DeptInfo>(selfInfo_S!);
+
+
+  const [deptUserList, setDeptUserList] = useState<DeptInfo[]>();
+
+  useEffect(() => {
+    (async () => {
+      if (selfInfo_S.deptId) {
+        const res = await Api_dept_userList_ctn({ deptId: selfInfo_S.deptId });
+        setDeptUserList(res);
+      }
+    })();
+  }, [selfInfo_S.deptId]);
+  console.log(deptUserList);
+
+
+
+
   return <MMMAAPage isNeedAnyRole={false} isNeedAnyDept={false}>
     <ComNav>
       <ComNavBarA className='mb10 pl10'>
