@@ -219,14 +219,14 @@ const IIIAddDept = ({ dept, onSuccess, mode, onClose }: { mode: "edit" | "add", 
           <ComInput placeholder={mode === "add" ? '请填写子部门名称' : '请填写新的部门名称'} value={form.deptName} onInput={(e) => setForm({ deptName: e.detail.value })}></ComInput>
         </ComButton>
         {mode === "add" &&
-          <ComButton className='nw' onClick={async () => {
+          <ComButton className='nw cccgreen' onClick={async () => {
             Taro.showLoading({ mask: true, title: "新增中..." });
             await Api_dept_add_ctn({ deptName: form.deptName, parentId: dept.deptId });
             Taro.showToast({ icon: "none", title: "成功" });
             onSuccess();
           }}>新增</ComButton>
         }
-        {mode === "edit" && <ComButton className='nw' onClick={async () => {
+        {mode === "edit" && <ComButton className='nw cccgreen' onClick={async () => {
           Taro.showLoading({ mask: true, title: "新增中..." });
           const res_deptInfo = await Api_dept_edit_ctn({ deptId: deptInfo?.deptId!, deptName: form.deptName, });
           Taro.showToast({ icon: "none", title: "成功" });
@@ -236,35 +236,38 @@ const IIIAddDept = ({ dept, onSuccess, mode, onClose }: { mode: "edit" | "add", 
         }}>修改</ComButton>
         }
       </View>
-      <View className='ww dll '>
-        <ComButton className='cccplh mb10 bccback'  >指定部门角色</ComButton>
-        <View className='dy dwp'>
-          {dicts_roles?.filter((e) => ["REGIMENT", "SUPPLIER", "DRIVER", "MERCHANT", "GUIDE", "SCANNER"].includes(e.roleKey)).map((e, i) => {
-            return <ComButton rr className={` mb10 ${deptInfo?.roles?.some(ee => ee.roleKey === e.roleKey) ? 'cccgreen' : ''}`}
-              onClick={async () => {
-                const isHasRole = deptInfo?.roles?.some(ee => ee.roleKey === e.roleKey);
-                let _roles: ROLE_ST[];
+      {mode === "edit" &&
+        <View className='ww dll '>
+          <ComButton className='cccplh mb10 bccback'>指定部门角色</ComButton>
+          <View className='dy dwp'>
+            {dicts_roles?.filter((e) => ["REGIMENT", "SUPPLIER", "DRIVER", "MERCHANT", "GUIDE", "SCANNER"].includes(e.roleKey)).map((e, i) => {
+              return <ComButton rr className={` mb10 ${deptInfo?.roles?.some(ee => ee.roleKey === e.roleKey) ? 'cccgreen' : ''}`}
+                onClick={async () => {
+                  const isHasRole = deptInfo?.roles?.some(ee => ee.roleKey === e.roleKey);
+                  let _roles: ROLE_ST[];
 
-                if (isHasRole) {
-                  _roles = deptInfo?.roles?.filter(ee => ee.roleKey !== e.roleKey)!;
-                } else {
-                  _roles = [...(deptInfo?.roles ?? []), e] as ROLE_ST[];
-                }
-                if (await try_Taro_showModal({ title: isHasRole ? "删除角色" : "新增角色", content: isHasRole ? "点击确定删除该角色" : "点击确定新增该角色", })) {
-                  Taro.showLoading({ mask: true, title: "更新中..." });
-                  const res_deptInfo = await Api_dept_edit_ctn({
-                    roles_: _roles.map(ee => ee.id),
-                    ...(_roles.find(ee => ee.roleKey === "REGIMENT") ? { deptId: deptInfo?.deptId } : null)  //
-                  });
-                  Taro.showToast({ icon: "none", title: "更新完成" });
-                  setDeptInfo(res_deptInfo);
-                } else {
-                  throw new Error("取消");
-                }
-              }} key={i}>{e.roleName}</ComButton>;
-          })}
+                  if (isHasRole) {
+                    _roles = deptInfo?.roles?.filter(ee => ee.roleKey !== e.roleKey)!;
+                  } else {
+                    _roles = [...(deptInfo?.roles ?? []), e] as ROLE_ST[];
+                  }
+                  if (await try_Taro_showModal({ title: isHasRole ? "删除角色" : "新增角色", content: isHasRole ? "点击确定删除该角色" : "点击确定新增该角色", })) {
+                    Taro.showLoading({ mask: true, title: "更新中..." });
+                    const res_deptInfo = await Api_dept_edit_ctn({
+                      roles_: _roles.map(ee => ee.id),
+                      ...(_roles.find(ee => ee.roleKey === "REGIMENT") ? { deptId: deptInfo?.deptId } : null)  //
+                    });
+                    Taro.showToast({ icon: "none", title: "更新完成" });
+                    setDeptInfo(res_deptInfo);
+                  } else {
+                    throw new Error("取消");
+                  }
+                }} key={i}>{e.roleName}</ComButton>;
+            })}
+          </View>
         </View>
-      </View>
+      }
+
       {roo___has_role(deptInfo, ["REGIMENT"]) &&
         <>
           <ComButton className='cccplh mb10 bccback'  >快递账号配置</ComButton>
