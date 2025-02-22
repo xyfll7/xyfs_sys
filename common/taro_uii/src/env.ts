@@ -95,6 +95,7 @@ const OPENID_DEV___ =
   // "oGwbL5HudJXb6ztDzUtEmpd41v1c" ||  // 王红霞2
   // "oGwbL5EtVeoi3OOYhzu2x-0eH2ho" ||  // 司机 苏新宇
   // "oGwbL5MStl5pETsgOH-AF_7DyFAs" ||  // 工厂揽收员 郝晶晶
+  // "oGwbL5HGbw_XTtv721jphKhsYcMU" ||  // 工厂揽收员 常莉欣
   /////////////////////////////////////////////////
   // "oGwbL5MUeSNxxA4o0oOmb_FUjE7g" ||  // 王肇ATD
   // "oGwbL5Dcqg4-BuRfqTd-sdRI4IWA" ||  // 杨跑跑AT
