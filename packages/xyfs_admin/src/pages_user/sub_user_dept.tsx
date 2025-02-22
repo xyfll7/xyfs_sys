@@ -178,11 +178,11 @@ const Index: FC<{}> = ({ }) => {
 
 function useTest(depts) {
   useEffect(() => {
-    if (depts?.[0]?.children?.[0].children) {
+    if (depts?.[0]?.children?.[1].children) {
 
       (async () => {
         const ____obj = {};
-        for (const _dept of depts?.[0]?.children?.[0].children) {
+        for (const _dept of depts?.[0]?.children?.[1].children) {
           const res = await Api_dept_userList_ctn({ deptId: _dept.deptId });
           console.log(res);
           ____obj[_dept.deptId] = res;
