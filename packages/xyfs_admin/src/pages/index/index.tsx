@@ -85,7 +85,7 @@ const IIISettings = ({ ...props }: ViewProps) => {
         <ComButton className='bccwhite mb10 mr10' url='/pages_agent/agent__express_search'>
           订单综合查询
         </ComButton>
-        <ComButton className='bccwhite mb10' url='/pages_comm/icomm_download_list' >下载任务列表</ComButton>
+        <ComButton className='bccwhite mb10 mr10' url='/pages_comm/icomm_download_list'>下载任务列表</ComButton>
       </>}
 
       {roo___has_role(selfInfo_S!, ["AGENT"]) && <>
