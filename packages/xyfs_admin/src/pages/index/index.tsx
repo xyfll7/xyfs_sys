@@ -75,19 +75,36 @@ const IIISettings = ({ ...props }: ViewProps) => {
   return <>
     <ComButton {...props} className='mb10 cccplh mr10 bccback' >设置</ComButton>
     <View className='dy dwp'>
-      {roo___has_role(selfInfo_S!, ["REGIMENT"]) && <>
-        <ComButton className='mb10 bccwhite nw mr10' url='/pages_regiment/regiment_bind_cloudPrinter'>云打印机</ComButton>
-        <ComButton className='mb10 bccwhite nw mr10' url='/pages_comm/icomm_printer'>蓝牙设备</ComButton>
+      {roo___has_role(selfInfo_S!, ["REGIMENT", "GUIDE", "MERCHANT"]) &&
         <ComButton className='mb10 bccwhite nw mr10' url='/pages_regiment/regiment_collection_record'>收款记录</ComButton>
-      </>}
-
-      {roo___has_role(selfInfo_S!, ["AGENT", "REGIMENT"]) && <>
+      }
+      {roo___has_role(selfInfo_S!, ["REGIMENT", "SCANNER", "MERCHANT"]) &&
+        <ComButton className='mb10 bccwhite nw mr10' url='/pages_comm/icomm_printer'>蓝牙设备</ComButton>
+      }
+      {roo___has_role(selfInfo_S!, ["REGIMENT"]) &&
+        <ComButton className='mb10 bccwhite nw mr10' url='/pages_regiment/regiment_bind_cloudPrinter'>云打印机</ComButton>
+      }
+      {roo___has_role(selfInfo_S!, ["AGENT", "REGIMENT"]) &&
+        <ComButton className='bccwhite mb10 mr10' url='/pages_comm/icomm_download_list'>下载任务列表</ComButton>
+      }
+      {roo___has_role(selfInfo_S!, ["AGENT", "REGIMENT"]) &&
         <ComButton className='bccwhite mb10 mr10' url='/pages_agent/agent__express_search'>
           订单综合查询
         </ComButton>
-        <ComButton className='bccwhite mb10 mr10' url='/pages_comm/icomm_download_list'>下载任务列表</ComButton>
-      </>}
-
+      }
+      {roo___has_role(selfInfo_S!, ["AGENT", "SUPPLIER"]) &&
+        <ComButtonOpen className='bccwhite mb10 mr10' id='invite'
+          shareTitle={`${selfInfo_S!.name} 邀请您注册`}
+          openType='share'
+          sharePath='/pages_user/sub_user_register'>
+          邀请注册
+        </ComButtonOpen>
+      }
+      {roo___has_role(selfInfo_S!, ["AGENT", "SUPPLIER"]) &&
+        <ComButton className='bccwhite mb10 mr10' url='/pages_user/sub_user_list'>
+          子用户
+        </ComButton>
+      }
       {roo___has_role(selfInfo_S!, ["AGENT"]) && <>
         <ComButton className='bccwhite mb10 mr10' url='/pages_agent/agent__account'>
           面单账号
@@ -95,18 +112,9 @@ const IIISettings = ({ ...props }: ViewProps) => {
         <ComButton className='bccwhite mb10 mr10' url='/pages_agent/agent__check_account'>
           对账
         </ComButton>
-        <ComButton className='bccwhite mb10 mr10' url='/pages_user/sub_user_list'>
-          子用户
-        </ComButton>
         <ComButton className='bccwhite mb10 mr10' url='/pages_user/sub_user_dept'>
           部门管理
         </ComButton>
-        <ComButtonOpen className='bccwhite mb10 mr10' id='invite'
-          shareTitle={`${selfInfo_S!.name} 邀请您注册`}
-          openType='share'
-          sharePath='/pages_user/sub_user_register'>
-          邀请注册
-        </ComButtonOpen>
       </>}
     </View>
   </>;
@@ -196,19 +204,8 @@ const IIImmmSUPPLIER = ({ ...props }: ViewProps) => {
   const selfInfo_S = useSTSelf(e => e.selfInfo);
   return <>
     <ComButton className='mb10 cccplh bccback'>供应商</ComButton>
-    <View className='dy'>
-      <ComButton className='bccwhite nw mb10 mr10' url='/pages_comm/icomm_orders_dryclean'>干洗订单</ComButton>
-    </View>
-    <View className='dy'>
-      <ComButton className='bccwhite  fwb mb10 mr10' url='/pages_comm/comm__product_dryclean'>干洗商品</ComButton>
-      <ComButtonOpen ll className='bccwhite mb10 mr10' id='invite'
-        shareTitle={`供应商:${selfInfo_S!.name} 邀请您注册员工`}
-        openType='share'
-        sharePath='/pages_user/sub_user_register'>
-        邀请注册-员工
-      </ComButtonOpen>
-      <ComButton ll className='bccwhite mb10 mr10' url='/pages_user/sub_user_list'>子用户</ComButton>
-    </View>
+    <ComButton className='bccwhite nw mb10 mr10' url='/pages_comm/icomm_orders_dryclean'>干洗订单</ComButton>
+    <ComButton className='bccwhite  fwb mb10 mr10' url='/pages_comm/comm__product_dryclean'>干洗商品</ComButton>
   </>;
 };
 const IIImmmDRIVER = ({ ...props }: ViewProps) => {
@@ -223,9 +220,6 @@ const IIImmmSCANNER = ({ ...props }: ViewProps) => {
     <ComButton className='mb10 cccplh bccback'>干洗工厂-揽收员</ComButton>
     <ComButton className='mb10 bccwhite' url='/pages_comm/icomm_scaner'>扫码揽件</ComButton>
     <ComButton className='mb10 ' url='/pages_comm/icomm_scaner?isShow=1'>已上传→</ComButton>
-    <View className='dy'>
-      <ComButton className='mb10 bccwhite nw mr10' url='/pages_comm/icomm_printer'>蓝牙设备</ComButton>
-    </View>
   </View>;
 };
 const IIImmmTest = ({ ...props }: ViewProps) => {
@@ -246,11 +240,6 @@ const IIImmmMERCHANT = ({ ...props }: ViewProps) => {
         <ComButton ll className=' nw mb10 mr10 bborder' url={`/pages_comm/icomm_orders_groupbuying?order_ST=${Order_ST.已退款}`}>已退款 </ComButton>
       </View>
       <ComButton ll className='bborder mb10' url='/pages_merchant/merchant_product_list'>商品列表</ComButton>
-    </View>
-    <ComButton className='mb10 cccplh bccback'>商家/配置</ComButton>
-    <View className='dy dwp'>
-      <ComButton className='mb10 bccwhite nw mr10' url='/pages_regiment/regiment_collection_record'>收款记录</ComButton>
-      <ComButton className='mb10 bccwhite nw mr10' url='/pages_comm/icomm_printer'>蓝牙设备</ComButton>
     </View>
   </>;
 };
@@ -275,7 +264,6 @@ const IIImmmGUIDE = ({ ...props }: ViewProps) => {
         });
         setQrcode(_src);
       }}>推广二维码</ComButton>
-      <ComButton className='mb10 bccwhite nw mr10' url='/pages_regiment/regiment_collection_record'>收款记录</ComButton>
     </View>
     <View>
       {Boolean(qrcode) &&
