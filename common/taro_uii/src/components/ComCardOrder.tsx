@@ -107,7 +107,7 @@ export const ComCardOrderDryclean: FC<{
       <View className='dy'>
         {order.orderStatus == Order_ST.待付款 && order.pickUpType == PickUp_ST.上门取件 && <ComButton rr className='cccplh bccyellow ml10' >{PickUp_ST[order.pickUpType!]}</ComButton>}
         {order.orderStatus == Order_ST.已退款 && <ComButton rr className='bccprice ml10 cccwhite' hoverClass='none'>已退款</ComButton>}
-        <ComButton rr className='cccgreen ml10'>{Product_category_ST[order.orderType!]}</ComButton>
+        <ComButton rr className='cccgreen ml10 nw'>{Product_category_ST[order.orderType!]}</ComButton>
       </View>
     </View>
     <ComAddressSwitchor ll rr className='mb10 ww' address={order?.userAddress} title='收:' time={`${order.orderTimeFormat}`}
