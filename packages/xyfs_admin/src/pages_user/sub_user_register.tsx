@@ -4,7 +4,9 @@ import Taro from "@tarojs/taro";
 import { DeptInfo } from "@xyfs/taro_uii";
 import { Api_dept_userList_ctn, Api_getNumber_ctn, Api_user_edit_ctn } from '@xyfs/taro_uii/api/api__users';
 import { ComButton, ComButtonOpen } from '@xyfs/taro_uii/components/ComButton';
+import { ComImage } from "@xyfs/taro_uii/components/ComImage";
 import { ComInput } from "@xyfs/taro_uii/components/ComInput";
+import { ComLoading } from "@xyfs/taro_uii/components/ComLoading";
 import { ComNav } from '@xyfs/taro_uii/components/ComNav';
 import { ComNavBarA } from '@xyfs/taro_uii/components/ComNavBarA';
 import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
@@ -94,6 +96,17 @@ const Index: FC = () => {
               }}>{userForm.mobile ? userForm.mobile : "请授权手机号"}</ComButtonOpen>
             </View>
           </View>
+          {!deptUserList && <ComLoading className='mb10'></ComLoading>}
+          {deptUserList && <>
+            <ComButton ll className='bccback mb10 prl10'>部门成员</ComButton>
+            {deptUserList?.map(e =>
+              <ComButton className='cccplh bccwhite mb10' key={e.id} onClick={async () => { e.mobile && Taro.makePhoneCall({ phoneNumber: e.mobile }); }}>
+                <ComImage className='mr10 IOO ' src={e.avatar}></ComImage>
+                <View className='wm8rem nw1 mr4'>{e.name}</View>/
+                <View className='wm8rem nw1 mr4 cccgreen'>{e.mobile}</View>
+              </ComButton>
+            )}
+          </>}
           {selfInfo_S.deptId && <>
             <ComButton ll className='bccback mb10 prl10'>部门信息</ComButton>
             <View className='ioo bccwhite pt10 dll mb10 prl10 ww'>
@@ -124,6 +137,8 @@ const Index: FC = () => {
             </View>
           </>
           }
+
+
           {selfInfo_S.parentDeptInfo &&
             <>
               <ComButton ll className='bccback mb10 prl10'>上级部门信息</ComButton>
@@ -143,6 +158,8 @@ const Index: FC = () => {
               </View>
             </>
           }
+
+
         </>
       </ComScrollView>
     }
