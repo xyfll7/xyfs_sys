@@ -75,8 +75,6 @@ const IIISettings = ({ ...props }: ViewProps) => {
   return <>
     <ComButton {...props} className='mb10 cccplh mr10 bccback' >设置</ComButton>
     <View className='dy dwp'>
-
-
       {roo___has_role(selfInfo_S!, ["REGIMENT"]) && <>
         <ComButton className='mb10 bccwhite nw mr10' url='/pages_regiment/regiment_bind_cloudPrinter'>云打印机</ComButton>
         <ComButton className='mb10 bccwhite nw mr10' url='/pages_comm/icomm_printer'>蓝牙设备</ComButton>
@@ -110,7 +108,6 @@ const IIISettings = ({ ...props }: ViewProps) => {
           邀请注册
         </ComButtonOpen>
       </>}
-
     </View>
   </>;
 };
