@@ -12,7 +12,7 @@ export type MyButtonProps = {
   sharePath?: string;
   shareTitle?: string;
   disabled?: boolean;
-  style?: React.CSSProperties;
+
   onClickO?: () => void;
   routeType?: "wx://cupertino-modal" | "wx://bottom-sheet";
 };
@@ -25,10 +25,9 @@ export function ComButton({
   onClick,
   onClickO,
   routeType,
-  style,
   children,
   ...props
-}: Omit<ViewProps, "style" | "onTouchStart"> & MyButtonProps & { children?: React.ReactNode; }) {
+}: Omit<ViewProps, "onTouchStart"> & MyButtonProps & { children?: React.ReactNode; }) {
   const back = utils_str_includes(["bcc", "bborder"], props.className) ? "" : "bccwhite";
 
   return <View {...props} id={props.id}
@@ -46,7 +45,7 @@ export function ComButton({
       wordBreak: "break-all",
       wordWrap: "break-word",
       minHeight: "calc(2 * var(--rem_base)) !important",
-      ...style,
+      ...(props.style as any),
     }} onClick={async (e) => {
       onClickO?.();
       !props.disabled && onClick?.(e);
