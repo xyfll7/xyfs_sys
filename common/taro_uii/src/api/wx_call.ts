@@ -25,7 +25,7 @@ export async function wx_call_container<OUT = void>({ path, data, params, method
         "APPID": env.appId,
         "ENV-Simulate": env.envSimulate,
         "ENV-Version": env.envVersion,
-        "SYS-Version": env.version,
+        "SYS-Version": env.version, // "2.2.52", //
         "X-WX-SERVICE": ({
           "develop": ({ develop: "el-main", trial: "el-prod", release: "el-prod" })[env.envSimulate],
           "trial": "el-prod",
@@ -46,6 +46,7 @@ export async function wx_call_container<OUT = void>({ path, data, params, method
       error?: string;
       timestamp?: string;
     };
+
     const res = (base_url !== "" && env.envVersion === "develop") ?
       await ___try_Taro_request<_Return>({ ...param }) :
       await ___try_Taro_callContainer<_Return>(_ctn, { ...param });
