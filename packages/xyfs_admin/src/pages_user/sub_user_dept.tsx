@@ -184,7 +184,7 @@ function useTest(depts) {
         const ____obj = {};
         for (const _dept of depts?.[0]?.children?.[1].children) {
           const res = await Api_dept_userList_ctn({ deptId: _dept.deptId });
-          console.log(res);
+          console.log(_dept.deptName, res[0].name, _dept.deptName.includes(res[0].name));
           ____obj[_dept.deptId] = res;
         }
         console.log("summarize：", ____obj);
