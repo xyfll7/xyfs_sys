@@ -151,11 +151,13 @@ const Index: FC = () => {
         <View className='dr mb10'>
           <ComButton className='ml10 nw' onClick={() => { setForm(null); setSearchValue(null); page_init(true); }}>清空</ComButton>
           <ComButton className={`ml10 nw prl30 ${form.orderType == 1 ? "bccgreen cccwhite" : "cccgreen"}`} onClick={() => {
+            if (page_loading) { throw new Error("正在加载中，请稍后再试"); }
             setForm({ orderType: 1 });
             page_init();
             setSearchValue({ ...form, orderType: 1 });
           }}>搜快递</ComButton>
           <ComButton className={`ml10 nw prl30 ${form.orderType == 2 ? "bccgreen cccwhite" : "cccgreen"}`} onClick={() => {
+            if (page_loading) { throw new Error("正在加载中，请稍后再试"); }
             setForm({ orderType: 2 });
             page_init();
             setSearchValue({ ...form, orderType: 2 });
@@ -189,7 +191,7 @@ const Index: FC = () => {
           case Product_category_ST.快递:
             const order0 = e as OrderInfo<Product_Express>;
             return <View className='bccwhite IOO mb10 ww' key={e.id}>
-              <ComCardOrderExpress className='mb10' order={order0} showUser='regiment' />
+              <ComCardOrderExpress className='mb10' order={order0} />
               {order0.productList?.[0]?.waybillId &&
                 <View className='dr dwp  ww prl10'>
                   <ComButton rr className='cccgreen mb10 bborder'
@@ -210,7 +212,7 @@ const Index: FC = () => {
           case Product_category_ST.干洗:
             const order1 = e as OrderInfo<Product_Dryclean>;
             return <View className='bccwhite IOO mb10 ww' key={e.id}>
-              <ComCardOrderDryclean className='mb10' order={order1} showUser='regiment' />
+              <ComCardOrderDryclean className='mb10' order={order1} />
               <View className='dr dwp prl10 ww'>
                 {Boolean(order1.productList?.length) && order1.orderStatus !== 1 && <ComButton rr className='slr cccgreen bborder mb10 ml10' onClick={async () => {
                   await try_Taro_navigateTo({ url: `/pages_comm/comm__express_path?${coo___objToUrl({ express_share_id: order1.id })}` });
