@@ -146,7 +146,7 @@ export async function utils_import_excel(): Promise<string> {
 
 // 选择打印机
 export async function utils_get_cloud_printer(selfInfo_S: DeptInfo): Promise<Printer_Info | null> {
-  const printers = roo___my_dept(selfInfo_S)?.printers ?? [];
+  const printers = selfInfo_S.printers ?? [];
   if (printers.length === 0) {
     return null;
   } else if (printers.length === 1) {
