@@ -25,7 +25,7 @@ export async function Api_userAddress_remove_ctn(id: string): Promise<AddressInf
   });
   return res;
 }
-export async function Api_userAddress_list_ctn(params: Pick<Pagination<unknown>, "keyword" | "pageNum" | "pageSize"> & { type?: Address_T; userId: string; }): Promise<Pagination<AddressInfo[]>> {
+export async function Api_userAddress_list_ctn(params: Pick<Pagination<unknown>, "keyword" | "pageNum" | "pageSize"> & { type?: Address_T; }): Promise<Pagination<AddressInfo[]>> {
   const res = await wx_call_container<Promise<Pagination<AddressInfo[]>>>({
     path: "/userAddress/list",
     data: { ...params },

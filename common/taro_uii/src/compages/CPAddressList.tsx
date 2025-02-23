@@ -36,7 +36,6 @@ const CPAddressList: FC = () => {
     await Api_userAddress_list_ctn({
       ...p,
       type: addressType,
-      userId: selfInfo_S.OPENID!,
       keyword: searchValue,
     }), [addressType, searchValue, selfInfo_S.OPENID]);
   const { page, page_loading, page_list_get, page_list_update, page_init } = useHook_pageListNew(___page_getter);

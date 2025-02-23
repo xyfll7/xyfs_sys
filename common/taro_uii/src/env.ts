@@ -10,7 +10,7 @@ const ___envSimulate = "develop";
 // cSpell: disable;
 const OPENID_DEV___ =
   // @ts-ignore
-  "oGwbL5G9lIOcFJcAUTnpCwcY-cPA" || //
+  // "oGwbL5G9lIOcFJcAUTnpCwcY-cPA" || //
   // "oGwbL5L15zCh0gHj8q5qqoUcXFHQ" || //
 
   ////////////////////////////////////////////////
