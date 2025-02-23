@@ -25,7 +25,7 @@ export async function wx_call_container<OUT = void>({ path, data, params, method
         "APPID": env.appId,
         "ENV-Simulate": env.envSimulate,
         "ENV-Version": env.envVersion,
-        "SYS-Version": env.version, // "2.2.52", //
+        "SYS-Version": "2.2.52", // env.version, //
         "X-WX-SERVICE": ({
           "develop": ({ develop: "el-main", trial: "el-prod", release: "el-prod" })[env.envSimulate],
           "trial": "el-prod",
@@ -57,7 +57,7 @@ export async function wx_call_container<OUT = void>({ path, data, params, method
         throw new Error(`${res.data?.message}//${res.data?.code}`);
       }
     } else {
-      throw new Error(`${res.data?.status}::${path}`);
+      throw new Error(`${res.data?.message ?? "***"}::${path}`);
     }
   } else {
     throw new Error("云托管初始化失败");
