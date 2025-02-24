@@ -12,7 +12,7 @@ const OPENID_DEV___ =
   // @ts-ignore
   // "oGwbL5G9lIOcFJcAUTnpCwcY-cPA" || //
   // "oGwbL5L15zCh0gHj8q5qqoUcXFHQ" || //
-
+  // "oGwbL5E_PQDKGmfZrLNkKWaM6u-I" || //
   ////////////////////////////////////////////////
   // "oGwbL5D1WtsGTuLhWneaepYuHW3k" ||  // 何旭东
   // "oGwbL5OLhRpOKRWrkVNSMqXuGPaE" ||  // 我妈
@@ -20,7 +20,7 @@ const OPENID_DEV___ =
   ////////////////////////////////////////////////
   // "oGwbL5IZEq-8Op4CvUTNodRKdOB0" ||  // 冯强
   // "oGwbL5CEoFe5T1fqyAQUu0ohSLSM" ||  // 王红霞
-  // "oGwbL5HudJXb6ztDzUtEmpd41v1c" ||  // 王红霞2
+  "oGwbL5HudJXb6ztDzUtEmpd41v1c" ||  // 王红霞2
   // "oGwbL5EtVeoi3OOYhzu2x-0eH2ho" ||  // 司机 苏新宇
   // "oGwbL5MStl5pETsgOH-AF_7DyFAs" ||  // 工厂揽收员 郝晶晶
   // "oGwbL5HGbw_XTtv721jphKhsYcMU" ||  // 工厂揽收员 常莉欣
