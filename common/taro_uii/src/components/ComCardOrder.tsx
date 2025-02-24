@@ -67,7 +67,10 @@ export const ComCardOrderExpress: FC<{
       {order.productList?.[0]?.deliveryId &&
         <View className='dbtc  ww'>
           <View className='dy'>
-            <ComButton rr ll className='nw'>
+            <ComButton rr ll className='nw' onClick={async () => {
+              await try_Taro_setClipboardData({ data: order.productList?.[0]?.waybillId ?? "", });
+              Taro.showToast({ icon: "none", title: `已复制`, });
+            }}>
               {order.productList?.[0]?.deliveryName?.slice(0, 2)} {order.productList?.[0]?.waybillId}
             </ComButton>
             {order.productList?.[0]?.waybillId &&
