@@ -116,7 +116,7 @@ const Index: FC = () => {
               </View>
               <View className='ww mb10 dy' >
                 <ComButton ll className='w5rem bccwhite nw' hoverClass='none'>部门电话</ComButton>
-                <ComButton ll className='flx1 cccplh ' hoverClass='none'>{selfInfo_S.deptInfo?.mobile}</ComButton>
+                <ComButton ll className='flx1 cccplh cccgreen' hoverClass='none' onClick={async () => { selfInfo_S.deptInfo?.mobile && await Taro.makePhoneCall({ phoneNumber: selfInfo_S.deptInfo?.mobile }); }}>{selfInfo_S.deptInfo?.mobile}</ComButton>
               </View>
               <View className='ww mb10 dy' >
                 <ComButton ll className='w5rem bccwhite nw' hoverClass='none'>部门地址</ComButton>
@@ -149,10 +149,10 @@ const Index: FC = () => {
                 </View>
                 <View className='ww mb10 dy' >
                   <ComButton ll className='w5rem bccwhite nw' hoverClass='none'>部门电话</ComButton>
-                  <ComButton ll className='flx1 cccplh ' hoverClass='none'>{selfInfo_S.parentDeptInfo.mobile}</ComButton>
+                  <ComButton ll className='flx1 cccplh cccgreen' hoverClass='none' onClick={async () => { selfInfo_S.parentDeptInfo?.mobile && await Taro.makePhoneCall({ phoneNumber: selfInfo_S.parentDeptInfo?.mobile }); }}>{selfInfo_S.parentDeptInfo.mobile}</ComButton>
                 </View>
                 <View className='ww mb10 dy' >
-                  <ComButton ll className='w5rem bccwhite nw' hoverClass='none'>部门电话</ComButton>
+                  <ComButton ll className='w5rem bccwhite nw' hoverClass='none'>部门地址</ComButton>
                   <ComButton ll className='flx1 cccplh ' hoverClass='none'>{selfInfo_S.parentDeptInfo.address}</ComButton>
                 </View>
               </View>
