@@ -68,8 +68,8 @@ const Index: FC<{}> = ({ }) => {
             <ComButton className='mb10 ww '>
               <View className='nw1'>{_dept.deptName}</View>
             </ComButton>
-            <View className='ww  dy'>
-              <ComButton rr className='ml10 mb10 cccplh bborder ww nw' onClick={async () => {
+            <View className='dy'>
+              <ComButton rr className='ml10 mb10 cccplh bborder  nw' onClick={async () => {
                 const [res_index] = await try_Taro_showActionSheet({ itemList: ["修改部门", "删除部门"] });
                 if (res_index === 0) {
                   setDept(_dept);
@@ -84,14 +84,14 @@ const Index: FC<{}> = ({ }) => {
                   }
                 }
               }}>更多</ComButton>
-              <ComButton rr className='ml10 mb10 bborder ww nw' onClick={async () => {
+              <ComButton rr className='ml10 mb10 bborder  nw' onClick={async () => {
                 Taro.showLoading({ mask: true, title: "加载中" });
                 const res = await Api_dept_userList_ctn({ deptId: _dept.deptId });
                 setDeptUserList(res);
                 setDept(_dept);
                 Taro.hideLoading();
               }}>成员</ComButton>
-              <ComButton rr className='ml10 mb10 bborder ww nw' onClick={() => { setDept(_dept); setMode("add"); }}><Text className='cccgreen'>+</Text>加</ComButton>
+              <ComButton rr className='ml10 mb10 bborder  nw' onClick={() => { setDept(_dept); setMode("add"); }}><Text className='cccgreen'>+</Text>加</ComButton>
             </View>
           </View>
           {roo___has_role(_dept, ["REGIMENT"]) &&
