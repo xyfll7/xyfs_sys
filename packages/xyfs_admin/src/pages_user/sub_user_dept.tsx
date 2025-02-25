@@ -65,16 +65,17 @@ const Index: FC<{}> = ({ }) => {
       {depts && <ComTree list={depts} keyName='deptId'>
         {(_dept) => <View className='ww dll bccwhite  ioo ovh pt10 mb10 pr10'>
           <View className='dbtc ww' >
-            <ComButton className='mb10 ww '>
+            <ComButton className='mb10 ww' hoverClass='none'>
               <View className='nw1'>{_dept.deptName}</View>
             </ComButton>
-            <View className='dy'>
-              <ComButton rr className='ml10 mb10 cccplh bborder  nw' onClick={async () => {
-                const [res_index] = await try_Taro_showActionSheet({ itemList: ["修改部门", "删除部门"] });
-                if (res_index === 0) {
+            <View className='ww  dy'>
+              <ComButton rr className='ml10 mb10 cccplh bborder ww nw' onClick={async () => {
+                const [, res_item] = await try_Taro_showActionSheet({ itemList: ["修改部门", "删除部门"] });
+                if (res_item === "修改部门") {
                   setDept(_dept);
                   setMode("edit");
-                } else if (res_index === 1) {
+                }
+                if (res_item === "删除部门") {
                   const res = await try_Taro_showModal({ title: "提示", content: "您确定要删除该部门？" });
                   if (res) {
                     Taro.showLoading({ mask: true, title: "删除中" });
@@ -94,6 +95,36 @@ const Index: FC<{}> = ({ }) => {
               <ComButton rr className='ml10 mb10 bborder  nw' onClick={() => { setDept(_dept); setMode("add"); }}><Text className='cccgreen'>+</Text>加</ComButton>
             </View>
           </View>
+          {_dept.deptId === 101 && <View className='ww dr'>
+            <Picker
+              className='slr mb10'
+              header-text='请选择账单月份'
+              value={date}
+              end={format(coo___ios_date(), "yyyy-MM-dd")}
+              mode='date'
+              fields='month' onChange={async (e) => {
+                Taro.showLoading({ mask: true, title: "下载中...", });
+                const _date = `${e.detail.value}-01`;
+                setDate(_date);
+                const dateRes = utils_get_start_end_date(_date);
+                if (!_dept?.children) { throw new Error("没有子部门"); }
+                for (const item of _dept.children) {
+                  await Api_order_paymentExport_ctn({
+                    deptId: item.deptId!,
+                    startDate: dateRes.firstDateOfMonth,
+                    endDate: dateRes.lastDateOfMonth,
+                  });
+                }
+                Taro.hideLoading();
+                if (await try_Taro_showModal({ title: "提交成功", content: "请到下载任务列表查看对账单", confirmText: "去查看" })) {
+                  await try_Taro_navigateTo({ url: "/pages_comm/icomm_download_list" });
+                }
+
+              }}>
+              <ComButton rr className='bccback cccgreen'>批量下载对账单</ComButton>
+            </Picker>
+          </View>
+          }
           {roo___has_role(_dept, ["REGIMENT"]) &&
             <View className='ww dr'>
               <Picker
@@ -181,22 +212,22 @@ const Index: FC<{}> = ({ }) => {
 };
 
 
-function useTest(depts) {
-  useEffect(() => {
-    if (depts?.[0]?.children?.[1].children) {
+// function useTest(depts) {
+//   useEffect(() => {
+//     if (depts?.[0]?.children?.[1].children) {
 
-      (async () => {
-        const ____obj = {};
-        for (const _dept of depts?.[0]?.children?.[1].children) {
-          const res = await Api_dept_userList_ctn({ deptId: _dept.deptId });
-          console.log(_dept.deptName, res[0].name, _dept.deptName.includes(res[0].name));
-          ____obj[_dept.deptId] = res;
-        }
-        console.log("summarize：", ____obj);
-      })();
-    }
-  }, [depts]);
-}
+//       (async () => {
+//         const ____obj = {};
+//         for (const _dept of depts?.[0]?.children?.[1].children) {
+//           const res = await Api_dept_userList_ctn({ deptId: _dept.deptId });
+//           console.log(_dept.deptName, res[0].name, _dept.deptName.includes(res[0].name));
+//           ____obj[_dept.deptId] = res;
+//         }
+//         console.log("summarize：", ____obj);
+//       })();
+//     }
+//   }, [depts]);
+// }
 
 
 

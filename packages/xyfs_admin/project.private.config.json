@@ -10,6 +10,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages_comm/icomm_download_list",
+          "pathName": "pages_comm/icomm_download_list",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages_user/sub_user_dept",
           "pathName": "pages_user/sub_user_dept",
           "query": "",
@@ -40,5 +47,5 @@
       ]
     }
   },
-  "libVersion": "3.7.7"
+  "libVersion": "3.7.9"
 }
