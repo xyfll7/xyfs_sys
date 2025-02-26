@@ -10,6 +10,20 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages_user/sub_user_dept",
+          "pathName": "pages_user/sub_user_dept",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_agent/agent__check_account",
+          "pathName": "pages_agent/agent__check_account",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages_comm/icomm_download_list",
           "pathName": "pages_comm/icomm_download_list",
           "query": "",
@@ -47,5 +61,5 @@
       ]
     }
   },
-  "libVersion": "3.7.9"
+  "libVersion": "3.7.8"
 }

@@ -12,6 +12,7 @@ import { ComNavBarA } from '@xyfs/taro_uii/components/ComNavBarA';
 import { ComNavBarB } from "@xyfs/taro_uii/components/ComNavBarB";
 import { ComPopupNew } from "@xyfs/taro_uii/components/ComPopupNew";
 import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
+import { ComSearcher } from "@xyfs/taro_uii/components/ComSearcher";
 import { ComTree } from "@xyfs/taro_uii/components/ComTree";
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { ROLE_ST } from "@xyfs/taro_uii/src/config";
@@ -22,7 +23,7 @@ import { useHook_Reducer } from "@xyfs/taro_uii/utils/useHooks";
 import { utils_get_start_end_date } from "@xyfs/taro_uii/utils/util";
 import { coo___ios_date } from "@xyfs/utils/util";
 import { format } from "date-fns";
-import { FC, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 
 definePageConfig({
   navigationStyle: "custom", disableScroll: true,
@@ -33,12 +34,19 @@ definePageConfig({
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC<{}> = ({ }) => {
   const [depts, setDepts] = useState<any[]>();
-  useEffect(() => { ___Api_dept_list_ctn(); }, []);
-  async function ___Api_dept_list_ctn() {
+  const [searchValue, setSearchValue] = useHook_Reducer("");
+
+
+  const ___Api_dept_list_ctn = useCallback(async () => {
     setDepts(undefined);
-    const res_dept_list = await Api_dept_list_ctn();
+    const res_dept_list = await Api_dept_list_ctn({ keyword: searchValue });
+
     setDepts(res_dept_list);
-  }
+  }, [searchValue]);
+
+
+  useEffect(() => { ___Api_dept_list_ctn(); }, [___Api_dept_list_ctn]);
+
 
 
   // useTest(depts); // 查看部门成员数量
@@ -51,12 +59,17 @@ const Index: FC<{}> = ({ }) => {
 
   const [deptUserList, setDeptUserList] = useState<any[] | null>(null);
   const [date, setDate] = useState<string>(format(coo___ios_date(), "yyyy-MM-dd"));
+
   return <MMMAAPage>
-    <ComNav>
+    <ComNav className='prl10'>
       <View className='ww'>
-        <ComNavBarA className='mb10 pl10'>
+        <ComNavBarA className='mb10 '>
           <ComButton ll className='bcctrans cccplh ml10'>部门管理</ComButton>
         </ComNavBarA>
+        <View className='mb10'>
+          <ComSearcher className='ww' placeholder='部门名称' isShowSearcher
+            onSetSearchValue={(e) => { setSearchValue(e); }} />
+        </View>
       </View>
     </ComNav>
     <ComScrollView className=''>
