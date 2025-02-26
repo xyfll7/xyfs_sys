@@ -10,6 +10,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages_agent/agent__account",
+          "pathName": "pages_agent/agent__account",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages_user/sub_user_register",
           "pathName": "pages_user/sub_user_register",
           "query": "",

@@ -8,7 +8,6 @@ import { ComNavBarA } from '@xyfs/taro_uii/components/ComNavBarA';
 import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
-import { Delivery_Account } from "@xyfs/taro_uii/type_index";
 import { FC, useEffect, useState } from "react";
 
 
@@ -28,7 +27,7 @@ const Index: FC<{}> = ({ }) => {
         <View className='mb10   ioo  dll ww' key={logistic.bizId}>
           <View className='dbtc  flx1 ww'>
             <ComButton className='cccplh'>{logistic.deliveryName}</ComButton>
-            <ComButton className='cccplh'>{logistic && <IIIQuotaNum logistic={logistic}></IIIQuotaNum>}</ComButton>
+            <ComButton className='cccplh'>{logistic.deliveryId && <IIIQuotaNum deliveryId={logistic.deliveryId}></IIIQuotaNum>}</ComButton>
           </View>
         </View>)
       }
@@ -39,40 +38,15 @@ const Index: FC<{}> = ({ }) => {
 
 
 const IIIQuotaNum: FC<{
-  logistic: Delivery_Account;
-}> = ({ logistic }) => {
-  const selfInfo_S = useSTSelf(s => s.selfInfo!);
+  deliveryId: string;
+}> = ({ deliveryId }) => {
   const [quotaNum, setQuotaNum] = useState<string | null>(null);
-
   useEffect(() => {
     (async () => {
-      switch (logistic.deliveryId) {
-        case "JTSD":
-          const res0 = await Api_logistic_queryStock_ctn({ deliveryId: logistic.deliveryId, });
-          setQuotaNum(res0?.remainNum ?? "-1");
-          break;
-        case "STO":
-          const res1 = await Api_logistic_queryStock_ctn({ deliveryId: logistic.deliveryId, });
-          setQuotaNum(res1?.remainNum ?? "-1");
-          break;
-        case "EMS":
-          const res2 = await Api_logistic_queryStock_ctn({ deliveryId: logistic.deliveryId, });
-          setQuotaNum(res2?.remainNum ?? "-1");
-          break;
-        case "YUNDA":
-          const res3 = await Api_logistic_queryStock_ctn({ deliveryId: logistic.deliveryId, });
-          setQuotaNum(res3?.remainNum ?? "-1");
-          break;
-        case "YTO":
-          const res4 = await Api_logistic_queryStock_ctn({ deliveryId: logistic.deliveryId, });
-          setQuotaNum(res4?.remainNum ?? "-1");
-          break;
-        default:
-          throw new Error("尚未支持该的递公司");
-          break;
-      }
+      const res0 = await Api_logistic_queryStock_ctn({ deliveryId });
+      setQuotaNum(res0?.remainNum ?? "-");
     })();
-  }, [logistic, selfInfo_S.OPENID]);
+  }, [deliveryId,]);
   return <>{quotaNum ?? "..."}</>;
 };
 
