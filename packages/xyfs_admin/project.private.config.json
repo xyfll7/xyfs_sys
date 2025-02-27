@@ -6,39 +6,6 @@
     "urlCheck": false,
     "bigPackageSizeSupport": true
   },
-  "condition": {
-    "miniprogram": {
-      "list": [
-        {
-          "name": "pages_agent/agent__account",
-          "pathName": "pages_agent/agent__account",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages_user/sub_user_register",
-          "pathName": "pages_user/sub_user_register",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages_user/sub_user_register",
-          "pathName": "pages_user/sub_user_register",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages_regiment/regiment_orders_express",
-          "pathName": "pages_regiment/regiment_orders_express",
-          "query": "order_ST=2",
-          "launchMode": "default",
-          "scene": null
-        }
-      ]
-    }
-  },
+  "condition": {},
   "libVersion": "3.7.7"
 }

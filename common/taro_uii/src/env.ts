@@ -10,9 +10,7 @@ const ___envSimulate = "release";
 // cSpell: disable;
 const OPENID_DEV___ =
   // @ts-ignore
-  // "oGwbL5G9lIOcFJcAUTnpCwcY-cPA" || //
-  // "oGwbL5L15zCh0gHj8q5qqoUcXFHQ" || //
-  // "oGwbL5E_PQDKGmfZrLNkKWaM6u-I" || //
+  // "oGwbL5MStl5pETsgOH-AF_7DyFAs" || //
   ////////////////////////////////////////////////
   // "oGwbL5D1WtsGTuLhWneaepYuHW3k" ||  // 何旭东
   // "oGwbL5OLhRpOKRWrkVNSMqXuGPaE" ||  // 我妈
