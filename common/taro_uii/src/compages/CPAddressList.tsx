@@ -26,7 +26,6 @@ import { utils_validate_express } from "../utils/validator";
 
 
 const CPAddressList: FC = () => {
-  const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const { options } = Taro_getCurrentInstance<{ manType: AddressManType; }>();
   const [addressType, setAddressType] = useState<Address_T>(options.manType === "send" ? Address_T.寄件地址 : Address_T.收件地址);
 
@@ -37,7 +36,7 @@ const CPAddressList: FC = () => {
       ...p,
       type: addressType,
       keyword: searchValue,
-    }), [addressType, searchValue, selfInfo_S.OPENID]);
+    }), [addressType, searchValue]);
   const { page, page_loading, page_list_get, page_list_update, page_init } = useHook_pageListNew(___page_getter);
 
   const [initProvinceCityArea, setInitProvinceCityArea] = useState<{ province: string, city: string, area: string; } | null>(null);

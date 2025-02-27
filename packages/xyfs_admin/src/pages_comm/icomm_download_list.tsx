@@ -10,6 +10,8 @@ import { ComNavBarA } from "@xyfs/taro_uii/components/ComNavBarA";
 import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
 import { ComSELFView, MMMAAPage } from "@xyfs/taro_uii/components/MMMAAPage";
 import { getMyEnv } from "@xyfs/taro_uii/src/env";
+import { roo___has_role } from "@xyfs/taro_uii/src/roles";
+import { useSTSelf } from "@xyfs/taro_uii/store/store";
 import { try_Taro_setClipboardData, try_Taro_shareFileMessage, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
 import { useHook_pageListNew } from "@xyfs/taro_uii/utils/useHooks";
 import { utils_downloadFile_saveFile } from "@xyfs/taro_uii/utils/util";
@@ -26,6 +28,7 @@ definePageConfig({
 
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC<{}> = ({ }) => {
+  const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const ___page_getter = useCallback(async (p: Pagination<unknown>) => await Api_common_taskList({ ...p, }), []);
   const { page, page_loading, page_list_get, page_init } = useHook_pageListNew(___page_getter);
   const ___time = 24;
@@ -36,9 +39,17 @@ const Index: FC<{}> = ({ }) => {
           <ComButton ll className='bcctrans cccplh ml10'>下载任务列表</ComButton>
         </ComNavBarA>
         <View className='dbtc ww prl10'>
-          <ComButton className='bccback mb10 cccplh'>您下载的对账单会显示在这个页面</ComButton>
-          <ComButton className='mb10' onClick={() => { page_init(); }}>刷新</ComButton>
+          <ComButton className='bccback mb10 cccplh nw1'>您下载的对账单会显示在这个页面</ComButton>
+          <ComButton className='mb10 nw cccgreen' onClick={() => { page_init(); }}>刷新</ComButton>
         </View>
+        {roo___has_role(selfInfo_S, ["AGENT"]) &&
+          <View className='dr ww prl10'>
+            <ComButton className='mb10 nw cccgreen' onClick={async () => {
+              await try_Taro_setClipboardData({ data: page.list?.map(e => e.url).join("\n") });
+              Taro.showToast({ icon: "none", title: "已复制下载链接", });
+            }}>批量复制下载链接</ComButton>
+          </View>
+        }
       </View>
     </ComNav>
     <ComScrollView onScrollToLower={async () => { page_list_get(page); }}>
@@ -75,13 +86,13 @@ const Index: FC<{}> = ({ }) => {
                   {e.type === 1 &&
                     <View className='dy'>
                       {e.url && <><Text className='wm15rem nw1 '> {file_name}</Text><Text className='cccgreen'>  _完成</Text></>}
-                      {!e.url && <><Text className='wm15rem nw1'>{file_name}</Text><Text>_下载中...</Text></>}
+                      {!e.url && <><Text className='wm15rem nw1'>{file_name}</Text><Text className='nw'>_下载中...</Text></>}
                     </View>
                   }
                   {e.type === 2 &&
                     <View className='dy'>
                       {e.url && <><Text className='wm15rem nw1 '> {file_name}</Text><Text className='cccgreen'>  _完成</Text></>}
-                      {!e.url && <><Text className='wm15rem nw1'>{file_name}</Text><Text>_下载中...</Text></>}
+                      {!e.url && <><Text className='wm15rem nw1'>{file_name}</Text><Text className='nw'>_下载中...</Text></>}
                     </View>
                   }
                   {e.type === 3 &&
@@ -105,7 +116,7 @@ const Index: FC<{}> = ({ }) => {
       }
       <ComLoading className='mb10' isLastPage={page?.isLastPage} loading={page_loading} onLoadMore={() => page_list_get(page)} />
     </ComScrollView>
-  </MMMAAPage>;
+  </MMMAAPage >;
 };
 
 

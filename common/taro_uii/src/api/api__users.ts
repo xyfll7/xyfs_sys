@@ -281,7 +281,9 @@ export async function Api_dept_del_ctn(params: {
   });
   return res;
 }
-export async function Api_dept_list_ctn(params?: {}) {
+export async function Api_dept_list_ctn(params?: {
+  keyword: string,
+}) {
   const res = await wx_call_container<DeptInfo[]>({
     path: "/dept/list",
     data: { ...params },
