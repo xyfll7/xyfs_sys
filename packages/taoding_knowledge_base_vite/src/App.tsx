@@ -31,7 +31,7 @@ export default App;
 function MYBody() {
   return <div className="flex flex-col pt-2 h-screen">
     <div className="flex justify-between pl-4 pr-4 mb-2 ">
-      <Button variant="outline" className="border-0 shadow-none">知识库</Button>
+      <Button variant="outline" className="border-0 shadow-none" onClick={async () => { throw new Error("ag"); }}>知识库</Button>
       <ModeToggle ></ModeToggle>
     </div>
     <Separator className="" />
