@@ -28,25 +28,17 @@ function App() {
 
 export default App;
 
-
-
 function MYBody() {
-  return <div className="flex flex-col pt-2">
+  return <div className="flex flex-col pt-2 h-screen">
     <div className="flex justify-between pl-4 pr-4 mb-2 ">
       <Button variant="outline" className="border-0 shadow-none">知识库</Button>
       <ModeToggle ></ModeToggle>
     </div>
     <Separator className="" />
-    <ScrollArea className="h-[200px] w-[350px] rounded-md border p-4">
-      Jokester began sneaking into the castle in the middle of the night and leaving
-      jokes all over the place: under the king's pillow, in his soup, even in the
-      royal toilet. The king was furious, but he couldn't seem to stop Jokester. And
-      then, one day, the people of the kingdom discovered that the jokes left by
-      Jokester were so funny that they couldn't help but laugh. And once they
-      started laughing, they couldn't stop.
+    <ScrollArea className=" h-[100%] w-[250px] border-r p-4">
+
     </ScrollArea>
   </div>;
-
 }
 
 
@@ -55,6 +47,7 @@ function useLogin() {
   useEffect(() => {
     let wwLogin: ww.WWLoginInstance;
     const token_ = localStorage.getItem("token");
+    console.log("ttttt", token_);
     if (token_) {
       setToken(token_);
     } else {

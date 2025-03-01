@@ -18,6 +18,8 @@ async function base_fetch<T>(url: string, params: T) {
     const res_ = await res.json();
     if (res_.message === "ok") {
       return res_.data;
+    } else {
+      throw new Error(res_.message);
     }
   }
 }
