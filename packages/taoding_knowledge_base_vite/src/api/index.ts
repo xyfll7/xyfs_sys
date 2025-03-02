@@ -108,7 +108,7 @@ async function base_fetch_file_download(url: string, params: Record<string, any>
 export const login = async (params: { code: string; }) => {
   return await base_fetch<{ token: string; }>("/login", params);
 };
-export const auth_my_files = async (params: { cid: number; }) => {
+export const auth_my_files = async (params: { cid: number; keyword: string; }) => {
   return await base_fetch<{ files: MyFile[]; }>("/auth/my-files", params);
 };
 export const auth_cate = async (params: { cid: number; }) => {

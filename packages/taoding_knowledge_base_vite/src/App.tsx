@@ -16,7 +16,8 @@ import {
   DialogTitle
 } from "@/components/ui/dialog";
 import * as ww from "@wecom/jssdk";
-import { CloudDownload, CloudUpload, File, Loader, MoreHorizontal, SquareLibrary, TriangleAlert, UsersRound } from "lucide-react";
+import { format } from "date-fns";
+import { CloudDownload, CloudUpload, File, Loader, MoreHorizontal, Search, SquareLibrary, TriangleAlert, UsersRound } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import './App.css';
@@ -25,6 +26,7 @@ import { FilePermissionManagementMemo } from "./components/FilePermissionManagem
 import { ModeToggle } from "./components/mode-toggle";
 import { Button } from "./components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "./components/ui/dropdown-menu";
+import { Input } from "./components/ui/input";
 import { ScrollArea } from "./components/ui/scroll-area";
 import { Separator } from "./components/ui/separator";
 import { Cate, MyFile, User } from "./vite-env";
@@ -68,7 +70,7 @@ function MYBody() {
 
   return <div className="flex flex-col pt-2 h-screen w-full  ">
     <div className="flex justify-between pl-4 pr-4 mb-2 ">
-      <Button variant="link" className="border-0 shadow-none font-bold dark:text-white text-black " onClick={async () => { throw new Error("ag"); }}>
+      <Button variant="link" className="border-0 shadow-none font-bold dark:text-white text-black " onClick={async () => { throw new Error("👌"); }}>
         <SquareLibrary />知识库
       </Button>
       <div className="flex">
@@ -79,7 +81,7 @@ function MYBody() {
     <div className=" h-[100%] flex">
       <ScrollArea className=" h-[100%] w-[250px] border-r pt-2  ">
         <div className="flex flex-col items-start">
-          <Button variant={"link"} className="ml-4 mb-2 dark:text-white text-black">文件</Button>
+          <Button variant={"link"} className="ml-4 mb-2 dark:text-white text-black">分类</Button>
           <Separator className="mb-2 bg-transparent" />
           <div className="pr-4 pl-4">
             {treeList.map((item, index) => {
@@ -108,17 +110,18 @@ function CurrentFile({ cate }: { cate: Cate; }) {
 
 
 
-  const get_auth_my_files = useCallback(async () => {
+  const get_auth_my_files = useCallback(async (keyword: string) => {
     setFiles(undefined);
-    const res = await auth_my_files({ cid: cate.cid });
+    const res = await auth_my_files({ cid: cate.cid, keyword });
     if (res?.files) {
       setFiles(res.files);
     }
   }, [cate.cid]);
 
   useEffect(() => {
-    get_auth_my_files();
+    get_auth_my_files("");
   }, [get_auth_my_files]);
+  const [keyword, setKeyword] = useState("");
 
   const [file, setFile] = useState<MyFile>();
   const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
@@ -209,7 +212,7 @@ function CurrentFile({ cate }: { cate: Cate; }) {
                   const res = await base_fetch_upload_file<{ fid: string, version: string; }>(formData);
                   setIsShowDialogUpload(false);
                   if (res) {
-                    get_auth_my_files();
+                    get_auth_my_files("");
                     toast.success("文件上传成功", {
                       description: `${res.fid}:${res.version}`,
                     });
@@ -227,35 +230,49 @@ function CurrentFile({ cate }: { cate: Cate; }) {
     </Dialog>
     <div className="flex justify-between w-full mb-2 pr-4 pl-4">
       <Button variant="link" className="border-0 shadow-none dark:text-white text-black">{cate.cname}</Button>
-      <Button className="" onClick={async () => {
-        const fileSelector = buildFileSelector();
-        fileSelector.click();
-        fileSelector.onchange = async () => {
-          console.log(fileSelector.files);
-          if (fileSelector.files?.[0]) {
-            const file = fileSelector.files[0];
-            const formData = new FormData();
-            formData.append('file', file);
-            formData.append('master_name', file.name);
-            // formData.append('fid', "35");
-            // formData.append('read', "ab12d673f33471d80126d14d349aa62c");
-            // formData.append('write', "FengSe");
-            formData.append('cid', `${cate.cid}`);
-            try {
-              setLoadingFileUpload(true);
-              const res = await base_fetch_upload_file<{ fid: string, version: string; }>(formData);
-              if (res) {
-                get_auth_my_files();
-                toast.success("文件上传成功", {
-                  description: `${res.fid}:${res.version}`,
-                });
-              }
-            } finally {
-              setLoadingFileUpload(false);
-            }
+      <div className="flex">
+
+
+        <Input className="max-w-[400px] min-w-[300px] mr-2" value={keyword} placeholder="请输入搜索关键字" onInput={e => {
+          setKeyword(e.currentTarget.value);
+        }} onKeyDown={(e) => {
+          if (e.key == "Enter") {
+            get_auth_my_files(keyword);
           }
-        };
-      }}>   {loadingFileUpload ? <Loader className="animate-spin" /> : <CloudUpload />} 上传文件</Button>
+        }}></Input>
+        <Button className="mr-2" onClick={() => {
+          get_auth_my_files(keyword);
+        }}><Search /> 搜索</Button>
+        <Button className="" onClick={async () => {
+          const fileSelector = buildFileSelector();
+          fileSelector.click();
+          fileSelector.onchange = async () => {
+            console.log(fileSelector.files);
+            if (fileSelector.files?.[0]) {
+              const file = fileSelector.files[0];
+              const formData = new FormData();
+              formData.append('file', file);
+              formData.append('master_name', file.name);
+              // formData.append('fid', "35");
+              // formData.append('read', "ab12d673f33471d80126d14d349aa62c");
+              // formData.append('write', "FengSe");
+              formData.append('cid', `${cate.cid}`);
+              try {
+                setLoadingFileUpload(true);
+                const res = await base_fetch_upload_file<{ fid: string, version: string; }>(formData);
+                if (res) {
+                  get_auth_my_files("");
+                  toast.success("文件上传成功", {
+                    description: `${res.fid}:${res.version}`,
+                  });
+                }
+              } finally {
+                setLoadingFileUpload(false);
+              }
+            }
+          };
+        }}>   {loadingFileUpload ? <Loader className="animate-spin" /> : <CloudUpload />} 上传文件</Button>
+      </div>
     </div>
     <Separator className="mb-2" />
     {files &&
@@ -293,6 +310,7 @@ function CurrentFile({ cate }: { cate: Cate; }) {
                         console.log(res_abc, res_abc);
                         const link = document.createElement('a');
                         link.href = res_abc;
+                        link.target = "_blank";
                         // link.download = item. master_name;
 
                         // 模拟点击链接进行下载
@@ -331,11 +349,9 @@ function CurrentFile({ cate }: { cate: Cate; }) {
 
                               // 释放 URL 对象
                               URL.revokeObjectURL(res_abc);
-                            }}>版本:{e.version} {e.ori_name} 创建人:({e.created_by}) 时间:{e.created_at}</DropdownMenuItem>;
+                            }}>版本:{e.version} {e.ori_name} 创建人:({e.created_by}) 时间:{format(new Date(e.created_at), "yyyy-MM-dd HH:mm:ss")}</DropdownMenuItem>;
                           })
                           }
-
-
                         </DropdownMenuContent>
                       </DropdownMenu>
 
