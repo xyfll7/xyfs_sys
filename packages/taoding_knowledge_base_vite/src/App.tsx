@@ -7,21 +7,38 @@ import {
   AlertDialogHeader,
   AlertDialogTitle
 } from "@/components/ui/alert-dialog";
-import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle
+} from "@/components/ui/dialog";
 import * as ww from "@wecom/jssdk";
-import { CloudDownload, CloudUpload, File, Loader, SquareLibrary, UserRound, UsersRound } from "lucide-react";
-import { memo, useEffect, useState } from "react";
+import { CloudDownload, CloudUpload, File, Loader, SquareLibrary, TriangleAlert, UsersRound } from "lucide-react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import './App.css';
-import { auth_cate, auth_my_files, auth_rule, auth_users, login } from './api';
+import { auth_cate, auth_download, auth_my_files, auth_rule, base_fetch_upload_file, login } from './api';
+import { FilePermissionManagementMemo } from "./components/FilePermissionManagementMemo";
 import { ModeToggle } from "./components/mode-toggle";
 import { Button } from "./components/ui/button";
 import { ScrollArea } from "./components/ui/scroll-area";
 import { Separator } from "./components/ui/separator";
 import { Cate, MyFile, User } from "./vite-env";
 
+
 function App() {
   const token = useLogin();
+  useEffect(() => {
+    window.onunhandledrejection = (error) => {
+      toast.error("全局错误", {
+        description: error.reason.message
+      });
+    };
+    return () => { window.onunhandledrejection = null; };
+  }, []);
 
 
   return (
@@ -36,43 +53,26 @@ export default App;
 
 function MYBody() {
   const [treeList, setTreeList] = useState<Cate[]>([]);
+  const [currentCid, setCurrentCid] = useState<Cate>();
   useEffect(() => {
     (async () => {
       const res = await auth_cate({ cid: 1 });
       if (res?.cates) {
-        setTreeList(res.cates.concat({
-          cid: 2,
-          cname: "我是分类x",
-          files: null
-        }).concat({
-          cid: 3,
-          cname: "测试分b",
-          files: null
-        }));
+        setTreeList(res.cates);
+        setCurrentCid(res.cates[0]);
       }
     })();
   }, []);
 
-  const [currentCid, setCurrentCid] = useState<Cate>();
+
   return <div className="flex flex-col pt-2 h-screen w-full  ">
     <div className="flex justify-between pl-4 pr-4 mb-2 ">
       <Button variant="link" className="border-0 shadow-none font-bold text-black" onClick={async () => { throw new Error("ag"); }}>
         <SquareLibrary />知识库
       </Button>
       <div className="flex">
-        <Button variant="link" className="border-0 shadow-none text-gray-500" onClick={() => {
-          console.log("测试ccc");
-          toast("Event has been created", {
-            description: "Sunday, December 03, 2023 at 9:00 AM",
-            action: {
-              label: "Undo",
-              onClick: () => console.log("Undo"),
-            },
-          });
-        }}>测试</Button>
         <ModeToggle ></ModeToggle>
       </div>
-
     </div>
     <Separator className="" />
     <div className=" h-[100%] flex">
@@ -100,22 +100,28 @@ function MYBody() {
 }
 
 
-const FilePermissionManagementMemo = memo(FilePermissionManagement, () => { return true; });
+
 function CurrentFile({ cate }: { cate: Cate; }) {
   const [loading, setLoading] = useState(true);
   const [files, setFiles] = useState<MyFile[]>();
   useEffect(() => {
     (async () => {
+      setFiles(undefined);
       const res = await auth_my_files({ cid: cate.cid });
       if (res?.files) {
         setFiles(res.files);
       }
     })();
   }, [cate.cid]);
+
   const [file, setFile] = useState<MyFile>();
-  const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
+  console.log("FilePermissionManagement::------", selectedUsers);
+  const [isShowDialogMember, setIsShowDialogMember] = useState(false);
+  const [isShowDialogUpload, setIsShowDialogUpload] = useState(false);
+  const [loadingFileUpload, setLoadingFileUpload] = useState(false);
   return <div className="flex flex-col h-full items-start w-full">
-    <AlertDialog open={Boolean(file)} onOpenChange={(e) => !e && setFile(undefined)}>
+    <AlertDialog open={isShowDialogMember} onOpenChange={(e) => !e && setIsShowDialogMember(false)}>
       <AlertDialogContent className="sm:max-w-[50%]" >
         <AlertDialogHeader >
           <AlertDialogTitle>
@@ -128,7 +134,8 @@ function CurrentFile({ cate }: { cate: Cate; }) {
             设置文件的查看权限
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <FilePermissionManagementMemo onComplete={() => { setLoading(false); }} onSetUsers={(e) => {
+
+        <FilePermissionManagementMemo file={file!} onComplete={() => { setLoading(false); }} onSetUsers={(e) => {
           setSelectedUsers(e);
         }} />
         <AlertDialogFooter>
@@ -142,9 +149,17 @@ function CurrentFile({ cate }: { cate: Cate; }) {
             }
             try {
               setLoading(true);
-              await auth_rule({ fid: String(file!.fid), read: selectedUsers, });
-              setFile(undefined);
+              await auth_rule({
+                fid: String(file!.fid),
+                read: selectedUsers.filter(e => e.rule == "1").map(e => e.user_id),
+                write: selectedUsers.filter(e => e.rule == "2").map(e => e.user_id),
+                manage: selectedUsers.filter(e => e.rule == "3").map(e => e.user_id),
+              });
+              setIsShowDialogMember(false);
               setLoading(false);
+              toast.success("成功", {
+                description: "文件权限设置成功"
+              });
             } catch (error) {
               const error_ = error as Error;
               setLoading(false);
@@ -152,45 +167,140 @@ function CurrentFile({ cate }: { cate: Cate; }) {
                 description: error_?.message ?? "未知错误",
               });
             }
-          }}>{loading && <Loader className="animate-spin" />} 确认</Button>
+          }}>{loading && <Loader className="animate-spin" />}确认</Button>
         </AlertDialogFooter>
 
 
       </AlertDialogContent>
     </AlertDialog>
+    <Dialog open={isShowDialogUpload} onOpenChange={(e) => { setIsShowDialogUpload(e); }}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle className="flex items-center text-yellow-600"> <TriangleAlert className="mr-2" />警告提示</DialogTitle>
+          <DialogDescription className="text-red-500">
+            该操作会覆盖掉当前文件：{file?.master_name}
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <Button variant={"outline"} className="text-gray-500 " onClick={() => setIsShowDialogUpload(e => !e)}>取消</Button>
+          <Button onClick={async () => {
+            const fileSelector = buildFileSelector();
+            fileSelector.click();
+            fileSelector.onchange = async () => {
+              console.log(fileSelector.files);
+              if (fileSelector.files?.[0]) {
+                const file_ = fileSelector.files[0];
+                console.log(file_);
+                const formData = new FormData();
+                formData.append('file', file_);
+                // formData.append('master_name', file.name);
+                formData.append('fid', `${file!.fid!}`);
+                // formData.append('read', "ab12d673f33471d80126d14d349aa62c");
+                // formData.append('write', "FengSe");
+                // formData.append('cid', `${cate.cid}`);
+                try {
+                  setLoadingFileUpload(true);
+                  const res = await base_fetch_upload_file<{ fid: string, version: string; }>(formData);
+                  setIsShowDialogUpload(false);
+                  if (res) {
+                    toast.success("文件上传成功", {
+                      description: `${res.fid}:${res.version}`,
+                    });
+                  }
+                } finally {
+                  setLoadingFileUpload(false);
+                }
+              }
+            };
+          }}>
+            {loadingFileUpload ? <Loader className="animate-spin" /> : <CloudUpload />} 选择文件并上传
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
     <div className="flex justify-between w-full mb-2 pr-4 pl-4">
       <Button variant="link" className="border-0 shadow-none  text-black">{cate.cname}</Button>
+      <Button className="" onClick={async () => {
+        const fileSelector = buildFileSelector();
+        fileSelector.click();
+        fileSelector.onchange = async () => {
+          console.log(fileSelector.files);
+          if (fileSelector.files?.[0]) {
+            const file = fileSelector.files[0];
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('master_name', file.name);
+            // formData.append('fid', "35");
+            // formData.append('read', "ab12d673f33471d80126d14d349aa62c");
+            // formData.append('write', "FengSe");
+            formData.append('cid', `${cate.cid}`);
+            try {
+              setLoadingFileUpload(true);
+              const res = await base_fetch_upload_file<{ fid: string, version: string; }>(formData);
 
-      <Button className=""><CloudUpload /> 上传文件</Button>
+              if (res) {
+                toast.success("文件上传成功", {
+                  description: `${res.fid}:${res.version}`,
+                });
+              }
+            } finally {
+              setLoadingFileUpload(false);
+            }
 
+          }
+        };
+      }}>   {loadingFileUpload ? <Loader className="animate-spin" /> : <CloudUpload />} 上传文件</Button>
     </div>
     <Separator className="mb-2" />
     {files &&
       <ScrollArea className=" h-[100%] box-border w-full  p-4 pb-30 text-gray-500">
         <div className="flex flex-col items-start w-full overflow-hidden box-border">
-          {[...files!, ...files!, ...files!, ...files!, ...files!, ...files!, ...files!, ...files!, ...files!, ...files!, ...files!, ...files!, ...files!,]?.map((item, index) => {
+          {[...files!]?.map((item, index) => {
             return <div className="w-full flex flex-col overflow-hidden" key={item.cid + index}>
               <div className="w-full flex justify-between mb-2 "  >
                 <div className="ml-4 flex items-center border-0 shadow-none  justify-start text-gray-500 ">
                   <File size={"1rem"} className="min-w-[1rem]" />
                   <div className="nw1 flex items-center rounded-md  px-2 text-sm ">
-                    {item?.master_name} {item?.master_name} {item?.master_name} {item?.master_name} {item?.master_name} {item?.master_name} {item?.master_name}
+                    {item?.master_name}
                   </div>
                 </div>
                 <div className="flex">
-                  <Button variant="outline" className=" text-gray-500 ml-2" onClick={() => { setLoading(true); setFile(item); }}>
-                    <UsersRound />
-                    成员
-                  </Button>
-                  <Button variant="outline" className=" text-gray-500 ml-2">
-                    <CloudUpload />
-                    上传
-                  </Button>
+                  {(item.rule.rule == 0 || item.rule.rule == 3) &&
+                    <Button variant="outline" className=" text-gray-500 ml-2" onClick={() => { setLoading(true); setFile(item); setIsShowDialogMember(true); }}>
+                      <UsersRound />
+                      成员
+                    </Button>
+                  }
+                  {item.rule.rule != null && String(item.rule.rule) && item.rule.rule != 1 &&
+                    <Button variant="outline" className=" text-gray-500 ml-2" onClick={() => {
+                      setFile(item);
+                      setIsShowDialogUpload(e => !e);
+                    }}>
+                      <CloudUpload />
+                      上传
+                    </Button>
+                  }
+                  {item.rule.rule != null && String(item.rule.rule) && <Button variant="outline" className=" text-gray-500 ml-2" onClick={async () => {
+                    const res_abc = await auth_download({ fid: item.fid, version: 1 });
+                    console.log(res_abc, res_abc);
+                    const link = document.createElement('a');
+                    link.href = res_abc;
+                    // link.download = item. master_name;
 
-                  <Button variant="outline" className=" text-gray-500 ml-2">
+                    // 模拟点击链接进行下载
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+
+                    // 释放 URL 对象
+                    URL.revokeObjectURL(res_abc);
+
+                  }}>
                     <CloudDownload />
                     下载
                   </Button>
+                  }
+
                 </div>
               </div>
               <Separator className="mb-2 " />
@@ -200,53 +310,17 @@ function CurrentFile({ cate }: { cate: Cate; }) {
       </ScrollArea>
     }
 
-  </div>;
-}
-
-
-function FilePermissionManagement({ onSetUsers, onComplete }: { onComplete: () => void, onSetUsers?: (e: string[]) => void; }) {
-  const [users, setUsers] = useState<User[]>();
-  useEffect(() => {
-    (async () => {
-      console.log("1111xxxxxxxxxff");
-      const res = await auth_users();
-      if (res) {
-        setUsers(res.users);
-        onComplete();
-      }
-    })();
-  }, [onComplete]);
-  const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
-  return <div className="flex flex-col overflow-hidden  items-start w-full">
-    {!users && <Button variant={"outline"} className="border-0 shadow-none text-gray-500">数据加载中...</Button>}
-    {users && <ScrollArea className=" h-[400px] w-full  ">
-      {users?.map((item, index) => {
-        return <div className="flex justify-between items-center w-full" key={item.user_id + index}>
-          <div className="flex items-center rounded-md  px-4 py-2 font-mono text-sm ">
-            <Checkbox className="mr-2" id={item.user_id} onClick={() => {
-              let users: string[] = [];
-              if (selectedUsers.includes(item.user_id)) {
-                users = selectedUsers.filter((e) => e !== item.user_id);
-              } else {
-                users = [...selectedUsers, item.user_id];
-              }
-              setSelectedUsers(users);
-              onSetUsers?.(users);
-            }} />
-            <label htmlFor={item.user_id} className="flex items-center w-full text-gray-500">
-              <UserRound size={"1rem"} className="mr-2 min-w-[1rem]" />
-              {item.name}
-            </label>
-          </div>
-        </div>;
-      })}
-    </ScrollArea>
-    }
-  </div>;
+  </div >;
 }
 
 
 
+function buildFileSelector() {
+  const fileSelector = document.createElement('input');
+  fileSelector.setAttribute('type', 'file');
+  fileSelector.setAttribute('multiple', 'multiple');
+  return fileSelector;
+}
 
 function useLogin() {
   const [token, setToken] = useState<string>();

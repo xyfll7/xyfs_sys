@@ -4,6 +4,7 @@
 export interface User {
   user_id: string;
   name: string;
+  rule: string | null;
 }
 
 export interface Cate {
@@ -18,6 +19,7 @@ export interface MyFile {
   created_by: string;
   created_at: string;
   updated_at: string;
+  rule: { rule: number; };
   rules: Rule[] | null;
   versions: Version[] | null;
   cate: Cate | null;
