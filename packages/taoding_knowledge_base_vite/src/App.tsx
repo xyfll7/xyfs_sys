@@ -131,9 +131,9 @@ function CurrentFile({ cate }: { cate: Cate; }) {
       <AlertDialogContent className="sm:max-w-[50%]" >
         <AlertDialogHeader >
           <AlertDialogTitle>
-            <div className="flex items-baseline">
-              <span className="mr-2" >文件名称.xdf</span>
-              <span className="text-gray-500 text-xs">权限管理</span>
+            <div className="flex items-baseline justify-start">
+              <span className="mr-2 nw1  " >{file?.master_name}</span>
+              <span className="text-gray-500 text-xs whitespace-nowrap">权限管理</span>
             </div>
           </AlertDialogTitle>
           <AlertDialogDescription>
