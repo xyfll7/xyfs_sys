@@ -37,7 +37,7 @@ function FilePermissionManagement({ file, onSetUsers, onComplete }: { file: MyFi
         onComplete();
       }
     })();
-  }, [file.fid, onComplete]);
+  }, [file.fid, onComplete, onSetUsers]);
 
   const columns: ColumnDef<User>[] = [
     {
@@ -50,15 +50,19 @@ function FilePermissionManagement({ file, onSetUsers, onComplete }: { file: MyFi
       header: "权限",
       cell: ({ row }) => {
         const user = row.original;
-        return <RulesManager user={user} selectedUsers={selectedUsers} onSelectedRule={(e) => {
+        return <RulesManager user={user} selectedUsers={selectedUsers} onSelectedRule={(e, uu) => {
 
           let users: User[] = [];
           if (!e) {
             users = selectedUsers.filter((e) => e.user_id != user.user_id);
           } else {
+            let uuu: User[] = [];
+            if (selectedUsers.find(uu => uu.user_id == uu.user_id)) {
+              uuu = selectedUsers.filter(xx => xx.user_id != uu.user_id);
+            }
             const user_ = JSON.parse(JSON.stringify(user));
             user_.rule = e;
-            users = [...selectedUsers, user_];
+            users = [...uuu, user_];
           }
           setSelectedUsers(users);
           onSetUsers?.(users);
@@ -81,7 +85,7 @@ export const FilePermissionManagementMemo = memo(FilePermissionManagement, () =>
 
 
 
-function RulesManager({ user, selectedUsers, onSelectedRule }: { selectedUsers: User[], user: User; onSelectedRule: (e: string | null) => void; }) {
+function RulesManager({ user, selectedUsers, onSelectedRule }: { selectedUsers: User[], user: User; onSelectedRule: (e: string | null, uu: User) => void; }) {
   const user___ = selectedUsers.find(e => user.user_id == e.user_id) ?? user;
   const [rule, setRule] = useState<string | null>(user___.rule);
   return (
@@ -92,11 +96,11 @@ function RulesManager({ user, selectedUsers, onSelectedRule }: { selectedUsers: 
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => { setRule(null); onSelectedRule(null); }}>取消</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => { setRule(null); onSelectedRule(null, user); }}>取消</DropdownMenuItem>
         {/* <DropdownMenuItem onClick={() => { setRule("0"); onSelectedRule("0"); }}>所有者</DropdownMenuItem> */}
-        <DropdownMenuItem onClick={() => { setRule("3"); onSelectedRule("3"); }}>管理员</DropdownMenuItem>
-        <DropdownMenuItem onClick={() => { setRule("2"); onSelectedRule("2"); }}>编辑</DropdownMenuItem>
-        <DropdownMenuItem onClick={() => { setRule("1"); onSelectedRule("1"); }}>下载 </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => { setRule("3"); onSelectedRule("3", user); }}>管理员</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => { setRule("2"); onSelectedRule("2", user); }}>编辑</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => { setRule("1"); onSelectedRule("1", user); }}>下载 </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
