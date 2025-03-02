@@ -1,12 +1,14 @@
+import qs from 'qs';
 import { Cate, MyFile, User } from "../vite-env";
 const base_url = 'http://192.168.60.230:8081';
+
 // const base_url = 'http://file.taoding.cn:8081';
 
 async function base_fetch<T>(url: string, params: Record<string, any>) {
   const token = localStorage.getItem("token");
   const res = await fetch(`${base_url}${url}`, {
     method: 'POST',
-    body: new URLSearchParams(params),
+    body: qs.stringify(params),
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       ...(token && url !== "/login" ? { 'Authorization': token } : null)
