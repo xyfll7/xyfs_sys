@@ -7,16 +7,18 @@ import {
   AlertDialogHeader,
   AlertDialogTitle
 } from "@/components/ui/alert-dialog";
+import { Checkbox } from "@/components/ui/checkbox";
 import * as ww from "@wecom/jssdk";
-import { CloudDownload, CloudUpload, File, Loader, SquareLibrary, UsersRound } from "lucide-react";
+import { CloudDownload, CloudUpload, File, Loader, SquareLibrary, UserRound, UsersRound } from "lucide-react";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import './App.css';
-import { auth_cate, auth_my_files, login } from './api';
+import { auth_cate, auth_my_files, auth_rule, auth_users, login } from './api';
 import { ModeToggle } from "./components/mode-toggle";
 import { Button } from "./components/ui/button";
 import { ScrollArea } from "./components/ui/scroll-area";
 import { Separator } from "./components/ui/separator";
-import { Cate, MyFile } from "./vite-env";
+import { Cate, MyFile, User } from "./vite-env";
 
 function App() {
   const token = useLogin();
@@ -52,10 +54,25 @@ function MYBody() {
   }, []);
 
   const [currentCid, setCurrentCid] = useState<Cate>();
-  return <div className="flex flex-col pt-2 h-screen w-screen ">
+  return <div className="flex flex-col pt-2 h-screen w-full  ">
     <div className="flex justify-between pl-4 pr-4 mb-2 ">
-      <Button variant="link" className="border-0 shadow-none font-bold " onClick={async () => { throw new Error("ag"); }}><SquareLibrary />知识库</Button>
-      <ModeToggle ></ModeToggle>
+      <Button variant="link" className="border-0 shadow-none font-bold " onClick={async () => { throw new Error("ag"); }}>
+        <SquareLibrary />知识库
+      </Button>
+      <div className="flex">
+        <Button variant="link" className="border-0 shadow-none text-gray-500" onClick={() => {
+          console.log("测试ccc");
+          toast("Event has been created", {
+            description: "Sunday, December 03, 2023 at 9:00 AM",
+            action: {
+              label: "Undo",
+              onClick: () => console.log("Undo"),
+            },
+          });
+        }}>测试</Button>
+        <ModeToggle ></ModeToggle>
+      </div>
+
     </div>
     <Separator className="" />
     <div className=" h-[100%] flex">
@@ -88,15 +105,17 @@ function CurrentFile({ cate }: { cate: Cate; }) {
   useEffect(() => {
     (async () => {
       const res = await auth_my_files({ cid: cate.cid });
-      console.log("resffff", res);
       if (res?.files) {
         setFiles(res.files);
       }
     })();
   }, [cate.cid]);
-  const [showDialog, setShowDialog] = useState(false);
+
+  const [file, setFile] = useState<MyFile>();
+  const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
   return <div className="flex flex-col h-full items-start w-full">
-    <AlertDialog open={showDialog} onOpenChange={(e) => setShowDialog(e)}>
+    <AlertDialog open={Boolean(file)} onOpenChange={(e) => !e && setFile(undefined)}>
       <AlertDialogContent className="sm:max-w-[50%]" >
         <AlertDialogHeader >
           <AlertDialogTitle>
@@ -106,16 +125,28 @@ function CurrentFile({ cate }: { cate: Cate; }) {
             </div>
           </AlertDialogTitle>
           <AlertDialogDescription >
-            This action cannot be undone. This will permanently delete your account
-            and remove your data from our servers.
+            设置文件的查看权限
           </AlertDialogDescription>
         </AlertDialogHeader>
-
+        <FilePermissionManagement onSetUsers={(e) => {
+          setSelectedUsers(e);
+        }} />
         <AlertDialogFooter>
           <AlertDialogCancel>取消</AlertDialogCancel>
-          <Button onClick={async () => {
-            setShowDialog((e) => !e);
-          }}><Loader className="animate-spin" /> 确认</Button>
+          <Button disabled={loading} onClick={async () => {
+            if (file) {
+              try {
+                setLoading(true);
+                await auth_rule({ fid: String(file.fid), read: selectedUsers, });
+                console.log(selectedUsers);
+                setFile(undefined);
+                setLoading(false);
+              } catch (error) {
+                console.log("出错了", error);
+                setLoading(false);
+              }
+            }
+          }}>{loading && <Loader className="animate-spin" />} 确认</Button>
         </AlertDialogFooter>
 
 
@@ -132,14 +163,16 @@ function CurrentFile({ cate }: { cate: Cate; }) {
       <ScrollArea className=" h-[100%] box-border w-full  p-4 pb-30 text-gray-500">
         <div className="flex flex-col items-start w-full overflow-hidden box-border">
           {[...files!, ...files!, ...files!, ...files!, ...files!, ...files!, ...files!, ...files!, ...files!, ...files!, ...files!, ...files!, ...files!,]?.map((item, index) => {
-            return <div className="w-full flex flex-col overflow-hidden">
-              <div className="w-full flex justify-between mb-2 " key={item.cid + index} >
-                <Button variant="outline" className="border-0 shadow-none  text-gray-500">
-                  <File />
-                  {item?.master_name}
-                </Button>
+            return <div className="w-full flex flex-col overflow-hidden" key={item.cid + index}>
+              <div className="w-full flex justify-between mb-2 "  >
+                <div className="ml-4 flex items-center border-0 shadow-none  justify-start text-gray-500 ">
+                  <File size={"1rem"} className="min-w-[1rem]" />
+                  <div className="nw1 flex items-center rounded-md  px-2 text-sm ">
+                    {item?.master_name} {item?.master_name} {item?.master_name} {item?.master_name} {item?.master_name} {item?.master_name} {item?.master_name}
+                  </div>
+                </div>
                 <div className="flex">
-                  <Button variant="outline" className=" text-gray-500 ml-2" onClick={() => { setShowDialog((e) => !e); }}>
+                  <Button variant="outline" className=" text-gray-500 ml-2" onClick={() => { setFile(item); }}>
                     <UsersRound />
                     成员
                   </Button>
@@ -165,12 +198,51 @@ function CurrentFile({ cate }: { cate: Cate; }) {
 }
 
 
+function FilePermissionManagement({ onSetUsers }: { onSetUsers?: (e: string[]) => void; }) {
+  const [users, setUsers] = useState<User[]>();
+  useEffect(() => {
+    (async () => {
+      const res = await auth_users();
+      if (res) {
+        setUsers(res.users);
+      }
+    })();
+  }, []);
+  const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
+  return <div className="flex flex-col overflow-hidden  items-start w-full">
+    {!users && <Button variant={"outline"} className="border-0 shadow-none text-gray-500">数据加载中...</Button>}
+    {users && <ScrollArea className=" h-[400px] w-full  ">
+      {users?.map((item, index) => {
+        return <div className="flex justify-between items-center w-full" key={item.user_id + index}>
+          <div className="flex items-center rounded-md  px-4 py-2 font-mono text-sm ">
+            <Checkbox className="mr-2" id={item.user_id} onClick={() => {
+              let users: string[] = [];
+              if (selectedUsers.includes(item.user_id)) {
+                users = selectedUsers.filter((e) => e !== item.user_id);
+              } else {
+                users = [...selectedUsers, item.user_id];
+              }
+              setSelectedUsers(users);
+              onSetUsers?.(users);
+            }} />
+            <label htmlFor={item.user_id} className="flex items-center w-full text-gray-500">
+              <UserRound size={"1rem"} className="mr-2 min-w-[1rem]" />
+              {item.name}
+            </label>
+          </div>
+        </div>;
+      })}
+    </ScrollArea>
+    }
+  </div>;
+}
+
+
 function useLogin() {
   const [token, setToken] = useState<string>();
   useEffect(() => {
     let wwLogin: ww.WWLoginInstance;
     const token_ = localStorage.getItem("token");
-    console.log("ttttt", token_);
     if (token_) {
       setToken(token_);
     } else {
@@ -191,14 +263,12 @@ function useLogin() {
             },
             onLoginSuccess: async ({ code, }) => {
               const res_token = await login({ code });
-              console.log("code", code);
               if (res_token) {
                 re(res_token.token);
                 wwLogin.unmount();
               }
             },
             onLoginFail: async (err) => {
-              console.log(err);
               rj(err);
             }
           });

@@ -1,6 +1,11 @@
 /// <reference types="vite/client" />
 
 
+export interface User {
+  user_id: string;
+  name: string;
+}
+
 export interface Cate {
   cid: number;
   cname: string;

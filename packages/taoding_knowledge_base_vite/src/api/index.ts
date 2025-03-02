@@ -1,4 +1,4 @@
-import { Cate, MyFile } from "../vite-env";
+import { Cate, MyFile, User } from "../vite-env";
 
 
 
@@ -37,4 +37,10 @@ export const auth_my_files = async (params: { cid: number; }) => {
 
 export const auth_cate = async (params: { cid: number; }) => {
   return await base_fetch<{ cates: Cate[]; }>("/auth/cate", params);
+};
+export const auth_users = async () => {
+  return await base_fetch<{ users: User[]; }>("/auth/users", {});
+};
+export const auth_rule = async (params: { fid: string; read: string[], write?: string; }) => {
+  return await base_fetch<{ users: User[]; }>("/auth/rule", params);
 };
