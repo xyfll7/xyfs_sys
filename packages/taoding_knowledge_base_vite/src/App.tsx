@@ -10,7 +10,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import * as ww from "@wecom/jssdk";
 import { CloudDownload, CloudUpload, File, Loader, SquareLibrary, UserRound, UsersRound } from "lucide-react";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { toast } from "sonner";
 import './App.css';
 import { auth_cate, auth_my_files, auth_rule, auth_users, login } from './api';
@@ -56,7 +56,7 @@ function MYBody() {
   const [currentCid, setCurrentCid] = useState<Cate>();
   return <div className="flex flex-col pt-2 h-screen w-full  ">
     <div className="flex justify-between pl-4 pr-4 mb-2 ">
-      <Button variant="link" className="border-0 shadow-none font-bold " onClick={async () => { throw new Error("ag"); }}>
+      <Button variant="link" className="border-0 shadow-none font-bold text-black" onClick={async () => { throw new Error("ag"); }}>
         <SquareLibrary />知识库
       </Button>
       <div className="flex">
@@ -78,7 +78,7 @@ function MYBody() {
     <div className=" h-[100%] flex">
       <ScrollArea className=" h-[100%] w-[250px] border-r pt-2  ">
         <div className="flex flex-col items-start">
-          <Button variant={"link"} className="ml-4 mb-2 ">文件</Button>
+          <Button variant={"link"} className="ml-4 mb-2 text-black">文件</Button>
           <Separator className="mb-2 bg-transparent" />
           <div className="pr-4 pl-4">
             {treeList.map((item, index) => {
@@ -91,7 +91,7 @@ function MYBody() {
         </div>
       </ScrollArea>
       <div className="flex flex-col items-start  pt-2 w-full">
-        {!currentCid && <Button variant={"outline"} className="ml-4 border-0 shadow-none flex flex-col items-start text-gray-500">请选择文件分类...</Button>}
+        {!currentCid && <Button variant="link" className="ml-4 border-0 shadow-none flex flex-col items-start text-gray-500">请选择文件分类...</Button>}
         {currentCid && <CurrentFile cate={currentCid}></CurrentFile>}
       </div>
     </div>
@@ -100,7 +100,9 @@ function MYBody() {
 }
 
 
+const FilePermissionManagementMemo = memo(FilePermissionManagement, () => { return true; });
 function CurrentFile({ cate }: { cate: Cate; }) {
+  const [loading, setLoading] = useState(true);
   const [files, setFiles] = useState<MyFile[]>();
   useEffect(() => {
     (async () => {
@@ -110,10 +112,8 @@ function CurrentFile({ cate }: { cate: Cate; }) {
       }
     })();
   }, [cate.cid]);
-
   const [file, setFile] = useState<MyFile>();
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
-  const [loading, setLoading] = useState(false);
   return <div className="flex flex-col h-full items-start w-full">
     <AlertDialog open={Boolean(file)} onOpenChange={(e) => !e && setFile(undefined)}>
       <AlertDialogContent className="sm:max-w-[50%]" >
@@ -124,27 +124,33 @@ function CurrentFile({ cate }: { cate: Cate; }) {
               <span className="text-gray-500 text-xs">权限管理</span>
             </div>
           </AlertDialogTitle>
-          <AlertDialogDescription >
+          <AlertDialogDescription>
             设置文件的查看权限
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <FilePermissionManagement onSetUsers={(e) => {
+        <FilePermissionManagementMemo onComplete={() => { setLoading(false); }} onSetUsers={(e) => {
           setSelectedUsers(e);
         }} />
         <AlertDialogFooter>
           <AlertDialogCancel>取消</AlertDialogCancel>
           <Button disabled={loading} onClick={async () => {
-            if (file) {
-              try {
-                setLoading(true);
-                await auth_rule({ fid: String(file.fid), read: selectedUsers, });
-                console.log(selectedUsers);
-                setFile(undefined);
-                setLoading(false);
-              } catch (error) {
-                console.log("出错了", error);
-                setLoading(false);
-              }
+            if (selectedUsers.length === 0) {
+              toast.error("错误", {
+                description: "请至少选择一个用户",
+              });
+              return;
+            }
+            try {
+              setLoading(true);
+              await auth_rule({ fid: String(file!.fid), read: selectedUsers, });
+              setFile(undefined);
+              setLoading(false);
+            } catch (error) {
+              const error_ = error as Error;
+              setLoading(false);
+              toast.error("错误", {
+                description: error_?.message ?? "未知错误",
+              });
             }
           }}>{loading && <Loader className="animate-spin" />} 确认</Button>
         </AlertDialogFooter>
@@ -153,7 +159,7 @@ function CurrentFile({ cate }: { cate: Cate; }) {
       </AlertDialogContent>
     </AlertDialog>
     <div className="flex justify-between w-full mb-2 pr-4 pl-4">
-      <Button variant="link" className="border-0 shadow-none  ">{cate.cname}</Button>
+      <Button variant="link" className="border-0 shadow-none  text-black">{cate.cname}</Button>
 
       <Button className=""><CloudUpload /> 上传文件</Button>
 
@@ -172,7 +178,7 @@ function CurrentFile({ cate }: { cate: Cate; }) {
                   </div>
                 </div>
                 <div className="flex">
-                  <Button variant="outline" className=" text-gray-500 ml-2" onClick={() => { setFile(item); }}>
+                  <Button variant="outline" className=" text-gray-500 ml-2" onClick={() => { setLoading(true); setFile(item); }}>
                     <UsersRound />
                     成员
                   </Button>
@@ -198,16 +204,18 @@ function CurrentFile({ cate }: { cate: Cate; }) {
 }
 
 
-function FilePermissionManagement({ onSetUsers }: { onSetUsers?: (e: string[]) => void; }) {
+function FilePermissionManagement({ onSetUsers, onComplete }: { onComplete: () => void, onSetUsers?: (e: string[]) => void; }) {
   const [users, setUsers] = useState<User[]>();
   useEffect(() => {
     (async () => {
+      console.log("1111xxxxxxxxxff");
       const res = await auth_users();
       if (res) {
         setUsers(res.users);
+        onComplete();
       }
     })();
-  }, []);
+  }, [onComplete]);
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
   return <div className="flex flex-col overflow-hidden  items-start w-full">
     {!users && <Button variant={"outline"} className="border-0 shadow-none text-gray-500">数据加载中...</Button>}
@@ -236,6 +244,8 @@ function FilePermissionManagement({ onSetUsers }: { onSetUsers?: (e: string[]) =
     }
   </div>;
 }
+
+
 
 
 function useLogin() {
