@@ -16,14 +16,15 @@ import {
   DialogTitle
 } from "@/components/ui/dialog";
 import * as ww from "@wecom/jssdk";
-import { CloudDownload, CloudUpload, File, Loader, SquareLibrary, TriangleAlert, UsersRound } from "lucide-react";
-import { useEffect, useState } from "react";
+import { CloudDownload, CloudUpload, File, Loader, MoreHorizontal, SquareLibrary, TriangleAlert, UsersRound } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import './App.css';
 import { auth_cate, auth_download, auth_my_files, auth_rule, base_fetch_upload_file, login } from './api';
 import { FilePermissionManagementMemo } from "./components/FilePermissionManagementMemo";
 import { ModeToggle } from "./components/mode-toggle";
 import { Button } from "./components/ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "./components/ui/dropdown-menu";
 import { ScrollArea } from "./components/ui/scroll-area";
 import { Separator } from "./components/ui/separator";
 import { Cate, MyFile, User } from "./vite-env";
@@ -104,15 +105,20 @@ function MYBody() {
 function CurrentFile({ cate }: { cate: Cate; }) {
   const [loading, setLoading] = useState(true);
   const [files, setFiles] = useState<MyFile[]>();
-  useEffect(() => {
-    (async () => {
-      setFiles(undefined);
-      const res = await auth_my_files({ cid: cate.cid });
-      if (res?.files) {
-        setFiles(res.files);
-      }
-    })();
+
+
+
+  const get_auth_my_files = useCallback(async () => {
+    setFiles(undefined);
+    const res = await auth_my_files({ cid: cate.cid });
+    if (res?.files) {
+      setFiles(res.files);
+    }
   }, [cate.cid]);
+
+  useEffect(() => {
+    get_auth_my_files();
+  }, [get_auth_my_files]);
 
   const [file, setFile] = useState<MyFile>();
   const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
@@ -203,6 +209,7 @@ function CurrentFile({ cate }: { cate: Cate; }) {
                   const res = await base_fetch_upload_file<{ fid: string, version: string; }>(formData);
                   setIsShowDialogUpload(false);
                   if (res) {
+                    get_auth_my_files();
                     toast.success("文件上传成功", {
                       description: `${res.fid}:${res.version}`,
                     });
@@ -237,8 +244,8 @@ function CurrentFile({ cate }: { cate: Cate; }) {
             try {
               setLoadingFileUpload(true);
               const res = await base_fetch_upload_file<{ fid: string, version: string; }>(formData);
-
               if (res) {
+                get_auth_my_files();
                 toast.success("文件上传成功", {
                   description: `${res.fid}:${res.version}`,
                 });
@@ -246,7 +253,6 @@ function CurrentFile({ cate }: { cate: Cate; }) {
             } finally {
               setLoadingFileUpload(false);
             }
-
           }
         };
       }}>   {loadingFileUpload ? <Loader className="animate-spin" /> : <CloudUpload />} 上传文件</Button>
@@ -280,25 +286,60 @@ function CurrentFile({ cate }: { cate: Cate; }) {
                       上传
                     </Button>
                   }
-                  {item.rule.rule != null && String(item.rule.rule) && <Button variant="outline" className=" text-gray-500 ml-2" onClick={async () => {
-                    const res_abc = await auth_download({ fid: item.fid, version: 1 });
-                    console.log(res_abc, res_abc);
-                    const link = document.createElement('a');
-                    link.href = res_abc;
-                    // link.download = item. master_name;
+                  {item.rule.rule != null && String(item.rule.rule) &&
+                    <div className="flex items-center">
+                      <Button variant="outline" className=" text-gray-500 ml-2" onClick={async () => {
+                        const res_abc = await auth_download({ fid: item.fid, version: 0 });
+                        console.log(res_abc, res_abc);
+                        const link = document.createElement('a');
+                        link.href = res_abc;
+                        // link.download = item. master_name;
 
-                    // 模拟点击链接进行下载
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
+                        // 模拟点击链接进行下载
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
 
-                    // 释放 URL 对象
-                    URL.revokeObjectURL(res_abc);
+                        // 释放 URL 对象
+                        URL.revokeObjectURL(res_abc);
+                      }}>
+                        <CloudDownload />
+                        下载
+                      </Button>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" className="h-8 w-8 p-0">
+                            <span className="sr-only">Open menu</span>
+                            <MoreHorizontal />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuLabel>历史版本</DropdownMenuLabel>
+                          {item.versions?.map(e => {
+                            return <DropdownMenuItem className="text-gray-500" onClick={async () => {
+                              const res_abc = await auth_download({ fid: item.fid, version: e.version });
+                              console.log(res_abc, res_abc);
+                              const link = document.createElement('a');
+                              link.target = "_blank";
+                              link.href = res_abc;
+                              // link.download = item. master_name;
 
-                  }}>
-                    <CloudDownload />
-                    下载
-                  </Button>
+                              // 模拟点击链接进行下载
+                              document.body.appendChild(link);
+                              link.click();
+                              document.body.removeChild(link);
+
+                              // 释放 URL 对象
+                              URL.revokeObjectURL(res_abc);
+                            }}>版本:{e.version} {e.ori_name} 创建人:({e.created_by}) 时间:{e.created_at}</DropdownMenuItem>;
+                          })
+                          }
+
+
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+
+                    </div>
                   }
 
                 </div>
