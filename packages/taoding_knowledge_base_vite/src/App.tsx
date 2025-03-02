@@ -68,7 +68,7 @@ function MYBody() {
 
   return <div className="flex flex-col pt-2 h-screen w-full  ">
     <div className="flex justify-between pl-4 pr-4 mb-2 ">
-      <Button variant="link" className="border-0 shadow-none font-bold text-black" onClick={async () => { throw new Error("ag"); }}>
+      <Button variant="link" className="border-0 shadow-none font-bold dark:text-white text-black " onClick={async () => { throw new Error("ag"); }}>
         <SquareLibrary />知识库
       </Button>
       <div className="flex">
@@ -79,7 +79,7 @@ function MYBody() {
     <div className=" h-[100%] flex">
       <ScrollArea className=" h-[100%] w-[250px] border-r pt-2  ">
         <div className="flex flex-col items-start">
-          <Button variant={"link"} className="ml-4 mb-2 text-black">文件</Button>
+          <Button variant={"link"} className="ml-4 mb-2 dark:text-white text-black">文件</Button>
           <Separator className="mb-2 bg-transparent" />
           <div className="pr-4 pl-4">
             {treeList.map((item, index) => {
@@ -226,7 +226,7 @@ function CurrentFile({ cate }: { cate: Cate; }) {
       </DialogContent>
     </Dialog>
     <div className="flex justify-between w-full mb-2 pr-4 pl-4">
-      <Button variant="link" className="border-0 shadow-none  text-black">{cate.cname}</Button>
+      <Button variant="link" className="border-0 shadow-none dark:text-white text-black">{cate.cname}</Button>
       <Button className="" onClick={async () => {
         const fileSelector = buildFileSelector();
         fileSelector.click();
@@ -379,7 +379,7 @@ function useLogin() {
               login_type: ww.WWLoginType.corpApp,
               agentid: '1000052',
               appid: 'ww9bfa0c5bd58bb8b3',
-              redirect_uri: 'http://file.taoding.cn',
+              redirect_uri: 'https://file.taoding.cn',
               state: 'STATE',
               redirect_type: ww.WWLoginRedirectType.callback,
             },

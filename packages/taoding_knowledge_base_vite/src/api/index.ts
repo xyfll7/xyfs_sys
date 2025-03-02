@@ -1,8 +1,9 @@
 import qs from "qs";
 import { Cate, MyFile, User } from "../vite-env";
-const base_url = 'http://192.168.60.230:8081';
+// const base_url = 'http://192.168.60.230:8081';
 
 // const base_url = 'http://file.taoding.cn:8081';
+const base_url = 'https://file-share.taoding.cn/';
 
 async function base_fetch_new<T>(url: string, params: Record<string, any>) {
   console.log(params);
