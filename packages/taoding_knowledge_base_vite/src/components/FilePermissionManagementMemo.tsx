@@ -52,9 +52,12 @@ function FilePermissionManagement({ file, onSetUsers, onComplete }: { file: MyFi
         const user = row.original;
         return <RulesManager user={user} selectedUsers={selectedUsers} onSelectedRule={(e, uu) => {
 
+
+          console.log("sssss", e, uu);
+
           let users: User[] = [];
           if (!e) {
-            users = selectedUsers.filter((e) => e.user_id != user.user_id);
+            users = selectedUsers.filter((e) => e.user_id != uu.user_id);
           } else {
             let uuu: User[] = [];
             if (selectedUsers.find(uu => uu.user_id == uu.user_id)) {
@@ -86,8 +89,8 @@ export const FilePermissionManagementMemo = memo(FilePermissionManagement, () =>
 
 
 function RulesManager({ user, selectedUsers, onSelectedRule }: { selectedUsers: User[], user: User; onSelectedRule: (e: string | null, uu: User) => void; }) {
-  const user___ = selectedUsers.find(e => user.user_id == e.user_id) ?? user;
-  const [rule, setRule] = useState<string | null>(user___.rule);
+  const user___ = selectedUsers.find(e => user.user_id == e.user_id);
+  const [rule, setRule] = useState<string | null>(user___?.rule ?? null);
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild disabled={user.rule == "0"}>
