@@ -93,7 +93,7 @@ function MYBody() {
       </ScrollArea>
       <div className="flex flex-col items-start  pt-2 w-full">
         {!currentCid && <Button variant="link" className="ml-4 border-0 shadow-none flex flex-col items-start text-gray-500">请选择文件分类...</Button>}
-        {currentCid && <CurrentFile cate={currentCid}></CurrentFile>}
+        {currentCid && <CurrentFile cate={currentCid} ></CurrentFile>}
       </div>
     </div>
 
@@ -316,7 +316,7 @@ function CurrentFile({ cate }: { cate: Cate; }) {
                         <DropdownMenuContent align="end">
                           <DropdownMenuLabel>历史版本</DropdownMenuLabel>
                           {item.versions?.map(e => {
-                            return <DropdownMenuItem className="text-gray-500" onClick={async () => {
+                            return <DropdownMenuItem key={e.fid} className="text-gray-500" onClick={async () => {
                               const res_abc = await auth_download({ fid: item.fid, version: e.version });
                               console.log(res_abc, res_abc);
                               const link = document.createElement('a');
