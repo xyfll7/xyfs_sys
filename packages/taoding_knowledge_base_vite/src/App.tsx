@@ -28,6 +28,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Input } from "./components/ui/input";
 import { ScrollArea } from "./components/ui/scroll-area";
 import { Separator } from "./components/ui/separator";
+import { useLogin } from "./useLogin";
 import { Cate, MyFile, User } from "./vite-env";
 
 
@@ -41,8 +42,6 @@ function App() {
     };
     return () => { window.onunhandledrejection = null; };
   }, []);
-
-
   return (
     <div className="bg-background text-foreground">
       {!token && <div className="">请先登录....</div>}
