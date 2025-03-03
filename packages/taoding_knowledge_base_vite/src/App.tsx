@@ -20,7 +20,8 @@ import { CloudDownload, CloudUpload, File, Loader, MoreHorizontal, Search, Squar
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import './App.css';
-import { auth_cate, auth_download, auth_my_files, auth_rule, base_fetch_upload_file } from './api';
+import { auth_download, auth_my_files, auth_rule, base_fetch_upload_file } from './api';
+import { CategoryTree } from "./components/CategoryTree";
 import { FilePermissionManagementMemo } from "./components/FilePermissionManagementMemo";
 import { ModeToggle } from "./components/mode-toggle";
 import { Button } from "./components/ui/button";
@@ -55,20 +56,11 @@ function App() {
 export default App;
 
 function MYBody() {
-  const [treeList, setTreeList] = useState<Cate[]>([]);
-  const [currentCid, setCurrentCid] = useState<Cate>();
-  useEffect(() => {
-    (async () => {
-      const res = await auth_cate({ cid: 1 });
-      if (res?.cates) {
-        setTreeList(res.cates);
-        setCurrentCid(res.cates[0]);
-      }
-    })();
-  }, []);
 
+  const [currentCate, setCurrentCate] = useState<Cate>();
 
   return <div className="flex flex-col pt-2 h-screen w-full  ">
+
     <div className="flex justify-between pl-4 pr-4 mb-2 ">
       <Button variant="link" className="border-0 shadow-none font-bold dark:text-white text-black " onClick={async () => { throw new Error("👌"); }}>
         <SquareLibrary />知识库
@@ -80,27 +72,19 @@ function MYBody() {
     <Separator className="" />
     <div className=" h-[100%] flex">
       <ScrollArea className=" h-[100%] w-[250px] border-r pt-2  ">
-        <div className="flex flex-col items-start">
-          <Button variant={"link"} className="ml-4 mb-2 dark:text-white text-black">分类</Button>
-          <Separator className="mb-2 bg-transparent" />
-          <div className="pr-4 pl-4 w-full">
-            {treeList.map((item, index) => {
-              return <Button key={item.cid + index} variant="outline" className={`w-full justify-start border-0 shadow-none text-gray-500 ${currentCid?.cid === item.cid ? "bg-gray-100" : ""}`}
-                onClick={() => {
-                  setCurrentCid(item);
-                }}>{item.cname}</Button>;
-            })}
-          </div>
-        </div>
+        <CategoryTree currentCate={currentCate} onSetCurrentCate={setCurrentCate}></CategoryTree>
       </ScrollArea>
       <div className="flex flex-col items-start  pt-2 w-full">
-        {!currentCid && <Button variant="link" className="ml-4 border-0 shadow-none flex flex-col items-start text-gray-500">请选择文件分类...</Button>}
-        {currentCid && <CurrentFile cate={currentCid} ></CurrentFile>}
+        {!currentCate && <Button variant="link" className="ml-4 border-0 shadow-none flex flex-col items-start text-gray-500">请选择文件分类...</Button>}
+        {currentCate && <CurrentFile cate={currentCate} ></CurrentFile>}
       </div>
     </div>
 
   </div>;
 }
+
+
+
 
 
 
@@ -281,6 +265,7 @@ function CurrentFile({ cate }: { cate: Cate; }) {
       <ScrollArea className=" h-[100%] box-border w-full  p-4 pb-30 text-gray-500">
         <div className="flex flex-col items-start w-full overflow-hidden box-border">
           {[...files!]?.map((item, index) => {
+            console.log("--------", item);
             return <div className="w-full flex flex-col overflow-hidden" key={item.cid + index}>
               <div className="w-full flex justify-between mb-2 "  >
                 <div className="ml-4 flex items-center border-0 shadow-none  justify-start text-gray-500 ">
@@ -290,13 +275,13 @@ function CurrentFile({ cate }: { cate: Cate; }) {
                   </div>
                 </div>
                 <div className="flex">
-                  {(item.rule.rule == 0 || item.rule.rule == 3) &&
+                  {(item.rule?.rule == 0 || item.rule?.rule == 3) &&
                     <Button variant="outline" className=" text-gray-500 ml-2" onClick={() => { setLoading(true); setFile(item); setIsShowDialogMember(true); }}>
                       <UsersRound />
                       成员
                     </Button>
                   }
-                  {item.rule.rule != null && String(item.rule.rule) && item.rule.rule != 1 &&
+                  {item.rule?.rule != null && String(item.rule?.rule) && item.rule?.rule != 1 &&
                     <Button variant="outline" className=" text-gray-500 ml-2" onClick={() => {
                       setFile(item);
                       setIsShowDialogUpload(e => !e);
@@ -305,7 +290,7 @@ function CurrentFile({ cate }: { cate: Cate; }) {
                       上传
                     </Button>
                   }
-                  {item.rule.rule != null && String(item.rule.rule) &&
+                  {item.rule?.rule != null && String(item.rule?.rule) &&
                     <div className="flex items-center">
                       <Button variant="outline" className=" text-gray-500 ml-2" onClick={async () => {
                         const res_abc = await auth_download({ fid: item.fid, version: 0 });

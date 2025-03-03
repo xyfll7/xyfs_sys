@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host file.taoding.cn",
-    "build": "tsc -b && vite build",
+    "dev": "sudo vite --host file.taoding.cn",
+    "build": "sudo tsc -b && sudo vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
