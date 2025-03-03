@@ -334,7 +334,7 @@ function CurrentFile({ cate }: { cate: Cate; }) {
                         <DropdownMenuContent align="end">
                           <DropdownMenuLabel>历史版本</DropdownMenuLabel>
                           {item.versions?.map(e => {
-                            return <DropdownMenuItem key={e.fid} className="text-gray-500" onClick={async () => {
+                            return <DropdownMenuItem key={e.vid} className="text-gray-500" onClick={async () => {
                               const res_abc = await auth_download({ fid: item.fid, version: e.version });
                               console.log(res_abc, res_abc);
                               const link = document.createElement('a');
