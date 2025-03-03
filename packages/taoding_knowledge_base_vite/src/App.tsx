@@ -83,7 +83,7 @@ function MYBody() {
         <div className="flex flex-col items-start">
           <Button variant={"link"} className="ml-4 mb-2 dark:text-white text-black">分类</Button>
           <Separator className="mb-2 bg-transparent" />
-          <div className="pr-4 pl-4">
+          <div className="pr-4 pl-4 w-full">
             {treeList.map((item, index) => {
               return <Button key={item.cid + index} variant="outline" className={`w-full justify-start border-0 shadow-none text-gray-500 ${currentCid?.cid === item.cid ? "bg-gray-100" : ""}`}
                 onClick={() => {
