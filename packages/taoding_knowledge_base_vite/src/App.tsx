@@ -239,7 +239,8 @@ function CurrentFile({ cate }: { cate: Cate; }) {
           if (e.key == "Enter") {
             get_auth_my_files(keyword);
           }
-        }}></Input>
+        }}>
+        </Input>
         <Button className="mr-2" onClick={() => {
           get_auth_my_files(keyword);
         }}><Search /> 搜索</Button>
@@ -275,6 +276,8 @@ function CurrentFile({ cate }: { cate: Cate; }) {
       </div>
     </div>
     <Separator className="mb-2" />
+    {!files && <Button className="ml-4 border-0 shadow-none text-gray-500" variant={"outline"}>数据加载中...</Button>}
+    {files && files.length == 0 && <Button className="ml-4 border-0 shadow-none text-gray-500" variant={"outline"}>没有数据...</Button>}
     {files &&
       <ScrollArea className=" h-[100%] box-border w-full  p-4 pb-30 text-gray-500">
         <div className="flex flex-col items-start w-full overflow-hidden box-border">
@@ -366,8 +369,7 @@ function CurrentFile({ cate }: { cate: Cate; }) {
         </div>
       </ScrollArea>
     }
-
-  </div >;
+  </div>;
 }
 
 
