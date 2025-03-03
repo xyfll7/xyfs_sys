@@ -33,8 +33,10 @@ import { Cate, MyFile, User } from "./vite-env";
 
 
 function App() {
+
   const token = useLogin();
   useEffect(() => {
+
     window.onunhandledrejection = (error) => {
       toast.error("全局错误", {
         description: error.reason.message
