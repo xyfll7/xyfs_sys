@@ -6,6 +6,18 @@
     "urlCheck": false,
     "bigPackageSizeSupport": true
   },
-  "condition": {},
+  "condition": {
+    "miniprogram": {
+      "list": [
+        {
+          "name": "pages_user/sub_user_register",
+          "pathName": "pages_user/sub_user_register",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        }
+      ]
+    }
+  },
   "libVersion": "3.7.7"
 }

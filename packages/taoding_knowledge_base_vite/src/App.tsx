@@ -15,13 +15,12 @@ import {
   DialogHeader,
   DialogTitle
 } from "@/components/ui/dialog";
-import * as ww from "@wecom/jssdk";
 import { format } from "date-fns";
 import { CloudDownload, CloudUpload, File, Loader, MoreHorizontal, Search, SquareLibrary, TriangleAlert, UsersRound } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import './App.css';
-import { auth_cate, auth_download, auth_my_files, auth_rule, base_fetch_upload_file, login } from './api';
+import { auth_cate, auth_download, auth_my_files, auth_rule, base_fetch_upload_file } from './api';
 import { FilePermissionManagementMemo } from "./components/FilePermissionManagementMemo";
 import { ModeToggle } from "./components/mode-toggle";
 import { Button } from "./components/ui/button";
@@ -231,8 +230,6 @@ function CurrentFile({ cate }: { cate: Cate; }) {
     <div className="flex justify-between w-full mb-2 pr-4 pl-4">
       <Button variant="link" className="border-0 shadow-none dark:text-white text-black">{cate.cname}</Button>
       <div className="flex">
-
-
         <Input className="max-w-[400px] min-w-[300px] mr-2" value={keyword} placeholder="请输入搜索关键字" onInput={e => {
           setKeyword(e.currentTarget.value);
         }} onKeyDown={async (e) => {
@@ -380,54 +377,4 @@ function buildFileSelector() {
   fileSelector.setAttribute('type', 'file');
   fileSelector.setAttribute('multiple', 'multiple');
   return fileSelector;
-}
-
-function useLogin() {
-  const [token, setToken] = useState<string>();
-  useEffect(() => {
-    let wwLogin: ww.WWLoginInstance;
-    const token_ = localStorage.getItem("token");
-    if (token_) {
-      setToken(token_);
-    } else {
-      function ww_login() {
-        return new Promise<string>((re, rj) => {
-          wwLogin = ww.createWWLoginPanel({
-            el: document.getElementById('login_box')!,
-            params: {
-              login_type: ww.WWLoginType.corpApp,
-              agentid: '1000052',
-              appid: 'ww9bfa0c5bd58bb8b3',
-              redirect_uri: 'https://file.taoding.cn',
-              state: 'STATE',
-              redirect_type: ww.WWLoginRedirectType.callback,
-            },
-            onCheckWeComLogin: (e) => {
-              console.log("islogin:;:", e.isWeComLogin);
-            },
-            onLoginSuccess: async ({ code, }) => {
-              const res_token = await login({ code });
-              if (res_token) {
-                re(res_token.token);
-                wwLogin.unmount();
-              }
-            },
-            onLoginFail: async (err) => {
-              rj(err);
-            }
-          });
-        });
-      }
-      (async () => {
-        const res_token = await ww_login();
-        localStorage.setItem("token", res_token);
-        setToken(res_token);
-      })();
-    }
-
-    return () => {
-      wwLogin?.unmount();
-    };
-  }, []);
-  return token;
 }
