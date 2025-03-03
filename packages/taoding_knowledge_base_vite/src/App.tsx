@@ -235,13 +235,14 @@ function CurrentFile({ cate }: { cate: Cate; }) {
 
         <Input className="max-w-[400px] min-w-[300px] mr-2" value={keyword} placeholder="请输入搜索关键字" onInput={e => {
           setKeyword(e.currentTarget.value);
-        }} onKeyDown={(e) => {
+        }} onKeyDown={async (e) => {
           if (e.key == "Enter") {
             get_auth_my_files(keyword);
           }
         }}>
         </Input>
-        <Button className="mr-2" onClick={() => {
+        <Button className="mr-2" onClick={async () => {
+
           get_auth_my_files(keyword);
         }}><Search /> 搜索</Button>
         <Button className="" onClick={async () => {
