@@ -108,7 +108,12 @@
     {
       "label": "--S:gitt:czz",
       "type": "shell",
-      "command": "source ~/.zshrc && proxy && git add . && npx cz && git push",
+      "osx": {
+        "command": "source ~/.zshrc && proxy && git add . && npx cz && git push",
+      },
+      "windows": {
+        "command": "git add . && npx cz && git push",
+      },
       "problemMatcher": [],
       "presentation": {
         "focus": true
