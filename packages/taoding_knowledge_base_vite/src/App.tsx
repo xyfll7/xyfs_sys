@@ -18,12 +18,14 @@ import {
 import { format } from "date-fns";
 import { CloudDownload, CloudUpload, File, Loader, MoreHorizontal, Search, SquareLibrary, TriangleAlert, UsersRound } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import { toast } from "sonner";
 import './App.css';
 import { auth_download, auth_my_files, auth_rule, base_fetch_upload_file } from './api';
 import { CategoryTree } from "./components/CategoryTree";
 import { FilePermissionManagementMemo } from "./components/FilePermissionManagementMemo";
 import { ModeToggle } from "./components/mode-toggle";
+import { ThemeProvider } from "./components/theme-provider";
 import { Button } from "./components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "./components/ui/dropdown-menu";
 import { Input } from "./components/ui/input";
@@ -31,7 +33,20 @@ import { ScrollArea } from "./components/ui/scroll-area";
 import { Separator } from "./components/ui/separator";
 import { useLogin } from "./useLogin";
 import { Cate, MyFile, User } from "./vite-env";
-
+export function AppWarp() {
+  const isMobile = /Mobile/.test(window.navigator.userAgent);
+  if (isMobile) {
+    return <div className="p-2">
+      <Button className="border-0 shadow-none text-gray-500" variant={"outline"}>请前往电脑端企业微信打开</Button>
+    </div>;
+  } else {
+    return <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+      <ErrorBoundary fallback={<div>Something went wrong</div>}>
+        <App />
+      </ErrorBoundary>
+    </ThemeProvider>;
+  }
+}
 
 function App() {
 
