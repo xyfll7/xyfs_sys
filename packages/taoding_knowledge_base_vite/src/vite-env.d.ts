@@ -11,6 +11,8 @@ export interface Cate {
   cid: number;
   cname: string;
   files: File[] | null;
+  pid: string;
+  children: Cate[];
 }
 export interface MyFile {
   fid: number;

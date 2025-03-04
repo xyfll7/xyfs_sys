@@ -53,7 +53,6 @@ function FilePermissionManagement({ file, onSetUsers, onComplete }: { file: MyFi
         return <RulesManager user={user} selectedUsers={selectedUsers} onSelectedRule={(e, uu) => {
 
 
-          console.log("sssss", e, uu);
 
           let users: User[] = [];
           if (!e) {

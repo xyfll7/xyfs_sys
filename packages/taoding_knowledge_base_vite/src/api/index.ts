@@ -4,7 +4,6 @@ import { Cate, MyFile, User } from "../vite-env";
 
 
 const base_url = (() => {
-  console.log(",,,,,", process.env.NODE_ENV);
   if (process.env.NODE_ENV === "development") {
     return 'http://192.168.60.230:8081';
   } else {
@@ -15,7 +14,6 @@ const base_url = (() => {
 
 
 async function base_fetch<T>(url: string, params: Record<string, any>) {
-  console.log(params);
   const token = localStorage.getItem("token");
   const res = await fetch(`${base_url}${url}`, {
     method: 'POST',
@@ -68,7 +66,6 @@ async function base_fetch_file_download(url: string, params: Record<string, any>
     });
     if (res.ok) {
       const res_ = await res.blob();
-      console.log(res.headers.get("content-disposition"));
       const url = URL.createObjectURL(res_);
       return url;
     } else {

@@ -54,7 +54,7 @@ function App() {
   useEffect(() => {
 
     window.onunhandledrejection = (error) => {
-      toast.error("全局错误", {
+      toast.error("❌ 错误", {
         description: error.reason.message
       });
     };
@@ -86,7 +86,7 @@ function MYBody() {
     </div>
     <Separator className="" />
     <div className=" h-[100%] flex">
-      <ScrollArea className=" h-[100%] w-[250px] border-r pt-2  ">
+      <ScrollArea className=" h-[100%] w-[300px] border-r pt-2  ">
         <CategoryTree currentCate={currentCate} onSetCurrentCate={setCurrentCate}></CategoryTree>
       </ScrollArea>
       <div className="flex flex-col items-start  pt-2 w-full">
@@ -124,7 +124,6 @@ function CurrentFile({ cate }: { cate: Cate; }) {
 
   const [file, setFile] = useState<MyFile>();
   const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
-  console.log("FilePermissionManagement::------", selectedUsers);
   const [isShowDialogMember, setIsShowDialogMember] = useState(false);
   const [isShowDialogUpload, setIsShowDialogUpload] = useState(false);
   const [loadingFileUpload, setLoadingFileUpload] = useState(false);
@@ -195,10 +194,8 @@ function CurrentFile({ cate }: { cate: Cate; }) {
             const fileSelector = buildFileSelector();
             fileSelector.click();
             fileSelector.onchange = async () => {
-              console.log(fileSelector.files);
               if (fileSelector.files?.[0]) {
                 const file_ = fileSelector.files[0];
-                console.log(file_);
                 const formData = new FormData();
                 formData.append('file', file_);
                 // formData.append('master_name', file.name);
@@ -246,7 +243,6 @@ function CurrentFile({ cate }: { cate: Cate; }) {
           const fileSelector = buildFileSelector();
           fileSelector.click();
           fileSelector.onchange = async () => {
-            console.log(fileSelector.files);
             if (fileSelector.files?.[0]) {
               const file = fileSelector.files[0];
               const formData = new FormData();
@@ -280,7 +276,6 @@ function CurrentFile({ cate }: { cate: Cate; }) {
       <ScrollArea className=" h-[100%] box-border w-full  p-4 pb-30 text-gray-500">
         <div className="flex flex-col items-start w-full overflow-hidden box-border">
           {[...files!]?.map((item, index) => {
-            console.log("--------", item);
             return <div className="w-full flex flex-col overflow-hidden" key={item.cid + index}>
               <div className="w-full flex justify-between mb-2 "  >
                 <div className="ml-4 flex items-center border-0 shadow-none  justify-start text-gray-500 ">
@@ -309,7 +304,6 @@ function CurrentFile({ cate }: { cate: Cate; }) {
                     <div className="flex items-center">
                       <Button variant="outline" className=" text-gray-500 ml-2" onClick={async () => {
                         const res_abc = await auth_download({ fid: item.fid, version: 0 });
-                        console.log(res_abc, res_abc);
                         const link = document.createElement('a');
                         link.href = res_abc;
                         link.target = "_blank";
@@ -338,7 +332,6 @@ function CurrentFile({ cate }: { cate: Cate; }) {
                           {item.versions?.map(e => {
                             return <DropdownMenuItem key={e.vid} className="text-gray-500" onClick={async () => {
                               const res_abc = await auth_download({ fid: item.fid, version: e.version });
-                              console.log(res_abc, res_abc);
                               const link = document.createElement('a');
                               link.target = "_blank";
                               link.href = res_abc;

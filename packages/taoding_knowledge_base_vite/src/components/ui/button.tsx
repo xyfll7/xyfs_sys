@@ -54,5 +54,25 @@ function Button({
     />
   );
 }
+function DIVButton({
+  className,
+  variant,
+  size,
+  asChild = false,
+  ...props
+}: React.ComponentProps<"div"> &
+  VariantProps<typeof buttonVariants> & {
+    asChild?: boolean;
+  }) {
+  const Comp = asChild ? Slot : "div";
+  return (
+    <Comp
+      data-slot="div"
+      className={cn(buttonVariants({ variant, size, className },), "[&_svg]:pointer-events-auto")}
+      {...props}
+    />
+  );
+}
 
-export { Button, buttonVariants };
+export { Button, buttonVariants, DIVButton };
+

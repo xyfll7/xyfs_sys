@@ -48,9 +48,7 @@ export async function login_WeComLogin(wwLogin: ww.WWLoginInstance | null): Prom
             panel_size: ww.WWLoginPanelSizeType.middle,
             lang: ww.WWLoginLangType.zh
           },
-          onCheckWeComLogin: (e) => {
-            console.log("islogin:;:", e.isWeComLogin);
-          },
+          onCheckWeComLogin: () => { },
           onLoginSuccess: async ({ code, }) => {
             const res_token = await login({ code });
             if (res_token) {
