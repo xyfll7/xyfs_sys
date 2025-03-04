@@ -1,12 +1,17 @@
+
 import './App.css';
 import { Button } from './components/ui/button';
+import Layout from './layout';
 
 function App() {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center min-h-svh">
+      <div className="">
         <Button>Click me</Button>
+        <Layout>
+          <div>fasdf</div>
+        </Layout>
       </div>
     </>
   );
