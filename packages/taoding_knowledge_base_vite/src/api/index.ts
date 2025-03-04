@@ -13,68 +13,48 @@ const base_url = (() => {
 })();
 
 
-async function base_fetch<T>(url: string, params: Record<string, any>) {
-  const token = localStorage.getItem("token");
-  const res = await fetch(`${base_url}${url}`, {
-    method: 'POST',
-    // body: qs.stringify(params),
-    body: qs.stringify(params, { arrayFormat: 'repeat' }),
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      ...(token && url !== "/login" ? { 'Authorization': token } : null)
-    }
-  });
-
-  if (res.ok) {
-    const res_ = await res.json();
-    if (res_.message === "ok") {
-      return res_.data as T;
-    } else {
-      throw new Error(res_.message);
-    }
-  }
-};
-export async function base_fetch_upload_file<T>(formData: FormData) {
-  const res = await fetch(`${base_url}/auth/upload`, {
-    method: 'POST',
-    body: formData,
-    headers: {
-      'Authorization': localStorage.getItem("token")!
-    }
-  });
-  if (res.ok) {
-    const res_ = await res.json();
-    if (res_.message === "ok") {
-      return res_.data as T;
-    } else {
-      throw new Error(res_.message);
-    }
-  } else {
-    throw new Error("文件上传接口错误 ");
-  }
-};
-async function base_fetch_file_download(url: string, params: Record<string, any>): Promise<string> {
+async function base_fetch<T>(url: string, params: Record<string, any> | FormData) {
   const token = localStorage.getItem("token");
   try {
     const res = await fetch(`${base_url}${url}`, {
       method: 'POST',
-      body: new URLSearchParams(params),
+      body: params instanceof FormData ? params : qs.stringify(params, { arrayFormat: 'repeat' }),
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
         ...(token && url !== "/login" ? { 'Authorization': token } : null)
       }
     });
-    if (res.ok) {
+
+
+    if (url === "/login") {
+      console.log(res);
       const res_ = await res.blob();
       const url = URL.createObjectURL(res_);
-      return url;
-    } else {
-      throw new Error("下载接口错误");
+      return url as T;
+    } else if (res.ok) {
+      const res_ = await res.json();
+      console.log("sssss", res_);
+      if (res_.message === "ok") {
+        return res_.data as T;
+      } else if (res_.status === -3) {
+        console.log("登录过期，请重新登录");
+        localStorage.removeItem("token");
+        window.location.reload();
+        throw new Error("登录过期，请重新登录");
+      } else {
+        throw new Error(res_.message);
+      }
     }
-  } catch (err) {
-    console.log(err);
-    throw err;
+  } catch (error) {
+    console.log("------", error);
+    throw error;
   }
+};
+
+
+
+export async function upload_file<T>(params: FormData) {
+  return await base_fetch<T>("/auth/upload", params);
 };
 export const login = async (params: { code: string; }) => {
   return await base_fetch<{ token: string; }>("/login", params);
@@ -95,5 +75,5 @@ export const auth_cate_add = async (params: { pid: string; cname: string; }) => 
   return await base_fetch<{ users: User[]; }>("/auth/cate/add", params);
 };
 export const auth_download = async (params: { fid: number; version: number; }) => {
-  return await base_fetch_file_download("/auth/download", params);
+  return await base_fetch<string>("/auth/download", params);
 };

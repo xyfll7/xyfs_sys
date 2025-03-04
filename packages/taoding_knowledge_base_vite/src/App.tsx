@@ -21,7 +21,7 @@ import { useCallback, useEffect, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { toast } from "sonner";
 import './App.css';
-import { auth_download, auth_my_files, auth_rule, base_fetch_upload_file } from './api';
+import { auth_download, auth_my_files, auth_rule, upload_file } from './api';
 import { CategoryTree } from "./components/CategoryTree";
 import { FilePermissionManagementMemo } from "./components/FilePermissionManagementMemo";
 import { ModeToggle } from "./components/mode-toggle";
@@ -205,7 +205,7 @@ function CurrentFile({ cate }: { cate: Cate; }) {
                 // formData.append('cid', `${cate.cid}`);
                 try {
                   setLoadingFileUpload(true);
-                  const res = await base_fetch_upload_file<{ fid: string, version: string; }>(formData);
+                  const res = await upload_file<{ fid: string, version: string; }>(formData);
                   setIsShowDialogUpload(false);
                   if (res) {
                     get_auth_my_files("");
@@ -254,7 +254,7 @@ function CurrentFile({ cate }: { cate: Cate; }) {
               formData.append('cid', `${cate.cid}`);
               try {
                 setLoadingFileUpload(true);
-                const res = await base_fetch_upload_file<{ fid: string, version: string; }>(formData);
+                const res = await upload_file<{ fid: string, version: string; }>(formData);
                 if (res) {
                   get_auth_my_files("");
                   toast.success("文件上传成功", {
@@ -304,8 +304,9 @@ function CurrentFile({ cate }: { cate: Cate; }) {
                     <div className="flex items-center">
                       <Button variant="outline" className=" text-gray-500 ml-2" onClick={async () => {
                         const res_abc = await auth_download({ fid: item.fid, version: 0 });
+
                         const link = document.createElement('a');
-                        link.href = res_abc;
+                        link.href = res_abc ?? "";
                         link.target = "_blank";
                         // link.download = item. master_name;
 
@@ -315,7 +316,7 @@ function CurrentFile({ cate }: { cate: Cate; }) {
                         document.body.removeChild(link);
 
                         // 释放 URL 对象
-                        URL.revokeObjectURL(res_abc);
+                        URL.revokeObjectURL(res_abc ?? "");
                       }}>
                         <CloudDownload />
                         下载
@@ -334,7 +335,7 @@ function CurrentFile({ cate }: { cate: Cate; }) {
                               const res_abc = await auth_download({ fid: item.fid, version: e.version });
                               const link = document.createElement('a');
                               link.target = "_blank";
-                              link.href = res_abc;
+                              link.href = res_abc ?? "";
                               // link.download = item. master_name;
 
                               // 模拟点击链接进行下载
@@ -343,7 +344,7 @@ function CurrentFile({ cate }: { cate: Cate; }) {
                               document.body.removeChild(link);
 
                               // 释放 URL 对象
-                              URL.revokeObjectURL(res_abc);
+                              URL.revokeObjectURL(res_abc ?? "");
                             }}>版本:{e.version} {e.ori_name} 创建人:({e.created_by}) 时间:{format(new Date(e.created_at), "yyyy-MM-dd HH:mm:ss")}</DropdownMenuItem>;
                           })
                           }

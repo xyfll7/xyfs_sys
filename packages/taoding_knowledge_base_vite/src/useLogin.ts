@@ -7,23 +7,20 @@ import { login } from './api';
 export function useLogin() {
   const [token, setToken] = useState<string>();
   useEffect(() => {
-    let wwLogin: ww.WWLoginInstance | null = null;
-    (async () => {
-      const { token, wwLogin: wwLogin_ } = await login_WeComLogin(wwLogin);
-      wwLogin = wwLogin_;
-      setToken(token);
-    })();
-    return () => {
-      wwLogin?.unmount();
-    };
+    // let wwLogin: ww.WWLoginInstance | null = null;
     // (async () => {
-    //   const token_ = await login_OAuth2();
-    //   if (token_?.token)
-    //     setToken(token_?.token);
+    //   const { token, wwLogin: wwLogin_ } = await login_WeComLogin(wwLogin);
+    //   wwLogin = wwLogin_;
+    //   setToken(token);
     // })();
-
-
-
+    // return () => {
+    //   wwLogin?.unmount();
+    // };
+    (async () => {
+      const token_ = await login_OAuth2();
+      if (token_?.token)
+        setToken(token_?.token);
+    })();
 
   }, []);
   return token;
