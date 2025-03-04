@@ -26,9 +26,9 @@ export function CategoryTree({ currentCate, onSetCurrentCate }: { currentCate?: 
   useEffect(() => {
     (async () => {
       const res = await auth_cate({ cid: 1 });
-      if (res?.cates) {
-        setTreeList(res.cates);
-        onSetCurrentCate(res.cates[0]);
+      if (res?.tree) {
+        setTreeList(res.tree);
+        onSetCurrentCate(res.tree[0]);
       }
     })();
   }, [onSetCurrentCate]);

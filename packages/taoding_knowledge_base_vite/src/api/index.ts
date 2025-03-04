@@ -86,7 +86,7 @@ export const auth_my_files = async (params: { cid: number; keyword: string; }) =
   return await base_fetch<{ files: MyFile[]; }>("/auth/my-files", params);
 };
 export const auth_cate = async (params: { cid: number; }) => {
-  return await base_fetch<{ cates: Cate[]; }>("/auth/cate", params);
+  return await base_fetch<{ tree: Cate[]; }>("/auth/cate", params);
 };
 export const auth_users = async (params: { fid: number; }) => {
   return await base_fetch<{ users: User[]; }>("/auth/users", params);
