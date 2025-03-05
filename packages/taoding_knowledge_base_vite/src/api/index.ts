@@ -26,14 +26,13 @@ async function base_fetch<T>(url: string, params: Record<string, any> | FormData
     });
 
 
-    if (url === "/login") {
+    if (url === "/auth/download") {
       console.log(res);
       const res_ = await res.blob();
       const url = URL.createObjectURL(res_);
       return url as T;
     } else if (res.ok) {
       const res_ = await res.json();
-      console.log("sssss", res_);
       if (res_.message === "ok") {
         return res_.data as T;
       } else if (res_.status === -3) {

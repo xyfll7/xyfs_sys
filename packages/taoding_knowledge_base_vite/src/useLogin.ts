@@ -7,21 +7,27 @@ import { login } from './api';
 export function useLogin() {
   const [token, setToken] = useState<string>();
   useEffect(() => {
-    // let wwLogin: ww.WWLoginInstance | null = null;
-    // (async () => {
-    //   const { token, wwLogin: wwLogin_ } = await login_WeComLogin(wwLogin);
-    //   wwLogin = wwLogin_;
-    //   setToken(token);
-    // })();
-    // return () => {
-    //   wwLogin?.unmount();
-    // };
-    (async () => {
-      const token_ = await login_OAuth2();
-      if (token_?.token)
-        setToken(token_?.token);
-    })();
 
+    const isWxWork = /wxwork/.test(window.navigator.userAgent);
+    console.log(isWxWork);
+
+    let wwLogin: ww.WWLoginInstance | null = null;
+    if (isWxWork) {
+      (async () => {
+        const token_ = await login_OAuth2();
+        if (token_?.token)
+          setToken(token_?.token);
+      })();
+    } else {
+      (async () => {
+        const { token, wwLogin: wwLogin_ } = await login_WeComLogin(wwLogin);
+        wwLogin = wwLogin_;
+        setToken(token);
+      })();
+    }
+    return () => {
+      wwLogin?.unmount();
+    };
   }, []);
   return token;
 }
@@ -48,6 +54,7 @@ export async function login_WeComLogin(wwLogin: ww.WWLoginInstance | null): Prom
           onCheckWeComLogin: () => { },
           onLoginSuccess: async ({ code, }) => {
             const res_token = await login({ code });
+            console.log("tttttttk0:::11", res_token);
             if (res_token) {
               re(res_token.token);
               wwLogin?.unmount();
@@ -73,13 +80,14 @@ export async function login_OAuth2() {
     if (window.location.href.indexOf('code') > -1) {
       const code_ = new URLSearchParams(window.location.search).get('code');
       const res_token = await login({ code: code_ ?? '' });
+      console.log("tttttttk0:::", res_token);
       if (res_token?.token) {
         localStorage.setItem("token", res_token.token);
         token = res_token.token;
       }
     } else {
       const appid = 'ww9bfa0c5bd58bb8b3';
-      const redirect_uri = 'http://file.taoding.cn';
+      const redirect_uri = 'https://file.taoding.cn';
       const response_type = 'code';
       const scope = 'snsapi_base';
       // const scope = 'snsapi_privateinfo';

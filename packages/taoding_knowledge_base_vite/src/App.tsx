@@ -20,6 +20,7 @@ import { CloudDownload, CloudUpload, File, Loader, MoreHorizontal, Search, Squar
 import { useCallback, useEffect, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { toast } from "sonner";
+import VConsole from 'vconsole';
 import './App.css';
 import { auth_download, auth_my_files, auth_rule, upload_file } from './api';
 import { CategoryTree } from "./components/CategoryTree";
@@ -34,6 +35,7 @@ import { Separator } from "./components/ui/separator";
 import { useLogin } from "./useLogin";
 import { Cate, MyFile, User } from "./vite-env";
 export function AppWarp() {
+  new VConsole();
   const isMobile = /Mobile/.test(window.navigator.userAgent);
   if (isMobile) {
     return <div className="p-2">
