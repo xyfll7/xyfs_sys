@@ -18,10 +18,8 @@ declare global {
       PUBLIC_App_Secret: string;
       // 顾客端
       TARO_APP_CLIENT: string;
-      CLIENT_App_Secret: string;
       // 管理端
       TARO_APP_ADMIN: string;
-      ADMIN_App_Secret: string;
       // 云托管
       TARO_APP_CTN_PRO: string;
       TARO_APP_CTN_DEV: string;

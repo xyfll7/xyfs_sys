@@ -19,8 +19,8 @@ import { ComCartPrice } from "../components/ComPrice";
 import { ComQRCode } from "../components/ComQRCode";
 import { ComScrollView } from "../components/ComScrollView";
 import { ComSquare } from "../components/ComSquare";
-import { get_dev_value } from "../env";
-import { roo___has_role, roo___my_dept } from "../roles";
+import { get_dev_value, getMyEnv } from "../env";
+import { roo___my_dept } from "../roles";
 import { useSTSelf } from "../store/store";
 import { try_Taro_chooseAddress, try_Taro_cloud_uploadFile, try_Taro_navigateToMiniProgram } from "../utils/try_catch";
 
@@ -264,8 +264,8 @@ const ProductCategoryCard: FC<{ productCategory: Record<string, Product_Dryclean
                 <ComButton className='nw bccback'>{ee.intro ? ee.intro : e}</ComButton>
                 <View className='dbtc ww'>
                   <ComButton className='cccprice bccback'><Text className='mr2'>¥</Text>{ee.price}</ComButton>
-                  {roo___has_role(useSTSelf.getState().selfInfo, ["REGIMENT"]) &&
-                    <ComButton rr className='bccwhite' onClick={() => onCartEdit?.(ee)}><Text className='cccgreen'>+</Text><Text className='cccgreen'>加</Text></ComButton>
+                  {getMyEnv().appId === process.env.TARO_APP_ADMIN &&
+                    <ComButton rr className='bccwhite' onClick={() => onCartEdit?.(ee)}><Text className='cccgreen'>+</Text><Text >加</Text></ComButton>
                   }
                 </View>
               </View>
