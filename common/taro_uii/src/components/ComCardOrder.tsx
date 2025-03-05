@@ -73,13 +73,6 @@ export const ComCardOrderExpress: FC<{
             }}>
               {order.productList?.[0]?.deliveryName?.slice(0, 2)} {order.productList?.[0]?.waybillId}
             </ComButton>
-            {order.productList?.[0]?.waybillId &&
-              <ComButton ll className='cccgreen bborder'
-                onClick={async () => {
-                  await try_Taro_setClipboardData({ data: order.productList?.[0]?.waybillId ?? "", });
-                  Taro.showToast({ icon: "none", title: `已复制`, });
-                }}>复制</ComButton>
-            }
           </View>
           {order.productList?.[0]?.waybillId &&
             <View className='dy'>
@@ -87,7 +80,7 @@ export const ComCardOrderExpress: FC<{
                 <ComButton rr className='cccgreen bborder'
                   onClick={async () => {
                     await try_Taro_navigateTo({ url: `/pages_comm/comm__express_path?${coo___objToUrl({ express_share_id: order.id })}` });
-                  }}>轨迹</ComButton> : null
+                  }}><Text className="nw">轨迹</Text> </ComButton> : null
               }
               <MMMShare rr orderType='快递' className='bborder' id={order.id!} name={order.deptName!} ></MMMShare>
             </View>

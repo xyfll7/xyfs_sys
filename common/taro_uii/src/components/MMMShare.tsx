@@ -1,4 +1,4 @@
-import { ButtonProps } from "@tarojs/components";
+import { ButtonProps, Text } from "@tarojs/components";
 import { coo___objToUrl } from "@xyfs/utils/util";
 import { FC } from "react";
 import { getMyEnv } from "../env";
@@ -16,7 +16,7 @@ export const MMMShare: FC<ButtonProps & { name: string; rr?: boolean, ll?: boole
           path: `/pages_comm/comm__express_path?${coo___objToUrl({ express_share_id: id })}`,
           noRelaunchIfPathUnchanged: false,
         })}>
-        分享
+        <Text className="nw">分享</Text>
       </ComButton> :
       <ComButtonOpen rr={rr} ll={ll} className={`cccgreen ${props.className}`} id={id}
         shareTitle={`${name}(团长)分享给您的${orderType}订单`}

@@ -127,7 +127,7 @@ const Index: FC<{}> = ({ }) => {
                     setShowQR(_src);
                     Taro.hideLoading();
                   }}>
-                  <Text className='cccgreen'>⤻</Text>小码
+                  <Text className='cccgreen'>⤻</Text>付款码
                 </ComButton>
               }
               {Boolean(_order1.productList?.length) && _order1.orderStatus === 1 &&
