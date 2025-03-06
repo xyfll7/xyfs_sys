@@ -57,7 +57,7 @@ const Index: FC<{}> = ({ }) => {
         const file_name = `${e.endDate?.slice(0, 7).split("-")[0] ?? ""}年${e.endDate?.slice(0, 7).split("-")[1] ?? ""}月_${e.name}`;
         return <View className='dll mb10 bccwhite pt10 ioo ww prl10' key={e.id}>
           <View className='dbtc ww'>
-            <ComButton ll className='' onTap={async () => {
+            <ComButton ll className=' ww' onTap={async () => {
 
               if (differenceInMinutes(coo___ios_date(), coo___ios_date(e.createTime)) > ___time * 60 * 2) {
                 throw new Error("该文件已过期，请去下载最新文件");
@@ -84,19 +84,19 @@ const Index: FC<{}> = ({ }) => {
               {differenceInMinutes(coo___ios_date(), coo___ios_date(e.createTime)) > ___time * 60 * 2 ? <Text className='cccplh'>该文件已过时，请去下载最新文件</Text> :
                 <>
                   {e.type === 1 &&
-                    <View className='dy'>
+                    <View className='dbtc ww'>
                       {e.url && <><Text className='wm15rem nw1 '> {file_name}</Text><Text className='cccgreen'>  _完成</Text></>}
                       {!e.url && <><Text className='wm15rem nw1'>{file_name}</Text><Text className='nw'>_下载中...</Text></>}
                     </View>
                   }
                   {e.type === 2 &&
-                    <View className='dy'>
+                    <View className='dbtc ww'>
                       {e.url && <><Text className='wm15rem nw1 '> {file_name}</Text><Text className='cccgreen'>  _完成</Text></>}
                       {!e.url && <><Text className='wm15rem nw1'>{file_name}</Text><Text className='nw'>_下载中...</Text></>}
                     </View>
                   }
                   {e.type === 3 &&
-                    <View className='dy'>
+                    <View className='dbtc ww'>
                       {e.status == 1 && <><Text className='wm15rem nw1'>写入任务</Text><Text className='cccgreen'>_完成</Text></>}
                       {e.status != 1 && <><Text className='wm15rem nw1'>写入任务</Text><Text>_执行中...</Text></>}
                     </View>
@@ -105,7 +105,7 @@ const Index: FC<{}> = ({ }) => {
               }
 
             </ComButton>
-            <ComButton rr ll>{i + 1}</ComButton>
+            <ComButton rr ll className='nw'>{i + 1}</ComButton>
           </View>
           <View className='cccplh fs08'>开始下载时间: {e.createTime}  </View>
           <View className='cccplh fs08'>结束下载时间: {e.updateTime ?? '下载中...'} </View>

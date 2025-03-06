@@ -58,11 +58,15 @@ const Index: FC = () => {
             <ComImage compress className='mr10 oo ovh' src={selfInfo_S?.avatar} />
             <View className='nw1 wm5rem mr10'>{selfInfo_S!.name}</View>
             {selfInfo_S!.mobile}
-            <View className='cccgreen ml10'>修改</View>
+            <View className='cccgreen ml10 nw'>修改</View>
           </ComButton>
         </View>
       </View>
-      {getMyEnv().isDevtools && <IIImmmTest />}
+      {getMyEnv().isDevtools &&
+        <View className='dll'>
+          <ComButton className='bccwhite cccprice fwb mb10' url='/pages/test/ctest_display' >测试display</ComButton>
+          <ComButton className='bccwhite cccprice fwb mb10' url='/pages/test/ctest_index' routeType='wx://cupertino-modal'>测试</ComButton>
+        </View>}
       <MMMFooter className='mb10' />
     </ComScrollView>
   </MMMAAPage>;
@@ -201,7 +205,6 @@ const IIImmmREGIMENT = ({ ...props }: ViewProps) => {
   </>;
 };
 const IIImmmSUPPLIER = ({ ...props }: ViewProps) => {
-  const selfInfo_S = useSTSelf(e => e.selfInfo);
   return <>
     <ComButton className='mb10 cccplh bccback'>供应商</ComButton>
     <ComButton className='bccwhite nw mb10 mr10' url='/pages_comm/icomm_orders_dryclean'>干洗订单</ComButton>
@@ -222,12 +225,7 @@ const IIImmmSCANNER = ({ ...props }: ViewProps) => {
     <ComButton className='mb10 ' url='/pages_comm/icomm_scaner?isShow=1'>已上传→</ComButton>
   </View>;
 };
-const IIImmmTest = ({ ...props }: ViewProps) => {
-  return <View className={`${props.className} dll`}>
-    <ComButton className='bccwhite cccprice fwb mb10' url='/pages/test/ctest_display' >测试display</ComButton>
-    <ComButton className='bccwhite cccprice fwb mb10' url='/pages/test/ctest_index' routeType='wx://cupertino-modal'>测试</ComButton>
-  </View>;
-};
+
 const IIImmmMERCHANT = ({ ...props }: ViewProps) => {
   return <>
     <View className={`bccwhite ww dll pt10 prl10 IOO ${props.className}`}>

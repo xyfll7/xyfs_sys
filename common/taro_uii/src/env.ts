@@ -3,16 +3,16 @@ import "@xyfs/utils/init";
 import Package from "../package.json";
 import { Environment, EnvVersion } from "../types/type_index";
 
-export const base_url: string = "http://192.168.60.229:8080";
+export const base_url: string = "";
 
-const ___envSimulate = "develop";
+const ___envSimulate = "release";
 
 // cSpell: disable;
 const OPENID_DEV___ =
   // @ts-ignore
   // "oGwbL5BF-W3LalUua-8ItKptM3Y8" || //
 
-  // "oGwbL5ENjFmjV7Y5jmTCRdXwR25k" || //
+  // "oGwbL5L15zCh0gHj8q5qqoUcXFHQ" || //
   ////////////////////////////////////////////////
   // "oGwbL5D1WtsGTuLhWneaepYuHW3k" ||  // 何旭东
   // "oGwbL5OLhRpOKRWrkVNSMqXuGPaE" ||  // 我妈
