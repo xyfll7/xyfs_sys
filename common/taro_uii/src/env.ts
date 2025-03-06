@@ -5,7 +5,7 @@ import { Environment, EnvVersion } from "../types/type_index";
 
 export const base_url: string = "";
 
-const ___envSimulate = "release";
+const ___envSimulate = "develop";
 
 // cSpell: disable;
 const OPENID_DEV___ =
@@ -57,7 +57,7 @@ export function getMyEnv(env?: EnvVersion): Environment {
   if (appId === process.env.TARO_APP_CLIENT) { // 顾客端，不模拟用户登录
     delete envObj[_envVersion].OPENID;
   }
-  envObj[_envVersion].isDevtools = Taro.getDeviceInfo().platform === "devtools";
+  envObj[_envVersion].platform = Taro.getDeviceInfo().platform as "devtools" | "android" | "ios";
   envObj[_envVersion].envVersion = _envVersion;
   return envObj[_envVersion];
 }

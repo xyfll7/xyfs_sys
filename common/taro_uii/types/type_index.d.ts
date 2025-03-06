@@ -31,7 +31,7 @@ type Environment = {
   version: string;
   OPENID?: string;
   DEPTID?: string;
-  isDevtools?: boolean;
+  platform?: "devtools" | "android" | "ios";
   isDeveloping?: boolean;
 };
 interface Events<T> {

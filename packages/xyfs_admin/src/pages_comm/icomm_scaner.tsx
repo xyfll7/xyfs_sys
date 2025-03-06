@@ -109,7 +109,7 @@ const Index: FC = () => {
     <View className=' ww prl10 dll pt10'>
       <View className='dy slr'>
 
-        {getMyEnv().isDevtools &&
+        {getMyEnv().platform === "devtools" &&
           <ComButton rr className='mb10 cccprice nw' onClick={async () => {
             for (const item of ["819711856524"]) {
               Taro.showLoading({ mask: true, title: "加载中...", });
@@ -198,13 +198,13 @@ const IIICameraScaner = (prams: { className?: string, onScanCode: (e: string) =>
   const isLoading = useRef(false);
 
   return <View className='dcl ww' style={{ height: '210rpx' }}>
-    {getMyEnv().isDevtools && <View className={`mb10 IOO ovh dxy  ${prams.className}`} style={{ height: '190rpx', width: '98vw', boxShadow: "0px 2rpx 8rpx 0px rgba(0, 0, 0, 0.3)", backgroundColor: "rgb(0 0 0 / 50%)" }}
+    {getMyEnv().platform === "devtools" && <View className={`mb10 IOO ovh dxy  ${prams.className}`} style={{ height: '190rpx', width: '98vw', boxShadow: "0px 2rpx 8rpx 0px rgba(0, 0, 0, 0.3)", backgroundColor: "rgb(0 0 0 / 50%)" }}
       onClick={() => { prams.onScanCode("1000003"); }}>
       模拟扫码
     </View>
     }
 
-    {!getMyEnv().isDevtools &&
+    {getMyEnv().platform !== "devtools" &&
       <Camera mode='scanCode' devicePosition='back' flash='off' className={`mb10 IOO ovh dxy  ${prams.className}`} style={{ height: '190rpx', width: '98vw', boxShadow: "0px 2rpx 8rpx 0px rgba(0, 0, 0, 0.3)", backgroundColor: "rgb(0 0 0 / 50%)" }}
         onError={async (err) => { throw new Error(err.detail.errMsg); }}
         onScanCode={async (e) => {

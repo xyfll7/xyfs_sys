@@ -45,7 +45,7 @@ const Index: FC<{}> = ({ }) => {
 
 
 
-  getMyEnv().isDevtools && ____test(page.list ?? []);
+  getMyEnv().platform === "devtools" && ____test(page.list ?? []);
 
 
   const [date, setDate] = useState<string>(format(coo___ios_date(), "yyyy-MM-dd"));

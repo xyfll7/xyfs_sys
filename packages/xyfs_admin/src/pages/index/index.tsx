@@ -62,7 +62,7 @@ const Index: FC = () => {
           </ComButton>
         </View>
       </View>
-      {getMyEnv().isDevtools &&
+      {getMyEnv().platform === "devtools" &&
         <View className='dll'>
           <ComButton className='bccwhite cccprice fwb mb10' url='/pages/test/ctest_display' >测试display</ComButton>
           <ComButton className='bccwhite cccprice fwb mb10' url='/pages/test/ctest_index' routeType='wx://cupertino-modal'>测试</ComButton>
@@ -181,7 +181,7 @@ const IIImmmREGIMENT = ({ ...props }: ViewProps) => {
         </View>
       </View>
     </View>
-    {getMyEnv().isDevtools &&
+    {getMyEnv().platform === "devtools" &&
       <View className='pr ww mb10 bccwhite IOO ovh'>
         <View className=' hh ww pa drc pr17' style={{ top: "0rem" }}>
           <ComImage compress className='bcctrans' style={{ width: "20vw", height: "15vw" }} mode='aspectFit' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/helps.png' />

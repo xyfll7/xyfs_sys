@@ -12,10 +12,10 @@ import { ComSELFView, MMMAAPage } from "@xyfs/taro_uii/components/MMMAAPage";
 import { getMyEnv } from "@xyfs/taro_uii/src/env";
 import { roo___has_role } from "@xyfs/taro_uii/src/roles";
 import { useSTSelf } from "@xyfs/taro_uii/store/store";
-import { try_Taro_setClipboardData, try_Taro_shareFileMessage, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
+import { try_Taro_openDocument, try_Taro_setClipboardData, try_Taro_shareFileMessage, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
 import { useHook_pageListNew } from "@xyfs/taro_uii/utils/useHooks";
 import { utils_downloadFile_saveFile } from "@xyfs/taro_uii/utils/util";
-import { coo___ios_date } from "@xyfs/utils/util";
+import { coo___00String_number, coo___ios_date } from "@xyfs/utils/util";
 import { differenceInMinutes, format } from "date-fns";
 import { FC, useCallback } from "react";
 
@@ -62,21 +62,27 @@ const Index: FC<{}> = ({ }) => {
               if (differenceInMinutes(coo___ios_date(), coo___ios_date(e.createTime)) > ___time * 60 * 2) {
                 throw new Error("该文件已过期，请去下载最新文件");
               }
-
               if (e.url) {
-                if (getMyEnv().isDevtools) {
+                if (getMyEnv().platform === "devtools") {
                   await try_Taro_setClipboardData({ data: e.url });
                   Taro.showToast({ icon: "none", title: "已复制下载链接", });
                   return;
                 }
                 Taro.showLoading({ mask: true, title: "下载中..." });
                 const ___fileName = `${file_name}_对账单_${format(coo___ios_date(e.createTime), "yyyy_MM_dd_HH_mm_ss")}.csv`;
-                const res_savedFilePath = await utils_downloadFile_saveFile({ url: e.url, file_name: ___fileName });
-                Taro.hideLoading();
-                await try_Taro_showModal({
-                  title: "下载成功", content: "请保存文件后查看", showCancel: true, confirmText: "保存", cancelText: "取消",
-                  success: async (res) => { if (res.confirm) { await try_Taro_shareFileMessage({ filePath: res_savedFilePath, fileName: ___fileName }); } }
+                const res_savedFilePath = await utils_downloadFile_saveFile({
+                  url: e.url,
+                  file_name: getMyEnv().platform === "android" ? ___fileName.replace(".csv", ".xls") : ___fileName
                 });
+                Taro.hideLoading();
+                if (getMyEnv().platform === "android") {
+                  console.log("res_savedFilePath", res_savedFilePath);
+                  await try_Taro_openDocument({ filePath: res_savedFilePath });
+                } else if (getMyEnv().platform === "ios") {
+                  if (await try_Taro_showModal({ title: "下载成功", content: "请保存文件后查看", showCancel: true, confirmText: "保存", cancelText: "取消", })) {
+                    await try_Taro_shareFileMessage({ filePath: res_savedFilePath, fileName: ___fileName });
+                  }
+                }
               } else {
                 throw new Error("正在下载，请稍后");
               }
@@ -105,7 +111,7 @@ const Index: FC<{}> = ({ }) => {
               }
 
             </ComButton>
-            <ComButton rr ll className='nw'>{i + 1}</ComButton>
+            <ComButton rr ll className='nw'> {coo___00String_number(i + 1, 3)}</ComButton>
           </View>
           <View className='cccplh fs08'>开始下载时间: {e.createTime}  </View>
           <View className='cccplh fs08'>结束下载时间: {e.updateTime ?? '下载中...'} </View>

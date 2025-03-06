@@ -176,3 +176,13 @@ export function coo___privacy_string(name: string) {
     return name; // 王五哈哈显示为王**哈
   }
 }
+
+export function coo___00String_number(num: string | number, len: number) {
+  num = parseInt(String(num), 10);//转数据类型，以十进制自增
+  num = num.toString();//转为字符串
+  while (num.length < len) {//当字符串长度小于设定长度时，在前面加0
+    num = "0" + num;
+  }
+  //如果字符串长度超过设定长度只做自增处理。
+  return num;
+}
