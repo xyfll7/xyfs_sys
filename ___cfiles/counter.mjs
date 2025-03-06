@@ -22,16 +22,17 @@ try {
     const workSheetsFromFile = xlsx.parse(`${__dirname}/untitled_folder/${file}`);
     const sheet = workSheetsFromFile[0];
 
-    const count = sheet.data.reduce((ccc, iii) => {
+    const count = sheet.data.reduce((ccc, iii, index) => {
 
-      if (iii[12]?.includes("极兔") || iii[12]?.includes("韵达") || iii[12]?.includes("申通")) {
+      if (iii[12]?.includes("邮政")) {
         return ccc += 1;
       } else {
         return ccc;
       }
 
     }, 0);
-    console.log(`${sheet.data?.[1]?.join(',')},${(count * 0.2).toFixed(0)}`);
+    if (count > 0)
+      console.log(`${index},${sheet.data?.[1]?.join(',')},count:${count}`);
   });
 
 } catch (err) {
