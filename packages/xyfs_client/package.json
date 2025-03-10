@@ -10,8 +10,8 @@
 		"framework": "React"
 	},
 	"scripts": {
-		"build:weapp": "taro build --type weapp",
-		"dev:weapp": "npm run build:weapp -- --watch",
+		"build:weapp": "rimraf dist && taro build --type weapp",
+		"dev:weapp": "rimraf dist && npm run build:weapp -- --watch",
 		"typecheck": "tsc --skipLibCheck --noEmit",
 		"fix": "eslint src --fix",
 		"lint-staged": "lint-staged"

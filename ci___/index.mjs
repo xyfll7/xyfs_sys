@@ -29,14 +29,14 @@ const __dirname = path.dirname(filename);
 
 const APP_A = {
   app_name: "管理端",
-  projectPath: '../packages/xyfs_admin/build',
+  projectPath: '../packages/xyfs_admin',
   appid: "wxc6ff511796ec714a",
   privateKeyPath: "./private.wxc6ff511796ec714a.key",
 };
 
 const APP_C = {
   app_name: "顾客端",
-  projectPath: '../packages/xyfs_client/build',
+  projectPath: '../packages/xyfs_client',
   appid: "wxbd3ffb2bc1deb654",
   privateKeyPath: "./private.wxbd3ffb2bc1deb654.key",
 };
@@ -64,7 +64,7 @@ async function ___upload(desc, cfg) {
     }),
     robot: 17,
 
-    onProgressUpdate: (e) => { if (typeof e._msg === "string") { spinner.text = `${String(e._msg)}`; }; },
+    onProgressUpdate: (e) => { if (typeof e._msg === "string") { spinner.text = `EEE:::${String(e._msg)}`; }; },
     version: packageConfig.version,
     desc,
     setting: {

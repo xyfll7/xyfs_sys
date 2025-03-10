@@ -3,14 +3,14 @@ import "@xyfs/utils/init";
 import Package from "../package.json";
 import { Environment, EnvVersion } from "../types/type_index";
 
-export const base_url: string = "http://192.168.60.19:8080";
+export const base_url: string = "";
 
 const ___envSimulate = "develop";
 
 // cSpell: disable;
 const OPENID_DEV___ =
   // @ts-ignore
-  // "oGwbL5BF-W3LalUua-8ItKptM3Y8" || //
+  "oGwbL5O_FBTl9622gKF8ZraYSiPA" || //
 
   // "oGwbL5L15zCh0gHj8q5qqoUcXFHQ" || //
   ////////////////////////////////////////////////
