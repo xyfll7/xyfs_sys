@@ -121,7 +121,7 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
                     }
                   }}>
                   <ComSquare className='icon-wxpay mr4' style={{ width: "calc(1.3 * var(--rem_base))" }} />
-                  <Text className='nw'>支付1</Text>
+                  <Text className='nw'>支付</Text>
                 </ComButton>
               )}
             </View>

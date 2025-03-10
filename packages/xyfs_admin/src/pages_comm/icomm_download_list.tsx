@@ -92,13 +92,13 @@ const Index: FC<{}> = ({ }) => {
                   {e.type === 1 &&
                     <View className='dbtc ww'>
                       {e.url && <><Text className='wm15rem nw1 '> {file_name}</Text><Text className='cccgreen'>  _完成</Text></>}
-                      {!e.url && <><Text className='wm15rem nw1'>{file_name}</Text><Text className='nw'>_下载中...</Text></>}
+                      {!e.url && <><Text className='wm15rem nw1'>{file_name}</Text><Text className='nw cccplh'>_下载中...</Text></>}
                     </View>
                   }
                   {e.type === 2 &&
                     <View className='dbtc ww'>
                       {e.url && <><Text className='wm15rem nw1 '> {file_name}</Text><Text className='cccgreen'>  _完成</Text></>}
-                      {!e.url && <><Text className='wm15rem nw1'>{file_name}</Text><Text className='nw'>_下载中...</Text></>}
+                      {!e.url && <><Text className='wm15rem nw1'>{file_name}</Text><Text className='nw cccplh'>_下载中...</Text></>}
                     </View>
                   }
                   {e.type === 3 &&
