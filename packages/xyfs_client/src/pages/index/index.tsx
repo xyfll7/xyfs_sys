@@ -83,7 +83,7 @@ const Index: FC = () => {
 
       {roo___has_role(selfInfo_S!.deptInfo!, ["REGIMENT"]) && <IIIMainNavigator className='mb10  ' />}
 
-      <IIIBanner className='mb10' />
+      {getMyEnv().isDeveloping && <IIIBanner className='mb10' />}
 
       {/* <IIIBringGoodsArea /> */}
       {/* <IIIRegimentAssistList /> */}
