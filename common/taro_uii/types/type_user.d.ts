@@ -35,6 +35,7 @@ export interface BaseUserInfo {
   name?: string;
   userId?: string;
   openId?: string;
+  appid?: string;
 }
 
 export interface DeptInfo extends BaseUserInfo, AddressInfo {

@@ -3,16 +3,15 @@ import "@xyfs/utils/init";
 import Package from "../package.json";
 import { Environment, EnvVersion } from "../types/type_index";
 
-export const base_url: string = "";
+export const base_url: string = "http://192.168.60.19:8080";
 
 const ___envSimulate = "develop";
 
 // cSpell: disable;
 const OPENID_DEV___ =
   // @ts-ignore
-  "oGwbL5O_FBTl9622gKF8ZraYSiPA" || //
 
-  // "oGwbL5L15zCh0gHj8q5qqoUcXFHQ" || //
+  // "oGwbL5OJfPgKB4U-LWAD0jvufljU" || //
   ////////////////////////////////////////////////
   // "oGwbL5D1WtsGTuLhWneaepYuHW3k" ||  // 何旭东
   // "oGwbL5OLhRpOKRWrkVNSMqXuGPaE" ||  // 我妈
@@ -57,9 +56,9 @@ export function getMyEnv(env?: EnvVersion): Environment {
   version && (envObj[_envVersion].version = version);
   (envObj[_envVersion].appId = appId);
 
-  if (appId === process.env.TARO_APP_CLIENT) { // 顾客端，不模拟用户登录
-    delete envObj[_envVersion].OPENID;
-  }
+  // if (appId === process.env.TARO_APP_CLIENT) { // 顾客端，不模拟用户登录
+  //   delete envObj[_envVersion].OPENID;
+  // }
   envObj[_envVersion].platform = Taro.getDeviceInfo().platform as "devtools" | "android" | "ios";
   envObj[_envVersion].envVersion = _envVersion;
   return envObj[_envVersion];

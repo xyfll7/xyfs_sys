@@ -314,6 +314,8 @@ const netWork = {
 export function ComSELFView({ isRefreshSelfInfo_SEveryTime, ...props }: ViewProps & { isRefreshSelfInfo_SEveryTime?: boolean; }) {
   const net = useSyncExternalStore(netWork.sub, () => netWork.status);
   const [selfInfo_S] = useHook_selfInfo_show({ isRefreshSelfInfo_SEveryTime });
+  const isInApp = selfInfo_S?.appid === getMyEnv().appId;
+  console.log("OOOOO", isInApp);
   useLoad(() => {
     Taro.onThemeChange(({ theme }) => {
       useSTSelf.getState().setSelfInfoTheme(theme);
@@ -343,7 +345,7 @@ export function ComSELFView({ isRefreshSelfInfo_SEveryTime, ...props }: ViewProp
         {
           !selfInfo_S ?
             <ComNav className='prl10'><ComLoading className='ml10 mb10' /></ComNav>
-            : props.children
+            : (isInApp ? props.children : <ComNav className='prl10'><ComButton className='cccplh mb10'>AppId不匹配!</ComButton></ComNav>)
         }
       </>
     }
