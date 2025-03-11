@@ -166,8 +166,7 @@ const IIIOrderExpressOperation: FC<{
         </View>
       )}
 
-      <View className='dbtc mb10 ww'>
-        <ComButton ll className='cccplh nw '>下单人: {order.appid == process.env.TARO_APP_CLIENT ? "用户" : "团长"} </ComButton>
+      <View className='dr mb10 ww'>
         <View className='dy'>
           {order.productList?.[0]?.weight && order.orderStatus === Order_ST.待付款 && <ComButton rr className='bccyellow'
             onClick={() => onSetShowQRCode(true)} >
@@ -176,6 +175,15 @@ const IIIOrderExpressOperation: FC<{
           {order.orderStatus === Order_ST.待付款 && Boolean(order.totalPrice) && (
             <ComButton rr ll className='bccyellow ml10'
               onClick={async () => {
+
+
+                if (order.appid === process.env.TARO_APP_ADMIN && order.userId !== useSTSelf.getState().selfInfo?.id) {
+                  if (!await try_Taro_showModal({ title: "警告", content: `${order.userName} 拥有该订单，您确定要支付吗？`, confirmText: '继续支付' })) {
+                    throw new Error("取消");
+                  }
+                }
+
+
                 Taro.showLoading({ mask: true, title: "获取支付参数...", });
                 const res_pay = await Api_order_pay_ctn({ orderId: order.id!, });
                 // 吊起微信支付 -> 打开支付成功弹窗
