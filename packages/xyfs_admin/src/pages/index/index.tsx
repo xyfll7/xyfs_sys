@@ -119,6 +119,9 @@ const IIISettings = ({ ...props }: ViewProps) => {
         <ComButton className='bccwhite mb10 mr10' url='/pages_user/sub_user_dept'>
           部门管理
         </ComButton>
+        <ComButton className='bccwhite mb10 mr10' url='/pages_user/dry_cleaning_statement'>
+          干洗账单
+        </ComButton>
       </>}
     </View>
   </>;

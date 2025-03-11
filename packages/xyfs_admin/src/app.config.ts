@@ -52,6 +52,7 @@ export default defineAppConfig({
         "sub_user_edit",
         "sub_user_list",
         "sub_user_register",
+        "dry_cleaning_statement",
       ]
     }
   ],
