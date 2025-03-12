@@ -95,7 +95,7 @@ export default defineConfig<'webpack5'>(async (merge, { }) => {
     return merge(baseConfig, config_my_common, config_my_dev, devConfig);
   }
   // 生产构建配置（默认开启压缩混淆等）
-  return merge(baseConfig, config_my_common, config_my_dev, { ...prodConfig, outputRoot: 'build' });
+  return merge(baseConfig, config_my_common, config_my_dev, { ...prodConfig, });
 })
 
 
