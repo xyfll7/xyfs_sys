@@ -109,6 +109,9 @@ const IIISettings = ({ ...props }: ViewProps) => {
           子用户
         </ComButton>
       }
+      {roo___has_role(selfInfo_S!, ["AGENT", "SUPPLIER"]) && <ComButton className='bccwhite mb10 mr10' url='/pages_user/dry_cleaning_statement'>
+        干洗账单
+      </ComButton>}
       {roo___has_role(selfInfo_S!, ["AGENT"]) && <>
         <ComButton className='bccwhite mb10 mr10' url='/pages_agent/agent__account'>
           面单账号
@@ -119,9 +122,7 @@ const IIISettings = ({ ...props }: ViewProps) => {
         <ComButton className='bccwhite mb10 mr10' url='/pages_user/sub_user_dept'>
           部门管理
         </ComButton>
-        <ComButton className='bccwhite mb10 mr10' url='/pages_user/dry_cleaning_statement'>
-          干洗账单
-        </ComButton>
+
       </>}
     </View>
   </>;

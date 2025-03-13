@@ -145,7 +145,8 @@ export async function Api_order_print_ctn(params: {
 }
 export async function Api_order_paymentDetail_ctn(params: Pick<Pagination<any>, "keyword" | "pageNum" | "pageSize"> & {
   date: string,
-  type: 1 | 2;
+  type: 1 | 2; // 1 全部 2 退款
+  checkType: 1 | 2; //1 团长个人的对账单 2 干洗工厂查看干洗订单情况
 }): Promise<Pagination<any>> {
   const res = await wx_call_container<Promise<Pagination<any>>>({
     path: "/order/paymentDetail",
@@ -156,6 +157,7 @@ export async function Api_order_paymentDetail_ctn(params: Pick<Pagination<any>, 
 export async function Api_order_paymentList_ctn(params: {
   endDate: string,
   startDate: string;
+  checkType: 1 | 2; //1 团长个人的对账单 2 干洗工厂查看干洗订单情况
 }): Promise<any> {
   const res = await wx_call_container<Promise<any>>({
     path: "/order/paymentList",
@@ -168,6 +170,7 @@ export async function Api_order_paymentExport_ctn(params: {
   deptId?: string;
   startDate: string;
   endDate: string;
+  checkType: 1 | 2; //1 团长个人的对账单 2 干洗工厂查看干洗订单情况
 }): Promise<string> {
   const res = await wx_call_container<string>({
     path: "/order/paymentExport",

@@ -35,7 +35,11 @@ const Index: FC<{}> = ({ }) => {
   const [page_paymentList, setPage_paymentList] = useState<any[] | null>(null);
   useEffect(() => {
     (async () => {
-      const res = await Api_order_paymentList_ctn({ startDate: format(subDays(coo___ios_date(), 6), "yyyy-MM-dd"), endDate: format(coo___ios_date(), "yyyy-MM-dd") });
+      const res = await Api_order_paymentList_ctn({
+        startDate: format(subDays(coo___ios_date(), 6), "yyyy-MM-dd"),
+        endDate: format(coo___ios_date(), "yyyy-MM-dd"),
+        checkType: 1
+      });
       setPage_paymentList(res);
     })();
   }, []);
@@ -43,7 +47,9 @@ const Index: FC<{}> = ({ }) => {
   const ___page_getter = useCallback(async (p: Pagination<unknown>) =>
     await Api_order_paymentDetail_ctn({
       ...p,
-      date: format(coo___ios_date(), "yyyy-MM-dd"), type: 1
+      date: format(coo___ios_date(), "yyyy-MM-dd"),
+      type: 1,
+      checkType: 1
     }), []);
   const { page: page_paymentDetail, page_loading, } = useHook_pageListNew(___page_getter, { pageSize: 10 });
   return <MMMAAPage>
@@ -68,6 +74,7 @@ const Index: FC<{}> = ({ }) => {
               await Api_order_paymentExport_ctn({
                 startDate: dateRes.firstDateOfMonth,
                 endDate: dateRes.lastDateOfMonth,
+                checkType: 1
               });
               Taro.hideLoading();
               if (await try_Taro_showModal({
@@ -118,12 +125,13 @@ const IIIPaymentDetailToday: FC<{
 };
 const IIIPaymentDetailSomeDay: FC<{ onClose: () => void; paymentDetailSomeDay: any; }> = ({ onClose, paymentDetailSomeDay }) => {
   const [tabType, setTabType] = useState<1 | 2>(1);
-
+  const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const ___page_getter = useCallback(async (p: Pagination<unknown>) =>
     await Api_order_paymentDetail_ctn({
       ...p,
       date: paymentDetailSomeDay.paymentDate,
-      type: tabType
+      type: tabType,
+      checkType: 1
     }), [paymentDetailSomeDay.paymentDate, tabType]);
   const { page, page_loading, page_list_get, page_init } = useHook_pageListNew(___page_getter, { pageSize: 10 });
 

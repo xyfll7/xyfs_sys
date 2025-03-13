@@ -10,6 +10,20 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages_user/dry_cleaning_statement",
+          "pathName": "pages_user/dry_cleaning_statement",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_user/dry_cleaning_statement",
+          "pathName": "pages_user/dry_cleaning_statement",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages_regiment/regiment_orders_express",
           "pathName": "pages_regiment/regiment_orders_express",
           "query": "order_ST=1",
