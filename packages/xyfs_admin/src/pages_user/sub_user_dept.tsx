@@ -126,6 +126,7 @@ const Index: FC<{}> = ({ }) => {
                     deptId: item.deptId!,
                     startDate: dateRes.firstDateOfMonth,
                     endDate: dateRes.lastDateOfMonth,
+                    checkType: 1,
                   });
                 }
                 Taro.hideLoading();
@@ -156,6 +157,7 @@ const Index: FC<{}> = ({ }) => {
                     deptId: _dept.deptId!,
                     startDate: dateRes.firstDateOfMonth,
                     endDate: dateRes.lastDateOfMonth,
+                    checkType: 1,
                   });
                   Taro.hideLoading();
                   if (await try_Taro_showModal({ title: "提交成功", content: "请到下载任务列表查看对账单", confirmText: "去查看" })) {
