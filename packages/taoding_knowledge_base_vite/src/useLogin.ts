@@ -34,7 +34,6 @@ export function useLogin() {
 
 export async function login_WeComLogin(wwLogin: ww.WWLoginInstance | null): Promise<{ token: string, wwLogin: ww.WWLoginInstance | null; }> {
   let token_ = localStorage.getItem("token");
-
   if (!token_) {
     function ww_login() {
       return new Promise<string>((re, rj) => {
@@ -44,7 +43,7 @@ export async function login_WeComLogin(wwLogin: ww.WWLoginInstance | null): Prom
             login_type: ww.WWLoginType.corpApp,
             agentid: import.meta.env.VITE_AgentId, // '1000052',
             appid: import.meta.env.VITE_CorpId, // 'ww9bfa0c5bd58bb8b3',
-            redirect_uri: import.meta.env.VITE_redirect_uri,  //  'http://file.taoding.cn',
+            redirect_uri: `${window.location.protocol}//${import.meta.env.VITE_redirect_uri}`,  //  'http://file.taoding.cn',
             state: 'loginState',
             redirect_type: ww.WWLoginRedirectType.callback,
             panel_size: ww.WWLoginPanelSizeType.middle,
@@ -84,7 +83,7 @@ export async function login_OAuth2() {
       }
     } else {
       const appid = import.meta.env.VITE_CorpId; // 'ww9bfa0c5bd58bb8b3';
-      const redirect_uri = import.meta.env.VITE_redirect_uri; // 'https://file.taoding.cn';
+      const redirect_uri = `${window.location.protocol}//${import.meta.env.VITE_redirect_uri}`; // 'https://file.taoding.cn';
       const agentid = import.meta.env.VITE_AgentId; // '1000052';
       const response_type = 'code';
       const scope = 'snsapi_base';
