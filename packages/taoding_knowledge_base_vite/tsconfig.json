@@ -8,6 +8,9 @@
       "path": "./tsconfig.node.json"
     }
   ],
+  "lib": [
+    "WebWorker"
+  ],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {

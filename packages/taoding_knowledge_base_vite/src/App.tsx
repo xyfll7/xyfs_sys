@@ -33,10 +33,13 @@ import { Input } from "./components/ui/input";
 import { ScrollArea } from "./components/ui/scroll-area";
 import { Separator } from "./components/ui/separator";
 import { useLogin } from "./useLogin";
-import { Cate, MyFile, User } from "./vite-env";
+
 export function AppWarp() {
   new VConsole();
   const isMobile = /Mobile/.test(window.navigator.userAgent);
+
+
+
   if (isMobile) {
     return <div className="p-2">
       <Button className="border-0 shadow-none text-gray-500" variant={"outline"}>请前往电脑端企业微信打开</Button>

@@ -1,20 +1,38 @@
 /// <reference types="vite/client" />
 
 
-export interface User {
+
+
+
+interface ImportMetaEnv {
+  readonly VITE_BASE_URL: string;
+  readonly VITE_CorpId: string;
+  readonly VITE_AgentId: string;
+  readonly VITE_redirect_uri: string;
+  // more env variables...
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
+}
+
+
+
+
+interface User {
   user_id: string;
   name: string;
   rule: string | null;
 }
 
-export interface Cate {
+interface Cate {
   cid: number;
   cname: string;
   files: File[] | null;
   pid: string;
   children: Cate[];
 }
-export interface MyFile {
+interface MyFile {
   fid: number;
   cid: number;
   master_name: string;
@@ -27,7 +45,7 @@ export interface MyFile {
   cate: Cate | null;
 }
 
-export interface Rule {
+interface Rule {
   rid: number;
   fid: number;
   user_id: string;
@@ -35,7 +53,7 @@ export interface Rule {
   file: MyFile;
 }
 
-export interface Version {
+interface Version {
   vid: number;
   version: number;
   fid: number;

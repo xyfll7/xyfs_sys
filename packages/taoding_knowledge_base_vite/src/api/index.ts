@@ -7,7 +7,7 @@ const base_url = (() => {
   if (process.env.NODE_ENV === "development") {
     return 'http://192.168.60.230:8081';
   } else {
-    return 'https://file-share.taoding.cn';
+    return import.meta.env.VITE_BASE_URL; // 'https://file-share.taoding.cn';
     // return 'http://file.taoding.cn:8081';
   }
 })();
