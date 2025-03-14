@@ -35,7 +35,10 @@ import { Separator } from "./components/ui/separator";
 import { useLogin } from "./useLogin";
 
 export function AppWarp() {
-  new VConsole();
+  if (import.meta.env.MODE === "development") {
+    new VConsole();
+  }
+
   const isMobile = /Mobile/.test(window.navigator.userAgent);
 
 

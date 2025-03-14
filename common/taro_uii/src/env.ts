@@ -11,7 +11,7 @@ const ___envSimulate = "develop";
 const OPENID_DEV___ =
   // @ts-ignore
 
-  // "oGwbL5OJfPgKB4U-LWAD0jvufljU" || //
+  // "oGwbL5Ik6N77gAnLvNFh1BXP3lqc" || //
   ////////////////////////////////////////////////
   // "oGwbL5D1WtsGTuLhWneaepYuHW3k" ||  // 何旭东
   // "oGwbL5OLhRpOKRWrkVNSMqXuGPaE" ||  // 我妈
@@ -24,7 +24,7 @@ const OPENID_DEV___ =
   // "oGwbL5MStl5pETsgOH-AF_7DyFAs" ||  // 工厂揽收员 郝晶晶
   // "oGwbL5HGbw_XTtv721jphKhsYcMU" ||  // 工厂揽收员 常莉欣
   /////////////////////////////////////////////////
-  // "oGwbL5MUeSNxxA4o0oOmb_FUjE7g" ||  // 王肇ATD
+  "oGwbL5MUeSNxxA4o0oOmb_FUjE7g" ||  // 王肇ATD
   // "oGwbL5Dcqg4-BuRfqTd-sdRI4IWA" ||  // 杨跑跑AT
   // "oGwbL5JnohyARPysoNc-kVtUiJLY" ||  // 王小虎 工厂
 
