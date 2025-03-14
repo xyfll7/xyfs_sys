@@ -3,6 +3,7 @@ import qs from "qs";
 
 
 const base_url = (() => {
+  console.log("env:::::::", process.env.NODE_ENV);
   if (process.env.NODE_ENV === "development") {
     return 'http://192.168.60.230:8081';
   } else {

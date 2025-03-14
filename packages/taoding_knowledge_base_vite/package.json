@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev:group": "sudo vite --host file.taoding.cn --mode TD_group",
+    "dev:group": "sudo vite --host file.taoding.com --mode TD_group",
     "build:group": "sudo tsc -b && sudo vite build --mode TD_group",
     "dev:qifu": "sudo vite --host file.taoding.cn --mode TD_qifu",
     "build:qifu": "sudo tsc -b && sudo vite build --mode TD_qifu",

@@ -6,7 +6,7 @@ import { defineConfig, loadEnv } from 'vite';
 // https://vite.dev/config/
 export default ({ mode }: { mode: string; }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
-  console.log(process.env.VITE_redirect_uri);
+  console.log("OOOOO", process.env.VITE_redirect_uri);
   return defineConfig({
     plugins: [react(), tailwindcss()],
     server: {
