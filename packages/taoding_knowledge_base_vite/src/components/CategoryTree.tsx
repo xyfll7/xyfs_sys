@@ -16,7 +16,6 @@ import { Separator } from "@radix-ui/react-dropdown-menu";
 import { ChevronRight, Loader, Plus } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { auth_cate, auth_cate_add } from "../api";
-import { Cate } from "../vite-env";
 import { Button, DIVButton } from "./ui/button";
 import { Input } from "./ui/input";
 

@@ -1,5 +1,4 @@
 import qs from "qs";
-import { Cate, MyFile, User } from "../vite-env";
 
 
 

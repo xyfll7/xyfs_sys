@@ -20,7 +20,6 @@ import {
 } from "@tanstack/react-table";
 import { memo, useEffect, useState } from "react";
 import { auth_users } from "../api";
-import { MyFile, User } from "../vite-env";
 import { Button } from "./ui/button";
 
 
