@@ -18,7 +18,9 @@ export function useLogin() {
       })();
     } else {
       (async () => {
+        console.log("ttttt",);
         const { token, wwLogin: wwLogin_ } = await login_WeComLogin(wwLogin);
+        console.log("ttttt", token);
         wwLogin = wwLogin_;
         setToken(token);
       })();
