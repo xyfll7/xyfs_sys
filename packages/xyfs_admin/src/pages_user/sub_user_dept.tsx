@@ -254,7 +254,6 @@ const IIIDeptAdd = ({ dept, onSuccess, onClose }: { dept: any; onSuccess: () => 
       <View className='dy'><ComButton className='fwb bccback'>添加子部门</ComButton></View>
     </ComNavBarB>
     <ComButton className='mb10 bcctrans' hoverClass='none'> <Text className='cccplh'>上级部门:</Text> {dept.deptName}</ComButton>
-    <ComLoading className='mb10'></ComLoading>
     <View className='ww mb10 dll'>
       <View className='mb10 ww dy'>
         <ComButton className='bccbacktab ww mr10' hoverClass='none'>
