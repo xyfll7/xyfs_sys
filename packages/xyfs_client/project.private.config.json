@@ -6,6 +6,25 @@
     "urlCheck": false,
     "bigPackageSizeSupport": true
   },
-  "condition": {},
+  "condition": {
+    "miniprogram": {
+      "list": [
+        {
+          "name": "pages_regiment/regiment_invitor",
+          "pathName": "pages_regiment/regiment_invitor",
+          "query": "OPENID_regiment=oGwbL5MUeSNxxA4o0oOmb_FUjE7g",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_regiment/regiment_assist",
+          "pathName": "pages_regiment/regiment_assist",
+          "query": "OPENID_regiment=oGwbL5MUeSNxxA4o0oOmb_FUjE7g",
+          "launchMode": "default",
+          "scene": null
+        }
+      ]
+    }
+  },
   "libVersion": "development"
 }

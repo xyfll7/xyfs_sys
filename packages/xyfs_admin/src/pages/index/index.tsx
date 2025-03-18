@@ -141,7 +141,7 @@ const IIImmmREGIMENT = ({ ...props }: ViewProps) => {
           <ComButton ll className='mb10  dy bborder' onClick={async () =>
             try_Taro_navigateToMiniProgram({
               appId: process.env.TARO_APP_CLIENT,
-              path: `/pages_regiment/regiment_invitor?${coo___objToUrl({ deptId: selfInfo_S!.OPENID })}`,
+              path: `/pages_regiment/regiment_invitor?${coo___objToUrl({ OPENID_regiment: selfInfo_S!.OPENID })}`,
               noRelaunchIfPathUnchanged: false,
             })}>
             分享邀请:<Text className='cccgreen'>小象心选顾客端</Text>

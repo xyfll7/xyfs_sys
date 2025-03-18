@@ -21,16 +21,16 @@ export function useHook_Reducer<T>(data: T): [T, React.Dispatch<Partial<T> | nul
 }
 
 
-export function useHook_userInfo(OPENID_user___: string) {
+export function useHook_deptInfo({ OPENID_regiment }: { OPENID_regiment: string; }) {
   const [userInfo, setUserInfo] = useState<DeptInfo | null>(null);
   useEffect(() => {
-    if (OPENID_user___) {
+    if (OPENID_regiment) {
       (async () => {
-        const res = await Api_user_info_ctn({ userId: OPENID_user___ });
+        const res = await Api_user_info_ctn({ userId: OPENID_regiment });
         setUserInfo(res);
       })();
     }
-  }, [OPENID_user___]);
+  }, [OPENID_regiment]);
   return userInfo;
 }
 
