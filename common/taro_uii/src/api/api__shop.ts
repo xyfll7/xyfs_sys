@@ -65,7 +65,7 @@ export async function Api_cart_add_ctn(params: {
   // cartId: number,
   productId?: string,// 产品id
   id?: string,
-  // quantity: number,// 数量
+  quantity: number,// 数量
   // selected: number,// 勾选状态
 
   serveIds: string[],

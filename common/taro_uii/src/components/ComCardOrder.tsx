@@ -133,7 +133,7 @@ export const ComCardOrderDryclean: FC<{
       <View className='ww mb10'>
         {order.productList?.map((e) => {
           return <View className='dbtc ww' key={e.id}>
-            <ComButton ll><View className='dbase'><Text className='wm10rem nw1'>{e.name}</Text></View></ComButton>
+            <ComButton ll><View className='dbase'><Text className='wm10rem nw1'>{e.name}</Text> <Text className="cccplh fs08">/{e.quantity}</Text> </View></ComButton>
             <View className='dy'>
               <ComButton rr className='nw' onClick={async () => {
                 await try_Taro_setClipboardData({ data: e.code! });

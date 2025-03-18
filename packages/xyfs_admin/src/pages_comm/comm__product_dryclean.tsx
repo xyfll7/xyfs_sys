@@ -30,8 +30,8 @@ const Index: FC<{}> = ({ }) => {
 
   const { options } = Taro_getCurrentInstance<{ order_info: string; }>();
   const _order: OrderInfo<Product_Dryclean> | undefined = options.order_info && JSON.parse(decodeURIComponent(decodeURIComponent(options.order_info)));
-  console.log("ooooodddder", _order);
   const [cartItem, setCartItem] = useState<Product_Dryclean | null>(null);
+
   const [user, setUser] = useState({
     name: _order?.userAddress?.name ?? "",
     mobile: _order?.userAddress?.mobile ?? "",
@@ -60,7 +60,7 @@ const Index: FC<{}> = ({ }) => {
       setCart(res);
       Taro.hideLoading();
     }}>
-    {roo___has_role(useSTSelf.getState().selfInfo!, ["REGIMENT", "USER"]) &&
+    {roo___has_role(useSTSelf.getState().selfInfo!, ["REGIMENT"]) &&
       <View>
         <View className='pt10'>
           <CPDryclean.ShopCartTabBarRegiment key='ShopCartTabBarRegiment' cart={cart} onToggle={async () => {
@@ -145,7 +145,7 @@ const Index: FC<{}> = ({ }) => {
         </ComPopupNew>
         }
         {cartItem && <ComPopupNew isShowTopClose onClose={() => setCartItem(null)}>
-          <CPDryclean.CartItemEditor onSetCart={(e) => setCart(e)} cartItem={cartItem} onToggle={() => { setCartItem(null); }} />
+          <CPDryclean.CartItemEditor onSetCart={(e) => { setCart(e); }} cartItem={cartItem} onToggle={() => { setCartItem(null); }} />
         </ComPopupNew>
         }
       </View>

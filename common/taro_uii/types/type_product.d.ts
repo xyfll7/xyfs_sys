@@ -64,6 +64,7 @@ interface Product_Dryclean extends ProductBase {
   pictureUrl?: string;//  "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/%E8%8C%83%E7%BE%8E%E5%A5%B3.jpg?sign=2ed78016744cc7c33b7d772dc4d5c20a&t=1713180835";
   img?: string;
   price?: number; // 49;
+  unit?: number; // 49;
   pricePerUnit?: number; // 49;
   productId?: number; //1;
   quantity?: number; //1;

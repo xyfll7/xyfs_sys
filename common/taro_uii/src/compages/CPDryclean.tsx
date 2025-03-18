@@ -139,8 +139,10 @@ const CartItemEditor: FC<{ cartItem: Product_Dryclean; onSetCart: (e: Product_Dr
       ...(cartItem.affixOptions ?? []),
     ].filter((e) => Boolean(e.price)),
   });
+  console.log("bbb.", form);
   const [pictureUrl, setPictureUrl] = useState<string>(cartItem.img ?? "");
   const [remark, setRemark] = useState("");
+  const [quantity, setQuantity] = useState(cartItem.quantity ? cartItem.quantity : 1);
 
   const [drycleanNotesType] = useDrycleanNotesType();
 
@@ -159,9 +161,9 @@ const CartItemEditor: FC<{ cartItem: Product_Dryclean; onSetCart: (e: Product_Dr
             <ComButton rr className='fwb bccback'>
               <Text className='wm8rem nw1'>{cartItem.name}/{cartItem.intro}</Text>
             </ComButton>
-            <View className='nw ml4 dy'>
+            <View className='nw ml4 dbase'>
               <Text className='cccprice mr2'>¥</Text>
-              <Text className='cccprice nw1'>{cartItem.price}</Text>
+              {cartItem.price && <Text className='cccprice nw1'>{cartItem.price * quantity}</Text>}
               {Boolean(form.price.length) && <>
                 <Text className='cccprice'>+</Text>
                 <Text className='cccprice nw1'>{form.price.reduce((num, ee) => num + Number(ee.price), 0)}</Text>
@@ -181,12 +183,13 @@ const CartItemEditor: FC<{ cartItem: Product_Dryclean; onSetCart: (e: Product_Dr
               affixIds: form.affix.map(ee => ee.id),
 
               remark: remark,
-
+              quantity: quantity,
               img: pictureUrl,
               ...(cartItem.productId ?
                 ({ id: cartItem.id, }) :
                 ({ productId: cartItem.id }))
             });
+            console.log(res);
             onSetCart(res);
             Taro.showToast({ icon: "none", title: "添加成功" });
 
@@ -201,6 +204,23 @@ const CartItemEditor: FC<{ cartItem: Product_Dryclean; onSetCart: (e: Product_Dr
           return [...res_cloud_files.map(ee => ee.fileID)];
         }} />
       <View className='ww'>
+        {cartItem.unit && <View className="dy ww">
+          <ComButton className='mb10 mr10 bccback nw' hoverClass='none'>
+            数量:  <Text className='nw w2rem dxy'>{quantity} </Text>  {cartItem.unit}
+          </ComButton>
+          <ComButton className='mb10 bccbacktab ww dxy mr10' hoverClass='none' onClick={() => {
+            if (quantity === 1) { Taro.showToast({ icon: "none", title: "数量最少为1" }); return; }
+            setQuantity(ee => ee - 1);
+          }}>
+            <Text className='mr6 cccplh nw'>-减</Text>
+          </ComButton>
+          <ComButton className='mb10 bccbacktab ww dxy' hoverClass='none' onClick={() => setQuantity(ee => ee + 1)}>
+            <Text className='mr6 cccplh nw'>+加</Text>
+          </ComButton>
+        </View>
+        }
+
+
         <ComButton className='mb10 bccbacktab' hoverClass='none'>
           <Text className='mr6 cccplh nw'>备注:</Text>
           <ComInput placeholder='请输入备注内容' value={remark} onInput={(eee) => setRemark(eee.detail.value)}></ComInput>
@@ -275,7 +295,11 @@ const ProductCategoryCard: FC<{ productCategory: Record<string, Product_Dryclean
               {cartItems?.map(eee => {
                 const str = [...eee.serveOptions ?? [], ...eee.affixOptions ?? [], ...eee.colorOptions ?? [], ...eee.defectOptions ?? []].map(eeee => eeee.label).join("/");
                 return <View className='ww dbtc mb10' key={eee.id}>
-                  <ComButton ll className=''>{str ? <Text className='wm13rem nw1'>{str}</Text> : <Text className='cccplh'>无备注</Text>} </ComButton>
+                  <ComButton ll className=''>
+                    <View className="dbase">
+                      {str ? <Text className='wm13rem nw1'>{str}</Text> : <Text className='cccplh'>无备注</Text>} <Text className="cccplh fs08">/{eee.quantity}</Text>
+                    </View>
+                  </ComButton>
                   <ComButton rr className='slr cccplh  mr10' onClick={() => onCartDel?.(eee)}>删除</ComButton>
                   <ComButton rr className='cccgreen  bborder' onClick={() => onCartEdit?.(eee)}>备注</ComButton>
                 </View>;
@@ -336,7 +360,7 @@ function ___get_cart_total_price(cart: Product_Dryclean[]) {
       const arr = [...(ee.serveOptions ?? []), ...(ee.colorOptions ?? []), ...(ee.defectOptions ?? []), ...(ee.affixOptions ?? [])];
       _count = arr.reduce((_num, _ee) => _num + Number(_ee.price) * 100, 0) / 100;
     }
-    return num + Number(ee.price) * 100 + _count * 100;
+    return num + Number(ee.totalPrice) * 100 + _count * 100;
   }, 0) / 100);
 }
 
