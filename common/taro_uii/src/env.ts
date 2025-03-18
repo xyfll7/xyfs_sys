@@ -3,7 +3,7 @@ import "@xyfs/utils/init";
 import Package from "../package.json";
 import { Environment, EnvVersion } from "../types/type_index";
 
-export const base_url: string = "http://192.168.70.42:8080";
+export const base_url: string = "http://192.168.6.137:8080";
 
 const ___envSimulate = "develop";
 
@@ -11,7 +11,7 @@ const ___envSimulate = "develop";
 const OPENID_DEV___ =
   // @ts-ignore
 
-  // "oGwbL5Ik6N77gAnLvNFh1BXP3lqc" || //
+  // "oGwbL5EQR6BDwKoPCf02_1zJ00Kg" || //
   ////////////////////////////////////////////////
   // "oGwbL5D1WtsGTuLhWneaepYuHW3k" ||  // 何旭东
   // "oGwbL5OLhRpOKRWrkVNSMqXuGPaE" ||  // 我妈

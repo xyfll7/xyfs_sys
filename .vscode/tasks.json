@@ -177,10 +177,10 @@
       "label": "env:rh:pc:---",
       "type": "shell",
       "osx": {
-        "command": "gsed -i '/const ___envSimulate/s/.*/const ___envSimulate = \"develop\";/' ./common/taro_uii/src/env.ts && gsed -i '/export const base_url/s/.*/export const base_url: string = \"http:\\/\\/192.168.70.42:8080\";/' ./common/taro_uii/src/env.ts",
+        "command": "gsed -i '/const ___envSimulate/s/.*/const ___envSimulate = \"develop\";/' ./common/taro_uii/src/env.ts && gsed -i '/export const base_url/s/.*/export const base_url: string = \"http:\\/\\/192.168.6.137:8080\";/' ./common/taro_uii/src/env.ts",
       },
       "windows": {
-        "command": "sed -i '/const ___envSimulate/s/.*/const ___envSimulate = \"develop\";/' ./common/taro_uii/src/env.ts && sed -i '/export const base_url/s/.*/export const base_url: string = \"http:\\/\\/192.168.70.42:8080\";/' ./common/taro_uii/src/env.ts"
+        "command": "sed -i '/const ___envSimulate/s/.*/const ___envSimulate = \"develop\";/' ./common/taro_uii/src/env.ts && sed -i '/export const base_url/s/.*/export const base_url: string = \"http:\\/\\/192.168.6.137:8080\";/' ./common/taro_uii/src/env.ts"
       },
       "problemMatcher": [],
       "presentation": {
