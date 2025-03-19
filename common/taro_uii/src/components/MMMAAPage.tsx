@@ -91,7 +91,7 @@ export const MMMAAPage: FC<{
           <View className='safe-height'>
             {process.env.TARO_APP_ADMIN === getMyEnv().appId &&
               <View className='fs06 prl20 dy ww  pbt6 cccplh fwl'>
-                <Text className='mr6 nw'>v:{getMyEnv().version}</Text>
+                <Text className='mr6 nw'>v: {getMyEnv().version}</Text>
                 <Text className='mr6 nw'>M: {useSTSelf.getState().selfInfo?.mobile ?? '000'}</Text>
                 {useSTSelf.getState().selfInfo?.deptName &&
                   <Text className='mr6 nw1'>当前部门/{useSTSelf.getState().selfInfo?.deptName}</Text>
