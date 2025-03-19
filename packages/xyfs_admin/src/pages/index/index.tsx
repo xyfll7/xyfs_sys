@@ -138,12 +138,14 @@ const IIImmmREGIMENT = ({ ...props }: ViewProps) => {
         <ComButton ll className='mb10 cccplh' >团长/快递业务</ComButton>
         <View className='dy dwp'>
           <ComButton ll className='fwb mb10 mr10 bborder' url='/pages_comm/comm__product_express'>快递</ComButton>
-          <ComButton ll className='mb10  dy bborder' onClick={async () =>
+          <ComButton ll className='mb10  dy bborder' onClick={async () => {
+            console.log("bbbb", `/pages_regiment/regiment_invitor?${coo___objToUrl({ OPENID_regiment: selfInfo_S!.OPENID })}`);
             try_Taro_navigateToMiniProgram({
               appId: process.env.TARO_APP_CLIENT,
               path: `/pages_regiment/regiment_invitor?${coo___objToUrl({ OPENID_regiment: selfInfo_S!.OPENID })}`,
               noRelaunchIfPathUnchanged: false,
-            })}>
+            });
+          }}>
             分享邀请:<Text className='cccgreen'>小象心选顾客端</Text>
           </ComButton>
         </View>

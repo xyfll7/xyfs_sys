@@ -1,5 +1,5 @@
 // :: pages_regiment/regiment_invitor
-import { View } from '@tarojs/components';
+import { Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import { DeptInfo, OrderInfo, ProductBase } from '@xyfs/taro_uii';
 import { Api_order_query_ctn } from '@xyfs/taro_uii/api/api__orders';
@@ -34,8 +34,8 @@ const Index: FC = () => {
 
         <View className='dll ww'>
           <View className='dy'>
-            <ComButton className='mb10 mr10' onClick={() => { Taro.navigateBackMiniProgram({}); }}>返回→管理端</ComButton>
-            <ComButton ll className='mb10 cccplh'> <View className='wm7rem'>{dept?.name}</View> (团长) 您好 👋 </ComButton>
+            <ComButton className='mb10 mr10 nw' onClick={() => { Taro.navigateBackMiniProgram({}); }}>返回→管理端</ComButton>
+            <ComButton ll className='mb10 cccplh nw1'> <Text className='wm7rem'>{dept?.name}</Text> <Text className='nw'>(团长) 您好 👋</Text>  </ComButton>
           </View>
           <IIIExpress deptInfo={dept}></IIIExpress>
           <IIIDryclean deptInfo={dept}></IIIDryclean>
@@ -47,16 +47,8 @@ const Index: FC = () => {
 
 
 const IIIExpress: FC<{ deptInfo: DeptInfo; }> = ({ deptInfo }) => {
-  console.log('deptInfooooooo', `/pages_comm/comm__product_express?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ R_D: Number(deptInfo.mobile).toString(36) })) })}`);
   return <View className='mb10 dy bccwhite ww ioo pt10 prl10'>
     <ComButton ll className='nw bccwhite mr10 bccwhite mb10'>快递</ComButton>
-    {/* <ComQRCode rr className='cccgreen mb10 slr' params={{
-      buttonText: "小程序码",
-      title: "团长专属",
-      desc: ["快递下单快捷小程序码"],
-      page: "pages_comm/comm__product_express",
-      scene: coo___objToUrl({ R_D: Number(deptInfo.mobile).toString(36) }),
-    }} /> */}
     <ComButtonOpen rr className='cccgreen bccwhite bborder mb10 slr' id='send_express'
       shareTitle={`${deptInfo?.name} 团长 邀您6元起寄快递`}
       openType='share'

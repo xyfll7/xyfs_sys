@@ -3,7 +3,7 @@ import Taro, { useDidShow, useLoad } from "@tarojs/taro";
 import { coo___urlToObj } from "@xyfs/utils/util";
 import React, { CSSProperties, FC, useEffect, useState, useSyncExternalStore } from "react";
 import { DeptInfo } from "../../types/type_user";
-import { Api_login_rqs, Api_user_edit_ctn } from "../api/api__users";
+import { Api_user_edit_ctn } from "../api/api__users";
 import { getMyEnv } from "../env";
 import { roo___has_role } from "../roles";
 import { useSTSelf } from "../store/store";
@@ -366,15 +366,11 @@ const useHook_selfInfo_show = ({ isRefreshSelfInfo_SEveryTime = false, }: { isRe
   const { R_D } = coo___urlToObj<{ R_D?: string; }>(options.scene);
   const _R_D = R_D ? String(parseInt(R_D, 36)) : undefined;
   const selfInfo = useSTSelf(s => s.selfInfo);
+
   useDidShow(async () => {
     if (_R_D && process.env.TARO_APP_CLIENT === Taro.getAccountInfoSync().miniProgram.appId) { // 只有顾客端用户才能切换团长
-      const res_selfInfo = await Api_login_rqs();
-      if (res_selfInfo.deptInfo?.mobile === _R_D) { // 如果用户已经有团长，并且就是分享团长本人就不去切换用户的团长了
-        useSTSelf.getState().sett(res_selfInfo);
-      } else {
-        const res_userInfo = await Api_user_edit_ctn({ deptId: _R_D });
-        useSTSelf.getState().sett(res_userInfo);
-      }
+      const res_userInfo = await Api_user_edit_ctn({ deptId: _R_D });
+      useSTSelf.getState().sett(res_userInfo);
     } else if (isRefreshSelfInfo_SEveryTime || !selfInfo) { // 每次DidShow都去获取用户信息
       await useSTSelf.getState().sett();
     }

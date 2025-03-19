@@ -12,14 +12,21 @@
         {
           "name": "pages_comm/comm__product_express",
           "pathName": "pages_comm/comm__product_express",
-          "query": "scene=R_D%3D84vlq75",
+          "query": "scene=R_D%3D8jrdxps",
           "launchMode": "default",
           "scene": null
         },
         {
           "name": "pages_regiment/regiment_invitor",
           "pathName": "pages_regiment/regiment_invitor",
-          "query": "OPENID_regiment=oGwbL5MUeSNxxA4o0oOmb_FUjE7g",
+          "query": "OPENID_regiment=oGwbL5CEoFe5T1fqyAQUu0ohSLSM",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_comm/comm__product_express",
+          "pathName": "pages_comm/comm__product_express",
+          "query": "scene=R_D%3D84vlq75",
           "launchMode": "default",
           "scene": null
         },

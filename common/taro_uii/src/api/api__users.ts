@@ -172,7 +172,10 @@ export async function Api_dept_info_ctn(params: { deptId: string; }): Promise<De
 export async function Api_user_edit_ctn(params: Partial<DeptInfo>): Promise<DeptInfo> {
   const res = await wx_call_container<DeptInfo>({
     path: "/user/edit",
-    data: { ...params },
+    data: {
+      ...params,
+      code: await (async () => { return Taro_getStorageSync<string>("OPENID", getMyEnv()) ? "" : await try_Taro_login(); })()
+    },
   });
   return res;
 }
