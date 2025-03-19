@@ -66,7 +66,7 @@ export const MMMAAPage: FC<{
       style={{ minWidth: widthV, width: widthV, maxWidth: widthV, height: heightV, minHeight: heightV, maxHeight: heightV, overflow: "hidden" }}
       hoverStopPropagation
       onClick={(e) => { e.stopPropagation(); }}>
-      {isLoading && <ComNav className='prl10'><ComLoading /></ComNav>}
+      {isLoading && <ComNav className='prl20'><ComLoading /></ComNav>}
       {!isLoading && isSystemUpdate && <IIISystemUPdate />}
       {!isLoading && !isSystemUpdate && !___is_required_regiment(selfInfo_S, isNeedRegiment) && <IIIUserHasNoRegiment className='prl10' />}
       {!isLoading && !isSystemUpdate && !___is_required_dept(selfInfo_S, isNeedAnyDept) && <IIIUserHasNoDept className='prl10' />}

@@ -48,8 +48,8 @@ const Index: FC = () => {
 
 const IIIExpress: FC<{ deptInfo: DeptInfo; }> = ({ deptInfo }) => {
   return <View className='mb10 dy bccwhite ww ioo pt10 prl10'>
-    <ComButton ll className='nw bccwhite mr10 bccwhite mb10'>快递</ComButton>
-    <ComButtonOpen rr className='cccgreen bccwhite bborder mb10 slr' id='send_express'
+    <ComButton ll className='nw bccwhite mr10 bccwhite mb10' hoverClass='none'>快递</ComButton>
+    <ComButtonOpen rr className='cccgreen bccbacktab  mb10 slr' id='send_express'
       shareTitle={`${deptInfo?.name} 团长 邀您6元起寄快递`}
       openType='share'
       sharePath={`/pages_comm/comm__product_express?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ R_D: Number(deptInfo.mobile).toString(36) })) })}`}>
@@ -73,8 +73,8 @@ const IIIDryclean: FC<{ deptInfo: DeptInfo; }> = ({ deptInfo }) => {
   return <> {
     order && <View className='ww bccwhite ioo pt10 mb10'>
       <View className='dy ww prl10'>
-        <ComButton ll className='nw bccwhite mr10 bccwhite mb10'>干洗</ComButton>
-        <ComButtonOpen rr className='cccgreen bborder mb10 slr' id='send_dryclean'
+        <ComButton ll className='nw bccwhite mr10 bccwhite mb10' hoverClass='none'>干洗</ComButton>
+        <ComButtonOpen rr className='cccgreen bccbacktab mb10 slr' id='send_dryclean'
           shareTitle={`${deptInfo?.name} 团长 邀您支付快递订单`}
           openType='share'
           sharePath={`/pages_user/user_orders?${coo___objToUrl({ scene: `${encodeURIComponent(coo___objToUrl({ R_D: Number(deptInfo.mobile).toString(36), S_D: S_D }))}` })}`}>
