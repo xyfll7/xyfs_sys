@@ -315,7 +315,6 @@ export function ComSELFView({ isRefreshSelfInfo_SEveryTime, ...props }: ViewProp
   const net = useSyncExternalStore(netWork.sub, () => netWork.status);
   const [selfInfo_S] = useHook_selfInfo_show({ isRefreshSelfInfo_SEveryTime });
   const isInApp = selfInfo_S?.appid === getMyEnv().appId;
-  console.log("OOOOO", isInApp);
   useLoad(() => {
     Taro.onThemeChange(({ theme }) => {
       useSTSelf.getState().setSelfInfoTheme(theme);

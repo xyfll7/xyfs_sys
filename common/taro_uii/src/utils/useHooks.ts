@@ -75,12 +75,12 @@ export function useHook_shareAppMessage({ page }: { page?: string; } = {}) {
   });
 }
 const logger = Taro.getRealtimeLogManager();
-export function useHook_Error(params?: { isShowBug?: boolean; isLogBug?: boolean; }) {
+export function useHook_Error(params?: { isShowBug?: boolean; isPrintBug?: boolean; }) {
   const isShowBug = params?.isShowBug ?? true;
-  let isLogBug = params?.isLogBug ?? false;
+  let isPrintBug = params?.isPrintBug ?? false;
 
   if (getMyEnv().envVersion === "develop") {
-    isLogBug = true;
+    isPrintBug = true;
   }
 
   useError(async (e) => {
@@ -93,16 +93,16 @@ export function useHook_Error(params?: { isShowBug?: boolean; isLogBug?: boolean
     if (err.reason instanceof ErrorR && Boolean(err.reason.isShow)) {
       isShowBug &&
         Taro.showToast({ icon: "none", title: `S_${err.reason.message}`, });
-      isLogBug && console.info(`S_${err.reason.message}`);
+      isPrintBug && console.info(`S_${err.reason.message}`);
     } else if (err.reason instanceof Error) {
       isShowBug &&
         Taro.showToast({ icon: "none", title: `G_${err.reason.message}`, });
-      isLogBug && console.error(`G_${err.reason.message}`);
+      isPrintBug && console.error(`G_${err.reason.message}`);
       logger.error({ ...err });
     } else {
       isShowBug &&
         Taro.showToast({ icon: "none", title: "W_未知错误", });
-      isLogBug && console.error("W_未知错误", err);
+      isPrintBug && console.error("W_未知错误", err);
     }
   });
 }

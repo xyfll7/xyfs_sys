@@ -47,6 +47,7 @@ const Index: FC = () => {
 
 
 const IIIExpress: FC<{ deptInfo: DeptInfo; }> = ({ deptInfo }) => {
+  console.log('deptInfooooooo', `/pages_comm/comm__product_express?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ R_D: Number(deptInfo.mobile).toString(36) })) })}`);
   return <View className='mb10 dy bccwhite ww ioo pt10 prl10'>
     <ComButton ll className='nw bccwhite mr10 bccwhite mb10'>快递</ComButton>
     {/* <ComQRCode rr className='cccgreen mb10 slr' params={{
