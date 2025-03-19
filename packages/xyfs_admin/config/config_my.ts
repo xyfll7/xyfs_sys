@@ -1,6 +1,7 @@
 
 import { type UserConfigExport } from '@tarojs/cli';
 import dotenv from 'dotenv';
+import fs from 'fs';
 import path from 'path';
 
 const envConfig = dotenv.config({
@@ -32,6 +33,10 @@ export const config_my_common: UserConfigExport = {
     options: {}
   },
   mini: {
+    webpackChain(chain, webpack) {
+      changeFileMiniprogramRoot();
+      console.log("----------修改miniprogramRoot完毕");
+    },
     compile: {
       include: [
         // @ts-ignore
@@ -51,4 +56,34 @@ export const config_my_dev: UserConfigExport = {
 
 
 
+
+const changeFileMiniprogramRoot = () => {
+  const configPath = path.join(__dirname, "../dist/project.config.json");
+
+  // 读取 dist/project.config.json 文件内容
+  fs.readFile(configPath, "utf8", (err, data) => {
+    if (err) {
+      console.error("Error reading file:", err);
+      return;
+    }
+
+    // 解析 JSON 数据
+    const config = JSON.parse(data);
+
+    // 修改数据 有点骚操作
+    config.miniprogramRoot = "";
+
+    // 将修改后的数据转换为 JSON 字符串
+    const updatedConfig = JSON.stringify(config, null, 2);
+
+    // 将修改后的数据写回文件
+    fs.writeFile(configPath, updatedConfig, "utf8", (err) => {
+      if (err) {
+        console.error("Error writing file:", err);
+        return;
+      }
+      console.log("File updated successfully.");
+    });
+  });
+};
 

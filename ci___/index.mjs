@@ -64,7 +64,7 @@ async function ___upload(desc, cfg) {
     }),
     robot: 17,
 
-    onProgressUpdate: (e) => { if (typeof e._msg === "string") { spinner.text = `EEE:::${String(e._msg)}`; }; },
+    onProgressUpdate: (e) => { if (typeof e._msg === "string") { spinner.text = `EEE:${String(e._msg)}`; }; },
     version: packageConfig.version,
     desc,
     setting: {
