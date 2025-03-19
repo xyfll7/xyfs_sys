@@ -162,7 +162,7 @@ const IIIDeptList = ({ userInfo, onUpdateUserInfo }: { userInfo: DeptInfo; onUpd
   }
   return <>
     {depts === undefined && <ComLoading />}
-    {depts?.length === 0 && <ComButton>没有数据</ComButton>}
+    {depts?.length === 0 && <ComLoading isEmpty />}
     {depts && <ComTree list={depts} keyName='deptId'>
       {(e) => <View className='bccwhite ioo ovh pt10 dbtc ww mb10 ww' >
         <ComButton className='mb10 ww'>

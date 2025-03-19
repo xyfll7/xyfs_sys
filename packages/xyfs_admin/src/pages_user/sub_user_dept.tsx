@@ -74,7 +74,7 @@ const Index: FC<{}> = ({ }) => {
     </ComNav>
     <ComScrollView className=''>
       {depts === undefined && <ComLoading />}
-      {depts?.length === 0 && <ComButton>没有数据</ComButton>}
+      {depts?.length === 0 && <ComLoading isEmpty />}
       {depts && <ComTree list={depts} keyName='deptId'>
         {(_dept) => <View className='ww dll bccwhite  ioo ovh pt10 mb10 pr10'>
           <View className='dbtc ww' >
