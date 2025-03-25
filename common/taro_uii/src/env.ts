@@ -11,7 +11,7 @@ const ___envSimulate = "release";
 const OPENID_DEV___ =
   // @ts-ignore
   // "oHt125PwK5RNNkUSROpWd-epeB8s" || //
-  "oGwbL5EcFiPkVS8UMlY57inHek1E" || //
+  // "oGwbL5EcFiPkVS8UMlY57inHek1E" || //
   ////////////////////////////////////////////////
   // "oGwbL5D1WtsGTuLhWneaepYuHW3k" ||  // 何旭东
   // "oGwbL5OLhRpOKRWrkVNSMqXuGPaE" ||  // 我妈
