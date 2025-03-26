@@ -10,7 +10,6 @@ const ___envSimulate = "release";
 // cSpell: disable;
 const OPENID_DEV___ =
   // @ts-ignore
-  // "oHt125PwK5RNNkUSROpWd-epeB8s" || //
   // "oGwbL5EcFiPkVS8UMlY57inHek1E" || //
   ////////////////////////////////////////////////
   // "oGwbL5D1WtsGTuLhWneaepYuHW3k" ||  // 何旭东
