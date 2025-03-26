@@ -11,6 +11,7 @@ build_*/
 test.ts
 test*.ts
 test*.*
+_test*.*
 test/
 test_*/
 *_old
