@@ -11,6 +11,8 @@ build_*/
 test.ts
 test*.ts
 test*.*
+test/
+test_*/
 *_old
 zbash.sh
 zqrcode.jpg
