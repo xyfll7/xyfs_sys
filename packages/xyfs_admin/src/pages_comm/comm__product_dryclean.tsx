@@ -63,10 +63,10 @@ const Index: FC<{}> = ({ }) => {
     {roo___has_role(useSTSelf.getState().selfInfo!, ["REGIMENT"]) &&
       <View>
         <View className='pt10'>
-          <CPDryclean.ShopCartTabBarRegiment key='ShopCartTabBarRegiment' cart={cart} onToggle={async () => {
+          <CPDryclean.ShopCartTabBarRegiment key='ShopCartTabBarRegiment' isPay={!__isShare} cart={cart} onToggle={async () => {
             if (!(cart!.length! > 0)) { throw new Error('购物车是空的～'); }
             setShow(e => !e);
-          }} isPay={!__isShare} onPay={async () => {
+          }} onPay={async () => {
             if (!Boolean(cart.length)) { throw new Error("购物车是空的，先去选购吧～"); }
             if (!user.mobile) { throw new Error("请输入顾客手机号"); }
             if (!/^(1)\d{10}$/.test(user.mobile)) { throw new Error("请输入正确的手机号"); }
@@ -126,7 +126,6 @@ const Index: FC<{}> = ({ }) => {
 
                 }} onClearCart={async () => { setCart([]); setUser(() => ({ name: "", mobile: "" })); }} />
             </View>
-
           </CPDryclean.ShopCartTabBarRegiment>
         </View>
         {show && <ComPopupNew className='ww' onClose={() => setShow(e => !e)}>
@@ -140,7 +139,7 @@ const Index: FC<{}> = ({ }) => {
               Taro.hideLoading();
             }}
             cart={cart} onToggle={() => setShow(e => !e)}>
-            <CPDryclean.ShopCartTabBarRegiment key='ShopCartTabBarRegiment' cart={cart} onToggle={() => setShow(e => !e)} />
+            <CPDryclean.ShopCartTabBarRegiment key='ShopCartTabBarRegiment' isPay={!__isShare} cart={cart} onToggle={() => setShow(e => !e)} />
           </CPDryclean.ShopCart>
         </ComPopupNew>
         }
