@@ -12,6 +12,7 @@ test.ts
 test*.ts
 test*.*
 _test*.*
+_test_*/
 test/
 test_*/
 *_old
