@@ -191,7 +191,6 @@ const IIIOrderPayRegiment: FC<{}> = ({ }) => {
     Taro.showLoading({ mask: true, title: "检查地址...", });
     await Api_logistic_check_ctn(useSTExpress.getState().express);
     Taro.showLoading({ mask: true, title: "获取价格...", });
-    console.log("express_Sssssssssssssssssss",);
     const res_price = await Api_order_previewPrice_ctn(useSTExpress.getState().express);
     useSTExpress.getState().sett({
       totalPrice: String(res_price.totalPrice) ?? "",

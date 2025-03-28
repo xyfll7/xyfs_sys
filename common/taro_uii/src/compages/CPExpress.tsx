@@ -139,9 +139,11 @@ const ExpressRecMan: FC<{ onChooseProvinceCityArea: () => void; onSmartPast: (st
       </View>
       <View className='dbtc ww'>
         <ComButton ll className='bccbacktab flx1 mr10 mb10' hoverClass='none'>
-          <ComInput placeholder='收件人姓名' value={express_S.productList?.[0]?.recMan?.name} onInput={(e) => {
-            useSTExpress.getState().sett({ productList: [{ recMan: { name: e.detail.value, } }] });
-          }}></ComInput>
+          <ComInput placeholder='收件人姓名' value={express_S.productList?.[0]?.recMan?.name ?? ""}
+            onInput={(e) => {
+              useSTExpress.getState().sett({ productList: [{ recMan: { name: e.detail.value, } }] });
+            }}>
+          </ComInput>
         </ComButton>
         <ComButton rr className='cccgreen mb10 bborder'
           onClick={async () => {
@@ -156,7 +158,7 @@ const ExpressRecMan: FC<{ onChooseProvinceCityArea: () => void; onSmartPast: (st
       </View>
       <ComButton ll rr className='bccbacktab flx1 mb10 ww dy' hoverClass='none'>
         <ComInput ref={inputRef} className={`${addStr && (utils_get_str_phone(addStr) !== express_S.productList?.[0]?.recMan?.mobile) ? "cccprice" : ""} `}
-          type={inputType} placeholder='联系电话:手机号码/固定电话' value={express_S?.productList?.[0]?.recMan?.mobile}
+          type={inputType} placeholder='联系电话:手机号码/固定电话' value={express_S?.productList?.[0]?.recMan?.mobile ?? ""}
           onInput={(e) => {
             useSTExpress.getState().sett({ productList: [{ recMan: { mobile: e.detail.value, } }] });
           }} />
