@@ -12,9 +12,9 @@ definePageConfig({
 
 export default function COMSELFWarp() { return <Index></Index>; };
 const Index: FC<{}> = ({ }) => {
-  const [state, setState] = useState("123213111");
+  const [state, setState] = useState("12345678");
   return <View className='pt50'>
-    <ComInput placeholder='fasdfasdf' value={state} onInput={(e) => setState(e.detail.value)}></ComInput>
+    <ComInput placeholder='fasdfasdf' value={state} onInput={(e) => { console.log("xxxx"); setState(e.detail.value); }}></ComInput>
     <Input placeholder='fasdfasdf222' value={state} onInput={(e) => { setState(e.detail.value); }}></Input>
     <input placeholder='' value={state} onInput={(e) => { setState(e.currentTarget.value); }}></input>
   </View>;
