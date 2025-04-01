@@ -1,5 +1,5 @@
 // :: pages_comm/icomm_printer
-import { View } from '@tarojs/components';
+import { Text, View } from '@tarojs/components';
 import Taro from "@tarojs/taro";
 import { ComAuth } from '@xyfs/taro_uii/components/ComAuth';
 import { ComButton } from '@xyfs/taro_uii/components/ComButton';
@@ -84,7 +84,7 @@ const IIIComMyBluePrinter: FC = () => {
 
 // 搜索打印机列表
 const IIIBlueList: FC = () => {
-  const { devices, state, startBlue, stopBlue, addPrinter } = useINHooks_Blue_devices();
+  let { devices, state, startBlue, stopBlue, addPrinter } = useINHooks_Blue_devices();
   const blueDevices_S = useSTBlueDevices((s) => s.blueDevices);
   return <View className='dll ww'>
     <IIIComMyBluePrinter />
@@ -100,12 +100,12 @@ const IIIBlueList: FC = () => {
 
     {devices?.filter(e => !blueDevices_S?.find(ee => ee.deviceId === e.deviceId)).map(e => {
       return <View className='dbtt mb10 pbt8 prl10 bccwhite ioo ww' key={e.deviceId} >
-        <View className='dll'>
-          <ComButton ll className='nw1 wm15rem'  > {e.name} ({e.RSSI}) </ComButton>
+        <View className='dll mr10'>
+          <ComButton ll><Text className='nw1 wm15rem'>{e.name} ({e.RSSI})</Text>  </ComButton>
           <View className='cccplh fs08'> {e.deviceId}</View>
         </View>
         <View>
-          <ComButton rr className='cccgreen bborder' onClick={async () => {
+          <ComButton rr className='cccgreen bborder nw' onClick={async () => {
             const res_device = await addPrinter(e);
             useSTBlueDevices.getState().sett([...(blueDevices_S ?? []), res_device]);
           }}> 添加打印机</ComButton>

@@ -71,6 +71,8 @@ async function ___upload(desc, cfg) {
       // es5: true,
       // es6: true,
       es7: true,
+      // minify: true,
+      autoPrefixWXSS: true,
       useProjectConfig: true,
     },
   });

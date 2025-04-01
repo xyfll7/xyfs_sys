@@ -10,11 +10,18 @@
     "miniprogram": {
       "list": [
         {
-          "name": "test0",
-          "pathName": "pages/test/ctest_index0",
+          "name": "pages_comm/icomm_printer",
+          "pathName": "pages_comm/icomm_printer",
           "query": "",
           "scene": null,
           "launchMode": "default"
+        },
+        {
+          "name": "test0",
+          "pathName": "pages/test/ctest_index0",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         },
         {
           "name": "pages_user/sub_user_dept",
