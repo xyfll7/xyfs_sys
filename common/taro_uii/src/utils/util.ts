@@ -77,7 +77,7 @@ export function utils_duplicates(arr: any[]) {
   return temp;
 }
 
-// 获取二维码
+// 获取二维码 注: 开发环境无法生成二维码，只有在真机上才能生成
 export async function utils_get_qrcode({ page, scene, appid }: { appid?: string; page: string; scene: string; }): Promise<string> {
 
   const imageData = await Api_qrcode_ctn({
