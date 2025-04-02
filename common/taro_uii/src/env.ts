@@ -3,7 +3,7 @@ import "@xyfs/utils/init";
 import Package from "../package.json";
 import { Environment, EnvVersion } from "../types/type_index";
 
-export const base_url: string = "";
+export const base_url: string = "http://192.168.6.137:8080";
 
 const ___envSimulate = "develop";
 
@@ -43,8 +43,8 @@ const envObj: Record<EnvVersion, Environment> = {
   trial: { ctnId: process.env.TARO_APP_CTN_PRO, envSimulate: "release", version: Package.version, appId: "" },
   develop: {
     ctnId: process.env.TARO_APP_CTN_DEV, envSimulate: ___envSimulate, version: Package.version, appId: "", OPENID: OPENID_DEV___ ? OPENID_DEV___ : undefined,
-    isDeveloping: true  // 开发中的功能 /// 这个没问题，只有dev环境才有这个参数，不用删除
-    // isDeveloping: false  // 开发中的功能 /// 这个没问题，只有dev环境才有这个参数，不用删除
+    // isDeveloping: true  // 开发中的功能 /// 这个没问题，只有dev环境才有这个参数，不用删除
+    isDeveloping: false  // 开发中的功能 /// 这个没问题，只有dev环境才有这个参数，不用删除
   },
 };
 

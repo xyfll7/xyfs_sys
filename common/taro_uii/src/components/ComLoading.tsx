@@ -17,15 +17,15 @@ export const ComLoading: FC<ViewProps & MyButtonProps & {
       <View className='dy cccplh nw1' >
         {(() => {
           if (isLastPage) {
-            return <><Text className='mr6'>{icon}</Text><Text>没有更多</Text></>;
+            return <><Text className='mr10'>{icon}</Text><Text>没有更多</Text></>;
           } else if (loading) {
-            return <><Text className='mr6 loading-small'></Text><Text>加载 ...</Text></>;
+            return <><Text className='mr10 loading-small'></Text><Text>加载 ...</Text></>;
           } else if (isLastPage !== undefined) {
-            return <><Text className='mr6'>{icon}</Text><Text>点击加载更多</Text></>;
+            return <><Text className='mr10'>{icon}</Text><Text>点击加载更多</Text></>;
           } else if (isEmpty) {
-            return <><Text className='mr6'>{icon}</Text><Text>{props.children ?? "没有数据"}</Text></>;
+            return <><Text className='mr10'>{icon}</Text><Text>{props.children ?? "没有数据"}</Text></>;
           } else {
-            return <><Text className='mr6 loading-small'></Text><Text>加载 ...</Text></>;
+            return <><Text className='mr10 loading-small'></Text><Text>加载 ...</Text></>;
           }
         })()}
       </View>

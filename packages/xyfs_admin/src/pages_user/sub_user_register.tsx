@@ -108,7 +108,7 @@ const Index: FC = () => {
             )}
           </>}
           {selfInfo_S.deptId && <>
-            <ComButton ll className='bccback mb10 prl10'>部门信息</ComButton>
+            <ComButton ll className='bccback mb10 prl10'>当前所在部门信息</ComButton>
             <View className='ioo bccwhite pt10 dll mb10 prl10 ww'>
               <View className='ww mb10 dy' >
                 <ComButton ll className='w5rem bccwhite nw' hoverClass='none'>当前部门</ComButton>
