@@ -10,11 +10,18 @@
     "miniprogram": {
       "list": [
         {
-          "name": "pages_user/sub_user_register",
-          "pathName": "pages_user/sub_user_register",
+          "name": "pages_comm/icomm_orders_dryclean",
+          "pathName": "pages_comm/icomm_orders_dryclean",
           "query": "",
           "scene": null,
           "launchMode": "default"
+        },
+        {
+          "name": "pages_user/sub_user_register",
+          "pathName": "pages_user/sub_user_register",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         },
         {
           "name": "pages_user/sub_user_list",

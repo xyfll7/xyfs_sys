@@ -24,7 +24,7 @@ import { roo___has_role } from "@xyfs/taro_uii/src/roles";
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
 import { Taro_getCurrentInstance, try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_scanCode, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
 import { useHook_pageListNew, useHook_Reducer } from '@xyfs/taro_uii/utils/useHooks';
-import { utils_get_qrcode } from "@xyfs/taro_uii/utils/util";
+import { utils_get_qrcode, utils_show_button } from "@xyfs/taro_uii/utils/util";
 import { coo___objToUrl } from "@xyfs/utils/util";
 
 import { FC, useCallback, useEffect, useState } from "react";
@@ -71,7 +71,7 @@ const Index: FC<{}> = ({ }) => {
           const _order1 = order as OrderInfo<Product_Dryclean>;
           return <View className='dll ww mb10 bccwhite ioo' key={order.id}>
             <ComCardOrderDryclean className='ww' key={_order1.id} order={_order1}
-              onBindCode={async (e) => {
+              onBindCode={utils_show_button(roo___has_role(selfInfo_S, ["REGIMENT"]), async (e) => {
                 Taro.showLoading({ mask: true, title: "扫码中...", });
                 const res_code = getMyEnv().platform === "devtools" ? "1000003" : await try_Taro_scanCode<string>({ type: "CODABAR", scanType: ["barCode"] });
                 Taro.showLoading({ mask: true, title: "绑定中...", });
@@ -82,86 +82,88 @@ const Index: FC<{}> = ({ }) => {
                 });
                 page_list_update(p => ({ ...p, list: p.list.map(item => item.id === res.id ? res : item) }));
                 Taro.showToast({ icon: "none", title: "绑定成功", });
-              }} />
-            <View className='dr dwp prl10 ww'>
-              {_order1.orderStatus === Order_ST.已付款 && order.latestEventType! < 2 && <ComButton rr className='cccplh mb10 bborder ml10' onClick={async () => {
-                if (await try_Taro_showModal({ title: "提示", content: "您确定要退款吗？", confirmText: "确认退款" })) {
-                  Taro.showLoading({ mask: true, title: "退款中...", });
-                  await Api_order_cancel_ctn({ orderId: order.id!, });
-                  page_list_update((p) => ({ ...p, list: p.list.filter(eee => eee.id !== _order1.id) }));
-                  Taro.hideLoading();
-                  Taro.showToast({ icon: 'none', title: "订单移入已退款" });
-                } else {
-                  throw new Error("取消");
-                }
-              }}>退款</ComButton>}
-              {Boolean(order.productList?.length) && _order1.orderStatus !== 1 && <ComButton rr className='slr cccgreen bborder mb10 ml10' onClick={async () => {
-                await try_Taro_navigateTo({ url: `/pages_comm/comm__express_path?${coo___objToUrl({ express_share_id: order.id })}` });
-              }}>轨迹</ComButton>}
-              {Boolean(order.productList?.length) && order.orderStatus === 2 && <MMMShare rr orderType='干洗' className='bborder mb10 ml10' id={order.id!} name={order.deptName!} ></MMMShare>}
-              {_order1.orderStatus === 1 && <ComButton rr className='cccplh mb10 bborder ml10' onClick={async () => {
-                const res_modal = await try_Taro_showModal({ title: "提示", content: "您确定要删除该订单吗?", confirmText: "删除" });
-                if (res_modal) {
-                  Taro.showLoading({ mask: true, title: "删除中..." });
-                  await Api_order_cancel_ctn({ orderId: order.id!, });
-                  page_list_update(p => ({ ...p, list: p.list.filter(ee => ee.id !== order.id) }));
-                  Taro.showToast({ icon: "none", title: "删除成功" });
-                } else {
-                  throw new Error("取消");
-                }
-              }}>删除</ComButton>}
-              {Boolean(_order1.productList?.length) && _order1.orderStatus === 1 &&
-                <ComButton rr className='mb10 ml10 bborder' onClick={async () => {
-                  Taro.showLoading({ mask: true, title: "分享中..." });
-                  await dryclean_sharer(_order1.orderCode!);
-                  Taro.showToast({ icon: "none", title: "分享中完成" });
-                }}>
-                  <Text className='cccgreen'>⤻</Text>卡片
-                </ComButton>
-              }
-              {Boolean(_order1.productList?.length) && _order1.orderStatus === 1 &&
-                <ComButton rr className='ml10 mb10 bborder'
-                  onClick={async () => {
-                    Taro.showLoading({ mask: true, title: "生成中..." });
-                    const _src = await utils_get_qrcode({ appid: process.env.TARO_APP_CLIENT, page: "pages_user/user_orders", scene: coo___objToUrl({ R_D: Number(useSTSelf.getState().selfInfo!.mobile).toString(36), S_D: String(_order1.orderCode!), }) });
-                    setShowQR(_src);
+              })} />
+            {roo___has_role(selfInfo_S, ["REGIMENT"]) &&
+              <View className='dr dwp prl10 ww'>
+                {_order1.orderStatus === Order_ST.已付款 && order.latestEventType! < 2 && <ComButton rr className='cccplh mb10 bborder ml10' onClick={async () => {
+                  if (await try_Taro_showModal({ title: "提示", content: "您确定要退款吗？", confirmText: "确认退款" })) {
+                    Taro.showLoading({ mask: true, title: "退款中...", });
+                    await Api_order_cancel_ctn({ orderId: order.id!, });
+                    page_list_update((p) => ({ ...p, list: p.list.filter(eee => eee.id !== _order1.id) }));
                     Taro.hideLoading();
-                  }}>
-                  <Text className='cccgreen'>⤻</Text>付款码
-                </ComButton>
-              }
-              {Boolean(_order1.productList?.length) && _order1.orderStatus === 1 &&
-                <ComButton rr className='ml10 mb10 cccgreen bccyellow' onClick={async () => {
-                  Taro.showLoading({ mask: true, title: '支付...' });
-                  const res_pay = await Api_order_pay_ctn({ orderId: String(_order1.id) });
-                  try {
-                    await try_Taro_requestPayment({ ...res_pay, package: res_pay.packageStr });
-                    page_list_update(p => ({ ...p, list: p.list.filter(ee => ee.id !== order.id) }));
-                    if (await try_Taro_showModal({
-                      title: "支付成功",
-                      content: `订单移到"已支付"列表`,
-                      confirmText: "查看订单",
-                      cancelText: "取消"
-                    })) {
-                      page_init();
-                      setOrderType(Order_ST.已付款);
-                    }
-                  } catch {
-                    throw new ErrorR("取消支付", true);
-                  } finally {
-                    Taro.hideLoading();
+                    Taro.showToast({ icon: 'none', title: "订单移入已退款" });
+                  } else {
+                    throw new Error("取消");
                   }
-                }}>
-                  <ComSquare style={{ width: "calc(1.3 * var(--rem_base))" }} className='icon-wxpay mr4' />付
-                </ComButton>
-              }
+                }}>退款</ComButton>}
+                {Boolean(order.productList?.length) && _order1.orderStatus !== 1 && <ComButton rr className='slr cccgreen bborder mb10 ml10' onClick={async () => {
+                  await try_Taro_navigateTo({ url: `/pages_comm/comm__express_path?${coo___objToUrl({ express_share_id: order.id })}` });
+                }}>轨迹</ComButton>}
+                {Boolean(order.productList?.length) && order.orderStatus === 2 && <MMMShare rr orderType='干洗' className='bborder mb10 ml10' id={order.id!} name={order.deptName!} ></MMMShare>}
+                {_order1.orderStatus === 1 && <ComButton rr className='cccplh mb10 bborder ml10' onClick={async () => {
+                  const res_modal = await try_Taro_showModal({ title: "提示", content: "您确定要删除该订单吗?", confirmText: "删除" });
+                  if (res_modal) {
+                    Taro.showLoading({ mask: true, title: "删除中..." });
+                    await Api_order_cancel_ctn({ orderId: order.id!, });
+                    page_list_update(p => ({ ...p, list: p.list.filter(ee => ee.id !== order.id) }));
+                    Taro.showToast({ icon: "none", title: "删除成功" });
+                  } else {
+                    throw new Error("取消");
+                  }
+                }}>删除</ComButton>}
+                {Boolean(_order1.productList?.length) && _order1.orderStatus === 1 &&
+                  <ComButton rr className='mb10 ml10 bborder' onClick={async () => {
+                    Taro.showLoading({ mask: true, title: "分享中..." });
+                    await dryclean_sharer(_order1.orderCode!);
+                    Taro.showToast({ icon: "none", title: "分享中完成" });
+                  }}>
+                    <Text className='cccgreen'>⤻</Text>卡片
+                  </ComButton>
+                }
+                {Boolean(_order1.productList?.length) && _order1.orderStatus === 1 &&
+                  <ComButton rr className='ml10 mb10 bborder'
+                    onClick={async () => {
+                      Taro.showLoading({ mask: true, title: "生成中..." });
+                      const _src = await utils_get_qrcode({ appid: process.env.TARO_APP_CLIENT, page: "pages_user/user_orders", scene: coo___objToUrl({ R_D: Number(useSTSelf.getState().selfInfo!.mobile).toString(36), S_D: String(_order1.orderCode!), }) });
+                      setShowQR(_src);
+                      Taro.hideLoading();
+                    }}>
+                    <Text className='cccgreen'>⤻</Text>付款码
+                  </ComButton>
+                }
+                {Boolean(_order1.productList?.length) && _order1.orderStatus === 1 &&
+                  <ComButton rr className='ml10 mb10 cccgreen bccyellow' onClick={async () => {
+                    Taro.showLoading({ mask: true, title: '支付...' });
+                    const res_pay = await Api_order_pay_ctn({ orderId: String(_order1.id) });
+                    try {
+                      await try_Taro_requestPayment({ ...res_pay, package: res_pay.packageStr });
+                      page_list_update(p => ({ ...p, list: p.list.filter(ee => ee.id !== order.id) }));
+                      if (await try_Taro_showModal({
+                        title: "支付成功",
+                        content: `订单移到"已支付"列表`,
+                        confirmText: "查看订单",
+                        cancelText: "取消"
+                      })) {
+                        page_init();
+                        setOrderType(Order_ST.已付款);
+                      }
+                    } catch {
+                      throw new ErrorR("取消支付", true);
+                    } finally {
+                      Taro.hideLoading();
+                    }
+                  }}>
+                    <ComSquare style={{ width: "calc(1.3 * var(--rem_base))" }} className='icon-wxpay mr4' />付
+                  </ComButton>
+                }
 
-              {!Boolean(_order1.productList?.length) &&
-                <ComButton rr className='mb10 bborder ml10' onClick={async () => {
-                  await try_Taro_navigateTo({ url: `/pages_comm/comm__product_dryclean?order_info=${encodeURIComponent(JSON.stringify(_order1))}` });
-                }}><Text className='cccgreen'>修改</Text></ComButton>
-              }
-            </View>
+                {!Boolean(_order1.productList?.length) &&
+                  <ComButton rr className='mb10 bborder ml10' onClick={async () => {
+                    await try_Taro_navigateTo({ url: `/pages_comm/comm__product_dryclean?order_info=${encodeURIComponent(JSON.stringify(_order1))}` });
+                  }}><Text className='cccgreen'>修改</Text></ComButton>
+                }
+              </View>
+            }
           </View>;
         } else {
           return null;
