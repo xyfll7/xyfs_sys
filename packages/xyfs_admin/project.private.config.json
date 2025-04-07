@@ -10,11 +10,25 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages_user/sub_user_edit",
+          "pathName": "pages_user/sub_user_edit",
+          "query": "userId=oGwbL5MUeSNxxA4o0oOmb_FUjE7g",
+          "scene": null,
+          "launchMode": "default"
+        },
+        {
+          "name": "pages/test/ctest_index",
+          "pathName": "pages/test/ctest_index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages_comm/comm__publisher",
           "pathName": "pages_comm/comm__publisher",
           "query": "",
-          "scene": null,
-          "launchMode": "default"
+          "launchMode": "default",
+          "scene": null
         },
         {
           "name": "pages_comm/icomm_printer",

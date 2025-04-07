@@ -2,7 +2,7 @@
 import { Text, View } from "@tarojs/components";
 import Taro from '@tarojs/taro';
 import { DeptInfo } from "@xyfs/taro_uii";
-import { Api_dept_list_ctn, Api_user_dept_ctn, Api_user_edit_ctn, Api_user_info_ctn } from '@xyfs/taro_uii/api/api__users';
+import { Api_dept_list_ctn, Api_user_addUserDept_ctn, Api_user_delUserDept_ctn, Api_user_edit_ctn, Api_user_info_ctn } from '@xyfs/taro_uii/api/api__users';
 import { ComButton } from '@xyfs/taro_uii/components/ComButton';
 import { ComImage } from '@xyfs/taro_uii/components/ComImage';
 import { ComLoading } from '@xyfs/taro_uii/components/ComLoading';
@@ -57,49 +57,90 @@ const IIImyUserEditorAGENT: FC = () => {
   const [show, setShow] = useState(false);
   return <>
     {!userInfo && <ComLoading className='mb10'></ComLoading>}
-    {userInfo && <View key={userInfo.id} className='mb10 ww dll ww prl10 pt10 ioo bccwhite'>
-      <View className='dy mb10 ww'>
-        <ComImage src={userInfo.avatar ?? ""} />
-        <ComButton ll className='ml10 cccplh bccwhite' ><View className='wm10rem nw1'> {userInfo.name} </View></ComButton>
-      </View>
-
-      <View className='cccplh mb10 '>{utils_addressInfoToString(userInfo)}</View>
-      <View className='ww'>
-        <View className='ww dbtc'>
-          <View className='dy mb10'> <Text className='cccplh'>当前部门</Text>
-            {userInfo.deptName ? <ComButton ll className='bborder ml10'>{userInfo.deptName}</ComButton> : <ComButton ll className='ml10 cccplh'>未指定</ComButton>}
-          </View>
-          <View className='dy mb10'>
-            {userInfo.deptName && <ComButton rr className='cccgreen bborder' onClick={async () => {
-              const res_modal = await try_Taro_showModal({ title: "提示", content: "您确定要移出该部门？" });
-              if (res_modal) {
-                Taro.showLoading({ mask: true, title: "移出中..." });
-                await Api_user_dept_ctn({ id: userInfo.id!, });
-                const res = await Api_user_info_ctn({ userId: options.userId! });
-                setUserInfo(res);
-
-                Taro.showToast({ icon: "none", title: "完成" });
-              }
-            }
-            }>移出</ComButton>}
-            <ComButton rr className='cccgreen bborder ml10' onClick={() => setShow(e => !e)}>指定</ComButton>
-          </View>
+    {userInfo && <>
+      <View key={userInfo.id} className='mb10 ww dll ww prl10 pt10 ioo bccwhite'>
+        <View className='dy mb10 ww'>
+          <ComImage src={userInfo.avatar ?? ""} />
+          <ComButton ll className='ml10 cccplh bccwhite' ><View className='wm10rem nw1'> {userInfo.name} </View></ComButton>
         </View>
-        {show && <ComPopupNew onClose={() => setShow(e => !e)}>
-          <View className='dll prl10' style={{ height: "70vh" }}>
-            <ComNavBarB className='mb10' onClose={() => setShow(e => !e)}>
-              <View className='dy'><ComButton className='fwb bccback'>指定部门</ComButton></View>
-            </ComNavBarB>
-            <ComScrollView className=''>
-              <IIIDeptList userInfo={userInfo} onUpdateUserInfo={(e) => { setUserInfo(e); setShow(false); }}></IIIDeptList>
-            </ComScrollView>
+
+        <View className='cccplh mb10 '>{utils_addressInfoToString(userInfo)}</View>
+        <View className='ww'>
+          <View className='ww dbtc'>
+            <View className='dy mb10'> <Text className='cccplh'>当前部门</Text>
+              {userInfo.deptName ? <ComButton ll className='bborder ml10'>{userInfo.deptName}</ComButton> : <ComButton ll className='ml10 cccplh'>未指定</ComButton>}
+            </View>
+            <View className='dy mb10'>
+              <ComButton rr className='cccgreen bborder ml10' onClick={() => setShow(e => !e)}>添加部门</ComButton>
+            </View>
           </View>
-        </ComPopupNew>
+          {show && <ComPopupNew onClose={() => setShow(e => !e)}>
+            <View className='dll prl10' style={{ height: "70vh" }}>
+              <ComNavBarB className='mb10' onClose={() => setShow(e => !e)}>
+                <View className='dy'><ComButton className='fwb bccback'>添加部门</ComButton></View>
+              </ComNavBarB>
+              <ComScrollView className=''>
+                <IIIDeptList userInfo={userInfo} onUpdateUserInfo={(e) => { setUserInfo(e); setShow(false); }}></IIIDeptList>
+              </ComScrollView>
+            </View>
+          </ComPopupNew>
+          }
+        </View>
+      </View>
+      <View className='dll ww'>
+        <ComButton className='mb10 bccback'>所在部门</ComButton>
+        {userInfo.depts?.map(e => {
+          return <View key={e.deptId} className='mb10 bccwhite ww ioo pt10 dll prl10'>
+            <View className='dbtc ww mb10 '>
+              <ComButton ll className=''>
+                <Text className='nw1'>
+                  {e.deptName}
+                </Text>
+              </ComButton>
+              {userInfo.deptId === e.deptId ?
+                <View className='dy'>
+                  <ComButton rr className='cccplh nw' onClick={async () => {
+                    const res_modal = await try_Taro_showModal({ title: "提示", content: "您确定要移出该部门？" });
+                    if (res_modal) {
+                      Taro.showLoading({ mask: true, title: "移出中..." });
+                      const res = await Api_user_info_ctn({ userId: options.userId! });
+                      setUserInfo(res);
+                      Taro.showToast({ icon: "none", title: "完成" });
+                    }
+                  }}>移出</ComButton>
+                  <ComButton rr className='cccplh nw'>当前部门</ComButton>
+                </View>
+                :
+                <View className='dy'>
+                  <ComButton rr className='cccplh nw' onClick={async () => {
+                    const res_modal = await try_Taro_showModal({ title: "提示", content: "您确定要将该用户退出该部门？" });
+                    if (res_modal) {
+                      Taro.showLoading({ mask: true, title: "退出中..." });
+                      const res = await Api_user_delUserDept_ctn({ deptId: e.deptId!, userId: userInfo.id! });
+                      setUserInfo(res);
+                      Taro.showToast({ icon: "none", title: "完成" });
+                    }
+                  }}>退出</ComButton>
+                  <ComButton rr className='cccgreen nw' onClick={async () => {
+                    Taro.showLoading({ mask: true, title: "切换中..." });
+                    const res = await Api_user_edit_ctn({ deptId: e.deptId, userId: userInfo.id! });
+                    setUserInfo(res);
+                    Taro.showToast({ icon: "none", title: "切换完成" });
+                  }}>
+                    切换
+                  </ComButton>
+                </View>
+
+              }
+
+            </View>
+
+          </View>;
+        })
+
         }
       </View>
-
-
-    </View>
+    </>
     }
   </>;
 };
@@ -170,11 +211,11 @@ const IIIDeptList = ({ userInfo, onUpdateUserInfo }: { userInfo: DeptInfo; onUpd
         </ComButton>
         <View className='dr pr10'>
           <ComButton rr className='ml10 mb10 cccgreen bborder nw' onClick={async () => {
-            Taro.showLoading({ mask: true, title: "更新中..." });
-            const res = await Api_user_edit_ctn({ deptId: e.deptId, userId: userInfo.id! });
+            Taro.showLoading({ mask: true, title: "添加中..." });
+            const res = await Api_user_addUserDept_ctn({ deptId: e.deptId, userId: userInfo.id! });
             onUpdateUserInfo(res);
-            Taro.showToast({ icon: "none", title: "更新完成" });
-          }}>指定</ComButton>
+            Taro.showToast({ icon: "none", title: "添加完成" });
+          }}>添加</ComButton>
         </View>
       </View>
       }

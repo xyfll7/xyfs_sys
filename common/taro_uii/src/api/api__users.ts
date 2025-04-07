@@ -174,7 +174,30 @@ export async function Api_user_edit_ctn(params: Partial<DeptInfo>): Promise<Dept
     path: "/user/edit",
     data: {
       ...params,
-      code: await (async () => { return Taro_getStorageSync<string>("OPENID", getMyEnv()) ? "" : await try_Taro_login(); })()
+    },
+  });
+  return res;
+}
+export async function Api_user_addUserDept_ctn(params: {
+  userId: string,
+  deptId: string,
+}): Promise<DeptInfo> {
+  const res = await wx_call_container<DeptInfo>({
+    path: "/user/addUserDept",
+    data: {
+      ...params,
+    },
+  });
+  return res;
+}
+export async function Api_user_delUserDept_ctn(params: {
+  userId: string,
+  deptId: string,
+}): Promise<DeptInfo> {
+  const res = await wx_call_container<DeptInfo>({
+    path: "/user/delUserDept",
+    data: {
+      ...params,
     },
   });
   return res;
