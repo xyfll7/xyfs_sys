@@ -35,5 +35,5 @@
   "dependencies": {
     "node-xlsx": "^0.24.0"
   },
-  "packageManager": "pnpm@10.6.2"
+  "packageManager": "pnpm@10.7.1"
 }
