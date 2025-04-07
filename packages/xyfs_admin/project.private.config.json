@@ -10,11 +10,25 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages_user/sub_user_register",
+          "pathName": "pages_user/sub_user_register",
+          "query": "",
+          "scene": null,
+          "launchMode": "default"
+        },
+        {
+          "name": "pages_user/sub_user_list",
+          "pathName": "pages_user/sub_user_list",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages_user/sub_user_edit",
           "pathName": "pages_user/sub_user_edit",
           "query": "userId=oGwbL5MUeSNxxA4o0oOmb_FUjE7g",
-          "scene": null,
-          "launchMode": "default"
+          "launchMode": "default",
+          "scene": null
         },
         {
           "name": "pages/test/ctest_index",

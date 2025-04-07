@@ -7,7 +7,7 @@ import { Api_user_edit_ctn } from "../api/api__users";
 import { getMyEnv } from "../env";
 import { roo___has_role } from "../roles";
 import { useSTSelf } from "../store/store";
-import { Taro_getCurrentInstance, try_Taro_navigateBack, try_Taro_navigateToMiniProgram } from "../utils/try_catch";
+import { Taro_getCurrentInstance, try_Taro_navigateBack, try_Taro_navigateTo, try_Taro_navigateToMiniProgram } from "../utils/try_catch";
 import { useHook_shareAppMessage } from "../utils/useHooks";
 import { ComButton } from "./ComButton";
 import { ComLoading } from "./ComLoading";
@@ -208,6 +208,9 @@ const IIIUserHasNoRole: FC<{ className: string; }> = ({ className }) => {
         </ComButton>
         <ComButton className='mb10 cccplh  ww bccback' hoverClass='none'  >
           您所在的部门没有任何权限
+        </ComButton>
+        <ComButton className='mb10 cccgreen' onClick={() => { try_Taro_navigateTo({ url: "/pages_user/sub_user_register" }); }}>
+          查看个人信息
         </ComButton>
       </>
       }

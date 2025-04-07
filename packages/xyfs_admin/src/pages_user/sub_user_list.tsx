@@ -1,8 +1,7 @@
 // :: pages_user/sub_user_list
-import { Picker, View } from "@tarojs/components";
+import { View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { DeptInfo, Pagination } from "@xyfs/taro_uii";
-import { Api_order_paymentExport_ctn } from "@xyfs/taro_uii/api/api__orders";
 import { Api_user_myUserList_ctn } from '@xyfs/taro_uii/api/api__users';
 import { ComButton } from '@xyfs/taro_uii/components/ComButton';
 import { ComImage } from '@xyfs/taro_uii/components/ComImage';
@@ -14,12 +13,9 @@ import { ComSearcher } from '@xyfs/taro_uii/components/ComSearcher';
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { getMyEnv } from "@xyfs/taro_uii/src/env";
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
-import { try_Taro_navigateTo, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
 import { useHook_pageListNew, useHook_Reducer } from '@xyfs/taro_uii/utils/useHooks';
-import { utils_addressInfoToString, utils_get_start_end_date } from "@xyfs/taro_uii/utils/util";
-import { coo___ios_date, coo___unique_arr } from "@xyfs/utils/util";
-import { format } from "date-fns";
-import { FC, useCallback, useState } from "react";
+import { utils_addressInfoToString } from "@xyfs/taro_uii/utils/util";
+import { FC, useCallback } from "react";
 
 definePageConfig({
   navigationStyle: "custom", disableScroll: true,
@@ -47,52 +43,18 @@ const Index: FC<{}> = ({ }) => {
 
   getMyEnv().platform === "devtools" && ____test(page.list ?? []);
 
-
-  const [date, setDate] = useState<string>(format(coo___ios_date(), "yyyy-MM-dd"));
   return <MMMAAPage>
     <ComNav>
       <View className='ww prl10'>
         <ComNavBarA className='mb10'>
           <ComButton ll className='bcctrans cccplh ml10' >子用户列表</ComButton>
         </ComNavBarA>
-        {/* {dicts_roles && roo___has_role(selfInfo_S, ["AGENT"]) && <ComListTypeSelectorNew disabled={page_loading} data={[{ id: 0, roleName: "全部", }, ...dicts_roles].filter(e => !utils_str_includes(["用户", "员工"], e.roleName))} label='roleName' value='id' tabType={userRole}
-          setTab={(e) => { page_init(); setUserRole(e); }} />} */}
         <ComSearcher className='mb10' isShowSearcher disabled={page_loading} onSetSearchValue={(e) => {
           page_init();
           setSearchValue(`${e}`);
         }} />
         <View className='cccplh ww dbtc mb10'>
           <ComButton>共{page.total ? page.total : "..."}个子用户</ComButton>
-          <Picker
-            className='slr'
-            header-text='请选择账单月份'
-            value={date}
-            end={format(coo___ios_date(), "yyyy-MM-dd")}
-            mode='date'
-            fields='month'
-            onChange={async (e) => {
-              Taro.showLoading({ mask: true, title: "下载中...", });
-              const _date = `${e.detail.value}-01`;
-              setDate(_date);
-              const dateRes = utils_get_start_end_date(_date);
-
-              const ___list = coo___unique_arr(page.list, "id");
-              for (let i = 0; i < ___list.length; i++) {
-                const myUser = ___list[i];
-                await Api_order_paymentExport_ctn({
-                  deptId: myUser!.deptId!,
-                  startDate: dateRes.firstDateOfMonth,
-                  endDate: dateRes.lastDateOfMonth,
-                });
-              }
-
-              Taro.hideLoading();
-              if (await try_Taro_showModal({ title: "提交成功", content: "请到下载任务列表查看对账单", confirmText: "去查看" })) {
-                await try_Taro_navigateTo({ url: "/pages_comm/icomm_download_list" });
-              }
-            }}>
-            <ComButton rr className='cccgreen'>批量下载对账单</ComButton>
-          </Picker>
         </View>
       </View>
     </ComNav>
@@ -138,9 +100,9 @@ const IIImyUserCardAGENT: FC<{ myUser: DeptInfo; }> = ({ myUser }) => {
           </ComButton>
         </View>
         <ComButton className='nw'>{myUser.deptId}</ComButton>
-
       </View>
       <View className='cccplh mb10 '>{utils_addressInfoToString(myUser)}  </View>
+      <ComButton ll className="mb10 cccgreen" onClick={() => { myUser.mobile && Taro.makePhoneCall({ phoneNumber: myUser.mobile }); }}>{myUser.mobile}</ComButton>
       <View className='ds dwp'>
         {myUser.roles?.map(e => <ComButton ll className='cccplh bborder mb10' key={e.id}>{e.roleName}</ComButton>)}
       </View>

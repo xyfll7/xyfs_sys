@@ -1,5 +1,5 @@
 // :: pages_user/sub_user_register
-import { View } from "@tarojs/components";
+import { Text, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { DeptInfo } from "@xyfs/taro_uii";
 import { Api_dept_userList_ctn, Api_getNumber_ctn, Api_user_edit_ctn } from '@xyfs/taro_uii/api/api__users';
@@ -19,6 +19,7 @@ definePageConfig({ disableScroll: true, navigationStyle: "custom", });
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC = () => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
+
   const [userForm, setUserForm] = useHook_Reducer<DeptInfo>(selfInfo_S!);
 
 
@@ -98,7 +99,7 @@ const Index: FC = () => {
           </View>
           {!deptUserList && <ComLoading className='mb10'></ComLoading>}
           {deptUserList && <>
-            <ComButton ll className='bccback mb10 prl10'>部门成员</ComButton>
+            <ComButton ll className='bccback mb10 prl10'>当前部门成员</ComButton>
             {deptUserList?.map(e =>
               <ComButton className='cccplh bccwhite mb10' key={e.id} onClick={async () => { e.mobile && Taro.makePhoneCall({ phoneNumber: e.mobile }); }}>
                 <ComImage className='mr10 IOO ' src={e.avatar}></ComImage>
@@ -141,7 +142,7 @@ const Index: FC = () => {
 
           {selfInfo_S.parentDeptInfo &&
             <>
-              <ComButton ll className='bccback mb10 prl10'>上级部门信息</ComButton>
+              <ComButton ll className='bccback mb10 prl10'>当前部门的上级部门信息</ComButton>
               <View className='ioo bccwhite pt10 dll mb10 prl10 ww'>
                 <View className='ww mb10 dy' >
                   <ComButton ll className='w5rem bccwhite nw' hoverClass='none'>部门名称</ComButton>
@@ -158,6 +159,39 @@ const Index: FC = () => {
               </View>
             </>
           }
+
+          {selfInfo_S.depts && selfInfo_S.depts.length > 0 && <View className="ww dll">
+            <ComButton ll className='bccback mb10 prl10' hoverClass='none'>所属部门列表</ComButton>
+            {selfInfo_S.depts?.map(e => {
+              return <View key={e.deptId} className='mb10 bccwhite ww ioo pt10 dll prl10'>
+                <View className='dbtc ww mb10 '>
+                  <ComButton ll className=''>
+                    <Text className='nw1'>
+                      {e.deptName}
+                    </Text>
+                  </ComButton>
+                  {selfInfo_S.deptId === e.deptId &&
+                    <ComButton rr className='cccplh nw'>当前部门</ComButton>
+                  }
+                  {selfInfo_S.deptId !== e.deptId &&
+                    <ComButton rr className='cccgreen nw' onClick={async () => {
+                      Taro.showLoading({ mask: true, title: "切换中..." });
+                      const res = await Api_user_edit_ctn({ deptId: e.deptId, userId: selfInfo_S.id! });
+                      useSTSelf.getState().sett({ ...res });
+                      Taro.showToast({ icon: "none", title: "切换完成" });
+                    }}>
+                      切换
+                    </ComButton>
+                  }
+
+                </View>
+
+              </View>;
+            })
+            }
+          </View>}
+
+
 
 
         </>

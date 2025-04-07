@@ -53,9 +53,9 @@ export function utils_addressInfoToString(addr?: AddressInfo | DeptInfo | null, 
     `${addr?.province ?? ""} ${addr?.city ?? ""} ${addr?.area ?? ""} ${addr?.address ?? ""}`;
   if (addr) {
     const res = (str.trim() ? str : undefined);
-    return res ?? "";
+    return res ? res : "暂无地址";
   } else {
-    return "";
+    return "暂无地址";
   }
 }
 

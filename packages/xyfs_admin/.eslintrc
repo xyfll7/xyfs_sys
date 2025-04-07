@@ -14,7 +14,8 @@
     "react/jsx-indent-props": [
       "error",
       2
-    ]
+    ],
+    "jsx-quotes": "off"
   },
   "parserOptions": {
     "requireConfigFile": false
