@@ -91,7 +91,7 @@ const IIISettings = ({ ...props }: ViewProps) => {
       {roo___has_role(selfInfo_S!, ["AGENT", "REGIMENT"]) &&
         <ComButton className='bccwhite mb10 mr10' url='/pages_comm/icomm_download_list'>下载任务列表</ComButton>
       }
-      {roo___has_role(selfInfo_S!, ["AGENT", "REGIMENT"]) &&
+      {roo___has_role(selfInfo_S!, ["AGENT", "REGIMENT", "SUPPLIER", "SCANNER"]) &&
         <ComButton className='bccwhite mb10 mr10' url='/pages_agent/agent__express_search'>
           订单综合查询
         </ComButton>

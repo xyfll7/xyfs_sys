@@ -101,8 +101,8 @@ export const ComCardOrderDryclean: FC<{
     <View className='dbtc ww mb10 '>
       <MMMOrderUser order={order} />
       <View className='dy'>
-        {order.orderStatus == Order_ST.待付款 && order.pickUpType == PickUp_ST.上门取件 && <ComButton rr className='cccplh bccyellow ml10' >{PickUp_ST[order.pickUpType!]}</ComButton>}
-        {order.orderStatus == Order_ST.已退款 && <ComButton rr className='bccprice ml10 cccwhite' hoverClass='none'>已退款</ComButton>}
+        {order.orderStatus == Order_ST.待付款 && order.pickUpType == PickUp_ST.上门取件 && <ComButton rr className='cccplh bccyellow ml10 nw' >{PickUp_ST[order.pickUpType!]}</ComButton>}
+        {order.orderStatus == Order_ST.已退款 && <ComButton rr className='bccprice ml10 cccwhite nw' hoverClass='none'>已退款</ComButton>}
         <ComButton rr className='cccgreen ml10 nw'>{Product_category_ST[order.orderType!]}</ComButton>
       </View>
     </View>
