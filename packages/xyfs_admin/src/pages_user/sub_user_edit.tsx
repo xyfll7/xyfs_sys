@@ -67,11 +67,13 @@ const IIImyUserEditorAGENT: FC = () => {
         <View className='cccplh mb10 '>{utils_addressInfoToString(userInfo)}</View>
         <View className='ww'>
           <View className='ww dbtc'>
-            <View className='dy mb10'> <Text className='cccplh'>当前部门</Text>
-              {userInfo.deptName ? <ComButton ll className='bborder ml10'>{userInfo.deptName}</ComButton> : <ComButton ll className='ml10 cccplh'>未指定</ComButton>}
+            <View className='dy mb10'><Text className='cccplh nw'>当前部门</Text>
+              {userInfo.deptName ? <ComButton ll className='bborder ml10'>
+                <Text className='nw1'>{userInfo.deptName}</Text>
+              </ComButton> : <ComButton ll className='ml10 cccplh'>未指定</ComButton>}
             </View>
             <View className='dy mb10'>
-              <ComButton rr className='cccgreen bborder ml10' onClick={() => setShow(e => !e)}>添加部门</ComButton>
+              <ComButton rr className='cccgreen bborder ml10 nw' onClick={() => setShow(e => !e)}>添加部门</ComButton>
             </View>
           </View>
           {show && <ComPopupNew onClose={() => setShow(e => !e)}>

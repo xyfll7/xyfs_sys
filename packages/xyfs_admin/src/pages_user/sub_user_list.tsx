@@ -83,9 +83,6 @@ function ____test(list: any[]) {
       ____arr[ind]!.count++;
     }
   });
-  console.log("____obj", ____obj);
-  console.log("____arr", ____arr);
-  console.log("list", list);
 }
 
 const IIImyUserCardAGENT: FC<{ myUser: DeptInfo; }> = ({ myUser }) => {
