@@ -8,7 +8,10 @@ definePageConfig({
   // "styleIsolation": "shared",
   // "componentFramework": "glass-easel",
   // "renderer": "skyline",
-  "navigationBarTitleText": "测试页面"
+  "navigationBarTitleText": "测试页面",
+  usingComponents: {
+    'store-product-item': '../../components/store-product-item/store-product-item',
+  }
 });
 
 export default function COMSELFWarp() { return <Index></Index>; };
@@ -16,16 +19,14 @@ export default function COMSELFWarp() { return <Index></Index>; };
 
 
 const Index: FC<{}> = ({ }) => {
-
-
-
-
   return <View className=' ww dxy' style={{ height: "100vh" }}>
     <View className='dcl'>
       <ComButton className='mb10'>111</ComButton>
       <ComButton className='' onClick={() => {
 
-      }}>222</ComButton>
+      }}>222323xxxvvv</ComButton>
+      {/*@ts-ignore*/}
+      <store-product-item />
     </View>
   </View>;
 };

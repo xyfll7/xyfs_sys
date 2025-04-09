@@ -10,11 +10,18 @@
     "miniprogram": {
       "list": [
         {
-          "name": "pages_comm/comm__publisher",
-          "pathName": "pages_comm/comm__publisher",
+          "name": "pages/test/ctest_index",
+          "pathName": "pages/test/ctest_index",
           "query": "",
           "scene": null,
           "launchMode": "default"
+        },
+        {
+          "name": "pages_comm/comm__publisher",
+          "pathName": "pages_comm/comm__publisher",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         },
         {
           "name": "pages_comm/comm__product_express",
