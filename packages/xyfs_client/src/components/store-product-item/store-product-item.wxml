@@ -1,6 +1,3 @@
-<view>
-  <store-product appid="wx1b971f2389e507d5" product-id="10000214415248" custom-content="{{false}}">
-    <view>自定义卡片内容</view>
-  </store-product>
-  <button>12312321</button>
-</view>
+<store-product class="ww" appid="{{appid}}" product-id="{{productId}}" custom-content="{{false}}" product-promotion-link="{{productPromotionLink}}">
+  <slot></slot>
+</store-product>

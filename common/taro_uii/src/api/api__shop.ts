@@ -61,6 +61,7 @@ export async function Api_cart_share_ctn(params: { orderId: string; }): Promise<
   });
   return res;
 }
+
 export async function Api_cart_add_ctn(params: {
   // cartId: number,
   productId?: string,// 产品id
@@ -104,6 +105,15 @@ export async function Api_cart_add_ctn(params: {
   const res = await wx_call_container<any>({
     path: "/cart/add",
     data: { ...params }
+  });
+  return res;
+}
+export async function Api_common_productList_ctn(params: { orderId: string; }) {
+  const res = await wx_call_container<any[]>({
+    path: "/common/productList",
+    data: {
+      ...params,
+    }
   });
   return res;
 }
