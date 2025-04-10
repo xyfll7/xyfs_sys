@@ -65,8 +65,10 @@ const Index: FC = () => {
       {getMyEnv().platform === "devtools" &&
         <View className='dll'>
           <ComButton className='bccwhite cccprice fwb mb10' url='/pages/test/ctest_display' >测试display</ComButton>
-          <ComButton className='bccwhite cccprice fwb mb10' url='/pages/test/ctest_index' routeType='wx://cupertino-modal'>测试</ComButton>
-        </View>}
+          <ComButton className='bccwhite cccprice fwb mb10' url='/pages/test/ctest_index' >测试</ComButton>
+          <ComButton className='bccwhite cccprice fwb mb10' url='/pages/test/ctest_utils' >工具</ComButton>
+        </View>
+      }
       <MMMFooter className='mb10' />
     </ComScrollView>
   </MMMAAPage>;

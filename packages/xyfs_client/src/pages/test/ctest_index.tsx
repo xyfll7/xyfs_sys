@@ -34,11 +34,13 @@ const Index: FC<{}> = ({ }) => {
     });
   }, []);
 
-  return <View className='ww dll'>
-    <ComNav className='prl10'>
-      <ComNavBarA>测试页面</ComNavBarA>
+  return <View className='prl10'>
+    <ComNav>
+      <ComNavBarA className='mb10 pl10'>
+        <ComButton ll className='bcctrans cccplh ml10' >小工具</ComButton>
+      </ComNavBarA>
     </ComNav>
-    <View className='dll prl10 pt10 ww'>
+    <View className='dll pt10 ww'>
       {!productList && <ComLoading></ComLoading>}
       {productList?.length === 0 && <ComLoading isEmpty></ComLoading>}
       {productList?.map((item, index) => {
@@ -65,7 +67,7 @@ const Index: FC<{}> = ({ }) => {
       }
 
     </View>
-  </View >;
+  </View>;
 };
 
 

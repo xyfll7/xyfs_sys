@@ -57,7 +57,7 @@ export const MMMAAPage: FC<{
         isNeedAnyDept = false;// 顾客端 关闭部门限制
         break;
     }
-
+    console.log(selfInfo_S);
     const isSystemUpdate = Number(env.version.replaceAll(".", "")) < Number(selfInfo_S.serveVersion?.replaceAll(".", ""));
     const heightV = "100vh";
     const widthV = "100vw";
