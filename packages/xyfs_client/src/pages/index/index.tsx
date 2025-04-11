@@ -2,6 +2,7 @@
 import { Text, View, ViewProps } from '@tarojs/components';
 import { Pagination } from '@xyfs/taro_uii';
 import { Api_assist_explore_ctn } from '@xyfs/taro_uii/api/api__assist';
+import { Api_common_productList_ctn } from '@xyfs/taro_uii/api/api__shop';
 import CPRegimentAssist from '@xyfs/taro_uii/compages/CPRegimentAssist';
 import { ComAddressSwitchor } from '@xyfs/taro_uii/components/ComAddressSwitchor';
 import { ComBanner } from '@xyfs/taro_uii/components/ComBanner';
@@ -9,6 +10,7 @@ import { ComButton } from '@xyfs/taro_uii/components/ComButton';
 import { ComImage } from '@xyfs/taro_uii/components/ComImage';
 import { ComLoading } from '@xyfs/taro_uii/components/ComLoading';
 import { ComNav } from '@xyfs/taro_uii/components/ComNav';
+import { ComPrice } from '@xyfs/taro_uii/components/ComPrice';
 import { ComScrollView } from '@xyfs/taro_uii/components/ComScrollView';
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { MMMFooter } from '@xyfs/taro_uii/components/MMMFooter';
@@ -19,7 +21,7 @@ import { useSTSelf } from '@xyfs/taro_uii/store/store';
 import { try_Taro_navigateTo } from '@xyfs/taro_uii/utils/try_catch';
 import { useHook_pageListNew } from '@xyfs/taro_uii/utils/useHooks';
 import { utils_get_capsule } from '@xyfs/taro_uii/utils/util';
-import { FC, useCallback, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 
 definePageConfig({
   enableShareAppMessage: true, navigationStyle: "custom", disableScroll: true,
@@ -83,9 +85,9 @@ const Index: FC = () => {
 
       {roo___has_role(selfInfo_S!.deptInfo!, ["REGIMENT"]) && <IIIMainNavigator className='mb10  ' />}
 
-      {getMyEnv().isDeveloping && <IIIBanner className='mb10' />}
+      {/* {getMyEnv().isDeveloping && <IIIBanner className='mb10' />} */}
 
-      {/* <IIIBringGoodsArea /> */}
+      <IIIBringGoods className='mb10' />
       {/* <IIIRegimentAssistList /> */}
       {getMyEnv().platform === "devtools" &&
         <View className='dll'>
@@ -127,7 +129,52 @@ const IIIBanner = ({ ...props }: ViewProps) => {
   </View>;
 };
 
+const IIIBringGoods = ({ className }: { className?: string; }) => {
+  const [productList, setProductList] = useState<any[]>();
+  useEffect(() => {
+    Api_common_productList_ctn({ orderId: "123" }).then((res) => {
+      console.log(res);
+      setProductList(res);
+    });
+  }, []);
+  return <View className={className}>
+    {!productList && <ComLoading></ComLoading>}
+    {productList?.length === 0 && <ComLoading isEmpty></ComLoading>}
+    {productList?.map((item, index) => {
+      const product = item.product[0];
+      return <View className='ww ovh dll' key={index}>
+        {/*@ts-ignore*/}
+        <store-product-item class="ww hh  mb10" customContent appid={product.appid} productId={product.out_product_id} productPromotionLink={product.product_promotion_link}>
+          <View className='ds mb10 hh ovh bccwhite ioo h7rem ww'>
+            <ComImage className='mr10' src={product.img_url} style={{ width: "7rem" }}></ComImage>
+            <View className='pt10 hh ww dbtl h7rem ovh'>
+              <View>
+                <ComButton ll className='' hoverClass='none'>
+                  <Text className="nw1"> {product.title}</Text>
+                </ComButton>
+                <View className=''>
+                  <ComPrice className='cccprice' price={product.selling_price / 100}></ComPrice>
+                </View>
+              </View>
 
+              <View className='h2rem mb10 ovh ww dr'>
+                {/*@ts-ignore*/}
+                <store-product-item class="mr10 ds" customContent openPage="buy" appid={product.appid} productId={product.out_product_id} productPromotionLink={product.product_promotion_link}>
+                  <View className='dr ww'>
+                    <ComButton className='bccgreen cccwhite'>购买</ComButton>
+                  </View>
+                  {/*@ts-ignore*/}
+                </store-product-item>
+              </View>
+            </View>
+          </View>
+          {/*@ts-ignore*/}
+        </store-product-item>
+      </View>;
+    })
+    }
+  </View>;
+};
 
 const IIIBringGoodsArea = () => {
   return <View className='bccwhite mb10 ioo ww pt10 dll prl10 ' onClick={async () => {

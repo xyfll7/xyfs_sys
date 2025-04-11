@@ -1,3 +1,3 @@
-<store-product class="ww" appid="{{appid}}" product-id="{{productId}}" custom-content="{{false}}" product-promotion-link="{{productPromotionLink}}">
+<store-product class="ww" appid="{{appid}}" product-id="{{productId}}" open-page="{{openPage}}" custom-content="{{customContent}}" product-promotion-link="{{productPromotionLink}}">
   <slot></slot>
 </store-product>
