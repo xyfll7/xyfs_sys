@@ -35,7 +35,7 @@ export const ComCardOrderExpress: FC<{
         onClick={() => {
           Taro.showToast({ icon: "none", title: `${order.productList?.[0]?.recMan?.address}` });
         }} />
-      <ComAddressSwitchor ll rr className='mb10 ww' address={order.productList?.[0]?.sendMan} title='寄:' time={`印${format(coo___ios_date(order.lastPrintTime), "MM/dd HH:mm")}`}
+      <ComAddressSwitchor ll rr className='mb10 ww' address={order.productList?.[0]?.sendMan} title='寄:' time={order.lastPrintTime ? `印${format(coo___ios_date(order.lastPrintTime), "MM/dd HH:mm")}` : "印-"}
         onClick={() => {
           Taro.showToast({ icon: "none", title: `${order.productList?.[0]?.sendMan?.address}` });
         }} />
@@ -110,7 +110,7 @@ export const ComCardOrderDryclean: FC<{
       onClick={() => {
         Taro.showToast({ icon: "none", title: `${order?.userAddress?.address}` });
       }} />
-    <ComAddressSwitchor ll rr className='mb10 ww' address={order?.deptAddress} title='团:' time={order.lastPrintTime ? `印${format(coo___ios_date(order.lastPrintTime), "MM/dd HH:mm")}` : ""}
+    <ComAddressSwitchor ll rr className='mb10 ww' address={order?.deptAddress} title='团:' time={order.lastPrintTime ? `印${format(coo___ios_date(order.lastPrintTime), "MM/dd HH:mm")}` : "印-"}
       onClick={() => {
         Taro.showToast({ icon: "none", title: `${order?.deptAddress?.address}` });
       }} />
