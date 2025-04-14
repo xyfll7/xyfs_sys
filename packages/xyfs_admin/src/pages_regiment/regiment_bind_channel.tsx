@@ -55,7 +55,6 @@ const IIIBindAccountList: FC<{}> = ({ }) => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const [form, setForm] = useHook_Reducer({
 
-    // 任会
     channelId: "", // 视频号ID
 
     talentId: "", // 带货者ID
