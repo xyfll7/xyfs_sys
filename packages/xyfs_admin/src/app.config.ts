@@ -39,6 +39,7 @@ export default defineAppConfig({
     {
       root: "pages_regiment",
       pages: [
+        "regiment_bind_channel",
         "regiment_bind_cloudPrinter",
         "regiment_collection_record",
         "regiment_orders_express",

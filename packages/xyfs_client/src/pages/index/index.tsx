@@ -87,7 +87,7 @@ const Index: FC = () => {
 
       {/* {getMyEnv().isDeveloping && <IIIBanner className='mb10' />} */}
 
-      <IIIBringGoods className='mb10' />
+      <IIIBringGoods className='' />
       {/* <IIIRegimentAssistList /> */}
       {getMyEnv().platform === "devtools" &&
         <View className='dll'>
@@ -137,20 +137,20 @@ const IIIBringGoods = ({ className }: { className?: string; }) => {
       setProductList(res);
     });
   }, []);
-  return <View className={className}>
-    {!productList && <ComLoading></ComLoading>}
-    {productList?.length === 0 && <ComLoading isEmpty></ComLoading>}
+  return <View className={`${className} ww dll`}>
+    {!productList && <ComLoading className='mb10'></ComLoading>}
+    {productList?.length === 0 && <ComLoading className='mb10' isEmpty></ComLoading>}
     {productList?.map((item, index) => {
       const product = item.product[0];
-      return <View className='ww ovh dll' key={index}>
+      return <View className='ww  dll' key={index}>
         {/*@ts-ignore*/}
-        <store-product-item class="ww hh  mb10" customContent appid={product.appid} productId={product.out_product_id} productPromotionLink={product.product_promotion_link}>
-          <View className='ds mb10 hh ovh bccwhite ioo h7rem ww'>
+        <store-product-item class="ww hh mb10" customContent appid={product.appid} productId={product.out_product_id} productPromotionLink={product.product_promotion_link}>
+          <View className='ds  hh ovh bccwhite ioo h7rem ww'>
             <ComImage className='mr10' src={product.img_url} style={{ width: "7rem" }}></ComImage>
             <View className='pt10 hh ww dbtl h7rem ovh'>
               <View>
                 <ComButton ll className='' hoverClass='none'>
-                  <Text className="nw1"> {product.title}</Text>
+                  <Text className="nw1"> {String(product.title)}</Text>
                 </ComButton>
                 <View className=''>
                   <ComPrice className='cccprice' price={product.selling_price / 100}></ComPrice>
