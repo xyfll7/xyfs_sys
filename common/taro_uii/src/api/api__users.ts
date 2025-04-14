@@ -369,6 +369,7 @@ export async function Api_dept_removeUser_ctn(params: {
   return res;
 }
 export async function Api_dept_channelConfig_ctn(params: {
+  deptId: string,
   channelId: string, // 视频号ID
 
   talentId: string, // 带货者ID

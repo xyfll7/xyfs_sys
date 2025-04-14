@@ -35,9 +35,26 @@ const Index: FC<{}> = ({ }) => {
   </MMMAAPage>;
 };
 
+// 任会
+
+// 视频号ID sph7OSpmev0O3p5
+
+// 带货者ID wxe85137cf3b18aa9c
+// 密钥 0008f8d014880f32d18a079024d973cf
+
+// 橱窗ID wxa0e0de3c6c6bb17d
+// 橱窗密钥 03538d1fa323e99a1aa5356d73100d43
+
+// Token令牌 Tokenrenhui
+// 消息密钥 j0FHC1Grq9suY9mjSQXuTKxEx3HbbWA1pxbE4GniL7R;
+
+// https://el-main-63173-10-1306790653.sh.run.tcloudbase.com/api/wechat/channels/sph7OSpmev0O3p5
+
+
 const IIIBindAccountList: FC<{}> = ({ }) => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const [form, setForm] = useHook_Reducer({
+    // 任会
     channelId: "sph7OSpmev0O3p5", // 视频号ID
 
     talentId: "wxe85137cf3b18aa9c", // 带货者ID
@@ -46,8 +63,20 @@ const IIIBindAccountList: FC<{}> = ({ }) => {
     windowId: "wxa0e0de3c6c6bb17d", // 橱窗
     windowSecret: "03538d1fa323e99a1aa5356d73100d43", // 橱窗密钥
 
-    token: "Tokenrenhui", // 令牌
-    encodingAesKey: "j0FHC1Grq9suY9mjSQXuTKxEx3HbbWA1pxbE4GniL7R",  // 密钥
+    token: "Tokenrenhui", // 消息推送令牌
+    encodingAesKey: "j0FHC1Grq9suY9mjSQXuTKxEx3HbbWA1pxbE4GniL7R",  // 消息推送密钥
+
+    // // 白菜菜
+    // channelId: "sphmAL8GAKrPRor", // 视频号ID
+
+    // talentId: "wxfd4789b3f486c0ac", // 带货者ID
+    // talentSecret: "f51b3fe6e5867a6163ffa719244f6a85", // 带货者密钥
+
+    // windowId: "wxd1c92a8a56e4b777", // 橱窗
+    // windowSecret: "0db4a6eec1e94cb20a1895c2c3235935", // 橱窗密钥
+
+    // token: "TokensphmAL8GAKrPRor", // 令牌
+    // encodingAesKey: "P0pbl2HlnJoOzehcS9fvlqNxr2XWFxNMUtiHfSStRj4",  // 密钥
   });
 
   return <>
@@ -139,6 +168,7 @@ const IIIBindAccountList: FC<{}> = ({ }) => {
       <ComButton className='bccgreen cccwhite nw mb10' hoverClass="none" onClick={async () => {
         Taro.showLoading({ mask: true, title: "提交中..." });
         const res = await Api_dept_channelConfig_ctn({
+          deptId: selfInfo_S.deptId!,
 
           channelId: form.channelId, // 视频号ID
 
@@ -176,3 +206,18 @@ const IIIBindAccountList: FC<{}> = ({ }) => {
 // 消息密钥 j0FHC1Grq9suY9mjSQXuTKxEx3HbbWA1pxbE4GniL7R;
 
 // https://el-main-63173-10-1306790653.sh.run.tcloudbase.com/api/wechat/channels/sph7OSpmev0O3p5
+
+// 王肇
+
+// 视频号ID sphmAL8GAKrPRor
+
+// 带货者ID wxfd4789b3f486c0ac
+// 带货 Secret f51b3fe6e5867a6163ffa719244f6a85
+
+// 橱窗ID wxd1c92a8a56e4b777
+// 橱窗密钥 0db4a6eec1e94cb20a1895c2c3235935
+
+// Token令牌 TokensphmAL8GAKrPRor
+// 消息密钥 P0pbl2HlnJoOzehcS9fvlqNxr2XWFxNMUtiHfSStRj4
+
+// https://el-main-63173-10-1306790653.sh.run.tcloudbase.com/api/wechat/channels/sphmAL8GAKrPRor
