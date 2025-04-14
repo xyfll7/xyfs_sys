@@ -368,3 +368,21 @@ export async function Api_dept_removeUser_ctn(params: {
   });
   return res;
 }
+export async function Api_dept_channelConfig_ctn(params: {
+  channelId: string, // 视频号ID
+
+  talentId: string, // 带货者ID
+  talentSecret: string, // 带货者密钥
+
+  token: string, // 令牌
+  encodingAesKey: string,  // 密钥
+
+  windowId: string; // 橱窗
+  windowSecret: string; // 橱窗密钥
+}) {
+  const res = await wx_call_container<any[]>({
+    path: "/user/channelConfig",
+    data: { ...params },
+  });
+  return res;
+}
