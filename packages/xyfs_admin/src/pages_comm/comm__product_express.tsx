@@ -167,8 +167,6 @@ const IIIOrderPayRegiment: FC<{}> = ({ }) => {
   const express_S = useSTExpress(s => s.express);
   const [showQRCode, setShowQRCode] = useState<boolean>(false);
 
-
-
   if (!express_S) { return null; }
   const isShunFeng = express_S?.productList?.[0]?.deliveryId === "SF";
   const isJingDong = express_S?.productList?.[0]?.deliveryId === "JD";

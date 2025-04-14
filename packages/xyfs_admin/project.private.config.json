@@ -10,6 +10,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages_comm/comm__product_express",
+          "pathName": "pages_comm/comm__product_express",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages_regiment/regiment_bind_channel",
           "pathName": "pages_regiment/regiment_bind_channel",
           "query": "",

@@ -5,12 +5,12 @@ import { Environment, EnvVersion } from "../types/type_index";
 
 export const base_url: string = "";
 
-const ___envSimulate = "release";
+const ___envSimulate = "develop";
 
 // cSpell: disable;
 const OPENID_DEV___ =
   // @ts-ignore
-  "15229512266" || //
+  // "15229512266" || //
   ////////////////////////////////////////////////
   // "oGwbL5D1WtsGTuLhWneaepYuHW3k" ||  // 何旭东
   // "oGwbL5OLhRpOKRWrkVNSMqXuGPaE" ||  // 我妈

@@ -1,5 +1,5 @@
 import { Button, ButtonProps, Label, View, ViewProps } from "@tarojs/components";
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { try_Taro_navigateTo } from "../utils/try_catch";
 import { utils_str_includes } from "../utils/util";
 
@@ -29,9 +29,11 @@ export function ComButton({
   ...props
 }: Omit<ViewProps, "onTouchStart"> & MyButtonProps & { children?: React.ReactNode; }) {
   const back = utils_str_includes(["bcc", "bborder"], props.className) ? "" : "bccwhite";
-
+  const [handleClick, loading] = useHooks_PreventDoubleClick();
+  props.disabled = props.disabled || loading;
   return <View {...props} id={props.id}
     className={`${props.className} ${back} ${rr ? "" : "pr10"} ${ll ? "" : "pl10"} ${props.disabled ? "disabled bccwhite" : ""} transall ioo dy`}
+
     hoverClass={(() => {
       if (props.disabled) {
         return "none";
@@ -47,9 +49,11 @@ export function ComButton({
       minHeight: "calc(2 * var(--rem_base)) !important",
       ...(props.style as any),
     }} onClick={async (e) => {
-      onClickO?.();
-      !props.disabled && onClick?.(e);
-      !props.disabled && url && await try_Taro_navigateTo({ url, routeType: routeType });
+      handleClick(async () => {
+        await onClickO?.();
+        !props.disabled && await onClick?.(e);
+        !props.disabled && url && await try_Taro_navigateTo({ url, routeType: routeType });
+      });
     }} >
     {children}
   </View>;
@@ -68,3 +72,28 @@ export function ComButtonOpen({
     <Button {...props} style={{ display: "none !important" }} data-title={shareTitle} data-path={sharePath} onClick={(e) => { onClick?.(e); }}></Button>
   </Label>;
 }
+
+type AsyncFunction<T = any> = (...args: any[]) => Promise<T>;
+
+const useHooks_PreventDoubleClick = <T,>(): [
+  (asyncFunction: AsyncFunction<T>) => Promise<T | void>,
+  boolean
+] => {
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const preventDoubleClick = useCallback(
+    async (asyncFunction: AsyncFunction<T>) => {
+      if (isSubmitting) {
+        return;
+      }
+      setIsSubmitting(true);
+      try {
+        return await asyncFunction();
+      } finally {
+        setIsSubmitting(false);
+      }
+    },
+    [isSubmitting]
+  );
+
+  return [preventDoubleClick, isSubmitting];
+};
