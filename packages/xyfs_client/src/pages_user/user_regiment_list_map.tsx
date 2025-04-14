@@ -70,8 +70,11 @@ const IIIRegimentList = () => {
     }
   }, [selected_dept]);
 
-  let __dept_list = (page.list ? [...(roo___my_dept(selfInfo_S) ? [roo___my_dept(selfInfo_S)!] : []), ...page.list] : null);
-  console.log("pageppp", __dept_list);
+  const my_dept = roo___my_dept(selfInfo_S);
+  // const my_dept = { "deptId": 173, "parentId": 101, "ancestors": "0,101,173", "deptName": "王肇mock_站点", "avatar": null, "leader": "oGwbL5MUeSNxxA4o0oOmb_FUjE7g", "mobile": "17709205217", "address": "二环南路东段268号-雁塔区太乙嘉园(二环南路东段南)", "locationName": "陕西省西安市雁塔区二环南路东段268号-雁塔区太乙嘉园(二环南路东段南)", "code": "510000", "country": "中国", "province": "陕西省", "city": "西安市", "area": "雁塔区", "longitude": 108.975147, "latitude": 34.233051, "realId": "612731198903180415", "realName": "王肇", "logisticPriceSchemeId": 2, "dryCleaningPriceSchemeId": null, "pickUpPrice": null, "supplierTypeDictIds": null, "email": null, "orderNum": null, "status": "0", "delFlag": "0", "createBy": null, "createTime": "2025-01-14 15:41:18", "updateBy": null, "updateTime": "2025-02-21 11:37:03", "distance": null, "userId": null, "children": [], "users": [], "printers": null, "logistics": null, "logisticPriceScheme": null, "dryCleaningPriceScheme": null, "supplierTypeList": null, "parentDeptInfo": null, "roles": [{ "id": 2, "roleName": "团长", "roleKey": "REGIMENT", "status": "0", "delFlag": "0", "createBy": "", "createTime": "2024-01-28 17:39:45", "updateBy": "", "updateTime": null, "remark": null }, { "id": 0, "roleName": "用户", "roleKey": "USER", "status": "0", "delFlag": "0", "createBy": "", "createTime": "2024-01-28 17:44:09", "updateBy": "", "updateTime": null, "remark": null }], "roles_": null, "logistics_": null };
+
+  let __dept_list = (page.list ? [...(my_dept ? [my_dept] : []), ...page.list] : null);
+  console.log("pageppp", JSON.stringify(__dept_list![0]));
   const [toggle, setToggle] = useState(false);
   return <>
     {locate && <Map className='ovh' id='myMap' layerStyle={Taro.getAppBaseInfo().theme === "dark" ? 0 : 1}

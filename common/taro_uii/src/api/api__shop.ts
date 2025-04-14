@@ -108,7 +108,7 @@ export async function Api_cart_add_ctn(params: {
   });
   return res;
 }
-export async function Api_common_productList_ctn(params: { orderId: string; }) {
+export async function Api_common_productList_ctn(params?: {}) {
   const res = await wx_call_container<any[]>({
     path: "/user/productList",
     data: {

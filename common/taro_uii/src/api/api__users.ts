@@ -176,6 +176,8 @@ export async function Api_user_edit_ctn(params: Partial<DeptInfo>): Promise<Dept
       ...params,
     },
   });
+  Taro.setStorageSync("OPENID", res?.OPENID);
+  Taro.setStorageSync("DEPTID", res?.deptId);
   return res;
 }
 export async function Api_user_addUserDept_ctn(params: {

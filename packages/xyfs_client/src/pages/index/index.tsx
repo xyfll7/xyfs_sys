@@ -130,13 +130,15 @@ const IIIBanner = ({ ...props }: ViewProps) => {
 };
 
 const IIIBringGoods = ({ className }: { className?: string; }) => {
+  const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const [productList, setProductList] = useState<any[]>();
   useEffect(() => {
-    Api_common_productList_ctn({ orderId: "123" }).then((res) => {
-      console.log(res);
+    console.log(selfInfo_S);
+    setProductList(undefined);
+    Api_common_productList_ctn().then((res) => {
       setProductList(res);
     });
-  }, []);
+  }, [selfInfo_S]);
   return <View className={`${className} ww dll`}>
     {!productList && <ComLoading className='mb10'></ComLoading>}
     {productList?.length === 0 && <ComLoading className='mb10' isEmpty></ComLoading>}
