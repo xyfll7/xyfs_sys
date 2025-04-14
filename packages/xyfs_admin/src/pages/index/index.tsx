@@ -1,5 +1,7 @@
 // :: pages/index/index
 import { Text, View, ViewProps } from "@tarojs/components";
+import Taro from "@tarojs/taro";
+import { Api_common_jtsd } from "@xyfs/taro_uii/api/api__users";
 import { ComBanner } from "@xyfs/taro_uii/components/ComBanner";
 import { ComButton, ComButtonOpen } from '@xyfs/taro_uii/components/ComButton';
 import { ComImage } from "@xyfs/taro_uii/components/ComImage";
@@ -126,6 +128,23 @@ const IIISettings = ({ ...props }: ViewProps) => {
         </ComButton>
         <ComButton className='bccwhite mb10 mr10' url='/pages_user/sub_user_dept'>
           部门管理
+        </ComButton>
+
+      </>}
+      {roo___has_role(selfInfo_S!, ["AGENT"]) && <>
+        <ComButton className="mb10 mr10" onClick={async () => {
+          Taro.showLoading({ title: "切换中..." });
+          await Api_common_jtsd({ expressType: 1 });
+          Taro.showToast({ icon: "none", title: "切换成功" });
+        }}>
+          极兔-标准快递
+        </ComButton>
+        <ComButton className="mb10 mr10" onClick={async () => {
+          Taro.showLoading({ title: "切换中..." });
+          await Api_common_jtsd({ expressType: 2 });
+          Taro.showToast({ icon: "none", title: "切换成功" });
+        }}>
+          极兔-兔优达
         </ComButton>
 
       </>}
