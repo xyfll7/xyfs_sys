@@ -54,17 +54,30 @@ const Index: FC<{}> = ({ }) => {
 const IIIBindAccountList: FC<{}> = ({ }) => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const [form, setForm] = useHook_Reducer({
+
     // 任会
-    channelId: "sph7OSpmev0O3p5", // 视频号ID
+    channelId: "", // 视频号ID
 
-    talentId: "wxe85137cf3b18aa9c", // 带货者ID
-    talentSecret: "0008f8d014880f32d18a079024d973cf", // 带货者密钥
+    talentId: "", // 带货者ID
+    talentSecret: "", // 带货者密钥
 
-    windowId: "wxa0e0de3c6c6bb17d", // 橱窗
-    windowSecret: "03538d1fa323e99a1aa5356d73100d43", // 橱窗密钥
+    windowId: "", // 橱窗
+    windowSecret: "", // 橱窗密钥
 
-    token: "Tokenrenhui", // 消息推送令牌
-    encodingAesKey: "j0FHC1Grq9suY9mjSQXuTKxEx3HbbWA1pxbE4GniL7R",  // 消息推送密钥
+    token: "", // 消息推送令牌
+    encodingAesKey: "",  // 消息推送密钥
+
+    // // 任会
+    // channelId: "sph7OSpmev0O3p5", // 视频号ID
+
+    // talentId: "wxe85137cf3b18aa9c", // 带货者ID
+    // talentSecret: "0008f8d014880f32d18a079024d973cf", // 带货者密钥
+
+    // windowId: "wxa0e0de3c6c6bb17d", // 橱窗
+    // windowSecret: "03538d1fa323e99a1aa5356d73100d43", // 橱窗密钥
+
+    // token: "Tokenrenhui", // 消息推送令牌
+    // encodingAesKey: "j0FHC1Grq9suY9mjSQXuTKxEx3HbbWA1pxbE4GniL7R",  // 消息推送密钥
 
     // // 白菜菜
     // channelId: "sphmAL8GAKrPRor", // 视频号ID
