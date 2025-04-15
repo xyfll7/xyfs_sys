@@ -383,7 +383,7 @@ export async function Api_dept_channelConfig_ctn(params: {
   windowId: string; // 橱窗
   windowSecret: string; // 橱窗密钥
 }) {
-  const res = await wx_call_container<any[]>({
+  const res = await wx_call_container<DeptInfo>({
     path: "/user/channelConfig",
     data: { ...params },
   });

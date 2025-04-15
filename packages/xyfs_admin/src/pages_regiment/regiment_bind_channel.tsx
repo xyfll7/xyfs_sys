@@ -1,5 +1,5 @@
 // :: pages_regiment/regiment_bind_cloudPrinter
-import { View } from "@tarojs/components";
+import { Text, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { Api_dept_channelConfig_ctn } from '@xyfs/taro_uii/api/api__users';
 import { ComButton } from '@xyfs/taro_uii/components/ComButton';
@@ -9,7 +9,7 @@ import { ComNavBarA } from '@xyfs/taro_uii/components/ComNavBarA';
 import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
-import { try_Taro_setClipboardData } from '@xyfs/taro_uii/utils/try_catch';
+import { try_Taro_setClipboardData, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
 import { useHook_Reducer } from "@xyfs/taro_uii/utils/useHooks";
 import { FC } from "react";
 
@@ -78,7 +78,7 @@ const IIIBindAccountList: FC<{}> = ({ }) => {
     // token: "Tokenrenhui", // 消息推送令牌
     // encodingAesKey: "j0FHC1Grq9suY9mjSQXuTKxEx3HbbWA1pxbE4GniL7R",  // 消息推送密钥
 
-    // // 白菜菜
+    // // // 白菜菜
     // channelId: "sphmAL8GAKrPRor", // 视频号ID
 
     // talentId: "wxfd4789b3f486c0ac", // 带货者ID
@@ -96,14 +96,18 @@ const IIIBindAccountList: FC<{}> = ({ }) => {
       <ComButton className='cccplh bccback nw mb10' hoverClass="none" onClick={async () => { }}>
         微信小店带货助手 绑定
       </ComButton>
-      <View className="cccplh prl10 mb10">
+      <View className="cccplh prl10 mb10" onClick={async () => {
+        await try_Taro_setClipboardData({ data: "https://channels.weixin.qq.com/login.html", });
+        Taro.showToast({ icon: "none", title: "已复制", });
+      }}>
         <View>复制并打开该网址，微信扫码登陆</View>
-        <View onClick={async () => {
-          await try_Taro_setClipboardData({ data: "https://channels.weixin.qq.com/login.html", });
-          Taro.showToast({ icon: "none", title: "已复制", });
-        }}>https://channels.weixin.qq.com/login.html</View>
-        <View>带货助手 {'>'} 微信小店带货助手 {'>'} </View>
+        <View >https://channels.weixin.qq.com/login.html</View>
+        <View>1、直播 {'>'} 直播管理 {'>'} 开放能力 </View>
+        <View>2、带货助手 {'>'} 微信小店带货助手 {'>'} 点击头像 {'>'} 开放能力</View>
       </View>
+
+
+      <ComButton className="mb10 bccback" hoverClass="none">已绑定视频号ID: <Text className="cccgreen ml10">{selfInfo_S.channelId}</Text> </ComButton>
 
 
       <View className='ioo bccwhite pt10 dll mb10 prl10 ww'>
@@ -178,7 +182,27 @@ const IIIBindAccountList: FC<{}> = ({ }) => {
 
 
       <ComButton className='bccgreen cccwhite nw mb10' hoverClass="none" onClick={async () => {
+
+        const res_modal = await try_Taro_showModal({
+          title: "提示",
+          content: "您已经绑定了视频号ID，是否要重新绑定？",
+          cancelText: "取消",
+          confirmText: "重新绑定",
+        });
+        if (!res_modal) { Taro.showToast({ icon: "none", title: "取消" }); return; }
+
+        if (!form.channelId) { Taro.showToast({ icon: "none", title: "请输入视频号ID", }); return; }
+        if (!form.talentId) { Taro.showToast({ icon: "none", title: "请输入带货者ID", }); return; }
+        if (!form.talentSecret) { Taro.showToast({ icon: "none", title: "请输入带货者密钥", }); return; }
+        if (!form.windowId) { Taro.showToast({ icon: "none", title: "请输入橱窗ID", }); return; }
+        if (!form.windowSecret) { Taro.showToast({ icon: "none", title: "请输入橱窗密钥", }); return; }
+        if (!form.token) { Taro.showToast({ icon: "none", title: "请输入令牌", }); return; }
+        if (!form.encodingAesKey) { Taro.showToast({ icon: "none", title: "请输入令牌密钥", }); return; }
+
         Taro.showLoading({ mask: true, title: "提交中..." });
+
+
+
         const res = await Api_dept_channelConfig_ctn({
           deptId: selfInfo_S.deptId!,
 
@@ -193,6 +217,7 @@ const IIIBindAccountList: FC<{}> = ({ }) => {
           token: form.token, // 令牌
           encodingAesKey: form.encodingAesKey  // 密钥
         });
+        useSTSelf.getState().sett(res);
         Taro.showToast({ icon: "none", title: "提交成功", });
       }}>
         提交
