@@ -44,6 +44,7 @@ export interface DeptInfo extends BaseUserInfo, AddressInfo {
   deptName?: string;
   parentDeptId?: string;  // 发布者（团长）的上级代理OPENID
 
+  channelId?: string;
   supplierTypeDictIds: string,
   roles?: ROLE_ST[], // 角色
   roles_?: number[], // 角色更新

@@ -2,15 +2,29 @@ Component({
   behaviors: [],
   properties: {
     appid: String,
-    productId: String, // 简化的定义方式
-    productPromotionLink: String, // 简化的定义方式
+    productId: String,
+    productPromotionLink: String,
     customContent: {
       type: Boolean,
       value: false, // Default value
+
     },
     openPage: {
       type: String,
       value: "product-detail", // Default value
     },
   },
+  lifetimes: {
+    created: function () {
+      console.log("111111111");
+    },
+    // 生命周期函数，可以为函数，或一个在methods段中定义的方法名
+    attached: function () {
+      console.log(this);
+    },
+    moved: function () { },
+    detached: function () { },
+  },
+
+
 });

@@ -28,6 +28,9 @@ definePageConfig({
   // "styleIsolation": "apply-shared",
   // "componentFramework": "glass-easel",
   // "renderer": "skyline",
+  usingComponents: {
+    'store-product-item': '../../components/store-product-item/store-product-item',
+  }
 });
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC = () => {
@@ -87,7 +90,8 @@ const Index: FC = () => {
 
       {/* {getMyEnv().isDeveloping && <IIIBanner className='mb10' />} */}
 
-      <IIIBringGoods className='' />
+      {selfInfo_S.channelId && <IIIBringGoods channelId={selfInfo_S.channelId} />}
+
       {/* <IIIRegimentAssistList /> */}
       {getMyEnv().platform === "devtools" &&
         <View className='dll'>
@@ -129,16 +133,18 @@ const IIIBanner = ({ ...props }: ViewProps) => {
   </View>;
 };
 
-const IIIBringGoods = ({ className }: { className?: string; }) => {
-  const selfInfo_S = useSTSelf(s => s.selfInfo!);
+
+const IIIBringGoods = ({ className, channelId }: { className?: string; channelId?: string; }) => {
   const [productList, setProductList] = useState<any[]>();
   useEffect(() => {
-    console.log(selfInfo_S);
     setProductList(undefined);
-    Api_common_productList_ctn().then((res) => {
-      setProductList(res);
-    });
-  }, [selfInfo_S]);
+    if (channelId) {
+      Api_common_productList_ctn().then((res) => {
+        setProductList(res);
+      });
+    }
+  }, [channelId]);
+
   return <View className={`${className} ww dll`}>
     {!productList && <ComLoading className='mb10'></ComLoading>}
     {productList?.length === 0 && <ComLoading className='mb10' isEmpty></ComLoading>}
@@ -147,7 +153,7 @@ const IIIBringGoods = ({ className }: { className?: string; }) => {
       return <View className='ww  dll' key={index}>
         {/*@ts-ignore*/}
         <store-product-item class="ww hh mb10" customContent appid={product.appid} productId={product.out_product_id} productPromotionLink={product.product_promotion_link}>
-          <View className='ds  hh ovh bccwhite ioo h7rem ww'>
+          <View className='ds  hh ovh bccwhite mb10 ioo h7rem ww'>
             <ComImage className='mr10' src={product.img_url} style={{ width: "7rem" }}></ComImage>
             <View className='pt10 hh ww dbtl h7rem ovh'>
               <View>
