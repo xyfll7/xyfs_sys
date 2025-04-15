@@ -83,8 +83,12 @@ const IIISettings = ({ ...props }: ViewProps) => {
   return <>
     <ComButton {...props} className='mb10 cccplh mr10 bccback' >设置</ComButton>
     <View className='dy dwp'>
-      {roo___has_role(selfInfo_S!, ["REGIMENT"]) &&
+      {roo___has_role(selfInfo_S!, ["REGIMENT"]) && <>
         <ComButton className='mb10 bccwhite nw mr10' url='/pages_regiment/regiment_bind_channel'>绑定视频号</ComButton>
+        <ComButton className='bccwhite mb10 mr10' url='/pages_agent/agent__account'>
+          面单账号
+        </ComButton>
+      </>
       }
       {roo___has_role(selfInfo_S!, ["REGIMENT", "GUIDE", "MERCHANT"]) &&
         <ComButton className='mb10 bccwhite nw mr10' url='/pages_regiment/regiment_collection_record'>收款记录</ComButton>

@@ -39,6 +39,7 @@ const Index: FC = () => {
           </View>
           <IIIExpress deptInfo={dept}></IIIExpress>
           <IIIDryclean deptInfo={dept}></IIIDryclean>
+          <IIIBringGoods deptInfo={dept}></IIIBringGoods>
         </View>
       }
     </ComScrollView>
@@ -84,4 +85,16 @@ const IIIDryclean: FC<{ deptInfo: DeptInfo; }> = ({ deptInfo }) => {
       <ComCardOrderDryclean order={order as any} />
     </View>
   }</>;
+};
+const IIIBringGoods: FC<{ deptInfo: DeptInfo; }> = ({ deptInfo }) => {
+  return <View className='mb10 dy bccwhite ww ioo pt10 prl10'>
+    <ComButton ll className='nw bccwhite mr10 bccwhite mb10' hoverClass='none'>带货</ComButton>
+    <ComButtonOpen rr className='cccgreen bccbacktab  mb10 slr' id='send_express'
+      shareTitle={`${deptInfo?.name} 团长 邀您买东西啦`}
+      openType='share'
+      sharePath={`/pages/index/index?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ R_D: Number(deptInfo.mobile).toString(36) })) })}`}>
+      邀请下单(带货)
+    </ComButtonOpen>
+  </View>;
+
 };
