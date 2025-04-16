@@ -52,11 +52,15 @@ export const useSTSelf = create<State_SelfInfo>((set, get) => ({
     const res = Taro.getAppBaseInfo();
     const theme = res.theme ?? "light";
     if (selfInfo) {
+      Taro.setStorageSync("OPENID", selfInfo.OPENID);
+      Taro.setStorageSync("DEPTID", selfInfo.deptId);
       set((s) => ({ selfInfo: { theme, ...s.selfInfo, ...selfInfo, } }));
       return { theme, ...get().selfInfo, ...selfInfo, };
     } else {
       const res_selfInfo = await ___Api_login_rqs();
       if (res_selfInfo) { // 这里不能删，因为throttle截流 被拦截了的调用会返回 undefined
+        Taro.setStorageSync("OPENID", res_selfInfo.OPENID);
+        Taro.setStorageSync("DEPTID", res_selfInfo.deptId);
         if (JSON.stringify(get().selfInfo) !== JSON.stringify(res_selfInfo)) { // 如果获取的数据和本地数据一样则不刷新
           set((s) => ({ selfInfo: { theme, ...s.selfInfo, ...res_selfInfo, } }));
         }

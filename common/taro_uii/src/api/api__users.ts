@@ -1,4 +1,3 @@
-import Taro from "@tarojs/taro";
 import { AddressInfo, DeptInfo, DICTS_KEYS, Pagination, Printer_Info } from "../../types";
 import { getMyEnv } from "../env";
 import { Taro_getStorageSync } from "../utils/try_catch";
@@ -107,10 +106,7 @@ export async function Api_login_rqs(): Promise<DeptInfo> {
       code: await (async () => { return Taro_getStorageSync<string>("OPENID", getMyEnv()) ? "" : await try_Taro_login(); })()
     }
   });
-  Taro.setStorageSync("OPENID", res?.OPENID);
-  Taro.setStorageSync("DEPTID", res?.deptId);
   return res;
-
 }
 export async function Api_qrcode_ctn(params: { appid?: string, page: string, scene: string; }) {
   const res = await wx_call_container<ArrayBuffer>({
@@ -176,8 +172,6 @@ export async function Api_user_edit_ctn(params: Partial<DeptInfo>): Promise<Dept
       ...params,
     },
   });
-  Taro.setStorageSync("OPENID", res?.OPENID);
-  Taro.setStorageSync("DEPTID", res?.deptId);
   return res;
 }
 export async function Api_user_addUserDept_ctn(params: {

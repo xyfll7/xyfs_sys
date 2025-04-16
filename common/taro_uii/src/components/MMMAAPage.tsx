@@ -315,7 +315,7 @@ const netWork = {
 
 export function ComSELFView({ isRefreshSelfInfo_SEveryTime, ...props }: ViewProps & { isRefreshSelfInfo_SEveryTime?: boolean; }) {
   const net = useSyncExternalStore(netWork.sub, () => netWork.status);
-  const [selfInfo_S] = useHook_selfInfo_show({ isRefreshSelfInfo_SEveryTime });
+  const [selfInfo_S, isLoading] = useHook_selfInfo_show({ isRefreshSelfInfo_SEveryTime });
   const isInApp = selfInfo_S?.appid === getMyEnv().appId;
   useLoad(() => {
     Taro.onThemeChange(({ theme }) => {
@@ -346,7 +346,11 @@ export function ComSELFView({ isRefreshSelfInfo_SEveryTime, ...props }: ViewProp
         {
           !selfInfo_S ?
             <ComNav className='prl10'><ComLoading className='ml10 mb10' /></ComNav>
-            : (isInApp ? props.children : <ComNav className='prl10'><ComButton className='cccplh mb10'>AppId不匹配!</ComButton></ComNav>)
+            : (isInApp ? <View className="pr">
+              {isLoading && <ComNav className='prl10 pa z1'><ComLoading className='ml10 mb10' >刷新 ...</ComLoading></ComNav>}
+              {props.children}
+            </View>
+              : <ComNav className='prl10'><ComButton className='cccplh mb10'>AppId不匹配!</ComButton></ComNav>)
         }
       </>
     }
@@ -363,21 +367,26 @@ export function ComSELFView({ isRefreshSelfInfo_SEveryTime, ...props }: ViewProp
 
 
 
-const useHook_selfInfo_show = ({ isRefreshSelfInfo_SEveryTime = false, }: { isRefreshSelfInfo_SEveryTime?: boolean; } = {}): [DeptInfo | null] => {
+const useHook_selfInfo_show = ({ isRefreshSelfInfo_SEveryTime = false, }: { isRefreshSelfInfo_SEveryTime?: boolean; } = {}): [DeptInfo | null, boolean] => {
   const { options } = Taro_getCurrentInstance<{ scene?: string; }>();
   const { R_D } = coo___urlToObj<{ R_D?: string; }>(options.scene);
   const _R_D = R_D ? String(parseInt(R_D, 36)) : undefined;
   const selfInfo = useSTSelf(s => s.selfInfo);
-
+  const [isLoadSelf, setIsLoadSelf] = useState(false);
+  console.log("sssss", isLoadSelf);
   useDidShow(async () => {
     if (_R_D && process.env.TARO_APP_CLIENT === Taro.getAccountInfoSync().miniProgram.appId) { // 只有顾客端用户才能切换团长
+      setIsLoadSelf(true);
       const res_userInfo = await Api_user_edit_ctn({ deptId: _R_D });
       useSTSelf.getState().sett(res_userInfo);
+      setIsLoadSelf(false);
     } else if (isRefreshSelfInfo_SEveryTime || !selfInfo) { // 每次DidShow都去获取用户信息
+      setIsLoadSelf(true);
       await useSTSelf.getState().sett();
+      setIsLoadSelf(false);
     }
   });
-  return _R_D ? [selfInfo?.deptId ? selfInfo : null] : [selfInfo];
+  return _R_D ? [selfInfo?.deptId ? selfInfo : null, isLoadSelf] : [selfInfo, isLoadSelf];
 }
 
 
