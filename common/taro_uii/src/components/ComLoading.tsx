@@ -11,9 +11,9 @@ export const ComLoading: FC<ViewProps & MyButtonProps & {
   isEmpty?: boolean;
 }> = ({
   icon = coo___arr_random(["🍋", "🍓", "🥑", "🍒", "🍉", "🍭", "🍡", "🌶", "🌽", "🥬", "🍎", "🍅"]),
-  onLoadMore, isLastPage, loading, isEmpty, ...props }) => {
+  onLoadMore, isLastPage, loading, isEmpty, className = "bccbacktab", ...props }) => {
 
-    return <ComButton {...props} className={`${props.className} cccplh bccbacktab`} hoverClass='none' onClick={() => !isLastPage && !loading && onLoadMore?.()}>
+    return <ComButton {...props} className={`${className} cccplh`} hoverClass='none' onClick={() => !isLastPage && !loading && onLoadMore?.()}>
       <View className='dy cccplh nw1' >
         {(() => {
           if (isLastPage) {
