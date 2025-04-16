@@ -83,14 +83,17 @@ const IIISettings = ({ ...props }: ViewProps) => {
   return <>
     <ComButton {...props} className='mb10 cccplh mr10 bccback' >设置</ComButton>
     <View className='dy dwp'>
-      {roo___has_role(selfInfo_S!, ["REGIMENT"]) && <>
+      {roo___has_role(selfInfo_S!, ["REGIMENT", "GUIDE"]) && <>
         <ComButton className='mb10 bccwhite nw mr10' url='/pages_regiment/regiment_bind_channel'>绑定视频号</ComButton>
+      </>
+      }
+      {roo___has_role(selfInfo_S!, ["REGIMENT"]) && <>
         <ComButton className='bccwhite mb10 mr10' url='/pages_agent/agent__account'>
           面单账号
         </ComButton>
       </>
       }
-      {roo___has_role(selfInfo_S!, ["REGIMENT", "GUIDE", "MERCHANT"]) &&
+      {roo___has_role(selfInfo_S!, ["REGIMENT", "MERCHANT"]) &&
         <ComButton className='mb10 bccwhite nw mr10' url='/pages_regiment/regiment_collection_record'>收款记录</ComButton>
       }
       {roo___has_role(selfInfo_S!, ["REGIMENT", "SCANNER", "MERCHANT"]) &&
@@ -284,18 +287,20 @@ const IIImmmGUIDE = ({ ...props }: ViewProps) => {
         <ComButton ll className=' nw mb10 mr10 bborder' url={`/pages_comm/icomm_orders_groupbuying?order_ST=${Order_ST.已付款}`}>已付款 </ComButton>
         <ComButton ll className=' nw mb10 mr10 bborder' url={`/pages_comm/icomm_orders_groupbuying?order_ST=${Order_ST.已退款}`}>已退款 </ComButton>
       </View>
+
+      <View className='dy dwp'>
+        <ComButton ll className='mb10 bborder nw mr10' onClick={async () => {
+          const _src = await utils_get_qrcode({
+            appid: process.env.TARO_APP_CLIENT,
+            page: "pages/index/index",
+            scene: coo___objToUrl({ R_D: Number(selfInfo_S!.mobile).toString(36), }),
+          });
+          setQrcode(_src);
+        }}>推广二维码</ComButton>
+      </View>
     </View>
-    <ComButton className='mb10 cccplh bccback'>导游/配置</ComButton>
-    <View className='dy dwp'>
-      <ComButton className='mb10 bccwhite nw mr10' onClick={async () => {
-        const _src = await utils_get_qrcode({
-          appid: process.env.TARO_APP_CLIENT,
-          page: "pages/index/index",
-          scene: coo___objToUrl({ R_D: Number(selfInfo_S!.mobile).toString(36), }),
-        });
-        setQrcode(_src);
-      }}>推广二维码</ComButton>
-    </View>
+
+
     <View>
       {Boolean(qrcode) &&
         <ComPopupNew className=' ww' >
