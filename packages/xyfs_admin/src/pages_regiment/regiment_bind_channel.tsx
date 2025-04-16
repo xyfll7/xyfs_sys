@@ -107,7 +107,9 @@ const IIIBindAccountList: FC<{}> = ({ }) => {
       </View>
 
 
-      <ComButton className="mb10 bccback" hoverClass="none">已绑定视频号ID: <Text className="cccgreen ml10">{selfInfo_S.channelId}</Text> </ComButton>
+      {selfInfo_S.channelId && <ComButton className="mb10 bccback" hoverClass="none">已绑定视频号ID: <Text className="cccgreen ml10">{selfInfo_S.channelId}</Text> </ComButton>}
+      {selfInfo_S.channelId && <ComButton className="mb10 bccback" hoverClass="none">尚未绑定 </ComButton>}
+
 
 
       <View className='ioo bccwhite pt10 dll mb10 prl10 ww'>

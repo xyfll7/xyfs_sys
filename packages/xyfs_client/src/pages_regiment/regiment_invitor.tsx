@@ -23,7 +23,7 @@ const Index: FC = () => {
   return <MMMAAPage
     isNeedRegiment={false}
     isLoading={!options.OPENID_regiment ? Boolean(options.OPENID_regiment) : !dept}
-    isPageAccess={roo___has_role(dept, ["REGIMENT"])}>
+    isPageAccess={roo___has_role(dept, ["REGIMENT", "GUIDE"])}>
     <ComNav>
       <ComNavBarA backText='首页' onClickBack={async () => { await try_Taro_navigateBack(); }} className='mb10 pl10'>
         <ComButton ll className='bcctrans cccplh ml10' >分享邀请</ComButton>
@@ -31,15 +31,17 @@ const Index: FC = () => {
     </ComNav>
     <ComScrollView>
       {dept &&
-
         <View className='dll ww'>
           <View className='dy'>
             <ComButton className='mb10 mr10 nw' onClick={() => { Taro.navigateBackMiniProgram({}); }}>返回→管理端</ComButton>
             <ComButton ll className='mb10 cccplh nw1'> <Text className='wm7rem'>{dept?.name}</Text> <Text className='nw'>(团长) 您好 👋</Text>  </ComButton>
           </View>
-          <IIIExpress deptInfo={dept}></IIIExpress>
-          <IIIDryclean deptInfo={dept}></IIIDryclean>
-          <IIIBringGoods deptInfo={dept}></IIIBringGoods>
+          {roo___has_role(dept, ["REGIMENT"]) && <IIIExpress deptInfo={dept}></IIIExpress>}
+          {roo___has_role(dept, ["REGIMENT"]) && <IIIDryclean deptInfo={dept}></IIIDryclean>}
+
+
+          {roo___has_role(dept, ["REGIMENT", "GUIDE"]) && <IIIBringGoods deptInfo={dept}></IIIBringGoods>}
+
         </View>
       }
     </ComScrollView>
@@ -96,5 +98,4 @@ const IIIBringGoods: FC<{ deptInfo: DeptInfo; }> = ({ deptInfo }) => {
       邀请下单(带货)
     </ComButtonOpen>
   </View>;
-
 };

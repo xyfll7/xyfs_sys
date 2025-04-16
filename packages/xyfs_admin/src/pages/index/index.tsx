@@ -1,6 +1,7 @@
 // :: pages/index/index
 import { Text, View, ViewProps } from "@tarojs/components";
 import Taro from "@tarojs/taro";
+import { DeptInfo } from "@xyfs/taro_uii";
 import { Api_common_jtsd } from "@xyfs/taro_uii/api/api__users";
 import { ComBanner } from "@xyfs/taro_uii/components/ComBanner";
 import { ComButton, ComButtonOpen } from '@xyfs/taro_uii/components/ComButton';
@@ -76,7 +77,22 @@ const Index: FC = () => {
   </MMMAAPage>;
 };
 
-
+const IIIShareInviteCard = ({ selfInfo_S, ...props }: { selfInfo_S: DeptInfo; } & ViewProps) => {
+  return <>
+    {roo___has_role(selfInfo_S!, ["REGIMENT", "GUIDE"]) &&
+      <ComButton ll className='mb10 dy bborder' onClick={async () => {
+        console.log("bbbb", `/pages_regiment/regiment_invitor?${coo___objToUrl({ OPENID_regiment: selfInfo_S!.OPENID })}`);
+        try_Taro_navigateToMiniProgram({
+          appId: process.env.TARO_APP_CLIENT,
+          path: `/pages_regiment/regiment_invitor?${coo___objToUrl({ OPENID_regiment: selfInfo_S!.OPENID })}`,
+          noRelaunchIfPathUnchanged: false,
+        });
+      }}>
+        <Text className="mr10">分享邀请</Text> <Text className='cccgreen'>小象心选顾客端</Text>
+      </ComButton>
+    }
+  </>;
+};
 
 const IIISettings = ({ ...props }: ViewProps) => {
   const selfInfo_S = useSTSelf(e => e.selfInfo);
@@ -169,23 +185,13 @@ const IIImmmREGIMENT = ({ ...props }: ViewProps) => {
         <ComButton ll className='mb10 cccplh' >团长/快递业务</ComButton>
         <View className='dy dwp'>
           <ComButton ll className='fwb mb10 mr10 bborder' url='/pages_comm/comm__product_express'>快递</ComButton>
-          <ComButton ll className='mb10  dy bborder' onClick={async () => {
-            console.log("bbbb", `/pages_regiment/regiment_invitor?${coo___objToUrl({ OPENID_regiment: selfInfo_S!.OPENID })}`);
-            try_Taro_navigateToMiniProgram({
-              appId: process.env.TARO_APP_CLIENT,
-              path: `/pages_regiment/regiment_invitor?${coo___objToUrl({ OPENID_regiment: selfInfo_S!.OPENID })}`,
-              noRelaunchIfPathUnchanged: false,
-            });
-          }}>
-            分享邀请:<Text className='cccgreen'>小象心选顾客端</Text>
-          </ComButton>
         </View>
         <View className='dy dwp'>
           <ComButton ll className=' nw mb10 mr10 bborder' url={`/pages_regiment/regiment_orders_express?order_ST=${Order_ST.待付款}`}>待付款 </ComButton>
           <ComButton ll className=' nw mb10 mr10 bborder' url={`/pages_regiment/regiment_orders_express?order_ST=${Order_ST.已付款}`}>已付款 </ComButton>
           <ComButton ll className=' nw mb10 mr10 bborder' url={`/pages_regiment/regiment_orders_express?order_ST=${Order_ST.已退款}`}>已退款 </ComButton>
         </View>
-
+        <IIIShareInviteCard selfInfo_S={selfInfo_S!} />
       </View>
     </View>
 
@@ -283,6 +289,7 @@ const IIImmmGUIDE = ({ ...props }: ViewProps) => {
   return <>
     <View className={`bccwhite ww dll mb10 pt10 prl10 IOO ${props.className}`}>
       <ComButton ll className='mb10 cccplh bccwhite mr10'>导游/带货</ComButton>
+      <IIIShareInviteCard selfInfo_S={selfInfo_S!} />
       <View className='dy dwp'>
         <ComButton ll className='mb10 bborder nw mr10' onClick={async () => {
           Taro.showLoading({ mask: true, title: "生成中..." });
@@ -295,6 +302,7 @@ const IIImmmGUIDE = ({ ...props }: ViewProps) => {
           setQrcode(_src);
         }}>推广二维码</ComButton>
       </View>
+
     </View>
     <View>
       {Boolean(qrcode) &&
@@ -308,3 +316,4 @@ const IIImmmGUIDE = ({ ...props }: ViewProps) => {
     </View>
   </>;
 };
+
