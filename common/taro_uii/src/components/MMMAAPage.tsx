@@ -346,8 +346,10 @@ export function ComSELFView({ isRefreshSelfInfo_SEveryTime, ...props }: ViewProp
         {
           !selfInfo_S ?
             <ComNav className='prl10'><ComLoading className='ml10 mb10' /></ComNav>
-            : (isInApp ? <View className="pr">
-              {isLoading && <ComNav className='pa z1' style={{ marginLeft: "-0.2rem", marginTop: "-0.2rem" }}><ComLoading className='ml10 mb10 bcctrans' >{true}</ComLoading></ComNav>}
+            : (isInApp ? <View className="">
+              <View className='z1 pa'>
+                {isLoading && <ComNav className='' style={{ marginLeft: "-0.2rem", marginTop: "-0.2rem" }}><ComLoading className='ml10 mb10 bcctrans' >{true}</ComLoading></ComNav>}
+              </View>
               {props.children}
             </View>
               : <ComNav className='prl10'><ComButton className='cccplh mb10'>AppId不匹配!</ComButton></ComNav>)

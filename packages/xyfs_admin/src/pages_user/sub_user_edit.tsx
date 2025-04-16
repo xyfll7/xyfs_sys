@@ -91,6 +91,7 @@ const IIImyUserEditorAGENT: FC = () => {
       </View>
       <View className='dll ww'>
         <ComButton className='mb10 bccback'>所在部门</ComButton>
+        {userInfo.depts?.length === 0 && <ComLoading isEmpty className='mb10' />}
         {userInfo.depts?.map(e => {
           return <View key={e.deptId} className='mb10 bccwhite ww ioo pt10 dll prl10'>
             <View className='dbtc ww mb10 '>
