@@ -91,7 +91,7 @@ export async function utils_get_qrcode({ page, scene, appid }: { appid?: string;
     encoding: "base64",
     data: imageData,
   });
-
+  console.info("二维码::", res);
   return res;
 }
 
