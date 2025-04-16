@@ -52,11 +52,13 @@ const Index: FC = () => {
               }
             }}>删除</ComButton>
             <ComButton rr className='mb10  bborder ml10' onClick={async () => {
+              Taro.showLoading({ mask: true, title: "生成中..." });
               const _src = await utils_get_qrcode({
                 appid: process.env.TARO_APP_CLIENT,
                 page: "pages/index/index",
                 scene: coo___objToUrl({ R_D: Number(useSTSelf.getState().selfInfo!.mobile).toString(36), S_D: String(e.id), }),
               });
+              Taro.hideLoading();
               setQrcode(_src);
             }}>生成二维码</ComButton>
           </View>

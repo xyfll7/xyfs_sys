@@ -284,23 +284,18 @@ const IIImmmGUIDE = ({ ...props }: ViewProps) => {
     <View className={`bccwhite ww dll mb10 pt10 prl10 IOO ${props.className}`}>
       <ComButton ll className='mb10 cccplh bccwhite mr10'>导游/带货</ComButton>
       <View className='dy dwp'>
-        <ComButton ll className=' nw mb10 mr10 bborder' url={`/pages_comm/icomm_orders_groupbuying?order_ST=${Order_ST.已付款}`}>已付款 </ComButton>
-        <ComButton ll className=' nw mb10 mr10 bborder' url={`/pages_comm/icomm_orders_groupbuying?order_ST=${Order_ST.已退款}`}>已退款 </ComButton>
-      </View>
-
-      <View className='dy dwp'>
         <ComButton ll className='mb10 bborder nw mr10' onClick={async () => {
+          Taro.showLoading({ mask: true, title: "生成中..." });
           const _src = await utils_get_qrcode({
             appid: process.env.TARO_APP_CLIENT,
             page: "pages/index/index",
             scene: coo___objToUrl({ R_D: Number(selfInfo_S!.mobile).toString(36), }),
           });
+          Taro.hideLoading();
           setQrcode(_src);
         }}>推广二维码</ComButton>
       </View>
     </View>
-
-
     <View>
       {Boolean(qrcode) &&
         <ComPopupNew className=' ww' >
