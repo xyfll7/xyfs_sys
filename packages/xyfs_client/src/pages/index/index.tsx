@@ -91,6 +91,12 @@ const Index: FC = () => {
       {/* {getMyEnv().isDeveloping && <IIIBanner className='mb10' />} */}
 
       {selfInfo_S.channelId && <IIIBringGoods channelId={selfInfo_S.channelId} />}
+      {selfInfo_S.channelId && <IIIBringGoods channelId={selfInfo_S.channelId} />}
+      {selfInfo_S.channelId && <IIIBringGoods channelId={selfInfo_S.channelId} />}
+      {selfInfo_S.channelId && <IIIBringGoods channelId={selfInfo_S.channelId} />}
+      {selfInfo_S.channelId && <IIIBringGoods channelId={selfInfo_S.channelId} />}
+      {selfInfo_S.channelId && <IIIBringGoods channelId={selfInfo_S.channelId} />}
+      {selfInfo_S.channelId && <IIIBringGoods channelId={selfInfo_S.channelId} />}
 
       {/* <IIIRegimentAssistList /> */}
       {getMyEnv().platform === "devtools" &&
@@ -145,6 +151,7 @@ const IIIBringGoods = ({ className, channelId }: { className?: string; channelId
     }
   }, [channelId]);
 
+  const customContent = true;
   return <View className={`${className} ww dll`}>
     {!productList && <ComLoading className='mb10'></ComLoading>}
     {productList?.length === 0 && <ComLoading className='mb10' isEmpty></ComLoading>}
@@ -152,7 +159,7 @@ const IIIBringGoods = ({ className, channelId }: { className?: string; channelId
       const product = item.product[0];
       return <View className='ww  dll' key={index}>
         {/*@ts-ignore*/}
-        <store-product-item class="ww hh mb10" customContent appid={product.appid} productId={product.out_product_id} productPromotionLink={product.product_promotion_link}>
+        <store-product-item class="ww hh mb10" customContent={customContent} appid={product.appid} productId={product.out_product_id} productPromotionLink={product.product_promotion_link}>
           <View className='ds  hh ovh bccwhite mb10 ioo h7rem ww'>
             <ComImage className='mr10' src={product.img_url} style={{ width: "7rem" }}></ComImage>
             <View className='pt10 hh ww dbtl h7rem ovh'>
@@ -167,7 +174,7 @@ const IIIBringGoods = ({ className, channelId }: { className?: string; channelId
 
               <View className='h2rem mb10 ovh ww dr'>
                 {/*@ts-ignore*/}
-                <store-product-item class="mr10 ds" customContent openPage="buy" appid={product.appid} productId={product.out_product_id} productPromotionLink={product.product_promotion_link}>
+                <store-product-item class="mr10 ds" customContent={customContent} openPage="buy" appid={product.appid} productId={product.out_product_id} productPromotionLink={product.product_promotion_link}>
                   <View className='dr ww'>
                     <ComButton className='bccgreen cccwhite'>购买</ComButton>
                   </View>
