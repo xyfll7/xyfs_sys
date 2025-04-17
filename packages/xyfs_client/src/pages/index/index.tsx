@@ -37,7 +37,6 @@ const Index: FC = () => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const [isHeaderBack, setIsHeaderBack] = useState(false);
   const { capRight } = utils_get_capsule();
-  console.log("xxxx:::", selfInfo_S);
   return <MMMAAPage>
     <View className='ww'>
       <ComBanner isHeaderBack={isHeaderBack} src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/back_image_25.jpg' />
