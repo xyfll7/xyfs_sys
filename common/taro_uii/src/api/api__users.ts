@@ -99,11 +99,12 @@ export async function Api_common_textOCR_ctn(params: { imgUrl?: string; text?: s
     text: res.text
   };
 }
-export async function Api_login_rqs(): Promise<DeptInfo> {
+export async function Api_login_rqs(params?: { mobile?: string, }): Promise<DeptInfo> {
   const res = await wx_call_container<DeptInfo>({
     path: "/login",
     data: {
-      code: await (async () => { return Taro_getStorageSync<string>("OPENID", getMyEnv()) ? "" : await try_Taro_login(); })()
+      code: await (async () => { return Taro_getStorageSync<string>("OPENID", getMyEnv()) ? "" : await try_Taro_login(); })(),
+      ...params,
     }
   });
   return res;

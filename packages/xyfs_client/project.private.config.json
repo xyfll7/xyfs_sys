@@ -10,6 +10,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages/index/index",
+          "pathName": "pages/index/index",
+          "query": "scene=R_D%3D7yfv1wj",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages_regiment/regiment_invitor",
           "pathName": "pages_regiment/regiment_invitor",
           "query": "OPENID_regiment=oGwbL5PVdCTyoE2sYHAq2bdNA9BY",

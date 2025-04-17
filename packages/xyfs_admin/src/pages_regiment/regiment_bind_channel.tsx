@@ -35,22 +35,6 @@ const Index: FC<{}> = ({ }) => {
   </MMMAAPage>;
 };
 
-// 任会
-
-// 视频号ID sph7OSpmev0O3p5
-
-// 带货者ID wxe85137cf3b18aa9c
-// 密钥 0008f8d014880f32d18a079024d973cf
-
-// 橱窗ID wxa0e0de3c6c6bb17d
-// 橱窗密钥 03538d1fa323e99a1aa5356d73100d43
-
-// Token令牌 Tokenrenhui
-// 消息密钥 j0FHC1Grq9suY9mjSQXuTKxEx3HbbWA1pxbE4GniL7R;
-
-// https://el-main-63173-10-1306790653.sh.run.tcloudbase.com/api/wechat/channels/sph7OSpmev0O3p5
-
-
 const IIIBindAccountList: FC<{}> = ({ }) => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const [form, setForm] = useHook_Reducer({
@@ -108,7 +92,7 @@ const IIIBindAccountList: FC<{}> = ({ }) => {
 
 
       {selfInfo_S.channelId && <ComButton className="mb10 bccback" hoverClass="none">已绑定视频号ID: <Text className="cccgreen ml10">{selfInfo_S.channelId}</Text> </ComButton>}
-      {selfInfo_S.channelId && <ComButton className="mb10 bccback" hoverClass="none">尚未绑定 </ComButton>}
+      {!selfInfo_S.channelId && <ComButton className="mb10 bccback" hoverClass="none">尚未绑定 </ComButton>}
 
 
 
@@ -185,13 +169,18 @@ const IIIBindAccountList: FC<{}> = ({ }) => {
 
       <ComButton className='bccgreen cccwhite nw mb10' hoverClass="none" onClick={async () => {
 
-        const res_modal = await try_Taro_showModal({
-          title: "提示",
-          content: "您已经绑定了视频号ID，是否要重新绑定？",
-          cancelText: "取消",
-          confirmText: "重新绑定",
-        });
-        if (!res_modal) { Taro.showToast({ icon: "none", title: "取消" }); return; }
+
+        if (selfInfo_S.channelId) {
+          const res_modal = await try_Taro_showModal({
+            title: "提示",
+            content: "您已经绑定了视频号ID，是否要重新绑定？",
+            cancelText: "取消",
+            confirmText: "重新绑定",
+          });
+          if (!res_modal) { Taro.showToast({ icon: "none", title: "取消" }); return; }
+        }
+
+
 
         if (!form.channelId) { Taro.showToast({ icon: "none", title: "请输入视频号ID", }); return; }
         if (!form.talentId) { Taro.showToast({ icon: "none", title: "请输入带货者ID", }); return; }
