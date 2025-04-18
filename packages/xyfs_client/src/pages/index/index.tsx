@@ -91,12 +91,6 @@ const Index: FC = () => {
       {/* {getMyEnv().isDeveloping && <IIIBanner className='mb10' />} */}
 
       {selfInfo_S.channelId && <IIIBringGoods channelId={selfInfo_S.channelId} />}
-      {selfInfo_S.channelId && <IIIBringGoods channelId={selfInfo_S.channelId} />}
-      {selfInfo_S.channelId && <IIIBringGoods channelId={selfInfo_S.channelId} />}
-      {selfInfo_S.channelId && <IIIBringGoods channelId={selfInfo_S.channelId} />}
-      {selfInfo_S.channelId && <IIIBringGoods channelId={selfInfo_S.channelId} />}
-      {selfInfo_S.channelId && <IIIBringGoods channelId={selfInfo_S.channelId} />}
-      {selfInfo_S.channelId && <IIIBringGoods channelId={selfInfo_S.channelId} />}
 
       {/* <IIIRegimentAssistList /> */}
       {getMyEnv().platform === "devtools" &&
