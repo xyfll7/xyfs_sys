@@ -317,6 +317,7 @@ export function ComSELFView({ isRefreshSelfInfo_SEveryTime, ...props }: ViewProp
   const net = useSyncExternalStore(netWork.sub, () => netWork.status);
   const [selfInfo_S, isLoading] = useHook_selfInfo_show({ isRefreshSelfInfo_SEveryTime });
   const isInApp = selfInfo_S?.appid === getMyEnv().appId;
+  console.log("ComSELFView", selfInfo_S, isInApp, getMyEnv().appId);
   useLoad(() => {
     Taro.onThemeChange(({ theme }) => {
       useSTSelf.getState().setSelfInfoTheme(theme);
@@ -339,6 +340,7 @@ export function ComSELFView({ isRefreshSelfInfo_SEveryTime, ...props }: ViewProp
   }
 
 
+
   return <View className={`dll  ${props.className}`}
     style={{ filter: selfInfo_S?.is_silence_color ? "grayscale(1)" : "", minWidth: "100vw", width: "100vw", maxWidth: "100vw", height: "100vh", minHeight: "100vh", maxHeight: "100vh", overflow: "hidden" }}>
     {net.isConnected &&
@@ -352,7 +354,10 @@ export function ComSELFView({ isRefreshSelfInfo_SEveryTime, ...props }: ViewProp
               </View>
               {props.children}
             </View>
-              : <ComNav className='prl10'><ComButton className='cccplh mb10'>AppId不匹配!</ComButton></ComNav>)
+              : <ComNav className='prl10'>
+                <ComButton className='cccplh mb10'>AppId不匹配!</ComButton>
+                <ComButton className='cccplh mb10'>当前 {process.env.TARO_APP_ADMIN === getMyEnv().appId ? "管理端" : "顾客端"}</ComButton>
+              </ComNav>)
         }
       </>
     }
