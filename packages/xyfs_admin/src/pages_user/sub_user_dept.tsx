@@ -34,7 +34,7 @@ definePageConfig({
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC<{}> = ({ }) => {
   const [depts, setDepts] = useState<any[]>();
-  const [searchValue, setSearchValue] = useHook_Reducer("");
+  const [searchValue, setSearchValue] = useHook_Reducer("王肇");
 
 
   const ___Api_dept_list_ctn = useCallback(async () => {
@@ -249,36 +249,49 @@ const Index: FC<{}> = ({ }) => {
 
 const IIIDeptAdd = ({ dept, onSuccess, onClose }: { dept: any; onSuccess: () => void; onClose: () => void; }) => {
   const [form, setForm] = useHook_Reducer({ deptName: "" });
+  const [isMainDept, setIsMainDept] = useState(false);
   return <View className='ww dll'>
     <ComNavBarB className='mb10' onClose={onClose}>
       <View className='dy'><ComButton className='fwb bccback'>添加子部门</ComButton></View>
     </ComNavBarB>
     <ComButton className='mb10 bcctrans' hoverClass='none'> <Text className='cccplh'>上级部门:</Text> {dept.deptName}</ComButton>
-    <View className='ww mb10 dll'>
+    <View className='ww mb10 dll bccwhite ioo pl10 pt10'>
       <View className='mb10 ww dy'>
+        <Text className="nw mr10">部门名称</Text>
         <ComButton className='bccbacktab ww mr10' hoverClass='none'>
           <ComInput placeholder='请填写子部门名称' value={form.deptName} onInput={(e) => setForm({ deptName: e.detail.value })}></ComInput>
         </ComButton>
-        <ComButton className='nw cccgreen' onClick={async () => {
-          Taro.showLoading({ mask: true, title: "新增中..." });
-          await Api_dept_add_ctn({ deptName: form.deptName, parentId: dept.deptId });
-          Taro.showToast({ icon: "none", title: "成功" });
-          onSuccess();
-        }}>新增</ComButton>
       </View>
+      <View className='mb10 ww dbtc mb10'>
+        <Text className="nw mr10">是否为第一部门</Text>
+        <ComButton className={`bccbacktab mr10 ${isMainDept ? "cccgreen" : "cccplh"}`} hoverClass='none' onClick={() => {
+          setIsMainDept(!isMainDept);
+        }}>
+          {isMainDept ? '是' : '否'}
+        </ComButton>
+      </View>
+    </View>
+    <View className="dr ww">
+      <ComButton className='nw cccgreen' onClick={async () => {
+        Taro.showLoading({ mask: true, title: "新增中..." });
+        await Api_dept_add_ctn({ deptName: form.deptName, parentId: dept.deptId, mainDept: isMainDept ? 1 : 0 });
+        Taro.showToast({ icon: "none", title: "成功" });
+        onSuccess();
+      }}>新增</ComButton>
     </View>
 
   </View>;
 };
 const IIIDeptEdit = ({ dept, onSuccess, onClose }: { dept: any; onSuccess: () => void; onClose: () => void; }) => {
-  console.log("dept", dept);
   const { dicts_roles, dicts_delivery, dicts_logisticPricescheme } = useSTDicts(state => state);
   const [form, setForm] = useHook_Reducer({ deptName: "" });
   const [deptInfo, setDeptInfo] = useState<DeptInfo | null>(null);
+  const [isMainDept, setIsMainDept] = useState(false);
   useEffect(() => {
     (async () => {
       const res = await Api_dept_info_ctn({ deptId: dept.deptId! });
       setDeptInfo(res);
+      setIsMainDept(res?.mainDept == 1 ? true : false);
     })();
   }, [dept]);
 
@@ -296,13 +309,21 @@ const IIIDeptEdit = ({ dept, onSuccess, onClose }: { dept: any; onSuccess: () =>
 
         <ComButton className='nw cccgreen' onClick={async () => {
           Taro.showLoading({ mask: true, title: "新增中..." });
-          const res_deptInfo = await Api_dept_edit_ctn({ deptId: deptInfo?.deptId!, deptName: form.deptName, });
+          const res_deptInfo = await Api_dept_edit_ctn({ deptId: deptInfo?.deptId!, deptName: form.deptName, mainDept: isMainDept ? 1 : 0 });
           Taro.showToast({ icon: "none", title: "成功" });
           Taro.showToast({ icon: "none", title: "更新完成" });
           setDeptInfo(res_deptInfo);
           onSuccess();
         }}>修改</ComButton>
 
+      </View>
+      <View className='ww dbtc '>
+        <ComButton className='cccplh mb10 bccback'>是否为第一部门</ComButton>
+        <ComButton className={`bccbacktab  mb10 ${isMainDept ? "cccgreen" : "cccplh"}`} hoverClass='none' onClick={() => {
+          setIsMainDept(!isMainDept);
+        }}>
+          {isMainDept ? '是' : '否'}
+        </ComButton>
       </View>
       <View className='ww dll '>
         <ComButton className='cccplh mb10 bccback'>指定部门角色</ComButton>

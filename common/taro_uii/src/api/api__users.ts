@@ -288,6 +288,7 @@ export async function Api_dept_add_ctn(params: {
   leader?: string,
   parentId?: string,
   phone?: string,
+  mainDept: 1 | 0,
 }) {
   const res = await wx_call_container<Printer_Info>({
     path: "/dept/add",

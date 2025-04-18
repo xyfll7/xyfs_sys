@@ -58,6 +58,7 @@ export interface DeptInfo extends BaseUserInfo, AddressInfo {
   deptInfo?: DeptInfo | null; // 我的团长信息
   managerUser?: DeptInfo | null; // 我的团长信息
   depts?: DeptInfo[];
+  mainDept: 1 | 0; // 是否为主部门
   parentDeptInfo?: DeptInfo | null;  // 我的上级信息 - 代理/工厂
   serveVersion?: string; // 服务版本
   lastUpdateTime?: number; // 更新时间

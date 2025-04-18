@@ -37,6 +37,7 @@ const Index: FC = () => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const [isHeaderBack, setIsHeaderBack] = useState(false);
   const { capRight } = utils_get_capsule();
+  console.log("ssss:::", selfInfo_S);
   return <MMMAAPage>
     <View className='ww'>
       <ComBanner isHeaderBack={isHeaderBack} src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/back_image_25.jpg' />
@@ -93,6 +94,9 @@ const Index: FC = () => {
       {selfInfo_S.channelId && <IIIBringGoods channelId={selfInfo_S.channelId} />}
 
       {/* <IIIRegimentAssistList /> */}
+
+
+
       {getMyEnv().platform === "devtools" &&
         <View className='dll'>
           <ComButton className='bccwhite cccprice fwb mb10' url='/pages/test/ctest_display' >测试display</ComButton>
@@ -132,6 +136,7 @@ const IIIBanner = ({ ...props }: ViewProps) => {
     </View>
   </View>;
 };
+
 
 
 const IIIBringGoods = ({ className, channelId }: { className?: string; channelId?: string; }) => {
@@ -209,15 +214,25 @@ const IIIBringGoodsArea = () => {
 };
 
 const IIIMainNavigator: FC<{ className?: string; style?: string | React.CSSProperties; }> = ({ className = '', style }) => {
-  return <View className={`${className} dy pl10 pt10`} style={style}>
-    <ComButton className='mb10 oo pbt8 mr10 fwb shadow' url='/pages_comm/comm__product_express' >
-      团寄快递
-    </ComButton>
-    <ComButton className='mb10 oo pbt8 mr10 fwb shadow' url='/pages_comm/comm__product_dryclean' >
-      团购干洗
-    </ComButton>
+  const selfInfo_S = useSTSelf(s => s.selfInfo!);
+  return <View className='dll ww'>
+    <View className={`${className} dy pl10 pt10`} style={style}>
+      <ComButton className='mb10 oo pbt8 mr10 fwb shadow' url='/pages_comm/comm__product_express' >
+        团寄快递
+      </ComButton>
+      <ComButton className='mb10 oo pbt8 mr10 fwb shadow' url='/pages_comm/comm__product_dryclean' >
+        团购干洗
+      </ComButton>
+      {selfInfo_S.managerUser &&
+        <ComButton className='mb10 oo pbt8 mr10 fwb shadow' url='/pages_regiment/regiment_invitor' >
+          管理页
+        </ComButton>
+      }
+    </View>
+
   </View>;
 };
+
 
 const IIIRegimentAssistList: FC<{}> = ({ }) => {
 
