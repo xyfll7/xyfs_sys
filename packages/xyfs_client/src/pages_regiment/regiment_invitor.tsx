@@ -33,7 +33,7 @@ const Index: FC = () => {
         <View className='dll ww'>
           <View className='dy'>
             <ComButton className='mb10 mr10 nw' onClick={() => { Taro.navigateBackMiniProgram({}); }}>返回→管理端</ComButton>
-            <ComButton ll className='mb10 cccplh nw1'> <Text className='wm7rem'>{managerUser?.name}</Text> <Text className='nw'>(团长) 您好 👋</Text>  </ComButton>
+            <ComButton ll className='mb10 cccplh nw1'> <Text className='wm7rem nw1'>{managerUser?.name}</Text> <Text className='nw'>(团长) 您好 👋</Text>  </ComButton>
           </View>
           {roo___has_role(managerUser, ["REGIMENT"]) && <IIIExpress deptInfo={managerUser}></IIIExpress>}
           {roo___has_role(managerUser, ["REGIMENT"]) && <IIIDryclean deptInfo={managerUser}></IIIDryclean>}
