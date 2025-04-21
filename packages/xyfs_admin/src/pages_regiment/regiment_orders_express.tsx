@@ -101,7 +101,7 @@ const Index: FC<{}> = ({ }) => {
       {page.list?.map((e) => {
         const ee1 = e as OrderInfo<Product_Express>;
         return <View className='bccwhite IOO mb10 ww' key={e.id}>
-          <ComCardOrderExpress key={e.id} className='mb10' order={ee1} />
+          <ComCardOrderExpress key={e.id} className='' order={ee1} />
           <IIIOrderExpressOperation
             onSetShowQRCode={(ee) => setShowQRCode(ee)}
             order={ee1}
