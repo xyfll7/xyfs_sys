@@ -34,7 +34,8 @@ definePageConfig({
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC<{}> = ({ }) => {
   const [depts, setDepts] = useState<any[]>();
-  const [searchValue, setSearchValue] = useHook_Reducer("王肇");
+  // const [searchValue, setSearchValue] = useHook_Reducer("王肇");
+  const [searchValue, setSearchValue] = useHook_Reducer("");
 
 
   const ___Api_dept_list_ctn = useCallback(async () => {
