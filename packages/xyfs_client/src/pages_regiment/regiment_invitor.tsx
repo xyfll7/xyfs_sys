@@ -10,37 +10,36 @@ import { ComNavBarA } from '@xyfs/taro_uii/components/ComNavBarA';
 import { ComScrollView } from '@xyfs/taro_uii/components/ComScrollView';
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { roo___has_role } from '@xyfs/taro_uii/src/roles';
+import { useSTSelf } from '@xyfs/taro_uii/store/store';
 import { Taro_getCurrentInstance, try_Taro_navigateBack } from '@xyfs/taro_uii/utils/try_catch';
-import { useHook_deptInfo } from '@xyfs/taro_uii/utils/useHooks';
 import { coo___objToUrl, coo___urlToObj } from '@xyfs/utils/util';
 import { FC, useEffect, useState } from 'react';
 
 definePageConfig({ enableShareAppMessage: true, navigationStyle: "custom", disableScroll: true, });
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC = () => {
-  const { options } = Taro_getCurrentInstance<{ OPENID_regiment: string, }>();
-  const dept = useHook_deptInfo({ OPENID_regiment: options.OPENID_regiment });
+  const selfInfo_S = useSTSelf(s => s.selfInfo!);
+  const managerUser = selfInfo_S.managerUser;
   return <MMMAAPage
     isNeedRegiment={false}
-    isLoading={!options.OPENID_regiment ? Boolean(options.OPENID_regiment) : !dept}
-    isPageAccess={roo___has_role(dept, ["REGIMENT", "GUIDE"])}>
+    isPageAccess={roo___has_role(managerUser, ["REGIMENT", "GUIDE"])}>
     <ComNav>
       <ComNavBarA backText='首页' onClickBack={async () => { await try_Taro_navigateBack(); }} className='mb10 pl10'>
         <ComButton ll className='bcctrans cccplh ml10' >分享邀请</ComButton>
       </ComNavBarA>
     </ComNav>
     <ComScrollView>
-      {dept &&
+      {managerUser &&
         <View className='dll ww'>
           <View className='dy'>
             <ComButton className='mb10 mr10 nw' onClick={() => { Taro.navigateBackMiniProgram({}); }}>返回→管理端</ComButton>
-            <ComButton ll className='mb10 cccplh nw1'> <Text className='wm7rem'>{dept?.name}</Text> <Text className='nw'>(团长) 您好 👋</Text>  </ComButton>
+            <ComButton ll className='mb10 cccplh nw1'> <Text className='wm7rem'>{managerUser?.name}</Text> <Text className='nw'>(团长) 您好 👋</Text>  </ComButton>
           </View>
-          {roo___has_role(dept, ["REGIMENT"]) && <IIIExpress deptInfo={dept}></IIIExpress>}
-          {roo___has_role(dept, ["REGIMENT"]) && <IIIDryclean deptInfo={dept}></IIIDryclean>}
+          {roo___has_role(managerUser, ["REGIMENT"]) && <IIIExpress deptInfo={managerUser}></IIIExpress>}
+          {roo___has_role(managerUser, ["REGIMENT"]) && <IIIDryclean deptInfo={managerUser}></IIIDryclean>}
 
 
-          {roo___has_role(dept, ["REGIMENT", "GUIDE"]) && <IIIBringGoods deptInfo={dept}></IIIBringGoods>}
+          {roo___has_role(managerUser, ["REGIMENT", "GUIDE"]) && <IIIBringGoods deptInfo={managerUser}></IIIBringGoods>}
 
         </View>
       }

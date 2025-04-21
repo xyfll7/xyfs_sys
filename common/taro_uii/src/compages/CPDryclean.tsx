@@ -403,7 +403,7 @@ const ShopCartTabBarRegiment: FC<PropsWithChildren & { children?: ReactElement |
 
 
 export async function dryclean_sharer(orderCode: string) {
-  const url = `/pages_regiment/regiment_invitor?${coo___objToUrl({ OPENID_regiment: useSTSelf.getState().selfInfo!.OPENID, scene: encodeURIComponent(coo___objToUrl({ S_D: String(orderCode) })) })}`;
+  const url = `/pages_regiment/regiment_invitor?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ S_D: String(orderCode) })) })}`;
   try_Taro_navigateToMiniProgram({
     appId: process.env.TARO_APP_CLIENT,
     path: url,

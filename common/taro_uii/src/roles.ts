@@ -6,7 +6,7 @@ import { ROLE_KEY, ROLE_NAME, ROLE_ST } from './config';
 
 
 // 角色判断函数
-export function roo___has_role(userInfo: DeptInfo | null, _roles: ROLE_KEY[] = [], mode: "or" | "and" | "only" = "or"): boolean {
+export function roo___has_role(userInfo?: DeptInfo | null, _roles: ROLE_KEY[] = [], mode: "or" | "and" | "only" = "or"): boolean {
   // 检测团长的团长是否为团长自己
   const roles = userInfo?.roles ?? [];
 

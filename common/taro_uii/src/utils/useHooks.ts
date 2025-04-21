@@ -2,8 +2,6 @@ import Taro, { useError, useShareAppMessage, useUnhandledRejection } from "@taro
 import { coo___ios_date } from "@xyfs/utils/util";
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { Pagination } from "../../types/type_index";
-import { DeptInfo } from "../../types/type_user";
-import { Api_user_info_ctn } from "../api/api__users";
 import { ErrorR } from "../config";
 import { getMyEnv } from "../env";
 import { try_Taro_getLocation } from "./try_catch";
@@ -18,20 +16,6 @@ export function useHook_Reducer<T>(data: T): [T, React.Dispatch<Partial<T> | nul
     }
   }, data);
   return [state, setState as React.Dispatch<Partial<T> | null>];
-}
-
-
-export function useHook_deptInfo({ OPENID_regiment }: { OPENID_regiment: string; }) {
-  const [userInfo, setUserInfo] = useState<DeptInfo | null>(null);
-  useEffect(() => {
-    if (OPENID_regiment) {
-      (async () => {
-        const res = await Api_user_info_ctn({ userId: OPENID_regiment });
-        setUserInfo(res);
-      })();
-    }
-  }, [OPENID_regiment]);
-  return userInfo;
 }
 
 export function useHook_getLocation() {

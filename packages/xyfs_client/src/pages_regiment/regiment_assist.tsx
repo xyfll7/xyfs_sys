@@ -10,15 +10,15 @@ import { ComNavBarA } from "@xyfs/taro_uii/components/ComNavBarA";
 import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
 import { ComSELFView, MMMAAPage } from "@xyfs/taro_uii/components/MMMAAPage";
 import { roo___has_role } from "@xyfs/taro_uii/src/roles";
-import { Taro_getCurrentInstance } from "@xyfs/taro_uii/utils/try_catch";
-import { useHook_deptInfo, useHook_pageListNew } from "@xyfs/taro_uii/utils/useHooks";
+import { useSTSelf } from "@xyfs/taro_uii/store/store";
+import { useHook_pageListNew } from "@xyfs/taro_uii/utils/useHooks";
 import { FC, useCallback } from "react";
 
 definePageConfig({ enableShareAppMessage: true, navigationStyle: "custom", disableScroll: true, });
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC = () => {
-  const { options } = Taro_getCurrentInstance<{ OPENID_regiment: string, }>();
-  const dept = useHook_deptInfo({ OPENID_regiment: options.OPENID_regiment });
+  const selfInfo_S = useSTSelf(s => s.selfInfo!);
+  const managerUser = selfInfo_S.managerUser;
   const ___page_getter = useCallback(async (p: Pagination<unknown>) =>
     await Api_assist_list_ctn({
       ...p,
@@ -27,8 +27,7 @@ const Index: FC = () => {
   const { page, } = useHook_pageListNew(___page_getter,);
   return <MMMAAPage
     isNeedRegiment={false}
-    isLoading={!options.OPENID_regiment ? Boolean(options.OPENID_regiment) : !dept}
-    isPageAccess={roo___has_role(dept, ["REGIMENT"])}>
+    isPageAccess={roo___has_role(managerUser, ["REGIMENT"])}>
     <ComNav isRight>
       <ComNavBarA className='mb10 pl10'>
         <ComButton ll className='bcctrans ml10 cccplh'>团长帮忙</ComButton>
