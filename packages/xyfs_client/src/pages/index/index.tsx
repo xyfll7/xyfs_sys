@@ -1,8 +1,10 @@
 // :: pages/index/index
 import { Text, View, ViewProps } from '@tarojs/components';
+import Taro from '@tarojs/taro';
 import { Pagination } from '@xyfs/taro_uii';
 import { Api_assist_explore_ctn } from '@xyfs/taro_uii/api/api__assist';
 import { Api_common_productList_ctn } from '@xyfs/taro_uii/api/api__shop';
+import { Api_user_edit_ctn } from '@xyfs/taro_uii/api/api__users';
 import CPRegimentAssist from '@xyfs/taro_uii/compages/CPRegimentAssist';
 import { ComAddressSwitchor } from '@xyfs/taro_uii/components/ComAddressSwitchor';
 import { ComBanner } from '@xyfs/taro_uii/components/ComBanner';
@@ -18,7 +20,7 @@ import { MMMLogo } from '@xyfs/taro_uii/components/MMMLogo';
 import { getMyEnv } from '@xyfs/taro_uii/src/env';
 import { roo___has_role, roo___my_dept } from '@xyfs/taro_uii/src/roles';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
-import { try_Taro_navigateTo } from '@xyfs/taro_uii/utils/try_catch';
+import { try_Taro_navigateBack, try_Taro_navigateTo } from '@xyfs/taro_uii/utils/try_catch';
 import { useHook_pageListNew } from '@xyfs/taro_uii/utils/useHooks';
 import { utils_get_capsule } from '@xyfs/taro_uii/utils/util';
 import { FC, useCallback, useEffect, useState } from 'react';
@@ -223,10 +225,21 @@ const IIIMainNavigator: FC<{ className?: string; style?: string | React.CSSPrope
       <ComButton className='mb10 oo pbt8 mr10 fwb shadow' url='/pages_comm/comm__product_dryclean' >
         团购干洗
       </ComButton>
-      {selfInfo_S.managerUser &&
+      {selfInfo_S.managerUser && <>
+
         <ComButton className='mb10 oo pbt8 mr10 fwb shadow' url='/pages_regiment/regiment_invitor' >
           管理页
         </ComButton>
+        <ComButton className='mb10 oo pbt8 mr10 fwb shadow' onClick={async () => {
+          Taro.showLoading({ mask: true, title: "更新中...", });
+          const res_userInfo = await Api_user_edit_ctn({ deptId: selfInfo_S.managerUser?.deptId });
+          useSTSelf.getState().sett(res_userInfo);
+          Taro.hideLoading();
+          try_Taro_navigateBack();
+        }} >
+          关注自己
+        </ComButton>
+      </>
       }
     </View>
 
