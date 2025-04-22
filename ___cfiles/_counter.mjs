@@ -34,7 +34,7 @@ function Salary_Statistics_Table() {
   });
   const result = strs.join('\n');
   fs.writeFileSync(`${__dirname}/_test_result.csv`, result);
-  console.log("Done!");
+  console.log("_test_result.csv,Done!");
 }
 function Postal_Order_Form() {
 
