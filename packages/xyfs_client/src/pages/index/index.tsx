@@ -8,12 +8,13 @@ import { Api_user_edit_ctn } from '@xyfs/taro_uii/api/api__users';
 import CPRegimentAssist from '@xyfs/taro_uii/compages/CPRegimentAssist';
 import { ComAddressSwitchor } from '@xyfs/taro_uii/components/ComAddressSwitchor';
 import { ComBanner } from '@xyfs/taro_uii/components/ComBanner';
-import { ComButton } from '@xyfs/taro_uii/components/ComButton';
-import { ComImage } from '@xyfs/taro_uii/components/ComImage';
+import { ComButton, ComButtonOpen } from '@xyfs/taro_uii/components/ComButton';
+import { ComImage, ComImageStack } from '@xyfs/taro_uii/components/ComImage';
 import { ComLoading } from '@xyfs/taro_uii/components/ComLoading';
 import { ComNav } from '@xyfs/taro_uii/components/ComNav';
 import { ComPrice } from '@xyfs/taro_uii/components/ComPrice';
 import { ComScrollView } from '@xyfs/taro_uii/components/ComScrollView';
+import { ComSquare } from '@xyfs/taro_uii/components/ComSquare';
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { MMMFooter } from '@xyfs/taro_uii/components/MMMFooter';
 import { MMMLogo } from '@xyfs/taro_uii/components/MMMLogo';
@@ -23,6 +24,7 @@ import { useSTSelf } from '@xyfs/taro_uii/store/store';
 import { try_Taro_navigateBack, try_Taro_navigateTo } from '@xyfs/taro_uii/utils/try_catch';
 import { useHook_pageListNew } from '@xyfs/taro_uii/utils/useHooks';
 import { utils_get_capsule } from '@xyfs/taro_uii/utils/util';
+import { coo___objToUrl } from '@xyfs/utils/util';
 import { FC, useCallback, useEffect, useState } from 'react';
 
 definePageConfig({
@@ -39,10 +41,12 @@ const Index: FC = () => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const [isHeaderBack, setIsHeaderBack] = useState(false);
   const { capRight } = utils_get_capsule();
-  console.log("ssss:::", selfInfo_S);
   return <MMMAAPage>
     <View className='ww'>
-      <ComBanner isHeaderBack={isHeaderBack} src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/back_image_25.jpg' />
+      {/* <ComBanner isHeaderBack={isHeaderBack} src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/back_image_25.jpg' /> */}
+      <ComBanner isHeaderBack={isHeaderBack} maskHightT='70%' maskHightF='10vh' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/farmer_0.webp' />
+      {/* <ComBanner isHeaderBack={isHeaderBack} src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/yanan_3.jpg' /> */}
+      {/* <ComBanner isHeaderBack={isHeaderBack} maskHightT='70%' maskHightF='10vh' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/yanan_4.webp' /> */}
       <ComNav>
         <View className='ww'>
 
@@ -89,9 +93,16 @@ const Index: FC = () => {
       onScroll={(e, top) => { if (e.detail.scrollTop > top) { setIsHeaderBack(true); } }}
       onScrollToUpper={() => { setIsHeaderBack(false); }}>
 
-      {roo___has_role(selfInfo_S!.deptInfo!, ["REGIMENT"]) && <IIIMainNavigator className='mb10  ' />}
+      <IIIMainNavigator className='mb10  ' />
+
 
       {/* {getMyEnv().isDeveloping && <IIIBanner className='mb10' />} */}
+
+      <View className='prl10 ww'>
+        <View className='dxy bccgreen fs07 ioo prl10 pbt10 cccwhite ww mb10'>
+          指导单位:延安市商务局 | 公益合作伙伴: 中国扶贫基金会 善品公社
+        </View>
+      </View>
 
       {selfInfo_S.channelId && <IIIBringGoods channelId={selfInfo_S.channelId} />}
 
@@ -141,7 +152,107 @@ const IIIBanner = ({ ...props }: ViewProps) => {
 
 
 
-const IIIBringGoods = ({ className, channelId }: { className?: string; channelId?: string; }) => {
+const IIIBringGoods = ({ className, channelId, }: { className?: string; channelId?: string; }) => {
+  const selfInfo_S = useSTSelf(s => s.selfInfo!);
+  const [productList, setProductList] = useState<any[]>();
+  useEffect(() => {
+    setProductList(undefined);
+    if (channelId) {
+      Api_common_productList_ctn().then((res) => {
+        setProductList(res);
+      });
+    }
+  }, [channelId]);
+  const customContent = true;
+  return <View className={`${className} ww dll`}>
+    {!productList && <ComLoading className='mb10'></ComLoading>}
+    {productList?.length === 0 && <ComLoading className='mb10' isEmpty></ComLoading>}
+    {productList && [...productList, ...productList, ...productList].map((item, index) => {
+      const product = item.product[0];
+      return <View className='ww  dll' key={index}>
+        {/*@ts-ignore*/}
+        <View className='dll IOO mb10 ww' style={{
+          background: [
+            "linear-gradient(170deg,#fcfefc, #f4faee, #e6f2d7, #cfebc0);",
+            "linear-gradient(170deg,#fff9f6, #fff0e7, #ffe1cc, #ffcfb3);",
+            "linear-gradient(170deg,#fffef8, #fef8d9, #fdefb0, #fde68a);",
+            "linear-gradient(170deg,#fbfcfd, #f0f3fa, #dee7f1, #cfdced);",
+          ][index % 4]
+        }}>
+          <View className='prl10 pt10 dy mb10 ww '>
+            <ComImage className='mr10' mode='heightFix' style={{ width: 'auto', height: "1.2rem", borderRadius: "0rem !important" }} src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/yanan_logo.webp'></ComImage>
+            <View className=' fs11 ' style={{ color: ["#6CAB3E", "#EF753E", "#E5A100", "#6A83B3"][index % 4] }}>
+              <Text className="nw1"> {String(product.title)}</Text>
+            </View>
+          </View>
+          <View className='prl10 mb10 ww'>
+            {/*@ts-ignore*/}
+            <store-product-item class="ww hh" openPage="product-detail" customContent={customContent} appid={product.appid} productId={product.out_product_id} productPromotionLink={product.product_promotion_link}>
+              <View className='ds bccwhite IOO hh ovh ww'>
+                <ComImage className='mr10' src={product.img_url} style={{ width: "7rem" }}></ComImage>
+                <View className='pt10 hh ww dbtl h7remx  ovh'>
+                  <View>
+                    <ComButton ll className='bcctrans' hoverClass='none'>
+                      <Text className="nw1"> {String(product.title)}</Text>
+                    </ComButton>
+                    <View className=''>
+                      <ComPrice className='cccprice' price={product.selling_price / 100}></ComPrice>
+                    </View>
+                  </View>
+
+                  <View className='h2rem mb10 ovh ww dr'>
+                    {/*@ts-ignore*/}
+                    <store-product-item class="mr10 ds" customContent={customContent} openPage="buy" appid={product.appid} productId={product.out_product_id} productPromotionLink={product.product_promotion_link}>
+                      <View className='dr ww'>
+                        <ComButton className='bccgreen cccwhite'>购买</ComButton>
+                      </View>
+                      {/*@ts-ignore*/}
+                    </store-product-item>
+                  </View>
+                </View>
+              </View>
+              {/*@ts-ignore*/}
+            </store-product-item>
+          </View>
+          <View className='prl10 dbtc ww mb10' onClick={async (e) => { e.stopPropagation(); }}>
+            <ComImageStack className='mr6' length={6} avatars={[
+              "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/yanan_3.jpg",
+              "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/yanan_3.jpg",
+              "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/yanan_3.jpg",
+            ]}>
+            </ComImageStack>
+
+            <ComButtonOpen className='cccgreen bccbacktab slr' id='send_express'
+              shareTitle={`${selfInfo_S.managerUser?.name} 团长 邀您买东西啦`}
+              openType='share'
+              sharePath={`/pages/index/index?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ R_D: Number(selfInfo_S.managerUser?.mobile).toString(36) })) })}`}>
+              <View className='dbase'>
+                {selfInfo_S.managerUser && <Text className='fs07 mr4' style={{ color: "#FFD700" }}>¥</Text>}
+                <Text className='cccplh mr4'>分享</Text>
+              </View>
+              <ComSquare className='icon-share mr4' style={{ width: "calc(1 * var(--rem_base))" }} />
+            </ComButtonOpen>
+          </View>
+          {/* <View className='prl10 ww'>
+              <View className='bccwhite IOO  mb10 prl10 pt10 ds ww' style={{}} >
+                <View className='mb10 ds'>
+                  <ComImage className='mr10 oo' src={product.img_url} style={{ width: "4rem" }}></ComImage>
+                  <View className='dll'>
+                    <Text className="nw1"> {String(product.title)}</Text>
+                    <Text className="nw1 cccprice">助农价: 22.9元</Text>
+                  </View>
+                </View>
+              </View>
+            </View> */}
+        </View>
+
+
+      </View>;
+    })
+    }
+  </View>;
+};
+const IIIBringGoodsOld = ({ className, channelId }: { className?: string; channelId?: string; }) => {
   const [productList, setProductList] = useState<any[]>();
   useEffect(() => {
     setProductList(undefined);
@@ -218,19 +329,23 @@ const IIIBringGoodsArea = () => {
 const IIIMainNavigator: FC<{ className?: string; style?: string | React.CSSProperties; }> = ({ className = '', style }) => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   return <View className='dll ww'>
-    <View className={`${className} dy pl10 pt10`} style={style}>
-      <ComButton className='mb10 oo pbt8 mr10 fwb shadow' url='/pages_comm/comm__product_express' >
-        团寄快递
-      </ComButton>
-      <ComButton className='mb10 oo pbt8 mr10 fwb shadow' url='/pages_comm/comm__product_dryclean' >
-        团购干洗
-      </ComButton>
+    <View className={`${className} dy dwp pl10 pt10`} style={style}>
+      {roo___has_role(selfInfo_S!.deptInfo!, ["REGIMENT"]) &&
+        <ComButton className='mb10 oo pbt8 mr10 fwb shadow nw' url='/pages_comm/comm__product_express' >
+          团寄快递
+        </ComButton>
+      }
+      {roo___has_role(selfInfo_S!.deptInfo!, ["REGIMENT"]) &&
+        <ComButton className='mb10 oo pbt8 mr10 fwb shadow nw' url='/pages_comm/comm__product_dryclean' >
+          团购干洗
+        </ComButton>
+      }
       {selfInfo_S.managerUser && <>
 
-        <ComButton className='mb10 oo pbt8 mr10 fwb shadow' url='/pages_regiment/regiment_invitor' >
+        <ComButton className='mb10 oo pbt8 mr10 fwb shadow nw' url='/pages_regiment/regiment_invitor' >
           管理页
         </ComButton>
-        <ComButton className='mb10 oo pbt8 mr10 fwb shadow' onClick={async () => {
+        <ComButton className='mb10 oo pbt8 mr10 fwb shadow nw' onClick={async () => {
           Taro.showLoading({ mask: true, title: "更新中...", });
           const res_userInfo = await Api_user_edit_ctn({ deptId: selfInfo_S.managerUser?.deptId });
           useSTSelf.getState().sett(res_userInfo);
