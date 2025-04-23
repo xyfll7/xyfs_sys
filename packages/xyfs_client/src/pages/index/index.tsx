@@ -25,7 +25,7 @@ import { try_Taro_navigateBack, try_Taro_navigateTo } from '@xyfs/taro_uii/utils
 import { useHook_pageListNew } from '@xyfs/taro_uii/utils/useHooks';
 import { utils_get_capsule } from '@xyfs/taro_uii/utils/util';
 import { coo___objToUrl } from '@xyfs/utils/util';
-import { FC, useCallback, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import { AVATARS } from '../../avatars';
 
 definePageConfig({
@@ -153,7 +153,7 @@ const IIIBanner = ({ ...props }: ViewProps) => {
 
 
 
-const IIIBringGoods = ({ className, channelId, }: { className?: string; channelId?: string; }) => {
+const IIIBringGoods = React.memo(({ className, channelId, }: { className?: string; channelId?: string; }) => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const [productList, setProductList] = useState<any[]>();
   useEffect(() => {
@@ -235,7 +235,7 @@ const IIIBringGoods = ({ className, channelId, }: { className?: string; channelI
     })
     }
   </View>;
-};
+});
 const IIIBringGoodsOld = ({ className, channelId }: { className?: string; channelId?: string; }) => {
   const [productList, setProductList] = useState<any[]>();
   useEffect(() => {
