@@ -8,19 +8,22 @@ import { ComButton } from './ComButton';
 import { ComNav } from './ComNav';
 
 
-export const ComAuth = ({ ...params }: {
+export const ComAuth = ({ className = 'prl20', isHiddenNav = false, ...params }: {
   authKey: keyof AuthSetting | "scope.bluetooth";
   successMessage: string,
   errMessage: string,
   title: string,
   content: string,
   confirmText: string,
+  className?: string;
+  isHiddenNav?: boolean;
 } & ViewProps) => {
   const { auth, privacy, openSetting, requirePrivacyAuthorize } = useINHook_Auth(params.authKey, params.successMessage, params.errMessage);
+
   return <>
     {!auth &&
-      <ComNav className='prl10'>
-        <View className='dll prl10'>
+      <ComNav isHidden={isHiddenNav} className={className}>
+        <View className='dll '>
           {(privacy === false || !auth) && <ComButton className='cccplh mb10'>授权</ComButton>}
           {privacy === false && <ComButton className='cccplh mb10'>获取隐私授权...</ComButton>}
           {privacy === false &&
@@ -91,6 +94,7 @@ function useINHook_Auth(auth: keyof AuthSetting | "scope.bluetooth", success_mes
   }, [_auth, auth, onAuth, privacy]);
 
   return {
+    // auth: null,
     auth: _auth,
     privacy,
     openSetting: ___openSetting,

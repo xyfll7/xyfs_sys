@@ -25,15 +25,7 @@ import { FC, useCallback, useEffect, useState } from 'react';
 definePageConfig({ navigationStyle: "custom" });
 export default function COMSELFWarp() {
   return <ComSELFView>
-    <ComAuth
-      authKey='scope.userLocation'
-      successMessage='地图模块授权成功'
-      errMessage='地图模块授权失败'
-      title='开启地图...'
-      content='该小程序尚未获得手机地图的使用权限'
-      confirmText='点击授权→地图'>
-      <Index />
-    </ComAuth>
+    <Index />
   </ComSELFView>;
 };
 const Index: FC<{}> = ({ }) => {
@@ -53,11 +45,15 @@ const IIIRegimentList = () => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const { locate } = useHook_getLocation();
   const [selected_dept, setSelected_dep] = useState<DeptInfo | null>(roo___my_dept(selfInfo_S));
-  const ___page_getter = useCallback(async (p: Pagination<unknown>) =>
-    await Api_user_nearbyRegimentList_ctn({
+  console.log('111111xxx');
+  const ___page_getter = useCallback(async (p: Pagination<unknown>) => {
+    console.log('111111');
+    return await Api_user_nearbyRegimentList_ctn({
       ...p,
       longitude: locate?.longitude!, latitude: locate?.latitude!, keyword: ""
-    }), [locate?.latitude, locate?.longitude]);
+    });
+  }
+    , [locate?.latitude, locate?.longitude]);
   const { page, page_loading, page_list_get, } = useHook_pageListNew(___page_getter, { isLoadFirstRun: false });
   useINHook_map_init(page.list!, locate, MAP_ID);
   useEffect(() => {
@@ -75,13 +71,17 @@ const IIIRegimentList = () => {
 
   let __dept_list = (page.list ? [...(my_dept ? [my_dept] : []), ...page.list] : null);
   const [toggle, setToggle] = useState(false);
+  console.log(":::::", locate);
   return <>
     {locate && <Map className='ovh' id='myMap' layerStyle={Taro.getAppBaseInfo().theme === "dark" ? 0 : 1}
       style={{ width: "100vw", height: '100vh', borderTopLeftRadius: "var(--rem_base)", borderTopRightRadius: "var(--rem_base)", }}
       longitude={locate?.longitude!}
       latitude={locate?.latitude!}
-      scale={14} onError={() => { }} />
+      scale={14} onError={() => { }} onTap={(e) => {
+        console.log("zb", e);
+      }} />
     }
+
     <View className='pa ww prl10 z9 dll transall safe-bottom' style={{ bottom: "0rem", height: toggle ? "25vh" : "85vh" }}>
       <View className='ww hh bccback IOO ovh mb10 dll prl10 pb10 ' style={{}}>
         <View className='ww' onClick={() => setToggle(e => !e)}>
@@ -91,24 +91,35 @@ const IIIRegimentList = () => {
             <ComButton rr className='mb10 bccback cccplh'>{toggle ? "展开" : "收起"}</ComButton>
           </View>
         </View>
-        <ComScrollView onScrollToLower={async () => { page_list_get(page); }} >
-          <View className='dll ww'>
-            {__dept_list?.filter((e, i, arr) => arr.findIndex(ee => ee.deptId === e.deptId) === i).map((e, i) => {
-              return <IIIDeptCard dept={e} key={i} selected_dept={selected_dept}
-                onClick_move_to_regiment={() => { setSelected_dep(e); }}
-                onClick_select_regiment={async () => {
-                  Taro.showLoading({ mask: true, title: "更新中...", });
-                  const res_userInfo = await Api_user_edit_ctn({ deptId: e.deptId });
-                  useSTSelf.getState().sett(res_userInfo);
-                  Taro.hideLoading();
-                  try_Taro_navigateBack();
-                }}></IIIDeptCard>;
-            })}
-            <ComLoading className='mb10' isLastPage={page?.isLastPage} loading={page_loading} onLoadMore={() => page_list_get(page)}></ComLoading>
-          </View>
-        </ComScrollView>
+        <ComAuth
+          isHiddenNav
+          className='prl0'
+          authKey='scope.userLocation'
+          successMessage='地理位置授权成功'
+          errMessage='地理位置授权失败'
+          title='获取地理位置...'
+          content='该小程序尚未获得地理位置使用权限'
+          confirmText='点击授权→地理位置'>
+          <ComScrollView onScrollToLower={async () => { page_list_get(page); }} >
+            <View className='dll ww'>
+              {__dept_list?.filter((e, i, arr) => arr.findIndex(ee => ee.deptId === e.deptId) === i).map((e, i) => {
+                return <IIIDeptCard dept={e} key={i} selected_dept={selected_dept}
+                  onClick_move_to_regiment={() => { setSelected_dep(e); }}
+                  onClick_select_regiment={async () => {
+                    Taro.showLoading({ mask: true, title: "更新中...", });
+                    const res_userInfo = await Api_user_edit_ctn({ deptId: e.deptId });
+                    useSTSelf.getState().sett(res_userInfo);
+                    Taro.hideLoading();
+                    try_Taro_navigateBack();
+                  }}></IIIDeptCard>;
+              })}
+              <ComLoading className='mb10' isLastPage={page?.isLastPage} loading={page_loading} onLoadMore={() => page_list_get(page)}></ComLoading>
+            </View>
+          </ComScrollView>
+        </ComAuth>
       </View>
     </View>
+
   </>;
 };
 

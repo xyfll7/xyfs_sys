@@ -16,6 +16,7 @@ import { FC } from 'react';
 definePageConfig({ disableScroll: true, navigationStyle: "custom" });
 export default function COMSELFWarp() {
   return <ComSELFView>
+
     <ComAuth
       authKey='scope.bluetooth'
       successMessage='蓝牙模块授权成功'

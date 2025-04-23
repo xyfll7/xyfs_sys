@@ -17,13 +17,20 @@ export function useHook_Reducer<T>(data: T): [T, React.Dispatch<Partial<T> | nul
   }, data);
   return [state, setState as React.Dispatch<Partial<T> | null>];
 }
-
 export function useHook_getLocation() {
-  const [locate, setLocate] = useState<Taro.getLocation.SuccessCallbackResult | null>(null);
+  const [locate, setLocate] = useState<Taro.getLocation.SuccessCallbackResult | null>({
+    longitude: 109.4944152813261, latitude: 36.59341106404218,
+    horizontalAccuracy: 0,
+    speed: 0,
+    verticalAccuracy: 0,
+    altitude: 0,
+    accuracy: 0,
+    errMsg: "",
+  });
   useEffect(() => {
     (async () => {
       const res = await try_Taro_getLocation();
-      setLocate(getMyEnv().platform === "devtools" ? { ...res, longitude: 109.49303, latitude: 36.59141 } : res);
+      setLocate(getMyEnv().platform === "devtools" ? { ...res, longitude: 109.49441528132616, latitude: 36.593411064042186 } : res);
     })();
   }, []);
   return { locate };

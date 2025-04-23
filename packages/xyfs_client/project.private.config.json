@@ -10,6 +10,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages_user/user_regiment_list_map",
+          "pathName": "pages_user/user_regiment_list_map",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages_regiment/regiment_invitor",
           "pathName": "pages_regiment/regiment_invitor",
           "query": "",
