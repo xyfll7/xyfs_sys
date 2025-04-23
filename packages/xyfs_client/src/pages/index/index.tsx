@@ -101,7 +101,7 @@ const Index: FC = () => {
 
       <View className='prl10 ww'>
         <View className='dxy bccgreen fs07 ioo prl10 pbt10 cccwhite ww mb10'>
-          指导单位:延安市商务局 | 公益合作伙伴: 中国扶贫基金会 善品公社
+          欢迎访问小象心选管，我们是一个专注于为您提供优质商品和服务的平台。我们致力于为您带来更好的购物体验。
         </View>
       </View>
 
