@@ -222,7 +222,7 @@ const IIIBringGoods = ({ className, channelId, }: { className?: string; channelI
             ]}>
             </ComImageStack>
 
-            <ComButtonOpen className='cccgreen bccbacktab slr' id='send_express'
+            <ComButtonOpen className='cccgreen bborder slr' id='send_express'
               shareTitle={`${selfInfo_S.managerUser?.name} 团长 邀您买东西啦`}
               openType='share'
               sharePath={`/pages/index/index?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ R_D: Number(selfInfo_S.managerUser?.mobile).toString(36) })) })}`}>
@@ -233,20 +233,7 @@ const IIIBringGoods = ({ className, channelId, }: { className?: string; channelI
               <ComSquare className='icon-share mr4' style={{ width: "calc(1 * var(--rem_base))" }} />
             </ComButtonOpen>
           </View>
-          {/* <View className='prl10 ww'>
-              <View className='bccwhite IOO  mb10 prl10 pt10 ds ww' style={{}} >
-                <View className='mb10 ds'>
-                  <ComImage className='mr10 oo' src={product.img_url} style={{ width: "4rem" }}></ComImage>
-                  <View className='dll'>
-                    <Text className="nw1"> {String(product.title)}</Text>
-                    <Text className="nw1 cccprice">助农价: 22.9元</Text>
-                  </View>
-                </View>
-              </View>
-            </View> */}
         </View>
-
-
       </View>;
     })
     }
