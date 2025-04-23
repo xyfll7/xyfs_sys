@@ -49,8 +49,6 @@ export function ComButton({
       minHeight: "calc(2 * var(--rem_base)) !important",
       ...(props.style as any),
     }} onClick={async (e) => {
-      e.stopPropagation();
-      e.preventDefault();
       handleClick(async () => {
         await onClickO?.();
         !props.disabled && await onClick?.(e);
