@@ -26,6 +26,7 @@ import { useHook_pageListNew } from '@xyfs/taro_uii/utils/useHooks';
 import { utils_get_capsule } from '@xyfs/taro_uii/utils/util';
 import { coo___objToUrl } from '@xyfs/utils/util';
 import { FC, useCallback, useEffect, useState } from 'react';
+import { AVATARS } from '../../avatars';
 
 definePageConfig({
   enableShareAppMessage: true, navigationStyle: "custom", disableScroll: true,
@@ -215,11 +216,7 @@ const IIIBringGoods = ({ className, channelId, }: { className?: string; channelI
             </store-product-item>
           </View>
           <View className='prl10 dbtc ww mb10' onClick={async (e) => { e.stopPropagation(); }}>
-            <ComImageStack className='mr6' length={6} avatars={[
-              "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/yanan_3.jpg",
-              "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/yanan_3.jpg",
-              "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/yanan_3.jpg",
-            ]}>
+            <ComImageStack className='mr6' length={6} avatars={AVATARS.sort(() => Math.random() - 0.5).slice(0, 3)}>
             </ComImageStack>
 
             <ComButtonOpen className='cccgreen bborder slr' id='send_express'
