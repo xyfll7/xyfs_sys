@@ -8,11 +8,11 @@ export function ComBanner({
   isHeaderBack,
   maskHightF = "80vw",
   maskHightT = "100%",
-
+  className = "",
   src = 'https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/back_image_6.jpg',
-  onClick }: { isHeaderBack: boolean; src?: string; maskHightF?: string; maskHightT?: string; onClick?: () => void; }) {
+  onClick }: { className?: String; isHeaderBack: boolean; src?: string; maskHightF?: string; maskHightT?: string; onClick?: () => void; }) {
   return <RootPortal style={{ zIndex: -1 }}>
-    <View className='root-portal' style={{ position: "absolute", top: "0vw", right: "0vw", width: "100vw", zIndex: -1 }}>
+    <View className={`root-portal ${className}`} style={{ position: "absolute", top: "0vw", right: "0vw", width: "100vw", zIndex: -1 }}>
       <View className='ww'>
         <View className='dxy ww ovh ioo bccbacktab'>
           <ComImage className='ioo z1' style={{ height: "auto", width: "100vw" }} mode='widthFix'

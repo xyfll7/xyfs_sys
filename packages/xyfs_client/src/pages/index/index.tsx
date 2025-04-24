@@ -224,7 +224,7 @@ const IIIBringGoods = React.memo(({ className, channelId, }: { className?: strin
               openType='share'
               sharePath={`/pages/index/index?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ R_D: Number(selfInfo_S.managerUser?.mobile).toString(36) })) })}`}>
               <View className='dbase'>
-                {selfInfo_S.managerUser && <Text className='fs07 mr4' style={{ color: "#FFA500" }}>¥</Text>}
+                {selfInfo_S.managerUser && <Text className='fs07 mr4 cccorange' >¥</Text>}
                 <Text className='cccplh mr4'>分享</Text>
               </View>
               <ComSquare className='icon-share mr4' style={{ width: "calc(1 * var(--rem_base))" }} />

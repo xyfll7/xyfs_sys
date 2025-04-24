@@ -4,6 +4,7 @@ export default defineAppConfig({
   ...AppConfig,
   pages: [
     "pages/index/index",
+    "pages/group_buy",
     "pages/test/ctest_display",
     "pages/test/ctest_index",
     "pages/test/ctest_utils",
