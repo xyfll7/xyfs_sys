@@ -24,8 +24,8 @@ const Index: FC<{}> = ({ }) => {
     <ComScrollView>
       {(!selfInfo_S?.logistics || selfInfo_S?.logistics?.length == 0) && <ComLoading className='mb10' isEmpty >您没还有绑定电子面单账号</ComLoading>}
       {selfInfo_S?.logistics?.map(logistic =>
-        <View className='mb10   ioo  dll ww' key={logistic.bizId}>
-          <View className='dbtc  flx1 ww'>
+        <View className='mb10 ioo dll ww' key={logistic.bizId}>
+          <View className='dbtc flx1 ww'>
             <ComButton className='cccplh'>{logistic.deliveryName}</ComButton>
             <ComButton className='cccplh'>{logistic.deliveryId && <IIIQuotaNum deliveryId={logistic.deliveryId}></IIIQuotaNum>}</ComButton>
           </View>
