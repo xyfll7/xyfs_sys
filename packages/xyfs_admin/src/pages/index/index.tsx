@@ -99,6 +99,7 @@ const IIISettings = ({ ...props }: ViewProps) => {
   return <>
     <ComButton {...props} className='mb10 cccplh mr10 bccback' >设置</ComButton>
     <View className='dy dwp'>
+
       {roo___has_role(selfInfo_S!, ["REGIMENT", "GUIDE"]) && <>
         <ComButton className='mb10 bccwhite nw mr10' url='/pages_regiment/regiment_bind_channel'>绑定视频号</ComButton>
       </>
@@ -149,10 +150,6 @@ const IIISettings = ({ ...props }: ViewProps) => {
         <ComButton className='bccwhite mb10 mr10' url='/pages_agent/agent__check_account'>
           对账
         </ComButton>
-        <ComButton className='bccwhite mb10 mr10' url='/pages_user/sub_user_dept'>
-          部门管理
-        </ComButton>
-
       </>}
       {roo___has_role(selfInfo_S!, ["AGENT"]) && <>
         <ComButton className="mb10 mr10" onClick={async () => {
@@ -169,8 +166,13 @@ const IIISettings = ({ ...props }: ViewProps) => {
         }}>
           极兔-兔优达
         </ComButton>
-
       </>}
+      {roo___has_role(selfInfo_S!, ["ADMIN"]) && <>
+        <ComButton className='bccwhite mb10 mr10' url='/pages_user/sub_user_dept'>
+          部门管理
+        </ComButton>
+      </>
+      }
     </View>
   </>;
 };
