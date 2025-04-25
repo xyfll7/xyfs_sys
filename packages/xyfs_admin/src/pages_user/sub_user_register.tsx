@@ -50,7 +50,7 @@ const Index: FC = () => {
     {selfInfo_S.deptId &&
       <ComScrollView>
         <>
-          <ComButton ll className='bccback mb10 prl10'>我的信息</ComButton>
+          <ComButton ll className='bccback mb10 prl10 cccplh'>我的信息</ComButton>
           <View className='ioo bccwhite pt10 dll mb10 prl10 ww'>
             <View className='ww mb10 dy' >
               <ComButton ll className='w5rem bccwhite'>姓名</ComButton>
@@ -101,7 +101,7 @@ const Index: FC = () => {
 
 
           {selfInfo_S.depts && selfInfo_S.depts.length > 0 && <View className="ww dll">
-            <ComButton ll className='bccback mb10 prl10' hoverClass='none'>所属部门列表</ComButton>
+            <ComButton ll className='bccback mb10 prl10 cccplh' hoverClass='none'>所属部门列表</ComButton>
             {selfInfo_S.depts?.map(e => {
               return <View key={e.deptId} className='mb10 bccwhite ww ioo pt10 dll prl10'>
                 <View className='dbtc ww mb10 '>
@@ -135,17 +135,19 @@ const Index: FC = () => {
 
           {!deptUserList && <ComLoading className='mb10'></ComLoading>}
           {deptUserList && <>
-            <ComButton ll className='bccback mb10 prl10' hoverClass="none">当前部门成员</ComButton>
+            <ComButton ll className='bccback mb10 prl10 cccplh' hoverClass="none">当前部门成员</ComButton>
             {deptUserList?.map(e =>
-              <ComButton className='cccplh bccwhite mb10' key={e.id} onClick={async () => { e.mobile && Taro.makePhoneCall({ phoneNumber: e.mobile }); }}>
-                <ComImage className='mr10 IOO ' src={e.avatar}></ComImage>
-                <View className='wm8rem nw1 mr4'>{e.name}</View>/
-                <View className='wm8rem nw1 mr4 cccgreen'>{e.mobile}</View>
-              </ComButton>
+              <View className="dy mb10 prl10">
+                <ComImage className='mr10 IOO' src={e.avatar}></ComImage>
+                <ComButton ll className='bcctrans' key={e.id} onClick={async () => { e.mobile && Taro.makePhoneCall({ phoneNumber: e.mobile }); }}>
+                  <View className='wm8rem nw1 mr4'>{e.name}</View>/
+                  <View className='wm8rem nw1 mr4 cccgreen'>{e.mobile}</View>
+                </ComButton>
+              </View>
             )}
           </>}
           {selfInfo_S.deptId && <>
-            <ComButton ll className='bccback mb10 prl10' hoverClass="none">当前所在部门信息</ComButton>
+            <ComButton ll className='bccback mb10 prl10 cccplh' hoverClass="none">当前所在部门信息</ComButton>
             <View className='ioo bccwhite pt10 dll mb10 prl10 ww'>
               <View className='ww mb10 dy' >
                 <ComButton ll className='w5rem bccwhite nw' hoverClass='none'>当前部门</ComButton>
@@ -178,7 +180,7 @@ const Index: FC = () => {
 
           {selfInfo_S.parentDeptInfo &&
             <>
-              <ComButton ll className='bccback mb10 prl10' hoverClass="none">当前部门的上级部门信息</ComButton>
+              <ComButton ll className='bccback mb10 prl10 cccplh' hoverClass="none">当前部门的上级部门信息</ComButton>
               <View className='ioo bccwhite pt10 dll mb10 prl10 ww'>
                 <View className='ww mb10 dy' >
                   <ComButton ll className='w5rem bccwhite nw' hoverClass='none'>部门名称</ComButton>
