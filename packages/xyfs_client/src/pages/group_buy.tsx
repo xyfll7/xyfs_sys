@@ -10,6 +10,8 @@ import { ComScrollView } from '@xyfs/taro_uii/components/ComScrollView';
 import { ComSquare } from '@xyfs/taro_uii/components/ComSquare';
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { MMMFooter } from '@xyfs/taro_uii/components/MMMFooter';
+import { roo___my_dept } from '@xyfs/taro_uii/src/roles';
+import { useSTSelf } from '@xyfs/taro_uii/store/store';
 import { try_Taro_chooseAddress } from '@xyfs/taro_uii/utils/try_catch';
 import { FC, useState } from 'react';
 import { AVATARS } from '../avatars';
@@ -23,6 +25,7 @@ definePageConfig({
 
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC = () => {
+  const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const [isHeaderBack, setIsHeaderBack] = useState(false);
   const [type, setType] = useState(1);
   const isBanner = true;
@@ -58,7 +61,7 @@ const Index: FC = () => {
         <ComButton className='cccgreen bborder ml10 nw'>到付</ComButton>
       </View>
       <View className='ww dr mb10'>
-        <ComAddressSwitchor className="ww mr10 bcctrans" isShort title='团:' address={{}} />
+        <ComAddressSwitchor className="ww mr10 bcctrans" isShort title='团:' address={roo___my_dept(selfInfo_S)} />
         <ComCartPrice totalPrice={"10"} num={"1"} onClick={() => {
 
         }} />
