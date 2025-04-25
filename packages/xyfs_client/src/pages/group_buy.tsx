@@ -57,7 +57,7 @@ const Index: FC = () => {
     </ComScrollView>
     <View className='ww dll pt10'>
       <View className='ww dr mb10'>
-        <ComAddressSwitchor className="ww bcctrans" isShort isIcon title='收货人:' address={address} onClick={async (e) => {
+        <ComAddressSwitchor className="ww bcctrans" isShort isIcon addressPlaceholder='请填写收货地址' title='收货人:' address={address} onClick={async (e) => {
           const res_address = await try_Taro_chooseAddress();
           setAddress(res_address);
         }} />

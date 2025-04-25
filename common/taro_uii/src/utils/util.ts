@@ -47,15 +47,15 @@ export const utils_get_capsule = (reTry: boolean = true) => {
 };
 
 // 地址信息字符串化
-export function utils_addressInfoToString(addr?: AddressInfo | DeptInfo | null, isShort = false) {
+export function utils_addressInfoToString(addr?: AddressInfo | DeptInfo | null, isShort = false, addressPlaceholder = "暂无地址") {
   const str = isShort ?
     `${addr?.address ?? ""}` :
     `${addr?.province ?? ""} ${addr?.city ?? ""} ${addr?.area ?? ""} ${addr?.address ?? ""}`;
   if (addr) {
     const res = (str.trim() ? str : undefined);
-    return res ? res : "暂无地址";
+    return res ? res : addressPlaceholder;
   } else {
-    return "暂无地址";
+    return addressPlaceholder;
   }
 }
 
