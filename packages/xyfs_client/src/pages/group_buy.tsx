@@ -12,6 +12,7 @@ import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { MMMFooter } from '@xyfs/taro_uii/components/MMMFooter';
 import { roo___my_dept } from '@xyfs/taro_uii/src/roles';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
+import { AddressInfo } from '@xyfs/taro_uii/type_user';
 import { try_Taro_chooseAddress } from '@xyfs/taro_uii/utils/try_catch';
 import { FC, useState } from 'react';
 import { AVATARS } from '../avatars';
@@ -29,6 +30,7 @@ const Index: FC = () => {
   const [isHeaderBack, setIsHeaderBack] = useState(false);
   const [type, setType] = useState(1);
   const isBanner = true;
+  const [address, setAddress] = useState<AddressInfo | undefined>(selfInfo_S.defaultRecManAddress);
   return <MMMAAPage className={`${isBanner ? "" : new Map([[0, "bccback"], [1, "bccwhite"]]).get(type)}`}>
     <View className='ww'>
       {isBanner &&
@@ -55,8 +57,9 @@ const Index: FC = () => {
     </ComScrollView>
     <View className='ww dll pt10'>
       <View className='ww dr mb10'>
-        <ComAddressSwitchor className="ww bcctrans" isShort isIcon title='收货人:' address={{}} onClick={async (e) => {
+        <ComAddressSwitchor className="ww bcctrans" isShort isIcon title='收货人:' address={address} onClick={async (e) => {
           const res_address = await try_Taro_chooseAddress();
+          setAddress(res_address);
         }} />
         <ComButton className='cccgreen bborder ml10 nw'>到付</ComButton>
       </View>

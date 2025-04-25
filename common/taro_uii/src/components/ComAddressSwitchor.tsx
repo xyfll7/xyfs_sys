@@ -13,7 +13,7 @@ export const ComAddressSwitchor: FC<ViewProps & MyButtonProps & {
   isShort?: boolean;
   isIcon?: boolean;
   addressPlaceholder?: string;
-}> = ({ isIcon = false, time, isShort = false, url, className, address, onClick, title, addressPlaceholder = "暂无地址", ...props }) => {
+}> = ({ isIcon = false, time, isShort = false, url, className, address, onClick, title, addressPlaceholder = "请先选择您的收货地址", ...props }) => {
   const __address = utils_addressInfoToString(address, isShort);
   const __name = (address as DeptInfo)?.deptName ?? address?.name;
   return <ComButton className={`${className}`} onClick={onClick} url={url} {...props}>
