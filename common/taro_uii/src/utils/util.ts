@@ -47,7 +47,7 @@ export const utils_get_capsule = (reTry: boolean = true) => {
 };
 
 // 地址信息字符串化
-export function utils_addressInfoToString(addr?: AddressInfo | DeptInfo | null, isShort = false, addressPlaceholder = "暂无地址") {
+export function utils_addressInfoToString(addr?: AddressInfo | DeptInfo | null, isShort: Boolean = false, addressPlaceholder: String = "暂无地址") {
   const str = isShort ?
     `${addr?.address ?? ""}` :
     `${addr?.province ?? ""} ${addr?.city ?? ""} ${addr?.area ?? ""} ${addr?.address ?? ""}`;
