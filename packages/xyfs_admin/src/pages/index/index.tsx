@@ -135,11 +135,7 @@ const IIISettings = ({ ...props }: ViewProps) => {
           邀请注册
         </ComButtonOpen>
       }
-      {roo___has_role(selfInfo_S!, ["AGENT", "SUPPLIER"]) &&
-        <ComButton className='bccwhite mb10 mr10' url='/pages_user/sub_user_list'>
-          子用户
-        </ComButton>
-      }
+
       {roo___has_role(selfInfo_S!, ["AGENT", "SUPPLIER"]) && <ComButton className='bccwhite mb10 mr10' url='/pages_user/dry_cleaning_statement'>
         干洗账单
       </ComButton>}
@@ -172,6 +168,11 @@ const IIISettings = ({ ...props }: ViewProps) => {
           部门管理
         </ComButton>
       </>
+      }
+      {roo___has_role(selfInfo_S!, ["ADMIN", "AGENT"]) &&
+        <ComButton className='bccwhite mb10 mr10' url='/pages_user/sub_user_list'>
+          子用户
+        </ComButton>
       }
     </View>
   </>;
