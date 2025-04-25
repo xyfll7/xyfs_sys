@@ -1,12 +1,16 @@
 // :: pages/index/index
-import { View } from '@tarojs/components';
+import { Text, View } from '@tarojs/components';
+import { ComAddressSwitchor } from '@xyfs/taro_uii/components/ComAddressSwitchor';
 import { ComBanner } from '@xyfs/taro_uii/components/ComBanner';
 import { ComButton } from '@xyfs/taro_uii/components/ComButton';
 import { ComImage } from '@xyfs/taro_uii/components/ComImage';
 import { ComNav } from '@xyfs/taro_uii/components/ComNav';
+import { ComCartPrice } from '@xyfs/taro_uii/components/ComPrice';
 import { ComScrollView } from '@xyfs/taro_uii/components/ComScrollView';
+import { ComSquare } from '@xyfs/taro_uii/components/ComSquare';
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { MMMFooter } from '@xyfs/taro_uii/components/MMMFooter';
+import { try_Taro_chooseAddress } from '@xyfs/taro_uii/utils/try_catch';
 import { FC, useState } from 'react';
 import { AVATARS } from '../avatars';
 
@@ -21,10 +25,12 @@ export default function COMSELFWarp() { return <ComSELFView><Index></Index></Com
 const Index: FC = () => {
   const [isHeaderBack, setIsHeaderBack] = useState(false);
   const [type, setType] = useState(1);
-  return <MMMAAPage className={`${new Map([[1, ""]]).get(type)}`}>
+  const isBanner = true;
+  return <MMMAAPage className={`${isBanner ? "" : new Map([[0, "bccback"], [1, "bccwhite"]]).get(type)}`}>
     <View className='ww'>
-      <ComBanner className={`${new Map([[0, "bccback"], [1, "bccwhite"]]).get(type)}`} isHeaderBack={isHeaderBack} maskHightT='70%' maskHightF='10vh' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/farmer_0.webp' />
-      {/* <ComBanner isHeaderBack={isHeaderBack} maskHightT='70%' maskHightF='10vh' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/yanan_4.webp' /> */}
+      {isBanner &&
+        <ComBanner className={`${new Map([[0, "bccback"], [1, "bccwhite"]]).get(type)}`} isHeaderBack={isHeaderBack} maskHightT='70%' maskHightF='10vh' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/farmer_0.webp' />
+      }
       <ComNav className='mb10'>
         <ComButton className="cccorange  fs13 fwb bcctrans" hoverClass='none'>今日鲜果</ComButton>
       </ComNav>
@@ -35,7 +41,7 @@ const Index: FC = () => {
       <View className='ww dll prl10'>
         <ComButton ll className={`mb10 cccplh bcctrans nw1 `} hoverClass='none'>今日下单明日送达 🚗 🛵 🎁</ComButton>
         <View className='ww dr'>
-          <ComButton rr className='mb10 bcctrans03-dark cccgreen nw' onClick={() => {
+          <ComButton rr className={`mb10  cccgreen nw ${isBanner ? "bcctrans03-dark" : ""}`} onClick={() => {
             setType(type == 0 ? 1 : 0);
           }}>{new Map([[0, "图文版"], [1, "简洁版"]]).get(type)} </ComButton>
         </View>
@@ -44,9 +50,23 @@ const Index: FC = () => {
       <IIIUser />
       <MMMFooter className='mb10' />
     </ComScrollView>
-    <View className='ww pt20'>
-      <View className='dr'>
-        <ComButton className='bccyellow'>下单</ComButton>
+    <View className='ww dll pt10'>
+      <View className='ww dr mb10'>
+        <ComAddressSwitchor className="ww bcctrans" isShort isIcon title='收货人:' address={{}} onClick={async (e) => {
+          const res_address = await try_Taro_chooseAddress();
+        }} />
+        <ComButton className='cccgreen bborder ml10 nw'>到付</ComButton>
+      </View>
+      <View className='ww dr mb10'>
+        <ComAddressSwitchor className="ww mr10 bcctrans" isShort title='团:' address={{}} />
+        <ComCartPrice totalPrice={"10"} num={"1"} onClick={() => {
+
+        }} />
+
+        <ComButton className='bccyellow ml10 nw'>
+          <ComSquare style={{ width: "calc(1.3 * var(--rem_base))" }} className='icon-wxpay mr4' />
+          <Text>现付</Text>
+        </ComButton>
       </View>
     </View>
   </MMMAAPage>;
@@ -104,7 +124,7 @@ const IIIUser = () => {
     {["", "", "", "",].map((e, i) => {
       return <View className='dy mb10 ww' key={i}>
         <ComImage className='mr10 oo ovh' src={AVATARS.sort(() => Math.random() - 0.5)[0]}></ComImage>
-        <ComButton className='bcctransx'>用户</ComButton>
+        <ComButton ll className='bcctrans'>用户</ComButton>
       </View>;
     })}
   </View>;
