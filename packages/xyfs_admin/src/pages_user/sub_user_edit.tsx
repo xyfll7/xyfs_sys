@@ -39,7 +39,7 @@ const Index: FC<{}> = ({ }) => {
       </View>
     </ComNav>
     <ComScrollView>
-      {roo___has_role(selfInfo_S, ["AGENT"]) && <IIImyUserEditorAGENT></IIImyUserEditorAGENT>}
+      {roo___has_role(selfInfo_S, ["AGENT", "ADMIN"]) && <IIImyUserEditorAGENT></IIImyUserEditorAGENT>}
       {roo___has_role(selfInfo_S, ["SUPPLIER"]) && <IIImyUserEditorSUPPLIER></IIImyUserEditorSUPPLIER>}
     </ComScrollView>
   </MMMAAPage>;

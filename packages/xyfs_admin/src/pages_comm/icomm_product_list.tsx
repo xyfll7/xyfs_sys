@@ -1,4 +1,4 @@
-// :: pages_merchant/merchant_product_list
+// :: pages_comm/icomm_product_list
 import { View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { Pagination } from "@xyfs/taro_uii";

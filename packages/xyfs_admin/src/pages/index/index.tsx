@@ -163,6 +163,22 @@ const IIISettings = ({ ...props }: ViewProps) => {
           极兔-兔优达
         </ComButton>
       </>}
+
+      {roo___has_role(selfInfo_S!, ["ADMIN"]) && <>
+        <ComButton className='bccwhite mb10 mr10' url='/pages_user/sub_user_dept'>
+          部门管理
+        </ComButton>
+      </>
+      }
+      {roo___has_role(selfInfo_S!, ["GROUPLEADER"]) && <>
+        <ComButton className='bccwhite mb10 mr10' url='/pages_comm/comm__publisher'>
+          发布商品
+        </ComButton>
+        <ComButton className='bccwhite mb10 mr10' url='/pages_comm/icomm_product_list'>
+          已发布
+        </ComButton>
+      </>
+      }
       {roo___has_role(selfInfo_S!, ["ADMIN"]) && <>
         <ComButton className='bccwhite mb10 mr10' url='/pages_user/sub_user_dept'>
           部门管理
@@ -282,7 +298,7 @@ const IIImmmMERCHANT = ({ ...props }: ViewProps) => {
         <ComButton ll className=' nw mb10 mr10 bborder' url={`/pages_comm/icomm_orders_groupbuying?order_ST=${Order_ST.已付款}`}>已付款 </ComButton>
         <ComButton ll className=' nw mb10 mr10 bborder' url={`/pages_comm/icomm_orders_groupbuying?order_ST=${Order_ST.已退款}`}>已退款 </ComButton>
       </View>
-      <ComButton ll className='bborder mb10' url='/pages_merchant/merchant_product_list'>商品列表</ComButton>
+      <ComButton ll className='bborder mb10' url='/pages_comm/icomm_product_list'>商品列表</ComButton>
     </View>
   </>;
 };

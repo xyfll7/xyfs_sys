@@ -19,6 +19,7 @@ export default defineAppConfig({
         "icomm_orders_groupbuying",
         "icomm_printer",
         "icomm_scaner",
+        "icomm_product_list",
         "comm__realName",
       ],
     },
@@ -28,12 +29,6 @@ export default defineAppConfig({
         "agent__account",
         "agent__check_account",
         "agent__express_search",
-      ]
-    },
-    {
-      root: "pages_merchant",
-      pages: [
-        "merchant_product_list",
       ]
     },
     {
