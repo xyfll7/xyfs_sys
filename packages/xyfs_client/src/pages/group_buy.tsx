@@ -37,7 +37,7 @@ const Index: FC = () => {
         <ComBanner className={`${new Map([[0, "bccback"], [1, "bccwhite"]]).get(type)}`} isHeaderBack={isHeaderBack} maskHightT='70%' maskHightF='10vh' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/farmer_0.webp' />
       }
       <ComNav className='mb10'>
-        <ComButton className="cccorange  fs13 fwb bcctrans" hoverClass='none'>今日鲜果</ComButton>
+        <ComButton className="cccorange  fs13 fwb bcctrans" hoverClass='none'>鲜果团购</ComButton>
       </ComNav>
     </View>
     <ComScrollView className='IOO' upperThreshold={200}
