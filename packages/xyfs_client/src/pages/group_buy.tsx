@@ -96,13 +96,13 @@ const Index: FC = () => {
 const IIIItem = ({ item, type }: { item: any; type: number; }) => {
   if (type == 1) {
     return <View className='dll ww bccback IOO prl10 mb10'  >
-      <View className='dbtc ww'>
+      <View className='dbtc ww pt4'>
         <View>
-          <ComButton ll className=' bccback ' hoverClass='none'> <Text className='nw1'>{item.name}</Text> </ComButton>
+          <ComButton ll className='bccback' hoverClass='none'> <Text className='nw1'>{item.name}</Text> </ComButton>
           <View className='cccplh mb10 nw1'>{item.intro ? item.intro : "没有简介"}</View>
         </View>
         <View className='dy'>
-          <ComButton className='bccback' >-</ComButton>
+          <ComButton className='bccback'>-</ComButton>
           <ComButton rr className='bccwhite nw ml10 cccgreen' >+ 加</ComButton>
         </View>
       </View>
