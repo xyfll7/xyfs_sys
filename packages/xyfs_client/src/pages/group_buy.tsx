@@ -18,7 +18,7 @@ import { Pagination } from '@xyfs/taro_uii/type_index';
 import { AddressInfo } from '@xyfs/taro_uii/type_user';
 import { try_Taro_chooseAddress } from '@xyfs/taro_uii/utils/try_catch';
 import { useHook_pageListNew } from '@xyfs/taro_uii/utils/useHooks';
-import { FC, useCallback, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import { AVATARS } from '../avatars';
 
 definePageConfig({
@@ -45,6 +45,8 @@ const Index: FC = () => {
     }), []);
   const { page, page_loading, page_list_get } = useHook_pageListNew(___page_getter,);
 
+  const [cart, setCart] = useState<any[]>([]);
+  console.log("cart", cart);
   return <MMMAAPage className={`${isBanner ? "" : new Map([[0, "bccback"], [1, "bccwhite"]]).get(type)}`}>
     <View className='ww'>
       {isBanner &&
@@ -65,7 +67,9 @@ const Index: FC = () => {
           }}>{new Map([[0, "图文版"], [1, "简洁版"]]).get(type)} </ComButton>
         </View>
       </View>
-      {page.list && page.list.map((item, index) => <IIIItem item={item} key={index} type={type}></IIIItem>)}
+      {page.list && page.list.map((item, index) => <IIIItem item={item} key={index} type={type}
+        add={() => { setCart((e) => [...e, { ...item }]); }}
+        sub={() => { setCart(cart.filter((_, i) => cart.findIndex(e => e.id === item.id) != i)); }} />)}
       {!page.list && <ComLoading className='mb10' isLastPage={page?.isLastPage} loading={page_loading} onLoadMore={() => page_list_get(page)} />}
       <IIIUsers />
       <MMMFooter className='mb10' />
@@ -93,7 +97,7 @@ const Index: FC = () => {
   </MMMAAPage>;
 };
 
-const IIIItem = ({ item, type }: { item: any; type: number; }) => {
+const IIIItem = ({ item, type, add, sub }: { item: any; type: number; add: () => void, sub: () => void; }) => {
   if (type == 1) {
     return <View className='dll ww bccback IOO prl10 mb10'  >
       <View className='dbtc ww pt4'>
@@ -102,8 +106,8 @@ const IIIItem = ({ item, type }: { item: any; type: number; }) => {
           <View className='cccplh mb10 nw1'>{item.intro ? item.intro : "没有简介"}</View>
         </View>
         <View className='dy'>
-          <ComButton className='bccback'>-</ComButton>
-          <ComButton rr className='bccwhite nw ml10 cccgreen' >+ 加</ComButton>
+          <ComButton className='bccback' onClick={sub}>-</ComButton>
+          <ComButton rr className='bccwhite nw ml10 cccgreen' onClick={add}>+ 加</ComButton>
         </View>
       </View>
     </View>;
@@ -127,7 +131,7 @@ const IIIItem = ({ item, type }: { item: any; type: number; }) => {
 };
 
 
-const IIIUsers = () => {
+const IIIUsers = React.memo(() => {
   return <View className='ww prl10'>
     <ComButton ll className='bcctrans mb10 cccplh' hoverClass='none'>今日跟团用户</ComButton>
     {["", "", "", "",].map((e, i) => {
@@ -137,4 +141,4 @@ const IIIUsers = () => {
       </View>;
     })}
   </View>;
-};
+});
