@@ -46,7 +46,7 @@ const Index: FC = () => {
   const { page, page_loading, page_list_get } = useHook_pageListNew(___page_getter,);
 
   const [cart, setCart] = useState<any[]>([]);
-  console.log("cart", cart);
+
   return <MMMAAPage className={`${isBanner ? "" : new Map([[0, "bccback"], [1, "bccwhite"]]).get(type)}`}>
     <View className='ww'>
       {isBanner &&
@@ -55,22 +55,26 @@ const Index: FC = () => {
       <ComNav className='mb10'>
         <ComButton className="cccorange  fs13 fwb bcctrans" hoverClass='none'>鲜果团购</ComButton>
       </ComNav>
-    </View>
-    <ComScrollView className='IOO' upperThreshold={200}
-      onScroll={(e, top) => { if (e.detail.scrollTop > top) { setIsHeaderBack(true); } }}
-      onScrollToUpper={() => { setIsHeaderBack(false); }}>
       <View className='ww dll prl10'>
         <ComButton ll className={`mb10 cccplh bcctrans nw1 `} hoverClass='none'>今日下单明日送达 🚗 🛵 🎁</ComButton>
         <View className='ww dr'>
-          <ComButton rr className={`mb10  cccgreen nw ${isBanner ? "bcctrans03-dark" : ""}`} onClick={() => {
+          <ComButton rr className={`mb10 cccwhite ${isBanner ? "bcctrans03-dark" : ""}`} onClick={() => { setCart([]); }}>清空</ComButton>
+          <ComButton rr className={`mb10 cccgreen nw ml10 ${isBanner ? "bcctrans03-dark" : ""}`} onClick={() => {
             setType(type == 0 ? 1 : 0);
           }}>{new Map([[0, "图文版"], [1, "简洁版"]]).get(type)} </ComButton>
         </View>
       </View>
+    </View>
+    <ComScrollView className='IOO' upperThreshold={200}
+      onScroll={(e, top) => { if (e.detail.scrollTop > top) { setIsHeaderBack(true); } }}
+      onScrollToUpper={() => { setIsHeaderBack(false); }}>
+
       {page.list && page.list.map((item, index) => <IIIItem item={item} key={index} type={type}
+        count={cart.filter(e => e.id === item.id).length}
         add={() => { setCart((e) => [...e, { ...item }]); }}
         sub={() => { setCart(cart.filter((_, i) => cart.findIndex(e => e.id === item.id) != i)); }} />)}
       {!page.list && <ComLoading className='mb10' isLastPage={page?.isLastPage} loading={page_loading} onLoadMore={() => page_list_get(page)} />}
+
       <IIIUsers />
       <MMMFooter className='mb10' />
     </ComScrollView>
@@ -84,9 +88,7 @@ const Index: FC = () => {
       </View>
       <View className='ww dr mb10'>
         <ComAddressSwitchor className="ww mr10 bcctrans" isShort title='团:' address={roo___my_dept(selfInfo_S)} />
-        <ComCartPrice totalPrice={"10"} num={"1"} onClick={() => {
-
-        }} />
+        <ComCartPrice totalPrice={String(cart.reduce((sum, item) => sum + (item.price * 100), 0) / 100)} num={String(cart.length)} />
 
         <ComButton className='bccyellow ml10 nw'>
           <ComSquare style={{ width: "calc(1.3 * var(--rem_base))" }} className='icon-wxpay mr4' />
@@ -97,16 +99,22 @@ const Index: FC = () => {
   </MMMAAPage>;
 };
 
-const IIIItem = ({ item, type, add, sub }: { item: any; type: number; add: () => void, sub: () => void; }) => {
+const IIIItem = ({ item, type, add, sub, count }: { count: number, item: any; type: number; add: () => void, sub: () => void; }) => {
   if (type == 1) {
     return <View className='dll ww bccback IOO prl10 mb10'  >
       <View className='dbtc ww pt4'>
         <View>
-          <ComButton ll className='bccback' hoverClass='none'> <Text className='nw1'>{item.name}</Text> </ComButton>
+          <ComButton ll className='bccback' hoverClass='none'>
+            <View className='dbase'>
+              <Text className='nw1 mr6'>{item.name}</Text>
+              <Text className='nw cccprice'>¥{item.price}</Text>
+              {count > 0 && <View className='bcctrans cccprice nw fs08'> /{count}</View>}
+            </View>
+          </ComButton>
           <View className='cccplh mb10 nw1'>{item.intro ? item.intro : "没有简介"}</View>
         </View>
         <View className='dy'>
-          <ComButton className='bccback' onClick={sub}>-</ComButton>
+          {count > 0 && <ComButton className="bccback cccgreen" onClick={sub}>-</ComButton>}
           <ComButton rr className='bccwhite nw ml10 cccgreen' onClick={add}>+ 加</ComButton>
         </View>
       </View>
