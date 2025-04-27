@@ -15,13 +15,12 @@ export const ComImage: FC<Omit<ImageProps, "style" | "src"> & { compress?: boole
 }) => {
   let { height, width } = style || {};
   width = width || "calc(2 * var(--rem_base))";
-  const isCompress = typeof compress === "string";
-  const ___crop = isCompress ? `/crop/${compress}x${compress}/gravity/center` : "";
-  const ___comp = isCompress ? "imageMogr2/format/webp" : "";
+  const ___crop = typeof compress === "string" ? `/crop/${compress}x${compress}/gravity/center` : "";
+  const ___comp = Boolean(compress) ? "?imageMogr2/format/webp" : "";
   return (
     <Image
       {...props}
-      src={src ? `${src}${isCompress ? "?" : ""}${___comp}${___crop}` : ""}
+      src={src ? `${src}${___comp}${___crop}` : ""}
       className={`${props.className} ${icon === true ? "" : icon} ${utils_str_includes(["bcc"], props.className) ? "" : "bccbacktab"} transall ovh ioo`}
       style={{
         ...style,

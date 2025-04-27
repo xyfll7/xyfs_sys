@@ -7,6 +7,8 @@ import { ComButton } from '@xyfs/taro_uii/components/ComButton';
 import { ComImage } from '@xyfs/taro_uii/components/ComImage';
 import { ComLoading } from '@xyfs/taro_uii/components/ComLoading';
 import { ComNav } from '@xyfs/taro_uii/components/ComNav';
+import { ComNavBarB } from '@xyfs/taro_uii/components/ComNavBarB';
+import { ComPopupNew } from '@xyfs/taro_uii/components/ComPopupNew';
 import { ComCartPrice } from '@xyfs/taro_uii/components/ComPrice';
 import { ComScrollView } from '@xyfs/taro_uii/components/ComScrollView';
 import { ComSquare } from '@xyfs/taro_uii/components/ComSquare';
@@ -37,6 +39,7 @@ const Index: FC = () => {
   const [address, setAddress] = useState<AddressInfo | undefined>(selfInfo_S.defaultRecManAddress);
 
 
+
   const ___page_getter = useCallback(async (p: Pagination<unknown>) =>
     await Api_goods_list_ctn({
       ...p,
@@ -46,6 +49,11 @@ const Index: FC = () => {
   const { page, page_loading, page_list_get } = useHook_pageListNew(___page_getter,);
 
   const [cart, setCart] = useState<any[]>([]);
+
+
+  const [product, setProduct] = useState<any>(
+    // { "id": 6, "name": "延安山地苹果", "sketch": null, "intro": "重量6-7斤/12枚装/果径80-85", "keywords": null, "tags": null, "price": 58, "weight": 1, "marketPrice": null, "stock": 30, "warningStock": null, "limitQuantity": null, "attachUrl": "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/product_image/oGwbL5PVdCTyoE2sYHAq2bdNA9BY/_1731288105472_0.png", "userId": "oGwbL5PVdCTyoE2sYHAq2bdNA9BY", "status": 1, "sort": 2, "lastUpdateTime": "2024-11-11 09:21:56", "delFlag": "0", "createBy": "oGwbL5PVdCTyoE2sYHAq2bdNA9BY", "createTime": "2024-11-11 09:21:56", "updateBy": null, "updateTime": null, "remark": "", "userName": "王理代", "userMobile": "17319969379", "userAvatar": "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/comm_avatar/default/狗2@1x.webp", "totalSaleStock": null, "saleStock": null, "orderUser": null }
+  );
 
   return <MMMAAPage className={`${isBanner ? "" : new Map([[0, "bccback"], [1, "bccwhite"]]).get(type)}`}>
     <View className='ww'>
@@ -71,8 +79,9 @@ const Index: FC = () => {
 
       {page.list && page.list.map((item, index) => <IIIItem item={item} key={index} type={type}
         count={cart.filter(e => e.id === item.id).length}
-        add={() => { setCart((e) => [...e, { ...item }]); }}
-        sub={() => { setCart(cart.filter((_, i) => cart.findIndex(e => e.id === item.id) != i)); }} />)}
+        onDetail={() => { setProduct(item); }}
+        onAdd={() => { setCart((e) => [...e, { ...item }]); }}
+        onSub={() => { setCart(cart.filter((_, i) => cart.findIndex(e => e.id === item.id) != i)); }} />)}
       {!page.list && <ComLoading className='mb10' isLastPage={page?.isLastPage} loading={page_loading} onLoadMore={() => page_list_get(page)} />}
 
       <IIIUsers />
@@ -96,14 +105,37 @@ const Index: FC = () => {
         </ComButton>
       </View>
     </View>
+    {product && <ComPopupNew onClose={() => { setProduct(null); }}  >
+      <View className='dll prl10' style={{ height: "70vh", }}>
+        <ComNavBarB className='mb10 ww' onClose={() => { setProduct(null); }} >
+          <ComButton className='fwb bccback'>详情</ComButton>
+        </ComNavBarB>
+        <ComScrollView className='IOO'>
+          <View className='ww'>
+            <View className=' dll ww prl10' >
+              <ComButton ll className='bccback' hoverClass='none'>
+                <View className='dbase'>
+                  <Text className='nw1 mr6'>{product.name}</Text>
+                  <Text className='nw cccprice'>¥{product.price}</Text>
+                </View>
+              </ComButton>
+              <View className='cccplh mb10 '>{product.intro ? product.intro : "没有简介"}</View>
+            </View>
+            {product.attachUrl.split(",").map((e, i) => {
+              return <ComImage className='mb10' style={{ width: "100%" }} compress="300" mode='widthFix' src={e}></ComImage>;
+            })}
+          </View>
+        </ComScrollView>
+      </View>
+    </ComPopupNew>}
   </MMMAAPage>;
 };
 
-const IIIItem = ({ item, type, add, sub, count }: { count: number, item: any; type: number; add: () => void, sub: () => void; }) => {
+const IIIItem = ({ item, type, onAdd, onSub, onDetail, count }: { count: number, item: any; type: number; onAdd: () => void, onSub: () => void; onDetail: () => void; }) => {
   if (type == 1) {
     return <View className='dll ww bccback IOO prl10 mb10'  >
-      <View className='dbtc ww pt4'>
-        <View>
+      <View className='dbtc ww'>
+        <View className='pt4 dll ww' onClick={onDetail}>
           <ComButton ll className='bccback' hoverClass='none'>
             <View className='dbase'>
               <Text className='nw1 mr6'>{item.name}</Text>
@@ -114,8 +146,8 @@ const IIIItem = ({ item, type, add, sub, count }: { count: number, item: any; ty
           <View className='cccplh mb10 nw1'>{item.intro ? item.intro : "没有简介"}</View>
         </View>
         <View className='dy'>
-          {count > 0 && <ComButton className="bccback cccgreen" onClick={sub}>-</ComButton>}
-          <ComButton rr className='bccwhite nw ml10 cccgreen' onClick={add}>+ 加</ComButton>
+          <ComButton className={`bccback  ${count > 0 ? "cccgreen" : "cccplh"}`} onClick={onSub}>-</ComButton>
+          <ComButton rr className='bccwhite nw ml10 cccgreen' onClick={onAdd}>+ 加</ComButton>
         </View>
       </View>
     </View>;
