@@ -48,18 +48,7 @@ export async function Api_goods_remove_ctn(params: { id: string, }): Promise<Pag
   });
   return res;
 }
-export async function Api_goodsCart_add_ctn<T>(params: {
-  "goodsId": string,
-  "id": string,
-  "quantity": -1 | 1,
-  "selected"?: 0 | 1;
-}): Promise<T> {
-  const res = await wx_call_container<T>({
-    path: "/goodsCart/add",
-    data: { ...params, selected: 1 }
-  });
-  return res;
-}
+
 export async function Api_goodsCart_clear_ctn(params: {
   attachUrl?: string;
 }): Promise<any> {
@@ -69,13 +58,7 @@ export async function Api_goodsCart_clear_ctn(params: {
   });
   return res;
 }
-export async function Api_goodsCart_query_ctn(): Promise<any> {
-  const res = await wx_call_container<any>({
-    path: "/goodsCart/query",
-    method: "GET"
-  });
-  return res;
-}
+
 export async function Api_goodsCart_preOrder_ctn(params: {
   "cartItemIds": number[],
   "goodsCartId": number, // 0,

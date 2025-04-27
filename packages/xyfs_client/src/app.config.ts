@@ -24,7 +24,6 @@ export default defineAppConfig({
         "user_my",
         "user_assist_home",
         "user_assist_detail",
-        "user_bring_goods",
         "user_orders",
         "user_regiment_list_map",
       ]

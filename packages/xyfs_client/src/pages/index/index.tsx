@@ -1,5 +1,5 @@
 // :: pages/index/index
-import { Text, View, ViewProps } from '@tarojs/components';
+import { Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import { Pagination } from '@xyfs/taro_uii';
 import { Api_assist_explore_ctn } from '@xyfs/taro_uii/api/api__assist';
@@ -105,6 +105,8 @@ const Index: FC = () => {
         </View>
       </View>
 
+
+
       {selfInfo_S.channelId && <IIIBringGoods channelId={selfInfo_S.channelId} />}
 
       {/* <IIIRegimentAssistList /> */}
@@ -123,33 +125,7 @@ const Index: FC = () => {
   </MMMAAPage>;
 };
 
-const IIIBanner = ({ ...props }: ViewProps) => {
-  return <View className={`ww ${props.className}`} onClick={async () => { await try_Taro_navigateTo({ url: "/pages_user/user_bring_goods" }); }}>
-    <View className=' ww ovh IOO' style={{ height: "100vw", }}>
-      <View style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
-        <ComImage src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/client_index_banner.png' style={{ width: "100vw", }} mode='widthFix' />
-      </View>
-    </View>
 
-    <View className='pa ww hh  dbtl z1 pt10 pl10 pr10' style={{ top: "0" }}>
-      <ComButton className='bccwhite pbt6' hoverClass='none'>
-        <View className='dll'>
-          <View className='fwb fs14  mr6'>今日优选</View>
-          <View className=''>
-            延安苹果
-          </View>
-          <View className=' dbase'>
-            <Text className='fs08 cccprice '>￥</Text>
-            <Text className='cccprice '>9.9元/4枚</Text>
-          </View>
-        </View>
-      </ComButton>
-      <View className='dr ww'>
-        <ComButton className='bccyellow mb10'> <View className='dbase'><Text className='cccgreen'>+</Text> <Text className='fwb'>买</Text> </View> </ComButton>
-      </View>
-    </View>
-  </View>;
-};
 
 
 
@@ -236,79 +212,8 @@ const IIIBringGoods = React.memo(({ className, channelId, }: { className?: strin
     }
   </View>;
 });
-const IIIBringGoodsOld = ({ className, channelId }: { className?: string; channelId?: string; }) => {
-  const [productList, setProductList] = useState<any[]>();
-  useEffect(() => {
-    setProductList(undefined);
-    if (channelId) {
-      Api_common_productList_ctn().then((res) => {
-        setProductList(res);
-      });
-    }
-  }, [channelId]);
 
-  const customContent = true;
-  return <View className={`${className} ww dll`}>
-    {!productList && <ComLoading className='mb10'></ComLoading>}
-    {productList?.length === 0 && <ComLoading className='mb10' isEmpty></ComLoading>}
-    {productList?.map((item, index) => {
-      const product = item.product[0];
-      return <View className='ww  dll' key={index}>
-        {/*@ts-ignore*/}
-        <store-product-item class="ww hh mb10" customContent={customContent} appid={product.appid} productId={product.out_product_id} productPromotionLink={product.product_promotion_link}>
-          <View className='ds  hh ovh bccwhite mb10 ioo h7rem ww'>
-            <ComImage className='mr10' src={product.img_url} style={{ width: "7rem" }}></ComImage>
-            <View className='pt10 hh ww dbtl h7rem ovh'>
-              <View>
-                <ComButton ll className='' hoverClass='none'>
-                  <Text className="nw1"> {String(product.title)}</Text>
-                </ComButton>
-                <View className=''>
-                  <ComPrice className='cccprice' price={product.selling_price / 100}></ComPrice>
-                </View>
-              </View>
 
-              <View className='h2rem mb10 ovh ww dr'>
-                {/*@ts-ignore*/}
-                <store-product-item class="mr10 ds" customContent={customContent} openPage="buy" appid={product.appid} productId={product.out_product_id} productPromotionLink={product.product_promotion_link}>
-                  <View className='dr ww'>
-                    <ComButton className='bccgreen cccwhite'>购买</ComButton>
-                  </View>
-                  {/*@ts-ignore*/}
-                </store-product-item>
-              </View>
-            </View>
-          </View>
-          {/*@ts-ignore*/}
-        </store-product-item>
-      </View>;
-    })
-    }
-  </View>;
-};
-
-const IIIBringGoodsArea = () => {
-  return <View className='bccwhite mb10 ioo ww pt10 dll prl10 ' onClick={async () => {
-    await try_Taro_navigateTo({ url: `/pages_user/user_bring_goods` });
-  }}>
-    <View className='dbtc ww'>
-      <ComButton ll className='mb10 cccplh'>团长带货专区</ComButton>
-      <ComButton rr className='cccplh mb10'>去看看</ComButton>
-    </View>
-    <View className='dy ww'>
-      {[
-        { title: "肉类" },
-        { title: "蔬菜" },
-        { title: "水果" },
-        { title: "海鲜" },
-        { title: "蛋奶" },
-        { title: "烧卤" },
-      ].map((e, i) => {
-        return <ComButton ll className='mb10 bccback mr10' key={i}>{e.title}</ComButton>;
-      })}
-    </View>
-  </View>;
-};
 
 const IIIMainNavigator: FC<{ className?: string; style?: string | React.CSSProperties; }> = ({ className = '', style }) => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
