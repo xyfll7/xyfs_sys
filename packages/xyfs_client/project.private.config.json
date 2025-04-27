@@ -10,6 +10,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages_regiment/regiment_invitor",
+          "pathName": "pages_regiment/regiment_invitor",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages/group_buy",
           "pathName": "pages/group_buy",
           "query": "",
