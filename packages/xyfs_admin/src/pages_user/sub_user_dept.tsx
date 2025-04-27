@@ -262,12 +262,11 @@ const IIIDeptEdit = ({ dept, onSuccess, onClose }: { dept: any; onSuccess: () =>
   const { dicts_roles, dicts_delivery, dicts_logisticPricescheme } = useSTDicts(state => state);
   const [form, setForm] = useHook_Reducer({ deptName: "" });
   const [deptInfo, setDeptInfo] = useState<DeptInfo | null>(null);
-  const [isMainDept, setIsMainDept] = useState(false);
+
   useEffect(() => {
     (async () => {
       const res = await Api_dept_info_ctn({ deptId: dept.deptId! });
       setDeptInfo(res);
-      setIsMainDept(res?.mainDept == 1 ? true : false);
     })();
   }, [dept]);
 
@@ -285,7 +284,7 @@ const IIIDeptEdit = ({ dept, onSuccess, onClose }: { dept: any; onSuccess: () =>
 
         <ComButton className='nw cccgreen' onClick={async () => {
           Taro.showLoading({ mask: true, title: "新增中..." });
-          const res_deptInfo = await Api_dept_edit_ctn({ deptId: deptInfo?.deptId!, deptName: form.deptName, mainDept: isMainDept ? 1 : 0 });
+          const res_deptInfo = await Api_dept_edit_ctn({ deptId: deptInfo?.deptId!, deptName: form.deptName, mainDept: deptInfo?.mainDept == 1 ? 1 : 0 });
           Taro.showToast({ icon: "none", title: "成功" });
           Taro.showToast({ icon: "none", title: "更新完成" });
           setDeptInfo(res_deptInfo);
@@ -295,10 +294,8 @@ const IIIDeptEdit = ({ dept, onSuccess, onClose }: { dept: any; onSuccess: () =>
       </View>
       <View className='ww dbtc '>
         <ComButton className='cccplh mb10 bccback'>是否为第一部门</ComButton>
-        <ComButton className={`bccbacktab  mb10 ${isMainDept ? "cccgreen" : "cccplh"}`} hoverClass='none' onClick={() => {
-          setIsMainDept(!isMainDept);
-        }}>
-          {isMainDept ? '是' : '否'}
+        <ComButton className={`bccbacktab  mb10 ${deptInfo?.mainDept == 1 ? "cccgreen" : "cccplh"}`} hoverClass='none'>
+          {deptInfo?.mainDept == 1 ? '是' : '否'}
         </ComButton>
       </View>
       <View className='ww dll '>
@@ -319,7 +316,7 @@ const IIIDeptEdit = ({ dept, onSuccess, onClose }: { dept: any; onSuccess: () =>
                   console.log(deptInfo);
 
                   const isMainDept___ = utils_str_includes(["REGIMENT", "GUIDE", "GROUPLEADER"], e.roleKey);
-                  setIsMainDept(isMainDept___ ? true : false);
+
                   const res_deptInfo = await Api_dept_edit_ctn({
                     roles_: _roles.map(ee => ee.id),
                     deptId: deptInfo?.deptId,
