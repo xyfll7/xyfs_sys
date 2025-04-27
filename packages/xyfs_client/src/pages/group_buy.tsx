@@ -132,7 +132,7 @@ const IIIUsers = () => {
     <ComButton ll className='bcctrans mb10 cccplh' hoverClass='none'>今日跟团用户</ComButton>
     {["", "", "", "",].map((e, i) => {
       return <View className='dy mb10 ww' key={i}>
-        <ComImage className='mr10 oo ovh' src={AVATARS.sort(() => Math.random() - 0.5)[0]}></ComImage>
+        <ComImage className='mr10 oo ovh' src={[...AVATARS].sort(() => Math.random() - 0.5)[0]}></ComImage>
         <ComButton ll className='bcctrans'>用户</ComButton>
       </View>;
     })}
