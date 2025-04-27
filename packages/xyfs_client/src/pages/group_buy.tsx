@@ -1,9 +1,11 @@
 // :: pages/index/index
 import { Text, View } from '@tarojs/components';
+import { Api_goods_list_ctn } from "@xyfs/taro_uii/api/api__goods";
 import { ComAddressSwitchor } from '@xyfs/taro_uii/components/ComAddressSwitchor';
 import { ComBanner } from '@xyfs/taro_uii/components/ComBanner';
 import { ComButton } from '@xyfs/taro_uii/components/ComButton';
 import { ComImage } from '@xyfs/taro_uii/components/ComImage';
+import { ComLoading } from '@xyfs/taro_uii/components/ComLoading';
 import { ComNav } from '@xyfs/taro_uii/components/ComNav';
 import { ComCartPrice } from '@xyfs/taro_uii/components/ComPrice';
 import { ComScrollView } from '@xyfs/taro_uii/components/ComScrollView';
@@ -12,9 +14,11 @@ import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { MMMFooter } from '@xyfs/taro_uii/components/MMMFooter';
 import { roo___my_dept } from '@xyfs/taro_uii/src/roles';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
+import { Pagination } from '@xyfs/taro_uii/type_index';
 import { AddressInfo } from '@xyfs/taro_uii/type_user';
 import { try_Taro_chooseAddress } from '@xyfs/taro_uii/utils/try_catch';
-import { FC, useState } from 'react';
+import { useHook_pageListNew } from '@xyfs/taro_uii/utils/useHooks';
+import { FC, useCallback, useState } from 'react';
 import { AVATARS } from '../avatars';
 
 definePageConfig({
@@ -31,6 +35,16 @@ const Index: FC = () => {
   const [type, setType] = useState(1);
   const isBanner = true;
   const [address, setAddress] = useState<AddressInfo | undefined>(selfInfo_S.defaultRecManAddress);
+
+
+  const ___page_getter = useCallback(async (p: Pagination<unknown>) =>
+    await Api_goods_list_ctn({
+      ...p,
+      sort: "desc",
+      keyword: "",
+    }), []);
+  const { page, page_loading, page_list_get } = useHook_pageListNew(___page_getter,);
+
   return <MMMAAPage className={`${isBanner ? "" : new Map([[0, "bccback"], [1, "bccwhite"]]).get(type)}`}>
     <View className='ww'>
       {isBanner &&
@@ -51,8 +65,9 @@ const Index: FC = () => {
           }}>{new Map([[0, "图文版"], [1, "简洁版"]]).get(type)} </ComButton>
         </View>
       </View>
-      <IIIAbc type={type} />
-      <IIIUser />
+      {page.list && page.list.map((item, index) => <IIIItem item={item} key={index} type={type}></IIIItem>)}
+      {!page.list && <ComLoading className='mb10' isLastPage={page?.isLastPage} loading={page_loading} onLoadMore={() => page_list_get(page)} />}
+      <IIIUsers />
       <MMMFooter className='mb10' />
     </ComScrollView>
     <View className='ww dll pt10'>
@@ -78,53 +93,41 @@ const Index: FC = () => {
   </MMMAAPage>;
 };
 
-
-const IIIAbc = ({ type }: { type: number; }) => {
-  return <View className='ww'>
-    <View className={`ww ${new Map([[1, " ioo"]]).get(type)}`}>
-      {[
-        { title: '🥒 幸福小黄瓜', desc: "黄瓜很好，鸡蛋好吃", images: "https://cdn.agroworld.my/jQFku15773.jpeg,https://cdn.agroworld.my/DzNb415772.jpeg,https://cdn.agroworld.my/il6z315774.jpeg" },
-        { title: '🌶️ 绝杀大辣条', desc: "辣条不错，鸡蛋好吃", images: "https://www.huadu.gov.cn/img/1/1189/1189348/9646406.jpg,https://www.huadu.gov.cn/img/1/1189/1189349/9646406.jpg,https://www.huadu.gov.cn/img/1/1189/1189346/9646406.jpg" },
-        { title: '🥚 白色小鸡蛋', desc: "鸡蛋好吃，鸡蛋好吃鸡蛋好吃", images: "https://img.mp.sohu.com/upload/20170323/66a6076b064c496b9a565a55497a82d2_th.jpg,https://img.mp.sohu.com/upload/20170323/2c9d7c3273bc4900b3b43924a65a3620_th.jpg,https://img.mp.sohu.com/upload/20170323/4382f90dad08417c91439c43aa8c3029_th.jpg" },
-        { title: '🌶️ 绝杀大辣条', desc: "辣条不错，鸡蛋好吃", images: "https://www.huadu.gov.cn/img/1/1189/1189348/9646406.jpg,https://www.huadu.gov.cn/img/1/1189/1189349/9646406.jpg,https://www.huadu.gov.cn/img/1/1189/1189346/9646406.jpg" },
-        { title: '🥒 幸福小黄瓜', desc: "黄瓜很好，鸡蛋好吃", images: "https://cdn.agroworld.my/jQFku15773.jpeg,https://cdn.agroworld.my/DzNb415772.jpeg,https://cdn.agroworld.my/il6z315774.jpeg" },
-      ].map((item, index) => {
-        if (type == 1) {
-          return <View className='dll ww bccback IOO prl10 mb10' key={index} >
-            <View className='dbtc ww'>
-              <View>
-                <ComButton ll className=' bccback' hoverClass='none'>{item.title}</ComButton>
-                <View className='cccplh mb10'>{item.desc}</View>
-              </View>
-              <View className='dy'>
-                <ComButton className='bccback' >-</ComButton>
-                <ComButton rr className='bccwhite ml10 cccgreen' >+ 加</ComButton>
-              </View>
-            </View>
-          </View>;
-        } else {
-          return <View className='dll ww bccwhite pt10 IOO prl10 mb10' key={index} >
-            <ComButton ll className='mb10' hoverClass='none'>{item.title}</ComButton>
-            <View className='cccplh mb10'>{item.desc}</View>
-            <View className='ww dbl '>
-              <View className='dy mb10 ww '>
-                {item.images?.split(",").map((e, i) => {
-                  return <ComImage className='mr10' style={{ width: '4rem' }} src={e} key={i}></ComImage>;
-                })}
-              </View>
-              <View className='dbl dr ww mb10' >
-                <ComButton className=' bborder' hoverClass='none'>-</ComButton>
-                <ComButton rr className='ml10 bccyellow h2rem nw' hoverClass='none' >+ 加购</ComButton>
-              </View>
-            </View>
-          </View>;
-        }
-      })}
-    </View>
-  </View>;
+const IIIItem = ({ item, type }: { item: any; type: number; }) => {
+  if (type == 1) {
+    return <View className='dll ww bccback IOO prl10 mb10'  >
+      <View className='dbtc ww'>
+        <View>
+          <ComButton ll className=' bccback ' hoverClass='none'> <Text className='nw1'>{item.name}</Text> </ComButton>
+          <View className='cccplh mb10 nw1'>{item.intro ? item.intro : "没有简介"}</View>
+        </View>
+        <View className='dy'>
+          <ComButton className='bccback' >-</ComButton>
+          <ComButton rr className='bccwhite nw ml10 cccgreen' >+ 加</ComButton>
+        </View>
+      </View>
+    </View>;
+  } else {
+    return <View className='dll ww bccwhite pt10 IOO prl10 mb10' >
+      <ComButton ll hoverClass='none'><Text className='nw1'>{item.name}发生的发生的发生地方发生的发生的发生地方</Text> </ComButton>
+      <View className='cccplh mb10'><Text className='nw2'>{item.intro ? item.intro : "没有简介"}发生的发生的发生地方发生的发生的发生地方发生的发生的发生地方发生的发生的发生地方发生的发生的发生地方发生的发生的发生地方</Text> </View>
+      <View className='ww dbl'>
+        <View className='dy mb10 ww '>
+          {item.attachUrl?.split(",").map((e, i) => {
+            return <ComImage className='mr10' style={{ width: '4rem' }} src={e} key={i}></ComImage>;
+          })}
+        </View>
+        <View className='dbl dr ww mb10' >
+          <ComButton className=' bborder' hoverClass='none'>-</ComButton>
+          <ComButton rr className='ml10 bccyellow h2rem nw' hoverClass='none' >+ 加购</ComButton>
+        </View>
+      </View>
+    </View>;
+  }
 };
 
-const IIIUser = () => {
+
+const IIIUsers = () => {
   return <View className='ww prl10'>
     <ComButton ll className='bcctrans mb10 cccplh' hoverClass='none'>今日跟团用户</ComButton>
     {["", "", "", "",].map((e, i) => {
