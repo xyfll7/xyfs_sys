@@ -19,7 +19,7 @@ function IIITreeChild<T extends { children: T[]; }>({ list, keyName, children }:
       </View>
       <View className='pl10 dll ww'>
         <ComButton className='bccback cccplh mb10 ww dbtc' onClick={() => setShow(e => !e)}>
-          下级部门<View className='transall' style={{ transform: show ? "rotate(90deg)" : "rotate(270deg)" }}>㇛</View>
+          下级部门<View className='transall fs07' style={{ transform: show ? "rotate(90deg)" : "rotate(270deg)" }}>㇛</View>
         </ComButton>
         {show && <ComTree list={list} keyName={keyName}>{children}</ComTree>}
       </View>

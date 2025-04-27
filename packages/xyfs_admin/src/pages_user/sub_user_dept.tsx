@@ -20,7 +20,7 @@ import { roo___has_role } from "@xyfs/taro_uii/src/roles";
 import { useSTDicts } from "@xyfs/taro_uii/store/store";
 import { try_Taro_navigateTo, try_Taro_showActionSheet, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
 import { useHook_Reducer } from "@xyfs/taro_uii/utils/useHooks";
-import { utils_get_start_end_date } from "@xyfs/taro_uii/utils/util";
+import { utils_get_start_end_date, utils_str_includes } from "@xyfs/taro_uii/utils/util";
 import { coo___ios_date } from "@xyfs/utils/util";
 import { format } from "date-fns";
 import { FC, useCallback, useEffect, useState } from "react";
@@ -309,7 +309,6 @@ const IIIDeptEdit = ({ dept, onSuccess, onClose }: { dept: any; onSuccess: () =>
               onClick={async () => {
                 const isHasRole = deptInfo?.roles?.some(ee => ee.roleKey === e.roleKey);
                 let _roles: ROLE_ST[];
-
                 if (isHasRole) {
                   _roles = deptInfo?.roles?.filter(ee => ee.roleKey !== e.roleKey)!;
                 } else {
@@ -318,9 +317,12 @@ const IIIDeptEdit = ({ dept, onSuccess, onClose }: { dept: any; onSuccess: () =>
                 if (await try_Taro_showModal({ title: isHasRole ? "删除角色" : "新增角色", content: isHasRole ? "点击确定删除该角色" : "点击确定新增该角色", })) {
                   Taro.showLoading({ mask: true, title: "更新中..." });
                   console.log(deptInfo);
+
+                  const isMainDept___ = utils_str_includes(["REGIMENT", "GUIDE", "GROUPLEADER"], e.roleKey);
                   const res_deptInfo = await Api_dept_edit_ctn({
                     roles_: _roles.map(ee => ee.id),
-                    deptId: deptInfo?.deptId
+                    deptId: deptInfo?.deptId,
+                    mainDept: isMainDept___ ? 1 : 0
                   });
                   Taro.showToast({ icon: "none", title: "更新完成" });
                   setDeptInfo(res_deptInfo);
