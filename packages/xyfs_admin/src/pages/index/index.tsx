@@ -51,7 +51,7 @@ const Index: FC = () => {
       {roo___has_role(selfInfo_S!, ["SUPPLIER"]) && <IIImmmSUPPLIER />}
       {roo___has_role(selfInfo_S!, ["SCANNER"]) && <IIImmmSCANNER />}
       {roo___has_role(selfInfo_S!, ["GUIDE"]) && <IIImmmGUIDE />}
-
+      {roo___has_role(selfInfo_S!, ["GROUPLEADER"]) && <IIImmmGROUPLEADER />}
       <IIISettings />
 
       <View className='dll ww'>
@@ -163,22 +163,6 @@ const IIISettings = ({ ...props }: ViewProps) => {
           极兔-兔优达
         </ComButton>
       </>}
-
-      {roo___has_role(selfInfo_S!, ["ADMIN"]) && <>
-        <ComButton className='bccwhite mb10 mr10' url='/pages_user/sub_user_dept'>
-          部门管理
-        </ComButton>
-      </>
-      }
-      {roo___has_role(selfInfo_S!, ["GROUPLEADER"]) && <>
-        <ComButton className='bccwhite mb10 mr10' url='/pages_comm/comm__publisher'>
-          发布商品
-        </ComButton>
-        <ComButton className='bccwhite mb10 mr10' url='/pages_comm/icomm_product_list'>
-          已发布
-        </ComButton>
-      </>
-      }
       {roo___has_role(selfInfo_S!, ["ADMIN"]) && <>
         <ComButton className='bccwhite mb10 mr10' url='/pages_user/sub_user_dept'>
           部门管理
@@ -336,3 +320,18 @@ const IIImmmGUIDE = ({ ...props }: ViewProps) => {
   </>;
 };
 
+const IIImmmGROUPLEADER = ({ ...props }: ViewProps) => {
+  return <>
+    <View className={`bccwhite ww dll mb10 pt10 prl10 IOO ${props.className}`}>
+      <ComButton ll className='mb10 cccplh bccwhite mr10'>团主/卖货</ComButton>
+      <View className="dy ">
+        <ComButton ll className='bborder mb10 mr10' url='/pages_comm/comm__publisher'>
+          发布商品
+        </ComButton>
+        <ComButton ll className='bborder mb10 mr10' url='/pages_comm/icomm_product_list'>
+          已发布
+        </ComButton>
+      </View>
+    </View>
+  </>;
+};

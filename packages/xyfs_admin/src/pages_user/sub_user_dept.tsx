@@ -228,29 +228,12 @@ const Index: FC<{}> = ({ }) => {
 };
 
 
-// function useTest(depts) {
-//   useEffect(() => {
-//     if (depts?.[0]?.children?.[1].children) {
-
-//       (async () => {
-//         const ____obj = {};
-//         for (const _dept of depts?.[0]?.children?.[1].children) {
-//           const res = await Api_dept_userList_ctn({ deptId: _dept.deptId });
-//           console.log(_dept.deptName, res[0].name, _dept.deptName.includes(res[0].name));
-//           ____obj[_dept.deptId] = res;
-//         }
-//         console.log("summarize：", ____obj);
-//       })();
-//     }
-//   }, [depts]);
-// }
-
 
 
 
 const IIIDeptAdd = ({ dept, onSuccess, onClose }: { dept: any; onSuccess: () => void; onClose: () => void; }) => {
   const [form, setForm] = useHook_Reducer({ deptName: "" });
-  const [isMainDept, setIsMainDept] = useState(false);
+
   return <View className='ww dll'>
     <ComNavBarB className='mb10' onClose={onClose}>
       <View className='dy'><ComButton className='fwb bccback'>添加子部门</ComButton></View>
@@ -263,19 +246,11 @@ const IIIDeptAdd = ({ dept, onSuccess, onClose }: { dept: any; onSuccess: () => 
           <ComInput placeholder='请填写子部门名称' value={form.deptName} onInput={(e) => setForm({ deptName: e.detail.value })}></ComInput>
         </ComButton>
       </View>
-      <View className='mb10 ww dbtc mb10'>
-        <Text className="nw mr10">是否为第一部门</Text>
-        <ComButton className={`bccbacktab mr10 ${isMainDept ? "cccgreen" : "cccplh"}`} hoverClass='none' onClick={() => {
-          setIsMainDept(!isMainDept);
-        }}>
-          {isMainDept ? '是' : '否'}
-        </ComButton>
-      </View>
     </View>
     <View className="dr ww">
       <ComButton className='nw cccgreen' onClick={async () => {
         Taro.showLoading({ mask: true, title: "新增中..." });
-        await Api_dept_add_ctn({ deptName: form.deptName, parentId: dept.deptId, mainDept: isMainDept ? 1 : 0 });
+        await Api_dept_add_ctn({ deptName: form.deptName, parentId: dept.deptId, mainDept: 0 });
         Taro.showToast({ icon: "none", title: "成功" });
         onSuccess();
       }}>新增</ComButton>
