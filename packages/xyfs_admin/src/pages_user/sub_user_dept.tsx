@@ -319,6 +319,7 @@ const IIIDeptEdit = ({ dept, onSuccess, onClose }: { dept: any; onSuccess: () =>
                   console.log(deptInfo);
 
                   const isMainDept___ = utils_str_includes(["REGIMENT", "GUIDE", "GROUPLEADER"], e.roleKey);
+                  setIsMainDept(isMainDept___ ? true : false);
                   const res_deptInfo = await Api_dept_edit_ctn({
                     roles_: _roles.map(ee => ee.id),
                     deptId: deptInfo?.deptId,
