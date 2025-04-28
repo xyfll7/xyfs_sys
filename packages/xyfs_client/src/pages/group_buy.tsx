@@ -25,7 +25,6 @@ import { Taro_getCurrentInstance, try_Taro_chooseAddress, try_Taro_navigateTo, t
 import { useHook_pageListNew } from '@xyfs/taro_uii/utils/useHooks';
 import { coo___objToUrl, coo___privacy_string, coo___urlToObj } from '@xyfs/utils/util';
 import React, { FC, useCallback, useEffect, useState } from 'react';
-import { AVATARS } from '../avatars';
 
 definePageConfig({
   enableShareAppMessage: true, navigationStyle: "custom", disableScroll: true,
@@ -64,7 +63,6 @@ const Index: FC = () => {
       queryDeptId: D_D
     }), [D_D]);
   const { page, page_loading, page_list_get } = useHook_pageListNew(___page_getter,);
-
   const [cart, setCart] = useState<any[]>([]);
 
 
@@ -79,8 +77,8 @@ const Index: FC = () => {
       }
       <ComNav className='mb10 prl10' isRight>
         <View className='dy' >
-          <ComImage className='mr10' src={[...AVATARS].sort(() => Math.random() - 0.5)[0]} />
-          <ComButton ll className="cccorange  fs13 fwb bcctrans" hoverClass='none'><Text className='nw1'> {deptInfo?.deptName}</Text></ComButton>
+          <ComImage className='mr10' src={deptInfo?.avatar} />
+          <ComButton ll className="cccorange  fs13 fwb bcctrans" hoverClass='none'><Text className='nw1'> {deptInfo?.deptName ?? "..."}</Text></ComButton>
         </View>
       </ComNav>
       <View className='ww dll prl10'>
@@ -103,7 +101,7 @@ const Index: FC = () => {
         onAdd={() => { setCart((e) => [...e, { ...item }]); }}
         onSub={() => { setCart(cart.filter((_, i) => cart.findIndex(e => e.id === item.id) != i)); }} />)}
       {!page.list && <ComLoading className='mb10' isLastPage={page?.isLastPage} loading={page_loading} onLoadMore={() => page_list_get(page)} />}
-      {D_D && <IIIUsers deptId={D_D} />}
+      {D_D && page.list && <IIIUsers deptId={D_D} />}
       <MMMFooter className='mb10' />
     </ComScrollView>
     <View className='ww dll pt10'>
@@ -205,7 +203,7 @@ const IIIItem = ({ item, type, onAdd, onSub, onDetail, count }: { count: number,
       <View className='cccplh mb10'><Text className='nw2'>{item.intro ? item.intro : "没有简介"}发生的发生的发生地方发生的发生的发生地方发生的发生的发生地方发生的发生的发生地方发生的发生的发生地方发生的发生的发生地方</Text> </View>
       <View className='ww dbl'>
         <View className='dy mb10 ww '>
-          {item.attachUrl?.split(",").map((e, i) => {
+          {item.attachUrl?.split(",").slice(0, 3).map((e, i) => {
             return <ComImage className='mr10' style={{ width: '4rem' }} src={e} key={i}></ComImage>;
           })}
         </View>
@@ -226,7 +224,7 @@ const IIIUsers = React.memo(({ deptId }: { deptId: string; }) => {
       setUsers(res);
     });
   }, [deptId]);
-  return <View className='ww prl10'>
+  return <View className='ww prl10 dll'>
     <ComButton ll className='bcctrans mb10 cccplh' hoverClass='none'>今日跟团用户</ComButton>
     {users?.map((e, i) => {
       return <View className='dy mb10 ww' key={i}>
