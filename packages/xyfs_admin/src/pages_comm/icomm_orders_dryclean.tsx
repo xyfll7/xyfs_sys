@@ -124,7 +124,7 @@ const Index: FC<{}> = ({ }) => {
                 <ComButton rr className='ml10 mb10 bborder'
                   onClick={async () => {
                     Taro.showLoading({ mask: true, title: "生成中..." });
-                    const _src = await utils_get_qrcode({ appid: process.env.TARO_APP_CLIENT, page: "pages_user/user_orders", scene: coo___objToUrl({ R_D: Number(useSTSelf.getState().selfInfo!.mobile).toString(36), S_D: String(_order1.orderCode!), }) });
+                    const _src = await utils_get_qrcode({ appid: process.env.TARO_APP_CLIENT, page: "pages_user/user_orders", scene: coo___objToUrl({ R_D: Number(useSTSelf.getState().selfInfo!.mobile).toString(36), O_D: String(_order1.orderCode!), }) });
                     setShowQR(_src);
                     Taro.hideLoading();
                   }}>

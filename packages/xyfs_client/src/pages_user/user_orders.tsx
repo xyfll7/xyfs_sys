@@ -266,15 +266,15 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
 
 const useProductDryCleanEditor = () => {
   const { options } = Taro_getCurrentInstance<{ scene?: string; }>();
-  const { S_D } = coo___urlToObj<{ S_D?: string; }>(options.scene);
+  const { O_D } = coo___urlToObj<{ O_D?: string; }>(options.scene);
   const [isShare, setIsShare] = useState<boolean | null>(null);
   const [order, setOrder] = useState<any | true | null>(null);
   const [isPay, setIsPay] = useState(false);
   useEffect(() => {
     (async () => {
-      if (S_D) {
+      if (O_D) {
         try {
-          const res_order = await Api_cart_share_ctn({ orderId: S_D! });
+          const res_order = await Api_cart_share_ctn({ orderId: O_D! });
           setOrder(res_order.order);
           setIsShare(false);
           if (res_order.prePay) {
@@ -298,6 +298,6 @@ const useProductDryCleanEditor = () => {
         setIsShare(true);
       }
     })();
-  }, [S_D]);
+  }, [O_D]);
   return [order, isShare, isPay];
 };

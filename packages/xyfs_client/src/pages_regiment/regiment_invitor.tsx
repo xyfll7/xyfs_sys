@@ -63,15 +63,15 @@ const IIIExpress: FC<{ deptInfo: DeptInfo; }> = ({ deptInfo }) => {
 const IIIDryclean: FC<{ deptInfo: DeptInfo; }> = ({ deptInfo }) => {
   const [order, setOrder] = useState<OrderInfo<ProductBase> | null>(null);
   const { options } = Taro_getCurrentInstance<{ scene?: string; }>();
-  const { S_D } = coo___urlToObj<{ S_D?: string; }>(options.scene);
+  const { O_D } = coo___urlToObj<{ O_D?: string; }>(options.scene);
   useEffect(() => {
     (async () => {
-      if (S_D) {
-        const res_order = await Api_order_query_ctn({ orderId: S_D });
+      if (O_D) {
+        const res_order = await Api_order_query_ctn({ orderId: O_D });
         setOrder(res_order);
       }
     })();
-  }, [S_D]);
+  }, [O_D]);
   return <> {
     order && <View className='ww bccwhite ioo pt10 mb10'>
       <View className='dy ww prl10'>
@@ -79,7 +79,7 @@ const IIIDryclean: FC<{ deptInfo: DeptInfo; }> = ({ deptInfo }) => {
         <ComButtonOpen rr className='cccgreen bccbacktab mb10 slr' id='send_dryclean'
           shareTitle={`${deptInfo?.name} 团长 邀您支付快递订单`}
           openType='share'
-          sharePath={`/pages_user/user_orders?${coo___objToUrl({ scene: `${encodeURIComponent(coo___objToUrl({ R_D: Number(deptInfo.mobile).toString(36), S_D: S_D }))}` })}`}>
+          sharePath={`/pages_user/user_orders?${coo___objToUrl({ scene: `${encodeURIComponent(coo___objToUrl({ R_D: Number(deptInfo.mobile).toString(36), O_D: O_D }))}` })}`}>
           邀请下单(干洗)
         </ComButtonOpen>
       </View>

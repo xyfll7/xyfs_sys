@@ -21,7 +21,7 @@ import { roo___my_dept } from '@xyfs/taro_uii/src/roles';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
 import { Pagination } from '@xyfs/taro_uii/type_index';
 import { AddressInfo, DeptInfo } from '@xyfs/taro_uii/type_user';
-import { try_Taro_chooseAddress, try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
+import { Taro_getCurrentInstance, try_Taro_chooseAddress, try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
 import { useHook_pageListNew } from '@xyfs/taro_uii/utils/useHooks';
 import { coo___privacy_string } from '@xyfs/utils/util';
 import React, { FC, useCallback, useEffect, useState } from 'react';
@@ -36,6 +36,9 @@ definePageConfig({
 
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC = () => {
+
+  const { options } = Taro_getCurrentInstance<{ scene?: string; }>();
+
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const [isHeaderBack, setIsHeaderBack] = useState(false);
   const [type, setType] = useState(1);

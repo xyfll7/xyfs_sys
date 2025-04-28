@@ -111,7 +111,7 @@ const Index: FC<{}> = ({ }) => {
                 <ComInput cursorSpacing={100} placeholder='顾客电话/必填' value={user.mobile} onInput={(e) => setUser(ee => ({ ...ee, mobile: e.detail.value }))} type='number' />
               </ComButton>
               <CPDryclean.Sharer ll key='Sharer' className='mb10 ' isShare={__isShare}
-                onGetShareCode={async () => {
+                onGetOrderCode={async () => {
                   if (!Boolean(cart.length)) { throw new Error("购物车是空的，先去选购吧～"); }
                   if (!user.mobile) { throw new Error("请输入顾客手机号"); }
                   if (!/^(1)\d{10}$/.test(user.mobile)) { throw new Error("请输入正确的手机号"); }

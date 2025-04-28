@@ -56,7 +56,7 @@ const Index: FC = () => {
               const _src = await utils_get_qrcode({
                 appid: process.env.TARO_APP_CLIENT,
                 page: "pages/index/index",
-                scene: coo___objToUrl({ R_D: Number(useSTSelf.getState().selfInfo!.mobile).toString(36), S_D: String(e.id), }),
+                scene: coo___objToUrl({ R_D: Number(useSTSelf.getState().selfInfo!.mobile).toString(36), O_D: String(e.id), }),
               });
               Taro.hideLoading();
               setQrcode(_src);

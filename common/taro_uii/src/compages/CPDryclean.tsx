@@ -403,7 +403,7 @@ const ShopCartTabBarRegiment: FC<PropsWithChildren & { children?: ReactElement |
 
 
 export async function dryclean_sharer(orderCode: string) {
-  const url = `/pages_regiment/regiment_invitor?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ S_D: String(orderCode) })) })}`;
+  const url = `/pages_regiment/regiment_invitor?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ O_D: String(orderCode) })) })}`;
   try_Taro_navigateToMiniProgram({
     appId: process.env.TARO_APP_CLIENT,
     path: url,
@@ -411,15 +411,15 @@ export async function dryclean_sharer(orderCode: string) {
   });
 }
 
-export const Sharer: FC<MyButtonProps & ViewProps & { onGetShareCode: () => Promise<string>, isShare: boolean, onClearCart?: () => void; isBborder?: boolean; }> = ({ isShare, onGetShareCode, onClearCart, isBborder = false, ...props }) => {
+export const Sharer: FC<MyButtonProps & ViewProps & { onGetOrderCode: () => Promise<string>, isShare: boolean, onClearCart?: () => void; isBborder?: boolean; }> = ({ isShare, onGetOrderCode, onClearCart, isBborder = false, ...props }) => {
   return <ComQRCode rr={props.rr} className={`ml10  ${isBborder ? 'bborder' : ''}  ${isShare ? "" : "cccplh"} ${props.className}`}
     onPreTap={async () => {
-      const res_shareCode = await onGetShareCode();
+      const res_orderCode = await onGetOrderCode();
       if (!isShare) { throw new Error('购物车是空的～'); }
       return {
         appid: process.env.TARO_APP_CLIENT,
         page: "pages_user/user_orders",
-        scene: coo___objToUrl({ R_D: Number(useSTSelf.getState().selfInfo!.mobile).toString(36), S_D: String(res_shareCode), }),
+        scene: coo___objToUrl({ R_D: Number(useSTSelf.getState().selfInfo!.mobile).toString(36), O_D: String(res_orderCode), }),
       };
     }}
     onClick={async () => { onClearCart?.(); }}
