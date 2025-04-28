@@ -42,7 +42,7 @@ const Index: FC = () => {
   console.log("D_D", D_D, options);
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const [isHeaderBack, setIsHeaderBack] = useState(false);
-  const [type, setType] = useState(1);
+  const [type, setType] = useState(0);
   const isBanner = true;
   const [address, setAddress] = useState<AddressInfo | undefined>(selfInfo_S.defaultRecManAddress);
 
@@ -198,17 +198,27 @@ const IIIItem = ({ item, type, onAdd, onSub, onDetail, count }: { count: number,
     </View>;
   } else {
     return <View className='dll ww bccwhite pt10 IOO prl10 mb10' >
-      <ComButton ll hoverClass='none'><Text className='nw1'>{item.name}发生的发生的发生地方发生的发生的发生地方</Text> </ComButton>
-      <View className='cccplh mb10'><Text className='nw2'>{item.intro ? item.intro : "没有简介"}发生的发生的发生地方发生的发生的发生地方发生的发生的发生地方发生的发生的发生地方发生的发生的发生地方发生的发生的发生地方</Text> </View>
+      <View onClick={onDetail} >
+        <ComButton ll hoverClass='none' >
+          <View className='dbase'>
+            <Text className='nw1 mr6'>{item.name}</Text>
+            <Text className='nw cccprice'>¥{item.price}</Text>
+            {count > 0 && <View className='bcctrans cccprice nw fs08'> /{count}</View>}
+          </View>
+        </ComButton>
+        <View className='cccplh mb10 nw2'>{item.intro ? item.intro : "没有简介"}</View>
+      </View>
       <View className='ww dbl'>
-        <View className='dy mb10 ww '>
+        <View className='dy mb10 ww ' onClick={onDetail}>
           {item.attachUrl?.split(",").slice(0, 3).map((e, i) => {
             return <ComImage className='mr10' style={{ width: '4rem' }} src={e} key={i}></ComImage>;
           })}
         </View>
         <View className='dbl dr ww mb10' >
-          <ComButton className=' bborder' hoverClass='none'>-</ComButton>
-          <ComButton rr className='ml10 bccyellow h2rem nw' hoverClass='none' >+ 加购</ComButton>
+          <View>
+            <ComButton className={`bborder cccgreen ${count > 0 ? "" : "vbh"}`} onClick={onSub}>-</ComButton>
+          </View>
+          <ComButton rr className='ml10 bccyellow h2rem nw' onClick={onAdd} >+ 加购</ComButton>
         </View>
       </View>
     </View>;
