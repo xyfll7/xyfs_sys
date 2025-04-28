@@ -23,7 +23,7 @@ import { Pagination } from '@xyfs/taro_uii/type_index';
 import { AddressInfo, DeptInfo } from '@xyfs/taro_uii/type_user';
 import { Taro_getCurrentInstance, try_Taro_chooseAddress, try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
 import { useHook_pageListNew } from '@xyfs/taro_uii/utils/useHooks';
-import { coo___privacy_string } from '@xyfs/utils/util';
+import { coo___objToUrl, coo___privacy_string, coo___urlToObj } from '@xyfs/utils/util';
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import { AVATARS } from '../avatars';
 
@@ -36,9 +36,11 @@ definePageConfig({
 
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC = () => {
-
+  const share_path = `/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ D_D: "198" })) })}`;
+  console.log("share_path", share_path);
   const { options } = Taro_getCurrentInstance<{ scene?: string; }>();
-
+  const { D_D } = coo___urlToObj<{ D_D?: string; }>(options.scene);
+  console.log("D_D", D_D, options);
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const [isHeaderBack, setIsHeaderBack] = useState(false);
   const [type, setType] = useState(1);
@@ -48,18 +50,19 @@ const Index: FC = () => {
   const [deptInfo, setDeptInfo] = useState<DeptInfo | null>(null);
   useEffect(() => {
     (async () => {
-      const res = await Api_dept_info_ctn({ deptId: "198" });
+      if (!D_D) { return; }
+      const res = await Api_dept_info_ctn({ deptId: D_D });
       setDeptInfo(res);
     })();
-  }, []);
+  }, [D_D]);
 
   const ___page_getter = useCallback(async (p: Pagination<unknown>) =>
     await Api_goods_list_ctn({
       ...p,
       sort: "desc",
       keyword: "",
-      queryDeptId: "198"
-    }), []);
+      queryDeptId: D_D
+    }), [D_D]);
   const { page, page_loading, page_list_get } = useHook_pageListNew(___page_getter,);
 
   const [cart, setCart] = useState<any[]>([]);
@@ -100,8 +103,7 @@ const Index: FC = () => {
         onAdd={() => { setCart((e) => [...e, { ...item }]); }}
         onSub={() => { setCart(cart.filter((_, i) => cart.findIndex(e => e.id === item.id) != i)); }} />)}
       {!page.list && <ComLoading className='mb10' isLastPage={page?.isLastPage} loading={page_loading} onLoadMore={() => page_list_get(page)} />}
-
-      <IIIUsers />
+      {D_D && <IIIUsers deptId={D_D} />}
       <MMMFooter className='mb10' />
     </ComScrollView>
     <View className='ww dll pt10'>
@@ -217,13 +219,13 @@ const IIIItem = ({ item, type, onAdd, onSub, onDetail, count }: { count: number,
 };
 
 
-const IIIUsers = React.memo(() => {
+const IIIUsers = React.memo(({ deptId }: { deptId: string; }) => {
   const [users, setUsers] = useState<any[] | null>(null);
   useEffect(() => {
-    Api_goods_groupBuyingUserList_ctn({ queryDeptId: "198" }).then((res) => {
+    Api_goods_groupBuyingUserList_ctn({ queryDeptId: deptId }).then((res) => {
       setUsers(res);
     });
-  }, []);
+  }, [deptId]);
   return <View className='ww prl10'>
     <ComButton ll className='bcctrans mb10 cccplh' hoverClass='none'>今日跟团用户</ComButton>
     {users?.map((e, i) => {

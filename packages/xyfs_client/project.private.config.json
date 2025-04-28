@@ -10,15 +10,15 @@
     "miniprogram": {
       "list": [
         {
-          "name": "pages_regiment/regiment_invitor",
-          "pathName": "pages_regiment/regiment_invitor",
-          "query": "",
+          "name": "pages/group_buy",
+          "pathName": "pages/group_buy",
+          "query": "scene=D_D%3D198",
           "launchMode": "default",
           "scene": null
         },
         {
-          "name": "pages/group_buy",
-          "pathName": "pages/group_buy",
+          "name": "pages_regiment/regiment_invitor",
+          "pathName": "pages_regiment/regiment_invitor",
           "query": "",
           "launchMode": "default",
           "scene": null
