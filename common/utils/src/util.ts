@@ -164,16 +164,21 @@ export function coo___unique_arr<T extends Record<string, any>>(arr: T[], key: s
 }
 
 // 隐私字符串
-export function coo___privacy_string(name: string) {
-  if (name.length == 2) {
-    name = name.substring(0, 1) + '*'; // 截取name 字符串截取第一个字符，
-    return name; // 张三显示为张*
-  } else if (name.length == 3) {
-    name = name.substring(0, 1) + '*' + name.substring(2, 3); // 截取第一个和第三个字符
-    return name; // 李思思显示为李*思
+export function coo___privacy_string(str: string, { isPhone = false, placeholder }: { isPhone?: boolean; placeholder?: string; }) {
+  if (!str) { return placeholder; }
+  if (isPhone) {
+    str = str.slice(0, 3) + '****' + str.slice(7);
+    return str;
+  }
+  if (str?.length == 2) {
+    str = str.substring(0, 1) + '*'; // 截取name 字符串截取第一个字符，
+    return str ? str : placeholder; // 张三显示为张*
+  } else if (str.length == 3) {
+    str = str.substring(0, 1) + '*' + str.substring(2, 3); // 截取第一个和第三个字符
+    return str ? str : placeholder; // 李思思显示为李*思
   } else {
-    name = name.substring(0, 1) + '*' + '*' + name.substring(3, name.length); // 截取第一个和大于第4个字符
-    return name; // 王五哈哈显示为王**哈
+    str = str.substring(0, 1) + '*' + '*' + str.substring(3, str.length); // 截取第一个和大于第4个字符
+    return str ? str : placeholder; // 王五哈哈显示为王**哈
   }
 }
 

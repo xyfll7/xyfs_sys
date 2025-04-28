@@ -34,6 +34,7 @@ export async function Api_goods_list_ctn(params: Pick<Pagination<any>, "keyword"
   date?: string,
   type?: 1 | 2;
   sort?: "asc" | "desc";
+  queryDeptId?: string;
 }): Promise<Pagination<any>> {
   const res = await wx_call_container<Promise<Pagination<any>>>({
     path: "/goods/list",
@@ -60,12 +61,22 @@ export async function Api_goodsCart_clear_ctn(params: {
 }
 
 export async function Api_goodsCart_preOrder_ctn(params: {
-  "cartItemIds": number[],
-  "goodsCartId": number, // 0,
+  "goodsItems": { id: string; }[],
   "recMan": AddressInfo,
 }): Promise<any> {
   const res = await wx_call_container<any>({
     path: "/goodsCart/preOrder",
+    data: { ...params }
+  });
+  return res;
+}
+// /api/goods/groupBuyingUserList
+export async function Api_goods_groupBuyingUserList_ctn(params: {
+  "queryDeptId": string,
+}): Promise<any> {
+  const res = await wx_call_container<any>({
+    method: "GET",
+    path: "/goods/groupBuyingUserList",
     data: { ...params }
   });
   return res;

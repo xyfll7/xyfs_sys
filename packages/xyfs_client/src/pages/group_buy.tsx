@@ -1,6 +1,8 @@
 // :: pages/index/index
 import { Text, View } from '@tarojs/components';
-import { Api_goods_list_ctn } from "@xyfs/taro_uii/api/api__goods";
+import Taro from '@tarojs/taro';
+import { Api_goods_groupBuyingUserList_ctn, Api_goods_list_ctn, Api_goodsCart_preOrder_ctn } from "@xyfs/taro_uii/api/api__goods";
+import { Api_dept_info_ctn, Api_user_edit_ctn } from '@xyfs/taro_uii/api/api__users';
 import { ComAddressSwitchor } from '@xyfs/taro_uii/components/ComAddressSwitchor';
 import { ComBanner } from '@xyfs/taro_uii/components/ComBanner';
 import { ComButton } from '@xyfs/taro_uii/components/ComButton';
@@ -14,13 +16,15 @@ import { ComScrollView } from '@xyfs/taro_uii/components/ComScrollView';
 import { ComSquare } from '@xyfs/taro_uii/components/ComSquare';
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { MMMFooter } from '@xyfs/taro_uii/components/MMMFooter';
+import { ErrorR, Order_ST } from '@xyfs/taro_uii/src/config';
 import { roo___my_dept } from '@xyfs/taro_uii/src/roles';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
 import { Pagination } from '@xyfs/taro_uii/type_index';
-import { AddressInfo } from '@xyfs/taro_uii/type_user';
-import { try_Taro_chooseAddress } from '@xyfs/taro_uii/utils/try_catch';
+import { AddressInfo, DeptInfo } from '@xyfs/taro_uii/type_user';
+import { try_Taro_chooseAddress, try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
 import { useHook_pageListNew } from '@xyfs/taro_uii/utils/useHooks';
-import React, { FC, useCallback, useState } from 'react';
+import { coo___privacy_string } from '@xyfs/utils/util';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import { AVATARS } from '../avatars';
 
 definePageConfig({
@@ -38,13 +42,20 @@ const Index: FC = () => {
   const isBanner = true;
   const [address, setAddress] = useState<AddressInfo | undefined>(selfInfo_S.defaultRecManAddress);
 
-
+  const [deptInfo, setDeptInfo] = useState<DeptInfo | null>(null);
+  useEffect(() => {
+    (async () => {
+      const res = await Api_dept_info_ctn({ deptId: "198" });
+      setDeptInfo(res);
+    })();
+  }, []);
 
   const ___page_getter = useCallback(async (p: Pagination<unknown>) =>
     await Api_goods_list_ctn({
       ...p,
       sort: "desc",
       keyword: "",
+      queryDeptId: "198"
     }), []);
   const { page, page_loading, page_list_get } = useHook_pageListNew(___page_getter,);
 
@@ -60,8 +71,11 @@ const Index: FC = () => {
       {isBanner &&
         <ComBanner className={`${new Map([[0, "bccback"], [1, "bccwhite"]]).get(type)}`} isHeaderBack={isHeaderBack} maskHightT='70%' maskHightF='10vh' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/farmer_0.webp' />
       }
-      <ComNav className='mb10'>
-        <ComButton className="cccorange  fs13 fwb bcctrans" hoverClass='none'>鲜果团购</ComButton>
+      <ComNav className='mb10 prl10' isRight>
+        <View className='dy' >
+          <ComImage className='mr10' src={[...AVATARS].sort(() => Math.random() - 0.5)[0]} />
+          <ComButton ll className="cccorange  fs13 fwb bcctrans" hoverClass='none'><Text className='nw1'> {deptInfo?.deptName}</Text></ComButton>
+        </View>
       </ComNav>
       <View className='ww dll prl10'>
         <ComButton ll className={`mb10 cccplh bcctrans nw1 `} hoverClass='none'>今日下单明日送达 🚗 🛵 🎁</ComButton>
@@ -97,11 +111,37 @@ const Index: FC = () => {
       </View>
       <View className='ww dr mb10'>
         <ComAddressSwitchor className="ww mr10 bcctrans" isShort title='团:' address={roo___my_dept(selfInfo_S)} />
-        <ComCartPrice totalPrice={String(cart.reduce((sum, item) => sum + (item.price * 100), 0) / 100)} num={String(cart.length)} />
-
-        <ComButton className='bccyellow ml10 nw'>
+        <ComCartPrice className='bcctrans' totalPrice={String(cart.reduce((sum, item) => sum + (item.price * 100), 0) / 100)} num={String(cart.length)} />
+        <ComButton className='bccyellow ml10 nw' onClickO={async () => {
+          if (!Boolean(cart?.length)) { throw new ErrorR("购物车为空", true); }
+          if (!Boolean(address)) { throw new ErrorR("请选择收货地址", true); }
+          try {
+            Taro.showLoading({ mask: true, title: "支付中...", });
+            const res_pay = await Api_goodsCart_preOrder_ctn({
+              goodsItems: cart?.map(e => ({ id: e.id }))!,
+              recMan: address!,
+            });
+            Taro.showLoading({ mask: true, title: "支付...", });
+            await try_Taro_requestPayment({ ...res_pay, package: res_pay.packageStr });
+            Taro.hideLoading();
+            if (await try_Taro_showModal({ title: "支付完成", content: `订单移到"已支付"列表`, confirmText: "查看订单", cancelText: "留在本页" })) {
+              try_Taro_navigateTo({ url: `/pages_user/user_orders?order_ST=${Order_ST.已付款}` });
+            }
+          } catch (err) {
+            if (await try_Taro_showModal({ title: "取消支付", content: `订单移到"待支付"列表`, confirmText: "查看订单", cancelText: "留在本页" })) {
+              try_Taro_navigateTo({ url: `/pages_user/user_orders?order_ST=${Order_ST.待付款}` });
+            }
+          } finally {
+            setCart([]);
+            Taro.hideLoading();
+            // 如果个人信息中没有默认的用户收件地址，则更新用户收件地址
+            if (!selfInfo_S.defaultRecManAddress) {
+              await Api_user_edit_ctn({ defaultRecManAddress: address });
+            }
+          }
+        }}>
           <ComSquare style={{ width: "calc(1.3 * var(--rem_base))" }} className='icon-wxpay mr4' />
-          <Text>现付</Text>
+          <Text>买</Text>
         </ComButton>
       </View>
     </View>
@@ -146,7 +186,10 @@ const IIIItem = ({ item, type, onAdd, onSub, onDetail, count }: { count: number,
           <View className='cccplh mb10 nw1'>{item.intro ? item.intro : "没有简介"}</View>
         </View>
         <View className='dy'>
-          <ComButton className={`bccback  ${count > 0 ? "cccgreen" : "cccplh"}`} onClick={onSub}>-</ComButton>
+          <View>
+            <ComButton className={`bccback cccgreen ${count > 0 ? "" : "vbh"}`} onClick={onSub}>-</ComButton>
+          </View>
+
           <ComButton rr className='bccwhite nw ml10 cccgreen' onClick={onAdd}>+ 加</ComButton>
         </View>
       </View>
@@ -172,13 +215,20 @@ const IIIItem = ({ item, type, onAdd, onSub, onDetail, count }: { count: number,
 
 
 const IIIUsers = React.memo(() => {
+  const [users, setUsers] = useState<any[] | null>(null);
+  useEffect(() => {
+    Api_goods_groupBuyingUserList_ctn({ queryDeptId: "198" }).then((res) => {
+      setUsers(res);
+    });
+  }, []);
   return <View className='ww prl10'>
     <ComButton ll className='bcctrans mb10 cccplh' hoverClass='none'>今日跟团用户</ComButton>
-    {["", "", "", "",].map((e, i) => {
+    {users?.map((e, i) => {
       return <View className='dy mb10 ww' key={i}>
-        <ComImage className='mr10 oo ovh' src={[...AVATARS].sort(() => Math.random() - 0.5)[0]}></ComImage>
-        <ComButton ll className='bcctrans'>用户</ComButton>
+        <ComImage className='mr10 oo ovh' src={e.avatar}></ComImage>
+        <ComButton ll className='bcctrans cccplh'>{e.name ? e.name : coo___privacy_string(e.mobile, { isPhone: true, placeholder: "该用户想匿名" })}</ComButton>
       </View>;
     })}
+    {!users && <ComLoading className='mb10' />}
   </View>;
 });

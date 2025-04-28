@@ -12,9 +12,9 @@ export const ComPrice: FC<ViewProps & { price: number; }> = ({ price, ...props }
   </Text>;
 };
 
-export const ComCartPrice = ({ num, totalPrice, className, ...props }: { num?: string, totalPrice?: string; } & MyButtonProps & Omit<ViewProps, "style">) => {
+export const ComCartPrice = ({ num, totalPrice, className = "bborder", ...props }: { num?: string, totalPrice?: string; } & MyButtonProps & Omit<ViewProps, "style">) => {
   const _num = Number(num);
-  return <ComButton {...props} className={`${className} nw  bborder`} hoverClass='none'>
+  return <ComButton {...props} className={`${className} nw  `} hoverClass='none'>
     <View className='dbase'>
       <Text className='cccprice mr2 fs08'>¥</Text>
       <Text className='cccprice fwb fs13'>{totalPrice ?? "..."}</Text>
