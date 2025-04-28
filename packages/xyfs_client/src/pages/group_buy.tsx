@@ -5,7 +5,7 @@ import { Api_goods_groupBuyingUserList_ctn, Api_goods_list_ctn, Api_goodsCart_pr
 import { Api_dept_info_ctn, Api_user_edit_ctn } from '@xyfs/taro_uii/api/api__users';
 import { ComAddressSwitchor } from '@xyfs/taro_uii/components/ComAddressSwitchor';
 import { ComBanner } from '@xyfs/taro_uii/components/ComBanner';
-import { ComButton } from '@xyfs/taro_uii/components/ComButton';
+import { ComButton, ComButtonOpen } from '@xyfs/taro_uii/components/ComButton';
 import { ComImage } from '@xyfs/taro_uii/components/ComImage';
 import { ComLoading } from '@xyfs/taro_uii/components/ComLoading';
 import { ComNav } from '@xyfs/taro_uii/components/ComNav';
@@ -76,10 +76,14 @@ const Index: FC = () => {
         <ComBanner className={`${new Map([[0, "bccback"], [1, "bccwhite"]]).get(type)}`} isHeaderBack={isHeaderBack} maskHightT='70%' maskHightF='10vh' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/farmer_0.webp' />
       }
       <ComNav className='mb10 prl10' isRight>
-        <View className='dy' >
-          <ComImage className='mr10' src={deptInfo?.avatar} />
-          <ComButton ll className="cccorange  fs13 fwb bcctrans" hoverClass='none'><Text className='nw1'> {deptInfo?.deptName ?? "..."}</Text></ComButton>
+        <View className='ww dbtc'>
+          <View className='dy' >
+            <ComImage className='mr10' src={deptInfo?.avatar} />
+            <ComButton ll className="cccorange  fs13 fwb bcctrans" hoverClass='none'><Text className='nw1'> {deptInfo?.deptName ?? "..."}</Text></ComButton>
+          </View>
+
         </View>
+
       </ComNav>
       <View className='ww dll prl10'>
         <ComButton ll className={`mb10 cccplh bcctrans nw1 `} hoverClass='none'>今日下单明日送达 🚗 🛵 🎁</ComButton>
@@ -88,6 +92,16 @@ const Index: FC = () => {
           <ComButton rr className={`mb10 cccgreen nw ml10 ${isBanner ? "bcctrans03-dark" : ""}`} onClick={() => {
             setType(type == 0 ? 1 : 0);
           }}>{new Map([[0, "图文版"], [1, "简洁版"]]).get(type)} </ComButton>
+          <ComButtonOpen rr className='cccgreen bborder mb10 ml10' id='send_express'
+            shareTitle={`${selfInfo_S.managerUser?.name} 团长 邀您买东西啦`}
+            openType='share'
+            sharePath={`/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ D_D: D_D })) })}`}>
+            <View className='dbase'>
+              {selfInfo_S.managerUser && <Text className='fs07 mr4 cccorange' >¥</Text>}
+              <Text className='cccplh mr4'>分享</Text>
+            </View>
+            <ComSquare className='icon-share' style={{ width: "calc(1 * var(--rem_base))" }} />
+          </ComButtonOpen>
         </View>
       </View>
     </View>

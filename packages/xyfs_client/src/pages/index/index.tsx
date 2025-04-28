@@ -203,7 +203,7 @@ const IIIBringGoods = React.memo(({ className, channelId, }: { className?: strin
                 {selfInfo_S.managerUser && <Text className='fs07 mr4 cccorange' >¥</Text>}
                 <Text className='cccplh mr4'>分享</Text>
               </View>
-              <ComSquare className='icon-share mr4' style={{ width: "calc(1 * var(--rem_base))" }} />
+              <ComSquare className='icon-share' style={{ width: "calc(1 * var(--rem_base))" }} />
             </ComButtonOpen>
           </View>
         </View>
