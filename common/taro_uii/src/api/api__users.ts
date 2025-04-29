@@ -385,3 +385,12 @@ export async function Api_dept_channelConfig_ctn(params: {
   });
   return res;
 }
+
+export async function Api_dept_groupLeader_ctn(params: {}) {
+  const res = await wx_call_container<DeptInfo[]>({
+    method: "GET",
+    path: "/user/groupLeader",
+    data: { ...params },
+  });
+  return res;
+}

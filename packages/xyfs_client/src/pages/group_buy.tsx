@@ -32,17 +32,16 @@ definePageConfig({
   // "componentFramework": "glass-easel",
   // "renderer": "skyline",
 });
-
+// `/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ D_D: "198" })) })}`;
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC = () => {
-  const share_path = `/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ D_D: "198" })) })}`;
-  console.log("share_path", share_path);
+
   const { options } = Taro_getCurrentInstance<{ scene?: string; }>();
   const { D_D } = coo___urlToObj<{ D_D?: string; }>(options.scene);
-  console.log("D_D", D_D, options);
+
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const [isHeaderBack, setIsHeaderBack] = useState(false);
-  const [type, setType] = useState(0);
+  const [type, setType] = useState(1);
   const isBanner = true;
   const [address, setAddress] = useState<AddressInfo | undefined>(selfInfo_S.defaultRecManAddress);
 
@@ -70,10 +69,10 @@ const Index: FC = () => {
     // { "id": 6, "name": "延安山地苹果", "sketch": null, "intro": "重量6-7斤/12枚装/果径80-85", "keywords": null, "tags": null, "price": 58, "weight": 1, "marketPrice": null, "stock": 30, "warningStock": null, "limitQuantity": null, "attachUrl": "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/product_image/oGwbL5PVdCTyoE2sYHAq2bdNA9BY/_1731288105472_0.png", "userId": "oGwbL5PVdCTyoE2sYHAq2bdNA9BY", "status": 1, "sort": 2, "lastUpdateTime": "2024-11-11 09:21:56", "delFlag": "0", "createBy": "oGwbL5PVdCTyoE2sYHAq2bdNA9BY", "createTime": "2024-11-11 09:21:56", "updateBy": null, "updateTime": null, "remark": "", "userName": "王理代", "userMobile": "17319969379", "userAvatar": "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/comm_avatar/default/狗2@1x.webp", "totalSaleStock": null, "saleStock": null, "orderUser": null }
   );
 
-  return <MMMAAPage className={`${isBanner ? "" : new Map([[0, "bccback"], [1, "bccwhite"]]).get(type)}`}>
+  return <MMMAAPage className={`${isBanner ? "" : "bccback"}`}>
     <View className='ww'>
       {isBanner &&
-        <ComBanner className={`${new Map([[0, "bccback"], [1, "bccwhite"]]).get(type)}`} isHeaderBack={isHeaderBack} maskHightT='70%' maskHightF='10vh' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/farmer_0.webp' />
+        <ComBanner className={`${isBanner ? "" : "bccback"}`} isHeaderBack={isHeaderBack} maskHightT='70%' maskHightF='10vh' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/farmer_0.webp' />
       }
       <ComNav className='mb10 prl10' isRight>
         <View className='ww dbtc'>
@@ -87,33 +86,43 @@ const Index: FC = () => {
       </ComNav>
       <View className='ww dll prl10'>
         <ComButton ll className={`mb10 cccplh bcctrans nw1 `} hoverClass='none'>今日下单明日送达 🚗 🛵 🎁</ComButton>
-        <View className='ww dr'>
-          <ComButton rr className={`mb10 cccwhite ${isBanner ? "bcctrans03-dark" : ""}`} onClick={() => { setCart([]); }}>清空</ComButton>
-          <ComButton rr className={`mb10 cccgreen nw ml10 ${isBanner ? "bcctrans03-dark" : ""}`} onClick={() => {
-            setType(type == 0 ? 1 : 0);
-          }}>{new Map([[0, "图文版"], [1, "简洁版"]]).get(type)} </ComButton>
-          <ComButtonOpen rr className='cccgreen bborder mb10 ml10' id='send_express'
-            shareTitle={`${selfInfo_S.managerUser?.name} 团长 邀您买东西啦`}
-            openType='share'
-            sharePath={`/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ D_D: D_D })) })}`}>
-            <View className='dbase'>
-              {selfInfo_S.managerUser && <Text className='fs07 mr4 cccorange' >¥</Text>}
-              <Text className='cccplh mr4'>分享</Text>
-            </View>
-            <ComSquare className='icon-share' style={{ width: "calc(1 * var(--rem_base))" }} />
-          </ComButtonOpen>
-        </View>
       </View>
     </View>
-    <ComScrollView className='IOO' upperThreshold={200}
+    <ComScrollView className='IOO ' upperThreshold={200}
       onScroll={(e, top) => { if (e.detail.scrollTop > top) { setIsHeaderBack(true); } }}
       onScrollToUpper={() => { setIsHeaderBack(false); }}>
 
-      {page.list && page.list.map((item, index) => <IIIItem item={item} key={index} type={type}
-        count={cart.filter(e => e.id === item.id).length}
-        onDetail={() => { setProduct(item); }}
-        onAdd={() => { setCart((e) => [...e, { ...item }]); }}
-        onSub={() => { setCart(cart.filter((_, i) => cart.findIndex(e => e.id === item.id) != i)); }} />)}
+      {page.list &&
+        <View className='dll ww bccwhite pt10 mb10 prl10 IOO'>
+
+          <View className='ww dll prl10'>
+
+            <View className='ww dr'>
+              <ComButton rr className={`mb10 cccplh bborder `} onClick={() => { setCart([]); }}>清空</ComButton>
+              <ComButton rr className={`mb10 cccplh nw ml10 bborder `} onClick={() => {
+                setType(type == 0 ? 1 : 0);
+              }}>{new Map([[0, "图文版"], [1, "简洁版"]]).get(type)} </ComButton>
+              <ComButtonOpen rr className={`cccplh mb10 ml10 bborder `} id='send_express'
+                shareTitle={`${selfInfo_S.managerUser?.name} 团长 邀您买东西啦`}
+                openType='share'
+                sharePath={`/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ D_D: D_D })) })}`}>
+                <View className='dbase'>
+                  {selfInfo_S.managerUser && <Text className='fs07 mr4 cccorange' >¥</Text>}
+                  <Text className='mr4'>分享</Text>
+                </View>
+                <ComSquare className='icon-share' style={{ width: "calc(1 * var(--rem_base))" }} />
+              </ComButtonOpen>
+            </View>
+          </View>
+          {
+            [...page.list].map((item, index) => <IIIItem item={item} key={index} type={type}
+              count={cart.filter(e => e.id === item.id).length}
+              onDetail={() => { setProduct(item); }}
+              onAdd={() => { setCart((e) => [...e, { ...item }]); }}
+              onSub={() => { setCart(cart.filter((_, i) => cart.findIndex(e => e.id === item.id) != i)); }} />)
+          }
+        </View>
+      }
       {!page.list && <ComLoading className='mb10' isLastPage={page?.isLastPage} loading={page_loading} onLoadMore={() => page_list_get(page)} />}
       {D_D && page.list && <IIIUsers deptId={D_D} />}
       <MMMFooter className='mb10' />
@@ -204,18 +213,18 @@ const IIIItem = ({ item, type, onAdd, onSub, onDetail, count }: { count: number,
         </View>
         <View className='dy'>
           <View>
-            <ComButton className={`bccback cccgreen ${count > 0 ? "" : "vbh"}`} onClick={onSub}>-</ComButton>
+            <ComButton className={`bccbacktab cccgreen ${count > 0 ? "" : "vbh"}`} hoverClass='none' onClick={onSub}>-</ComButton>
           </View>
           <ComButton rr className='bccwhite nw ml10 cccgreen' onClick={onAdd}>+ 加</ComButton>
         </View>
       </View>
     </View>;
   } else {
-    return <View className='dll ww bccwhite pt10 IOO prl10 mb10' >
+    return <View className='dll ww bccback pt10 IOO prl10 mb10' >
       <View onClick={onDetail} >
-        <ComButton ll hoverClass='none' >
+        <ComButton ll className='bcctrans' hoverClass='none'>
           <View className='dbase'>
-            <Text className='nw1 mr6'>{item.name}</Text>
+            <Text className='nw1 mr6 '>{item.name}</Text>
             <Text className='nw cccprice'>¥{item.price}</Text>
             {count > 0 && <View className='bcctrans cccprice nw fs08'> /{count}</View>}
           </View>
@@ -230,7 +239,7 @@ const IIIItem = ({ item, type, onAdd, onSub, onDetail, count }: { count: number,
         </View>
         <View className='dbl dr ww mb10' >
           <View>
-            <ComButton className={`bborder cccgreen ${count > 0 ? "" : "vbh"}`} onClick={onSub}>-</ComButton>
+            <ComButton className={`bccbacktab cccgreen ${count > 0 ? "" : "vbh"}`} hoverClass='none' onClick={onSub}>-</ComButton>
           </View>
           <ComButton rr className='ml10 bccyellow h2rem nw' onClick={onAdd} >+ 加购</ComButton>
         </View>
@@ -248,13 +257,14 @@ const IIIUsers = React.memo(({ deptId }: { deptId: string; }) => {
     });
   }, [deptId]);
   return <View className='ww prl10 dll'>
-    <ComButton ll className='bcctrans mb10 cccplh' hoverClass='none'>今日跟团用户</ComButton>
+    <ComButton ll className='ml10 bcctrans mb10 cccplh' hoverClass='none'>今日跟团用户</ComButton>
     {users?.map((e, i) => {
       return <View className='dy mb10 ww' key={i}>
         <ComImage className='mr10 oo ovh' src={e.avatar}></ComImage>
         <ComButton ll className='bcctrans cccplh'>{e.name ? e.name : coo___privacy_string(e.mobile, { isPhone: true, placeholder: "该用户想匿名" })}</ComButton>
       </View>;
     })}
+    {users?.length === 0 && <ComLoading className='mb10' isEmpty >今天还没有人跟团哦 ~</ComLoading>}
     {!users && <ComLoading className='mb10' />}
   </View>;
 });
