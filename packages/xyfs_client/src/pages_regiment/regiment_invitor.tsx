@@ -118,7 +118,7 @@ const IIIGroupLeaders = () => {
         try_Taro_navigateTo({ url: `/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ D_D: e.deptId })) })}` });
       }}>
         <ComButton ll className='mb10' >
-          {e.name}
+          {e.deptName}
         </ComButton>
         <ComButtonOpen rr className='cccgreen bborder mb10 ml10' id='send_express'
           shareTitle={`${selfInfo_S.managerUser?.name} 团长 邀您买东西啦`}
