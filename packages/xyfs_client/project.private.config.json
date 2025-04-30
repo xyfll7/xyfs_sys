@@ -10,6 +10,27 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages/group_buy",
+          "pathName": "pages/group_buy",
+          "query": "scene=D_D%253D198",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_regiment/regiment_invitor",
+          "pathName": "pages_regiment/regiment_invitor",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_regiment/regiment_invitor",
+          "pathName": "pages_regiment/regiment_invitor",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages_regiment/regiment_invitor",
           "pathName": "pages_regiment/regiment_invitor",
           "query": "",

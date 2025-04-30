@@ -9,6 +9,7 @@ import { ComButton, ComButtonOpen } from '@xyfs/taro_uii/components/ComButton';
 import { ComImage } from '@xyfs/taro_uii/components/ComImage';
 import { ComLoading } from '@xyfs/taro_uii/components/ComLoading';
 import { ComNav } from '@xyfs/taro_uii/components/ComNav';
+import { ComNavBarA } from '@xyfs/taro_uii/components/ComNavBarA';
 import { ComNavBarB } from '@xyfs/taro_uii/components/ComNavBarB';
 import { ComPopupNew } from '@xyfs/taro_uii/components/ComPopupNew';
 import { ComCartPrice } from '@xyfs/taro_uii/components/ComPrice';
@@ -65,9 +66,11 @@ const Index: FC = () => {
   const [cart, setCart] = useState<any[]>([]);
 
 
+
   const [product, setProduct] = useState<any>(
     // { "id": 6, "name": "延安山地苹果", "sketch": null, "intro": "重量6-7斤/12枚装/果径80-85", "keywords": null, "tags": null, "price": 58, "weight": 1, "marketPrice": null, "stock": 30, "warningStock": null, "limitQuantity": null, "attachUrl": "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/product_image/oGwbL5PVdCTyoE2sYHAq2bdNA9BY/_1731288105472_0.png", "userId": "oGwbL5PVdCTyoE2sYHAq2bdNA9BY", "status": 1, "sort": 2, "lastUpdateTime": "2024-11-11 09:21:56", "delFlag": "0", "createBy": "oGwbL5PVdCTyoE2sYHAq2bdNA9BY", "createTime": "2024-11-11 09:21:56", "updateBy": null, "updateTime": null, "remark": "", "userName": "王理代", "userMobile": "17319969379", "userAvatar": "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/comm_avatar/default/狗2@1x.webp", "totalSaleStock": null, "saleStock": null, "orderUser": null }
   );
+  console.log("fff", page, !page.list);
 
   return <MMMAAPage className={`${isBanner ? "" : "bccback"}`}>
     <View className='ww'>
@@ -75,14 +78,14 @@ const Index: FC = () => {
         <ComBanner className={`${isBanner ? "" : "bccback"}`} isHeaderBack={isHeaderBack} maskHightT='70%' maskHightF='10vh' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/farmer_0.webp' />
       }
       <ComNav className='mb10 prl10' isRight>
-        <View className='ww dbtc'>
-          <View className='dy' >
-            <ComImage className='mr10' src={deptInfo?.avatar} />
-            <ComButton ll className="cccorange  fs13 fwb bcctrans" hoverClass='none'><Text className='nw1'> {deptInfo?.deptName ?? "..."}</Text></ComButton>
+        <ComNavBarA className='mb10 '>
+          <View className='ww dbtc ml10'>
+            <View className='dy' >
+              <ComImage className='mr10' src={deptInfo?.avatar} />
+              <ComButton ll className="cccorange  fs13 fwb bcctrans" hoverClass='none'><Text className='nw1'> {deptInfo?.deptName ?? "..."}</Text></ComButton>
+            </View>
           </View>
-
-        </View>
-
+        </ComNavBarA>
       </ComNav>
       <View className='ww dll prl10'>
         <ComButton ll className={`mb10 cccplh bcctrans nw1 `} hoverClass='none'>今日下单明日送达 🚗 🛵 🎁</ComButton>
@@ -92,7 +95,7 @@ const Index: FC = () => {
       onScroll={(e, top) => { if (e.detail.scrollTop > top) { setIsHeaderBack(true); } }}
       onScrollToUpper={() => { setIsHeaderBack(false); }}>
 
-      {page.list &&
+      {page.pageNum !== 0 && Boolean(page.list.length) &&
         <View className='dll ww bccwhite pt10 mb10 prl10 IOO'>
 
           <View className='ww dll prl10'>
@@ -123,8 +126,8 @@ const Index: FC = () => {
           }
         </View>
       }
-      {!page.list && <ComLoading className='mb10' isLastPage={page?.isLastPage} loading={page_loading} onLoadMore={() => page_list_get(page)} />}
-      {D_D && page.list && <IIIUsers deptId={D_D} />}
+      {page.pageNum === 0 || page.list.length === 0 && <ComLoading className='mb10' isLastPage={page?.isLastPage} loading={page_loading} onLoadMore={() => page_list_get(page)} />}
+      {D_D && Boolean(page.list.length) && <IIIUsers deptId={D_D} />}
       <MMMFooter className='mb10' />
     </ComScrollView>
     <View className='ww dll pt10'>
