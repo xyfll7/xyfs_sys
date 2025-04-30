@@ -12,7 +12,7 @@
         {
           "name": "pages/group_buy",
           "pathName": "pages/group_buy",
-          "query": "scene=D_D%253D198",
+          "query": "scene=G_D%253D198",
           "launchMode": "default",
           "scene": null
         },
@@ -47,7 +47,7 @@
         {
           "name": "pages/group_buy",
           "pathName": "pages/group_buy",
-          "query": "scene=D_D%3D198",
+          "query": "scene=G_D%3D198",
           "launchMode": "default",
           "scene": null
         },

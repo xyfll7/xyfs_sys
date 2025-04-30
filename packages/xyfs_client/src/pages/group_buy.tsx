@@ -34,12 +34,12 @@ definePageConfig({
   // "componentFramework": "glass-easel",
   // "renderer": "skyline",
 });
-// `/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ D_D: "198" })) })}`;
+// `/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ G_D: "198" })) })}`;
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC = () => {
 
   const { options } = Taro_getCurrentInstance<{ scene?: string; }>();
-  const { D_D } = coo___urlToObj<{ D_D?: string; }>(options.scene);
+  const { G_D } = coo___urlToObj<{ G_D?: string; }>(options.scene);
 
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const [isHeaderBack, setIsHeaderBack] = useState(false);
@@ -50,19 +50,19 @@ const Index: FC = () => {
   const [deptInfo, setDeptInfo] = useState<DeptInfo | null>(null);
   useEffect(() => {
     (async () => {
-      if (!D_D) { return; }
-      const res = await Api_dept_info_ctn({ deptId: D_D });
+      if (!G_D) { return; }
+      const res = await Api_dept_info_ctn({ deptId: G_D });
       setDeptInfo(res);
     })();
-  }, [D_D]);
+  }, [G_D]);
 
   const ___page_getter = useCallback(async (p: Pagination<unknown>) =>
     await Api_goods_list_ctn({
       ...p,
       sort: "desc",
       keyword: "",
-      queryDeptId: D_D
-    }), [D_D]);
+      queryDeptId: G_D
+    }), [G_D]);
   const { page, page_loading, page_list_get } = useHook_pageListNew(___page_getter,);
   const [cart, setCart] = useState<any[]>([]);
   Taro.getSystemInfo({
@@ -113,7 +113,7 @@ const Index: FC = () => {
               <ComButtonOpen rr className={`cccplh mb10 ml10 bborder `} id='send_express'
                 shareTitle={`${selfInfo_S.managerUser?.name} 团长 邀您买东西啦`}
                 openType='share'
-                sharePath={`/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ D_D: D_D })) })}`}>
+                sharePath={`/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ G_D: G_D })) })}`}>
                 <View className='dbase'>
                   {selfInfo_S.managerUser && <Text className='fs07 mr4 cccorange' >¥</Text>}
                   <Text className='mr4'>分享</Text>
@@ -132,7 +132,7 @@ const Index: FC = () => {
         </View>
       }
       {page.pageNum === 0 || page.list.length === 0 && <ComLoading className='mb10' isLastPage={page?.isLastPage} loading={page_loading} onLoadMore={() => page_list_get(page)} />}
-      {D_D && Boolean(page.list.length) && <IIIUsers deptId={D_D} />}
+      {G_D && Boolean(page.list.length) && <IIIUsers deptId={G_D} />}
       <MMMFooter className='mb10' />
     </ComScrollView>
     <View className='ww dll pt10'>

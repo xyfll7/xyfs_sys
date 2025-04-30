@@ -44,7 +44,7 @@ const Index: FC = () => {
           {roo___has_role(managerUser, ["REGIMENT"]) && <IIIDryclean deptInfo={managerUser}></IIIDryclean>}
 
           {roo___has_role(managerUser, ["REGIMENT", "GUIDE"]) && <IIIBringGoods deptInfo={managerUser}></IIIBringGoods>}
-          <IIIGroupLeaders></IIIGroupLeaders>
+          <IIIGroupLeaders deptInfo={managerUser}></IIIGroupLeaders>
         </View>
       }
     </ComScrollView>
@@ -104,7 +104,7 @@ const IIIBringGoods: FC<{ deptInfo: DeptInfo; }> = ({ deptInfo }) => {
 };
 
 
-const IIIGroupLeaders = () => {
+const IIIGroupLeaders: FC<{ deptInfo: DeptInfo; }> = ({ deptInfo }) => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const [groupLeaders, setGroupLeaders] = useState<DeptInfo[] | null>(null);
   useEffect(() => {
@@ -112,10 +112,11 @@ const IIIGroupLeaders = () => {
       setGroupLeaders(res);
     });
   }, []);
+
   return <>
     {groupLeaders?.map(e => {
       return <View key={e.deptId} className='mb10 dbtc bccwhite ww ioo pt10 prl10' onClick={() => {
-        try_Taro_navigateTo({ url: `/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ D_D: e.deptId })) })}` });
+        try_Taro_navigateTo({ url: `/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ G_D: e.deptId, R_D: Number(deptInfo.mobile).toString(36) })) })}` });
       }}>
         <ComButton ll className='mb10' hoverClass='none'>
           {e.deptName}
@@ -123,7 +124,7 @@ const IIIGroupLeaders = () => {
         <ComButtonOpen rr className='cccgreen bborder mb10 ml10' id='send_express'
           shareTitle={`${selfInfo_S.managerUser?.name} 团长 邀您买东西啦`}
           openType='share'
-          sharePath={`/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ D_D: e.deptId })) })}`}>
+          sharePath={`/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ G_D: e.deptId, })), R_D: Number(deptInfo.mobile).toString(36) })}`}>
           <View className='dbase'>
             {selfInfo_S.managerUser && <Text className='fs07 mr4 cccorange' >¥</Text>}
             <Text className='cccplh mr4'>分享</Text>
