@@ -110,7 +110,7 @@ const IIISettings = ({ ...props }: ViewProps) => {
         </ComButton>
       </>
       }
-      {roo___has_role(selfInfo_S!, ["REGIMENT", "MERCHANT"]) &&
+      {roo___has_role(selfInfo_S!, ["REGIMENT", "MERCHANT", "GROUPLEADER"]) &&
         <ComButton className='mb10 bccwhite nw mr10' url='/pages_regiment/regiment_collection_record'>收款记录</ComButton>
       }
       {roo___has_role(selfInfo_S!, ["REGIMENT", "SCANNER", "MERCHANT"]) &&
@@ -331,6 +331,10 @@ const IIImmmGROUPLEADER = ({ ...props }: ViewProps) => {
         <ComButton ll className='bborder mb10 mr10' url='/pages_comm/icomm_product_list'>
           已发布
         </ComButton>
+      </View>
+      <View className='dy dwp'>
+        <ComButton ll className=' nw mb10 mr10 bborder' url={`/pages_comm/icomm_orders_groupbuying?order_ST=${Order_ST.已付款}`}>已付款 </ComButton>
+        <ComButton ll className=' nw mb10 mr10 bborder' url={`/pages_comm/icomm_orders_groupbuying?order_ST=${Order_ST.已退款}`}>已退款 </ComButton>
       </View>
     </View>
   </>;
