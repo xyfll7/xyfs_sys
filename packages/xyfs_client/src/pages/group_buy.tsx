@@ -24,6 +24,7 @@ import { Pagination } from '@xyfs/taro_uii/type_index';
 import { AddressInfo, DeptInfo } from '@xyfs/taro_uii/type_user';
 import { Taro_getCurrentInstance, try_Taro_chooseAddress, try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
 import { useHook_pageListNew } from '@xyfs/taro_uii/utils/useHooks';
+
 import { coo___objToUrl, coo___privacy_string, coo___urlToObj } from '@xyfs/utils/util';
 import React, { FC, useCallback, useEffect, useState } from 'react';
 
@@ -64,8 +65,11 @@ const Index: FC = () => {
     }), [D_D]);
   const { page, page_loading, page_list_get } = useHook_pageListNew(___page_getter,);
   const [cart, setCart] = useState<any[]>([]);
-
-
+  Taro.getSystemInfo({
+    success(res) {
+      console.log('当前基础库版本：', res.SDKVersion);
+    }
+  });
 
   const [product, setProduct] = useState<any>(
     // { "id": 6, "name": "延安山地苹果", "sketch": null, "intro": "重量6-7斤/12枚装/果径80-85", "keywords": null, "tags": null, "price": 58, "weight": 1, "marketPrice": null, "stock": 30, "warningStock": null, "limitQuantity": null, "attachUrl": "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/product_image/oGwbL5PVdCTyoE2sYHAq2bdNA9BY/_1731288105472_0.png", "userId": "oGwbL5PVdCTyoE2sYHAq2bdNA9BY", "status": 1, "sort": 2, "lastUpdateTime": "2024-11-11 09:21:56", "delFlag": "0", "createBy": "oGwbL5PVdCTyoE2sYHAq2bdNA9BY", "createTime": "2024-11-11 09:21:56", "updateBy": null, "updateTime": null, "remark": "", "userName": "王理代", "userMobile": "17319969379", "userAvatar": "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/comm_avatar/default/狗2@1x.webp", "totalSaleStock": null, "saleStock": null, "orderUser": null }
@@ -87,6 +91,7 @@ const Index: FC = () => {
           </View>
         </ComNavBarA>
       </ComNav>
+
       <View className='ww dll prl10'>
         <ComButton ll className={`mb10 cccplh bcctrans nw1 `} hoverClass='none'>今日下单明日送达 🚗 🛵 🎁</ComButton>
       </View>

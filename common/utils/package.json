@@ -9,6 +9,10 @@
     "access": "public"
   },
   "exports": {
+    "./base64Utils": {
+      "types": "./src/base64Utils.ts",
+      "import": "./src/base64Utils.ts"
+    },
     "./gbk": {
       "types": "./src/gbk.ts",
       "import": "./src/gbk.ts"
