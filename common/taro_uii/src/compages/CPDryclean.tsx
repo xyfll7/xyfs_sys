@@ -4,12 +4,11 @@ import { coo___ios_date, coo___objToUrl } from "@xyfs/utils/util";
 import React, { FC, PropsWithChildren, ReactElement, ReactNode, useEffect, useState } from "react";
 import { DrycleanNotesType, Product_Dryclean } from "../../types/type_product";
 import { Api_userAddress_add_ctn } from "../api/api__address";
+import { Api_product_list_ctn, Api_productCategory_list_ctn } from "../api/api__product";
 import { Api_cart_add_ctn, Api_option_list_ctn } from "../api/api__shop";
 import { Api_user_edit_ctn } from "../api/api__users";
 import { ComAddressSwitchor } from "../components/ComAddressSwitchor";
 import { ComButton, MyButtonProps } from "../components/ComButton";
-
-import { Api_product_list_ctn, Api_productCategory_list_ctn } from "../api/api__product";
 import { ComImage } from "../components/ComImage";
 import { ComImageUploader } from "../components/ComImageUploader";
 import { ComInput } from "../components/ComInput";
@@ -23,13 +22,6 @@ import { get_dev_value, getMyEnv } from "../env";
 import { roo___my_dept } from "../roles";
 import { useSTSelf } from "../store/store";
 import { try_Taro_chooseAddress, try_Taro_cloud_uploadFile, try_Taro_navigateToMiniProgram } from "../utils/try_catch";
-
-
-
-
-
-
-
 
 
 function cartMerge(cart: Product_Dryclean[]) {
