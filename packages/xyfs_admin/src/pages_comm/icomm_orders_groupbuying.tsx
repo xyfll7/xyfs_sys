@@ -42,10 +42,11 @@ const Index: FC<{}> = ({ }) => {
   const { page, page_loading, page_list_get, page_list_update, page_init } = useHook_pageListNew(___page_getter);
   return <MMMAAPage>
     <ComNav className='prl10'>
-      <ComNavBarA className='mb10 '>
-        <ComButton ll className='bcctrans cccplh ' >
+      <ComNavBarA className='mb10'>
+        <ComButton ll className='bcctrans cccplh ml10' >
           {roo___has_role(selfInfo_S, ['SUPPLIER']) && '团购订单/供应商'}
           {roo___has_role(selfInfo_S, ['REGIMENT']) && '团购订单/团长'}
+          {roo___has_role(selfInfo_S, ['GROUPLEADER']) && '团购订单/团主'}
         </ComButton>
       </ComNavBarA>
       <ComListTypeSelectorNew className='' disabled={page_loading} enumData={Order_ST} typeList={[Order_ST.已付款, Order_ST.已退款]} tabType={orderType} setTab={(e) => { page_init(); setOrderType(e); }}></ComListTypeSelectorNew>

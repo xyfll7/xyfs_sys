@@ -6,6 +6,7 @@ import { Api_goods_list_ctn, Api_goods_remove_ctn } from "@xyfs/taro_uii/api/api
 import CPRegimentAssist from "@xyfs/taro_uii/compages/CPRegimentAssist";
 import { ComButton } from "@xyfs/taro_uii/components/ComButton";
 import { ComImage } from "@xyfs/taro_uii/components/ComImage";
+import { ComListTypeSelectorNew } from "@xyfs/taro_uii/components/ComListTypeSelectorNew";
 import { ComLoading } from "@xyfs/taro_uii/components/ComLoading";
 import { ComNav } from "@xyfs/taro_uii/components/ComNav";
 import { ComNavBarA } from "@xyfs/taro_uii/components/ComNavBarA";
@@ -24,19 +25,22 @@ definePageConfig({ enableShareAppMessage: true, navigationStyle: "custom", disab
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC = () => {
   // deptId=oGwbL5MUeSNxxA4o0oOmb_FUjE7g
+  const [tabType, setTabType] = useState<1 | 2>(1);
   const [qrcode, setQrcode] = useState<string | null>(null);
   const ___page_getter = useCallback(async (p: Pagination<unknown>) =>
     await Api_goods_list_ctn({
       ...p,
       sort: "desc",
       keyword: "",
-    }), []);
-  const { page, page_loading, page_list_get, page_list_update } = useHook_pageListNew(___page_getter);
+      type: tabType,
+    }), [tabType]);
+  const { page, page_loading, page_list_get, page_list_update, page_init } = useHook_pageListNew(___page_getter);
   return <MMMAAPage isNeedRegiment={false} >
-    <ComNav isRight>
-      <ComNavBarA className='mb10 pl10'>
-        <ComButton ll className='bcctrans ml10 cccplh'>我发布的</ComButton>
+    <ComNav isRight className="prl10">
+      <ComNavBarA className='mb10'>
+        <ComButton ll className='bcctrans ml10 cccplh'>商品列表</ComButton>
       </ComNavBarA>
+      <ComListTypeSelectorNew className='' disabled={page_loading} enumData={{ 1: "销售中", 2: "已下架", 全部: 1, 退款: 2 }} typeList={[1, 2]} tabType={tabType} setTab={(e) => { page_init(); setTabType(e); }} />
     </ComNav>
     <ComScrollView>
       {page.list?.map((e) => {
