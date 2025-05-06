@@ -336,7 +336,7 @@ const IIImmmGROUPLEADER = ({ ...props }: ViewProps) => {
           发布商品
         </ComButton>
         <ComButton ll className='bborder mb10 mr10' url='/pages_comm/icomm_product_list'>
-          已发布
+          商品列表
         </ComButton>
       </View>
       <View className='dy dwp'>
