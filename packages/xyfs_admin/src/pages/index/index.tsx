@@ -178,7 +178,7 @@ const IIISettings = ({ ...props }: ViewProps) => {
         </ComButton>
       }
       {roo___has_role(selfInfo_S!, ["GROUPLEADER"]) && <>
-        <IIISETTodysOrder className="mr10"></IIISETTodysOrder>
+        <IIISetTodaysOrder className="mr10"></IIISetTodaysOrder>
       </>
       }
     </View>
@@ -348,7 +348,7 @@ const IIImmmGROUPLEADER = ({ ...props }: ViewProps) => {
 };
 
 
-const IIISETTodysOrder = ({ ...props }: ViewProps) => {
+const IIISetTodaysOrder = ({ ...props }: ViewProps) => {
   const [date, setDate] = useState<string>(format(coo___ios_date(), "yyyy-MM-dd HH:mm:ss"));
   return <Picker
     header-text='请选择账单月份'
