@@ -11,7 +11,7 @@ export const ComListTypeSelectorNew = <T,>({ tabType, disabled, setTab, typeList
     tabType: T;
     data?: any[];
     enumData?: object;
-    typeList?: number[];
+    typeList?: (number | string)[];
     label?: string;
     value?: string;
     setTab: (e: T) => void;
