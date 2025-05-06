@@ -108,7 +108,12 @@ const Index: FC<{}> = ({ }) => {
                       {e.status != 1 && <><Text className='wm15rem nw1 cccplh'>写入任务</Text><Text>_执行中...</Text></>}
                     </View>
                   }
-
+                  {e.type === 4 &&
+                    <View className='dbtc ww'>
+                      {e.status == 1 && <><Text className='wm15rem nw1 cccplh'>{file_name}</Text><Text className='cccgreen'>_完成</Text></>}
+                      {e.status != 1 && <><Text className='wm15rem nw1 cccplh'>{file_name}</Text><Text>_执行中...</Text></>}
+                    </View>
+                  }
                 </View>
               }
 

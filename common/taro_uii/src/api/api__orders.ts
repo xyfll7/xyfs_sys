@@ -177,6 +177,16 @@ export async function Api_order_paymentExport_ctn(params: {
     data: { ...params },
   });
   return res;
+}
+export async function Api_order_export_ctn(params: {
+  startTime: string;
+  endTime: string;
+}): Promise<string> {
+  const res = await wx_call_container<string>({
+    path: "/order/export",
+    data: { ...params },
+  });
+  return res;
 
 }
 export async function Api_order_billVerify_ctn(params: { billExcelUrl: string; }): Promise<string> {

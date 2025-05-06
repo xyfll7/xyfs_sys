@@ -1,6 +1,6 @@
 import Taro from "@tarojs/taro";
 import { coo___ios_date } from "@xyfs/utils/util";
-import { format, lastDayOfMonth, startOfMonth } from "date-fns";
+import { endOfDay, format, lastDayOfMonth, startOfDay, startOfMonth } from "date-fns";
 import { AddressInfo, DeptInfo, OrderInfo, Printer_Info, ProductBase } from "../../types";
 import { Api_qrcode_ctn } from "../api/api__users";
 import { roo___my_dept } from "../roles";
@@ -95,6 +95,16 @@ export async function utils_get_qrcode({ page, scene, appid }: { appid?: string;
   return res;
 }
 
+// 今天0点，今天最23.59分59秒
+export function utils_get_start_end_time(time: string) {
+  const today = coo___ios_date(time);
+  const startTimeOfDay = format(startOfDay(today), "yyyy-MM-dd HH:mm:ss");
+  const endTimeOfDay = format(endOfDay(today), "yyyy-MM-dd HH:mm:ss");
+  return {
+    startTimeOfDay: startTimeOfDay,
+    endTimeOfDay: endTimeOfDay,
+  };
+}
 // 本月第一天，本月最后一天
 export function utils_get_start_end_date(date: string) {
   const today = coo___ios_date(date);

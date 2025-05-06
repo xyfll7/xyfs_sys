@@ -1,7 +1,8 @@
 // :: pages/index/index
-import { Text, View, ViewProps } from "@tarojs/components";
+import { Picker, Text, View, ViewProps } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { DeptInfo } from "@xyfs/taro_uii";
+import { Api_order_export_ctn } from "@xyfs/taro_uii/api/api__orders";
 import { Api_common_jtsd } from "@xyfs/taro_uii/api/api__users";
 import { ComBanner } from "@xyfs/taro_uii/components/ComBanner";
 import { ComButton, ComButtonOpen } from '@xyfs/taro_uii/components/ComButton';
@@ -17,9 +18,10 @@ import { Order_ST } from "@xyfs/taro_uii/src/config";
 import { getMyEnv } from "@xyfs/taro_uii/src/env";
 import { roo___has_role } from "@xyfs/taro_uii/src/roles";
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
-import { try_Taro_navigateToMiniProgram } from '@xyfs/taro_uii/utils/try_catch';
-import { utils_get_qrcode } from "@xyfs/taro_uii/utils/util";
-import { coo___objToUrl } from "@xyfs/utils/util";
+import { try_Taro_navigateTo, try_Taro_navigateToMiniProgram, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
+import { utils_get_qrcode, utils_get_start_end_time } from "@xyfs/taro_uii/utils/util";
+import { coo___ios_date, coo___objToUrl } from "@xyfs/utils/util";
+import format from "date-fns/format";
 import { FC, useState } from 'react';
 
 
@@ -104,6 +106,7 @@ const IIISettings = ({ ...props }: ViewProps) => {
         <ComButton className='mb10 bccwhite nw mr10' url='/pages_regiment/regiment_bind_channel'>绑定视频号</ComButton>
       </>
       }
+
       {roo___has_role(selfInfo_S!, ["REGIMENT"]) && <>
         <ComButton className='bccwhite mb10 mr10' url='/pages_agent/agent__account'>
           面单账号
@@ -119,7 +122,7 @@ const IIISettings = ({ ...props }: ViewProps) => {
       {roo___has_role(selfInfo_S!, ["REGIMENT"]) &&
         <ComButton className='mb10 bccwhite nw mr10' url='/pages_regiment/regiment_bind_cloudPrinter'>云打印机</ComButton>
       }
-      {roo___has_role(selfInfo_S!, ["AGENT", "REGIMENT"]) &&
+      {roo___has_role(selfInfo_S!, ["AGENT", "REGIMENT", "GROUPLEADER"]) &&
         <ComButton className='bccwhite mb10 mr10' url='/pages_comm/icomm_download_list'>下载任务列表</ComButton>
       }
       {roo___has_role(selfInfo_S!, ["AGENT", "REGIMENT", "SUPPLIER", "SCANNER"]) &&
@@ -173,6 +176,10 @@ const IIISettings = ({ ...props }: ViewProps) => {
         <ComButton className='bccwhite mb10 mr10' url='/pages_user/sub_user_list'>
           子用户
         </ComButton>
+      }
+      {roo___has_role(selfInfo_S!, ["GROUPLEADER"]) && <>
+        <IIISETTodysOrder className="mr10"></IIISETTodysOrder>
+      </>
       }
     </View>
   </>;
@@ -338,4 +345,36 @@ const IIImmmGROUPLEADER = ({ ...props }: ViewProps) => {
       </View>
     </View>
   </>;
+};
+
+
+const IIISETTodysOrder = ({ ...props }: ViewProps) => {
+  const [date, setDate] = useState<string>(format(coo___ios_date(), "yyyy-MM-dd HH:mm:ss"));
+  return <Picker
+    header-text='请选择账单月份'
+    value={date}
+    end={format(coo___ios_date(), "yyyy-MM-dd HH:mm:ss")}
+    mode='date'
+    fields='day'
+    onChange={async (e) => {
+      Taro.showLoading({ mask: true, title: "下载中...", });
+      const _date = `${e.detail.value}`;
+      setDate(_date);
+      const timeRes = utils_get_start_end_time(_date);
+      await Api_order_export_ctn({
+        startTime: timeRes.startTimeOfDay,
+        endTime: timeRes.endTimeOfDay,
+        // orderStatus: Order_ST.已付款,
+      });
+      Taro.hideLoading();
+      if (await try_Taro_showModal({
+        title: "提交成功",
+        content: "请到下载任务列表查看对账单",
+        confirmText: "去查看"
+      })) {
+        await try_Taro_navigateTo({ url: "/pages_comm/icomm_download_list" });
+      }
+    }}>
+    <ComButton className='mb10'>下载今日订单</ComButton>
+  </Picker>;
 };
