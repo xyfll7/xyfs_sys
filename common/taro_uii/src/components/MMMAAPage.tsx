@@ -349,7 +349,7 @@ export function ComSELFView({ isRefreshSelfInfo_SEveryTime, ...props }: ViewProp
             <ComNav className='prl10'><ComLoading className='ml10 mb10' /></ComNav>
             : (isInApp ? <View className="">
               <View className='z1 pa'>
-                {isLoading && <ComNav className='' style={{ marginLeft: "-0.2rem", marginTop: "-0.2rem" }}><ComLoading className='ml10 mb10 bcctrans' >{true}</ComLoading></ComNav>}
+                {isLoading && <ComNav style={{ marginTop: "0.5rem" }}><View className='ml20 oo bccgreen' style={{ minWidth: "0.5rem", minHeight: "0.5rem" }}></View> </ComNav>}
               </View>
               {props.children}
             </View>
