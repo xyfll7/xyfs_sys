@@ -72,6 +72,11 @@ const Index: FC<{}> = ({ }) => {
 const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: OrderInfo<Product_Dryclean>; onUpdateOrderItem: (e: OrderInfo<Product_Dryclean>) => void, onDeleteOrderItem: (e: OrderInfo<Product_Dryclean>) => void; }) => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
 
+  if (roo___has_role(selfInfo_S, ["GROUPLEADER"])) {
+    order.productList = order.productList?.map(e => ({ ...e, waybillId: e.waybillId ?? e.id })); // 兼容老数据
+  }
+
+
   const model = Boolean(order.productList?.filter(e => !e.waybillId)?.length) ? "waybill" : "print";
 
   const [products, setProducts] = useState({
@@ -80,15 +85,16 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
   }[model]);
 
   return <View className='dll ww mb10 bccwhite ioo' key={order.id}>
-    <ComCardOrderBringGoods className='ww mb10' model={model} isShowSelector={roo___has_role(selfInfo_S, ['MERCHANT'])} key={order.id} products={products} order={order} onSelectOrder={(e) => {
-      if (model === "waybill" && utils_arr_includes([e.id!], products.map(ee => ee.id!))) {
-        setProducts(products.filter(ee => ee.id !== e.id));
-      } else if (model === "print" && utils_arr_includes([e.waybillId!], products.map(ee => ee.waybillId!))) {
-        setProducts(products.filter(ee => ee.waybillId !== e.waybillId));
-      } else {
-        setProducts([...products, e].sort((a, b) => Number(a.id) - Number(b.id)));
-      }
-    }} />
+    <ComCardOrderBringGoods className='ww mb10' model={model} isShowSelector={roo___has_role(selfInfo_S, ['MERCHANT', "GROUPLEADER"])} key={order.id} products={products} order={order}
+      onSelectOrder={(e) => {
+        if (model === "waybill" && utils_arr_includes([e.id!], products.map(ee => ee.id!))) {
+          setProducts(products.filter(ee => ee.id !== e.id));
+        } else if (model === "print" && utils_arr_includes([e.waybillId!], products.map(ee => ee.waybillId!))) {
+          setProducts(products.filter(ee => ee.waybillId !== e.waybillId));
+        } else {
+          setProducts([...products, e].sort((a, b) => Number(a.id) - Number(b.id)));
+        }
+      }} />
     <View className='dr prl10 ww dwp'>
       {order.orderStatus === 1 &&
         <ComButton rr className='cccplh mb10 bborder nw' onClick={async () => {
@@ -134,7 +140,7 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
         <View className='cccprice'>{products?.map(e => order.productList?.findIndex(ee => ee.id === e.id)! + 1).join(",")}</View>
         <View className='cccgreen'>获取面单</View>
       </ComButton>}
-      {model === "print" && order.orderStatus === 2 && roo___has_role(selfInfo_S, ['MERCHANT']) && <ComButton rr className='ml10 bborder mb10 nw' onClick={async () => {
+      {model === "print" && order.orderStatus === 2 && roo___has_role(selfInfo_S, ['MERCHANT', "GROUPLEADER"]) && <ComButton rr className='ml10 bborder mb10 nw' onClick={async () => {
         if (!products.length) { Taro.showToast({ icon: "none", title: "至少选择一件商品" }); return; }
         await on_start_print((blue_device) => {
           return {

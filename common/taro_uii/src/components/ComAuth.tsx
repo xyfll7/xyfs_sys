@@ -65,8 +65,6 @@ function useINHook_Auth(auth: keyof AuthSetting | "scope.bluetooth", success_mes
   }
 
 
-
-
   const onAuth = useCallback(async () => {
     try {
       const res = await Taro.authorize({ scope: auth });

@@ -104,7 +104,11 @@ export async function Blue_startBluetoothDevicesDiscovery(blue_services: string[
       throw new Error("失败_开始搜寻附近的蓝牙外围设备");
     }
   } catch (err) {
-    throw new ErrorR(err);
+    if (err.errno === 1509008) {
+      throw new Error("请打开手机定位");
+    } else {
+      throw new ErrorR(err);
+    }
   }
 }
 
@@ -145,7 +149,10 @@ export async function Blue___openBluetoothAdapter() {
       } else {
         throw new Error("手机蓝牙未打开");
       }
+    } else if (err.errno === 3) {
+      throw new Error("附近设备权限未授权");
     } else {
+      console.log("打开蓝牙错误", err);
       throw new ErrorR(err);
     }
   }

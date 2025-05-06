@@ -304,6 +304,7 @@ export async function try_Taro_chooseLocation() {
 export async function try_Taro_openSetting(auth?: keyof Taro.AuthSetting): Promise<boolean | Taro.AuthSetting> {
   try {
     const res = await Taro.openSetting();
+    console.log("授权结果：", res);
     if (res && res.authSetting && auth) {
       return res.authSetting[auth]!;
     } else if (res && res.authSetting) {

@@ -15,6 +15,17 @@ import { FC } from 'react';
 
 definePageConfig({ disableScroll: true, navigationStyle: "custom" });
 export default function COMSELFWarp() {
+
+  Taro.getLocation({
+    type: 'gcj02',
+    success(res) {
+      console.log(":::0", res);
+    }, fail(err) {
+      console.log(":::", err);
+    }
+  });
+
+
   return <ComSELFView>
 
     <ComAuth

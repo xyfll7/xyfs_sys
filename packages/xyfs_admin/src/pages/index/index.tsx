@@ -116,7 +116,7 @@ const IIISettings = ({ ...props }: ViewProps) => {
       {roo___has_role(selfInfo_S!, ["REGIMENT", "MERCHANT", "GROUPLEADER"]) &&
         <ComButton className='mb10 bccwhite nw mr10' url='/pages_regiment/regiment_collection_record'>收款记录</ComButton>
       }
-      {roo___has_role(selfInfo_S!, ["REGIMENT", "SCANNER", "MERCHANT"]) &&
+      {roo___has_role(selfInfo_S!, ["REGIMENT", "SCANNER", "MERCHANT", "GROUPLEADER"]) &&
         <ComButton className='mb10 bccwhite nw mr10' url='/pages_comm/icomm_printer'>蓝牙设备</ComButton>
       }
       {roo___has_role(selfInfo_S!, ["REGIMENT"]) &&

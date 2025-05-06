@@ -10,6 +10,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages_comm/icomm_orders_groupbuying",
+          "pathName": "pages_comm/icomm_orders_groupbuying",
+          "query": "order_ST=2",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages_comm/icomm_product_list",
           "pathName": "pages_comm/icomm_product_list",
           "query": "",
