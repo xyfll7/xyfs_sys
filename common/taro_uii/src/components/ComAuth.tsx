@@ -3,7 +3,8 @@ import { View, ViewProps } from '@tarojs/components';
 import Taro, { AuthSetting } from "@tarojs/taro";
 import { useCallback, useEffect, useState } from 'react';
 import { ErrorR } from '../config';
-import { try_Taro_getPrivacySetting, try_Taro_getSetting, try_Taro_openSetting } from '../utils/try_catch';
+import { getMyEnv } from '../env';
+import { try_Taro_getLocation, try_Taro_getPrivacySetting, try_Taro_getSetting, try_Taro_openSetting } from '../utils/try_catch';
 import { ComButton } from './ComButton';
 import { ComNav } from './ComNav';
 
@@ -117,3 +118,46 @@ async function ___try_Taro_requirePrivacyAuthorize() {
     });
   });
 }
+
+
+export const ComAuthMore = ({ className = 'prl20', isHiddenNav = false, ...params }: {
+  successMessage: string,
+  errMessage: string,
+  title: string,
+  content: string,
+  confirmText: string,
+  className?: string;
+  isHiddenNav?: boolean;
+} & ViewProps) => {
+  const isIOS = getMyEnv().platform === "ios";
+  const [auth, setAuth] = useState<boolean | null>(isIOS ? true : null);
+  useEffect(() => {
+    if (isIOS) { return; }
+    ; (async () => {
+      try {
+        await try_Taro_getLocation();
+        setAuth(true);
+      } catch (err) {
+        setAuth(false);
+      }
+    })();
+  }, [isIOS]);
+  return <>
+    {!auth &&
+      <ComNav isHidden={isHiddenNav} className={className}>
+        <View className='dll '>
+          {!auth && <ComButton className='cccplh mb10'>授权</ComButton>}
+          {!auth && <>
+            {auth === null && <ComButton className='cccplh mb10 '>{params.title}</ComButton>}
+            {auth === false && <>
+              <ComButton className='cccplh mb10 ' >{params.content}</ComButton>
+              <ComButton className='cccplh mb10 ' >{params.confirmText}</ComButton>
+            </>}
+          </>
+          }
+        </View>
+      </ComNav>
+    }
+    {auth === true && params.children}
+  </>;
+};

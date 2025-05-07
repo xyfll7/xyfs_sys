@@ -1,7 +1,7 @@
 // :: pages_comm/icomm_printer
 import { Text, View } from '@tarojs/components';
 import Taro from "@tarojs/taro";
-import { ComAuth } from '@xyfs/taro_uii/components/ComAuth';
+import { ComAuth, ComAuthMore } from '@xyfs/taro_uii/components/ComAuth';
 import { ComButton } from '@xyfs/taro_uii/components/ComButton';
 import { ComLoading } from '@xyfs/taro_uii/components/ComLoading';
 import { ComNav } from '@xyfs/taro_uii/components/ComNav';
@@ -16,18 +16,7 @@ import { FC } from 'react';
 definePageConfig({ disableScroll: true, navigationStyle: "custom" });
 export default function COMSELFWarp() {
 
-  Taro.getLocation({
-    type: 'gcj02',
-    success(res) {
-      console.log(":::0", res);
-    }, fail(err) {
-      console.log(":::", err);
-    }
-  });
-
-
   return <ComSELFView>
-
     <ComAuth
       authKey='scope.bluetooth'
       successMessage='蓝牙模块授权成功'
@@ -42,7 +31,13 @@ export default function COMSELFWarp() {
         title='开启位置信息模块...'
         content='该小程序尚未获得手机位置信息的使用权限'
         confirmText='点击授权→位置'>
-        <Index />
+        <ComAuthMore
+          successMessage='手机定位授权成功'
+          errMessage='手机定位授权失败' title='开启手机定位模块...'
+          content='该小程序尚未获得手机定位的使用权限'
+          confirmText='请前往手机设置页面,打开手机定位功能,若已经打开,请重启小程序'>
+          <Index />
+        </ComAuthMore>
       </ComAuth>
     </ComAuth>
   </ComSELFView>;
