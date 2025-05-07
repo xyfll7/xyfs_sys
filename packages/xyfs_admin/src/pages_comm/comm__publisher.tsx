@@ -52,6 +52,7 @@ export const CPPublisher: FC = () => {
             remark: "",
             intro: form.str.split("\n")[1] ?? "",
             stock: 30,
+            weight: 1,
           });
           setForm(null);
           Taro.hideLoading();
