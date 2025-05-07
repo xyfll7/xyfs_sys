@@ -107,7 +107,7 @@ const IIISettings = ({ ...props }: ViewProps) => {
       </>
       }
 
-      {roo___has_role(selfInfo_S!, ["REGIMENT"]) && <>
+      {roo___has_role(selfInfo_S!, ["REGIMENT", "GROUPLEADER"]) && <>
         <ComButton className='bccwhite mb10 mr10' url='/pages_agent/agent__account'>
           面单账号
         </ComButton>
