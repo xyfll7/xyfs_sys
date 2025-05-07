@@ -333,9 +333,9 @@ const IIIDeptEdit = ({ dept, onSuccess, onClose }: { dept: any; onSuccess: () =>
       </View>
 
 
-      {roo___has_role(deptInfo, ["REGIMENT"]) &&
+      {roo___has_role(deptInfo, ["REGIMENT", "GROUPLEADER"]) &&
         <>
-          <ComButton className='cccplh mb10 bccback'  >快递账号配置</ComButton>
+          <ComButton className='cccplh mb10 bccback'>快递账号配置</ComButton>
           <View className='ds dwp ww'>
             {dicts_delivery?.map(e => <ComButton className={`bccwhite mb10 nw ${deptInfo.logistics?.find(ee => ee.deliveryId === e.deliveryId) ? "cccgreen" : ""}`} key={e.bizId}
               onClick={async () => {
@@ -361,6 +361,10 @@ const IIIDeptEdit = ({ dept, onSuccess, onClose }: { dept: any; onSuccess: () =>
                 }
               }}>{e.deliveryName?.slice(0, 2)}</ComButton>)}
           </View>
+        </>
+      }
+      {roo___has_role(deptInfo, ["REGIMENT"]) &&
+        <>
           <ComButton className='mb10 bccback cccplh'>快递价格方案</ComButton>
           <View className='dy mb10'>
             {dicts_logisticPricescheme?.map(e => {
