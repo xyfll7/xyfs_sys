@@ -104,7 +104,9 @@ export async function Blue_startBluetoothDevicesDiscovery(blue_services: string[
       throw new Error("失败_开始搜寻附近的蓝牙外围设备");
     }
   } catch (err) {
-    if (err?.errMsg.includes("fail already discovering devices")) {
+    if (err?.errMsg.includes("fail Starting discovery failed")) {
+      throw new Error("请打开手机蓝牙");
+    } else if (err?.errMsg.includes("fail already discovering devices")) {
       return;
     } else if (err.errno === 1509008) {
       throw new Error("请打开手机定位");
