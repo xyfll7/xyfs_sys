@@ -63,7 +63,7 @@ const Index: FC = () => {
             <ComImage compress className='mr10 oo ovh' src={selfInfo_S?.avatar} />
             <View className='nw1 wm5rem mr10'>{selfInfo_S!.name}</View>
             {selfInfo_S!.mobile}
-            <View className='cccgreen ml10 nw'>修改</View>
+            <View className='cccgreen ml10 nw'>设置</View>
           </ComButton>
         </View>
       </View>

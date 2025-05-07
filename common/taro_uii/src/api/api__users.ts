@@ -199,6 +199,9 @@ export async function Api_user_delUserDept_ctn(params: {
   });
   return res;
 }
+/**
+ * 该接口返回就是当前用户login的结果
+ */
 export async function Api_dept_edit_ctn(params: Partial<DeptInfo>): Promise<DeptInfo> {
   const res = await wx_call_container<DeptInfo>({
     path: "/dept/edit",

@@ -2,7 +2,7 @@
 import { Text, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { DeptInfo } from "@xyfs/taro_uii";
-import { Api_dept_userList_ctn, Api_getNumber_ctn, Api_user_edit_ctn } from '@xyfs/taro_uii/api/api__users';
+import { Api_dept_edit_ctn, Api_dept_userList_ctn, Api_getNumber_ctn, Api_user_edit_ctn } from '@xyfs/taro_uii/api/api__users';
 import { ComButton, ComButtonOpen } from '@xyfs/taro_uii/components/ComButton';
 import { ComImage } from "@xyfs/taro_uii/components/ComImage";
 import { ComInput } from "@xyfs/taro_uii/components/ComInput";
@@ -12,6 +12,7 @@ import { ComNavBarA } from '@xyfs/taro_uii/components/ComNavBarA';
 import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
+import { try_Taro_chooseAddress } from "@xyfs/taro_uii/utils/try_catch";
 import { useHook_Reducer } from "@xyfs/taro_uii/utils/useHooks";
 import { FC, useEffect, useState } from "react";
 
@@ -159,7 +160,13 @@ const Index: FC = () => {
               </View>
               <View className='ww mb10 dy' >
                 <ComButton ll className='w5rem bccwhite nw' hoverClass='none'>部门地址</ComButton>
-                <ComButton ll className='flx1 cccplh ' hoverClass='none'>{selfInfo_S.deptInfo?.address}</ComButton>
+                <ComButton ll className='flx1 cccplh ' hoverClass='none' onClick={async () => {
+                  Taro.showLoading({ mask: true, title: "更新地址..." });
+                  const res_address = await try_Taro_chooseAddress();
+                  const res_userInfo = await Api_dept_edit_ctn({ ...res_address });
+                  useSTSelf.getState().sett(res_userInfo);
+                  Taro.showToast({ icon: "none", title: "更新完成" });
+                }}>{selfInfo_S.deptInfo?.address}</ComButton>
               </View>
               <View className='ww mb10 dy' >
                 <ComButton ll className='w5rem bccwhite nw' hoverClass='none'>部门权限</ComButton>
