@@ -72,12 +72,13 @@ const Index: FC<{}> = ({ }) => {
 const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: OrderInfo<Product_Dryclean>; onUpdateOrderItem: (e: OrderInfo<Product_Dryclean>) => void, onDeleteOrderItem: (e: OrderInfo<Product_Dryclean>) => void; }) => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
 
-  if (roo___has_role(selfInfo_S, ["GROUPLEADER"])) {
-    order.productList = order.productList?.map(e => ({ ...e, waybillId: e.waybillId ?? e.id })); // 兼容老数据
-  }
-
-
-  const model = Boolean(order.productList?.filter(e => !e.waybillId)?.length) ? "waybill" : "print";
+  const model = (() => {
+    if (roo___has_role(selfInfo_S, ["GROUPLEADER"])) {
+      return "print";
+    } else {
+      return Boolean(order.productList?.filter(e => !e.waybillId)?.length) ? "waybill" : "print";
+    }
+  })();
 
   const [products, setProducts] = useState({
     "waybill": () => order.productList?.filter(e => !e.waybillId)!,
@@ -121,7 +122,7 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
         }
       }}>退款</ComButton>
       }
-      {model === "waybill" && order.orderStatus === 2 && roo___has_role(selfInfo_S, ['MERCHANT']) && <ComButton className='mb10 ml10 bborder' onClick={async () => {
+      {model === "waybill" && order.orderStatus === 2 && roo___has_role(selfInfo_S, ['MERCHANT', "GROUPLEADER"]) && <ComButton className='mb10 ml10 bborder' onClick={async () => {
         if (!products.length) { Taro.showToast({ icon: "none", title: "至少选择一件商品" }); return; }
         Taro.showLoading({ mask: true, title: "获取中..." });
         const res = await Api_logistic_createWaybill_ctn({
@@ -141,6 +142,10 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
         <View className='cccgreen'>获取面单</View>
       </ComButton>}
       {model === "print" && order.orderStatus === 2 && roo___has_role(selfInfo_S, ['MERCHANT', "GROUPLEADER"]) && <ComButton rr className='ml10 bborder mb10 nw' onClick={async () => {
+        console.log("打印面单", products);
+        const print_orders0 = order.productList?.filter(e => products.some(ee => ee.waybillId === e.waybillId))?.map(e => e.id!);
+        await Api_order_incrPrintTimes_ctn({ orderId: order.id!, orderProductIds: print_orders0 }); // 增加打印次数
+        throw new Error("取消");
         if (!products.length) { Taro.showToast({ icon: "none", title: "至少选择一件商品" }); return; }
         await on_start_print((blue_device) => {
           return {
