@@ -17,7 +17,7 @@ import { Order_ST, Product_category_ST } from "@xyfs/taro_uii/src/config";
 import { roo___has_role, roo___role_getRoleInfo } from "@xyfs/taro_uii/src/roles";
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
 import { on_get_printer_str_order_bing_goods, on_get_printer_str_order_bing_goods_waybill, on_start_print } from "@xyfs/taro_uii/utils/bluetooth/useHooks_Blue";
-import { Taro_getCurrentInstance, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
+import { Taro_getCurrentInstance, try_Taro_showActionSheet, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
 import { useHook_pageListNew, useHook_Reducer } from '@xyfs/taro_uii/utils/useHooks';
 import { utils_arr_includes } from "@xyfs/taro_uii/utils/util";
 import { coo___unique_arr } from "@xyfs/utils/util";
@@ -73,7 +73,7 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
 
   const model = (() => {
-    if (roo___has_role(selfInfo_S, ["GROUPLEADER"])) {
+    if (false && roo___has_role(selfInfo_S, ["GROUPLEADER"])) {
       return "print";
     } else {
       return Boolean(order.productList?.filter(e => !e.waybillId)?.length) ? "waybill" : "print";
@@ -147,18 +147,39 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
         await Api_order_incrPrintTimes_ctn({ orderId: order.id!, orderProductIds: print_orders0 }); // 增加打印次数
         throw new Error("取消");
         if (!products.length) { Taro.showToast({ icon: "none", title: "至少选择一件商品" }); return; }
-        await on_start_print((blue_device) => {
-          return {
-            cpcl: products!.map((eee, index) => {
-              const count = order.productList?.filter(e => e.waybillId === eee.waybillId).length;
-              if (eee.waybillId) {
-                return on_get_printer_str_order_bing_goods_waybill({ ...order, __product: eee, __index: index, __count: count }, blue_device);
-              } else {
-                return on_get_printer_str_order_bing_goods({ ...order, __product: eee, __index: index, __count: count }, blue_device);
-              }
-            })
-          };
-        }, { orderId: order.id!, selfInfo_S });
+
+        const [_, res_item] = await try_Taro_showActionSheet({
+          alertText: "打印方式",
+          itemList: ["合单打印", "分单打印"],
+        });
+        if (res_item === "合单打印") {
+          await on_start_print(() => {
+            return {
+              cpcl: (() => {
+                // if (eee.waybillId) {
+                //   return on_get_printer_str_order_bing_goods_waybill({ ...order, __product: eee, __index: index, __count: count }, blue_device);
+                // } else {
+                //   return on_get_printer_str_order_bing_goods({ ...order, __product: eee, __index: index, __count: count }, blue_device);
+                // }
+                return [""];
+              })()
+            };
+          }, { orderId: order.id!, selfInfo_S });
+        } else {
+          await on_start_print((blue_device) => {
+            return {
+              cpcl: products!.map((eee, index) => {
+                const count = order.productList?.filter(e => e.waybillId === eee.waybillId).length;
+                if (eee.waybillId) {
+                  return on_get_printer_str_order_bing_goods_waybill({ ...order, __product: eee, __index: index, __count: count }, blue_device);
+                } else {
+                  return on_get_printer_str_order_bing_goods({ ...order, __product: eee, __index: index, __count: count }, blue_device);
+                }
+              })
+            };
+          }, { orderId: order.id!, selfInfo_S });
+        }
+
         Taro.showLoading({ mask: true, title: "更新打印次数..." });
         const print_orders = order.productList?.filter(e => products.some(ee => ee.waybillId === e.waybillId))?.map(e => e.id!);
         await Api_order_incrPrintTimes_ctn({ orderId: order.id!, orderProductIds: print_orders }); // 增加打印次数
