@@ -158,7 +158,7 @@ const Index: FC = () => {
                 <ComButton ll className='w5rem bccwhite nw' hoverClass='none'>部门电话</ComButton>
                 <ComButton ll className='flx1 cccplh cccgreen' hoverClass='none' onClick={async () => { selfInfo_S.deptInfo?.mobile && await Taro.makePhoneCall({ phoneNumber: selfInfo_S.deptInfo?.mobile }); }}>{selfInfo_S.deptInfo?.mobile}</ComButton>
               </View>
-              <View className='ww mb10 dy' >
+              <View className='ww mb10 dbtc' >
                 <ComButton ll className='w5rem bccwhite nw' hoverClass='none'>部门地址</ComButton>
                 <ComButton ll className='flx1 cccplh ' hoverClass='none' onClick={async () => {
                   Taro.showLoading({ mask: true, title: "更新地址..." });
@@ -166,7 +166,7 @@ const Index: FC = () => {
                   const res_userInfo = await Api_dept_edit_ctn({ ...res_address });
                   useSTSelf.getState().sett(res_userInfo);
                   Taro.showToast({ icon: "none", title: "更新完成" });
-                }}>{selfInfo_S.deptInfo?.address}</ComButton>
+                }}>{selfInfo_S.deptInfo?.address ?? "***请选择地址***"}</ComButton>
               </View>
               <View className='ww mb10 dy' >
                 <ComButton ll className='w5rem bccwhite nw' hoverClass='none'>部门权限</ComButton>

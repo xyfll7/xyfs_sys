@@ -31,6 +31,7 @@ const OPENID_DEV___ =
   // "oGwbL5Lak_bditPcNT7qnmgmWHeo" ||  // 狗子 司机
   // "oGwbL5PVdCTyoE2sYHAq2bdNA9BY" ||  // 王理代 商家
   // "oGwbL5FKCrALVPc-XBeBspHo_gMw" ||  // 熊猫 导游
+  // "oGwbL5MUeSNxxA4o0oOmb_FUjE7g" ||  // 任会
 
   // "oGwbL5PA_c0S56GYdqE_62bGnNDQ" ||  // 猴猴 注册新用户测试
   "";
