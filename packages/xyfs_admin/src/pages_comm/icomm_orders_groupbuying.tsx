@@ -142,12 +142,7 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
         <View className='cccgreen'>获取面单</View>
       </ComButton>}
       {model === "print" && order.orderStatus === 2 && roo___has_role(selfInfo_S, ['MERCHANT', "GROUPLEADER"]) && <ComButton rr className='ml10 bborder mb10 nw' onClick={async () => {
-        console.log("打印面单", products);
-        const print_orders0 = order.productList?.filter(e => products.some(ee => ee.waybillId === e.waybillId))?.map(e => e.id!);
-        await Api_order_incrPrintTimes_ctn({ orderId: order.id!, orderProductIds: print_orders0 }); // 增加打印次数
-        throw new Error("取消");
         if (!products.length) { Taro.showToast({ icon: "none", title: "至少选择一件商品" }); return; }
-
         const [_, res_item] = await try_Taro_showActionSheet({
           alertText: "打印方式",
           itemList: ["合单打印", "分单打印"],

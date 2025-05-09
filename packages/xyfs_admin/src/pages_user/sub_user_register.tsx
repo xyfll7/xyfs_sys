@@ -38,7 +38,8 @@ const Index: FC = () => {
   console.log(deptUserList);
 
 
-  const [idcard, setIdCard] = useState<string>(selfInfo_S.deptInfo?.realId ?? "");
+  const [realId, setRealId] = useState<string>(selfInfo_S.deptInfo?.realId ?? "");
+  const [realName, setRealName] = useState<string>(selfInfo_S.deptInfo?.realName ?? "");
 
   return <MMMAAPage isNeedAnyRole={false} isNeedAnyDept={false}>
     <ComNav>
@@ -162,8 +163,11 @@ const Index: FC = () => {
                 <ComButton ll className='w5rem bccwhite nw' hoverClass='none'>部门地址</ComButton>
                 <ComButton ll className='flx1 cccplh ' hoverClass='none' onClick={async () => {
                   Taro.showLoading({ mask: true, title: "更新地址..." });
-                  const res_address = await try_Taro_chooseAddress(true);
-                  const res_userInfo = await Api_dept_edit_ctn({ ...res_address });
+                  const res_address = await try_Taro_chooseAddress();
+                  const res_userInfo = await Api_dept_edit_ctn({
+                    ...res_address,
+                    name: selfInfo_S.deptInfo?.deptName,
+                  });
                   useSTSelf.getState().sett(res_userInfo);
                   Taro.showToast({ icon: "none", title: "更新完成" });
                 }}>{selfInfo_S.deptInfo?.address ?? "***请选择地址***"}</ComButton>
@@ -182,19 +186,21 @@ const Index: FC = () => {
               </View>
               <View className='ww mb10 dy' >
                 <ComButton ll className='w5rem bccwhite nw' hoverClass='none'>负责人</ComButton>
-                <ComButton ll className='flx1 cccplh ' hoverClass='none'>{selfInfo_S.deptInfo?.name ?? "暂无"}</ComButton>
+                <ComButton ll className='flx1 cccplh bccback' hoverClass='none'>
+                  <ComInput type='idcard' placeholder='请输入身份证号' value={realName} onInput={(eee) => { setRealName(eee.detail.value); }} ></ComInput>
+                </ComButton>
               </View>
               <View className='ww mb10 dy' >
                 <ComButton ll className='w5rem bccwhite nw' hoverClass='none'>实名</ComButton>
                 <ComButton ll className='flx1 cccplh bccback mr10' hoverClass='none'>
-                  <ComInput type='idcard' placeholder='请输入身份证号' value={idcard} onInput={(eee) => { setIdCard(eee.detail.value); }} ></ComInput>
+                  <ComInput type='idcard' placeholder='请输入身份证号' value={realId} onInput={(eee) => { setRealId(eee.detail.value); }} ></ComInput>
                 </ComButton>
                 <ComButton rr className="bccgreen cccwhite" onClick={async () => {
-                  if (!selfInfo_S.deptInfo?.name) { Taro.showToast({ icon: "none", title: "请输入检查部门地址信息是否完整", }); return; }
-                  if (!idcard) { Taro.showToast({ icon: "none", title: "请输入身份证号", }); return; }
-                  if (idcard.length !== 18) { Taro.showToast({ icon: "none", title: "请输入正确的身份证号", }); return; }
+                  if (!realName) { Taro.showToast({ icon: "none", title: "请输入负责姓名", }); return; }
+                  if (!realId) { Taro.showToast({ icon: "none", title: "请输入身份证号", }); return; }
+                  if (realId.length !== 18) { Taro.showToast({ icon: "none", title: "请输入正确的身份证号", }); return; }
                   Taro.showLoading({ mask: true, title: "实名提交中..." });
-                  await Api_user_realNameAuth_ctn({ type: 3, idcard: idcard, name: selfInfo_S.deptInfo?.name, });
+                  await Api_user_realNameAuth_ctn({ type: 3, idcard: realId, name: realName, });
                   await useSTSelf.getState().sett();
                   Taro.showToast({ icon: "none", title: "实名成功", });
                 }}> 实名
