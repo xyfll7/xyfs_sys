@@ -1,23 +1,57 @@
+import { Fragment } from "react";
 import { getDictionary } from "./dictionaries";
-import { ModeToggle } from "./themes";
 
 
 
 
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
+
+const tags = Array.from({ length: 50 }).map(
+  (_, i, a) => `v1.2.0-beta.${a.length - i}`
+);
 
 export default async function Home() {
 
 
   const dict = await getDictionary(); // en
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <ModeToggle></ModeToggle>
-        <button>{dict.products.cart}</button>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-
+    <>
+      <div className="flex flex-1  w-full  overflow-hidden">
+        <aside className="w-[33.333vw]">
+          <div>
+            <button>{dict.products.cart}</button>
+          </div>
+        </aside>
+        <div className="  h-full flex w-full flex-col overflow-hidden">
+          <header>网站头部11</header>
+          <ScrollAreaDemo></ScrollAreaDemo>
+          <header></header>
+        </div>
+      </div>
+      <footer className="">
       </footer>
-    </div>
+    </>
+  );
+}
+
+function ScrollAreaDemo() {
+  return (
+    <ScrollArea className="w-full flex-1  overflow-hidden">
+      <div className="flex w-full">
+        <div className="p-4 w-full bg-red-500 ">
+          <h4 className="mb-4 text-sm font-medium leading-none">Tags</h4>
+          {tags.map((tag) => (
+            <Fragment key={tag}>
+              <div className="text-sm">
+                {tag}
+              </div>
+              <Separator className="my-2" />
+            </Fragment>
+          ))}
+        </div>
+        <div className="w-[33.333vw] bg-yellow-700">fasdf</div>
+      </div>
+    </ScrollArea>
   );
 }

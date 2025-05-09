@@ -11,6 +11,8 @@ const dictionaries = {
 export const getDictionary = async () => {
   const headersList = await headers();
   let acceptLanguage = (headersList.get('accept-language')?.split(',')[0]?.split("-")[0] || "en") as 'en' | 'zh';
-  locales.includes(acceptLanguage) || (acceptLanguage = 'en');
+  if (!locales.includes(acceptLanguage)) {
+    acceptLanguage = 'en';
+  }
   return dictionaries[acceptLanguage]();
 };
