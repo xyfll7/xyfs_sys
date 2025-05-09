@@ -277,6 +277,7 @@ export async function Api_user_realNameAuth_ctn(params: {
   name: string;
   mobile?: string;
   idCardUrl?: string;
+  type: 1 | 2 | 3; //  1 用户 2 地址 3 部门
 }) {
   const res = await wx_call_container<Printer_Info>({
     path: "/user/realNameAuth",

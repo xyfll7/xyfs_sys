@@ -47,11 +47,11 @@ export const MMMRealName: FC<{ onClose?: () => void; address?: AddressInfo | nul
               Taro.showLoading({ mask: true, title: "识别中..." });
               const res_realInfo = await Api_common_idCardOCR_ctn({ imgUrl: res.fileID });
               Taro.showLoading({ mask: true, title: "实名中..." });
-              await Api_user_realNameAuth_ctn({ idcard: res_realInfo.id, name: res_realInfo.name, mobile: form.mobile!, idCardUrl: res.fileID });
+              await Api_user_realNameAuth_ctn({ type: 2, idcard: res_realInfo.id, name: res_realInfo.name, mobile: form.mobile!, idCardUrl: res.fileID });
               setForm({ realName: res_realInfo.name, realId: res_realInfo.id });
 
               if (!___selfInfo?.realId && roo___has_role(___selfInfo, ["USER"])) {
-                await Api_user_realNameAuth_ctn({ idcard: res_realInfo.id, name: res_realInfo.name, idCardUrl: res.fileID });
+                await Api_user_realNameAuth_ctn({ type: 1, idcard: res_realInfo.id, name: res_realInfo.name, idCardUrl: res.fileID });
               }
 
 
@@ -69,7 +69,7 @@ export const MMMRealName: FC<{ onClose?: () => void; address?: AddressInfo | nul
         <ComButton className='mb10 bccyellow' onClick={async () => {
           Taro.showLoading({ mask: true, title: "实名提交中..." });
           const _form = await utils_validate_realName(form);
-          await Api_user_realNameAuth_ctn({ idcard: _form.realId!, name: _form.realName!, mobile: _form.mobile! });
+          await Api_user_realNameAuth_ctn({ type: 2, idcard: _form.realId!, name: _form.realName!, mobile: _form.mobile! });
           await useSTSelf.getState().sett();
           if (address) {
             useSTExpress.getState().sett({ productList: [{ sendMan: { realId: _form.realId, realName: _form.realName } }] });

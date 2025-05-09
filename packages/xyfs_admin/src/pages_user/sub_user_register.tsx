@@ -2,7 +2,7 @@
 import { Text, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { DeptInfo } from "@xyfs/taro_uii";
-import { Api_dept_edit_ctn, Api_dept_userList_ctn, Api_getNumber_ctn, Api_user_edit_ctn } from '@xyfs/taro_uii/api/api__users';
+import { Api_dept_edit_ctn, Api_dept_userList_ctn, Api_getNumber_ctn, Api_user_edit_ctn, Api_user_realNameAuth_ctn } from '@xyfs/taro_uii/api/api__users';
 import { ComButton, ComButtonOpen } from '@xyfs/taro_uii/components/ComButton';
 import { ComImage } from "@xyfs/taro_uii/components/ComImage";
 import { ComInput } from "@xyfs/taro_uii/components/ComInput";
@@ -38,7 +38,7 @@ const Index: FC = () => {
   console.log(deptUserList);
 
 
-
+  const [idcard, setIdCard] = useState<string>(selfInfo_S.deptInfo?.realId ?? "");
 
   return <MMMAAPage isNeedAnyRole={false} isNeedAnyDept={false}>
     <ComNav>
@@ -162,7 +162,7 @@ const Index: FC = () => {
                 <ComButton ll className='w5rem bccwhite nw' hoverClass='none'>部门地址</ComButton>
                 <ComButton ll className='flx1 cccplh ' hoverClass='none' onClick={async () => {
                   Taro.showLoading({ mask: true, title: "更新地址..." });
-                  const res_address = await try_Taro_chooseAddress();
+                  const res_address = await try_Taro_chooseAddress(true);
                   const res_userInfo = await Api_dept_edit_ctn({ ...res_address });
                   useSTSelf.getState().sett(res_userInfo);
                   Taro.showToast({ icon: "none", title: "更新完成" });
@@ -179,6 +179,27 @@ const Index: FC = () => {
               <View className='ww mb10 dy' >
                 <ComButton ll className='w5rem bccwhite nw' hoverClass='none'>授权快递</ComButton>
                 <ComButton ll className='flx1 cccplh ' hoverClass='none'>{selfInfo_S.logistics?.map(e => e.deliveryName).join('/')}</ComButton>
+              </View>
+              <View className='ww mb10 dy' >
+                <ComButton ll className='w5rem bccwhite nw' hoverClass='none'>负责人</ComButton>
+                <ComButton ll className='flx1 cccplh ' hoverClass='none'>{selfInfo_S.deptInfo?.name ?? "暂无"}</ComButton>
+              </View>
+              <View className='ww mb10 dy' >
+                <ComButton ll className='w5rem bccwhite nw' hoverClass='none'>实名</ComButton>
+                <ComButton ll className='flx1 cccplh bccback mr10' hoverClass='none'>
+                  <ComInput type='idcard' placeholder='请输入身份证号' value={idcard} onInput={(eee) => { setIdCard(eee.detail.value); }} ></ComInput>
+                </ComButton>
+                <ComButton rr className="bccgreen cccwhite" onClick={async () => {
+                  if (!selfInfo_S.deptInfo?.name) { Taro.showToast({ icon: "none", title: "请输入检查部门地址信息是否完整", }); return; }
+                  if (!idcard) { Taro.showToast({ icon: "none", title: "请输入身份证号", }); return; }
+                  if (idcard.length !== 18) { Taro.showToast({ icon: "none", title: "请输入正确的身份证号", }); return; }
+                  Taro.showLoading({ mask: true, title: "实名提交中..." });
+                  await Api_user_realNameAuth_ctn({ type: 3, idcard: idcard, name: selfInfo_S.deptInfo?.name, });
+                  await useSTSelf.getState().sett();
+                  Taro.showToast({ icon: "none", title: "实名成功", });
+                }}> 实名
+                </ComButton>
+                {/* <ComButton ll className='flx1 cccplh ' hoverClass='none'>{selfInfo_S.logistics?.map(e => e.deliveryName).join('/')}</ComButton> */}
               </View>
             </View>
           </>

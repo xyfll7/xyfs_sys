@@ -84,7 +84,7 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
     "waybill": () => order.productList?.filter(e => !e.waybillId)!,
     "print": () => coo___unique_arr(order.productList!, "waybillId")
   }[model]);
-
+  console.log("products", order);
   return <View className='dll ww mb10 bccwhite ioo' key={order.id}>
     <ComCardOrderBringGoods className='ww mb10' model={model} isShowSelector={roo___has_role(selfInfo_S, ['MERCHANT', "GROUPLEADER"])} key={order.id} products={products} order={order}
       onSelectOrder={(e) => {

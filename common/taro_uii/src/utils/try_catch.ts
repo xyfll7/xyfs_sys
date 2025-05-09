@@ -192,9 +192,26 @@ export async function try_Taro_showActionSheet<T>(option: Taro.showActionSheet.O
     throw new ErrorR(err);
   }
 }
-export async function try_Taro_chooseAddress(): Promise<Omit<AddressInfo, "id">> {
+export async function try_Taro_chooseAddress(isTest: boolean = false): Promise<Omit<AddressInfo, "id">> {
   try {
+    if (isTest) {
+      return {
+        name: "王肇",
+        mobile: "17709205217",
+        company: "",
+        postCode: "",
+        code: "710000",
+        country: "中国",
+        province: "陕西省",
+        city: "西安市",
+        area: "碑林区",
+        town: "",
+        address: "南二环西段88号老三届·世纪星大厦",
+        from: "WX",
+      };
+    }
     const res = await Taro.chooseAddress();
+    console.log("选择地址：", res);
     if (res) {
       return {
         name: res.userName ? res.userName : "",

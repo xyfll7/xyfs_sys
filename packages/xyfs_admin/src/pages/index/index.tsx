@@ -59,7 +59,7 @@ const Index: FC = () => {
       <View className='dll ww'>
         <ComButton className='bccback mb10 cccplh'>我</ComButton>
         <View className='dy'>
-          <ComButton className='dbtc mb10 mr10  bccwhite' url='/pages_user/sub_user_register'>
+          <ComButton className='dbtc mb10 mr10  bccback' url='/pages_user/sub_user_register'>
             <ComImage compress className='mr10 oo ovh' src={selfInfo_S?.avatar} />
             <View className='nw1 wm5rem mr10'>{selfInfo_S!.name}</View>
             {selfInfo_S!.mobile}

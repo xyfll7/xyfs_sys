@@ -205,7 +205,7 @@ export const ComCardOrderBringGoods: FC<{
               </View>
             </View>
           }
-          <ComImage className='mr10' src={e.pictureUrl!} style={{ width: "4rem" }} />
+          <ComImage className='mr10' compress={false} src={e.pictureUrl?.split(",")[0] ?? ''} style={{ width: "4rem" }} />
           <View className='ww'>
             <View className='dbtc ww'>
               <ComButton ll className='bccback'>
