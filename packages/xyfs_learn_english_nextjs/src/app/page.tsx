@@ -34,13 +34,13 @@ export default function Home() {
               plugins={[WheelGesturesPlugin()]} >
               <CarouselContent className="bg-red-300 h-full flex-1">
                 <CarouselItem className="bg-blue-300 h-full">
-                  111  <video className="bccred w-full" src="/video0.mp4" controls></video>
+                  <video className="bccred w-full" src="/video0.mp4" controls></video>
                 </CarouselItem>
                 <CarouselItem className="bg-red-500 h-full">
-                  222  {/* <video className="bccred w-full" src="/video0.mp4" controls></video> */}
+                  <video className="bccred w-full" src="/video0.mp4" controls></video>
                 </CarouselItem>
                 <CarouselItem className="bg-yellow-300 h-full">
-                  333  {/* <video className="bccred w-full" src="/video0.mp4" controls></video> */}
+                  <video className="bccred w-full" src="/video0.mp4" controls></video>
                 </CarouselItem>
               </CarouselContent>
             </Carousel>
