@@ -31,15 +31,15 @@ export default function Home() {
           <div className="flex-1 flex flex-col items-center justify-center overflow-hidden">
 
             <Carousel className="bg-green-300 w-full h-full flex flex-col justify-center overflow-hidden" orientation="vertical"
-              plugins={[WheelGesturesPlugin()]} >
-              <CarouselContent className="bg-red-300 h-full flex-1">
-                <CarouselItem className="bg-blue-300 h-full">
+              plugins={[WheelGesturesPlugin()]} opts={{ loop: false, skipSnaps: false }} >
+              <CarouselContent className="bg-red-300 h-full flex-1 ">
+                <CarouselItem className="bg-blue-300 h-full flex flex-col justify-center">
                   <video className="bccred w-full" src="/video0.mp4" controls></video>
                 </CarouselItem>
-                <CarouselItem className="bg-red-500 h-full">
+                <CarouselItem className="bg-red-500 h-full flex flex-col justify-center">
                   <video className="bccred w-full" src="/video0.mp4" controls></video>
                 </CarouselItem>
-                <CarouselItem className="bg-yellow-300 h-full">
+                <CarouselItem className="bg-yellow-300 h-full flex flex-col justify-center">
                   <video className="bccred w-full" src="/video0.mp4" controls></video>
                 </CarouselItem>
               </CarouselContent>
