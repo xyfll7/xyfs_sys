@@ -476,7 +476,7 @@ export function on_get_printer_str_order_bing_goods(_order: OrderInfo<Product_Dr
         return [
           `${T_0} 0 ${X_} ${Y_ += 30} 商品总数量 共${_order.productList?.length}件`,
           ...(() => _order.productList?.map((e, i) => [
-            `${T_0} 0 ${X_} ${Y_ += 30} ${i + 1}/${_order.productList?.length}${e.name?.substring(0, 10)}/${e.intro}`.substring(0, 20),
+            `${T_0} 0 ${X_} ${Y_ += 30} ${i + 1}/${_order.productList?.length}${e.name?.substring(0, 10)}`,
           ]).flat()!
           )(),
         ];
@@ -550,7 +550,7 @@ export function on_get_printer_str_order_bing_goods_waybill(_order: OrderInfo<Pr
         return [
           `${T_0} 0 ${X_} ${Y_ += 30} 商品总数量 共${_order.__count}件`,
           ...(() => _order.productList?.filter((e) => e.waybillId === _order.__product?.waybillId)?.map((e, i) => [
-            `${T_0} 0 ${X_} ${Y_ += 30} ${i + 1}/${_order.__count}${e.name?.substring(0, 10)}/${e.intro}`.substring(0, 20),
+            `${T_0} 0 ${X_} ${Y_ += 30} ${i + 1}/${_order.__count}${e.name?.substring(0, 10)}`,
           ]).flat()!
           )(),
         ];
@@ -559,7 +559,7 @@ export function on_get_printer_str_order_bing_goods_waybill(_order: OrderInfo<Pr
         return [
           `${T_0} 0 ${X_} ${Y_ += 30} 商品总数量 共${_order.productList?.length}件`,
           ...(() => _order.productList?.map((e, i) => [
-            `${T_0} 0 ${X_} ${Y_ += 30} ${i + 1}/${_order.productList?.length}${e.name?.substring(0, 10)}/${e.intro}`.substring(0, 20),
+            `${T_0} 0 ${X_} ${Y_ += 30} ${i + 1}/${_order.productList?.length}AA${e.name?.substring(0, 10)}`,
           ]).flat()!
           )(),
         ];
