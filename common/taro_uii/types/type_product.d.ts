@@ -40,9 +40,14 @@ export interface Product_Express extends ProductBase {
   logisticPriceSchemeId?: number,
 }
 export interface Product_Publish extends ProductBase, Time_Base {
-  picUrl: string; // 存货数量
-  name: string;
-  currentPrice: string;
+  picUrl?: string; // 存货数量
+  name?: string;
+  currentPrice?: string;
+  waybillId?: string;
+  pictureUrl?: string;
+  totalPrice?: number;
+  printTimes?: number;
+  orderId?: string;
 }
 
 export type DrycleanNotesType = { type: "color" | "serve" | "defec" | "affix", id: string, label: string, price: string, color: string; };

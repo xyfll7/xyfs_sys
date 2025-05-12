@@ -1,7 +1,7 @@
 // :: pages_comm/icomm_orders_groupbuying
 import { View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
-import { OrderInfo, Pagination, Product_Dryclean } from "@xyfs/taro_uii";
+import { OrderInfo, Pagination, Product_Dryclean, Product_Publish } from "@xyfs/taro_uii";
 import { Api_logistic_createWaybill_ctn } from "@xyfs/taro_uii/api/api__logistics";
 import { Api_order_cancel_ctn, Api_order_incrPrintTimes_ctn, Api_order_list_ctn, Api_order_remove_ctn } from '@xyfs/taro_uii/api/api__orders';
 import { ComButton } from "@xyfs/taro_uii/components/ComButton";
@@ -69,7 +69,7 @@ const Index: FC<{}> = ({ }) => {
 
 
 
-const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: OrderInfo<Product_Dryclean>; onUpdateOrderItem: (e: OrderInfo<Product_Dryclean>) => void, onDeleteOrderItem: (e: OrderInfo<Product_Dryclean>) => void; }) => {
+const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: OrderInfo<Product_Publish>; onUpdateOrderItem: (e: OrderInfo<Product_Dryclean>) => void, onDeleteOrderItem: (e: OrderInfo<Product_Dryclean>) => void; }) => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
 
   const IS_PURE_PRINT = roo___has_role(selfInfo_S, ["GROUPLEADER"]);

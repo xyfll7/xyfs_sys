@@ -3,7 +3,7 @@ import Taro from "@tarojs/taro";
 import { coo___ios_date, coo___objToUrl } from "@xyfs/utils/util";
 import { format } from "date-fns";
 import React, { FC } from "react";
-import { OrderInfo, Product_Dryclean, Product_Express } from "../../types/type_product";
+import { OrderInfo, Product_Dryclean, Product_Express, Product_Publish } from "../../types/type_product";
 import { Order_ST, PickUp_ST, Product_category_ST } from "../config";
 import { try_Taro_navigateTo, try_Taro_setClipboardData } from "../utils/try_catch";
 import { utils_arr_includes } from "../utils/util";
@@ -174,12 +174,12 @@ export const ComCardOrderDryclean: FC<{
 
 export const ComCardOrderBringGoods: FC<{
   className?: string;
-  order: OrderInfo<Product_Dryclean>;
-  products?: Product_Dryclean[];
+  order: OrderInfo<Product_Publish>;
+  products?: Product_Publish[];
   model?: "waybill" | "print",
   isPurePrint?: boolean;
   isShowSelector?: boolean;
-  onSelectOrder?: (e: Product_Dryclean) => void;
+  onSelectOrder?: (e: Product_Publish) => void;
 }> = ({ order, className = "", isPurePrint = false, model, products, onSelectOrder, isShowSelector = false }) => {
   return <View className={`bccwhite prl10 ioo pt10 ww ${className}`}>
     <View className='dbtc ww mb10'>
@@ -222,11 +222,14 @@ export const ComCardOrderBringGoods: FC<{
                 <ComPrice price={Number(e?.totalPrice)} />
               </ComButton>
             </View>
-            {e?.waybillId && <View className='cccplh dbtc ww' >
+            {!isPurePrint && e?.waybillId && <View className='cccplh dbtc ww' >
               <Text className='nw1' onClick={() => try_Taro_setClipboardData({ data: e.waybillId! })}>运单号:{e?.waybillId}</Text>  <Text className='nw'>/{e.printTimes ?? 0}</Text>
               <Text className='cccgreen pl10 nw' onClick={async () => {
                 await try_Taro_navigateTo({ url: `/pages_comm/comm__express_path?${coo___objToUrl({ express_share_id: order.id })}` });
               }}>轨迹</Text>
+            </View>}
+            {isPurePrint && e?.orderId && <View className='cccplh dbtc ww' >
+              <Text className='nw1' onClick={() => try_Taro_setClipboardData({ data: e.orderId! })}>运单号:{e?.orderId}</Text>  <Text className='nw'>/{e.printTimes ?? 0}</Text>
             </View>}
           </View>
         </View>;
