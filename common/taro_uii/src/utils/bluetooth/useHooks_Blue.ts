@@ -403,7 +403,7 @@ export function on_get_printer_str_order_express(_order: OrderInfo<Product_Expre
 
 }
 
-export function on_get_printer_str_order_bing_goods(_order: OrderInfo<Product_Dryclean>, blue_device?: Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice) {
+export function on_get_printer_str_order_bing_goods(_order: OrderInfo<Product_Dryclean>, type: "divide" | "merge", blue_device?: Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice) {
   _order = JSON.parse(JSON.stringify(_order, coo___JSON_str_code));
   const T_0 = utils_str_includes(["快递100"], blue_device?.name) ? "TEXT 0" : "TEXT 1";
   const L_H = 3;
@@ -471,7 +471,7 @@ export function on_get_printer_str_order_bing_goods(_order: OrderInfo<Product_Dr
   const arr_page = [`! 0 200 200 ${P_h} 1`];
   return [...arr_page, ...arr_content].reduce((str, e) => `${str}\r\n${e}`);
 }
-export function on_get_printer_str_order_bing_goods_waybill(_order: OrderInfo<Product_Dryclean>, blue_device?: Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice) {
+export function on_get_printer_str_order_bing_goods_waybill(_order: OrderInfo<Product_Dryclean>, type: "divide" | "merge", blue_device?: Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice) {
   _order = JSON.parse(JSON.stringify(_order, coo___JSON_str_code));
   const T_0 = utils_str_includes(["快递100"], blue_device?.name) ? "TEXT 0" : "TEXT 1";
   const L_H = 3;

@@ -142,33 +142,35 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
         <View className='cccgreen'>获取面单</View>
       </ComButton>}
       {model === "print" && order.orderStatus === 2 && roo___has_role(selfInfo_S, ['MERCHANT', "GROUPLEADER"]) && <ComButton rr className='ml10 bborder mb10 nw' onClick={async () => {
+        console.log("products：：", order.productList?.some(e => e.waybillId));
+        throw new Error("打印");
         if (!products.length) { Taro.showToast({ icon: "none", title: "至少选择一件商品" }); return; }
         const [_, res_item] = await try_Taro_showActionSheet({
           alertText: "打印方式",
           itemList: ["合单打印", "分单打印"],
         });
         if (res_item === "合单打印") {
-          await on_start_print(() => {
+          await on_start_print((blue_device) => {
             return {
               cpcl: (() => {
-                // if (eee.waybillId) {
-                //   return on_get_printer_str_order_bing_goods_waybill({ ...order, __product: eee, __index: index, __count: count }, blue_device);
-                // } else {
-                //   return on_get_printer_str_order_bing_goods({ ...order, __product: eee, __index: index, __count: count }, blue_device);
-                // }
-                return [""];
+                if (order.productList?.some(e => e.waybillId)) {
+                  return [on_get_printer_str_order_bing_goods_waybill({ ...order, }, "merge", blue_device)];
+                } else {
+                  return [on_get_printer_str_order_bing_goods({ ...order, }, "merge", blue_device)];
+                }
               })()
             };
           }, { orderId: order.id!, selfInfo_S });
-        } else {
+        }
+        if (res_item === "分单打印") {
           await on_start_print((blue_device) => {
             return {
               cpcl: products!.map((eee, index) => {
                 const count = order.productList?.filter(e => e.waybillId === eee.waybillId).length;
                 if (eee.waybillId) {
-                  return on_get_printer_str_order_bing_goods_waybill({ ...order, __product: eee, __index: index, __count: count }, blue_device);
+                  return on_get_printer_str_order_bing_goods_waybill({ ...order, __product: eee, __index: index, __count: count }, "divide", blue_device);
                 } else {
-                  return on_get_printer_str_order_bing_goods({ ...order, __product: eee, __index: index, __count: count }, blue_device);
+                  return on_get_printer_str_order_bing_goods({ ...order, __product: eee, __index: index, __count: count }, "divide", blue_device);
                 }
               })
             };
