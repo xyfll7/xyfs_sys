@@ -72,8 +72,9 @@ const Index: FC<{}> = ({ }) => {
 const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: OrderInfo<Product_Dryclean>; onUpdateOrderItem: (e: OrderInfo<Product_Dryclean>) => void, onDeleteOrderItem: (e: OrderInfo<Product_Dryclean>) => void; }) => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
 
+  const IS_PURE_PRINT = roo___has_role(selfInfo_S, ["GROUPLEADER"]);
   const model = (() => {
-    if (true && roo___has_role(selfInfo_S, ["GROUPLEADER"])) {
+    if (true && IS_PURE_PRINT) {
       return "print";
     } else {
       return Boolean(order.productList?.filter(e => !e.waybillId)?.length) ? "waybill" : "print";
@@ -82,19 +83,28 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
 
   const [products, setProducts] = useState({
     "waybill": () => order.productList?.filter(e => !e.waybillId)!,
-    "print": () => coo___unique_arr(order.productList!, "waybillId")
+    "print": () => IS_PURE_PRINT ? order.productList! : coo___unique_arr(order.productList!, "waybillId")
   }[model]);
 
   return <View className='dll ww mb10 bccwhite ioo' key={order.id}>
-    <ComCardOrderBringGoods className='ww mb10' model={model} isShowSelector={roo___has_role(selfInfo_S, ['MERCHANT', "GROUPLEADER"])} key={order.id} products={products} order={order}
+    <ComCardOrderBringGoods isPurePrint={IS_PURE_PRINT} className='ww mb10' model={model} isShowSelector={roo___has_role(selfInfo_S, ['MERCHANT', "GROUPLEADER"])} key={order.id} products={products} order={order}
       onSelectOrder={(e) => {
-        if (model === "waybill" && utils_arr_includes([e.id!], products.map(ee => ee.id!))) {
-          setProducts(products.filter(ee => ee.id !== e.id));
-        } else if (model === "print" && utils_arr_includes([e.waybillId!], products.map(ee => ee.waybillId!))) {
-          setProducts(products.filter(ee => ee.waybillId !== e.waybillId));
-        } else {
-          setProducts([...products, e].sort((a, b) => Number(a.id) - Number(b.id)));
+        if (roo___has_role(selfInfo_S, ['MERCHANT'])) {
+          if (model === "waybill" && utils_arr_includes([e.id!], products.map(ee => ee.id!))) {
+            setProducts(products.filter(ee => ee.id !== e.id));
+          } else if (model === "print" && utils_arr_includes([e.waybillId!], products.map(ee => ee.waybillId!))) {
+            setProducts(products.filter(ee => ee.waybillId !== e.waybillId));
+          } else {
+            setProducts([...products, e].sort((a, b) => Number(a.id) - Number(b.id)));
+          }
+        } else if (IS_PURE_PRINT) {
+          if (model === "print" && utils_arr_includes([e.id!], products.map(ee => ee.id!))) {
+            setProducts(products.filter(ee => ee.id !== e.id));
+          } else {
+            setProducts([...products, e].sort((a, b) => Number(a.id) - Number(b.id)));
+          }
         }
+
       }} />
     <View className='dr prl10 ww dwp'>
       {order.orderStatus === 1 &&
@@ -187,7 +197,8 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
         setProducts(order.productList?.filter(ee => !print_orders?.some(eee => eee === ee.id))!);
         Taro.showToast({ icon: "none", title: "打印完成", });
       }}>
-        <View className='cccprice'>{products?.map(e => order.productList?.findIndex(ee => ee.waybillId === e.waybillId)! + 1).join(",")}</View>
+        {IS_PURE_PRINT && <View className='cccprice'>{products?.map(e => order.productList?.findIndex(ee => ee.id === e.id)! + 1).join(",")}</View>}
+        {IS_PURE_PRINT && <View className='cccprice'>{products?.map(e => order.productList?.findIndex(ee => ee.waybillId === e.waybillId)! + 1).join(",")}</View>}
         <View className='cccgreen'>打印</View>
       </ComButton>
       }

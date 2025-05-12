@@ -80,7 +80,7 @@ export const ComCardOrderExpress: FC<{
                 <ComButton rr className='cccgreen bborder'
                   onClick={async () => {
                     await try_Taro_navigateTo({ url: `/pages_comm/comm__express_path?${coo___objToUrl({ express_share_id: order.id })}` });
-                  }}><Text className="nw">轨迹</Text> </ComButton> : null
+                  }}><Text className='nw'>轨迹</Text> </ComButton> : null
               }
               <MMMShare rr orderType='快递' className='bborder' id={order.id!} name={order.deptName!} ></MMMShare>
             </View>
@@ -133,7 +133,7 @@ export const ComCardOrderDryclean: FC<{
       <View className='ww mb10'>
         {order.productList?.map((e) => {
           return <View className='dbtc ww' key={e.id}>
-            <ComButton ll><View className='dbase'><Text className='wm10rem nw1'>{e.name}</Text> <Text className="cccplh fs08 nw">/{e.quantity}</Text> </View></ComButton>
+            <ComButton ll><View className='dbase'><Text className='wm10rem nw1'>{e.name}</Text> <Text className='cccplh fs08 nw'>/{e.quantity}</Text> </View></ComButton>
             <View className='dy'>
               <ComButton rr className='nw' onClick={async () => {
                 await try_Taro_setClipboardData({ data: e.code! });
@@ -177,9 +177,10 @@ export const ComCardOrderBringGoods: FC<{
   order: OrderInfo<Product_Dryclean>;
   products?: Product_Dryclean[];
   model?: "waybill" | "print",
+  isPurePrint?: boolean;
   isShowSelector?: boolean;
   onSelectOrder?: (e: Product_Dryclean) => void;
-}> = ({ order, className = "", model, products, onSelectOrder, isShowSelector = false }) => {
+}> = ({ order, className = "", isPurePrint = false, model, products, onSelectOrder, isShowSelector = false }) => {
   return <View className={`bccwhite prl10 ioo pt10 ww ${className}`}>
     <View className='dbtc ww mb10'>
       <MMMOrderUser order={order} />
@@ -200,9 +201,15 @@ export const ComCardOrderBringGoods: FC<{
           }
           {model === "print" && isShowSelector && order.orderStatus == 2 &&
             <View className='pa z1 ' style={{ top: "0rem", left: '0rem' }} onClick={() => { onSelectOrder?.(e); }} >
-              <View className={`${utils_arr_includes([e.waybillId!], (products?.map(ee => ee.waybillId!)!),) ? ' bccgreen' : 'bccback '} dxy cccwhite o6`} style={{ minWidth: "calc(1.2 * var(--rem_base))", minHeight: "calc(1.2 * var(--rem_base))" }}>
+              {!isPurePrint && <View className={`${utils_arr_includes([e.waybillId!], (products?.map(ee => ee.waybillId!)!),) ? ' bccgreen' : 'bccback '} dxy cccwhite o6`} style={{ minWidth: "calc(1.2 * var(--rem_base))", minHeight: "calc(1.2 * var(--rem_base))" }}>
                 <View className='fs07'>{order?.productList?.findIndex(ee => ee.waybillId === e.waybillId)! + 1}</View>
-              </View>
+              </View>}
+              {isPurePrint &&
+                <View className={`${utils_arr_includes([e.id!], (products?.map(ee => ee.id!)!),) ? ' bccgreen' : 'bccback '} dxy cccwhite o6`} style={{ minWidth: "calc(1.2 * var(--rem_base))", minHeight: "calc(1.2 * var(--rem_base))" }}>
+                  <View className='fs07'>{i + 1}</View>
+                </View>
+              }
+
             </View>
           }
           <ComImage className='mr10' compress={false} src={e.pictureUrl?.split(",")[0] ?? ''} style={{ width: "4rem" }} />
