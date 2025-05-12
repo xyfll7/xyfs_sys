@@ -84,7 +84,7 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
     "waybill": () => order.productList?.filter(e => !e.waybillId)!,
     "print": () => coo___unique_arr(order.productList!, "waybillId")
   }[model]);
-  console.log("products", order);
+
   return <View className='dll ww mb10 bccwhite ioo' key={order.id}>
     <ComCardOrderBringGoods className='ww mb10' model={model} isShowSelector={roo___has_role(selfInfo_S, ['MERCHANT', "GROUPLEADER"])} key={order.id} products={products} order={order}
       onSelectOrder={(e) => {
@@ -142,8 +142,6 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
         <View className='cccgreen'>获取面单</View>
       </ComButton>}
       {model === "print" && order.orderStatus === 2 && roo___has_role(selfInfo_S, ['MERCHANT', "GROUPLEADER"]) && <ComButton rr className='ml10 bborder mb10 nw' onClick={async () => {
-        console.log("products：：", order.productList?.some(e => e.waybillId));
-        throw new Error("打印");
         if (!products.length) { Taro.showToast({ icon: "none", title: "至少选择一件商品" }); return; }
         const [_, res_item] = await try_Taro_showActionSheet({
           alertText: "打印方式",
@@ -154,9 +152,9 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
             return {
               cpcl: (() => {
                 if (order.productList?.some(e => e.waybillId)) {
-                  return [on_get_printer_str_order_bing_goods_waybill({ ...order, }, "merge", blue_device)];
+                  return [on_get_printer_str_order_bing_goods_waybill({ ...order, __product: order.productList?.[0] }, "merge", blue_device)];
                 } else {
-                  return [on_get_printer_str_order_bing_goods({ ...order, }, "merge", blue_device)];
+                  return [on_get_printer_str_order_bing_goods({ ...order, __product: order.productList?.[0] }, "merge", blue_device)];
                 }
               })()
             };

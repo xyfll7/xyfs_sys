@@ -459,12 +459,32 @@ export function on_get_printer_str_order_bing_goods(_order: OrderInfo<Product_Dr
     `${T_0} 0 ${X_ + 60} ${Y_ += 80 + 10} ${_order.outTradeNo?.toUpperCase()}`,
 
     `${T_0} 0 ${X_} ${Y_ += 30} 团长：${___regiment?.name?.slice(0, 10)}  ${___regiment?.mobile}`,
-    `${T_0} 0 ${X_} ${Y_ += 30} 品名：${_order.__product?.name}`,
-    `${T_0} 0 ${X_} ${Y_ += 30} 商品总数量 共${_order.__count}件`,
-    ...(() => coo___divide_array_to_n_parts(___intro?.split(""), 20)
-      .map(e => e.join(""))
-      .map(e => `${T_0} 0 ${X_} ${Y_ += 30} ${e}`)
-    )(),
+
+
+    ... (() => {
+      if (type === "divide") {  // 分单打印
+        return [
+          `${T_0} 0 ${X_} ${Y_ += 30} 品名：${_order.__product?.name}`,
+          `${T_0} 0 ${X_} ${Y_ += 30} 商品总数量 共${_order.__count}件`,
+          ...(() => coo___divide_array_to_n_parts(___intro?.split(""), 20)
+            .map(e => e.join(""))
+            .map(e => `${T_0} 0 ${X_} ${Y_ += 30} ${e}`)
+          )(),
+        ];
+      }
+      if (type === "merge") {  // 合单打印
+        return [
+          `${T_0} 0 ${X_} ${Y_ += 30} 商品总数量 共${_order.productList?.length}件`,
+          ...(() => _order.productList?.map((e, i) => [
+            `${T_0} 0 ${X_} ${Y_ += 30} ${i + 1}/${_order.productList?.length}${e.name?.substring(0, 10)}/${e.intro}`.substring(0, 20),
+          ]).flat()!
+          )(),
+        ];
+      }
+      return [];
+    })(),
+
+
     `FORM`,
     `PRINT`,
   ];
@@ -524,12 +544,28 @@ export function on_get_printer_str_order_bing_goods_waybill(_order: OrderInfo<Pr
     `${T_0} 0 ${X_ + 30} ${Y_ += 80 + 10} ${_order.__product?.waybillId?.toUpperCase()}`,
 
     `${T_0} 0 ${X_} ${Y_ += 30} 团长：${___regiment?.name?.slice(0, 10)} ${___regiment?.mobile}`,
-    `${T_0} 0 ${X_} ${Y_ += 30} 商品总数量 共${_order.__count}件`,
-    ...(() => _order.productList?.filter((e) => e.waybillId === _order.__product?.waybillId)?.map((e, i) => [
-      `${T_0} 0 ${X_} ${Y_ += 30} ${i + 1}/${_order.__count}${e.name?.substring(0, 10)}/${e.intro}`.substring(0, 20),
-    ]).flat()!
-    )(),
 
+    ...(() => {
+      if (type === "divide") {  // 分单打印
+        return [
+          `${T_0} 0 ${X_} ${Y_ += 30} 商品总数量 共${_order.__count}件`,
+          ...(() => _order.productList?.filter((e) => e.waybillId === _order.__product?.waybillId)?.map((e, i) => [
+            `${T_0} 0 ${X_} ${Y_ += 30} ${i + 1}/${_order.__count}${e.name?.substring(0, 10)}/${e.intro}`.substring(0, 20),
+          ]).flat()!
+          )(),
+        ];
+      }
+      if (type === "merge") { // 合单打印
+        return [
+          `${T_0} 0 ${X_} ${Y_ += 30} 商品总数量 共${_order.productList?.length}件`,
+          ...(() => _order.productList?.map((e, i) => [
+            `${T_0} 0 ${X_} ${Y_ += 30} ${i + 1}/${_order.productList?.length}${e.name?.substring(0, 10)}/${e.intro}`.substring(0, 20),
+          ]).flat()!
+          )(),
+        ];
+      }
+      return [];
+    })(),
     `FORM`,
     `PRINT`,
   ];
