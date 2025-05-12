@@ -73,7 +73,7 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
 
   const model = (() => {
-    if (false && roo___has_role(selfInfo_S, ["GROUPLEADER"])) {
+    if (true && roo___has_role(selfInfo_S, ["GROUPLEADER"])) {
       return "print";
     } else {
       return Boolean(order.productList?.filter(e => !e.waybillId)?.length) ? "waybill" : "print";
@@ -152,9 +152,9 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
             return {
               cpcl: (() => {
                 if (order.productList?.some(e => e.waybillId)) {
-                  return [on_get_printer_str_order_bing_goods_waybill({ ...order, __product: order.productList?.[0] }, "merge", blue_device)];
+                  return [on_get_printer_str_order_bing_goods_waybill({ ...order, productList: products, __product: order.productList?.[0] }, "merge", blue_device)];
                 } else {
-                  return [on_get_printer_str_order_bing_goods({ ...order, __product: order.productList?.[0] }, "merge", blue_device)];
+                  return [on_get_printer_str_order_bing_goods({ ...order, productList: products, __product: order.productList?.[0] }, "merge", blue_device)];
                 }
               })()
             };
