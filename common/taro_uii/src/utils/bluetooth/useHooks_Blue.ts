@@ -559,7 +559,7 @@ export function on_get_printer_str_order_bing_goods_waybill(_order: OrderInfo<Pr
         return [
           `${T_0} 0 ${X_} ${Y_ += 30} 商品总数量 共${_order.productList?.length}件`,
           ...(() => _order.productList?.map((e, i) => [
-            `${T_0} 0 ${X_} ${Y_ += 30} ${i + 1}/${_order.productList?.length}AA${e.name?.substring(0, 10)}`,
+            `${T_0} 0 ${X_} ${Y_ += 30} ${i + 1}/${_order.productList?.length}${e.name?.substring(0, 10)}`,
           ]).flat()!
           )(),
         ];
