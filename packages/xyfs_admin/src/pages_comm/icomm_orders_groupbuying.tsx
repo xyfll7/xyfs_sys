@@ -198,7 +198,7 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
         Taro.showToast({ icon: "none", title: "打印完成", });
       }}>
         {IS_PURE_PRINT && <View className='cccprice'>{products?.map(e => order.productList?.findIndex(ee => ee.id === e.id)! + 1).join(",")}</View>}
-        {IS_PURE_PRINT && <View className='cccprice'>{products?.map(e => order.productList?.findIndex(ee => ee.waybillId === e.waybillId)! + 1).join(",")}</View>}
+        {!IS_PURE_PRINT && <View className='cccprice'>{products?.map(e => order.productList?.findIndex(ee => ee.waybillId === e.waybillId)! + 1).join(",")}</View>}
         <View className='cccgreen'>打印</View>
       </ComButton>
       }
