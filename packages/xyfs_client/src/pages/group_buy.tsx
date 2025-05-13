@@ -34,7 +34,7 @@ definePageConfig({
   // "componentFramework": "glass-easel",
   // "renderer": "skyline",
 });
-// `/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ G_D: "198" })) })}`;
+
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC = () => {
 
@@ -74,7 +74,6 @@ const Index: FC = () => {
   const [product, setProduct] = useState<any>(
     // { "id": 6, "name": "延安山地苹果", "sketch": null, "intro": "重量6-7斤/12枚装/果径80-85", "keywords": null, "tags": null, "price": 58, "weight": 1, "marketPrice": null, "stock": 30, "warningStock": null, "limitQuantity": null, "attachUrl": "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/product_image/oGwbL5PVdCTyoE2sYHAq2bdNA9BY/_1731288105472_0.png", "userId": "oGwbL5PVdCTyoE2sYHAq2bdNA9BY", "status": 1, "sort": 2, "lastUpdateTime": "2024-11-11 09:21:56", "delFlag": "0", "createBy": "oGwbL5PVdCTyoE2sYHAq2bdNA9BY", "createTime": "2024-11-11 09:21:56", "updateBy": null, "updateTime": null, "remark": "", "userName": "王理代", "userMobile": "17319969379", "userAvatar": "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/comm_avatar/default/狗2@1x.webp", "totalSaleStock": null, "saleStock": null, "orderUser": null }
   );
-  console.log("fff", page, !page.list);
 
   return <MMMAAPage className={`${isBanner ? "" : "bccback"}`}>
     <View className='ww'>
@@ -110,7 +109,7 @@ const Index: FC = () => {
               }}>{new Map([[0, "图文版"], [1, "简洁版"]]).get(type)} </ComButton>
               <ComButton rr className={`cccplh mb10 ml10 bborder `} onClick={async () => {
                 Taro.showLoading({ title: "获取短链中...", mask: true });
-                const res = await Api_common_getShortLink_ctn({ pageUrl: `pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ G_D: "198" })) })}`, pageTitle: "我是王小测🎉", isPermanent: false });
+                const res = await Api_common_getShortLink_ctn({ pageUrl: `pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ G_D: G_D })) })}`, pageTitle: "我是王小测🎉", isPermanent: false });
                 await try_Taro_setClipboardData({ data: res });
                 Taro.showToast({ icon: "none", title: "已复制", });
               }}>
