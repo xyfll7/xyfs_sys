@@ -3,6 +3,19 @@ import { getMyEnv } from "../env";
 import { Taro_getStorageSync } from "../utils/try_catch";
 import { try_Taro_login, wx_call_container } from "./wx_call";
 
+
+export async function Api_common_getShortLink_ctn(params: {
+  "pageUrl": string;
+  "pageTitle": string;
+  "isPermanent": boolean;
+}): Promise<any> {
+  const res = await wx_call_container<any>({
+    path: "/common/getShortLink",
+    data: { ...params }
+  });
+  return res;
+}
+
 export async function Api_common_list<T>(dictKey: DICTS_KEYS) {
   const res = await wx_call_container<T>({
     path: "/common/list",
