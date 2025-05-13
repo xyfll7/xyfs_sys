@@ -2,7 +2,7 @@
 import { Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import { Api_goods_groupBuyingUserList_ctn, Api_goods_list_ctn, Api_goodsCart_preOrder_ctn } from "@xyfs/taro_uii/api/api__goods";
-import { Api_dept_info_ctn, Api_user_edit_ctn } from '@xyfs/taro_uii/api/api__users';
+import { Api_common_getShortLink_ctn, Api_dept_info_ctn, Api_user_edit_ctn } from '@xyfs/taro_uii/api/api__users';
 import { ComAddressSwitchor } from '@xyfs/taro_uii/components/ComAddressSwitchor';
 import { ComBanner } from '@xyfs/taro_uii/components/ComBanner';
 import { ComButton, ComButtonOpen } from '@xyfs/taro_uii/components/ComButton';
@@ -22,7 +22,7 @@ import { roo___my_dept } from '@xyfs/taro_uii/src/roles';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
 import { Pagination } from '@xyfs/taro_uii/type_index';
 import { AddressInfo, DeptInfo } from '@xyfs/taro_uii/type_user';
-import { Taro_getCurrentInstance, try_Taro_chooseAddress, try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
+import { Taro_getCurrentInstance, try_Taro_chooseAddress, try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_setClipboardData, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
 import { useHook_pageListNew } from '@xyfs/taro_uii/utils/useHooks';
 
 import { coo___objToUrl, coo___privacy_string, coo___urlToObj } from '@xyfs/utils/util';
@@ -102,14 +102,23 @@ const Index: FC = () => {
 
       {page.pageNum !== 0 && Boolean(page.list.length) &&
         <View className='dll ww bccwhite pt10 mb10 prl10 IOO'>
-
           <View className='ww dll prl10'>
-
             <View className='ww dr'>
               <ComButton rr className={`mb10 cccplh bborder `} onClick={() => { setCart([]); }}>清空</ComButton>
               <ComButton rr className={`mb10 cccplh nw ml10 bborder `} onClick={() => {
                 setType(type == 0 ? 1 : 0);
               }}>{new Map([[0, "图文版"], [1, "简洁版"]]).get(type)} </ComButton>
+              <ComButton rr className={`cccplh mb10 ml10 bborder `} onClick={async () => {
+                Taro.showLoading({ title: "获取短链中...", mask: true });
+                const res = await Api_common_getShortLink_ctn({ pageUrl: `pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ G_D: "198" })) })}`, pageTitle: "我是王小测🎉", isPermanent: false });
+                await try_Taro_setClipboardData({ data: res });
+                Taro.showToast({ icon: "none", title: "已复制", });
+              }}>
+                <View className='dbase'>
+                  {selfInfo_S.managerUser && <Text className='fs07 mr4 cccorange' >¥</Text>}
+                  <Text className='mr4'>短链</Text>
+                </View>
+              </ComButton>
               <ComButtonOpen rr className={`cccplh mb10 ml10 bborder `} id='send_express'
                 shareTitle={`${selfInfo_S.managerUser?.name} 团长 邀您买东西啦`}
                 openType='share'
@@ -120,6 +129,7 @@ const Index: FC = () => {
                 </View>
                 <ComSquare className='icon-share' style={{ width: "calc(1 * var(--rem_base))" }} />
               </ComButtonOpen>
+
             </View>
           </View>
           {
