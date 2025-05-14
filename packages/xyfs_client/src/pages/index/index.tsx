@@ -42,7 +42,7 @@ const Index: FC = () => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const [isHeaderBack, setIsHeaderBack] = useState(false);
   const { capRight } = utils_get_capsule();
-  return <MMMAAPage>
+  return <MMMAAPage share={roo___has_role(selfInfo_S!.managerUser!, ["REGIMENT"]) ? { page: `/pages/index/index?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ R_D: Number(selfInfo_S.managerUser?.mobile).toString(36) })) })}`, } : undefined}>
     <View className='ww'>
       {/* <ComBanner isHeaderBack={isHeaderBack} src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/back_image_25.jpg' /> */}
       <ComBanner isHeaderBack={isHeaderBack} maskHightT='70%' maskHightF='10vh' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/farmer_0.webp' />
@@ -167,7 +167,7 @@ const IIIBringGoods = React.memo(({ className, channelId, }: { className?: strin
             <store-product-item class="ww hh" openPage="product-detail" customContent={customContent} appid={product.appid} productId={product.out_product_id} productPromotionLink={product.product_promotion_link}>
               <View className='ds bccwhite IOO hh ovh ww'>
                 <ComImage className='mr10' src={product.img_url} style={{ width: "7rem" }}></ComImage>
-                <View className='pt10 hh ww dbtl h7remx  ovh'>
+                <View className='pt10 hh ww dbtl ovh'>
                   <View>
                     <ComButton ll className='bcctrans' hoverClass='none'>
                       <Text className="nw1"> {String(product.title)}</Text>

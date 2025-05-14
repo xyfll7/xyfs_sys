@@ -38,28 +38,28 @@ export function useHook_getLocation() {
 
 
 
-export function useHook_shareAppMessage({ page, imageUrl = "" }: { page?: string; imageUrl?: string; } = {}) {
+export function useHook_shareAppMessage(params: { page?: string; imageUrl?: string; } = {}) {
   useShareAppMessage((res) => {
-    console.info("分享", res);
+    console.info("分享", res, params);
     const target = res.target as { dataset: { title: string; path: string; }; };
     if (res.from === "button") {
       // 来自页面内转发按钮
       return {
         title: target.dataset.title,
         path: target.dataset.path,
-        imageUrl: imageUrl,    // * 支持PNG及JPG * 显示图片长宽比是 5:4
+        imageUrl: params.imageUrl ?? "",    // * 支持PNG及JPG * 显示图片长宽比是 5:4
       };
-    } else if (res.from === "menu" && Boolean(page)) {
+    } else if (res.from === "menu" && Boolean(params.page)) {
       return {
         title: "小象团长助手",
-        path: page,
-        imageUrl: imageUrl,    // * 支持PNG及JPG * 显示图片长宽比是 5:4
+        path: params.page ?? "",
+        imageUrl: params.imageUrl ?? "",    // * 支持PNG及JPG * 显示图片长宽比是 5:4
       };
     } else {
       return {
         title: "小象团长助手",
         path: "/pages/index/index",
-        imageUrl: imageUrl,    // * 支持PNG及JPG * 显示图片长宽比是 5:4
+        imageUrl: params.imageUrl ?? "",    // * 支持PNG及JPG * 显示图片长宽比是 5:4
       };
     }
 
