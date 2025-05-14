@@ -100,7 +100,7 @@ const Index: FC = () => {
       {/* {getMyEnv().isDeveloping && <IIIBanner className='mb10' />} */}
 
       <View className='prl10 ww'>
-        <View className='dxy bccgreen fs07 ioo prl10 pbt10 cccwhite ww mb10'>
+        <View className='dxy bccgreen fs07 IOO prl10 pbt10 cccwhite ww mb20'>
           欢迎访问小象心选管，我们是一个专注于为您提供优质商品和服务的平台。我们致力于为您带来更好的购物体验。
         </View>
       </View>
@@ -115,9 +115,9 @@ const Index: FC = () => {
 
       {getMyEnv().platform === "devtools" &&
         <View className='dll'>
-          <ComButton className='bccwhite cccprice fwb mb10' url='/pages/test/ctest_display' >测试display</ComButton>
-          <ComButton className='bccwhite cccprice fwb mb10' url='/pages/test/ctest_index' routeType='wx://cupertino-modal'>测试</ComButton>
-          <ComButton className='bccwhite cccprice fwb mb10' url='/pages/test/ctest_utils' >工具</ComButton>
+          <ComButton className='bcctrans cccprice fwb mb10' url='/pages/test/ctest_display' >测试display</ComButton>
+          <ComButton className='bcctrans cccprice fwb mb10' url='/pages/test/ctest_index' routeType='wx://cupertino-modal'>测试</ComButton>
+          <ComButton className='bcctrans cccprice fwb mb10' url='/pages/test/ctest_utils' >工具</ComButton>
         </View>
       }
       <MMMFooter className='mb10' />

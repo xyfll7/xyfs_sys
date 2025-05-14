@@ -301,7 +301,7 @@ const IIIDeptEdit = ({ dept, onSuccess, onClose }: { dept: any; onSuccess: () =>
       <View className='ww dll '>
         <ComButton className='cccplh mb10 bccback'>指定部门角色</ComButton>
         <View className='dy dwp'>
-          {dicts_roles?.filter((e) => ["REGIMENT", "SUPPLIER", "DRIVER", "MERCHANT", "GUIDE", "SCANNER", "GROUPLEADER"].includes(e.roleKey)).map((e, i) => {
+          {dicts_roles?.filter((e) => ["REGIMENT", "SUPPLIER", "DRIVER", "MERCHANT", "GUIDE", "SCANNER", "GROUPLEADER", "ADMIN"].includes(e.roleKey)).map((e, i) => {
             return <ComButton rr className={` mb10 ${deptInfo?.roles?.some(ee => ee.roleKey === e.roleKey) ? 'cccgreen' : ''}`}
               onClick={async () => {
                 const isHasRole = deptInfo?.roles?.some(ee => ee.roleKey === e.roleKey);

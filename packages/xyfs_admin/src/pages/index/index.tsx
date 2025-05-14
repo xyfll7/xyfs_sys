@@ -69,9 +69,9 @@ const Index: FC = () => {
       </View>
       {getMyEnv().platform === "devtools" &&
         <View className='dll'>
-          <ComButton className='bccwhite cccprice fwb mb10' url='/pages/test/ctest_display' >测试display</ComButton>
-          <ComButton className='bccwhite cccprice fwb mb10' url='/pages/test/ctest_index' >测试</ComButton>
-          <ComButton className='bccwhite cccprice fwb mb10' url='/pages/test/ctest_utils' >工具</ComButton>
+          <ComButton className='bcctrans cccprice fwb mb10' url='/pages/test/ctest_display' >测试display</ComButton>
+          <ComButton className='bcctrans cccprice fwb mb10' url='/pages/test/ctest_index' >测试</ComButton>
+          <ComButton className='bcctrans cccprice fwb mb10' url='/pages/test/ctest_utils' >工具</ComButton>
         </View>
       }
       <MMMFooter className='mb10' />
@@ -165,7 +165,7 @@ const IIISettings = ({ ...props }: ViewProps) => {
           极兔-兔优达
         </ComButton>
       </>}
-      {roo___has_role(selfInfo_S!, ["ADMIN"]) && <>
+      {roo___has_role(selfInfo_S!, ["ADMIN", "AGENT"]) && <>
         <ComButton className='bccwhite mb10 mr10' url='/pages_user/sub_user_dept'>
           部门管理
         </ComButton>
