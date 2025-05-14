@@ -22,7 +22,10 @@ export const MMMAAPage: FC<{
   isNeedAnyDept?: boolean;
   isLoading?: boolean;
   isPageAccess?: boolean | null; // 页面访问权
-  shareMenuToPage?: string;
+  share?: {
+    page?: string;
+    imageUrl?: string;
+  };
   isShowBackImage?: boolean;
   isNoHeader?: boolean;
   isHideRL?: boolean;
@@ -39,7 +42,7 @@ export const MMMAAPage: FC<{
 }) => {
 
     const selfInfo_S = useSTSelf(s => s.selfInfo!);
-    useHook_shareAppMessage({ page: props.shareMenuToPage });
+    useHook_shareAppMessage({ page: props.share?.page, imageUrl: props.share?.imageUrl });
 
     const env = getMyEnv();
     let _childrens = React.Children.map(props.children, (e) => e);
