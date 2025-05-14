@@ -27,15 +27,9 @@ export const utils_get_capsule = (reTry: boolean = true) => {
   if (Capsule.width === 0 && Capsule.height === 0 && reTry) {
     Capsule = { bottom: 83, height: 32, left: 296, right: 383, top: 51, width: 87 };
   }
-  const ___platforms = ["mac"];
-  const deviceInfo = Taro.getDeviceInfo();
   const windowInfo = Taro.getWindowInfo();
-  if (___platforms.includes(deviceInfo.platform)) {
-    Capsule.top = 0;
-    Capsule.width = 0;
-  }
   const heightOnlyTop = windowInfo.statusBarHeight ?? 0 + Capsule.height ?? 0 + (Capsule.top - (windowInfo.statusBarHeight ?? 0)) * 2;
-  const capLeft = ___platforms.includes(deviceInfo.platform) ? 0 : windowInfo.windowWidth - Capsule?.right;
+  const capLeft = windowInfo.windowWidth - Capsule?.right;
   return {
     Capsule,
     heightOnlyTop,
