@@ -38,7 +38,7 @@ export function useHook_getLocation() {
 
 
 
-export function useHook_shareAppMessage({ page }: { page?: string; } = {}) {
+export function useHook_shareAppMessage({ page, imageUrl = "" }: { page?: string; imageUrl?: string; } = {}) {
   useShareAppMessage((res) => {
     console.info("分享", res);
     const target = res.target as { dataset: { title: string; path: string; }; };
@@ -47,19 +47,19 @@ export function useHook_shareAppMessage({ page }: { page?: string; } = {}) {
       return {
         title: target.dataset.title,
         path: target.dataset.path,
-        imageUrl: "",    // * 支持PNG及JPG * 显示图片长宽比是 5:4
+        imageUrl: imageUrl,    // * 支持PNG及JPG * 显示图片长宽比是 5:4
       };
     } else if (res.from === "menu" && Boolean(page)) {
       return {
         title: "小象团长助手",
         path: page,
-        imageUrl: "",    // * 支持PNG及JPG * 显示图片长宽比是 5:4
+        imageUrl: imageUrl,    // * 支持PNG及JPG * 显示图片长宽比是 5:4
       };
     } else {
       return {
         title: "小象团长助手",
         path: "/pages/index/index",
-        imageUrl: "",    // * 支持PNG及JPG * 显示图片长宽比是 5:4
+        imageUrl: imageUrl,    // * 支持PNG及JPG * 显示图片长宽比是 5:4
       };
     }
 
