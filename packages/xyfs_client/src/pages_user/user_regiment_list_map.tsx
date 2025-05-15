@@ -46,7 +46,7 @@ const IIIRegimentList = () => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const { locate } = useHook_getLocation();
   const [selected_dept, setSelected_dep] = useState<DeptInfo | null>(roo___my_dept(selfInfo_S));
-  const [searchValue, setSearchValue] = useHook_Reducer("王肇");
+  const [searchValue, setSearchValue] = useHook_Reducer("");
   const ___page_getter = useCallback(async (p: Pagination<unknown>) => {
     return await Api_user_nearbyRegimentList_ctn({
       ...p,
