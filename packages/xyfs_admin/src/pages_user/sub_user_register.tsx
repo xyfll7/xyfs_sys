@@ -35,8 +35,6 @@ const Index: FC = () => {
       }
     })();
   }, [selfInfo_S.deptId]);
-  console.log(deptUserList);
-
 
   const [realId, setRealId] = useState<string>("");
   const [realName, setRealName] = useState<string>("");
