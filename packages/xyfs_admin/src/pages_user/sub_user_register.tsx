@@ -164,11 +164,8 @@ const Index: FC = () => {
                 <ComButton ll className='flx1 cccplh ' hoverClass='none' onClick={async () => {
                   Taro.showLoading({ mask: true, title: "更新地址..." });
                   const res_address = await try_Taro_chooseAddress();
-                  const res_userInfo = await Api_dept_edit_ctn({
-                    ...res_address,
-                    name: selfInfo_S.deptInfo?.deptName,
-                  });
-                  useSTSelf.getState().sett(res_userInfo);
+                  await Api_dept_edit_ctn({ deptId: selfInfo_S.deptInfo?.deptId!, ...res_address, name: selfInfo_S.deptInfo?.deptName, });
+                  await useSTSelf.getState().sett();
                   Taro.showToast({ icon: "none", title: "更新完成" });
                 }}>{selfInfo_S.deptInfo?.address ?? "***请选择地址***"}</ComButton>
               </View>

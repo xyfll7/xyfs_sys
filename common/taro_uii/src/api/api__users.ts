@@ -213,9 +213,10 @@ export async function Api_user_delUserDept_ctn(params: {
   return res;
 }
 /**
- * 该接口返回就是当前用户login的结果
+ * 该接口用于修改部门信息-只编辑和返回指定部门的详情
+ * deptId必须传入
  */
-export async function Api_dept_edit_ctn(params: Partial<DeptInfo>): Promise<DeptInfo> {
+export async function Api_dept_edit_ctn(params: Partial<DeptInfo> & { deptId: string; }): Promise<DeptInfo> {
   const res = await wx_call_container<DeptInfo>({
     path: "/dept/edit",
     data: { ...params },

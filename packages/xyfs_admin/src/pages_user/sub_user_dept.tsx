@@ -146,10 +146,7 @@ const Index: FC<{}> = ({ }) => {
                 Taro.showLoading({ mask: true, title: "处理中...", });
                 if (!_dept?.children) { throw new Error("没有子部门"); }
                 for (const item of _dept.children) {
-                  const res_deptInfo = await Api_dept_edit_ctn({
-                    deptId: item?.deptId,
-                    mainDept: 1
-                  });
+                  const res_deptInfo = await Api_dept_edit_ctn({ deptId: item?.deptId, mainDept: 1 });
                 }
                 Taro.hideLoading();
               }}>批量设置为首要部门</ComButton>
@@ -333,11 +330,7 @@ const IIIDeptEdit = ({ dept, onSuccess, onClose }: { dept: any; onSuccess: () =>
 
                   const isMainDept___ = utils_str_includes(["REGIMENT", "GUIDE", "GROUPLEADER"], e.roleKey);
 
-                  const res_deptInfo = await Api_dept_edit_ctn({
-                    roles_: _roles.map(ee => ee.id),
-                    deptId: deptInfo?.deptId,
-                    mainDept: isMainDept___ ? 1 : 0
-                  });
+                  const res_deptInfo = await Api_dept_edit_ctn({ deptId: deptInfo?.deptId!, roles_: _roles.map(ee => ee.id), mainDept: isMainDept___ ? 1 : 0 });
                   Taro.showToast({ icon: "none", title: "更新完成" });
                   setDeptInfo(res_deptInfo);
                 } else {
