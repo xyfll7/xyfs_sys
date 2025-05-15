@@ -34,26 +34,20 @@ definePageConfig({
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC<{}> = ({ }) => {
   const [depts, setDepts] = useState<any[]>();
-  // const [searchValue, setSearchValue] = useHook_Reducer("王肇");
+
   const [searchValue, setSearchValue] = useHook_Reducer("");
+  const [timeStamp, setTimeStamp] = useState<number>(0);
 
 
   const ___Api_dept_list_ctn = useCallback(async () => {
     setDepts(undefined);
     const res_dept_list = await Api_dept_list_ctn({ keyword: searchValue });
-
     setDepts(res_dept_list);
-  }, [searchValue]);
+    console.log(timeStamp);
+  }, [searchValue, timeStamp]);
 
 
   useEffect(() => { ___Api_dept_list_ctn(); }, [___Api_dept_list_ctn]);
-
-
-
-  // useTest(depts); // 查看部门成员数量
-
-
-
 
   const [dept, setDept] = useState<any>(null);
   const [mode, setMode] = useState<"add" | "edit">();
@@ -69,7 +63,10 @@ const Index: FC<{}> = ({ }) => {
         </ComNavBarA>
         <View className='mb10'>
           <ComSearcher className='ww' placeholder='部门名称' isShowSearcher
-            onSetSearchValue={(e) => { setSearchValue(e); }} />
+            onSetSearchValue={(e) => {
+              setSearchValue(e);
+              setTimeStamp(new Date().getTime());
+            }} />
         </View>
       </View>
     </ComNav>
@@ -156,9 +153,22 @@ const Index: FC<{}> = ({ }) => {
           {_dept.deptId === 101 && <View className='ww dr'>
             <ComButton rr className='bccback cccgreen mb10'
               onClick={async () => {
+                const arr: any[] = [];
                 _dept.children.map((e: any) => {
-                  console.log("子部门", e.name, e.deptName, e.mobile);
+
+                  const index = arr.findIndex(ee => ee.mobile === e.mobile);
+                  if (index !== -1) {
+                    arr[index].count = arr[index].count ? arr[index].count + 1 : 1;
+                    arr.push({ deptName: e.deptName, mobile: e.mobile, deptId: String(e.deptId), count: 2 });
+                  } else {
+                    arr.push({ deptName: e.deptName, mobile: e.mobile, deptId: String(e.deptId), });
+                  }
+
+
                 });
+                arr.sort((a, b) => a.mobile - b.mobile).sort((a, b) => a.count ? -1 : 0);
+                console.log(arr);
+
               }}>查看子部门名称电话</ComButton>
           </View>
           }
