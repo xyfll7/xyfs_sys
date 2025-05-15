@@ -101,7 +101,7 @@ const Index: FC<{}> = ({ }) => {
       {page.list?.map((e) => {
         const ee1 = e as OrderInfo<Product_Express>;
         return <View className='bccwhite IOO mb10 ww' key={e.id}>
-          <ComCardOrderExpress key={e.id} className='' order={ee1} />
+          <ComCardOrderExpress key={e.id} className='mb10' order={ee1} />
           <IIIOrderExpressOperation
             onSetShowQRCode={(ee) => setShowQRCode(ee)}
             order={ee1}
@@ -166,14 +166,14 @@ const IIIOrderExpressOperation: FC<{
         </View>
       )}
 
-      <View className='dr mb10 ww'>
+      <View className='dr  ww'>
         <View className='dy'>
-          {order.productList?.[0]?.weight && order.orderStatus === Order_ST.待付款 && <ComButton rr className='bccyellow'
+          {order.productList?.[0]?.weight && order.orderStatus === Order_ST.待付款 && <ComButton rr className='bccyellow mb10'
             onClick={() => onSetShowQRCode(true)} >
             收款码
           </ComButton>}
           {order.orderStatus === Order_ST.待付款 && Boolean(order.totalPrice) && (
-            <ComButton rr ll className='bccyellow ml10'
+            <ComButton rr ll className='bccyellow ml10 mb10'
               onClick={async () => {
 
 

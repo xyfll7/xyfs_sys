@@ -140,6 +140,22 @@ const Index: FC<{}> = ({ }) => {
             </Picker>
           </View>
           }
+          {_dept.deptId === 101 && <View className='ww dr'>
+            <ComButton rr className='bccback cccgreen mb10'
+              onClick={async (e) => {
+                Taro.showLoading({ mask: true, title: "处理中...", });
+                if (!_dept?.children) { throw new Error("没有子部门"); }
+                for (const item of _dept.children) {
+                  const res_deptInfo = await Api_dept_edit_ctn({
+                    deptId: item?.deptId,
+                    mainDept: 1
+                  });
+                }
+                Taro.hideLoading();
+              }}>批量设置为首要部门</ComButton>
+
+          </View>
+          }
           {roo___has_role(_dept, ["REGIMENT"]) &&
             <View className='ww dr'>
               <Picker
