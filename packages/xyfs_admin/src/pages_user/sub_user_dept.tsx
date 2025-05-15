@@ -31,23 +31,54 @@ definePageConfig({
   // "componentFramework": "glass-easel",
   // "renderer": "skyline",
 });
+
+
+export function useHook_Fetch<T, X>(cb: (a: X) => Promise<T | null>) {
+  const [loading, setLoading] = useState(false);
+  const [refreshTime, setRefreshTime] = useState(coo___ios_date().getTime());
+  const [data, setData] = useState<T>(null as T);
+  function data_init(isStop: boolean = false) {
+    setData(() => (null as T));
+    setRefreshTime(coo___ios_date().getTime());
+  }
+
+  function data_update(up: (page: T) => T) { setData((e) => up(e)); }
+
+  const data_get = useCallback(async (_page?: T) => {
+    setLoading(true);
+    setData(null as T);
+    const res = await cb({} as X);
+    console.log("useEffect--------", res, refreshTime);
+    if (res) { setData(res as T); }
+    setLoading(false);
+  }, [cb, refreshTime]);
+
+
+  useEffect(() => {
+    (async () => {
+
+      await data_get();
+    })();
+  }, [data_get]);
+  return {
+    loading: loading,
+    data,
+    data_init,
+    data_get,
+    data_update
+  };
+}
+
+
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC<{}> = ({ }) => {
-  const [depts, setDepts] = useState<any[]>();
 
   const [searchValue, setSearchValue] = useHook_Reducer("");
-  const [timeStamp, setTimeStamp] = useState<number>(0);
-
-
   const ___Api_dept_list_ctn = useCallback(async () => {
-    setDepts(undefined);
-    const res_dept_list = await Api_dept_list_ctn({ keyword: searchValue });
-    setDepts(res_dept_list);
-    console.log(timeStamp);
-  }, [searchValue, timeStamp]);
+    return await Api_dept_list_ctn({ keyword: searchValue });
+  }, [searchValue,]);
 
-
-  useEffect(() => { ___Api_dept_list_ctn(); }, [___Api_dept_list_ctn]);
+  const { data: depts, data_get } = useHook_Fetch(___Api_dept_list_ctn);
 
   const [dept, setDept] = useState<any>(null);
   const [mode, setMode] = useState<"add" | "edit">();
@@ -59,19 +90,21 @@ const Index: FC<{}> = ({ }) => {
     <ComNav className='prl10'>
       <View className='ww'>
         <ComNavBarA className='mb10 '>
-          <ComButton ll className='bcctrans cccplh ml10'>部门管理</ComButton>
+          <ComButton ll className='bcctrans cccplh ml10' onClick={async () => {
+            await data_get();
+          }}>部门管理</ComButton>
         </ComNavBarA>
         <View className='mb10'>
           <ComSearcher className='ww' placeholder='部门名称' isShowSearcher
             onSetSearchValue={(e) => {
               setSearchValue(e);
-              setTimeStamp(new Date().getTime());
             }} />
         </View>
       </View>
     </ComNav>
+
     <ComScrollView className=''>
-      {depts === undefined && <ComLoading />}
+      {depts === null && <ComLoading />}
       {depts?.length === 0 && <ComLoading isEmpty />}
       {depts && <ComTree list={depts} keyName='deptId'>
         {(_dept) => <View className='ww dll bccwhite  ioo ovh pt10 mb10 pr10'>
@@ -90,7 +123,7 @@ const Index: FC<{}> = ({ }) => {
                   const res = await try_Taro_showModal({ title: "提示", content: "您确定要删除该部门？" });
                   if (res) {
                     Taro.showLoading({ mask: true, title: "删除中" });
-                    await Api_dept_del_ctn({ deptId: _dept.deptId });
+                    await Api_dept_del_ctn({ deptId: _dept.deptId! });
                     Taro.showToast({ icon: "none", title: "成功" });
                     await ___Api_dept_list_ctn();
                   }
@@ -98,7 +131,7 @@ const Index: FC<{}> = ({ }) => {
               }}>更多</ComButton>
               <ComButton rr className='ml10 mb10 bborder  nw' onClick={async () => {
                 Taro.showLoading({ mask: true, title: "加载中" });
-                const res = await Api_dept_userList_ctn({ deptId: _dept.deptId });
+                const res = await Api_dept_userList_ctn({ deptId: _dept.deptId! });
                 setDeptUserList(res);
                 setDept(_dept);
                 Taro.hideLoading();
@@ -106,7 +139,7 @@ const Index: FC<{}> = ({ }) => {
               <ComButton rr className='ml10 mb10 bborder  nw' onClick={() => { setDept(_dept); setMode("add"); }}><Text className='cccgreen'>+</Text>加</ComButton>
             </View>
           </View>
-          {_dept.deptId === 101 && <View className='ww dr'>
+          {Number(_dept.deptId) === 101 && <View className='ww dr'>
             <Picker
               className='slr mb10'
               header-text='请选择账单月份'
@@ -137,20 +170,20 @@ const Index: FC<{}> = ({ }) => {
             </Picker>
           </View>
           }
-          {_dept.deptId === 101 && <View className='ww dr'>
+          {Number(_dept.deptId) === 101 && <View className='ww dr'>
             <ComButton rr className='bccback cccgreen mb10'
               onClick={async () => {
                 Taro.showLoading({ mask: true, title: "处理中...", });
                 if (!_dept?.children) { throw new Error("没有子部门"); }
                 for (const item of _dept.children) {
-                  await Api_dept_edit_ctn({ deptId: item?.deptId, mainDept: 1 });
+                  await Api_dept_edit_ctn({ deptId: item?.deptId!, mainDept: 1 });
                 }
                 Taro.hideLoading();
               }}>批量设置为首要部门</ComButton>
 
           </View>
           }
-          {_dept.deptId === 101 && <View className='ww dr'>
+          {Number(_dept.deptId) === 101 && <View className='ww dr'>
             <ComButton rr className='bccback cccgreen mb10'
               onClick={async () => {
                 const arr: any[] = [];

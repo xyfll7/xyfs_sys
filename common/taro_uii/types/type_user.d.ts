@@ -43,13 +43,12 @@ export interface DeptInfo extends BaseUserInfo, AddressInfo {
   is_silence_color?: boolean; // 默哀色
   deptName?: string;
   parentDeptId?: string;  // 发布者（团长）的上级代理OPENID
-
   channelId?: string;
   supplierTypeDictIds: string,
   roles?: ROLE_ST[], // 角色
   roles_?: number[], // 角色更新
   permissions?: string[], // 权限
-
+  children: DeptInfo[]; // 下级部门
   defaultSendManAddress?: AddressInfo;
   defaultSendManAddressId?: string; // 默认寄件地址id
   defaultRecManAddress?: AddressInfo;
