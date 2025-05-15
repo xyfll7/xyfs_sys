@@ -156,11 +156,10 @@ const Index: FC<{}> = ({ }) => {
           {_dept.deptId === 101 && <View className='ww dr'>
             <ComButton rr className='bccback cccgreen mb10'
               onClick={async () => {
-                _dept.children.map((e) => {
+                _dept.children.map((e: any) => {
                   console.log("子部门", e.name, e.deptName, e.mobile);
                 });
               }}>查看子部门名称电话</ComButton>
-
           </View>
           }
           {roo___has_role(_dept, ["REGIMENT"]) &&
