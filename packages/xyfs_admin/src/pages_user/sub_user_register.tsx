@@ -38,8 +38,12 @@ const Index: FC = () => {
   console.log(deptUserList);
 
 
-  const [realId, setRealId] = useState<string>(selfInfo_S.deptInfo?.realId ?? "");
-  const [realName, setRealName] = useState<string>(selfInfo_S.deptInfo?.realName ?? "");
+  const [realId, setRealId] = useState<string>("");
+  const [realName, setRealName] = useState<string>("");
+  useEffect(() => {
+    setRealId(selfInfo_S.deptInfo?.realId ?? "");
+    setRealName(selfInfo_S.deptInfo?.realName ?? "");
+  }, [selfInfo_S.deptInfo]);
 
   return <MMMAAPage isNeedAnyRole={false} isNeedAnyDept={false}>
     <ComNav>
@@ -195,6 +199,7 @@ const Index: FC = () => {
                 <ComButton rr className="bccgreen cccwhite" onClick={async () => {
                   if (!realName) { Taro.showToast({ icon: "none", title: "请输入负责姓名", }); return; }
                   if (!realId) { Taro.showToast({ icon: "none", title: "请输入身份证号", }); return; }
+                  console.log(realId, realId.length);
                   if (realId.length !== 18) { Taro.showToast({ icon: "none", title: "请输入正确的身份证号", }); return; }
                   Taro.showLoading({ mask: true, title: "实名提交中..." });
                   await Api_user_realNameAuth_ctn({ type: 3, idcard: realId, name: realName, });
