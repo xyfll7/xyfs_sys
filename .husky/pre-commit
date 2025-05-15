@@ -1,4 +1,2 @@
-#!/usr/bin/env sh
-
 echo "✔︎ eslint 🌉 🌆 🌠 🌄 🎑 "
 pnpm --filter @xyfs/* lint-staged --no-stash
