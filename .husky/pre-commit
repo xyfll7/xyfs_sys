@@ -1,5 +1,4 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
+
 
 echo "✔︎ eslint 🌉 🌆 🌠 🌄 🎑 "
 pnpm --filter @xyfs/* lint-staged --no-stash
