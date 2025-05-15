@@ -10,6 +10,7 @@ import { ComLoading } from '@xyfs/taro_uii/components/ComLoading';
 import { ComNav } from '@xyfs/taro_uii/components/ComNav';
 import { ComNavBarA } from '@xyfs/taro_uii/components/ComNavBarA';
 import { ComScrollView } from '@xyfs/taro_uii/components/ComScrollView';
+import { ComSearcher } from '@xyfs/taro_uii/components/ComSearcher';
 import { ComTabBarLine } from '@xyfs/taro_uii/components/ComTabBarLine';
 import { ComSELFView } from '@xyfs/taro_uii/components/MMMAAPage';
 import { IM_locate, IM_logo_33x33 } from '@xyfs/taro_uii/src/image';
@@ -17,7 +18,7 @@ import { roo___my_dept } from '@xyfs/taro_uii/src/roles';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
 import { DeptInfo } from '@xyfs/taro_uii/type_user';
 import { try_Taro_navigateBack } from '@xyfs/taro_uii/utils/try_catch';
-import { useHook_getLocation, useHook_pageListNew } from '@xyfs/taro_uii/utils/useHooks';
+import { useHook_getLocation, useHook_pageListNew, useHook_Reducer } from '@xyfs/taro_uii/utils/useHooks';
 import { utils_addressInfoToString } from '@xyfs/taro_uii/utils/util';
 
 import { FC, useCallback, useEffect, useState } from 'react';
@@ -45,16 +46,15 @@ const IIIRegimentList = () => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const { locate } = useHook_getLocation();
   const [selected_dept, setSelected_dep] = useState<DeptInfo | null>(roo___my_dept(selfInfo_S));
-  console.log('111111xxx');
+  const [searchValue, setSearchValue] = useHook_Reducer("王肇");
   const ___page_getter = useCallback(async (p: Pagination<unknown>) => {
-    console.log('111111');
     return await Api_user_nearbyRegimentList_ctn({
       ...p,
-      longitude: locate?.longitude!, latitude: locate?.latitude!, keyword: ""
+      longitude: locate?.longitude!, latitude: locate?.latitude!,
+      keyword: searchValue
     });
-  }
-    , [locate?.latitude, locate?.longitude]);
-  const { page, page_loading, page_list_get, } = useHook_pageListNew(___page_getter, { isLoadFirstRun: false });
+  }, [locate?.latitude, locate?.longitude, searchValue]);
+  const { page, page_loading, page_list_get, page_init } = useHook_pageListNew(___page_getter, { isLoadFirstRun: false });
   useINHook_map_init(page.list!, locate, MAP_ID);
   useEffect(() => {
     if (selected_dept) {
@@ -71,7 +71,6 @@ const IIIRegimentList = () => {
 
   let __dept_list = (page.list ? [...(my_dept ? [my_dept] : []), ...page.list] : null);
   const [toggle, setToggle] = useState(false);
-  console.log(":::::", locate);
   return <>
     {locate && <Map className='ovh' id='myMap' layerStyle={Taro.getAppBaseInfo().theme === "dark" ? 0 : 1}
       style={{ width: "100vw", height: '100vh', borderTopLeftRadius: "var(--rem_base)", borderTopRightRadius: "var(--rem_base)", }}
@@ -91,6 +90,10 @@ const IIIRegimentList = () => {
             <ComButton rr className='mb10 bccback cccplh'>{toggle ? "展开" : "收起"}</ComButton>
           </View>
         </View>
+        <ComSearcher className='mb10' isShowSearcher disabled={page_loading} onSetSearchValue={(e) => {
+          page_init();
+          setSearchValue(`${e}`);
+        }} />
         <ComAuth
           isHiddenNav
           className='prl0'

@@ -142,14 +142,24 @@ const Index: FC<{}> = ({ }) => {
           }
           {_dept.deptId === 101 && <View className='ww dr'>
             <ComButton rr className='bccback cccgreen mb10'
-              onClick={async (e) => {
+              onClick={async () => {
                 Taro.showLoading({ mask: true, title: "处理中...", });
                 if (!_dept?.children) { throw new Error("没有子部门"); }
                 for (const item of _dept.children) {
-                  const res_deptInfo = await Api_dept_edit_ctn({ deptId: item?.deptId, mainDept: 1 });
+                  await Api_dept_edit_ctn({ deptId: item?.deptId, mainDept: 1 });
                 }
                 Taro.hideLoading();
               }}>批量设置为首要部门</ComButton>
+
+          </View>
+          }
+          {_dept.deptId === 101 && <View className='ww dr'>
+            <ComButton rr className='bccback cccgreen mb10'
+              onClick={async () => {
+                _dept.children.map((e) => {
+                  console.log("子部门", e.name, e.deptName, e.mobile);
+                });
+              }}>查看子部门名称电话</ComButton>
 
           </View>
           }
