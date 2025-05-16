@@ -13,10 +13,10 @@ export const base64Encode = (arraybuffer: ArrayBuffer): string => {
     base64 = '';
 
   for (i = 0; i < len; i += 3) {
-    base64 += chars[bytes[i] >> 2];
-    base64 += chars[((bytes[i] & 3) << 4) | (bytes[i + 1] >> 4)];
-    base64 += chars[((bytes[i + 1] & 15) << 2) | (bytes[i + 2] >> 6)];
-    base64 += chars[bytes[i + 2] & 63];
+    base64 += chars[bytes[i]! >> 2]!;
+    base64 += chars[((bytes[i]! & 3) << 4) | (bytes[i + 1]! >> 4)];
+    base64 += chars[((bytes[i + 1]! & 15) << 2) | (bytes[i + 2]! >> 6)];
+    base64 += chars[bytes[i + 2]! & 63];
   }
 
   if (len % 3 === 2) {
