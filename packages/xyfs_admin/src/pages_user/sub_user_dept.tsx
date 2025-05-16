@@ -158,12 +158,9 @@ const Index: FC<{}> = ({ }) => {
                   } else {
                     arr.push({ deptName: e.deptName, mobile: e.mobile, deptId: String(e.deptId), });
                   }
-
-
                 });
                 arr.sort((a, b) => a.mobile - b.mobile).sort((a, b) => a.count ? -1 : 0);
                 console.log(arr);
-
               }}>查看子部门名称电话</ComButton>
           </View>
           }
