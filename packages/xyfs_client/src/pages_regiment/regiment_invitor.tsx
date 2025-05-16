@@ -40,10 +40,10 @@ const Index: FC = () => {
             <ComButton className='mb10 mr10 nw' onClick={() => { Taro.navigateBackMiniProgram({}); }}>返回→管理端</ComButton>
             <ComButton ll className='mb10 cccplh nw1'> <Text className='wm7rem nw1'>{managerUser?.name}</Text> <Text className='nw'>(团长) 您好 👋</Text>  </ComButton>
           </View>
-          {roo___has_role(managerUser, ["REGIMENT"]) && <IIIExpress deptInfo={managerUser}></IIIExpress>}
-          {roo___has_role(managerUser, ["REGIMENT"]) && <IIIDryclean deptInfo={managerUser}></IIIDryclean>}
+          {roo___has_role(managerUser, ["REGIMENT"]) && <IIIExpress managerUser={managerUser}></IIIExpress>}
+          {roo___has_role(managerUser, ["REGIMENT"]) && <IIIDryclean managerUser={managerUser}></IIIDryclean>}
 
-          {roo___has_role(managerUser, ["REGIMENT", "GUIDE"]) && <IIIBringGoods deptInfo={managerUser}></IIIBringGoods>}
+          {roo___has_role(managerUser, ["REGIMENT", "GUIDE"]) && <IIIBringGoods managerUser={managerUser}></IIIBringGoods>}
           <IIIGroupLeaders deptInfo={managerUser}></IIIGroupLeaders>
         </View>
       }
@@ -52,19 +52,19 @@ const Index: FC = () => {
 };
 
 
-const IIIExpress: FC<{ deptInfo: DeptInfo; }> = ({ deptInfo }) => {
+const IIIExpress: FC<{ managerUser: DeptInfo; }> = ({ managerUser }) => {
   return <View className='mb10 dy bccwhite ww ioo pt10 prl10'>
     <ComButton ll className='nw bccwhite mr10 bccwhite mb10' hoverClass='none'>快递</ComButton>
     <ComButtonOpen rr className='cccgreen bccbacktab  mb10 slr' id='send_express'
-      shareTitle={`${deptInfo?.name} 团长 邀您6元起寄快递`}
+      shareTitle={`${managerUser?.name} 团长 邀您6元起寄快递`}
       openType='share'
-      sharePath={`/pages_comm/comm__product_express?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ R_D: Number(deptInfo.mobile).toString(36) })) })}`}>
+      sharePath={`/pages_comm/comm__product_express?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ R_D: Number(managerUser.mobile).toString(36) })) })}`}>
       邀请下单(快递)
     </ComButtonOpen>
   </View>;
 };
 
-const IIIDryclean: FC<{ deptInfo: DeptInfo; }> = ({ deptInfo }) => {
+const IIIDryclean: FC<{ managerUser: DeptInfo; }> = ({ managerUser }) => {
   const [order, setOrder] = useState<OrderInfo<ProductBase> | null>(null);
   const { options } = Taro_getCurrentInstance<{ scene?: string; }>();
   const { O_D } = coo___urlToObj<{ O_D?: string; }>(options.scene);
@@ -81,9 +81,9 @@ const IIIDryclean: FC<{ deptInfo: DeptInfo; }> = ({ deptInfo }) => {
       <View className='dy ww prl10'>
         <ComButton ll className='nw bccwhite mr10 bccwhite mb10' hoverClass='none'>干洗</ComButton>
         <ComButtonOpen rr className='cccgreen bccbacktab mb10 slr' id='send_dryclean'
-          shareTitle={`${deptInfo?.name} 团长 邀您支付快递订单`}
+          shareTitle={`${managerUser?.name} 团长 邀您支付快递订单`}
           openType='share'
-          sharePath={`/pages_user/user_orders?${coo___objToUrl({ scene: `${encodeURIComponent(coo___objToUrl({ R_D: Number(deptInfo.mobile).toString(36), O_D: O_D }))}` })}`}>
+          sharePath={`/pages_user/user_orders?${coo___objToUrl({ scene: `${encodeURIComponent(coo___objToUrl({ R_D: Number(managerUser.mobile).toString(36), O_D: O_D }))}` })}`}>
           邀请下单(干洗)
         </ComButtonOpen>
       </View>
@@ -91,13 +91,13 @@ const IIIDryclean: FC<{ deptInfo: DeptInfo; }> = ({ deptInfo }) => {
     </View>
   }</>;
 };
-const IIIBringGoods: FC<{ deptInfo: DeptInfo; }> = ({ deptInfo }) => {
+const IIIBringGoods: FC<{ managerUser: DeptInfo; }> = ({ managerUser }) => {
   return <View className='mb10 dy bccwhite ww ioo pt10 prl10'>
     <ComButton ll className='nw bccwhite mr10 bccwhite mb10' hoverClass='none'>带货</ComButton>
     <ComButtonOpen rr className='cccgreen bccbacktab  mb10 slr' id='send_express'
-      shareTitle={`${deptInfo?.name} 团长 邀您买东西啦`}
+      shareTitle={`${managerUser?.name} 团长 邀您买东西啦`}
       openType='share'
-      sharePath={`/pages/index/index?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ R_D: Number(deptInfo.mobile).toString(36) })) })}`}>
+      sharePath={`/pages/index/index?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ R_D: Number(managerUser.mobile).toString(36) })) })}`}>
       邀请下单(带货)
     </ComButtonOpen>
   </View>;

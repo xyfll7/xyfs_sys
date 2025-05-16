@@ -170,7 +170,7 @@ const Index: FC = () => {
                     Taro.showToast({ icon: "none", title: "更新完成" });
                   }
                 }}>
-                  {selfInfo_S.deptInfo?.mobile ?? "***请选择手机号***"}
+                  {selfInfo_S.deptInfo?.mobile ? selfInfo_S.deptInfo?.mobile : "***请选择手机号***"}
                 </ComButton>
               </View>
               <View className='ww mb10 dbtc' >
@@ -181,7 +181,7 @@ const Index: FC = () => {
                   await Api_dept_edit_ctn({ deptId: selfInfo_S.deptInfo?.deptId!, ...res_address, name: selfInfo_S.deptInfo?.deptName, });
                   await useSTSelf.getState().sett();
                   Taro.showToast({ icon: "none", title: "更新完成" });
-                }}>{selfInfo_S.deptInfo?.address ?? "***请选择地址***"}</ComButton>
+                }}>{selfInfo_S.deptInfo?.address ? selfInfo_S.deptInfo?.address : "***请选择地址***"}</ComButton>
               </View>
               <View className='ww mb10 dy' >
                 <ComButton ll className='w5rem bccwhite nw' hoverClass='none'>部门权限</ComButton>
