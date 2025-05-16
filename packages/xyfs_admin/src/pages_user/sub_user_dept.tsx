@@ -44,7 +44,7 @@ const Index: FC<{}> = ({ }) => {
     return await Api_dept_list_ctn({ keyword: searchValue });
   }, [searchValue,]);
 
-  const { data: depts, loading, data_get } = useHook_Fetch(___Api_dept_list_ctn);
+  const { data: depts, loading } = useHook_Fetch(___Api_dept_list_ctn);
 
   const [dept, setDept] = useState<any>(null);
   const [mode, setMode] = useState<"add" | "edit">();
