@@ -159,12 +159,24 @@ const Index: FC = () => {
               </View>
               <View className='ww mb10 dy' >
                 <ComButton ll className='w5rem bccwhite nw' hoverClass='none'>部门电话</ComButton>
-                <ComButton ll className='flx1 cccplh cccgreen' hoverClass='none' onClick={async () => { selfInfo_S.deptInfo?.mobile && await Taro.makePhoneCall({ phoneNumber: selfInfo_S.deptInfo?.mobile }); }}>{selfInfo_S.deptInfo?.mobile}</ComButton>
+                <ComButton ll className='flx1 cccplh ' hoverClass='none' onClick={async () => {
+                  if (selfInfo_S.deptInfo?.mobile) {
+                    await Taro.makePhoneCall({ phoneNumber: selfInfo_S.deptInfo?.mobile });
+                  } else {
+                    Taro.showLoading({ mask: true, title: "更新中..." });
+                    const res_address = await try_Taro_chooseAddress();
+                    await Api_dept_edit_ctn({ deptId: selfInfo_S.deptInfo?.deptId!, ...res_address, name: selfInfo_S.deptInfo?.deptName, });
+                    await useSTSelf.getState().sett();
+                    Taro.showToast({ icon: "none", title: "更新完成" });
+                  }
+                }}>
+                  {selfInfo_S.deptInfo?.mobile ?? "***请选择手机号***"}
+                </ComButton>
               </View>
               <View className='ww mb10 dbtc' >
                 <ComButton ll className='w5rem bccwhite nw' hoverClass='none'>部门地址</ComButton>
                 <ComButton ll className='flx1 cccplh ' hoverClass='none' onClick={async () => {
-                  Taro.showLoading({ mask: true, title: "更新地址..." });
+                  Taro.showLoading({ mask: true, title: "更新中..." });
                   const res_address = await try_Taro_chooseAddress();
                   await Api_dept_edit_ctn({ deptId: selfInfo_S.deptInfo?.deptId!, ...res_address, name: selfInfo_S.deptInfo?.deptName, });
                   await useSTSelf.getState().sett();

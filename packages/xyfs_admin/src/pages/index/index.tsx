@@ -185,6 +185,15 @@ const IIISettings = ({ ...props }: ViewProps) => {
 };
 const IIImmmREGIMENT = ({ ...props }: ViewProps) => {
   const selfInfo_S = useSTSelf(e => e.selfInfo);
+
+  if (!Boolean(selfInfo_S?.deptInfo?.mobile)) {
+    return <View className='dll'>
+      <ComButton className='mb10 cccplh bccback'>
+        部门缺失电话、地址信息，请补充
+      </ComButton>
+      <ComButton className='mb10 bccwhite cccgreen' url='/pages_user/sub_user_register'>去补充</ComButton>
+    </View>;
+  }
   return <>
     <View className='pr ww mb10 bccwhite IOO ovh'>
       <View className=' hh ww pa drc pr15' style={{ top: "0rem" }}>
