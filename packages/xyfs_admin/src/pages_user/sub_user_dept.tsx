@@ -56,15 +56,11 @@ const Index: FC<{}> = ({ }) => {
     <ComNav className='prl10'>
       <View className='ww'>
         <ComNavBarA className='mb10 '>
-          <ComButton ll className='bcctrans cccplh ml10' onClick={async () => {
-            await data_get();
-          }}>部门管理</ComButton>
+          <ComButton ll className='bcctrans cccplh ml10'>部门管理</ComButton>
         </ComNavBarA>
         <View className='mb10'>
           <ComSearcher className='ww' placeholder='部门名称' isShowSearcher disabled={loading}
-            onSetSearchValue={(e) => {
-              setSearchValue(e);
-            }} />
+            onSetSearchValue={(e) => { setSearchValue(e); }} />
         </View>
       </View>
     </ComNav>
