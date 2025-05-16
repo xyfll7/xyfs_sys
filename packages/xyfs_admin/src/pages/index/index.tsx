@@ -336,6 +336,16 @@ const IIImmmGUIDE = ({ ...props }: ViewProps) => {
 };
 
 const IIImmmGROUPLEADER = ({ ...props }: ViewProps) => {
+  const selfInfo_S = useSTSelf(e => e.selfInfo);
+
+  if (!Boolean(selfInfo_S?.deptInfo?.mobile)) {
+    return <View className='dll'>
+      <ComButton className='mb10 cccplh bccback'>
+        部门缺失电话、地址信息，请补充
+      </ComButton>
+      <ComButton className='mb10 bccwhite cccgreen' url='/pages_user/sub_user_register'>去补充</ComButton>
+    </View>;
+  }
   return <>
     <View className={`bccwhite ww dll mb10 pt10 prl10 IOO ${props.className}`}>
       <ComButton ll className='mb10 cccplh bccwhite mr10'>团主/卖货</ComButton>
