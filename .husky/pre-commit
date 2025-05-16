@@ -2,7 +2,3 @@
 
 echo "✔︎ eslint 🌉 🌆 🌠 🌄 🎑 "
 pnpm --filter @xyfs/* lint-staged --no-stash
-
-# echo "-----------------start"
-# source ~/.zshrc
-# echo "-----------------end"
