@@ -53,7 +53,7 @@ export interface DeptInfo extends BaseUserInfo, AddressInfo {
   defaultSendManAddressId?: string; // 默认寄件地址id
   defaultRecManAddress?: AddressInfo;
   defaultRecManAddressId?: string; // 默认收货地址id
-  deptId?: string; // 我的团长OPENID
+  deptId?: string;
   deptInfo?: DeptInfo | null; // 我的团长信息
   managerUser?: DeptInfo | null; // 我的团长信息
   depts?: DeptInfo[];
