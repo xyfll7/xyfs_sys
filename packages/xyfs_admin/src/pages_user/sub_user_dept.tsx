@@ -19,7 +19,7 @@ import { ROLE_ST } from "@xyfs/taro_uii/src/config";
 import { roo___has_role } from "@xyfs/taro_uii/src/roles";
 import { useSTDicts } from "@xyfs/taro_uii/store/store";
 import { try_Taro_navigateTo, try_Taro_showActionSheet, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
-import { useHook_Reducer } from "@xyfs/taro_uii/utils/useHooks";
+import { useHook_Fetch, useHook_Reducer } from "@xyfs/taro_uii/utils/useHooks";
 import { utils_get_start_end_date, utils_str_includes } from "@xyfs/taro_uii/utils/util";
 import { coo___ios_date } from "@xyfs/utils/util";
 import { format } from "date-fns";
@@ -33,41 +33,7 @@ definePageConfig({
 });
 
 
-export function useHook_Fetch<T, X>(cb: (a: X) => Promise<T | null>) {
-  const [loading, setLoading] = useState(false);
-  const [refreshTime, setRefreshTime] = useState(coo___ios_date().getTime());
-  const [data, setData] = useState<T>(null as T);
-  function data_init(isStop: boolean = false) {
-    setData(() => (null as T));
-    setRefreshTime(coo___ios_date().getTime());
-  }
 
-  function data_update(up: (page: T) => T) { setData((e) => up(e)); }
-
-  const data_get = useCallback(async (_page?: T) => {
-    setLoading(true);
-    setData(null as T);
-    const res = await cb({} as X);
-    console.log("useEffect--------", res, refreshTime);
-    if (res) { setData(res as T); }
-    setLoading(false);
-  }, [cb, refreshTime]);
-
-
-  useEffect(() => {
-    (async () => {
-
-      await data_get();
-    })();
-  }, [data_get]);
-  return {
-    loading: loading,
-    data,
-    data_init,
-    data_get,
-    data_update
-  };
-}
 
 
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
@@ -78,7 +44,7 @@ const Index: FC<{}> = ({ }) => {
     return await Api_dept_list_ctn({ keyword: searchValue });
   }, [searchValue,]);
 
-  const { data: depts, data_get } = useHook_Fetch(___Api_dept_list_ctn);
+  const { data: depts, loading, data_get } = useHook_Fetch(___Api_dept_list_ctn);
 
   const [dept, setDept] = useState<any>(null);
   const [mode, setMode] = useState<"add" | "edit">();
@@ -95,7 +61,7 @@ const Index: FC<{}> = ({ }) => {
           }}>部门管理</ComButton>
         </ComNavBarA>
         <View className='mb10'>
-          <ComSearcher className='ww' placeholder='部门名称' isShowSearcher
+          <ComSearcher className='ww' placeholder='部门名称' isShowSearcher disabled={loading}
             onSetSearchValue={(e) => {
               setSearchValue(e);
             }} />

@@ -164,3 +164,36 @@ export function useHook_pageListNew<P, T extends Pagination<P[]>>(cb: (a: Pagina
   };
 }
 
+
+export function useHook_Fetch<T>(cb: () => Promise<T | null>) {
+  const [loading, setLoading] = useState(false);
+  const [refreshTime, setRefreshTime] = useState(coo___ios_date().getTime());
+  const [data, setData] = useState<T>(null as T);
+  function data_init() {
+    setData(() => (null as T));
+    setRefreshTime(coo___ios_date().getTime());
+  }
+
+  function data_update(up: (page: T) => T) { setData((e) => up(e)); }
+
+  const data_get = useCallback(async (_page?: T) => {
+    setLoading(true);
+    setData(null as T);
+    const res = await cb();
+    if (res) { setData(res as T); }
+    setLoading(false);
+    console.info("refreshTime", refreshTime);
+  }, [cb, refreshTime]);
+
+
+  useEffect(() => {
+    (async () => { await data_get(); })();
+  }, [data_get]);
+  return {
+    loading,
+    data,
+    data_init,
+    data_get,
+    data_update
+  };
+}
