@@ -142,7 +142,7 @@ const IIIOrderExpressOperation: FC<{
 }> = ({ onSetShowQRCode, onDeleteOrder, order, onPrint, }) => {
   return (
     <View className='prl10'>
-      {(order.orderStatus == Order_ST.待付款) && (
+      {(order.orderStatus === Order_ST.待付款) && (
         <View className='dbtc mb10 ww'>
           <ComButton ll className='cccplh bborder'
             onClick={async () => {
@@ -199,7 +199,7 @@ const IIIOrderExpressOperation: FC<{
         </View>
       </View>
 
-      {order.orderStatus == Order_ST.已付款 && (
+      {order.orderStatus === Order_ST.已付款 && (
         <View className='ww dbtc mb10 ww'>
           {(order.refundStatus !== Refund_ST.失败 && order.productList?.[0]?.waybillId) ?
             <ComButton ll className='cccplh bborder'

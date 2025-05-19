@@ -107,7 +107,7 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
 
       }} />
     <View className='dr prl10 ww dwp'>
-      {order.orderStatus === 1 &&
+      {order.orderStatus === Order_ST.已付款 &&
         <ComButton rr className='cccplh mb10 bborder nw' onClick={async () => {
           const res_modal = await try_Taro_showModal({ title: "提示", content: "您确定要删除该订单吗?", confirmText: "删除" });
           if (res_modal) {
@@ -120,7 +120,7 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
           }
         }}>删除</ComButton>
       }
-      {order.orderStatus === 2 && <ComButton rr className='cccplh bborder mb10 nw' onClick={async () => {
+      {order.orderStatus === Order_ST.已付款 && <ComButton rr className='cccplh bborder mb10 nw' onClick={async () => {
         if (await try_Taro_showModal({ content: "您确定要退款?", confirmText: "确认退款", })) {
           Taro.showLoading({ mask: true, title: "退款中...", });
           await Api_order_cancel_ctn({ orderId: order.id!, });
@@ -132,7 +132,7 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
         }
       }}>退款</ComButton>
       }
-      {model === "waybill" && order.orderStatus === 2 && roo___has_role(selfInfo_S, ['MERCHANT', "GROUPLEADER"]) && <ComButton className='mb10 ml10 bborder' onClick={async () => {
+      {model === "waybill" && order.orderStatus === Order_ST.已付款 && roo___has_role(selfInfo_S, ['MERCHANT', "GROUPLEADER"]) && <ComButton className='mb10 ml10 bborder' onClick={async () => {
         if (!products.length) { Taro.showToast({ icon: "none", title: "至少选择一件商品" }); return; }
         Taro.showLoading({ mask: true, title: "获取中..." });
         const res = await Api_logistic_createWaybill_ctn({
@@ -151,7 +151,7 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
         <View className='cccprice'>{products?.map(e => order.productList?.findIndex(ee => ee.id === e.id)! + 1).join(",")}</View>
         <View className='cccgreen'>获取面单</View>
       </ComButton>}
-      {model === "print" && order.orderStatus === 2 && roo___has_role(selfInfo_S, ['MERCHANT', "GROUPLEADER"]) && <ComButton rr className='ml10 bborder mb10 nw' onClick={async () => {
+      {model === "print" && order.orderStatus === Order_ST.已付款 && roo___has_role(selfInfo_S, ['MERCHANT', "GROUPLEADER"]) && <ComButton rr className='ml10 bborder mb10 nw' onClick={async () => {
         if (!products.length) { Taro.showToast({ icon: "none", title: "至少选择一件商品" }); return; }
         const [, res_item] = await try_Taro_showActionSheet({
           alertText: "打印方式",

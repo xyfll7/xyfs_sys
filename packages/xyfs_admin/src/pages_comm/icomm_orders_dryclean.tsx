@@ -96,11 +96,11 @@ const Index: FC<{}> = ({ }) => {
                   throw new Error("取消");
                 }
               }}>退款</ComButton>}
-              {Boolean(order.productList?.length) && _order1.orderStatus !== 1 && <ComButton rr className='slr cccgreen bborder mb10 ml10' onClick={async () => {
+              {Boolean(order.productList?.length) && _order1.orderStatus !== Order_ST.待付款 && <ComButton rr className='slr cccgreen bborder mb10 ml10' onClick={async () => {
                 await try_Taro_navigateTo({ url: `/pages_comm/comm__express_path?${coo___objToUrl({ express_share_id: order.id })}` });
               }}>轨迹</ComButton>}
-              {hasRole && Boolean(order.productList?.length) && order.orderStatus === 2 && <MMMShare rr orderType='干洗' className='bborder mb10 ml10' id={order.id!} name={order.deptName!} ></MMMShare>}
-              {hasRole && _order1.orderStatus === 1 && <ComButton rr className='cccplh mb10 bborder ml10' onClick={async () => {
+              {hasRole && Boolean(order.productList?.length) && order.orderStatus === Order_ST.已付款 && <MMMShare rr orderType='干洗' className='bborder mb10 ml10' id={order.id!} name={order.deptName!} ></MMMShare>}
+              {hasRole && _order1.orderStatus === Order_ST.待付款 && <ComButton rr className='cccplh mb10 bborder ml10' onClick={async () => {
                 const res_modal = await try_Taro_showModal({ title: "提示", content: "您确定要删除该订单吗?", confirmText: "删除" });
                 if (res_modal) {
                   Taro.showLoading({ mask: true, title: "删除中..." });
@@ -111,7 +111,7 @@ const Index: FC<{}> = ({ }) => {
                   throw new Error("取消");
                 }
               }}>删除</ComButton>}
-              {hasRole && Boolean(_order1.productList?.length) && _order1.orderStatus === 1 &&
+              {hasRole && Boolean(_order1.productList?.length) && _order1.orderStatus === Order_ST.待付款 &&
                 <ComButton rr className='mb10 ml10 bborder' onClick={async () => {
                   Taro.showLoading({ mask: true, title: "分享中..." });
                   await dryclean_sharer(_order1.orderCode!);
@@ -120,7 +120,7 @@ const Index: FC<{}> = ({ }) => {
                   <Text className='cccgreen'>⤻</Text>卡片
                 </ComButton>
               }
-              {hasRole && Boolean(_order1.productList?.length) && _order1.orderStatus === 1 &&
+              {hasRole && Boolean(_order1.productList?.length) && _order1.orderStatus === Order_ST.待付款 &&
                 <ComButton rr className='ml10 mb10 bborder'
                   onClick={async () => {
                     Taro.showLoading({ mask: true, title: "生成中..." });
@@ -131,7 +131,7 @@ const Index: FC<{}> = ({ }) => {
                   <Text className='cccgreen'>⤻</Text>付款码
                 </ComButton>
               }
-              {hasRole && Boolean(_order1.productList?.length) && _order1.orderStatus === 1 &&
+              {hasRole && Boolean(_order1.productList?.length) && _order1.orderStatus === Order_ST.待付款 &&
                 <ComButton rr className='ml10 mb10 cccgreen bccyellow' onClick={async () => {
                   Taro.showLoading({ mask: true, title: '支付...' });
                   const res_pay = await Api_order_pay_ctn({ orderId: String(_order1.id) });

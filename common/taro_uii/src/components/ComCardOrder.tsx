@@ -26,7 +26,7 @@ export const ComCardOrderExpress: FC<{
         <MMMOrderUser order={order} />
 
         <View className='dy nw'>
-          {order.orderStatus == Order_ST.待付款 && order.pickUpType == PickUp_ST.上门取件 && <ComButton rr className='cccplh bccyellow ml10' >{PickUp_ST[order.pickUpType!]}</ComButton>}
+          {order.orderStatus === Order_ST.待付款 && order.pickUpType == PickUp_ST.上门取件 && <ComButton rr className='cccplh bccyellow ml10' >{PickUp_ST[order.pickUpType!]}</ComButton>}
           <ComButton rr className='cccgreen'>{Product_category_ST[order.orderType!]}</ComButton>
         </View>
 
@@ -48,10 +48,10 @@ export const ComCardOrderExpress: FC<{
           {order.productList?.[0]?.itemType && <Text className='mr4 nw1 wm6rem' >{`${order.productList?.[0]?.itemType}${order.productList?.[0]?.itemNotes ? `/${order.productList?.[0]?.itemNotes}` : ""}`}</Text>}
           <>
             {!order.productList?.[0]?.weight && <Text className='cccprice'>待计重</Text>}
-            {order.orderStatus == Order_ST.待付款 && order.productList?.[0]?.weight && <View className='cccprice'>待付款</View>}
-            {order.orderStatus == Order_ST.已付款 && <Text className='cccgreen'>已付款</Text>}
-            {order.orderStatus == Order_ST.退款中 && <Text className='cccprice'>退款中</Text>}
-            {order.orderStatus == Order_ST.已退款 && <Text className='cccplh'>已退款</Text>}
+            {order.orderStatus === Order_ST.待付款 && order.productList?.[0]?.weight && <View className='cccprice'>待付款</View>}
+            {order.orderStatus === Order_ST.已付款 && <Text className='cccgreen'>已付款</Text>}
+            {order.orderStatus === Order_ST.退款中 && <Text className='cccprice'>退款中</Text>}
+            {order.orderStatus === Order_ST.已退款 && <Text className='cccplh'>已退款</Text>}
           </>
         </ComButton>
         <ComButton rr
@@ -101,8 +101,8 @@ export const ComCardOrderDryclean: FC<{
     <View className='dbtc ww mb10 '>
       <MMMOrderUser order={order} />
       <View className='dy'>
-        {order.orderStatus == Order_ST.待付款 && order.pickUpType == PickUp_ST.上门取件 && <ComButton rr className='cccplh bccyellow ml10 nw' >{PickUp_ST[order.pickUpType!]}</ComButton>}
-        {order.orderStatus == Order_ST.已退款 && <ComButton rr className='bccprice ml10 cccwhite nw' hoverClass='none'>已退款</ComButton>}
+        {order.orderStatus === Order_ST.待付款 && order.pickUpType == PickUp_ST.上门取件 && <ComButton rr className='cccplh bccyellow ml10 nw' >{PickUp_ST[order.pickUpType!]}</ComButton>}
+        {order.orderStatus === Order_ST.已退款 && <ComButton rr className='bccprice ml10 cccwhite nw' hoverClass='none'>已退款</ComButton>}
         <ComButton rr className='cccgreen ml10 nw'>{Product_category_ST[order.orderType!]}</ComButton>
       </View>
     </View>
@@ -143,7 +143,7 @@ export const ComCardOrderDryclean: FC<{
                 <ComPrice price={e.totalPrice!} />
               </ComButton>
               <ComButton rr className='cccgreen bborder nw' onClick={async () => { Taro.previewMedia({ current: 0, sources: e.img?.split(",").map(ee => ({ url: ee })) ?? [] }); }}>图片</ComButton>
-              {!e.code && order.orderStatus === 2 && onBindCode && <ComButton rr className='cccgreen bborder nw ml10' onClick={async () => onBindCode?.(e)}>绑码</ComButton>}
+              {!e.code && order.orderStatus === Order_ST.已付款 && onBindCode && <ComButton rr className='cccgreen bborder nw ml10' onClick={async () => onBindCode?.(e)}>绑码</ComButton>}
             </View>
           </View>;
         })}
@@ -192,14 +192,14 @@ export const ComCardOrderBringGoods: FC<{
     <View className='ww'>
       {order?.productList?.map((e, i) => {
         return <View className='dtl ww bccback mb10 ioo pr' key={i}>
-          {model === "waybill" && isShowSelector && order.orderStatus == 2 &&
+          {model === "waybill" && isShowSelector && order.orderStatus === Order_ST.已付款 &&
             <View className='pa z1 ' style={{ top: "0rem", left: '0rem' }} onClick={() => { onSelectOrder?.(e); }} >
               <View className={`${utils_arr_includes([e.id!], (products?.map(ee => ee.id!)!),) ? 'bccred' : 'bccback '} dxy cccwhite o6`} style={{ minWidth: "calc(1.2 * var(--rem_base))", minHeight: "calc(1.2 * var(--rem_base))" }}>
                 <View className='fs07'>{i + 1}</View>
               </View>
             </View>
           }
-          {model === "print" && isShowSelector && order.orderStatus == 2 &&
+          {model === "print" && isShowSelector && order.orderStatus === Order_ST.已付款 &&
             <View className='pa z1 ' style={{ top: "0rem", left: '0rem' }} onClick={() => { onSelectOrder?.(e); }} >
               {!isPurePrint && <View className={`${utils_arr_includes([e.waybillId!], (products?.map(ee => ee.waybillId!)!),) ? ' bccgreen' : 'bccback '} dxy cccwhite o6`} style={{ minWidth: "calc(1.2 * var(--rem_base))", minHeight: "calc(1.2 * var(--rem_base))" }}>
                 <View className='fs07'>{order?.productList?.findIndex(ee => ee.waybillId === e.waybillId)! + 1}</View>

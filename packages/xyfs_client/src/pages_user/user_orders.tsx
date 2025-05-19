@@ -132,7 +132,7 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
           return <View className='dll ww  mb10 bccwhite ioo' key={order.id}>
             <ComCardOrderDryclean className='ww' key={_order1.id} order={_order1} />
             <View className='dr prl10 ww'>
-              {_order1.orderStatus === 1 &&
+              {_order1.orderStatus === Order_ST.待付款 &&
                 <ComButton rr className='cccplh ml10 mb10 bborder' onClick={async () => {
                   const res_modal = await try_Taro_showModal({ title: "提示", content: "您确定要删除该订单吗?", confirmText: "删除" });
                   if (res_modal) {
@@ -183,7 +183,7 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
               key={_order2.id}
               order={_order2}>
             </ComCardOrderSundries>
-            {_order2.orderStatus === 1 &&
+            {_order2.orderStatus === Order_ST.待付款 &&
               <View className='dy prl10'>
                 <ComButton ll className='cccplh mb10 bborder' onClick={async () => {
                   const res_modal = await try_Taro_showModal({ title: "提示", content: "您确定要删除该订单吗?", confirmText: "删除" });
@@ -199,7 +199,7 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
                 }}>删除</ComButton>
               </View>
             }
-            {_order2.orderStatus === 2 && <View>
+            {_order2.orderStatus === Order_ST.已付款 && <View>
               <ComButton onClick={async () => {
                 const res = await Api_order_confirm_ctn({ orderId: _order2.id! });
               }}>确认收货</ComButton>
@@ -214,7 +214,7 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
           return <View className='dll ww  mb10 bccwhite ioo' key={order.id}>
             <ComCardOrderBringGoods className='ww mb10' key={_order2.id} order={_order2} />
             <View className='dr dwp prl10 ww'>
-              {_order2.orderStatus === 1 &&
+              {_order2.orderStatus === Order_ST.待付款 &&
                 <ComButton rr className='cccplh mb10 bborder ml10' onClick={async () => {
                   const res_modal = await try_Taro_showModal({ title: "提示", content: "您确定要删除该订单吗?", confirmText: "删除" });
                   if (res_modal) {
@@ -227,14 +227,14 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
                   }
                 }}>删除</ComButton>
               }
-              {_order2.orderStatus === 2 && _order2.productList?.filter(e => e.waybillId).length === _order2.productList?.length &&
+              {_order2.orderStatus === Order_ST.已付款 && _order2.productList?.filter(e => e.waybillId).length === _order2.productList?.length &&
                 <ComButton rr className='mb10 bborder' onClick={async () => {
                   Taro.showLoading({ mask: true, title: "确认收货...", });
                   await Api_order_confirm_ctn({ orderId: _order2.id! });
                   Taro.showToast({ icon: "none", title: "确认收货成功" });
                 }}>确认收货</ComButton>
               }
-              {_order2.orderStatus === 2 && _order2.productList?.filter(e => e.waybillId).length !== _order2.productList?.length &&
+              {_order2.orderStatus === Order_ST.已付款 && _order2.productList?.filter(e => e.waybillId).length !== _order2.productList?.length &&
                 <ComButton rr className='mb10 bborder'>待发货</ComButton>
               }
               {Boolean(_order2.productList?.length) && orderType === Order_ST.待付款 &&

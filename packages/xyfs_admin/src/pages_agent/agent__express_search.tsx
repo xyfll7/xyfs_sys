@@ -11,7 +11,7 @@ import { ComNavBarA } from '@xyfs/taro_uii/components/ComNavBarA';
 import { ComPaySuccessCard } from '@xyfs/taro_uii/components/ComPaySuccessCard';
 import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
-import { Product_category_ST } from "@xyfs/taro_uii/src/config";
+import { Order_ST, Product_category_ST } from "@xyfs/taro_uii/src/config";
 import { roo___role_getRoleInfo } from "@xyfs/taro_uii/src/roles";
 import { useSTSelf } from "@xyfs/taro_uii/store/store";
 import { Pagination } from "@xyfs/taro_uii/type_index";
@@ -214,7 +214,7 @@ const Index: FC = () => {
             return <View className='bccwhite IOO mb10 ww' key={e.id}>
               <ComCardOrderDryclean className='mb10' order={order1} />
               <View className='dr dwp prl10 ww'>
-                {Boolean(order1.productList?.length) && order1.orderStatus !== 1 && <ComButton rr className='slr cccgreen bborder mb10 ml10' onClick={async () => {
+                {Boolean(order1.productList?.length) && order1.orderStatus !==  Order_ST.待付款 && <ComButton rr className='slr cccgreen bborder mb10 ml10' onClick={async () => {
                   await try_Taro_navigateTo({ url: `/pages_comm/comm__express_path?${coo___objToUrl({ express_share_id: order1.id })}` });
                 }}>轨迹</ComButton>}
               </View>
