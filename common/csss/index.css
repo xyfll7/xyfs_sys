@@ -40,8 +40,7 @@
     --color_shadow: 0rem 0rem 0.2rem  rgba(0, 0, 0, 0.1);
     color: #1b1b1b;
     color: var(--color_font);
-    background-color: #f5f5f5;
-    background-color: var(--color_back);
+
   }
 }
 
@@ -58,8 +57,6 @@
     --color_shadow: 0rem 0rem 0.2rem rgba(255, 255, 255, 0.1);
     color: #fefefb;
     color: var(--color_font);
-    background-color: #111111;
-    background-color: var(--color_back);
   }
 }
 
