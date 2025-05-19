@@ -28,8 +28,5 @@
     "postcss-nested": "^6.0.1",
     "postcss-preset-env": "^9.5.5",
     "postcss-simple-vars": "^7.0.1"
-  },
-  "dependencies": {
-    "install": "^0.13.0"
   }
 }
