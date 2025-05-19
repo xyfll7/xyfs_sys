@@ -11,7 +11,7 @@
   "scripts": {
     "typecheck": "pnpm --filter @xyfs/* typecheck",
     "iit": "release-it",
-    "update:project": "pnpm --filter @xyfs/taro_* --filter @xyfs/xyfs_* exec taro update project 4.0.12",
+    "update:project": "pnpm --filter @xyfs/taro_* --filter @xyfs/xyfs_* exec taro update project 4.1.1",
     "clean": "sudo rimraf --glob pnpm-lock.yaml ci___/node_modules common/**/node_modules common/**/dist* packages*/**/node_modules packages*/**/dist* packages*/**/build* packages*/**/.swc && rimraf node_modules",
     "prepare": "husky install"
   },
@@ -25,15 +25,13 @@
     "husky": "^9.1.7",
     "release-it": "^18.1.2",
     "rimraf": "^6.0.1",
-    "zx": "^8.4.0"
+    "zx": "^8.4.0",
+    "node-xlsx": "^0.24.0"
   },
   "config": {
     "commitizen": {
       "path": "git-cz"
     }
   },
-  "dependencies": {
-    "node-xlsx": "^0.24.0"
-  },
-  "packageManager": "pnpm@10.10.0"
+  "packageManager": "pnpm@10.11.0"
 }
