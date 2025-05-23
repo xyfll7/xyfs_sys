@@ -135,7 +135,7 @@ const Index: FC = () => {
           }
         </View>
       }
-      {page.pageNum === 0 || page.list.length === 0 && <ComLoading className='mb10' isLastPage={page?.isLastPage} loading={page_loading} onLoadMore={() => page_list_get(page)} />}
+      {(page.pageNum === 0 || page.list.length === 0) && <ComLoading className='mb10' isLastPage={page?.isLastPage} loading={page_loading} onLoadMore={() => page_list_get(page)} />}
       {G_D && Boolean(page.list.length) && <IIIUsers deptId={G_D} />}
       <MMMFooter className='mb10' />
     </ComScrollView>
