@@ -38,7 +38,7 @@
     --color_trans05: rgba(255, 255, 255, 0.5);
     --color_shadow: 0rem 0rem 0.2rem  rgba(0, 0, 0, 0.1);
     color: var(--color_font);
-
+    background-color: var(--color_back);
   }
 }
 
@@ -54,6 +54,7 @@
     --color_trans05: rgb(0 0 0 / 0.5);
     --color_shadow: 0rem 0rem 0.2rem rgba(255, 255, 255, 0.1);
     color: var(--color_font);
+    background-color: var(--color_back);
   }
 }
 
