@@ -25,7 +25,7 @@ definePageConfig({ enableShareAppMessage: true, navigationStyle: "custom", disab
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC = () => {
   // deptId=oGwbL5MUeSNxxA4o0oOmb_FUjE7g
-  const [tabType, setTabType] = useState<"1" | "-1">("1");
+  const [tabType, setTabType] = useState<-1 | 1>(1); // 1=>上架, -1=>下架
   const [qrcode, setQrcode] = useState<string | null>(null);
   const ___page_getter = useCallback(async (p: Pagination<unknown>) =>
     await Api_goods_list_ctn({
@@ -40,7 +40,7 @@ const Index: FC = () => {
       <ComNavBarA className='mb10'>
         <ComButton ll className='bcctrans ml10 cccplh'>商品列表</ComButton>
       </ComNavBarA>
-      <ComListTypeSelectorNew className='' disabled={page_loading} enumData={{ "1": "销售中", "-1": "已下架", 销售中: "1", 已下架: "-1" }} typeList={["1", "-1"]} tabType={tabType} setTab={(e) => { page_init(); setTabType(e); }} />
+      <ComListTypeSelectorNew className='' disabled={page_loading} enumData={{ "1": "销售中", "-1": "已下架", 销售中: 1, 已下架: -1 }} typeList={[1, -1]} tabType={tabType} setTab={(e) => { page_init(); setTabType(e); }} />
     </ComNav>
     <ComScrollView>
       {page.list?.map((e) => {
@@ -55,7 +55,7 @@ const Index: FC = () => {
                 page_list_update((p) => ({ ...p, list: p.list.filter(eee => eee.id !== e.id) }));
               }
             }}>删除</ComButton>
-            {tabType === "1" &&
+            {tabType === 1 &&
               <ComButton rr className='mb10 bborder ml10' onClick={async () => {
                 if (await try_Taro_showModal({ title: "您确定要下架该商品吗？" })) {
                   Taro.showLoading({ mask: true, title: "下架中" });
@@ -65,7 +65,7 @@ const Index: FC = () => {
                 }
               }}>下架</ComButton>
             }
-            {tabType === "-1" &&
+            {tabType === -1 &&
               <ComButton rr className='mb10 bborder ml10' onClick={async () => {
                 if (await try_Taro_showModal({ title: "您确定要下架该商品吗？" })) {
                   Taro.showLoading({ mask: true, title: "下架中" });

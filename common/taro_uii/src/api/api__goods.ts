@@ -34,7 +34,7 @@ export async function Api_goods_publish_ctn(params: {
 export async function Api_goods_list_ctn(params: Pick<Pagination<any>, "keyword" | "pageNum" | "pageSize"> & {
   date?: string,
   type?: 1 | 2;
-  status?: "-1" | "1"; //  -1=>下架,1=>上架
+  status?: -1 | 1; //  -1=>下架,1=>上架
   sort?: "asc" | "desc";
   queryDeptId?: string;
 }): Promise<Pagination<any>> {
