@@ -165,6 +165,7 @@ const Index: FC = () => {
                   } else {
                     Taro.showLoading({ mask: true, title: "更新中..." });
                     const res_address = await try_Taro_chooseAddress();
+                    Taro.showLoading({ mask: true, title: "更新中..." });
                     await Api_dept_edit_ctn({ deptId: selfInfo_S.deptInfo?.deptId!, ...res_address, name: selfInfo_S.deptInfo?.deptName, });
                     await useSTSelf.getState().sett();
                     Taro.showToast({ icon: "none", title: "更新完成" });
@@ -178,6 +179,7 @@ const Index: FC = () => {
                 <ComButton ll className='flx1 cccplh ' hoverClass='none' onClick={async () => {
                   Taro.showLoading({ mask: true, title: "更新中..." });
                   const res_address = await try_Taro_chooseAddress();
+                  Taro.showLoading({ mask: true, title: "更新中..." });
                   await Api_dept_edit_ctn({ deptId: selfInfo_S.deptInfo?.deptId!, ...res_address, name: selfInfo_S.deptInfo?.deptName, });
                   await useSTSelf.getState().sett();
                   Taro.showToast({ icon: "none", title: "更新完成" });
