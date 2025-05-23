@@ -54,7 +54,7 @@ const IIIRegimentList = () => {
       keyword: searchValue
     });
   }, [locate?.latitude, locate?.longitude, searchValue]);
-  const { page, page_loading, page_list_get, page_init } = useHook_pageListNew(___page_getter, { isLoadFirstRun: false });
+  const { page, page_loading, page_list_get, page_init } = useHook_pageListNew(___page_getter, { isLoadFirstRun: false, pageSize: 7 });
   useINHook_map_init(page.list!, locate, MAP_ID);
   useEffect(() => {
     if (selected_dept) {
@@ -77,7 +77,7 @@ const IIIRegimentList = () => {
       longitude={locate?.longitude!}
       latitude={locate?.latitude!}
       scale={14} onError={() => { }} onTap={(e) => {
-        console.log("zb", e);
+        console.log("点击产生坐标:", e);
       }} />
     }
 
