@@ -121,9 +121,7 @@ const IIISettings = ({ ...props }: ViewProps) => {
       {roo___has_role(selfInfo_S!, ["REGIMENT"]) &&
         <ComButton className='mb10 bccwhite nw mr10' url='/pages_regiment/regiment_bind_cloudPrinter'>云打印机</ComButton>
       }
-      {roo___has_role(selfInfo_S!, ["AGENT", "REGIMENT", "GROUPLEADER"]) &&
-        <ComButton className='bccwhite mb10 mr10' url='/pages_comm/icomm_download_list'>下载任务列表</ComButton>
-      }
+
       {roo___has_role(selfInfo_S!, ["AGENT", "REGIMENT", "SUPPLIER", "SCANNER"]) &&
         <ComButton className='bccwhite mb10 mr10' url='/pages_agent/agent__express_search'>
           订单综合查询
@@ -175,6 +173,9 @@ const IIISettings = ({ ...props }: ViewProps) => {
         <ComButton className='bccwhite mb10 mr10' url='/pages_user/sub_user_list'>
           子用户
         </ComButton>
+      }
+      {roo___has_role(selfInfo_S!, ["ADMIN", "AGENT", "REGIMENT", "GROUPLEADER"]) &&
+        <ComButton className='bccwhite mb10 mr10' url='/pages_comm/icomm_download_list'>下载任务列表</ComButton>
       }
       {roo___has_role(selfInfo_S!, ["GROUPLEADER"]) && <>
         <IIISetTodaysOrder className="mr10"></IIISetTodaysOrder>
