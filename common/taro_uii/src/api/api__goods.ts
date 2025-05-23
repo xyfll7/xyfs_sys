@@ -59,6 +59,14 @@ export async function Api_goods_down_ctn(params: { id: string, }): Promise<Pagin
   });
   return res;
 }
+// api/goods/up
+export async function Api_goods_up_ctn(params: { id: string, }): Promise<Pagination<any>> {
+  const res = await wx_call_container<Promise<Pagination<any>>>({
+    path: "/goods/up",
+    data: { ...params },
+  });
+  return res;
+}
 
 export async function Api_goodsCart_clear_ctn(params: {
   attachUrl?: string;
