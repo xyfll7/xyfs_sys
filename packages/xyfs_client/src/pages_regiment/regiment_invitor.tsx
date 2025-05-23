@@ -6,6 +6,7 @@ import { Api_order_query_ctn } from '@xyfs/taro_uii/api/api__orders';
 import { Api_dept_groupLeader_ctn } from '@xyfs/taro_uii/api/api__users';
 import { ComButton, ComButtonOpen } from '@xyfs/taro_uii/components/ComButton';
 import { ComCardOrderDryclean } from '@xyfs/taro_uii/components/ComCardOrder';
+import { ComLoading } from '@xyfs/taro_uii/components/ComLoading';
 import { ComNav } from '@xyfs/taro_uii/components/ComNav';
 import { ComNavBarA } from '@xyfs/taro_uii/components/ComNavBarA';
 import { ComScrollView } from '@xyfs/taro_uii/components/ComScrollView';
@@ -44,7 +45,7 @@ const Index: FC = () => {
           {roo___has_role(managerUser, ["REGIMENT"]) && <IIIDryclean managerUser={managerUser}></IIIDryclean>}
 
           {roo___has_role(managerUser, ["REGIMENT", "GUIDE"]) && <IIIBringGoods managerUser={managerUser}></IIIBringGoods>}
-          <IIIGroupLeaders deptInfo={managerUser}></IIIGroupLeaders>
+          <IIIGroupLeaders deptInfo={managerUser} />
         </View>
       }
     </ComScrollView>
@@ -113,9 +114,8 @@ const IIIGroupLeaders: FC<{ deptInfo: DeptInfo; }> = ({ deptInfo }) => {
     });
   }, []);
 
-
-
   return <>
+    {!groupLeaders && <ComLoading />}
     {groupLeaders?.map(e => {
       return <View key={e.deptId} className='mb10 dbtc bccwhite ww ioo pt10 prl10' onClick={() => {
         try_Taro_navigateTo({ url: `/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ G_D: e.deptId, })) })}` });

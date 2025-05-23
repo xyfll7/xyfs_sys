@@ -67,10 +67,10 @@ const Index: FC = () => {
             }
             {tabType === -1 &&
               <ComButton rr className='mb10 bborder ml10' onClick={async () => {
-                if (await try_Taro_showModal({ title: "您确定要下架该商品吗？" })) {
-                  Taro.showLoading({ mask: true, title: "下架中" });
+                if (await try_Taro_showModal({ title: "您确定要上架该商品吗？" })) {
+                  Taro.showLoading({ mask: true, title: "上架中" });
                   await Api_goods_up_ctn({ id: e.id });
-                  Taro.showToast({ icon: "none", title: "下架成功" });
+                  Taro.showToast({ icon: "none", title: "上架成功" });
                   page_list_update((p) => ({ ...p, list: p.list.filter(eee => eee.id !== e.id) }));
                 }
               }}>上架</ComButton>
