@@ -52,17 +52,25 @@ export async function Api_goods_remove_ctn(params: { id: string, }): Promise<Pag
   return res;
 }
 // api/goods/down
-export async function Api_goods_down_ctn(params: { id: string, }): Promise<Pagination<any>> {
-  const res = await wx_call_container<Promise<Pagination<any>>>({
+export async function Api_goods_down_ctn(params: { id: string, }): Promise<any> {
+  const res = await wx_call_container<Promise<any>>({
     path: "/goods/down",
     data: { ...params },
   });
   return res;
 }
 // api/goods/up
-export async function Api_goods_up_ctn(params: { id: string, }): Promise<Pagination<any>> {
-  const res = await wx_call_container<Promise<Pagination<any>>>({
+export async function Api_goods_up_ctn(params: { id: string, }): Promise<any> {
+  const res = await wx_call_container<Promise<any>>({
     path: "/goods/up",
+    data: { ...params },
+  });
+  return res;
+}
+// api/goods/stockSetting {id : , stock:  // 库存数量}
+export async function Api_goods_stockSetting_ctn(params: { id: string, stock: string; }): Promise<any> {
+  const res = await wx_call_container<Promise<any>>({
+    path: "/goods/stockSetting",
     data: { ...params },
   });
   return res;

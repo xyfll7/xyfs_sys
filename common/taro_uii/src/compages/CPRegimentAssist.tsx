@@ -14,6 +14,7 @@ const PublishCard: FC<ViewProps & { data: any; onMai?: (e: any) => void; }> = ({
       <Text className='cccprice fs08 '>¥</Text>
       <Text className='cccprice fs13 fwb '>{data.price}</Text>
       <Text className='cccplh fs08 dbase '>/{data.saleStock ? data.saleStock : 0} 已售</Text>
+      <Text className='cccplh fs08 dbase '>/{data.stock} 库存</Text>
     </View>
     <View className='dy mb10'>
       {data.attachUrl.split(",")?.slice(0, 3).map((e, i) =>

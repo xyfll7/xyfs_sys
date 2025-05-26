@@ -2,7 +2,7 @@
 import { View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { Pagination } from "@xyfs/taro_uii";
-import { Api_goods_down_ctn, Api_goods_list_ctn, Api_goods_remove_ctn, Api_goods_up_ctn } from "@xyfs/taro_uii/api/api__goods";
+import { Api_goods_down_ctn, Api_goods_list_ctn, Api_goods_remove_ctn, Api_goods_stockSetting_ctn, Api_goods_up_ctn } from "@xyfs/taro_uii/api/api__goods";
 import CPRegimentAssist from "@xyfs/taro_uii/compages/CPRegimentAssist";
 import { ComButton } from "@xyfs/taro_uii/components/ComButton";
 import { ComImage } from "@xyfs/taro_uii/components/ComImage";
@@ -75,6 +75,10 @@ const Index: FC = () => {
                 }
               }}>上架</ComButton>
             }
+            <ComButton rr className='mb10 bborder ml10' onClick={async () => {
+              const res = await Api_goods_stockSetting_ctn({ id: e.id, stock: String(e.stock) });
+
+            }}>编辑</ComButton>
 
             <ComButton rr className='mb10 bborder ml10' onClick={async () => {
               Taro.showLoading({ mask: true, title: "生成中..." });
