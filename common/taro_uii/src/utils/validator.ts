@@ -140,7 +140,18 @@ export async function utils_validate_upload_product<T extends Values>(obj: T): P
           return true;
         }
       },
-
+    },
+    stock: {
+      type: "string",
+      required: true,
+      message: "请录入库存",
+      validator: (_, value) => {
+        if (value === "0" || value === "") {
+          return false;
+        } else {
+          return true;
+        }
+      },
     },
     pictureUrl: {
       type: "string",
