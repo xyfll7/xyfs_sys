@@ -14,7 +14,7 @@ export function ComBanner({
   onClick }: { className?: string; isHeaderBack: boolean; src?: string; maskHightF?: string; maskHightT?: string; onClick?: () => void; }) {
 
   const str0___ = utils_str_includes(["bccwhite"], className) ? "linear-gradient(0deg, var(--color_white) 40%, rgba(0, 0, 0, 0) 100%);" : "linear-gradient(0deg, var(--color_back) 40%, rgba(0, 0, 0, 0) 100%);";
-  const str1___ = utils_str_includes(["bccwhite"], className) ? "linear-gradient(0deg, var(--color_white) 95%, rgba(0, 0, 0, 0) 100%);" : "linear-gradient(0deg, var(--color_back) 95%, rgba(0, 0, 0, 0) 100%);";
+  const str1___ = utils_str_includes(["bccwhite"], className) ? "linear-gradient(0deg, var(--color_white) 95%, rgba(0, 0, 0, 0) 100%);" : "linear-gradient(0deg, var(--color_back) 75%, rgba(0, 0, 0, 0) 100%);";
 
   return <RootPortal style={{ zIndex: -1 }}>
     <View className={`root-portal ${className}`} style={{ position: "absolute", top: "0vw", right: "0vw", width: "100vw", zIndex: -1 }}>

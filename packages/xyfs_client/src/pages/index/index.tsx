@@ -144,7 +144,7 @@ const IIIBringGoods = React.memo(({ className, channelId, }: { className?: strin
   return <View className={`${className} ww dll`}>
     {!productList && <ComLoading className='mb10'></ComLoading>}
     {productList?.length === 0 && <ComLoading className='mb10' isEmpty></ComLoading>}
-    {productList && [...productList, ...productList, ...productList].map((item, index) => {
+    {productList && [...productList].map((item, index) => {
       const product = item.product[0];
       return <View className='ww  dll' key={index}>
         {/*@ts-ignore*/}

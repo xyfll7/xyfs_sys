@@ -52,7 +52,7 @@ export const IIIPublisherAdmin: FC = () => {
             name: form.str.split("\n")[0] ?? "",
             remark: "",
             intro: form.str.split("\n")[1] ?? "",
-            stock: 30,
+            stock: form.stock === "" ? 0 : Number(form.stock),
             weight: 1,
           });
           setForm(null);
