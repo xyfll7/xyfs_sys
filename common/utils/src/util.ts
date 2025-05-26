@@ -119,16 +119,23 @@ export function coo___urlToObj<T = {}>(url?: string): T {
   );
 }
 
-export function coo___get_price(value: string, price: string, isDecimal: boolean = true) {
-  if (isDecimal) {
+export function coo___get_price(value: string, price: string,
+  param: { isDecimal?: boolean; integerLength?: number, decimalLength?: number; } = { isDecimal: true }) {
+
+  param.integerLength = param.integerLength || 3;
+  param.decimalLength = param.decimalLength || 2;
+
+  const regex = new RegExp(`^(.*\\..{${param.decimalLength}}).*$`, '');
+  console.log("pppppp", param);
+  if (param.isDecimal) {
     return Number.isNaN(Number(value)) ? price : (() => {
-      const [v_0, v_1] = value.replace(/^(.*\..{2}).*$/, "$1").split('.');
-      return `${String(v_0 ? Number(v_0) : "").slice(0, 3)}${value.includes('.') ? '.' : ''}${v_1 ?? ''}`;
+      const [v_0, v_1] = value.replace(regex, "$1").split('.');
+      return `${String(v_0 ? Number(v_0) : "").slice(0, param.integerLength)}${value.includes('.') ? '.' : ''}${v_1 ?? ''}`;
     })();
   } else {
     return Number.isNaN(Number(value)) ? price : (() => {
-      const [v_0, v_1] = value.replace(/^(.*\..{2}).*$/, "$1").split('.');
-      return `${String(v_0 ? Number(v_0) : "").slice(0, 3)}`;
+      const [v_0, v_1] = value.replace(regex, "$1").split('.');
+      return `${String(v_0 ? Number(v_0) : "").slice(0, param.integerLength)}`;
     })();
   }
 
