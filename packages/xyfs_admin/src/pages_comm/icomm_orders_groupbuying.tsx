@@ -107,7 +107,7 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
 
       }} />
     <View className='dr prl10 ww dwp'>
-      {order.orderStatus === Order_ST.已付款 &&
+      {order.orderStatus === Order_ST.已付款 && roo___has_role(selfInfo_S, ["GROUPLEADER"]) &&
         <ComButton rr className='cccplh mb10 bborder nw' onClick={async () => {
           const res_modal = await try_Taro_showModal({ title: "提示", content: "您确定要删除该订单吗?", confirmText: "删除" });
           if (res_modal) {
@@ -120,7 +120,7 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
           }
         }}>删除</ComButton>
       }
-      {order.orderStatus === Order_ST.已付款 && <ComButton rr className='ml10 cccplh bborder mb10 nw' onClick={async () => {
+      {order.orderStatus === Order_ST.已付款 && roo___has_role(selfInfo_S, ["GROUPLEADER"]) && <ComButton rr className='ml10 cccplh bborder mb10 nw' onClick={async () => {
         if (await try_Taro_showModal({ content: "您确定要退款?", confirmText: "确认退款", })) {
           Taro.showLoading({ mask: true, title: "退款中...", });
           await Api_order_cancel_ctn({ orderId: order.id!, });
