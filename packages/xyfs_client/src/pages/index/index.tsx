@@ -229,8 +229,7 @@ const IIIMainNavigator: FC<{ className?: string; style?: string | React.CSSPrope
           团购干洗
         </ComButton>
       }
-      {selfInfo_S.managerUser && <>
-
+      {roo___has_role(selfInfo_S.managerUser!, ["REGIMENT", "GUIDE"]) && <>
         <ComButton className='mb10 oo pbt8 mr10 fwb shadow nw' url='/pages_regiment/regiment_invitor' >
           管理页
         </ComButton>
