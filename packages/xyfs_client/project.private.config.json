@@ -12,9 +12,16 @@
         {
           "name": "pages/group_buy",
           "pathName": "pages/group_buy",
-          "query": "scene=G_D%253D185",
+          "query": "scene=G_D%253D198",
           "scene": null,
           "launchMode": "default"
+        },
+        {
+          "name": "pages/group_buy",
+          "pathName": "pages/group_buy",
+          "query": "scene=G_D%253D185",
+          "launchMode": "default",
+          "scene": null
         },
         {
           "name": "pages_regiment/regiment_invitor",

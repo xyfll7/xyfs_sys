@@ -86,14 +86,13 @@ const Index: FC = () => {
         </ComNavBarA>
       </ComNav>
 
-      <View className='ww dll prl10'>
-        <ComButton ll className={`mb10 cccplh bcctrans nw1 `} hoverClass='none'>今日下单明日送达 🚗 🛵 🎁</ComButton>
-      </View>
     </View>
     <ComScrollView className='IOO ' upperThreshold={200}
       onScroll={(e, top) => { if (e.detail.scrollTop > top) { setIsHeaderBack(true); } }}
       onScrollToUpper={() => { setIsHeaderBack(false); }}>
-
+      <View className='ww dll prl10'>
+        <ComButton ll className={`mb10 cccplh bcctrans nw1 `} hoverClass='none'>今日下单明日送达 🚗 🛵 🎁</ComButton>
+      </View>
       {page.pageNum !== 0 && Boolean(page.list.length) &&
         <View className='dll ww bccwhite pt10 mb10 prl10 IOO'>
           <View className='ww dll prl10'>
