@@ -98,7 +98,7 @@ const IIIBindAccountList: FC<{}> = ({ }) => {
 
       <View className='ioo bccwhite pt10 dll mb10 prl10 ww'>
         <View className='ww mb10 dy' >
-          <ComButton ll className='w5rem bccwhite'>视频号ID</ComButton>
+          <ComButton ll className='w6rem bccwhite'>视频号ID</ComButton>
           <ComButton ll className='flx1 cccplh bccback'>
             <ComInput value={form.channelId}
               onInput={(e) => { setForm({ channelId: e.detail.value }); }}
@@ -110,7 +110,7 @@ const IIIBindAccountList: FC<{}> = ({ }) => {
 
 
         <View className='ww mb10 dy' >
-          <ComButton ll className='w5rem bccwhite'>带货者ID</ComButton>
+          <ComButton ll className='w6rem bccwhite'>带货者ID</ComButton>
           <ComButton ll className='flx1 cccplh bccback'>
             <ComInput value={form.talentId}
               onInput={(e) => { setForm({ talentId: e.detail.value }); }}
@@ -118,7 +118,7 @@ const IIIBindAccountList: FC<{}> = ({ }) => {
           </ComButton>
         </View>
         <View className='ww mb10 dy' >
-          <ComButton ll className='w5rem bccwhite'>带货者密钥</ComButton>
+          <ComButton ll className='w6rem bccwhite'>带货者密钥</ComButton>
           <ComButton ll className='flx1 cccplh bccback'>
             <ComInput value={form.talentSecret}
               onInput={(e) => { setForm({ talentSecret: e.detail.value }); }}
@@ -126,10 +126,8 @@ const IIIBindAccountList: FC<{}> = ({ }) => {
           </ComButton>
         </View>
         <View className='ww mb10 dy' />
-
-
         <View className='ww mb10 dy' >
-          <ComButton ll className='w5rem bccwhite'>橱窗ID</ComButton>
+          <ComButton ll className='w6rem bccwhite'>橱窗ID</ComButton>
           <ComButton ll className='flx1 cccplh bccback'>
             <ComInput value={form.windowId}
               onInput={(e) => { setForm({ windowId: e.detail.value }); }}
@@ -137,7 +135,7 @@ const IIIBindAccountList: FC<{}> = ({ }) => {
           </ComButton>
         </View>
         <View className='ww mb10 dy' >
-          <ComButton ll className='w5rem bccwhite'>橱窗密钥</ComButton>
+          <ComButton ll className='w6rem bccwhite'>橱窗密钥</ComButton>
           <ComButton ll className='flx1 cccplh bccback'>
             <ComInput value={form.windowSecret}
               onInput={(e) => { setForm({ windowSecret: e.detail.value }); }}
@@ -147,7 +145,7 @@ const IIIBindAccountList: FC<{}> = ({ }) => {
         <View className='ww mb10 dy' />
 
         <View className='ww mb10 dy' >
-          <ComButton ll className='w5rem bccwhite'>令牌</ComButton>
+          <ComButton ll className='w6rem bccwhite'>令牌</ComButton>
           <ComButton ll className='flx1 cccplh bccback'>
             <ComInput value={form.token}
               onInput={(e) => { setForm({ token: e.detail.value }); }}
@@ -155,7 +153,7 @@ const IIIBindAccountList: FC<{}> = ({ }) => {
           </ComButton>
         </View>
         <View className='ww mb10 dy' >
-          <ComButton ll className='w5rem bccwhite'>令牌密钥</ComButton>
+          <ComButton ll className='w6rem bccwhite'>令牌密钥</ComButton>
           <ComButton ll className='flx1 cccplh bccback'>
             <ComInput value={form.encodingAesKey}
               onInput={(e) => { setForm({ encodingAesKey: e.detail.value }); }}
@@ -166,53 +164,54 @@ const IIIBindAccountList: FC<{}> = ({ }) => {
 
       </View>
 
+      <View className='ww mb10 dr' >
+        <ComButton className='bccgreen cccwhite nw mb10' hoverClass="none" onClick={async () => {
 
-      <ComButton className='bccgreen cccwhite nw mb10' hoverClass="none" onClick={async () => {
+
+          if (selfInfo_S.channelId) {
+            const res_modal = await try_Taro_showModal({
+              title: "提示",
+              content: "您已经绑定了视频号ID，是否要重新绑定？",
+              cancelText: "取消",
+              confirmText: "重新绑定",
+            });
+            if (!res_modal) { Taro.showToast({ icon: "none", title: "取消" }); return; }
+          }
 
 
-        if (selfInfo_S.channelId) {
-          const res_modal = await try_Taro_showModal({
-            title: "提示",
-            content: "您已经绑定了视频号ID，是否要重新绑定？",
-            cancelText: "取消",
-            confirmText: "重新绑定",
+
+          if (!form.channelId) { Taro.showToast({ icon: "none", title: "请输入视频号ID", }); return; }
+          if (!form.talentId) { Taro.showToast({ icon: "none", title: "请输入带货者ID", }); return; }
+          if (!form.talentSecret) { Taro.showToast({ icon: "none", title: "请输入带货者密钥", }); return; }
+          if (!form.windowId) { Taro.showToast({ icon: "none", title: "请输入橱窗ID", }); return; }
+          if (!form.windowSecret) { Taro.showToast({ icon: "none", title: "请输入橱窗密钥", }); return; }
+          if (!form.token) { Taro.showToast({ icon: "none", title: "请输入令牌", }); return; }
+          if (!form.encodingAesKey) { Taro.showToast({ icon: "none", title: "请输入令牌密钥", }); return; }
+
+          Taro.showLoading({ mask: true, title: "提交中..." });
+
+
+
+          const res = await Api_dept_channelConfig_ctn({
+            deptId: selfInfo_S.deptId!,
+
+            channelId: form.channelId, // 视频号ID
+
+            talentId: form.channelId, // 带货者ID
+            talentSecret: form.talentSecret, // 带货者密钥
+
+            windowId: form.windowId, // 橱窗
+            windowSecret: form.windowSecret, // 橱窗密钥
+
+            token: form.token, // 令牌
+            encodingAesKey: form.encodingAesKey  // 密钥
           });
-          if (!res_modal) { Taro.showToast({ icon: "none", title: "取消" }); return; }
-        }
-
-
-
-        if (!form.channelId) { Taro.showToast({ icon: "none", title: "请输入视频号ID", }); return; }
-        if (!form.talentId) { Taro.showToast({ icon: "none", title: "请输入带货者ID", }); return; }
-        if (!form.talentSecret) { Taro.showToast({ icon: "none", title: "请输入带货者密钥", }); return; }
-        if (!form.windowId) { Taro.showToast({ icon: "none", title: "请输入橱窗ID", }); return; }
-        if (!form.windowSecret) { Taro.showToast({ icon: "none", title: "请输入橱窗密钥", }); return; }
-        if (!form.token) { Taro.showToast({ icon: "none", title: "请输入令牌", }); return; }
-        if (!form.encodingAesKey) { Taro.showToast({ icon: "none", title: "请输入令牌密钥", }); return; }
-
-        Taro.showLoading({ mask: true, title: "提交中..." });
-
-
-
-        const res = await Api_dept_channelConfig_ctn({
-          deptId: selfInfo_S.deptId!,
-
-          channelId: form.channelId, // 视频号ID
-
-          talentId: form.channelId, // 带货者ID
-          talentSecret: form.talentSecret, // 带货者密钥
-
-          windowId: form.windowId, // 橱窗
-          windowSecret: form.windowSecret, // 橱窗密钥
-
-          token: form.token, // 令牌
-          encodingAesKey: form.encodingAesKey  // 密钥
-        });
-        useSTSelf.getState().sett(res);
-        Taro.showToast({ icon: "none", title: "提交成功", });
-      }}>
-        提交
-      </ComButton>
+          useSTSelf.getState().sett(res);
+          Taro.showToast({ icon: "none", title: "提交成功", });
+        }}>
+          提交
+        </ComButton>
+      </View>
     </View>
   </>;
 
