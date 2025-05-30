@@ -23,10 +23,10 @@ import { useSTSelf } from '@xyfs/taro_uii/store/store';
 import { Pagination } from '@xyfs/taro_uii/type_index';
 import { AddressInfo, DeptInfo } from '@xyfs/taro_uii/type_user';
 import { try_Taro_chooseAddress, try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_setClipboardData, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
-import { useHook_pageListNew } from '@xyfs/taro_uii/utils/useHooks';
+import { useHook_getCurrentInstance, useHook_pageListNew } from '@xyfs/taro_uii/utils/useHooks';
 
 import { coo___objToUrl, coo___privacy_string, coo___urlToObj } from '@xyfs/utils/util';
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 
 definePageConfig({
   enableShareAppMessage: true, navigationStyle: "custom", disableScroll: true,
