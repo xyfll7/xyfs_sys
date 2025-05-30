@@ -6,12 +6,13 @@ import { ComButton } from "../components/ComButton";
 import { ComNav } from "../components/ComNav";
 import { ComNavBarA } from "../components/ComNavBarA";
 import { MMMAAPage } from "../components/MMMAAPage";
-import { Taro_getCurrentInstance, try_Taro_cloud_uploadFile } from "../utils/try_catch";
+import { try_Taro_cloud_uploadFile } from "../utils/try_catch";
 import { utils_get_page_opener } from "../utils/util";
+import { useHook_getCurrentInstance } from "../utils/useHooks";
 
 const CPImageCropper: FC = () => {
   const { safeArea } = Taro.getWindowInfo();
-  const { options } = Taro_getCurrentInstance<{ imgSrc?: string; }>();
+  const { options } = useHook_getCurrentInstance<{ imgSrc?: string; }>();
   const cfg = {
     imgSrc: options.imgSrc,
     width: 250, //宽度

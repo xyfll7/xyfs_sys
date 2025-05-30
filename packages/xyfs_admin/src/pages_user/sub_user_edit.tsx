@@ -16,7 +16,8 @@ import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { ROLE_ST } from "@xyfs/taro_uii/src/config";
 import { roo___has_role } from "@xyfs/taro_uii/src/roles";
 import { useSTDicts, useSTSelf } from '@xyfs/taro_uii/store/store';
-import { Taro_getCurrentInstance, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
+import { try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
+import { useHook_getCurrentInstance } from "@xyfs/taro_uii/utils/useHooks";
 import { utils_addressInfoToString } from "@xyfs/taro_uii/utils/util";
 import { FC, useEffect, useState } from "react";
 
@@ -46,7 +47,7 @@ const Index: FC<{}> = ({ }) => {
 };
 
 const IIImyUserEditorAGENT: FC = () => {
-  const { options } = Taro_getCurrentInstance<{ userId?: string; }>();
+  const { options } = useHook_getCurrentInstance<{ userId?: string; }>();
   const [userInfo, setUserInfo] = useState<DeptInfo | null>(null);
   useEffect(() => {
     (async () => {
@@ -148,7 +149,7 @@ const IIImyUserEditorAGENT: FC = () => {
   </>;
 };
 const IIImyUserEditorSUPPLIER: FC = () => {
-  const { options } = Taro_getCurrentInstance<{ userId?: string; }>();
+  const { options } = useHook_getCurrentInstance<{ userId?: string; }>();
   const { dicts_roles } = useSTDicts(state => state);
   const [userInfo, setUserInfo] = useState<DeptInfo | null>(null);
   useEffect(() => {

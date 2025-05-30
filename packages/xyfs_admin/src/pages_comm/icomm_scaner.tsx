@@ -20,8 +20,8 @@ import { getMyEnv } from '@xyfs/taro_uii/src/env';
 import { roo___has_role } from '@xyfs/taro_uii/src/roles';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
 import { on_get_printer_str_order_dryclean_out_factory, on_start_print } from '@xyfs/taro_uii/utils/bluetooth/useHooks_Blue';
-import { Taro_getCurrentInstance, try_Taro_navigateTo, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
-import { useHook_pageListNew } from '@xyfs/taro_uii/utils/useHooks';
+import { try_Taro_navigateTo, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
+import { useHook_getCurrentInstance, useHook_pageListNew } from '@xyfs/taro_uii/utils/useHooks';
 import { coo___objToUrl } from '@xyfs/utils/util';
 import { FC, useCallback, useRef, useState } from 'react';
 
@@ -46,7 +46,7 @@ export default function COMSELFWarp() {
 };
 const Index: FC = () => {
   const role = useSTSelf.getState().selfInfo?.roles?.find(e => (["REGIMENT", "DRIVER", "SCANNER"] as ROLE_KEY[]).includes(e.roleKey));
-  const { options } = Taro_getCurrentInstance<{ isShow: string; }>();
+  const { options } = useHook_getCurrentInstance<{ isShow: string; }>();
   const [show, setShow] = useState(options.isShow ? true : false);
   const ___page_getter = useCallback(async (p: Pagination<unknown>) =>
     await Api_logistic_list_ctn<Pagination<OrderInfo<Product_Dryclean>[]>>({

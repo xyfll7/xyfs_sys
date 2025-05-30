@@ -14,7 +14,8 @@ import { ComSquare } from '@xyfs/taro_uii/components/ComSquare';
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { roo___has_role } from '@xyfs/taro_uii/src/roles';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
-import { Taro_getCurrentInstance, try_Taro_navigateBack, try_Taro_navigateTo } from '@xyfs/taro_uii/utils/try_catch';
+import { try_Taro_navigateBack, try_Taro_navigateTo } from '@xyfs/taro_uii/utils/try_catch';
+import { useHook_getCurrentInstance } from '@xyfs/taro_uii/utils/useHooks';
 import { coo___objToUrl, coo___urlToObj } from '@xyfs/utils/util';
 import { FC, useEffect, useState } from 'react';
 
@@ -67,7 +68,7 @@ const IIIExpress: FC<{ managerUser: DeptInfo; }> = ({ managerUser }) => {
 
 const IIIDryclean: FC<{ managerUser: DeptInfo; }> = ({ managerUser }) => {
   const [order, setOrder] = useState<OrderInfo<ProductBase> | null>(null);
-  const { options } = Taro_getCurrentInstance<{ scene?: string; }>();
+  const { options } = useHook_getCurrentInstance<{ scene?: string; }>();
   const { O_D } = coo___urlToObj<{ O_D?: string; }>(options.scene);
   useEffect(() => {
     (async () => {

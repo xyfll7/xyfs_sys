@@ -13,11 +13,12 @@ import { ComSquare } from "../components/ComSquare";
 import { MMMAAPage } from "../components/MMMAAPage";
 import { MMMAdBanner } from "../components/MMMAdBanner";
 import { Product_category_ST } from "../config";
-import { Taro_getCurrentInstance } from "../utils/try_catch";
+import { useHook_getCurrentInstance } from "../utils/useHooks";
+
 
 
 const CPExpressPath: FC = () => {
-  const { options } = Taro_getCurrentInstance<{ express_share_id?: string; }>();
+  const { options } = useHook_getCurrentInstance<{ express_share_id?: string; }>();
   const [order, setOrder] = useState<OrderInfo<ProductBase> | null>(null);
   const [path, setPath] = useState<{ waybillId: string; path: { description: string, time: string; }[]; }[] | null>(null);
 

@@ -197,3 +197,26 @@ export function useHook_Fetch<T>(cb: () => Promise<T | null>) {
     data_update
   };
 }
+
+
+
+export function useHook_getCurrentInstance<T>() {
+  const ref = useRef<Taro.PageInstance>();
+  const { page } = Taro.getCurrentInstance();
+
+  if (page) {
+    ref.current = page;
+  }
+
+  const obj: Record<string, any> = {};
+  const options = ref.current?.options;
+  options && Object.keys(options).map(key => {
+    const value = options[key] as any;
+    obj[key] = decodeURIComponent(value);
+  });
+
+  return {
+    ...ref.current,
+    options: obj as T
+  };
+}

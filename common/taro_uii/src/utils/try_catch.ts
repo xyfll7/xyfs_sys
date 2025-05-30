@@ -40,20 +40,7 @@ export function Taro_getStorageSync<T>(key: string, env?: Environment): T | null
     return null;
   }
 }
-export function Taro_getCurrentInstance<T>() {
-  const { page } = Taro.getCurrentInstance();;
-  const obj: Record<string, any> = {};
-  const options = page?.options;
-  options && Object.keys(options).map(key => {
-    const value = options[key] as any;
-    obj[key] = decodeURIComponent(value);
-  });
 
-  return {
-    ...page,
-    options: obj as T
-  };
-}
 
 
 export async function try_Taro_navigateBack(extraData?: TaroGeneral.IAnyObject) {
@@ -194,10 +181,12 @@ export async function try_Taro_showActionSheet<T>(option: Taro.showActionSheet.O
 }
 export async function try_Taro_chooseAddress(isTest: boolean = false): Promise<Omit<AddressInfo, "id">> {
   try {
+    const res = await Taro.chooseAddress();
+    console.log("选择地址：", res);
     if (isTest) {
       return {
         name: "王肇",
-        mobile: "17709205217",
+        mobile: "17709205218",
         company: "",
         postCode: "",
         code: "710000",
@@ -210,8 +199,7 @@ export async function try_Taro_chooseAddress(isTest: boolean = false): Promise<O
         from: "WX",
       };
     }
-    const res = await Taro.chooseAddress();
-    console.log("选择地址：", res);
+
     if (res) {
       return {
         name: res.userName ? res.userName : "",

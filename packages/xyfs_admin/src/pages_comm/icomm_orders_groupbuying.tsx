@@ -17,8 +17,8 @@ import { Order_ST, Product_category_ST } from "@xyfs/taro_uii/src/config";
 import { roo___has_role, roo___role_getRoleInfo } from "@xyfs/taro_uii/src/roles";
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
 import { on_get_printer_str_order_bing_goods, on_get_printer_str_order_bing_goods_waybill, on_start_print } from "@xyfs/taro_uii/utils/bluetooth/useHooks_Blue";
-import { Taro_getCurrentInstance, try_Taro_showActionSheet, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
-import { useHook_pageListNew, useHook_Reducer } from '@xyfs/taro_uii/utils/useHooks';
+import { try_Taro_showActionSheet, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
+import { useHook_getCurrentInstance, useHook_pageListNew, useHook_Reducer } from '@xyfs/taro_uii/utils/useHooks';
 import { utils_arr_includes } from "@xyfs/taro_uii/utils/util";
 import { coo___unique_arr } from "@xyfs/utils/util";
 import { FC, useCallback, useState } from "react";
@@ -27,7 +27,7 @@ definePageConfig({ navigationStyle: "custom", enableShareAppMessage: true, disab
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC<{}> = ({ }) => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
-  const { options } = Taro_getCurrentInstance<{ order_ST?: Order_ST; }>();
+  const { options } = useHook_getCurrentInstance<{ order_ST?: Order_ST; }>();
 
   const [orderType, setOrderType] = useState<Order_ST>(options.order_ST ?? Order_ST.待付款);
   const [searchValue, setSearchValue] = useHook_Reducer("");

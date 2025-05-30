@@ -107,6 +107,7 @@ const Index: FC = () => {
 
 
 
+      <IIIBringGoodsGROUPLEADER />
       {selfInfo_S.channelId && <IIIBringGoods channelId={selfInfo_S.channelId} />}
 
       {/* <IIIRegimentAssistList /> */}
@@ -127,7 +128,10 @@ const Index: FC = () => {
 
 
 
+const IIIBringGoodsGROUPLEADER = React.memo(({ className, channelId, }: { className?: string; channelId?: string; }) => {
 
+  return <View className={`${className} ww dll`}>111</View>;
+});
 
 const IIIBringGoods = React.memo(({ className, channelId, }: { className?: string; channelId?: string; }) => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);

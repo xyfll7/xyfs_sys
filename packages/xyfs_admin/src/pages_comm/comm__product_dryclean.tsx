@@ -17,7 +17,8 @@ import { Order_ST } from '@xyfs/taro_uii/src/config';
 import { roo___has_role } from '@xyfs/taro_uii/src/roles';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
 import { OrderInfo, Product_Dryclean } from '@xyfs/taro_uii/type_product';
-import { Taro_getCurrentInstance, try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
+import { try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
+import { useHook_getCurrentInstance } from '@xyfs/taro_uii/utils/useHooks';
 import { utils_get_qrcode } from '@xyfs/taro_uii/utils/util';
 import { coo___objToUrl } from '@xyfs/utils/util';
 import { FC, PropsWithChildren, useEffect, useState } from 'react';
@@ -28,7 +29,7 @@ export default function COMSELFWarp() { return <ComSELFView isRefreshSelfInfo_SE
 const Index: FC<{}> = ({ }) => {
   const [show, setShow] = useState(false);
 
-  const { options } = Taro_getCurrentInstance<{ order_info: string; }>();
+  const { options } = useHook_getCurrentInstance<{ order_info: string; }>();
   const _order: OrderInfo<Product_Dryclean> | undefined = options.order_info && JSON.parse(decodeURIComponent(decodeURIComponent(options.order_info)));
   const [cartItem, setCartItem] = useState<Product_Dryclean | null>(null);
 

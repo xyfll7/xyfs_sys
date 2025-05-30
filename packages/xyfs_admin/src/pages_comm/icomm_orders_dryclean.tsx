@@ -22,8 +22,8 @@ import { ErrorR, Order_ST, Product_category_ST } from "@xyfs/taro_uii/src/config
 import { getMyEnv } from "@xyfs/taro_uii/src/env";
 import { roo___has_role } from "@xyfs/taro_uii/src/roles";
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
-import { Taro_getCurrentInstance, try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_scanCode, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
-import { useHook_pageListNew, useHook_Reducer } from '@xyfs/taro_uii/utils/useHooks';
+import { try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_scanCode, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
+import { useHook_getCurrentInstance, useHook_pageListNew, useHook_Reducer } from '@xyfs/taro_uii/utils/useHooks';
 import { utils_get_qrcode, utils_show_button } from "@xyfs/taro_uii/utils/util";
 import { coo___objToUrl } from "@xyfs/utils/util";
 
@@ -33,7 +33,7 @@ definePageConfig({ navigationStyle: "custom", enableShareAppMessage: true, disab
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC<{}> = ({ }) => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
-  const { options } = Taro_getCurrentInstance<{ order_ST?: Order_ST; }>();
+  const { options } = useHook_getCurrentInstance<{ order_ST?: Order_ST; }>();
 
   const [orderType, setOrderType] = useState<Order_ST>(options.order_ST ?? Order_ST.待付款);
   const [searchValue, setSearchValue] = useHook_Reducer("");

@@ -7,8 +7,8 @@ import { Api_login_rqs } from "../api/api__users";
 import { getMyEnv } from "../env";
 import { roo___has_role } from "../roles";
 import { useSTSelf } from "../store/store";
-import { Taro_getCurrentInstance, try_Taro_navigateBack, try_Taro_navigateTo, try_Taro_navigateToMiniProgram } from "../utils/try_catch";
-import { useHook_shareAppMessage } from "../utils/useHooks";
+import {  try_Taro_navigateBack, try_Taro_navigateTo, try_Taro_navigateToMiniProgram } from "../utils/try_catch";
+import { useHook_getCurrentInstance, useHook_shareAppMessage } from "../utils/useHooks";
 import { ComButton } from "./ComButton";
 import { ComLoading } from "./ComLoading";
 import { ComNav } from "./ComNav";
@@ -377,7 +377,7 @@ export function ComSELFView({ isRefreshSelfInfo_SEveryTime, ...props }: ViewProp
 
 
 const useHook_selfInfo_show = ({ isRefreshSelfInfo_SEveryTime = false, }: { isRefreshSelfInfo_SEveryTime?: boolean; } = {}): [DeptInfo | null, boolean] => {
-  const { options } = Taro_getCurrentInstance<{ scene?: string; }>();
+  const { options } = useHook_getCurrentInstance<{ scene?: string; }>();
   const { R_D } = coo___urlToObj<{ R_D?: string; }>(options.scene);
   const _R_D = R_D ? String(parseInt(R_D, 36)) : undefined;
   const selfInfo = useSTSelf(s => s.selfInfo);

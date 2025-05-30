@@ -11,15 +11,15 @@ import { ComNavBarA } from "@xyfs/taro_uii/components/ComNavBarA";
 import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
 import { ComSELFView, MMMAAPage } from "@xyfs/taro_uii/components/MMMAAPage";
 import { useSTSelf } from "@xyfs/taro_uii/store/store";
-import { Taro_getCurrentInstance, try_Taro_navigateTo } from "@xyfs/taro_uii/utils/try_catch";
-import { useHook_pageListNew } from "@xyfs/taro_uii/utils/useHooks";
+import { try_Taro_navigateTo } from "@xyfs/taro_uii/utils/try_catch";
+import { useHook_getCurrentInstance, useHook_pageListNew } from "@xyfs/taro_uii/utils/useHooks";
 import { FC, useCallback, useState } from "react";
 
 definePageConfig({ enableShareAppMessage: true, navigationStyle: "custom", disableScroll: true, });
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC = () => {
 
-  const { options } = Taro_getCurrentInstance<{ user_id: string; }>();
+  const { options } = useHook_getCurrentInstance<{ user_id: string; }>();
   const [isHeaderBack, setIsHeaderBack] = useState(false);
 
 

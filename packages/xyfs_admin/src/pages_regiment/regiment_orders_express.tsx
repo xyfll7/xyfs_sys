@@ -19,8 +19,8 @@ import { Order_ST, Refund_ST } from "@xyfs/taro_uii/src/config";
 import { IM_线上_收款码 } from "@xyfs/taro_uii/src/image";
 import { useSTSelf } from "@xyfs/taro_uii/store/store";
 import { on_get_printer_str_order_express, on_start_print } from "@xyfs/taro_uii/utils/bluetooth/useHooks_Blue";
-import { Taro_getCurrentInstance, try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
-import { useHook_pageListNew, useHook_Reducer } from '@xyfs/taro_uii/utils/useHooks';
+import { try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
+import { useHook_getCurrentInstance, useHook_pageListNew, useHook_Reducer } from '@xyfs/taro_uii/utils/useHooks';
 import { coo___ios_date, coo___isNumber } from "@xyfs/utils/util";
 import { format } from "date-fns";
 import { FC, useCallback, useState } from "react";
@@ -35,7 +35,7 @@ definePageConfig({
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC<{}> = ({ }) => {
   const [showQRCode, setShowQRCode] = useState<boolean>(false);
-  const { options } = Taro_getCurrentInstance<{ order_ST: string; }>();
+  const { options } = useHook_getCurrentInstance<{ order_ST: string; }>();
   const [date, setDate] = useState<string>("");
   const [tabIndex, setTabIndex] = useState<Order_ST>(Number(options.order_ST ?? Order_ST.待付款));
 

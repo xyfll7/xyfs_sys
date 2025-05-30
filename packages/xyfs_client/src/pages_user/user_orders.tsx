@@ -17,8 +17,8 @@ import { ComSELFView, MMMAAPage } from "@xyfs/taro_uii/components/MMMAAPage";
 import { Order_ST, Product_category_ST } from "@xyfs/taro_uii/src/config";
 import { useSTExpress } from "@xyfs/taro_uii/store/store";
 import { OrderInfo, Product_Express, ProductBase } from "@xyfs/taro_uii/type_product";
-import { Taro_getCurrentInstance, try_Taro_requestPayment, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
-import { useHook_pageListNew } from "@xyfs/taro_uii/utils/useHooks";
+import { try_Taro_requestPayment, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
+import { useHook_getCurrentInstance, useHook_pageListNew } from "@xyfs/taro_uii/utils/useHooks";
 import { coo___urlToObj } from "@xyfs/utils/util";
 import { FC, useCallback, useEffect, useState } from "react";
 
@@ -42,7 +42,7 @@ const Index: FC = () => {
 
 
 const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
-  const { options } = Taro_getCurrentInstance<{ order_ST: string; }>();
+  const { options } = useHook_getCurrentInstance<{ order_ST: string; }>();
   const [orderType, setOrderType] = useState<Order_ST>((() => {
     if (isPay) {
       return Order_ST.已付款;
@@ -265,7 +265,7 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
 
 
 const useProductDryCleanEditor = () => {
-  const { options } = Taro_getCurrentInstance<{ scene?: string; }>();
+  const { options } = useHook_getCurrentInstance<{ scene?: string; }>();
   const { O_D } = coo___urlToObj<{ O_D?: string; }>(options.scene);
   const [isShare, setIsShare] = useState<boolean | null>(null);
   const [order, setOrder] = useState<any | true | null>(null);

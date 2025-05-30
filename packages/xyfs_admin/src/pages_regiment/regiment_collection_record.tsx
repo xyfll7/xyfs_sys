@@ -14,8 +14,8 @@ import { ComPopupNew } from '@xyfs/taro_uii/components/ComPopupNew';
 import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
-import { Taro_getCurrentInstance, try_Taro_navigateTo, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
-import { useHook_pageListNew } from "@xyfs/taro_uii/utils/useHooks";
+import { try_Taro_navigateTo, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
+import { useHook_getCurrentInstance, useHook_pageListNew } from "@xyfs/taro_uii/utils/useHooks";
 import { utils_get_start_end_date } from '@xyfs/taro_uii/utils/util';
 import { coo___ios_date } from "@xyfs/utils/util";
 import format from "date-fns/format";
@@ -26,7 +26,7 @@ definePageConfig({ navigationStyle: "custom", disableScroll: true, });
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC<{}> = ({ }) => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
-  const { options } = Taro_getCurrentInstance<{ OPENID?: string; regimentName?: string; }>();
+  const { options } = useHook_getCurrentInstance<{ OPENID?: string; regimentName?: string; }>();
   const [date, setDate] = useState<string>(format(coo___ios_date(), "yyyy-MM-dd"));
   const _OPENID = options.OPENID ?? selfInfo_S?.OPENID;
 

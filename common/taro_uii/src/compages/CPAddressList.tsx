@@ -18,15 +18,15 @@ import { MMMAAPage } from "../components/MMMAAPage";
 import { ComProvinceCityArea, initAddressData, MMMAddress } from "../components/MMMAddress";
 import { Address_T, ErrorR } from "../config";
 import { useSTSelf } from "../store/store";
-import { Taro_getCurrentInstance, try_Taro_navigateBack, try_Taro_setClipboardData, try_Taro_showModal } from "../utils/try_catch";
-import { useHook_pageListNew, useHook_Reducer } from "../utils/useHooks";
+import { try_Taro_navigateBack, try_Taro_setClipboardData, try_Taro_showModal } from "../utils/try_catch";
+import { useHook_getCurrentInstance, useHook_pageListNew, useHook_Reducer } from "../utils/useHooks";
 import { utils_get_page_opener } from "../utils/util";
 import { utils_validate_express } from "../utils/validator";
 
 
 
 const CPAddressList: FC = () => {
-  const { options } = Taro_getCurrentInstance<{ manType: AddressManType; }>();
+  const { options } = useHook_getCurrentInstance<{ manType: AddressManType; }>();
   const [addressType, setAddressType] = useState<Address_T>(options.manType === "send" ? Address_T.寄件地址 : Address_T.收件地址);
 
   const [searchValue, setSearchValue] = useHook_Reducer("");

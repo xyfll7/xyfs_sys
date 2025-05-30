@@ -22,11 +22,11 @@ import { roo___my_dept } from '@xyfs/taro_uii/src/roles';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
 import { Pagination } from '@xyfs/taro_uii/type_index';
 import { AddressInfo, DeptInfo } from '@xyfs/taro_uii/type_user';
-import { Taro_getCurrentInstance, try_Taro_chooseAddress, try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_setClipboardData, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
+import { try_Taro_chooseAddress, try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_setClipboardData, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
 import { useHook_pageListNew } from '@xyfs/taro_uii/utils/useHooks';
 
 import { coo___objToUrl, coo___privacy_string, coo___urlToObj } from '@xyfs/utils/util';
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 
 definePageConfig({
   enableShareAppMessage: true, navigationStyle: "custom", disableScroll: true,
@@ -35,13 +35,16 @@ definePageConfig({
   // "renderer": "skyline",
 });
 
+
+
+
+
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC = () => {
-
-  const { options } = Taro_getCurrentInstance<{ scene?: string; }>();
+  const selfInfo_S = useSTSelf(s => s.selfInfo!);
+  const { options } = useHook_getCurrentInstance<{ scene?: string; }>();
   const { G_D } = coo___urlToObj<{ G_D?: string; }>(options.scene);
 
-  const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const [isHeaderBack, setIsHeaderBack] = useState(false);
   const [type, setType] = useState(1);
   const isBanner = true;
@@ -56,20 +59,21 @@ const Index: FC = () => {
     })();
   }, [G_D]);
 
-  const ___page_getter = useCallback(async (p: Pagination<unknown>) =>
-    await Api_goods_list_ctn({
+  const ___page_getter = useCallback(async (p: Pagination<unknown>) => {
+    return await Api_goods_list_ctn({
       ...p,
       sort: "desc",
       keyword: "",
       queryDeptId: G_D
-    }), [G_D]);
+    });
+  }, [G_D]);
   const { page, page_loading, page_list_get } = useHook_pageListNew(___page_getter,);
   const [cart, setCart] = useState<any[]>([]);
 
   const [product, setProduct] = useState<any>(
     // { "id": 6, "name": "延安山地苹果", "sketch": null, "intro": "重量6-7斤/12枚装/果径80-85", "keywords": null, "tags": null, "price": 58, "weight": 1, "marketPrice": null, "stock": 30, "warningStock": null, "limitQuantity": null, "attachUrl": "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/product_image/oGwbL5PVdCTyoE2sYHAq2bdNA9BY/_1731288105472_0.png", "userId": "oGwbL5PVdCTyoE2sYHAq2bdNA9BY", "status": 1, "sort": 2, "lastUpdateTime": "2024-11-11 09:21:56", "delFlag": "0", "createBy": "oGwbL5PVdCTyoE2sYHAq2bdNA9BY", "createTime": "2024-11-11 09:21:56", "updateBy": null, "updateTime": null, "remark": "", "userName": "王理代", "userMobile": "17319969379", "userAvatar": "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/comm_avatar/default/狗2@1x.webp", "totalSaleStock": null, "saleStock": null, "orderUser": null }
   );
-  console.log("deptInfo", deptInfo);
+
   return <MMMAAPage className={`${isBanner ? "" : "bccback"}`}>
     <View className='ww'>
       {isBanner &&
@@ -144,10 +148,11 @@ const Index: FC = () => {
     </ComScrollView>
     <View className='ww dll pt10'>
       <View className='ww dr mb10'>
-        <ComAddressSwitchor className="ww bcctrans" isShort isIcon addressPlaceholder='请填写收货地址' title='收货人:' address={address} onClick={async (e) => {
-          const res_address = await try_Taro_chooseAddress();
-          setAddress(res_address);
-        }} />
+        <ComAddressSwitchor className="ww bcctrans" isShort isIcon addressPlaceholder='请填写收货地址' title='收货人:' address={address}
+          onClick={async (e) => {
+            const res_address = await try_Taro_chooseAddress(true);
+            setAddress(res_address);
+          }} />
         {/* <ComButton className='cccgreen bborder ml10 nw'>到付</ComButton> */}
       </View>
       <View className='ww dr mb10'>

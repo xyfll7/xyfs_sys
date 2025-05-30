@@ -14,7 +14,8 @@ import { ComTextarea } from "@xyfs/taro_uii/components/ComTextarea";
 import { ComSELFView, MMMAAPage } from "@xyfs/taro_uii/components/MMMAAPage";
 import { useSTSelf } from "@xyfs/taro_uii/store/store";
 import { AddressInfo } from "@xyfs/taro_uii/type_user";
-import { Taro_getCurrentInstance, try_Taro_chooseAddress, try_Taro_requestPayment } from "@xyfs/taro_uii/utils/try_catch";
+import { try_Taro_chooseAddress, try_Taro_requestPayment } from "@xyfs/taro_uii/utils/try_catch";
+import { useHook_getCurrentInstance } from "@xyfs/taro_uii/utils/useHooks";
 import { utils_addressInfoToString } from "@xyfs/taro_uii/utils/util";
 import React, { FC, useEffect, useState } from "react";
 
@@ -25,7 +26,7 @@ export default function COMSELFWarp() { return <ComSELFView><Index></Index></Com
 const Index: FC = () => {
   // deptId=oGwbL5MUeSNxxA4o0oOmb_FUjE7g
 
-  const { options } = Taro_getCurrentInstance<{ assist_item_id: string; deptId: string; }>();
+  const { options } = useHook_getCurrentInstance<{ assist_item_id: string; deptId: string; }>();
 
   const [data, setData] = useState<any>(null);
   const [isHeaderBack, setIsHeaderBack] = useState(false);
