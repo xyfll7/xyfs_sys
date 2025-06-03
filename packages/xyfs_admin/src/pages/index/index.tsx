@@ -174,7 +174,7 @@ const IIISettings = ({ ...props }: ViewProps) => {
           子用户
         </ComButton>
       }
-      {roo___has_role(selfInfo_S!, ["ADMIN", "AGENT", "REGIMENT", "GROUPLEADER"]) &&
+      {roo___has_role(selfInfo_S!, ["ADMIN", "AGENT", "REGIMENT", "GROUPLEADER", "SUPPLIER"]) &&
         <ComButton className='bccwhite mb10 mr10' url='/pages_comm/icomm_download_list'>下载任务列表</ComButton>
       }
       {roo___has_role(selfInfo_S!, ["GROUPLEADER"]) && <>
