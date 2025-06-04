@@ -76,7 +76,7 @@ const Index: FC<{}> = ({ }) => {
                 onClick_Children_Show?.(_depts?.findIndex((e) => e.deptId === _dept.deptId)!);
               }}>
                 {_dept.children && <View className='transall fs07 cccplh mr4' style={{ transform: _show ? "rotate(270deg)" : "rotate(180deg)" }}>㇛</View>}
-                {_dept?.deptName}
+                <Text className="nw1"> {_dept?.deptName}</Text>
               </View>
             </ComButton>
             <View className='ww  dy'>
