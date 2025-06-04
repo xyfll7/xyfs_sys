@@ -1,10 +1,10 @@
 // :: pages/index/index
 import { Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
-import { Pagination } from '@xyfs/taro_uii';
+import { DeptInfo, Pagination } from '@xyfs/taro_uii';
 import { Api_assist_explore_ctn } from '@xyfs/taro_uii/api/api__assist';
 import { Api_common_productList_ctn } from '@xyfs/taro_uii/api/api__shop';
-import { Api_user_edit_ctn } from '@xyfs/taro_uii/api/api__users';
+import { Api_dept_groupLeader_ctn, Api_user_edit_ctn } from '@xyfs/taro_uii/api/api__users';
 import CPRegimentAssist from '@xyfs/taro_uii/compages/CPRegimentAssist';
 import { ComAddressSwitchor } from '@xyfs/taro_uii/components/ComAddressSwitchor';
 import { ComBannerMemo } from '@xyfs/taro_uii/components/ComBanner';
@@ -107,7 +107,7 @@ const Index: FC = () => {
 
 
 
-      <IIIBringGoodsGROUPLEADER />
+      <IIIGroupLeaders />
       {selfInfo_S.channelId && <IIIBringGoods channelId={selfInfo_S.channelId} />}
 
       {/* <IIIRegimentAssistList /> */}
@@ -128,10 +128,6 @@ const Index: FC = () => {
 
 
 
-const IIIBringGoodsGROUPLEADER = React.memo(({ className, channelId, }: { className?: string; channelId?: string; }) => {
-
-  return <View className={`${className} ww dll`}>111</View>;
-});
 
 const IIIBringGoods = React.memo(({ className, channelId, }: { className?: string; channelId?: string; }) => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
@@ -290,4 +286,39 @@ const IIIRegimentAssistList: FC<{}> = ({ }) => {
       <ComLoading className='mb10' isLastPage={page?.isLastPage} loading={page_loading} onLoadMore={() => page_list_get(page)}></ComLoading>
     </View>
   );
+};
+
+
+const IIIGroupLeaders: FC = () => {
+  const selfInfo_S = useSTSelf(s => s.selfInfo!);
+  const [groupLeaders, setGroupLeaders] = useState<DeptInfo[] | null>(null);
+  useEffect(() => {
+    Api_dept_groupLeader_ctn({}).then(res => {
+      setGroupLeaders(res);
+    });
+  }, []);
+
+  return <>
+    {!groupLeaders && <ComLoading />}
+    {groupLeaders?.map(e => {
+      return <View key={e.deptId} className='mb10 dbtc bccwhite ww ioo pt10 prl10' onClick={() => {
+        try_Taro_navigateTo({ url: `/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ G_D: e.deptId, })) })}` });
+      }}>
+        <ComButton ll className='mb10' hoverClass='none'>
+          {e.deptName}
+        </ComButton>
+        {selfInfo_S.managerUser &&
+          <ComButtonOpen rr className='cccgreen bborder mb10 ml10' id='send_express'
+            shareTitle={`${selfInfo_S.managerUser?.name} 团长 邀您买东西啦`}
+            openType='share'
+            sharePath={`/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ G_D: e.deptId, })), R_D: Number(selfInfo_S.managerUser?.mobile).toString(36) })}`}>
+            <View className='dbase'>
+              <Text className='fs07 mr4 cccorange' >¥</Text>
+              <Text className='cccplh mr4'>分享</Text>
+            </View>
+            <ComSquare className='icon-share' style={{ width: "calc(1 * var(--rem_base))" }} />
+          </ComButtonOpen>}
+      </View>;
+    })}
+  </>;
 };
