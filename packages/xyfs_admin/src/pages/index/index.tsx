@@ -40,7 +40,10 @@ const Index: FC = () => {
   return <MMMAAPage>
     <ComNav isRight>
       <View className='ds flx1 ww mb10 '>
-        <ComBanner isHeaderBack src="https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/back_image_2025-06-03_002.png" />
+        <ComBanner isHeaderBack src={[
+          "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/back_image_2025-06-03_001.png",
+          "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/back_image_2025-06-03_002.png",
+        ].sort(() => Math.random() - 0.5)[0]} />
         <MMMLogo className='ml10' />
         <ComButton ll className='mr10 cccplh bcctrans' ><Text className='wm6rem nw1'>{selfInfo_S!.name}</Text> </ComButton>
       </View>
