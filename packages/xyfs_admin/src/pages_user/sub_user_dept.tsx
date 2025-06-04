@@ -69,10 +69,15 @@ const Index: FC<{}> = ({ }) => {
       {depts === null && <ComLoading />}
       {depts?.length === 0 && <ComLoading isEmpty />}
       {depts && <ComTree list={depts} keyName='deptId'>
-        {(_dept) => <View className='ww dll bccwhite  ioo ovh pt10 mb10 pr10'>
+        {(_dept, _depts, _show, onClick_Children_Show) => <View className='ww dll bccwhite  ioo ovh pt10 mb10 pr10'>
           <View className='dbtc ww' >
             <ComButton className='mb10 ww' hoverClass='none'>
-              <View className='nw1'>{_dept.deptName}</View>
+              <View className='nw1 dy' onClick={() => {
+                onClick_Children_Show?.(_depts?.findIndex((e) => e.deptId === _dept.deptId)!);
+              }}>
+                {_dept.children && <View className='transall fs07 cccplh mr4' style={{ transform: _show ? "rotate(270deg)" : "rotate(180deg)" }}>㇛</View>}
+                {_dept?.deptName}
+              </View>
             </ComButton>
             <View className='ww  dy'>
               <ComButton rr className='ml10 mb10 cccplh bborder ww nw' onClick={async () => {
