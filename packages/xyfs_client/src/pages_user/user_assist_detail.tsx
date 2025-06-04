@@ -3,7 +3,7 @@ import { Text, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { Api_assist_info_ctn } from "@xyfs/taro_uii/api/api__assist";
 import { Api_order_assistOrder_ctn } from "@xyfs/taro_uii/api/api__orders";
-import { ComBanner } from "@xyfs/taro_uii/components/ComBanner";
+import { ComBannerMemo } from "@xyfs/taro_uii/components/ComBanner";
 import { ComButton } from "@xyfs/taro_uii/components/ComButton";
 import { ComImage } from "@xyfs/taro_uii/components/ComImage";
 import { ComLoading } from "@xyfs/taro_uii/components/ComLoading";
@@ -50,7 +50,7 @@ const Index: FC = () => {
 
   return <MMMAAPage>
     <View style={{ height: "12vh" }}>
-      <ComBanner isHeaderBack={isHeaderBack} src={___image0} />
+      <ComBannerMemo isHeaderBack={isHeaderBack} src={___image0} />
       <ComNav className='fixed-top z9 transall' isRight>
         <ComNavBarA className='mb10 pl10 ww' >
           <View>

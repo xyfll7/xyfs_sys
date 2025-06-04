@@ -7,7 +7,7 @@ import { Api_common_productList_ctn } from '@xyfs/taro_uii/api/api__shop';
 import { Api_user_edit_ctn } from '@xyfs/taro_uii/api/api__users';
 import CPRegimentAssist from '@xyfs/taro_uii/compages/CPRegimentAssist';
 import { ComAddressSwitchor } from '@xyfs/taro_uii/components/ComAddressSwitchor';
-import { ComBanner } from '@xyfs/taro_uii/components/ComBanner';
+import { ComBannerMemo } from '@xyfs/taro_uii/components/ComBanner';
 import { ComButton, ComButtonOpen } from '@xyfs/taro_uii/components/ComButton';
 import { ComImage, ComImageStack } from '@xyfs/taro_uii/components/ComImage';
 import { ComLoading } from '@xyfs/taro_uii/components/ComLoading';
@@ -44,10 +44,10 @@ const Index: FC = () => {
   const { capRight } = utils_get_capsule();
   return <MMMAAPage share={roo___has_role(selfInfo_S!.managerUser!, ["REGIMENT"]) ? { page: `/pages/index/index?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ R_D: Number(selfInfo_S.managerUser?.mobile).toString(36) })) })}`, } : undefined}>
     <View className='ww'>
-      {/* <ComBanner isHeaderBack={isHeaderBack} src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/back_image_25.jpg' /> */}
-      <ComBanner isHeaderBack={isHeaderBack} maskHightT='70%' maskHightF='10vh' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/farmer_0.webp' />
-      {/* <ComBanner isHeaderBack={isHeaderBack} src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/yanan_3.jpg' /> */}
-      {/* <ComBanner isHeaderBack={isHeaderBack} maskHightT='70%' maskHightF='10vh' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/yanan_4.webp' /> */}
+      {/* <ComBannerMemo isHeaderBack={isHeaderBack} src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/back_image_25.jpg' /> */}
+      <ComBannerMemo isHeaderBack={isHeaderBack} maskHightT='70%' maskHightF='10vh' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/farmer_0.webp' />
+      {/* <ComBannerMemo isHeaderBack={isHeaderBack} src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/yanan_3.jpg' /> */}
+      {/* <ComBannerMemo isHeaderBack={isHeaderBack} maskHightT='70%' maskHightF='10vh' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/yanan_4.webp' /> */}
       <ComNav>
         <View className='ww'>
 

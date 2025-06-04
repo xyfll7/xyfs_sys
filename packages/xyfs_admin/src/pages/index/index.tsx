@@ -4,7 +4,7 @@ import Taro from "@tarojs/taro";
 import { DeptInfo } from "@xyfs/taro_uii";
 import { Api_order_export_ctn } from "@xyfs/taro_uii/api/api__orders";
 import { Api_common_jtsd } from "@xyfs/taro_uii/api/api__users";
-import { ComBanner } from "@xyfs/taro_uii/components/ComBanner";
+import { ComBannerMemo } from "@xyfs/taro_uii/components/ComBanner";
 import { ComButton, ComButtonOpen } from '@xyfs/taro_uii/components/ComButton';
 import { ComImage } from "@xyfs/taro_uii/components/ComImage";
 import { ComNav } from '@xyfs/taro_uii/components/ComNav';
@@ -40,7 +40,7 @@ const Index: FC = () => {
   return <MMMAAPage>
     <ComNav isRight>
       <View className='ds flx1 ww mb10 '>
-        <ComBanner isHeaderBack src={[
+        <ComBannerMemo isHeaderBack src={[
           "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/back_image_2025-06-03_001.png",
           "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/back_image_2025-06-03_002.png",
           "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/back_image_2025-06-03_003.png",

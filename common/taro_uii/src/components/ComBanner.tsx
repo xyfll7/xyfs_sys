@@ -1,11 +1,12 @@
 
 import { RootPortal, View } from '@tarojs/components';
+import React from 'react';
 import { utils_str_includes } from '../utils/util';
 import { ComImage } from './ComImage';
 
 
 
-export function ComBanner({
+function ComBanner({
   isHeaderBack,
   maskHightF = "80vw",
   maskHightT = "100%",
@@ -33,3 +34,5 @@ export function ComBanner({
     </View>
   </RootPortal>;
 }
+
+export const ComBannerMemo = React.memo(ComBanner);
