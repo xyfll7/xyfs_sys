@@ -4,14 +4,19 @@ import React from 'react';
 import { utils_str_includes } from '../utils/util';
 import { ComImage } from './ComImage';
 
-
+const _default_image = [
+  "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/back_image_2025-06-03_001.png",
+  "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/back_image_2025-06-03_002.png",
+  "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/back_image_2025-06-03_003.png",
+  "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/back_image_2025-06-03_004.png",
+].sort(() => Math.random() - 0.5)[0];
 
 function ComBanner({
   isHeaderBack,
   maskHightF = "80vw",
   maskHightT = "100%",
   className = "",
-  src = 'https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/back_image_6.jpg',
+  src = _default_image,
   onClick }: { className?: string; isHeaderBack: boolean; src?: string; maskHightF?: string; maskHightT?: string; onClick?: () => void; }) {
 
   const str0___ = utils_str_includes(["bccwhite"], className) ? "linear-gradient(0deg, var(--color_white) 40%, rgba(0, 0, 0, 0) 100%);" : "linear-gradient(0deg, var(--color_back) 40%, rgba(0, 0, 0, 0) 100%);";
