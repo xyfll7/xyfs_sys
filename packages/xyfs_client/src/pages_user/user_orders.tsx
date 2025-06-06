@@ -27,10 +27,10 @@ export default function COMSELFWarp() { return <ComSELFView><Index /> </ComSELFV
 const Index: FC = () => {
   const [shareOrder, isShare, isPay] = useProductDryCleanEditor();
   return <>
-    {isShare === null && <ComNav className='prl10'><ComLoading /></ComNav>}
+    {isShare === null && <ComNav className='prl20'><ComLoading /></ComNav>}
     {isShare === false && <ComNav className='prl10'>
       <View className='ww dll'>
-        <ComButton className='mb10'>待支付干洗订单</ComButton>
+        <ComButton className='mb10 ml10'>待支付干洗订单</ComButton>
         <ComCardOrderDryclean className='ww' order={shareOrder} />
       </View>
     </ComNav>}

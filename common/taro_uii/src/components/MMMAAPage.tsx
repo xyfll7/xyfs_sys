@@ -7,7 +7,7 @@ import { Api_login_rqs } from "../api/api__users";
 import { getMyEnv } from "../env";
 import { roo___has_role } from "../roles";
 import { useSTSelf } from "../store/store";
-import {  try_Taro_navigateBack, try_Taro_navigateTo, try_Taro_navigateToMiniProgram } from "../utils/try_catch";
+import { try_Taro_navigateBack, try_Taro_navigateTo, try_Taro_navigateToMiniProgram } from "../utils/try_catch";
 import { useHook_getCurrentInstance, useHook_shareAppMessage } from "../utils/useHooks";
 import { ComButton } from "./ComButton";
 import { ComLoading } from "./ComLoading";
@@ -350,7 +350,7 @@ export function ComSELFView({ isRefreshSelfInfo_SEveryTime, ...props }: ViewProp
         {
           !selfInfo_S ?
             <ComNav className='prl10'><ComLoading className='ml10 mb10' /></ComNav>
-            : (isInApp ? <View className="">
+            : (isInApp ? <View className="ww">
               <View className='z1 pa'>
                 {isLoading && <ComNav style={{ marginTop: "0.5rem" }}><View className='ml20 oo bccgreen' style={{ minWidth: "0.5rem", minHeight: "0.5rem" }}></View> </ComNav>}
               </View>

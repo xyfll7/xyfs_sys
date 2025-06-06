@@ -10,11 +10,32 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages_user/user_orders",
+          "pathName": "pages_user/user_orders",
+          "query": "scene=R_D%253D7yfv1wj%2526O_D%253DRTMIAL",
+          "scene": null,
+          "launchMode": "default"
+        },
+        {
+          "name": "pages/index/index",
+          "pathName": "pages/index/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/index/index",
+          "pathName": "pages/index/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages/group_buy",
           "pathName": "pages/group_buy",
           "query": "scene=G_D%253D198",
-          "scene": null,
-          "launchMode": "default"
+          "launchMode": "default",
+          "scene": null
         },
         {
           "name": "pages/group_buy",
