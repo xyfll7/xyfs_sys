@@ -16,8 +16,8 @@ export const MMMOrderUser = ({ order, ...props }: ViewProps & { order: OrderInfo
       Taro.showToast({ icon: "none", title: order.userName ? `已复制:${order.userName}/${order.deptName}` : "无" });
     }}>
       <View className="dy">
-        {order.appid === process.env.TARO_APP_CLIENT && <Text className='wm8rem nw1'>{order.userName ?? "顾客"}</Text>}
-        {order.appid === process.env.TARO_APP_ADMIN && <Text className='wm8rem nw1'>{order.userName}</Text>}
+        {order.appid === process.env.TARO_APP_CLIENT && <Text className='wm8rem nw1'>{order.userName ?? "匿名"}</Text>}
+        {order.appid === process.env.TARO_APP_ADMIN && <Text className='wm8rem nw1'>{order.userName ?? "匿名"}</Text>}
         /<Text className='wm8rem nw1'>{order.deptName}</Text>
       </View>
     </ComButton>
