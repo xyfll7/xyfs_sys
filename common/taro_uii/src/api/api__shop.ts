@@ -32,7 +32,7 @@ export async function Api_cart_preOrder_ctn(params: {
   pickUpRange?: string;
   nowPay?: boolean;
 
-}): Promise<Taro.requestPayment.Option & { packageStr: string; orderCode: string; }> {
+}): Promise<Taro.requestPayment.Option & { order: { orderCode: string; }; packageStr: string; }> {
   const res = await wx_call_container<any>({
     path: "/cart/preOrder",
     data: { ...params }

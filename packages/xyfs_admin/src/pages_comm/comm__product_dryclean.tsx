@@ -123,7 +123,7 @@ const Index: FC<{}> = ({ }) => {
                     userMobile: user.mobile,
                     userName: user.name,
                   });
-                  return res_shareOrder.orderCode;
+                  return res_shareOrder.order.orderCode;
 
                 }} onClearCart={async () => { setCart([]); setUser(() => ({ name: "", mobile: "" })); }} />
             </View>
