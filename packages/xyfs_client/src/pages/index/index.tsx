@@ -1,7 +1,7 @@
 // :: pages/index/index
 import { Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
-import { DeptInfo, Pagination } from '@xyfs/taro_uii';
+import { Pagination } from '@xyfs/taro_uii';
 import { Api_assist_explore_ctn } from '@xyfs/taro_uii/api/api__assist';
 import { Api_common_productList_ctn } from '@xyfs/taro_uii/api/api__shop';
 import { Api_dept_groupLeader_ctn, Api_user_edit_ctn } from '@xyfs/taro_uii/api/api__users';
@@ -97,7 +97,7 @@ const Index: FC = () => {
       <IIIMainNavigator className='mb10  ' />
 
 
-      {/* {getMyEnv().isDeveloping && <IIIBanner className='mb10' />} */}
+
 
       <View className='prl10 ww'>
         <View className='dxy bccgreen fs07 IOO prl10 pbt10 cccwhite ww mb20'>
@@ -291,16 +291,22 @@ const IIIRegimentAssistList: FC<{}> = ({ }) => {
 
 const IIIGroupLeaders: FC = () => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
-  const [groupLeaders, setGroupLeaders] = useState<DeptInfo[] | null>(null);
-  useEffect(() => {
-    Api_dept_groupLeader_ctn({}).then(res => {
-      setGroupLeaders(res);
-    });
-  }, []);
+
+
+
+  const ___page_getter = useCallback(async (p: Pagination<unknown>) =>
+    await Api_dept_groupLeader_ctn({
+      ...p,
+      keyword: ""
+    }), []);
+  const { page, page_loading, page_list_get, page_list_update, page_init } = useHook_pageListNew(___page_getter,);
+
+
+
+
 
   return <>
-    {!groupLeaders && <ComLoading />}
-    {groupLeaders?.map(e => {
+    {page.list?.map(e => {
       return <View key={e.deptId} className='mb10 dbtc bccwhite ww ioo pt10 prl10' onClick={() => {
         try_Taro_navigateTo({ url: `/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ G_D: e.deptId, })) })}` });
       }}>

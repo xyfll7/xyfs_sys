@@ -404,9 +404,13 @@ export async function Api_dept_channelConfig_ctn(params: {
   return res;
 }
 
-export async function Api_dept_groupLeader_ctn(params: {}) {
-  const res = await wx_call_container<DeptInfo[]>({
-    method: "GET",
+export async function Api_dept_groupLeader_ctn(params: Pick<Pagination<unknown>, "keyword" | "pageNum" | "pageSize"> & {
+  agentOpenid?: string;
+  regimentOpenid?: string;
+  userId?: string;
+  roleId?: number;
+}): Promise<Pagination<DeptInfo[]>> {
+  const res = await wx_call_container<Pagination<DeptInfo[]>>({
     path: "/user/groupLeader",
     data: { ...params },
   });
