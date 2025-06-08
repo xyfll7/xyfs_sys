@@ -17,7 +17,7 @@ import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { roo___my_dept } from '@xyfs/taro_uii/src/roles';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
 import { AddressInfo } from '@xyfs/taro_uii/type_user';
-import { try_Taro_chooseAddress } from '@xyfs/taro_uii/utils/try_catch';
+import { try_Taro_chooseAddress, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
 import { coo___ios_date } from '@xyfs/utils/util';
 import { format, subDays } from 'date-fns';
 import { FC, useState } from 'react';
@@ -115,7 +115,13 @@ const IIIShopCartTabBarUser: FC<{ onToggle: () => void; onPay?: () => void; }> =
             pickUpDate: form.pickUpDate,
             pickUpRange: form.pickUpRange,
           });
-          Taro.showToast({ icon: "none", title: "下单成功" });
+          Taro.hideLoading();
+          try_Taro_showModal({
+            title: "提示",
+            content: "预约成功，请等待团长上门取件",
+            confirmText: "知道了",
+            showCancel: false,
+          });
           const res_address = await Api_userAddress_add_ctn({ ...address, id: undefined, type: 2 });
           const res_userInfo = await Api_user_edit_ctn({ defaultRecManAddressId: res_address.id });
           useSTSelf.getState().sett(res_userInfo);
