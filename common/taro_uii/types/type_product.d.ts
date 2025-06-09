@@ -42,9 +42,11 @@ export interface Product_Express extends ProductBase {
 export interface Product_Publish extends ProductBase, Time_Base {
   picUrl?: string; // 存货数量
   name?: string;
+  attachUrl?: string;
   currentPrice?: string;
   waybillId?: string;
   pictureUrl?: string;
+  price?: string;
   totalPrice?: number;
   printTimes?: number;
   orderId?: string;

@@ -1,4 +1,4 @@
-import { AddressInfo, DeptInfo, DICTS_KEYS, Pagination, Printer_Info } from "../../types";
+import { AddressInfo, DeptInfo, DICTS_KEYS, Pagination, Printer_Info, Product_Publish } from "../../types";
 import { getMyEnv } from "../env";
 import { Taro_getStorageSync } from "../utils/try_catch";
 import { try_Taro_login, wx_call_container } from "./wx_call";
@@ -409,8 +409,8 @@ export async function Api_dept_groupLeader_ctn(params: Pick<Pagination<unknown>,
   regimentOpenid?: string;
   userId?: string;
   roleId?: number;
-}): Promise<Pagination<DeptInfo[]>> {
-  const res = await wx_call_container<Pagination<DeptInfo[]>>({
+}) {
+  const res = await wx_call_container<Pagination<(DeptInfo & { products: Product_Publish[]; })[]>>({
     path: "/user/groupLeader",
     data: { ...params },
   });

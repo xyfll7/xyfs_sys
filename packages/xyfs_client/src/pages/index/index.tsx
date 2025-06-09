@@ -307,24 +307,36 @@ const IIIGroupLeaders: FC = () => {
 
   return <>
     {page.list?.map(e => {
-      return <View key={e.deptId} className='mb10 dbtc bccwhite ww ioo pt10 prl10' onClick={() => {
-        try_Taro_navigateTo({ url: `/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ G_D: e.deptId, })) })}` });
-      }}>
-        <ComButton ll className='mb10' hoverClass='none'>
-          {e.deptName}
-        </ComButton>
-        {selfInfo_S.managerUser &&
-          <ComButtonOpen rr className='cccgreen bborder mb10 ml10' id='send_express'
-            shareTitle={`${selfInfo_S.managerUser?.name} 团长 邀您买东西啦`}
-            openType='share'
-            sharePath={`/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ G_D: e.deptId, })), R_D: Number(selfInfo_S.managerUser?.mobile).toString(36) })}`}>
-            <View className='dbase'>
-              <Text className='fs07 mr4 cccorange' >¥</Text>
-              <Text className='cccplh mr4'>分享</Text>
-            </View>
-            <ComSquare className='icon-share' style={{ width: "calc(1 * var(--rem_base))" }} />
-          </ComButtonOpen>}
+      return <View className='ww dll mb10  bccwhite ww ioo pt10 prl10' key={e.deptId}>
+        <View className='dbtc ww' onClick={() => {
+          try_Taro_navigateTo({ url: `/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ G_D: e.deptId, })) })}` });
+        }}>
+          <ComButton ll className='mb10' hoverClass='none'>
+            {e.deptName}
+          </ComButton>
+          {selfInfo_S.managerUser &&
+            <ComButtonOpen rr className='cccgreen bborder mb10 ml10' id='send_express'
+              shareTitle={`${selfInfo_S.managerUser?.name} 团长 邀您买东西啦`}
+              openType='share'
+              sharePath={`/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ G_D: e.deptId, })), R_D: Number(selfInfo_S.managerUser?.mobile).toString(36) })}`}>
+              <View className='dbase'>
+                <Text className='fs07 mr4 cccorange' >¥</Text>
+                <Text className='cccplh mr4'>分享</Text>
+              </View>
+              <ComSquare className='icon-share' style={{ width: "calc(1 * var(--rem_base))" }} />
+            </ComButtonOpen>}
+        </View>
+        <View className='dll mb10  ww' >
+          {e.products.map((p, i) => <View className='dy mb10' key={i}>
+            <ComImage className='mr10' src={p.attachUrl?.split(",")[0]} style={{ width: "2.5rem", height: "2.5rem" }} />
+            <ComButton className=''>
+              <Text className='nw1'>{p.name}</Text>
+              <View className='nw'>{p.price}</View>
+            </ComButton>
+          </View>)}
+        </View>
       </View>;
     })}
+    <ComLoading className='mb10' isLastPage={page?.isLastPage} loading={page_loading} onLoadMore={() => page_list_get(page)} />
   </>;
 };
