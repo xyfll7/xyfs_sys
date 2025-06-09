@@ -301,10 +301,6 @@ const IIIGroupLeaders: FC = () => {
     }), []);
   const { page, page_loading, page_list_get, page_list_update, page_init } = useHook_pageListNew(___page_getter,);
 
-
-
-
-
   return <>
     {page.list?.map(e => {
       return <View className='ww dll mb10  bccwhite ww ioo pt10 prl10' key={e.deptId}>
@@ -326,12 +322,12 @@ const IIIGroupLeaders: FC = () => {
               <ComSquare className='icon-share' style={{ width: "calc(1 * var(--rem_base))" }} />
             </ComButtonOpen>}
         </View>
-        <View className='dll mb10  ww' >
-          {e.products.map((p, i) => <View className='dy mb10' key={i}>
+        <View className='dll ww' >
+          {e.products.map((p, i) => <View className='dy mb10 ww' key={i}>
             <ComImage className='mr10' src={p.attachUrl?.split(",")[0]} style={{ width: "2.5rem", height: "2.5rem" }} />
-            <ComButton className=''>
-              <Text className='nw1'>{p.name}</Text>
-              <View className='nw'>{p.price}</View>
+            <ComButton rr ll className='ww  dbtc'>
+              <Text className='nw1 mr10'>{p.name}</Text>
+              <ComPrice className='cccprice' price={Number(p.price)}></ComPrice>
             </ComButton>
           </View>)}
         </View>
