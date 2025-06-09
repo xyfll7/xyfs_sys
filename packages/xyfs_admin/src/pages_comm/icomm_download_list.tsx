@@ -29,10 +29,11 @@ definePageConfig({
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC<{}> = ({ }) => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
-  const ___page_getter = useCallback(async (p: Pagination<unknown>) => await Api_common_taskList({ ...p, }), []);
+  const ___page_getter = useCallback(async (p: Pagination<unknown>) =>
+    await Api_common_taskList({ ...p, }), []);
   const { page, page_loading, page_list_get, page_init } = useHook_pageListNew(___page_getter);
   const ___time = 24;
-  return <MMMAAPage >
+  return <MMMAAPage>
     <ComNav>
       <View className='ww'>
         <ComNavBarA className='mb10 pl10'>
