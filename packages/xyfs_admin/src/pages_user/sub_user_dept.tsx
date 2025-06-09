@@ -16,6 +16,7 @@ import { ComSearcher } from "@xyfs/taro_uii/components/ComSearcher";
 import { ComTree } from "@xyfs/taro_uii/components/ComTree";
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { ROLE_ST } from "@xyfs/taro_uii/src/config";
+import { getMyEnv } from "@xyfs/taro_uii/src/env";
 import { roo___has_role } from "@xyfs/taro_uii/src/roles";
 import { useSTDicts } from "@xyfs/taro_uii/store/store";
 import { try_Taro_navigateTo, try_Taro_showActionSheet, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
@@ -330,7 +331,7 @@ const IIIDeptEdit = ({ dept, onSuccess, onClose }: { dept: any; onSuccess: () =>
       <View className='ww dll '>
         <ComButton className='cccplh mb10 bccback'>指定部门角色</ComButton>
         <View className='dy dwp'>
-          {dicts_roles?.filter((e) => ["REGIMENT", "SUPPLIER", "DRIVER", "MERCHANT", "GUIDE", "SCANNER", "GROUPLEADER"].includes(e.roleKey)).map((e, i) => {
+          {dicts_roles?.filter((e) => [...(getMyEnv().platform === "devtools" ? ["ADMIN"] : []), "REGIMENT", "SUPPLIER", "DRIVER", "MERCHANT", "GUIDE", "SCANNER", "GROUPLEADER",].includes(e.roleKey)).map((e, i) => {
             return <ComButton rr className={` mb10 ${deptInfo?.roles?.some(ee => ee.roleKey === e.roleKey) ? 'cccgreen' : ''}`}
               onClick={async () => {
                 const isHasRole = deptInfo?.roles?.some(ee => ee.roleKey === e.roleKey);

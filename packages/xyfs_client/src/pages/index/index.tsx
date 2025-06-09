@@ -303,7 +303,7 @@ const IIIGroupLeaders: FC = () => {
 
   return <>
     {page.list?.map(e => {
-      return <View className='ww dll mb10  bccwhite ww ioo pt10 prl10' key={e.deptId} onClick={() => {
+      return <View className='ww dll mb10  bccwhite ww IOO pt10 prl10' key={e.deptId} onClick={() => {
         try_Taro_navigateTo({ url: `/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ G_D: e.deptId, })) })}` });
       }}>
         <View className='dbtc ww' >
