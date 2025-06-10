@@ -169,7 +169,6 @@ const Index: FC = () => {
           try {
             Taro.showLoading({ mask: true, title: "支付..." });
             await try_Taro_requestPayment({ ...res_pay, package: res_pay.packageStr });
-            Taro.hideLoading();
             if (await try_Taro_showModal({ title: "支付成功", content: `订单移到"已支付"列表`, confirmText: "查看订单", cancelText: "留在本页" })) {
               try_Taro_navigateTo({ url: `/pages_user/user_orders?order_ST=${Order_ST.已付款}` });
             }
