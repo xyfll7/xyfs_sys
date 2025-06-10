@@ -23,7 +23,7 @@ export function ComPaySuccessCard() {
       <ComPopupNew className=' ww'>
         <View className='prl10'>
           <ComNavBarB className='mb10 ww' showClose={false}>
-            <ComButton className='fwb bccback'>{{ [`${Order_ST.待付款}`]: `取消支付`, [`${Order_ST.已付款}`]: `支付成功`, [`default`]: `默认标题`, "3": "", "4": "" }[express_S?.orderStatus ?? "default"]}</ComButton>
+            <ComButton className='fwb bccback'>{{ [`${Order_ST.待付款}`]: `支付失败`, [`${Order_ST.已付款}`]: `支付成功`, [`default`]: `默认标题`, "3": "", "4": "" }[express_S?.orderStatus ?? "default"]}</ComButton>
             <ComButton className='cccgreen' onClick={() => useSTExpress.getState().sett({ ___show: false })}>
               {express_S?.orderStatus === Order_ST.待付款 && "稍后支付→关闭"}
               {express_S?.orderStatus === Order_ST.已付款 && !express_S.printTimes && "稍后打印→关闭"}

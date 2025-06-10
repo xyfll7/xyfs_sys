@@ -148,7 +148,7 @@ const Index: FC<{}> = ({ }) => {
                       setOrderType(Order_ST.已付款);
                     }
                   } catch {
-                    throw new ErrorR("取消支付", true);
+                    throw new ErrorR("支付失败", true);
                   } finally {
                     Taro.hideLoading();
                   }

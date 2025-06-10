@@ -161,20 +161,20 @@ const Index: FC = () => {
         <ComButton className='bccyellow ml10 nw' onClickO={async () => {
           if (!Boolean(cart?.length)) { throw new ErrorR("购物车为空", true); }
           if (!Boolean(address)) { throw new ErrorR("请选择收货地址", true); }
+          Taro.showLoading({ mask: true, title: "支付中...", });
+          const res_pay = await Api_goodsCart_preOrder_ctn({
+            goodsItems: cart?.map(e => ({ id: e.id }))!,
+            recMan: address!,
+          });
           try {
-            Taro.showLoading({ mask: true, title: "支付中...", });
-            const res_pay = await Api_goodsCart_preOrder_ctn({
-              goodsItems: cart?.map(e => ({ id: e.id }))!,
-              recMan: address!,
-            });
-            Taro.showLoading({ mask: true, title: "支付...", });
+            Taro.showLoading({ mask: true, title: "支付..." });
             await try_Taro_requestPayment({ ...res_pay, package: res_pay.packageStr });
             Taro.hideLoading();
-            if (await try_Taro_showModal({ title: "支付完成", content: `订单移到"已支付"列表`, confirmText: "查看订单", cancelText: "留在本页" })) {
+            if (await try_Taro_showModal({ title: "支付成功", content: `订单移到"已支付"列表`, confirmText: "查看订单", cancelText: "留在本页" })) {
               try_Taro_navigateTo({ url: `/pages_user/user_orders?order_ST=${Order_ST.已付款}` });
             }
           } catch (err) {
-            if (await try_Taro_showModal({ title: "取消支付", content: `订单移到"待支付"列表`, confirmText: "查看订单", cancelText: "留在本页" })) {
+            if (await try_Taro_showModal({ title: "支付失败", content: `订单移到"待支付"列表`, confirmText: "查看订单", cancelText: "留在本页" })) {
               try_Taro_navigateTo({ url: `/pages_user/user_orders?order_ST=${Order_ST.待付款}` });
             }
           } finally {

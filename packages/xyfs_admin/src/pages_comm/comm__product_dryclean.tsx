@@ -91,7 +91,7 @@ const Index: FC<{}> = ({ }) => {
               }
             } catch (err) {
               if (await try_Taro_showModal({
-                title: "取消支付",
+                title: "支付失败",
                 content: `订单移到"待支付"列表`,
                 confirmText: "查看订单",
                 cancelText: "留在本页"
