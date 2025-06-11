@@ -246,3 +246,15 @@ export async function Api_order_shipments_ctn(params: { orderId: string; }): Pro
   });
   return res;
 }
+
+// POST /common/setJumpPath
+// {path :}
+// 消息跳转路径设置接口
+// https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/business-capabilities/order-shipping/order-shipping.html#%E5%85%AD%E3%80%81%E6%B6%88%E6%81%AF%E8%B7%B3%E8%BD%AC%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE%E6%8E%A5%E5%8F%A3
+export async function Api_common_setJumpPath_ctn(params: { path: string; }): Promise<any> {
+  const res = await wx_call_container<Promise<any>>({
+    path: "/common/setJumpPath",
+    data: { ...params },
+  });
+  return res;
+}

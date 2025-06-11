@@ -1,4 +1,6 @@
+import Taro from "@tarojs/taro";
 import { FC } from "react";
+import { Api_common_setJumpPath_ctn } from "../api/api__orders";
 import { ComButton } from "../components/ComButton";
 import { ComNav } from "../components/ComNav";
 import { ComNavBarA } from "../components/ComNavBarA";
@@ -13,7 +15,12 @@ const CTestUtils: FC = () => {
       </ComNavBarA>
     </ComNav>
     <ComScrollView >
-
+      <ComButton className='mb10' onClick={async () => {
+        Taro.showLoading({ mask: true, title: "处理中...", });
+        const res = await Api_common_setJumpPath_ctn({ path: "pages/test/ctest_index" });
+        console.log(res);
+        Taro.showToast({ icon: "none", title: "已设置消息跳转路径", });
+      }}>订单消息跳转路径设置</ComButton>
     </ComScrollView>
   </MMMAAPage>;
 };
