@@ -186,7 +186,7 @@ export async function try_Taro_chooseAddress(isTest: boolean = false): Promise<O
     if (isTest) {
       return {
         name: "王肇",
-        mobile: "17709205219",
+        mobile: "17709205222",
         company: "",
         postCode: "",
         code: "710000",
