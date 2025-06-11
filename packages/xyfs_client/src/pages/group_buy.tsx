@@ -281,7 +281,6 @@ const IIIUsers = React.memo(({ deptId }: { deptId: string; }) => {
   }, [Api_goods_groupBuyingUserList_ctn_callback]);
 
   useDidShow(() => {
-    Taro.showToast({ icon: "none", title: "执行了...", });
     Api_goods_groupBuyingUserList_ctn_callback();
   });
 
