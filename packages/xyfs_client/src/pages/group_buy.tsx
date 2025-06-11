@@ -271,6 +271,8 @@ const IIIItem = ({ item, type, onAdd, onSub, onDetail, count }: { count: number,
 const IIIUsers = React.memo(({ deptId }: { deptId: string; }) => {
   const [users, setUsers] = useState<any[] | null>(null);
   useEffect(() => {
+    setUsers(null);
+    if (!deptId) { return; }
     Api_goods_groupBuyingUserList_ctn({ queryDeptId: deptId }).then((res) => {
       setUsers(res);
     });

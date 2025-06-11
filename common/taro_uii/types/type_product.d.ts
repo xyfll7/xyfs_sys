@@ -105,6 +105,7 @@ interface OrderInfo<T> {
   appid?: string;
   mobile?: string;
   printTimes?: number;  // 打印次数
+  transactionId?: string;  // 打印次数
   orderType?: Product_category_ST; // 供应商类型
   payStatus?: 0 | 1; // 供应商类型
   deptId?: string; // 团长OPENID 该商品由该团长卖出

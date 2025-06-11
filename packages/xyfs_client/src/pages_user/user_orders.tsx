@@ -237,6 +237,24 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
               {_order2.orderStatus === Order_ST.已付款 && _order2.productList?.filter(e => e.waybillId).length !== _order2.productList?.length &&
                 <ComButton rr className='mb10 bborder'>待发货</ComButton>
               }
+              <ComButton rr className='ml10 mb10 bccyellow' onClick={async () => {
+                Taro.openBusinessView({
+                  businessType: 'weappOrderConfirm',
+                  // orderId: _order2.outTradeNo!
+                  extraData: {
+                    // @ts-ignore
+                    transaction_id: _order2.transactionId!,
+                    // merchant_id: _order2.orderType,
+                    // merchant_trade_no: _order2.orderType,
+                  },
+                  success: (res) => {
+                    console.log("openBusinessView success", res);
+                  },
+                  fail: (err) => {
+                    console.error("openBusinessView fail", err);
+                  }
+                });
+              }}>确认收货</ComButton>
               {Boolean(_order2.productList?.length) && orderType === Order_ST.待付款 &&
                 <ComButton rr className='mb10  bccyellow ml10'
                   onClick={async () => {
