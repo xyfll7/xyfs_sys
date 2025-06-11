@@ -116,12 +116,14 @@ const Index: FC = () => {
   const [form, setForm] = useHook_Reducer({
     orderType: 0 as 0 | 1 | 2 | 3,
     barCode: "",
+    orderId: "",
     phoneNumber: "",
     waybillId: "",
   });
   const [searchValue, setSearchValue] = useHook_Reducer<{
     orderType: 0 | 1 | 2 | 3;
     barCode: string;
+    orderId: string;
     phoneNumber: string;
     waybillId: string;
   } | null>(null);
@@ -138,6 +140,9 @@ const Index: FC = () => {
         <ComNavBarA className='mb10'>
           <ComButton ll className='bcctrans cccplh ml10' >订单综合查询</ComButton>
         </ComNavBarA>
+        <ComButton className='flx1 bccbacktab mb10' hoverClass='none'>
+          <ComInput className='' value={form.orderId} placeholder='订单单号' disabled={page_loading} onInput={(e) => { setForm({ orderType: 0, orderId: e.detail.value }); }} />
+        </ComButton>
         <ComButton className='flx1 bccbacktab mb10' hoverClass='none'>
           <ComInput className='' value={form.waybillId} placeholder='快递单号' disabled={page_loading} onInput={(e) => { setForm({ orderType: 0, waybillId: e.detail.value }); }} />
         </ComButton>
