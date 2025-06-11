@@ -45,7 +45,7 @@ const Index: FC<{}> = ({ }) => {
     return await Api_dept_list_ctn({ keyword: searchValue });
   }, [searchValue,]);
 
-  const { data: depts, loading } = useHook_Fetch(___Api_dept_list_ctn);
+  const { data: depts, loading, data_init, } = useHook_Fetch(___Api_dept_list_ctn);
 
   const [dept, setDept] = useState<any>(null);
   const [mode, setMode] = useState<"add" | "edit">();
@@ -93,7 +93,7 @@ const Index: FC<{}> = ({ }) => {
                     Taro.showLoading({ mask: true, title: "删除中" });
                     await Api_dept_del_ctn({ deptId: _dept.deptId! });
                     Taro.showToast({ icon: "none", title: "成功" });
-                    await ___Api_dept_list_ctn();
+                    await data_init();
                   }
                 }
               }}>更多</ComButton>
@@ -205,12 +205,12 @@ const Index: FC<{}> = ({ }) => {
     </ComScrollView>
     {dept && mode === "add" && <ComPopupNew onClose={() => setDept(null)}>
       <View className='dll prl10' style={{ height: "80vh" }}>
-        <IIIDeptAdd dept={dept} onSuccess={() => { setDept(null); ___Api_dept_list_ctn(); }} onClose={() => { setDept(null); }}></IIIDeptAdd>
+        <IIIDeptAdd dept={dept} onSuccess={() => { setDept(null); data_init(); }} onClose={() => { setDept(null); }}></IIIDeptAdd>
       </View>
     </ComPopupNew>}
     {dept && mode === "edit" && <ComPopupNew onClose={() => setDept(null)}>
       <View className='dll prl10' style={{ height: "80vh" }}>
-        <IIIDeptEdit dept={dept} onSuccess={() => { setDept(null); ___Api_dept_list_ctn(); }} onClose={() => { setDept(null); }}></IIIDeptEdit>
+        <IIIDeptEdit dept={dept} onSuccess={() => { setDept(null); data_init(); }} onClose={() => { setDept(null); }}></IIIDeptEdit>
       </View>
     </ComPopupNew>}
     {deptUserList && <ComPopupNew onClose={() => setDept(null)}>
