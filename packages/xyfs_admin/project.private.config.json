@@ -10,11 +10,18 @@
     "miniprogram": {
       "list": [
         {
-          "name": "pages_user/sub_user_dept",
-          "pathName": "pages_user/sub_user_dept",
+          "name": "pages_agent/agent__express_search",
+          "pathName": "pages_agent/agent__express_search",
           "query": "",
           "scene": null,
           "launchMode": "default"
+        },
+        {
+          "name": "pages_user/sub_user_dept",
+          "pathName": "pages_user/sub_user_dept",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         },
         {
           "name": "pages_comm/icomm_orders_groupbuying",

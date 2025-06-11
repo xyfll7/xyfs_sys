@@ -122,7 +122,7 @@ const IIISettings = ({ ...props }: ViewProps) => {
         <ComButton className='mb10 bccwhite nw mr10' url='/pages_regiment/regiment_bind_cloudPrinter'>云打印机</ComButton>
       }
 
-      {roo___has_role(selfInfo_S!, ["AGENT", "REGIMENT", "SUPPLIER", "SCANNER"]) &&
+      {roo___has_role(selfInfo_S!, ["AGENT", "REGIMENT", "SUPPLIER", "SCANNER", "GROUPLEADER"]) &&
         <ComButton className='bccwhite mb10 mr10' url='/pages_agent/agent__express_search'>
           订单综合查询
         </ComButton>

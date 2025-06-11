@@ -19,6 +19,13 @@
         {
           "name": "pages_user/user_orders",
           "pathName": "pages_user/user_orders",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_user/user_orders",
+          "pathName": "pages_user/user_orders",
           "query": "scene=R_D%253D7yfv1wj%2526O_D%253DRTMIAL",
           "launchMode": "default",
           "scene": null

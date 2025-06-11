@@ -12,6 +12,7 @@ import { ComPaySuccessCard } from '@xyfs/taro_uii/components/ComPaySuccessCard';
 import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { Order_ST, Product_category_ST } from "@xyfs/taro_uii/src/config";
+import { getMyEnv } from "@xyfs/taro_uii/src/env";
 import { roo___role_getRoleInfo } from "@xyfs/taro_uii/src/roles";
 import { useSTSelf } from "@xyfs/taro_uii/store/store";
 import { Pagination } from "@xyfs/taro_uii/type_index";
@@ -149,40 +150,49 @@ const Index: FC = () => {
           </ComButton>
         </View>
         <View className='dr mb10'>
-          <ComButton className='ml10 nw' onClick={() => { setForm(null); setSearchValue(null); page_init(true); }}>清空</ComButton>
-          <ComButton className={`ml10 nw prl30 ${form.orderType == 1 ? "bccgreen cccwhite" : "cccgreen"}`} onClick={() => {
+          <ComButton ll className='ml10 nw' onClick={() => { setForm(null); setSearchValue(null); page_init(true); }}>清空</ComButton>
+          <ComButton ll className={`ml10 nw  ${form.orderType == 1 ? "bccgreen cccwhite" : "cccgreen"}`} onClick={() => {
             if (page_loading) { throw new Error("正在加载中，请稍后再试"); }
             setForm({ orderType: 1 });
             page_init();
             setSearchValue({ ...form, orderType: 1 });
           }}>搜快递</ComButton>
-          <ComButton className={`ml10 nw prl30 ${form.orderType == 2 ? "bccgreen cccwhite" : "cccgreen"}`} onClick={() => {
+          <ComButton ll className={`ml10 nw  ${form.orderType == 2 ? "bccgreen cccwhite" : "cccgreen"}`} onClick={() => {
             if (page_loading) { throw new Error("正在加载中，请稍后再试"); }
             setForm({ orderType: 2 });
             page_init();
             setSearchValue({ ...form, orderType: 2 });
           }}>搜干洗</ComButton>
+          <ComButton ll className={`ml10 nw  ${form.orderType == 3 ? "bccgreen cccwhite" : "cccgreen"}`} onClick={() => {
+            if (page_loading) { throw new Error("正在加载中，请稍后再试"); }
+            setForm({ orderType: 3 });
+            page_init();
+            setSearchValue({ ...form, orderType: 3 });
+          }}>搜团购</ComButton>
         </View>
-        <View className='dr'>
-          <ComButton className=' mb10' onClick={async () => {
-            const arrr: any[] = [];
-            for (let i = 0; i < arr.length; i++) {
-              const res = await Api_order_aggregateQuery_ctn({
-                barCode: "",
-                orderType: 1,
-                pageNum: 1,
-                pageSize: 5,
-                phoneNumber: "",
-                roleId: 1,
-                waybillId: arr[i]!,
-              });
-              arrr.push(res);
-            }
-            console.log(JSON.stringify(arrr));
-          }} >
-            批量查询
-          </ComButton>
-        </View>
+        {getMyEnv().platform === "devtools" &&
+          <View className='dr'>
+            <ComButton className=' mb10' onClick={async () => {
+              const arrr: any[] = [];
+              for (let i = 0; i < arr.length; i++) {
+                const res = await Api_order_aggregateQuery_ctn({
+                  barCode: "",
+                  orderType: 1,
+                  pageNum: 1,
+                  pageSize: 5,
+                  phoneNumber: "",
+                  roleId: 1,
+                  waybillId: arr[i]!,
+                });
+                arrr.push(res);
+              }
+              console.log(JSON.stringify(arrr));
+            }} >
+              批量查询
+            </ComButton>
+          </View>
+        }
+
       </View>
     </ComNav>
     <ComScrollView onScrollToLower={async () => { page_list_get(page); }}>
@@ -214,7 +224,7 @@ const Index: FC = () => {
             return <View className='bccwhite IOO mb10 ww' key={e.id}>
               <ComCardOrderDryclean className='mb10' order={order1} />
               <View className='dr dwp prl10 ww'>
-                {Boolean(order1.productList?.length) && order1.orderStatus !==  Order_ST.待付款 && <ComButton rr className='slr cccgreen bborder mb10 ml10' onClick={async () => {
+                {Boolean(order1.productList?.length) && order1.orderStatus !== Order_ST.待付款 && <ComButton rr className='slr cccgreen bborder mb10 ml10' onClick={async () => {
                   await try_Taro_navigateTo({ url: `/pages_comm/comm__express_path?${coo___objToUrl({ express_share_id: order1.id })}` });
                 }}>轨迹</ComButton>}
               </View>
