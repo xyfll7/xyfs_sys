@@ -219,15 +219,7 @@ export async function Api_order_assistOrder_ctn(params: {
   });
   return res;
 }
-export async function Api_order_confirm_ctn(params: {
-  orderId: string,
-}): Promise<any> {
-  const res = await wx_call_container<Promise<any>>({
-    path: "/order/confirm",
-    data: { ...params },
-  });
-  return res;
-}
+
 export async function Api_order_orderProductCode_ctn(params: {
   code: string;// "string",
   orderId: string;// "string",

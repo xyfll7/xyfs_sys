@@ -56,6 +56,12 @@ export enum Product_category_ST {
   团购 = 4,
 }
 
+export enum Order_deliveryStatus_ST {
+  待发货 = 0,
+  待收货 = 1,
+  已签收 = 2,
+}
+
 export type ROLE_KEY = "USER" | "STAFF" | "DEVELOP" | "DRIVER" | "SUPPLIER" | "REGIMENT" | "AGENT" | "SCANNER" | "MERCHANT" | "GUIDE" | "GROUPLEADER" | "ADMIN" | "*:*:*";
 export type ROLE_NAME = "用户" | "员工" | "开发" | "司机" | "供应商" | "团长" | "代理" | "揽收员" | "商家";
 

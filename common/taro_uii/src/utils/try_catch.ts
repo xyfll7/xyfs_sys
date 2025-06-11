@@ -388,6 +388,29 @@ export async function try_Taro_requestPayment(data: Taro.requestPayment.Option) 
 
 
 
+export function try_Taro_openBusinessView(transactionId: string) {
+  return new Promise<TaroGeneral.CallbackResult>((resolve, reject) => {
+    Taro.openBusinessView({
+      businessType: 'weappOrderConfirm',
+      // @ts-ignore
+      extraData: { transaction_id: transactionId },
+      success: (res) => { resolve(res); },
+      fail: (err) => {
+        if (err.errMsg) {
+          reject(new Error(err.errMsg));
+        } else {
+          reject(err);
+        }
+      }
+    });
+
+  });
+
+
+
+}
+
+
 
 
 

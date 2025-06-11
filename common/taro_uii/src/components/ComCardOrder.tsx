@@ -1,10 +1,10 @@
 import { Text, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
-import { coo___ios_date, coo___objToUrl } from "@xyfs/utils/util";
+import { coo___ios_date, coo___isNumber, coo___objToUrl } from "@xyfs/utils/util";
 import { format } from "date-fns";
 import React, { FC } from "react";
 import { OrderInfo, Product_Dryclean, Product_Express, Product_Publish } from "../../types/type_product";
-import { Order_ST, PickUp_ST, Product_category_ST } from "../config";
+import { Order_deliveryStatus_ST, Order_ST, PickUp_ST, Product_category_ST } from "../config";
 import { try_Taro_navigateTo, try_Taro_setClipboardData } from "../utils/try_catch";
 import { utils_arr_includes } from "../utils/util";
 import { ComAddressSwitchor } from "./ComAddressSwitchor";
@@ -185,7 +185,16 @@ export const ComCardOrderBringGoods: FC<{
   return <View className={`bccwhite prl10 ioo pt10 ww ${className}`}>
     <View className='dbtc ww mb10'>
       <MMMOrderUser order={order} />
-      <ComButton rr className='cccgreen'>{Product_category_ST[order.orderType!]}</ComButton>
+      <View className="dy">
+        {coo___isNumber(order.deliveryStatus) &&
+          <View className={`dy ${new Map([
+            [Order_deliveryStatus_ST.待发货, 'cccprice'],
+            [Order_deliveryStatus_ST.待收货, 'cccgreen'],
+            [Order_deliveryStatus_ST.已签收, 'cccplh']])
+            .get(order.deliveryStatus!)}`}>{Order_deliveryStatus_ST[order.deliveryStatus!]}</View>
+        }
+        <ComButton rr className='cccgreen'>{Product_category_ST[order.orderType!]}</ComButton>
+      </View>
     </View>
     <ComAddressSwitchor ll rr className='ww mb10' title='收:' address={order?.userAddress} time={order.orderTimeFormat} />
     <ComAddressSwitchor ll rr className='ww mb10' title='团:' address={order?.deptAddress} />

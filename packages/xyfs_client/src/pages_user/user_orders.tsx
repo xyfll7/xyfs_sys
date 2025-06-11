@@ -3,7 +3,7 @@ import { Text, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { Pagination } from "@xyfs/taro_uii";
 import { Api_logistic_waybill_ctn } from "@xyfs/taro_uii/api/api__logistics";
-import { Api_order_confirm_ctn, Api_order_list_ctn, Api_order_pay_ctn, Api_order_print_ctn, Api_order_remove_ctn } from "@xyfs/taro_uii/api/api__orders";
+import { Api_order_list_ctn, Api_order_pay_ctn, Api_order_print_ctn, Api_order_remove_ctn } from "@xyfs/taro_uii/api/api__orders";
 import { Api_cart_share_ctn } from "@xyfs/taro_uii/api/api__shop";
 import { ComButton } from "@xyfs/taro_uii/components/ComButton";
 import { ComCardOrderBringGoods, ComCardOrderDryclean, ComCardOrderExpress, ComCardOrderSundries } from "@xyfs/taro_uii/components/ComCardOrder";
@@ -14,10 +14,10 @@ import { ComNavBarA } from "@xyfs/taro_uii/components/ComNavBarA";
 import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
 import { ComSquare } from "@xyfs/taro_uii/components/ComSquare";
 import { ComSELFView, MMMAAPage } from "@xyfs/taro_uii/components/MMMAAPage";
-import { Order_ST, Product_category_ST } from "@xyfs/taro_uii/src/config";
+import { Order_deliveryStatus_ST, Order_ST, Product_category_ST } from "@xyfs/taro_uii/src/config";
 import { useSTExpress } from "@xyfs/taro_uii/store/store";
 import { OrderInfo, Product_Express, ProductBase } from "@xyfs/taro_uii/type_product";
-import { try_Taro_requestPayment, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
+import { try_Taro_openBusinessView, try_Taro_requestPayment, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
 import { useHook_getCurrentInstance, useHook_pageListNew } from "@xyfs/taro_uii/utils/useHooks";
 import { coo___urlToObj } from "@xyfs/utils/util";
 import { FC, useCallback, useEffect, useState } from "react";
@@ -199,13 +199,7 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
                 }}>删除</ComButton>
               </View>
             }
-            {_order2.orderStatus === Order_ST.已付款 && <View>
-              <ComButton onClick={async () => {
-                const res = await Api_order_confirm_ctn({ orderId: _order2.id! });
-              }}>确认收货</ComButton>
-            </View>
 
-            }
           </View>;
         }
         if (Number(order.orderType) === Product_category_ST.团购) {
@@ -227,34 +221,13 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
                   }
                 }}>删除</ComButton>
               }
-              {_order2.orderStatus === Order_ST.已付款 && _order2.productList?.filter(e => e.waybillId).length === _order2.productList?.length &&
-                <ComButton rr className='mb10 bborder' onClick={async () => {
-                  Taro.showLoading({ mask: true, title: "确认收货...", });
-                  await Api_order_confirm_ctn({ orderId: _order2.id! });
+              {order.deliveryStatus === Order_deliveryStatus_ST.待收货 &&
+                <ComButton rr className='ml10 mb10 bccyellow' onClick={async () => {
+                  Taro.showLoading({ mask: true, title: "确认中...", });
+                  await try_Taro_openBusinessView(_order2.transactionId!);
                   Taro.showToast({ icon: "none", title: "确认收货成功" });
                 }}>确认收货</ComButton>
               }
-              {_order2.orderStatus === Order_ST.已付款 && _order2.productList?.filter(e => e.waybillId).length !== _order2.productList?.length &&
-                <ComButton rr className='mb10 bborder'>待发货</ComButton>
-              }
-              <ComButton rr className='ml10 mb10 bccyellow' onClick={async () => {
-                Taro.openBusinessView({
-                  businessType: 'weappOrderConfirm',
-                  // orderId: _order2.outTradeNo!
-                  extraData: {
-                    // @ts-ignore
-                    transaction_id: _order2.transactionId!,
-                    // merchant_id: _order2.orderType,
-                    // merchant_trade_no: _order2.orderType,
-                  },
-                  success: (res) => {
-                    console.log("openBusinessView success", res);
-                  },
-                  fail: (err) => {
-                    console.error("openBusinessView fail", err);
-                  }
-                });
-              }}>确认收货</ComButton>
               {Boolean(_order2.productList?.length) && orderType === Order_ST.待付款 &&
                 <ComButton rr className='mb10  bccyellow ml10'
                   onClick={async () => {
