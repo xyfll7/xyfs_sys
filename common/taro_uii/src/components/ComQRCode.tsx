@@ -2,6 +2,7 @@
 import { View, ViewProps } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { FC, useEffect, useState } from "react";
+import { try_Taro_hideLoading } from "../utils/try_catch";
 import { utils_get_qrcode } from "../utils/util";
 import { ComButton, MyButtonProps } from "./ComButton";
 import { ComImage } from "./ComImage";
@@ -39,7 +40,7 @@ export const ComQRCode: FC<ViewProps & MyButtonProps & { onPreTap?: () => Promis
           const _src = params.src || await utils_get_qrcode({ appid: res?.appid ?? params.appid, page: res?.page ?? params.page!, scene: res?.scene ?? params.scene! });
           setQrcode(_src);
           onClick?.(e);
-          Taro.hideLoading();
+          try_Taro_hideLoading();
         }}>
         {props.children ?? params.buttonText}
       </ComButton>

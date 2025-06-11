@@ -17,7 +17,7 @@ import { IM_locate, IM_logo_33x33 } from '@xyfs/taro_uii/src/image';
 import { roo___my_dept } from '@xyfs/taro_uii/src/roles';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
 import { DeptInfo } from '@xyfs/taro_uii/type_user';
-import { try_Taro_navigateBack } from '@xyfs/taro_uii/utils/try_catch';
+import { try_Taro_hideLoading, try_Taro_navigateBack } from '@xyfs/taro_uii/utils/try_catch';
 import { useHook_getLocation, useHook_pageListNew, useHook_Reducer } from '@xyfs/taro_uii/utils/useHooks';
 import { utils_addressInfoToString } from '@xyfs/taro_uii/utils/util';
 
@@ -112,7 +112,7 @@ const IIIRegimentList = () => {
                     Taro.showLoading({ mask: true, title: "更新中...", });
                     const res_userInfo = await Api_user_edit_ctn({ deptId: e.deptId });
                     useSTSelf.getState().sett(res_userInfo);
-                    Taro.hideLoading();
+                    try_Taro_hideLoading();
                     try_Taro_navigateBack();
                   }}></IIIDeptCard>;
               })}

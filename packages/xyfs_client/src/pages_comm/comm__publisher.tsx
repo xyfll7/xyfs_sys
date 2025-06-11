@@ -16,7 +16,7 @@ import { ComSELFView, MMMAAPage, } from '@xyfs/taro_uii/components/MMMAAPage';
 import { getMyEnv } from '@xyfs/taro_uii/src/env';
 import { roo___has_role } from '@xyfs/taro_uii/src/roles';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
-import { try_Taro_cloud_uploadFile, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
+import { try_Taro_cloud_uploadFile, try_Taro_hideLoading, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
 import { useHook_Reducer } from '@xyfs/taro_uii/utils/useHooks';
 import { utils_validate_upload_product } from '@xyfs/taro_uii/utils/validator';
 import { coo___get_price, coo___ios_date } from '@xyfs/utils/util';
@@ -58,7 +58,7 @@ export const IIIPublisherClient: FC = () => {
             intro: form.str.split("\n")[1] ?? ""
           });
           setForm(null);
-          Taro.hideLoading();
+          try_Taro_hideLoading();
           if (await try_Taro_showModal({ title: "提示", content: "发布成功", cancelText: "返回首页", confirmText: "继续发布" })) {
             Taro.showToast({ icon: "none", title: "发布成功" });
           } else {

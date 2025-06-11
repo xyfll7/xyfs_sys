@@ -14,7 +14,7 @@ import { ComTextarea } from "@xyfs/taro_uii/components/ComTextarea";
 import { ComSELFView, MMMAAPage } from "@xyfs/taro_uii/components/MMMAAPage";
 import { useSTSelf } from "@xyfs/taro_uii/store/store";
 import { AddressInfo } from "@xyfs/taro_uii/type_user";
-import { try_Taro_chooseAddress, try_Taro_requestPayment } from "@xyfs/taro_uii/utils/try_catch";
+import { try_Taro_chooseAddress, try_Taro_hideLoading, try_Taro_requestPayment } from "@xyfs/taro_uii/utils/try_catch";
 import { useHook_getCurrentInstance } from "@xyfs/taro_uii/utils/useHooks";
 import { utils_addressInfoToString } from "@xyfs/taro_uii/utils/util";
 import React, { FC, useEffect, useState } from "react";
@@ -147,7 +147,7 @@ const Index: FC = () => {
 
                 Taro.showLoading({ mask: true, title: "支付中...", });
                 await try_Taro_requestPayment({ ...res_pay, package: res_pay.packageStr });
-                Taro.hideLoading();
+                try_Taro_hideLoading();
 
               }}><Text className='fs08 mr6'>!@#$%^& </Text> <Text className='cccgreen'>+</Text> 买</ComButton>
             </View>

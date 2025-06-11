@@ -19,7 +19,7 @@ import { Order_ST, Refund_ST } from "@xyfs/taro_uii/src/config";
 import { IM_线上_收款码 } from "@xyfs/taro_uii/src/image";
 import { useSTSelf } from "@xyfs/taro_uii/store/store";
 import { on_get_printer_str_order_express, on_start_print } from "@xyfs/taro_uii/utils/bluetooth/useHooks_Blue";
-import { try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
+import { try_Taro_hideLoading, try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
 import { useHook_getCurrentInstance, useHook_pageListNew, useHook_Reducer } from '@xyfs/taro_uii/utils/useHooks';
 import { coo___ios_date, coo___isNumber } from "@xyfs/utils/util";
 import { format } from "date-fns";
@@ -208,7 +208,7 @@ const IIIOrderExpressOperation: FC<{
                   Taro.showLoading({ mask: true, title: "退款中...", });
                   await Api_order_cancel_ctn({ orderId: order.id!, });
                   onDeleteOrder();
-                  Taro.hideLoading();
+                  try_Taro_hideLoading();
                   try_Taro_showModal({ title: "退款操作成功", content: `订单移入"已退款"`, showCancel: false, });
                 } else {
                   throw new Error("取消");
@@ -222,7 +222,7 @@ const IIIOrderExpressOperation: FC<{
                   Taro.showLoading({ mask: true, title: "退款中...", });
                   await Api_order_cancel_ctn({ orderId: order.id!, });
                   onDeleteOrder();
-                  Taro.hideLoading();
+                  try_Taro_hideLoading();
                   try_Taro_showModal({ title: "退款操作成功", content: `订单移入"已退款"`, showCancel: false, });
                 } else {
                   throw new Error("取消");

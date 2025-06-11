@@ -6,7 +6,7 @@ import { Api_order_incrPrintTimes_ctn, Api_order_pay_ctn } from "../api/api__ord
 import { Order_ST } from "../config";
 import { useSTExpress, useSTSelf } from "../store/store";
 import { on_get_printer_str_order_express, on_start_print } from "../utils/bluetooth/useHooks_Blue";
-import { try_Taro_requestPayment, try_Taro_setClipboardData } from "../utils/try_catch";
+import { try_Taro_hideLoading, try_Taro_requestPayment, try_Taro_setClipboardData } from "../utils/try_catch";
 import { ComButton } from "./ComButton";
 import { ComNavBarB } from "./ComNavBarB";
 import { ComPopupNew } from "./ComPopupNew";
@@ -58,7 +58,7 @@ export function ComPaySuccessCard() {
                   Taro.showLoading({ mask: true, title: "支付中...", });
                   await try_Taro_requestPayment({ ...res_pay, package: res_pay.packageStr });
                   useSTExpress.getState().sett({ ...express_S, orderStatus: Order_ST.已付款 });
-                  Taro.hideLoading();
+                  try_Taro_hideLoading();
                 }}>
                 <ComSquare className='icon-wxpay mr4' style={{ width: "calc(1.3 * var(--rem_base))" }} />
                 <Text className='nw'>继续支付</Text>

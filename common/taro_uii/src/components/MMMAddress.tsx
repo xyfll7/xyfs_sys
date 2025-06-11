@@ -5,7 +5,7 @@ import { FC, useEffect, useRef, useState } from "react";
 import { AddressManType } from "../../types/type_product";
 import { AddressInfo } from "../../types/type_user";
 import { Api_common_textOCR_ctn } from "../api/api__users";
-import { try_Taro_chooseAddress, try_Taro_chooseLocation, try_Taro_chooseMedia, try_Taro_getClipboardData, try_Taro_navigateTo } from "../utils/try_catch";
+import { try_Taro_chooseAddress, try_Taro_chooseLocation, try_Taro_chooseMedia, try_Taro_getClipboardData, try_Taro_hideLoading, try_Taro_navigateTo } from "../utils/try_catch";
 import { utils_get_str_phone, utils_string_to_char_code } from "../utils/util";
 import { utils_validate_express } from "../utils/validator";
 import { ComButton } from "./ComButton";
@@ -138,7 +138,7 @@ export const MMMAddress: FC<{
                   town: res_address.town ?? "",
                   address: res_address.address + " " + res.name,
                 });
-                Taro.hideLoading();
+                try_Taro_hideLoading();
               }}>
               地图
             </ComButton>

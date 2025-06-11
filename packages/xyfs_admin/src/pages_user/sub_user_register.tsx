@@ -12,7 +12,7 @@ import { ComNavBarA } from '@xyfs/taro_uii/components/ComNavBarA';
 import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
-import { try_Taro_chooseAddress } from "@xyfs/taro_uii/utils/try_catch";
+import { try_Taro_chooseAddress, try_Taro_hideLoading } from "@xyfs/taro_uii/utils/try_catch";
 import { useHook_Reducer } from "@xyfs/taro_uii/utils/useHooks";
 import { FC, useEffect, useState } from "react";
 
@@ -66,7 +66,7 @@ const Index: FC = () => {
                       Taro.showLoading({ mask: true, title: "更新姓名..." });
                       const res_userInfo = await Api_user_edit_ctn({ name: userForm.name });
                       setUserForm(res_userInfo);
-                      Taro.hideLoading();
+                      try_Taro_hideLoading();
                       Taro.showToast({ icon: "none", title: "更新完成", });
                     } else {
                       throw new Error("姓名不合法");
@@ -90,13 +90,13 @@ const Index: FC = () => {
                     mobile: res,
                   });
                   setUserForm(res_userInfo);
-                  Taro.hideLoading();
+                  try_Taro_hideLoading();
                   Taro.showToast({ icon: "none", title: "更新完成", });
                 } else if (errMsg === "getPhoneNumber:fail user deny") {
-                  Taro.hideLoading();
+                  try_Taro_hideLoading();
                   Taro.showToast({ icon: "none", title: "请授权手机号", });
                 } else if (errMsg === "privacy permission is not authorized") {
-                  Taro.hideLoading();
+                  try_Taro_hideLoading();
                   Taro.showToast({ icon: "none", title: "隐私未授权", });
                 }
               }}>{userForm.mobile ? userForm.mobile : "请授权手机号"}</ComButtonOpen>
@@ -280,12 +280,12 @@ const IIIJoinUs = () => {
             if (code && errMsg === "getPhoneNumber:ok") {
               const res = await Api_getNumber_ctn({ code, iv, encryptedData, });
               setUserForm({ mobile: res });
-              Taro.hideLoading();
+              try_Taro_hideLoading();
             } else if (errMsg === "getPhoneNumber:fail user deny") {
-              Taro.hideLoading();
+              try_Taro_hideLoading();
               Taro.showToast({ icon: "none", title: "请授权手机号", });
             } else if (errMsg === "privacy permission is not authorized") {
-              Taro.hideLoading();
+              try_Taro_hideLoading();
               Taro.showToast({ icon: "none", title: "隐私未授权", });
             }
           }}>{userForm.mobile ? userForm.mobile : "请授权手机号"}</ComButtonOpen>

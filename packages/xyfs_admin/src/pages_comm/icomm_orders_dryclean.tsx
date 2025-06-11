@@ -22,7 +22,7 @@ import { ErrorR, Order_ST, Product_category_ST } from "@xyfs/taro_uii/src/config
 import { getMyEnv } from "@xyfs/taro_uii/src/env";
 import { roo___has_role } from "@xyfs/taro_uii/src/roles";
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
-import { try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_scanCode, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
+import { try_Taro_hideLoading, try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_scanCode, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
 import { useHook_getCurrentInstance, useHook_pageListNew, useHook_Reducer } from '@xyfs/taro_uii/utils/useHooks';
 import { utils_get_qrcode, utils_show_button } from "@xyfs/taro_uii/utils/util";
 import { coo___objToUrl } from "@xyfs/utils/util";
@@ -90,7 +90,7 @@ const Index: FC<{}> = ({ }) => {
                   Taro.showLoading({ mask: true, title: "退款中...", });
                   await Api_order_cancel_ctn({ orderId: order.id!, });
                   page_list_update((p) => ({ ...p, list: p.list.filter(eee => eee.id !== _order1.id) }));
-                  Taro.hideLoading();
+                  try_Taro_hideLoading();
                   Taro.showToast({ icon: 'none', title: "订单移入已退款" });
                 } else {
                   throw new Error("取消");
@@ -126,7 +126,7 @@ const Index: FC<{}> = ({ }) => {
                     Taro.showLoading({ mask: true, title: "生成中..." });
                     const _src = await utils_get_qrcode({ appid: process.env.TARO_APP_CLIENT, page: "pages_user/user_orders", scene: coo___objToUrl({ R_D: Number(useSTSelf.getState().selfInfo!.mobile).toString(36), O_D: String(_order1.orderCode!), }) });
                     setShowQR(_src);
-                    Taro.hideLoading();
+                    try_Taro_hideLoading();
                   }}>
                   <Text className='cccgreen'>⤻</Text>付款码
                 </ComButton>
@@ -150,7 +150,7 @@ const Index: FC<{}> = ({ }) => {
                   } catch {
                     throw new ErrorR("支付失败", true);
                   } finally {
-                    Taro.hideLoading();
+                    try_Taro_hideLoading();
                   }
                 }}>
                   <ComSquare style={{ width: "calc(1.3 * var(--rem_base))" }} className='icon-wxpay mr4' />付

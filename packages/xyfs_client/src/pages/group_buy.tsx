@@ -22,7 +22,7 @@ import { roo___my_dept } from '@xyfs/taro_uii/src/roles';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
 import { Pagination } from '@xyfs/taro_uii/type_index';
 import { AddressInfo, DeptInfo } from '@xyfs/taro_uii/type_user';
-import { try_Taro_chooseAddress, try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_setClipboardData, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
+import { try_Taro_chooseAddress, try_Taro_hideLoading, try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_setClipboardData, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
 import { useHook_getCurrentInstance, useHook_pageListNew } from '@xyfs/taro_uii/utils/useHooks';
 
 import { coo___objToUrl, coo___privacy_string, coo___urlToObj } from '@xyfs/utils/util';
@@ -178,7 +178,7 @@ const Index: FC = () => {
             }
           } finally {
             setCart([]);
-            Taro.hideLoading();
+            try_Taro_hideLoading();
             // 如果个人信息中没有默认的用户收件地址，则更新用户收件地址
             if (!selfInfo_S.defaultRecManAddress) {
               await Api_user_edit_ctn({ defaultRecManAddress: address });

@@ -20,7 +20,7 @@ import { Address_T, ErrorR, Order_ST } from "@xyfs/taro_uii/src/config";
 import { roo___has_role, roo___my_dept } from "@xyfs/taro_uii/src/roles";
 import { useSTExpress, useSTSelf } from "@xyfs/taro_uii/store/store";
 import { AddressInfo } from "@xyfs/taro_uii/type_user";
-import { try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
+import { try_Taro_hideLoading, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
 import { utils_get_page_opener } from "@xyfs/taro_uii/utils/util";
 import { utils_validate_express } from "@xyfs/taro_uii/utils/validator";
 import { coo___objToUrl } from "@xyfs/utils/util";
@@ -71,7 +71,7 @@ export const Index = () => {
           Taro.showLoading({ mask: true, title: "识别中..." });
           const res_address = await Api_common_textOCR_ctn({ text: text });
           useSTExpress.getState().sett({ productList: [{ recMan: res_address }] });
-          Taro.hideLoading();
+          try_Taro_hideLoading();
         }} />
       <CPExpress.ExpressInfo />
       <ComButton className='mb10 cccplh bccbacktab' hoverClass='none'>首重6元起，上门取件+2元</ComButton>
@@ -99,7 +99,7 @@ export const Index = () => {
           Taro.showLoading({ mask: true, title: "识别中..." });
           const res_address = await Api_common_textOCR_ctn({ text: text });
           setInitAddress(res_address);
-          Taro.hideLoading();
+          try_Taro_hideLoading();
         }}
         onShowProvinceCityArea={() => {
           setInitProvinceCityArea({
@@ -149,7 +149,7 @@ const IIIOrderPayUser: FC<{}> = ({ }) => {
             Taro.showLoading({ mask: true, title: "提交中...", });
             console.log("xxxxxxxxxxxxxxxxx", useSTExpress.getState().express);
             await Api_order_pre_ctn({ ...useSTExpress.getState().express, nowPay: false });
-            Taro.hideLoading();
+            try_Taro_hideLoading();
 
             if (await try_Taro_showModal({ title: "提示", content: "下单成功", confirmText: "查看订单", cancelText: "继续下单", })) {
               Taro.redirectTo({ url: `/pages_user/user_orders?${coo___objToUrl({ order_ST: String(Order_ST.待付款) })}` });

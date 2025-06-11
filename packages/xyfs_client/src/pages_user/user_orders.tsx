@@ -17,7 +17,7 @@ import { ComSELFView, MMMAAPage } from "@xyfs/taro_uii/components/MMMAAPage";
 import { Order_deliveryStatus_ST, Order_ST, Product_category_ST } from "@xyfs/taro_uii/src/config";
 import { useSTExpress } from "@xyfs/taro_uii/store/store";
 import { OrderInfo, Product_Express, ProductBase } from "@xyfs/taro_uii/type_product";
-import { try_Taro_openBusinessView, try_Taro_requestPayment, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
+import { try_Taro_hideLoading, try_Taro_openBusinessView, try_Taro_requestPayment, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
 import { useHook_getCurrentInstance, useHook_pageListNew } from "@xyfs/taro_uii/utils/useHooks";
 import { coo___urlToObj } from "@xyfs/utils/util";
 import { FC, useCallback, useEffect, useState } from "react";
@@ -57,7 +57,7 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
       Taro.showLoading({ mask: false, title: "删除中...", });
       await Api_order_remove_ctn({ orderId: order.id!, });
       page_list_update((p) => ({ ...p, list: p.list.filter(eee => eee.id !== order.id) }));
-      Taro.hideLoading();
+      try_Taro_hideLoading();
     }
   };
   const ___page_getter = useCallback(async (p: Pagination<unknown>) =>
@@ -110,7 +110,7 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
                         waybillId: res_waybill.waybillId
                       }]
                     });
-                    Taro.hideLoading();
+                    try_Taro_hideLoading();
                     page_init();
                     if (_order0.printerId) {
                       Taro.showLoading({ mask: true, title: "打印中...", });
@@ -154,7 +154,7 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
                   const res_pay = await Api_order_pay_ctn({ orderId: _order1.id!, });
                   Taro.showLoading({ mask: true, title: "支付中...", });
                   await try_Taro_requestPayment({ ...res_pay, package: res_pay.packageStr });
-                  Taro.hideLoading();
+                  try_Taro_hideLoading();
                 }}>
                 <ComSquare className='icon-wxpay mr4' style={{ width: "calc(1.3 * var(--rem_base))" }} />
                 <Text className='nw'>支付</Text>
@@ -173,7 +173,7 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
                 const res_pay = await Api_order_pay_ctn({ orderId: _order2.id!, });
                 Taro.showLoading({ mask: true, title: "支付中...", });
                 await try_Taro_requestPayment({ ...res_pay, package: res_pay.packageStr });
-                Taro.hideLoading();
+                try_Taro_hideLoading();
               }}>
               <ComSquare className='icon-wxpay mr4' style={{ width: "calc(1.3 * var(--rem_base))" }} />
               <Text className='nw'>支付</Text>
@@ -235,7 +235,7 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
                     const res_pay = await Api_order_pay_ctn({ orderId: _order2.id!, });
                     Taro.showLoading({ mask: true, title: "支付中...", });
                     await try_Taro_requestPayment({ ...res_pay, package: res_pay.packageStr });
-                    Taro.hideLoading();
+                    try_Taro_hideLoading();
                   }}>
                   <ComSquare className='icon-wxpay mr4' style={{ width: "calc(1.3 * var(--rem_base))" }} />
                   <Text className='nw'>支付</Text>

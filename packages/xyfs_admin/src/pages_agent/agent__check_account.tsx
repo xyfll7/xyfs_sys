@@ -6,7 +6,7 @@ import { ComNav } from '@xyfs/taro_uii/components/ComNav';
 import { ComNavBarA } from '@xyfs/taro_uii/components/ComNavBarA';
 import { ComScrollView } from '@xyfs/taro_uii/components/ComScrollView';
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
-import { try_Taro_chooseMessageFile, try_Taro_cloud_uploadFile, try_Taro_navigateTo, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
+import { try_Taro_chooseMessageFile, try_Taro_cloud_uploadFile, try_Taro_hideLoading, try_Taro_navigateTo, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
 import { coo___ios_date } from '@xyfs/utils/util';
 import { FC, useState } from 'react';
 
@@ -26,7 +26,7 @@ const Index: FC = () => {
         Taro.showLoading({ mask: true, title: "上传中..." });
         const res_fileID = await try_Taro_cloud_uploadFile(res_file!.path, `agent/_${coo___ios_date().getTime()}_${res_file?.name.split('.')[0]}`);
         setFileID(res_fileID.fileID ?? "");
-        Taro.hideLoading();
+        try_Taro_hideLoading();
       }}>上传对账单</ComButton>
       {!fileID && <ComButton className='mb10'>请先上传对账单</ComButton>}
       <ComButton className='mb10 cccplh'>
@@ -36,7 +36,7 @@ const Index: FC = () => {
       {fileID && <ComButton className='mb10 cccgreen' onClick={async () => {
         Taro.showLoading({ mask: true, title: "提交任务..." });
         await Api_order_billVerify_ctn({ billExcelUrl: fileID });
-        Taro.hideLoading();
+        try_Taro_hideLoading();
         if (await try_Taro_showModal({
           title: "提交成功",
           content: "请到下载任务列表查看对账单",
@@ -49,7 +49,7 @@ const Index: FC = () => {
       {fileID && <ComButton className='mb10 cccgreen' onClick={async () => {
         Taro.showLoading({ mask: true, title: "提交任务..." });
         await Api_order_writeWeight_ctn({ url: fileID });
-        Taro.hideLoading();
+        try_Taro_hideLoading();
         if (await try_Taro_showModal({
           title: "提交成功",
           content: "请到下载任务列表查看对账单",

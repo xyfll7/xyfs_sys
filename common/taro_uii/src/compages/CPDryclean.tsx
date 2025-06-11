@@ -21,7 +21,7 @@ import { ComSquare } from "../components/ComSquare";
 import { get_dev_value, getMyEnv } from "../env";
 import { roo___my_dept } from "../roles";
 import { useSTSelf } from "../store/store";
-import { try_Taro_chooseAddress, try_Taro_cloud_uploadFile, try_Taro_navigateToMiniProgram } from "../utils/try_catch";
+import { try_Taro_chooseAddress, try_Taro_cloud_uploadFile, try_Taro_hideLoading, try_Taro_navigateToMiniProgram } from "../utils/try_catch";
 
 
 function cartMerge(cart: Product_Dryclean[]) {
@@ -324,7 +324,7 @@ const RecManInfo: FC = () => {
         const res_address = await Api_userAddress_add_ctn({ ...res, type: 2 });
         const res_userInfo = await Api_user_edit_ctn({ defaultRecManAddressId: res_address.id });
         useSTSelf.getState().sett(res_userInfo);
-        Taro.hideLoading();
+        try_Taro_hideLoading();
       }}>
         <View className='dll'>
           <View className='nw'><Text>收货人:</Text><Text className='mr6'>{selfInfo_S.defaultRecManAddress.name}</Text><Text>{selfInfo_S.defaultRecManAddress.mobile}</Text> </View>
@@ -337,7 +337,7 @@ const RecManInfo: FC = () => {
         const res_address = await Api_userAddress_add_ctn({ ...res, type: 2 });
         const res_userInfo = await Api_user_edit_ctn({ defaultRecManAddressId: res_address.id });
         useSTSelf.getState().sett(res_userInfo);
-        Taro.hideLoading();
+        try_Taro_hideLoading();
       }}>添加收货人信息</ComButton>
     }
   </View>;

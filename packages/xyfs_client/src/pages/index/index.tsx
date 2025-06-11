@@ -21,7 +21,7 @@ import { MMMLogo } from '@xyfs/taro_uii/components/MMMLogo';
 import { getMyEnv } from '@xyfs/taro_uii/src/env';
 import { roo___has_role, roo___my_dept } from '@xyfs/taro_uii/src/roles';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
-import { try_Taro_navigateBack, try_Taro_navigateTo } from '@xyfs/taro_uii/utils/try_catch';
+import { try_Taro_hideLoading, try_Taro_navigateBack, try_Taro_navigateTo } from '@xyfs/taro_uii/utils/try_catch';
 import { useHook_pageListNew } from '@xyfs/taro_uii/utils/useHooks';
 import { utils_get_capsule } from '@xyfs/taro_uii/utils/util';
 import { coo___objToUrl } from '@xyfs/utils/util';
@@ -237,7 +237,7 @@ const IIIMainNavigator: FC<{ className?: string; style?: string | React.CSSPrope
           Taro.showLoading({ mask: true, title: "更新中...", });
           const res_userInfo = await Api_user_edit_ctn({ deptId: selfInfo_S.managerUser?.deptId });
           useSTSelf.getState().sett(res_userInfo);
-          Taro.hideLoading();
+          try_Taro_hideLoading();
           try_Taro_navigateBack();
         }} >
           关注自己

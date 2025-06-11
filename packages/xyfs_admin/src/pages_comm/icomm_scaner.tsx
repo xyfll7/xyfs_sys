@@ -20,7 +20,7 @@ import { getMyEnv } from '@xyfs/taro_uii/src/env';
 import { roo___has_role } from '@xyfs/taro_uii/src/roles';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
 import { on_get_printer_str_order_dryclean_out_factory, on_start_print } from '@xyfs/taro_uii/utils/bluetooth/useHooks_Blue';
-import { try_Taro_navigateTo, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
+import { try_Taro_hideLoading, try_Taro_navigateTo, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
 import { useHook_getCurrentInstance, useHook_pageListNew } from '@xyfs/taro_uii/utils/useHooks';
 import { coo___objToUrl } from '@xyfs/utils/util';
 import { FC, useCallback, useRef, useState } from 'react';
@@ -71,7 +71,7 @@ const Index: FC = () => {
           signer: useSTSelf.getState().selfInfo!.name!,
         });
         page_init();
-        Taro.hideLoading();
+        try_Taro_hideLoading();
       }} />
     </View>
     <ComScrollView onScrollToLower={async () => { page_list_get(page); }}>
@@ -120,7 +120,7 @@ const Index: FC = () => {
                 outTradeNo: item,
                 signer: useSTSelf.getState().selfInfo!.name!,
               });
-              Taro.hideLoading();
+              try_Taro_hideLoading();
             }
             page_init();
           }}>模拟</ComButton>

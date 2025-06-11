@@ -14,7 +14,7 @@ import { MMMRealName } from "../components/MMMRealName";
 import { PickUp_ST } from "../config";
 import { roo___has_role } from "../roles";
 import { useSTExpress, useSTSelf } from "../store/store";
-import { try_Taro_chooseAddress, try_Taro_chooseLocation, try_Taro_chooseMedia, try_Taro_getClipboardData, try_Taro_navigateTo } from "../utils/try_catch";
+import { try_Taro_chooseAddress, try_Taro_chooseLocation, try_Taro_chooseMedia, try_Taro_getClipboardData, try_Taro_hideLoading, try_Taro_navigateTo } from "../utils/try_catch";
 import { utils_get_str_phone } from "../utils/util";
 
 
@@ -178,7 +178,7 @@ const ExpressRecMan: FC<{ onChooseProvinceCityArea: () => void; onSmartPast: (st
             const res = await try_Taro_chooseLocation();
             Taro.showLoading({ mask: true, title: "地址解析...", });
             const res_address = await Api_common_textOCR_ctn({ text: res?.address?.trim() });
-            Taro.hideLoading();
+            try_Taro_hideLoading();
             useSTExpress.getState().sett({
               productList: [{
                 recMan: {

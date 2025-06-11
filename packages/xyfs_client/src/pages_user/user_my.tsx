@@ -14,7 +14,7 @@ import { ComNavBarA } from "@xyfs/taro_uii/components/ComNavBarA";
 import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
 import { ComSELFView, MMMAAPage } from "@xyfs/taro_uii/components/MMMAAPage";
 import { useSTSelf } from "@xyfs/taro_uii/store/store";
-import { try_Taro_cloud_uploadFile } from "@xyfs/taro_uii/utils/try_catch";
+import { try_Taro_cloud_uploadFile, try_Taro_hideLoading } from "@xyfs/taro_uii/utils/try_catch";
 import { useHook_pageListNew } from "@xyfs/taro_uii/utils/useHooks";
 import { FC, useCallback } from "react";
 
@@ -75,7 +75,7 @@ const IIISelfInfo: FC<{ className?: string; }> = ({ className = '' }) => {
             (async (name: string) => {
               const res_userInfo = await Api_user_edit_ctn({ name: name });
               useSTSelf.getState().sett(res_userInfo);
-              Taro.hideLoading();
+              try_Taro_hideLoading();
             })(e.detail.value);
           }} placeholder={selfInfo_S?.name ? selfInfo_S?.name : '请填写昵称'} />
         </ComButton>
@@ -93,7 +93,7 @@ const IIISelfInfo: FC<{ className?: string; }> = ({ className = '' }) => {
           } else if (errMsg === "getPhoneNumber:fail user deny") {
             Taro.showToast({ icon: "none", title: "授权失败，请重试", });
           }
-          Taro.hideLoading();
+          try_Taro_hideLoading();
         }}>授权手机号</ComButtonOpen>
       </View>
     }

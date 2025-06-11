@@ -18,7 +18,7 @@ import { MMMAAPage } from "../components/MMMAAPage";
 import { ComProvinceCityArea, initAddressData, MMMAddress } from "../components/MMMAddress";
 import { Address_T, ErrorR } from "../config";
 import { useSTSelf } from "../store/store";
-import { try_Taro_navigateBack, try_Taro_setClipboardData, try_Taro_showModal } from "../utils/try_catch";
+import { try_Taro_hideLoading, try_Taro_navigateBack, try_Taro_setClipboardData, try_Taro_showModal } from "../utils/try_catch";
 import { useHook_getCurrentInstance, useHook_pageListNew, useHook_Reducer } from "../utils/useHooks";
 import { utils_get_page_opener } from "../utils/util";
 import { utils_validate_express } from "../utils/validator";
@@ -111,7 +111,7 @@ const CPAddressList: FC = () => {
           Taro.showLoading({ mask: true, title: "识别中..." });
           const res_address = await Api_common_textOCR_ctn({ text: text });
           setInitAddress(res_address);
-          Taro.hideLoading();
+          try_Taro_hideLoading();
         }}
         onShowProvinceCityArea={() => {
           setInitProvinceCityArea({
@@ -180,7 +180,7 @@ const IIIAddRessCard: FC<{
               Taro.showLoading({ mask: true, title: "删除中...", });
               await Api_userAddress_remove_ctn(address.id!);
               onDelete();
-              Taro.hideLoading();
+              try_Taro_hideLoading();
             }
           }}>删除</ComButton>
         }
@@ -193,7 +193,7 @@ const IIIAddRessCard: FC<{
             Taro.showLoading({ mask: true, title: "设置中...", });
             const res_userInfo = await Api_user_edit_ctn({ defaultSendManAddressId: address.id });
             useSTSelf.getState().sett(res_userInfo);
-            Taro.hideLoading();
+            try_Taro_hideLoading();
             onRefresh();
           }}>设为默认</ComButton>
         }

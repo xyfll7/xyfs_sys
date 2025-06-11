@@ -12,7 +12,7 @@ import { ComSELFView, MMMAAPage } from "@xyfs/taro_uii/components/MMMAAPage";
 import { getMyEnv } from "@xyfs/taro_uii/src/env";
 import { roo___has_role } from "@xyfs/taro_uii/src/roles";
 import { useSTSelf } from "@xyfs/taro_uii/store/store";
-import { try_Taro_openDocument, try_Taro_setClipboardData, try_Taro_shareFileMessage, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
+import { try_Taro_hideLoading, try_Taro_openDocument, try_Taro_setClipboardData, try_Taro_shareFileMessage, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
 import { useHook_pageListNew } from "@xyfs/taro_uii/utils/useHooks";
 import { utils_downloadFile_saveFile } from "@xyfs/taro_uii/utils/util";
 import { coo___00String_number, coo___ios_date } from "@xyfs/utils/util";
@@ -75,7 +75,7 @@ const Index: FC<{}> = ({ }) => {
                   url: e.url,
                   file_name: getMyEnv().platform === "android" ? ___fileName.replace(".csv", ".xls") : ___fileName
                 });
-                Taro.hideLoading();
+                try_Taro_hideLoading();
                 if (getMyEnv().platform === "android") {
                   console.log("res_savedFilePath", res_savedFilePath);
                   await try_Taro_openDocument({ filePath: res_savedFilePath });

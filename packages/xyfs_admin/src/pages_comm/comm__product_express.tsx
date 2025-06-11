@@ -27,7 +27,7 @@ import { IM_线上_收款码 } from "@xyfs/taro_uii/src/image";
 import { roo___has_role, roo___my_dept } from "@xyfs/taro_uii/src/roles";
 import { useSTExpress, useSTSelf } from "@xyfs/taro_uii/store/store";
 import { AddressInfo } from "@xyfs/taro_uii/type_user";
-import { try_Taro_requestPayment } from "@xyfs/taro_uii/utils/try_catch";
+import { try_Taro_hideLoading, try_Taro_requestPayment } from "@xyfs/taro_uii/utils/try_catch";
 import { utils_get_cloud_printer, utils_get_page_opener, utils_get_qrcode } from "@xyfs/taro_uii/utils/util";
 import { utils_validate_express } from "@xyfs/taro_uii/utils/validator";
 import { coo___objToUrl } from "@xyfs/utils/util";
@@ -79,7 +79,7 @@ export const Index = () => {
             page: "pages_comm/comm__product_express",
             scene: coo___objToUrl({ R_D: Number(useSTSelf.getState().selfInfo!.mobile).toString(36), })
           });
-          Taro.hideLoading();
+          try_Taro_hideLoading();
           setPosterUrl(res!);
         }
         }><Text className='cccgreen '>⤻</Text>海报</ComButton>
@@ -102,7 +102,7 @@ export const Index = () => {
             Taro.showLoading({ mask: true, title: "识别中..." });
             const res_address = await Api_common_textOCR_ctn({ text: text });
             useSTExpress.getState().sett({ productList: [{ recMan: res_address }] });
-            Taro.hideLoading();
+            try_Taro_hideLoading();
           }} />
         <CPExpress.ExpressInfo />
         <ComButton className='mb10 cccplh bccbacktab' hoverClass='none'>首重6元起，上门取件+2元</ComButton>
@@ -131,7 +131,7 @@ export const Index = () => {
           Taro.showLoading({ mask: true, title: "识别中..." });
           const res_address = await Api_common_textOCR_ctn({ text: text });
           setInitAddress(res_address);
-          Taro.hideLoading();
+          try_Taro_hideLoading();
         }}
         onShowProvinceCityArea={() => {
           setInitProvinceCityArea({
@@ -289,7 +289,7 @@ const IIIOrderPayRegiment: FC<{}> = ({ }) => {
               pickUpPrice: String(res_price.productList?.[0].pickUpPrice),
             }]
           });
-          Taro.hideLoading();
+          try_Taro_hideLoading();
         }}>获取价格</ComButton>
       </View>
       <View className='ww mb10 dbtc'>
@@ -303,7 +303,7 @@ const IIIOrderPayRegiment: FC<{}> = ({ }) => {
               useSTExpress.getState().sett({ orderStatus: Order_ST.待付款, id: res_pay.orderId, outTradeNo: res_pay.outTradeNo });
               await try_Taro_requestPayment({ ...res_pay, package: res_pay.packageStr });
               useSTExpress.getState().sett({ orderStatus: Order_ST.已付款, });
-              Taro.hideLoading();
+              try_Taro_hideLoading();
             } finally {
               useSTExpress.getState().sett({ ___show: true });
               await Api_userAddress_add_ctn({
@@ -340,7 +340,7 @@ const IIIOrderPayRegiment: FC<{}> = ({ }) => {
                 type: Address_T.收件地址,
                 id: undefined
               });
-              Taro.hideLoading();
+              try_Taro_hideLoading();
               Taro.showToast({ icon: "none", title: "收件人信息保存成功" });
             }}></ComQRCode>
         }

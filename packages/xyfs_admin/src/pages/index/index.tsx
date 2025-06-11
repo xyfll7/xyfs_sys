@@ -18,7 +18,7 @@ import { Order_ST } from "@xyfs/taro_uii/src/config";
 import { getMyEnv } from "@xyfs/taro_uii/src/env";
 import { roo___has_role } from "@xyfs/taro_uii/src/roles";
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
-import { try_Taro_navigateTo, try_Taro_navigateToMiniProgram, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
+import { try_Taro_hideLoading, try_Taro_navigateTo, try_Taro_navigateToMiniProgram, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
 import { utils_get_qrcode, utils_get_start_end_time } from "@xyfs/taro_uii/utils/util";
 import { coo___ios_date, coo___objToUrl } from "@xyfs/utils/util";
 import format from "date-fns/format";
@@ -317,7 +317,7 @@ const IIImmmGUIDE = ({ ...props }: ViewProps) => {
             page: "pages/index/index",
             scene: coo___objToUrl({ R_D: Number(selfInfo_S!.mobile).toString(36), }),
           });
-          Taro.hideLoading();
+          try_Taro_hideLoading();
           setQrcode(_src);
         }}>推广二维码</ComButton>
       </View>
@@ -385,7 +385,7 @@ const IIISetTodaysOrder = ({ ...props }: ViewProps) => {
         endTime: timeRes.endTimeOfDay,
         // orderStatus: Order_ST.已付款,
       });
-      Taro.hideLoading();
+      try_Taro_hideLoading();
       if (await try_Taro_showModal({
         title: "提交成功",
         content: "请到下载任务列表查看对账单",

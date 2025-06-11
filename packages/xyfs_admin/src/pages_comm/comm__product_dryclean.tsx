@@ -17,7 +17,7 @@ import { Order_ST } from '@xyfs/taro_uii/src/config';
 import { roo___has_role } from '@xyfs/taro_uii/src/roles';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
 import { OrderInfo, Product_Dryclean } from '@xyfs/taro_uii/type_product';
-import { try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
+import { try_Taro_hideLoading, try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
 import { useHook_getCurrentInstance } from '@xyfs/taro_uii/utils/useHooks';
 import { utils_get_qrcode } from '@xyfs/taro_uii/utils/util';
 import { coo___objToUrl } from '@xyfs/utils/util';
@@ -59,7 +59,7 @@ const Index: FC<{}> = ({ }) => {
       Taro.showLoading({ mask: true, title: "处理中..." });
       const res = await Api_cart_delete_ctn({ id: String(e.id!) });
       setCart(res);
-      Taro.hideLoading();
+      try_Taro_hideLoading();
     }}>
     {roo___has_role(useSTSelf.getState().selfInfo!, ["REGIMENT"]) &&
       <View>
@@ -101,7 +101,7 @@ const Index: FC<{}> = ({ }) => {
             } finally {
               setCart([]);
               setUser(() => ({ name: "", mobile: "" }));
-              Taro.hideLoading();
+              try_Taro_hideLoading();
             }
           }}>
             <View className='dy'>
@@ -137,7 +137,7 @@ const Index: FC<{}> = ({ }) => {
               Taro.showLoading({ mask: true, title: "处理中..." });
               const res = await Api_cart_delete_ctn({ id: String(e.id!) });
               setCart(res);
-              Taro.hideLoading();
+              try_Taro_hideLoading();
             }}
             cart={cart} onToggle={() => setShow(e => !e)}>
             <CPDryclean.ShopCartTabBarRegiment key='ShopCartTabBarRegiment' isPay={!__isShare} cart={cart} onToggle={() => setShow(e => !e)} />
@@ -182,7 +182,7 @@ function IIIMain({ cart, onCartDelItem, onCartEdit, ...props }: PropsWithChildre
               page: "pages_comm/comm__product_dryclean",
               scene: coo___objToUrl({ R_D: Number(useSTSelf.getState().selfInfo!.mobile).toString(36), })
             });
-            Taro.hideLoading();
+            try_Taro_hideLoading();
             setPosterUrl(res!);
           }
           }><Text className='cccgreen'>⤻</Text>海报</ComButton>

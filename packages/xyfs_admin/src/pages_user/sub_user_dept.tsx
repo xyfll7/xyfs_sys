@@ -19,7 +19,7 @@ import { ROLE_ST } from "@xyfs/taro_uii/src/config";
 import { getMyEnv } from "@xyfs/taro_uii/src/env";
 import { roo___has_role } from "@xyfs/taro_uii/src/roles";
 import { useSTDicts } from "@xyfs/taro_uii/store/store";
-import { try_Taro_navigateTo, try_Taro_showActionSheet, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
+import { try_Taro_hideLoading, try_Taro_navigateTo, try_Taro_showActionSheet, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
 import { useHook_Fetch, useHook_Reducer } from "@xyfs/taro_uii/utils/useHooks";
 import { utils_get_start_end_date, utils_str_includes } from "@xyfs/taro_uii/utils/util";
 import { coo___ios_date } from "@xyfs/utils/util";
@@ -102,7 +102,7 @@ const Index: FC<{}> = ({ }) => {
                 const res = await Api_dept_userList_ctn({ deptId: _dept.deptId! });
                 setDeptUserList(res);
                 setDept(_dept);
-                Taro.hideLoading();
+                try_Taro_hideLoading();
               }}>成员</ComButton>
               <ComButton rr className='ml10 mb10 bborder  nw' onClick={() => { setDept(_dept); setMode("add"); }}><Text className='cccgreen'>+</Text>加</ComButton>
             </View>
@@ -128,7 +128,7 @@ const Index: FC<{}> = ({ }) => {
                     checkType: 1,
                   });
                 }
-                Taro.hideLoading();
+                try_Taro_hideLoading();
                 if (await try_Taro_showModal({ title: "提交成功", content: "请到下载任务列表查看对账单", confirmText: "去查看" })) {
                   await try_Taro_navigateTo({ url: "/pages_comm/icomm_download_list" });
                 }
@@ -146,7 +146,7 @@ const Index: FC<{}> = ({ }) => {
                 for (const item of _dept.children) {
                   await Api_dept_edit_ctn({ deptId: item?.deptId!, mainDept: 1 });
                 }
-                Taro.hideLoading();
+                try_Taro_hideLoading();
               }}>批量设置为首要部门</ComButton>
 
           </View>
@@ -190,7 +190,7 @@ const Index: FC<{}> = ({ }) => {
                     endDate: dateRes.lastDateOfMonth,
                     checkType: 1,
                   });
-                  Taro.hideLoading();
+                  try_Taro_hideLoading();
                   if (await try_Taro_showModal({ title: "提交成功", content: "请到下载任务列表查看对账单", confirmText: "去查看" })) {
                     await try_Taro_navigateTo({ url: "/pages_comm/icomm_download_list" });
                   }
@@ -371,7 +371,7 @@ const IIIDeptEdit = ({ dept, onSuccess, onClose }: { dept: any; onSuccess: () =>
                     Taro.showLoading({ mask: true, title: "取消中..." });
                     const res_userInfo = await Api_dept_edit_ctn({ deptId: deptInfo?.deptId!, logistics_: deptInfo.logistics?.filter(ee => ee.dictId !== e.id).map(ee => ee.dictId ?? ee.id!), });
                     setDeptInfo(res_userInfo);
-                    Taro.hideLoading();
+                    try_Taro_hideLoading();
                   } else {
                     throw new Error("取消");
                   }
@@ -380,7 +380,7 @@ const IIIDeptEdit = ({ dept, onSuccess, onClose }: { dept: any; onSuccess: () =>
                     Taro.showLoading({ mask: true, title: "授权中..." });
                     const res_userInfo = await Api_dept_edit_ctn({ deptId: deptInfo?.deptId!, logistics_: [...(deptInfo.logistics ?? []), e].map(ee => ee.dictId ?? ee.id!), });
                     setDeptInfo(res_userInfo);
-                    Taro.hideLoading();
+                    try_Taro_hideLoading();
                   } else {
                     throw new Error("取消");
                   }

@@ -7,8 +7,6 @@ import { ErrorR } from "../config";
 import { getMyEnv } from "../env";
 import { utils_str_includes } from "./util";
 
-
-
 async function try_Taro_scanCode<T>(params?: Taro.scanCode.Option & { type?: keyof Taro.scanCode.QRType; }): Promise<T> {
   try {
     const { type, ..._params } = params || {};
@@ -40,60 +38,26 @@ export function Taro_getStorageSync<T>(key: string, env?: Environment): T | null
     return null;
   }
 }
-
-
-
-export async function try_Taro_navigateBack(extraData?: TaroGeneral.IAnyObject) {
-  try {
-    if (Taro?.getEnterOptionsSync()?.apiCategory === "embedded") {
-      await Taro.navigateBackMiniProgram({ extraData });
-    }
-    await Taro.navigateBack();
-  } catch {
-    try {
-      Taro.reLaunch({ url: "/pages/index/index" });
-    } catch (errr) {
-      throw new ErrorR(errr);
-    }
-  }
-}
-export async function try_Taro_navigateTo(option: Taro.navigateTo.Option & { routeType?: "wx://cupertino-modal" | "wx://bottom-sheet"; }) {
-  try {
-    await Taro.navigateTo(option);
-  } catch (err) {
-    throw new ErrorR(err);
-  }
-}
-
-
-export async function try_Taro_chooseMedia(option: Taro.chooseMedia.Option): Promise<Taro.chooseMedia.ChooseMedia[]> {
-  try {
-    const res = await Taro.chooseMedia({
-      mediaType: ["image"],
-      sourceType: ["album", "camera"],
-      sizeType: ["compressed"],
-      ...option
+export function try_Taro_openBusinessView(transactionId: string) {
+  return new Promise<TaroGeneral.CallbackResult>((resolve, reject) => {
+    Taro.openBusinessView({
+      businessType: 'weappOrderConfirm',
+      // @ts-ignore
+      extraData: { transaction_id: transactionId },
+      success: (res) => { resolve(res); },
+      fail: (err) => {
+        if (err.errMsg) {
+          reject(new Error(err.errMsg));
+        } else {
+          reject(err);
+        }
+      }
     });
-    if (res.errMsg === "chooseMedia:ok") {
-      return res.tempFiles;
-    } else {
-      throw new Error("加载图片/视频错误");
-    }
-  } catch (err) {
-    throw new ErrorR(err);
-  }
-}
-export async function try_Taro_chooseMessageFile(option: Taro.chooseMessageFile.Option): Promise<Taro.chooseMessageFile.ChooseFile[]> {
-  try {
-    const res = await Taro.chooseMessageFile({ type: "file", ...option });
-    if (res.errMsg === "chooseMessageFile:ok") {
-      return res.tempFiles;
-    } else {
-      throw new Error("选择文件错误");
-    }
-  } catch (err) {
-    throw new ErrorR(err);
-  }
+
+  });
+
+
+
 }
 export function try_Taro_getFileSystemManager_readFile(option: Taro.FileSystemManager.ReadFileOption) {
   return new Promise<string | ArrayBuffer>((resolve, reject) => {
@@ -135,6 +99,56 @@ export function try_Taro_getFileSystemManager_saveFile(option: Taro.FileSystemMa
       fail: (err) => reject(new ErrorR(err)),
     });
   });
+}
+export async function try_Taro_navigateBack(extraData?: TaroGeneral.IAnyObject) {
+  try {
+    if (Taro?.getEnterOptionsSync()?.apiCategory === "embedded") {
+      await Taro.navigateBackMiniProgram({ extraData });
+    }
+    await Taro.navigateBack();
+  } catch {
+    try {
+      Taro.reLaunch({ url: "/pages/index/index" });
+    } catch (errr) {
+      throw new ErrorR(errr);
+    }
+  }
+}
+export async function try_Taro_navigateTo(option: Taro.navigateTo.Option & { routeType?: "wx://cupertino-modal" | "wx://bottom-sheet"; }) {
+  try {
+    await Taro.navigateTo(option);
+  } catch (err) {
+    throw new ErrorR(err);
+  }
+}
+export async function try_Taro_chooseMedia(option: Taro.chooseMedia.Option): Promise<Taro.chooseMedia.ChooseMedia[]> {
+  try {
+    const res = await Taro.chooseMedia({
+      mediaType: ["image"],
+      sourceType: ["album", "camera"],
+      sizeType: ["compressed"],
+      ...option
+    });
+    if (res.errMsg === "chooseMedia:ok") {
+      return res.tempFiles;
+    } else {
+      throw new Error("加载图片/视频错误");
+    }
+  } catch (err) {
+    throw new ErrorR(err);
+  }
+}
+export async function try_Taro_chooseMessageFile(option: Taro.chooseMessageFile.Option): Promise<Taro.chooseMessageFile.ChooseFile[]> {
+  try {
+    const res = await Taro.chooseMessageFile({ type: "file", ...option });
+    if (res.errMsg === "chooseMessageFile:ok") {
+      return res.tempFiles;
+    } else {
+      throw new Error("选择文件错误");
+    }
+  } catch (err) {
+    throw new ErrorR(err);
+  }
 }
 export async function try_Taro_downloadFile({ url }: { url: string, }) {
   try {
@@ -338,9 +352,6 @@ export async function try_Taro_getPrivacySetting(): Promise<Taro_.GetPrivacySett
     }
   });
 }
-
-
-
 export async function try_Taro_getSetting(auth?: keyof AuthSetting): Promise<boolean> {
   try {
     const res = await Taro.getSetting();
@@ -385,30 +396,15 @@ export async function try_Taro_requestPayment(data: Taro.requestPayment.Option) 
     throw new ErrorR(err);
   }
 }
-
-
-
-export function try_Taro_openBusinessView(transactionId: string) {
-  return new Promise<TaroGeneral.CallbackResult>((resolve, reject) => {
-    Taro.openBusinessView({
-      businessType: 'weappOrderConfirm',
-      // @ts-ignore
-      extraData: { transaction_id: transactionId },
-      success: (res) => { resolve(res); },
-      fail: (err) => {
-        if (err.errMsg) {
-          reject(new Error(err.errMsg));
-        } else {
-          reject(err);
-        }
-      }
-    });
-
-  });
-
-
-
+export async function try_Taro_hideLoading() {
+  try {
+    await Taro.hideLoading();
+  } catch (err) {
+    console.log("隐藏加载失败", err);
+    throw new ErrorR(err);
+  }
 }
+
 
 
 
