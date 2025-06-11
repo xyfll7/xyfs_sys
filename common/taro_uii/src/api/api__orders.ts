@@ -247,3 +247,10 @@ export async function Api_order_writeWeight_ctn(params: { url: string; }): Promi
   });
   return res;
 }
+export async function Api_order_shipments_ctn(params: { orderId: string; }): Promise<any> {
+  const res = await wx_call_container<Promise<any>>({
+    path: "/order/shipments",
+    data: { ...params },
+  });
+  return res;
+}

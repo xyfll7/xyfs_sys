@@ -1,9 +1,9 @@
 // :: pages_comm/icomm_orders_groupbuying
 import { View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
-import { OrderInfo, Pagination, Product_Dryclean, Product_Publish } from "@xyfs/taro_uii";
+import { OrderInfo, Pagination, Product_Dryclean } from "@xyfs/taro_uii";
 import { Api_logistic_createWaybill_ctn } from "@xyfs/taro_uii/api/api__logistics";
-import { Api_order_cancel_ctn, Api_order_incrPrintTimes_ctn, Api_order_list_ctn, Api_order_remove_ctn } from '@xyfs/taro_uii/api/api__orders';
+import { Api_order_cancel_ctn, Api_order_incrPrintTimes_ctn, Api_order_list_ctn, Api_order_remove_ctn, Api_order_shipments_ctn } from '@xyfs/taro_uii/api/api__orders';
 import { ComButton } from "@xyfs/taro_uii/components/ComButton";
 import { ComCardOrderBringGoods } from '@xyfs/taro_uii/components/ComCardOrder';
 import { ComListTypeSelectorNew } from "@xyfs/taro_uii/components/ComListTypeSelectorNew";
@@ -69,7 +69,7 @@ const Index: FC<{}> = ({ }) => {
 
 
 
-const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: OrderInfo<Product_Publish>; onUpdateOrderItem: (e: OrderInfo<Product_Dryclean>) => void, onDeleteOrderItem: (e: OrderInfo<Product_Dryclean>) => void; }) => {
+const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: OrderInfo<any>; onUpdateOrderItem: (e: OrderInfo<Product_Dryclean>) => void, onDeleteOrderItem: (e: OrderInfo<Product_Dryclean>) => void; }) => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
 
   const IS_PURE_PRINT = roo___has_role(selfInfo_S, ["GROUPLEADER"]);
@@ -199,9 +199,18 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
       }}>
         {IS_PURE_PRINT && <View className='cccprice'>{products?.map(e => order.productList?.findIndex(ee => ee.id === e.id)! + 1).join(",")}</View>}
         {!IS_PURE_PRINT && <View className='cccprice'>{products?.map(e => order.productList?.findIndex(ee => ee.waybillId === e.waybillId)! + 1).join(",")}</View>}
-        <View className='cccgreen'>打印</View>
+        <View className='cccgreen'>打印11</View>
       </ComButton>
       }
+      <ComButton rr className="mb10 bborder ml10" onClick={async () => {
+        Taro.showLoading({ mask: true, title: "发货中..." });
+        const res = await Api_order_shipments_ctn({ orderId: order.id! });
+        Taro.hideLoading();
+        if (res) {
+          Taro.showToast({ icon: "none", title: "发货成功" });
+          onUpdateOrderItem(res);
+        }
+      }}>确认发货1</ComButton>
     </View>
   </View>;
 }

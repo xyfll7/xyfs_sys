@@ -20,6 +20,7 @@ export const ComScrollView = (
     <ScrollView
       style={{
         height: "100%",
+        minHeight: "30vh",
         flex: 1,
         display: "flex",
         flexDirection: "column",

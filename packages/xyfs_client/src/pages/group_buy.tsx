@@ -1,6 +1,6 @@
 // :: pages/group_buy
 import { Text, View } from '@tarojs/components';
-import Taro from '@tarojs/taro';
+import Taro, { useDidShow } from '@tarojs/taro';
 import { Api_goods_groupBuyingUserList_ctn, Api_goods_list_ctn, Api_goodsCart_preOrder_ctn } from "@xyfs/taro_uii/api/api__goods";
 import { Api_common_getShortLink_ctn, Api_dept_info_ctn, Api_user_edit_ctn } from '@xyfs/taro_uii/api/api__users';
 import { ComAddressSwitchor } from '@xyfs/taro_uii/components/ComAddressSwitchor';
@@ -270,19 +270,28 @@ const IIIItem = ({ item, type, onAdd, onSub, onDetail, count }: { count: number,
 
 const IIIUsers = React.memo(({ deptId }: { deptId: string; }) => {
   const [users, setUsers] = useState<any[] | null>(null);
-  useEffect(() => {
+  const Api_goods_groupBuyingUserList_ctn_callback = useCallback(async () => {
     setUsers(null);
     if (!deptId) { return; }
-    Api_goods_groupBuyingUserList_ctn({ queryDeptId: deptId }).then((res) => {
-      setUsers(res);
-    });
+    const res = await Api_goods_groupBuyingUserList_ctn({ queryDeptId: deptId });
+    setUsers(res);
   }, [deptId]);
+  useEffect(() => {
+    Api_goods_groupBuyingUserList_ctn_callback();
+  }, [Api_goods_groupBuyingUserList_ctn_callback]);
+
+  useDidShow(() => {
+    Taro.showToast({ icon: "none", title: "执行了...", });
+    Api_goods_groupBuyingUserList_ctn_callback();
+  });
+
+
   return <View className='ww prl10 dll'>
     <ComButton ll className='ml10 bcctrans mb10 cccplh' hoverClass='none'>今日跟团用户</ComButton>
     {users?.map((e, i) => {
       return <View className='dy mb10 ww' key={i}>
         <ComImage className='mr10 oo ovh' src={e.avatar}></ComImage>
-        <ComButton ll className='bcctrans cccplh'>{e.name ? e.name : coo___privacy_string(e.mobile, { isPhone: true, placeholder: "该用户想匿名" })}</ComButton>
+        <ComButton ll className='bcctrans cccplh' hoverClass="none">{e.name ? e.name : coo___privacy_string(e.mobile, { isPhone: true, placeholder: "该用户想匿名" })}</ComButton>
       </View>;
     })}
     {users?.length === 0 && <ComLoading className='mb10' isEmpty >今天还没有人跟团哦 ~</ComLoading>}
