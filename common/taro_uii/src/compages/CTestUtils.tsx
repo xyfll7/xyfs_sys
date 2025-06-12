@@ -17,7 +17,7 @@ const CTestUtils: FC = () => {
     <ComScrollView >
       <ComButton className='mb10' onClick={async () => {
         Taro.showLoading({ mask: true, title: "处理中...", });
-        const res = await Api_common_setJumpPath_ctn({ path: "pages/test/ctest_index" });
+        const res = await Api_common_setJumpPath_ctn({ path: "/pages_comm/comm__product_express" });
         console.log(res);
         Taro.showToast({ icon: "none", title: "已设置消息跳转路径", });
       }}>订单消息跳转路径设置</ComButton>

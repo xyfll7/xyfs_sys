@@ -13,7 +13,7 @@ import { ComNavBarA } from '@xyfs/taro_uii/components/ComNavBarA';
 import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
 import { ComSearcher } from '@xyfs/taro_uii/components/ComSearcher';
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
-import { Order_ST, Product_category_ST } from "@xyfs/taro_uii/src/config";
+import { Order_deliveryStatus_ST, Order_ST, Product_category_ST } from "@xyfs/taro_uii/src/config";
 import { roo___has_role, roo___role_getRoleInfo } from "@xyfs/taro_uii/src/roles";
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
 import { on_get_printer_str_order_bing_goods, on_get_printer_str_order_bing_goods_waybill, on_start_print } from "@xyfs/taro_uii/utils/bluetooth/useHooks_Blue";
@@ -202,16 +202,20 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
         <View className='cccgreen'>打印11</View>
       </ComButton>
       }
-      <ComButton rr className="mb10 bborder ml10" onClick={async () => {
-        Taro.showLoading({ mask: true, title: "发货中..." });
-        const res = await Api_order_shipments_ctn({ orderId: order.id! });
-        try_Taro_hideLoading();
-        if (res) {
-          Taro.showToast({ icon: "none", title: "发货成功" });
-          onUpdateOrderItem(res);
-        }
-      }}>确认发货1</ComButton>
+      {order.deliveryStatus === Order_deliveryStatus_ST.待发货 &&
+        <ComButton rr className="mb10 bborder ml10" onClick={async () => {
+          Taro.showLoading({ mask: true, title: "发货中..." });
+          const res = await Api_order_shipments_ctn({ orderId: order.id! });
+          try_Taro_hideLoading();
+          if (res) {
+            Taro.showToast({ icon: "none", title: "发货成功" });
+            onUpdateOrderItem({ ...order, deliveryStatus: Order_deliveryStatus_ST.待收货 });
+          }
+        }}>确认发货1</ComButton>
+      }
+
     </View>
+    <View>{order.transactionId}</View>
   </View>;
 }
 

@@ -226,6 +226,7 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
                   Taro.showLoading({ mask: true, title: "确认中...", });
                   await try_Taro_openBusinessView(_order2.transactionId!);
                   Taro.showToast({ icon: "none", title: "确认收货成功" });
+                  page_list_update((p) => ({ ...p, list: p.list.map(eee => eee.id === order.id ? { ...eee, deliveryStatus: Order_deliveryStatus_ST.已签收 } : eee) }));
                 }}>确认收货</ComButton>
               }
               {Boolean(_order2.productList?.length) && orderType === Order_ST.待付款 &&
@@ -241,7 +242,7 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
                   <Text className='nw'>支付</Text>
                 </ComButton>}
             </View>
-            {/* <View>{order.transactionId}</View> */}
+            <View>{order.transactionId}</View>
           </View>;
         }
         return null;

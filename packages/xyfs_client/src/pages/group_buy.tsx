@@ -181,7 +181,8 @@ const Index: FC = () => {
             try_Taro_hideLoading();
             // 如果个人信息中没有默认的用户收件地址，则更新用户收件地址
             if (!selfInfo_S.defaultRecManAddress) {
-              await Api_user_edit_ctn({ defaultRecManAddress: address });
+              const res = await Api_user_edit_ctn({ defaultRecManAddress: address });
+              useSTSelf.getState().sett(res);
             }
           }
         }}>

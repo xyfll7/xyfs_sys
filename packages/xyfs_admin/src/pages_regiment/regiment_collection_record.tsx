@@ -56,7 +56,7 @@ const Index: FC<{}> = ({ }) => {
     <ComNav>
       <View className='ww'>
         <ComNavBarA className='mb10 pl10'>
-          <ComButton ll className='bcctrans cccplh ml10'>收款记录(<Text className='wm6rem nw1'>{selfInfo_S.deptName}</Text>)</ComButton>
+          <ComButton ll className='bcctrans cccplh ml10'>收款记录</ComButton>
         </ComNavBarA>
         <View className='prl10 dbtc  ww'>
           <ComButton rr className='slr mb10 cccplh mr10' url='/pages_comm/icomm_download_list'>历史下载记录</ComButton>
