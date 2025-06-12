@@ -3,7 +3,7 @@ import { View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { Api_order_aggregateQuery_ctn, Api_order_incrPrintTimes_ctn } from '@xyfs/taro_uii/api/api__orders';
 import { ComButton } from '@xyfs/taro_uii/components/ComButton';
-import { ComCardOrderDryclean, ComCardOrderExpress } from '@xyfs/taro_uii/components/ComCardOrder';
+import { ComCardOrderBringGoods, ComCardOrderDryclean, ComCardOrderExpress } from '@xyfs/taro_uii/components/ComCardOrder';
 import { ComInput } from "@xyfs/taro_uii/components/ComInput";
 import { ComLoading } from '@xyfs/taro_uii/components/ComLoading';
 import { ComNav } from '@xyfs/taro_uii/components/ComNav';
@@ -114,14 +114,14 @@ definePageConfig({ navigationStyle: "custom", enableShareAppMessage: true, disab
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC = () => {
   const [form, setForm] = useHook_Reducer({
-    orderType: 0 as 0 | 1 | 2 | 3,
+    orderType: 0 as 0 | 1 | 2 | 3 | 4,
     barCode: "",
     outTradeNo: "",
     phoneNumber: "",
     waybillId: "",
   });
   const [searchValue, setSearchValue] = useHook_Reducer<{
-    orderType: 0 | 1 | 2 | 3;
+    orderType: 0 | 1 | 2 | 3 | 4;
     barCode: string;
     outTradeNo: string;
     phoneNumber: string;
@@ -170,9 +170,9 @@ const Index: FC = () => {
           }}>搜干洗</ComButton>
           <ComButton ll className={`ml10 nw  ${form.orderType == 3 ? "bccgreen cccwhite" : "cccgreen"}`} onClick={() => {
             if (page_loading) { throw new Error("正在加载中，请稍后再试"); }
-            setForm({ orderType: 3 });
+            setForm({ orderType: 4 });
             page_init();
-            setSearchValue({ ...form, orderType: 3 });
+            setSearchValue({ ...form, orderType: 4 });
           }}>搜团购</ComButton>
         </View>
         {getMyEnv().platform === "devtools" &&
@@ -233,6 +233,13 @@ const Index: FC = () => {
                   await try_Taro_navigateTo({ url: `/pages_comm/comm__express_path?${coo___objToUrl({ express_share_id: order1.id })}` });
                 }}>轨迹</ComButton>}
               </View>
+            </View>;
+          case Product_category_ST.团购:
+            const _order2 = e as OrderInfo<any>;
+
+            return <View className='dll ww  mb10 bccwhite ioo' key={e.id}>
+              <ComCardOrderBringGoods className='ww mb10' key={_order2.id} order={_order2} />
+
             </View>;
           default:
             return null;

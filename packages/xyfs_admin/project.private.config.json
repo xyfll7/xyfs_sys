@@ -11,8 +11,8 @@
       "list": [
         {
           "name": "pages_agent/agent__express_search",
-          "pathName": "pages_agent/agent__express_search",
-          "query": "",
+          "pathName": "pages_comm/comm__express_path",
+          "query": "express_share_id=84vlq75_sxp4e2&channel=2",
           "scene": null,
           "launchMode": "default"
         },

@@ -207,11 +207,9 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
           Taro.showLoading({ mask: true, title: "发货中..." });
           const res = await Api_order_shipments_ctn({ orderId: order.id! });
           try_Taro_hideLoading();
-          if (res) {
-            Taro.showToast({ icon: "none", title: "发货成功" });
-            onUpdateOrderItem({ ...order, deliveryStatus: Order_deliveryStatus_ST.待收货 });
-          }
-        }}>确认发货1</ComButton>
+          Taro.showToast({ icon: "none", title: "发货成功" });
+          onUpdateOrderItem({ ...order, deliveryStatus: Order_deliveryStatus_ST.待收货 });
+        }}>确认发货</ComButton>
       }
 
     </View>

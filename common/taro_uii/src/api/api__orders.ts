@@ -69,7 +69,7 @@ export async function Api_order_aggregateQuery_ctn(params: Pick<Pagination<unkno
 {
   // orderDate?: string;
   // orderStatus?: Order_ST;
-  orderType?: 0 | 1 | 2 | 3; // 全部0, 快递1 干洗2 未知3
+  orderType?: 0 | 1 | 2 | 3 | 4; // 全部0, 快递1 干洗2 未知3
   roleId?: number; // 角色id
   "barCode": string;
   "phoneNumber": string;
