@@ -10,11 +10,18 @@
     "miniprogram": {
       "list": [
         {
+          "name": "微信外部跳转",
+          "pathName": "pages_comm/comm__express_path",
+          "query": "express_share_id=84vlq75_sxp4e2&channel=2",
+          "scene": null,
+          "launchMode": "default"
+        },
+        {
           "name": "",
           "pathName": "pages/test/ctest_utils",
           "query": "",
-          "scene": null,
-          "launchMode": "default"
+          "launchMode": "default",
+          "scene": null
         },
         {
           "name": "pages/group_buy",
@@ -174,13 +181,6 @@
           "name": "pages_comm/comm__product_express",
           "pathName": "pages_comm/comm__product_express",
           "query": "scene=R_D%3D8jrdxps",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages_comm/comm__product_express",
-          "pathName": "pages_comm/comm__product_express",
-          "query": "scene=R_D%3D84vlq75",
           "launchMode": "default",
           "scene": null
         }
