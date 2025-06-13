@@ -155,6 +155,19 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
                   Taro.showLoading({ mask: true, title: "支付中...", });
                   await try_Taro_requestPayment({ ...res_pay, package: res_pay.packageStr });
                   try_Taro_hideLoading();
+
+
+                  try_Taro_hideLoading();
+                  page_list_update((p) => ({ ...p, list: p.list.filter(eee => eee.id !== order.id) }));
+
+                  if (!await try_Taro_showModal({
+                    title: "支付成功",
+                    content: `订单移到"已付款"列表`,
+                    confirmText: "知道了",
+                    cancelText: "查看订单"
+                  })) {
+                    setOrderType(Order_ST.已付款);
+                  }
                 }}>
                 <ComSquare className='icon-wxpay mr4' style={{ width: "calc(1.3 * var(--rem_base))" }} />
                 <Text className='nw'>支付</Text>
@@ -174,6 +187,18 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
                 Taro.showLoading({ mask: true, title: "支付中...", });
                 await try_Taro_requestPayment({ ...res_pay, package: res_pay.packageStr });
                 try_Taro_hideLoading();
+
+                try_Taro_hideLoading();
+                page_list_update((p) => ({ ...p, list: p.list.filter(eee => eee.id !== order.id) }));
+
+                if (!await try_Taro_showModal({
+                  title: "支付成功",
+                  content: `订单移到"已付款"列表`,
+                  confirmText: "知道了",
+                  cancelText: "查看订单"
+                })) {
+                  setOrderType(Order_ST.已付款);
+                }
               }}>
               <ComSquare className='icon-wxpay mr4' style={{ width: "calc(1.3 * var(--rem_base))" }} />
               <Text className='nw'>支付</Text>
