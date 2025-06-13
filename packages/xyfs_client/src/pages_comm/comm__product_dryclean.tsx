@@ -117,8 +117,8 @@ const IIIShopCartTabBarUser: FC<{ onToggle: () => void; onPay?: () => void; }> =
           });
           try_Taro_hideLoading();
           try_Taro_showModal({
-            title: "提示",
-            content: "预约成功，请等待团长上门取件",
+            title: "预约成功",
+            content: "请等待团长上门取件",
             confirmText: "知道了",
             showCancel: false,
           });
