@@ -138,11 +138,11 @@ const Index: FC<{}> = ({ }) => {
                   try {
                     await try_Taro_requestPayment({ ...res_pay, package: res_pay.packageStr });
                     page_list_update(p => ({ ...p, list: p.list.filter(ee => ee.id !== order.id) }));
-                    if (await try_Taro_showModal({
+                    if (!await try_Taro_showModal({
                       title: "支付成功",
                       content: `订单移到"已支付"列表`,
-                      confirmText: "查看订单",
-                      cancelText: "取消"
+                      confirmText: "知道了",
+                      cancelText: "查看订单 "
                     })) {
                       page_init();
                       setOrderType(Order_ST.已付款);
