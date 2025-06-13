@@ -2,7 +2,7 @@
 import { Text, View, ViewProps } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { OrderInfo, Pagination, Product_Dryclean } from "@xyfs/taro_uii";
-import { Api_order_cancel_ctn, Api_order_list_ctn, Api_order_orderProductCode_ctn, Api_order_pay_ctn } from '@xyfs/taro_uii/api/api__orders';
+import { Api_order_cancel_ctn, Api_order_list_ctn, Api_order_orderProductCode_ctn, Api_order_pay_ctn, Api_order_shipments_ctn } from '@xyfs/taro_uii/api/api__orders';
 import { dryclean_sharer } from "@xyfs/taro_uii/compages/CPDryclean";
 import { ComButton, MyButtonProps } from "@xyfs/taro_uii/components/ComButton";
 import { ComCardOrderDryclean } from "@xyfs/taro_uii/components/ComCardOrder";
@@ -83,8 +83,17 @@ const Index: FC<{}> = ({ }) => {
                 page_list_update(p => ({ ...p, list: p.list.map(item => item.id === res.id ? res : item) }));
                 Taro.showToast({ icon: "none", title: "绑定成功", });
               })} />
-
+            <View>{order.transactionId}</View>
             <View className='dr dwp prl10 ww'>
+              {true &&
+                <ComButton rr className="mb10 bborder ml10" onClick={async () => {
+                  Taro.showLoading({ mask: true, title: "发货中..." });
+                  const res = await Api_order_shipments_ctn({ orderId: order.id! });
+                  try_Taro_hideLoading();
+                  Taro.showToast({ icon: "none", title: "发货成功" });
+                }}>确认发货</ComButton>
+              }
+
               {hasRole && _order1.orderStatus === Order_ST.已付款 && order.latestEventType! < 2 && <ComButton rr className='cccplh mb10 bborder ml10' onClick={async () => {
                 if (await try_Taro_showModal({ title: "提示", content: "您确定要退款吗？", confirmText: "确认退款" })) {
                   Taro.showLoading({ mask: true, title: "退款中...", });
