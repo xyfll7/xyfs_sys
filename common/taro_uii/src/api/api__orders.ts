@@ -258,3 +258,15 @@ export async function Api_common_setJumpPath_ctn(params: { path: string; }): Pro
   });
   return res;
 }
+
+
+// 确认收货提醒
+// POST  /order/receiveNotify
+// body {"orderId":}
+export async function Api_order_receiveNotify_ctn(params: { orderId: string; }): Promise<any> {
+  const res = await wx_call_container<Promise<any>>({
+    path: "/order/receiveNotify",
+    data: { ...params },
+  });
+  return res;
+}
