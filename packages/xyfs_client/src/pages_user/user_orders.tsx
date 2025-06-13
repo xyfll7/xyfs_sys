@@ -204,7 +204,6 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
         }
         if (Number(order.orderType) === Product_category_ST.团购) {
           const _order2 = order as OrderInfo<any>;
-
           return <View className='dll ww  mb10 bccwhite ioo' key={order.id}>
             <ComCardOrderBringGoods className='ww mb10' key={_order2.id} order={_order2} />
             <View className='dr dwp prl10 ww'>
@@ -236,7 +235,18 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
                     const res_pay = await Api_order_pay_ctn({ orderId: _order2.id!, });
                     Taro.showLoading({ mask: true, title: "支付中...", });
                     await try_Taro_requestPayment({ ...res_pay, package: res_pay.packageStr });
+
                     try_Taro_hideLoading();
+                    page_list_update((p) => ({ ...p, list: p.list.filter(eee => eee.id !== order.id) }));
+
+                    if (!await try_Taro_showModal({
+                      title: "支付成功",
+                      content: `订单移到"已付款"列表`,
+                      confirmText: "知道了",
+                      cancelText: "查看订单"
+                    })) {
+                      setOrderType(Order_ST.已付款);
+                    }
                   }}>
                   <ComSquare className='icon-wxpay mr4' style={{ width: "calc(1.3 * var(--rem_base))" }} />
                   <Text className='nw'>支付</Text>
