@@ -59,7 +59,7 @@ const Index: FC = () => {
             <View className='ww mb10 dy' >
               <ComButton ll className='w5rem bccwhite'>姓名</ComButton>
               <ComButton ll className='flx1 cccplh bccback'>
-                <ComInput type='nickname' value={userForm.name}
+                <ComInput type='nickname' confirmType="done" value={userForm.name}
                   onInput={(e) => { setUserForm({ name: e.detail.value }); }}
                   onNickNameReview={async (e) => {
                     if (e.detail.pass) {

@@ -1,6 +1,9 @@
 import { Input, InputProps, View } from "@tarojs/components";
 import { useState } from "react";
 
+/**
+ * @see https://developers.weixin.qq.com/miniprogram/dev/component/input.html
+ */
 export const ComInput = ({ className, ...props }: InputProps) => {
   const [cursor, setCursor] = useState(-1);
   return <View className='dy  ww' >
