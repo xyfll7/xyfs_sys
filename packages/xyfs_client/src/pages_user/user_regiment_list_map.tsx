@@ -108,7 +108,7 @@ const IIIRegimentList = () => {
             <View className='dll ww'>
               {__dept_list?.filter((e, i, arr) => arr.findIndex(ee => ee.deptId === e.deptId) === i).map((e, i) => {
                 return <IIIDeptCard dept={e} key={i} selected_dept={selected_dept}
-                  onClick_move_to_regiment={() => { setToggle(false); setSelected_dep(e); }}
+                  onClick_move_to_regiment={() => { setSelected_dep(e); }}
                   onClick_select_regiment={async () => {
                     Taro.showLoading({ mask: true, title: "更新中...", });
                     const res_userInfo = await Api_user_edit_ctn({ deptId: e.deptId });
