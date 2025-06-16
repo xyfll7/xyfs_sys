@@ -34,7 +34,7 @@ const Index: FC<{}> = ({ }) => {
   return <ScrollView scrollY className='' style={{ height: "100vh" }}>
     <View>
       <ComNav className='fixed-top bcctrans z99 prl10' onClick={() => { setToggle(true); }}>
-        <ComNavBarA className='mb10 pl10'>
+        <ComNavBarA className='mb10 pl10 bccred' onClick={() => { setToggle(true); }}>
           <ComButton ll className='ml10 bcctrans cccplh' >附近的团长</ComButton>
         </ComNavBarA>
       </ComNav>
