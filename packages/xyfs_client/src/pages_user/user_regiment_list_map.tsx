@@ -30,19 +30,20 @@ export default function COMSELFWarp() {
   </ComSELFView>;
 };
 const Index: FC<{}> = ({ }) => {
+  const [toggle, setToggle] = useState(false);
   return <ScrollView scrollY className='' style={{ height: "100vh" }}>
     <View>
-      <ComNav className='fixed-top bcctrans z99 prl10'>
+      <ComNav className='fixed-top bcctrans z99 prl10' onClick={() => { setToggle(true); }}>
         <ComNavBarA className='mb10 pl10'>
           <ComButton ll className='ml10 bcctrans cccplh' >附近的团长</ComButton>
         </ComNavBarA>
       </ComNav>
-      <IIIRegimentList />
+      <IIIRegimentList toggle={toggle} onToggle={(e) => { setToggle(e); }} />
     </View>
   </ScrollView>;
 };
 const MAP_ID = "myMap";
-const IIIRegimentList = () => {
+const IIIRegimentList = ({ toggle, onToggle }: { toggle: boolean; onToggle: (e: boolean) => void; }) => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const { locate } = useHook_getLocation();
   const [selected_dept, setSelected_dep] = useState<DeptInfo | null>(roo___my_dept(selfInfo_S));
@@ -70,7 +71,7 @@ const IIIRegimentList = () => {
   // const my_dept = { "deptId": 173, "parentId": 101, "ancestors": "0,101,173", "deptName": "王肇mock_站点", "avatar": null, "leader": "oGwbL5MUeSNxxA4o0oOmb_FUjE7g", "mobile": "17709205217", "address": "二环南路东段268号-雁塔区太乙嘉园(二环南路东段南)", "locationName": "陕西省西安市雁塔区二环南路东段268号-雁塔区太乙嘉园(二环南路东段南)", "code": "510000", "country": "中国", "province": "陕西省", "city": "西安市", "area": "雁塔区", "longitude": 108.975147, "latitude": 34.233051, "realId": "612731198903180415", "realName": "王肇", "logisticPriceSchemeId": 2, "dryCleaningPriceSchemeId": null, "pickUpPrice": null, "supplierTypeDictIds": null, "email": null, "orderNum": null, "status": "0", "delFlag": "0", "createBy": null, "createTime": "2025-01-14 15:41:18", "updateBy": null, "updateTime": "2025-02-21 11:37:03", "distance": null, "userId": null, "children": [], "users": [], "printers": null, "logistics": null, "logisticPriceScheme": null, "dryCleaningPriceScheme": null, "supplierTypeList": null, "parentDeptInfo": null, "roles": [{ "id": 2, "roleName": "团长", "roleKey": "REGIMENT", "status": "0", "delFlag": "0", "createBy": "", "createTime": "2024-01-28 17:39:45", "updateBy": "", "updateTime": null, "remark": null }, { "id": 0, "roleName": "用户", "roleKey": "USER", "status": "0", "delFlag": "0", "createBy": "", "createTime": "2024-01-28 17:44:09", "updateBy": "", "updateTime": null, "remark": null }], "roles_": null, "logistics_": null };
 
   let __dept_list = (page.list ? [...(my_dept ? [my_dept] : []), ...page.list] : null);
-  const [toggle, setToggle] = useState(false);
+
   return <>
     {locate && <Map className='ovh' id='myMap' layerStyle={Taro.getAppBaseInfo().theme === "dark" ? 0 : 1}
       style={{ width: "100vw", height: '100vh', borderTopLeftRadius: "var(--rem_base)", borderTopRightRadius: "var(--rem_base)", }}
@@ -78,13 +79,13 @@ const IIIRegimentList = () => {
       latitude={locate?.latitude!}
       scale={14} onError={() => { }} onTap={(e) => {
         console.log("点击产生坐标:", e);
-        setToggle(true);
+        onToggle(true);
       }} />
     }
 
     <View className='pa ww prl10 z9 dll transall safe-bottom' style={{ bottom: "0rem", height: toggle ? "25vh" : "85vh" }}>
       <View className='ww hh bccback IOO ovh mb10 dll prl10 pb10 ' style={{}}>
-        <View className='ww' onClick={() => setToggle(e => !e)}>
+        <View className='ww' onClick={() => onToggle(!toggle)}>
           <ComTabBarLine className='mbt6' isShort />
           <View className='dbtc ww prl10'>
             <ComButton ll className=' mb10 bccback cccplh'>请选择一个距您最近的团长</ComButton>
