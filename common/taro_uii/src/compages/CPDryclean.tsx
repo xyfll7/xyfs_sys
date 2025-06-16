@@ -387,7 +387,6 @@ const ShopCartTabBarRegiment: FC<PropsWithChildren & { children?: ReactElement |
           <ComSquare style={{ width: "calc(1.3 * var(--rem_base))" }} className='icon-wxpay mr4' />
           <Text className='fwb'>付</Text>
         </ComButton>
-        {/* <ComSquare className='icon-chevron-right mrl10' style={{ transform: "rotate(0deg)" }} onClick={onToggle} /> */}
       </View>
     </View>
   </View>;
