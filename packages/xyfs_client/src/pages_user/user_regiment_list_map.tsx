@@ -78,6 +78,7 @@ const IIIRegimentList = () => {
       latitude={locate?.latitude!}
       scale={14} onError={() => { }} onTap={(e) => {
         console.log("点击产生坐标:", e);
+        setToggle(true);
       }} />
     }
 

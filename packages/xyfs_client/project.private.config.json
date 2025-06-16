@@ -10,11 +10,18 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages_user/user_regiment_list_map",
+          "pathName": "pages_user/user_regiment_list_map",
+          "query": "",
+          "scene": null,
+          "launchMode": "default"
+        },
+        {
           "name": "微信外部跳转",
           "pathName": "pages_comm/comm__express_path",
           "query": "express_share_id=84vlq75_sxp4e2&channel=2",
-          "scene": null,
-          "launchMode": "default"
+          "launchMode": "default",
+          "scene": null
         },
         {
           "name": "",
