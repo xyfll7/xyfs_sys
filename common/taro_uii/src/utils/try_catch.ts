@@ -170,7 +170,7 @@ export async function try_Taro_downloadFile({ url }: { url: string, }) {
   }
 }
 export async function try_Taro_openDocument(params: Taro.openDocument.Option) {
-  const res = await Taro.openDocument({ ...params });
+  const res = await Taro.openDocument({ ...params, showMenu: true });
   if (res.errMsg !== "openDocument:ok") {
     throw new Error("打开文件失败");
   }
