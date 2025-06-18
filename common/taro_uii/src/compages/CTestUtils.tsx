@@ -1,13 +1,16 @@
 import Taro from "@tarojs/taro";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Api_common_setJumpPath_ctn } from "../api/api__orders";
 import { ComButton } from "../components/ComButton";
+import { ComImage } from "../components/ComImage";
 import { ComNav } from "../components/ComNav";
 import { ComNavBarA } from "../components/ComNavBarA";
 import { ComScrollView } from "../components/ComScrollView";
 import { MMMAAPage } from "../components/MMMAAPage";
+import { utils_get_qrcode } from "../utils/util";
 
 const CTestUtils: FC = () => {
+  const [qrcode, setQrcode] = useState<string>("");
   return <MMMAAPage>
     <ComNav>
       <ComNavBarA className='mb10 pl10'>
@@ -21,6 +24,18 @@ const CTestUtils: FC = () => {
         console.log(res);
         Taro.showToast({ icon: "none", title: "已设置消息跳转路径", });
       }}>订单消息跳转路径设置</ComButton>
+      <ComButton className='mb10' onClick={async () => {
+        Taro.showLoading({ mask: true, title: "生成中..." });
+        const _src = await utils_get_qrcode({
+          appid: process.env.TARO_APP_CLIENT,
+          page: "pages/index/index",
+          scene: "",
+        });
+        Taro.showToast({ icon: "none", title: "二维码已生成" });
+        console.log("二维码::", _src);
+        setQrcode(_src);
+      }}>生成二维码</ComButton>
+      <ComImage style={{ width: "10rem" }} src={qrcode}></ComImage>
     </ComScrollView>
   </MMMAAPage>;
 };

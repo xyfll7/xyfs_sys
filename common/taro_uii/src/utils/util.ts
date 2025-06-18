@@ -71,17 +71,17 @@ export function utils_duplicates(arr: any[]) {
   return temp;
 }
 
-// 获取二维码 注: 开发环境无法生成二维码，只有在真机上才能生成
-export async function utils_get_qrcode({ page, scene, appid }: { appid?: string; page: string; scene: string; }): Promise<string> {
+
+export async function utils_get_qrcode({ page, scene, appid, fileType = ".png" }: { appid?: string; page: string; scene: string; fileType?: ".png"; }): Promise<string> {
 
   const imageData = await Api_qrcode_ctn({
     appid: appid,
     page: page,
     scene: scene ? scene : "0",
   });
-
+  // 注: 开发环境无法生成二维码，只有在真机上才能生成
   const res = await try_Taro_getFileSystemManager_writeFile({
-    filePath: `${Taro.env.USER_DATA_PATH}/qrcode_${coo___ios_date().getTime()}.jpg`,
+    filePath: `${Taro.env.USER_DATA_PATH}/qrcode_${coo___ios_date().getTime()}${fileType}`,
     encoding: "base64",
     data: imageData,
   });
