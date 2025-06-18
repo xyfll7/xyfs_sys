@@ -88,7 +88,7 @@ const IIIRegimentList = ({ toggle, onToggle }: { toggle: boolean; onToggle: (e: 
         <View className='ww' onClick={() => onToggle(!toggle)}>
           <ComTabBarLine className='mbt6' isShort />
           <View className='dbtc ww prl10'>
-            <ComButton ll className=' mb10 bccback cccplh'>请选择一个距您最近的团长</ComButton>
+            <ComButton ll className=' mb10 bccback cccplh' hoverClass='none'>请选择一个距您最近的团长</ComButton>
             <ComButton rr className='mb10 bccback cccplh'>{toggle ? "展开" : "收起"}</ComButton>
           </View>
         </View>
