@@ -325,7 +325,7 @@ const IIIGroupLeaders: FC = () => {
         <View className='dll ww' >
           {e.products.map((p, i) => <View className='dy mb10 ww' key={i}>
             <ComImage className='mr10' src={p.attachUrl?.split(",")[0]} style={{ width: "2.5rem", height: "2.5rem" }} />
-            <ComButton rr ll className='ww  dbtc'>
+            <ComButton rr ll className='ww  dbtc' hoverClass='none'>
               <Text className='nw1 mr10'>{p.name}</Text>
               <ComPrice className='cccprice' price={Number(p.price)}></ComPrice>
             </ComButton>
