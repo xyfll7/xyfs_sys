@@ -194,7 +194,13 @@ const Index: FC = () => {
     {product && <ComPopupNew onClose={() => { setProduct(null); }}  >
       <View className='dll prl10' style={{ height: "70vh", }}>
         <ComNavBarB className='mb10 ww' onClose={() => { setProduct(null); }} >
-          <ComButton className='fwb bccback'>详情</ComButton>
+          <View className='ww dbtc'>
+            <ComButton className='fwb bccback' hoverClass="none">详情</ComButton>
+            <ComButton rr className=' bccyellow h2rem nw mr10' onClick={() => {
+              setCart((e) => [...e, { ...product }]);
+              Taro.showToast({ icon: "none", title: "已加购" });
+            }} >+ 加购</ComButton>
+          </View>
         </ComNavBarB>
         <ComScrollView className='IOO'>
           <View className='ww'>

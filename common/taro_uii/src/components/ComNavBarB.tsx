@@ -5,9 +5,9 @@ import { ComButton } from "./ComButton";
 export const ComNavBarB: FC<ViewProps & { rr?: boolean, showClose?: boolean, onClose?: () => void; }> = ({ rr = false, showClose = true, className, children, onClose }) => {
   const _childrens = React.Children.map(children, (e) => e);
   return <View className={`${className} dbtc ww`}>
-    <View>
+    <View className="ww">
       {_childrens?.[0]}
     </View>
-    {_childrens?.[1] ?? (showClose ? <ComButton rr={rr} className='cccgreen bccback' onClick={onClose}>关闭</ComButton> : null)}
+    {_childrens?.[1] ?? (showClose ? <ComButton rr={rr} className='cccgreen bccback nw' onClick={onClose}>关闭</ComButton> : null)}
   </View>;
 };
