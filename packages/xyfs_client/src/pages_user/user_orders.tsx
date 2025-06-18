@@ -155,9 +155,6 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
                   Taro.showLoading({ mask: true, title: "支付中...", });
                   await try_Taro_requestPayment({ ...res_pay, package: res_pay.packageStr });
                   try_Taro_hideLoading();
-
-
-                  try_Taro_hideLoading();
                   page_list_update((p) => ({ ...p, list: p.list.filter(eee => eee.id !== order.id) }));
 
                   if (!await try_Taro_showModal({
@@ -187,10 +184,7 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
                 Taro.showLoading({ mask: true, title: "支付中...", });
                 await try_Taro_requestPayment({ ...res_pay, package: res_pay.packageStr });
                 try_Taro_hideLoading();
-
-                try_Taro_hideLoading();
                 page_list_update((p) => ({ ...p, list: p.list.filter(eee => eee.id !== order.id) }));
-
                 if (!await try_Taro_showModal({
                   title: "支付成功",
                   content: `订单移到"已付款"列表`,
@@ -260,10 +254,8 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
                     const res_pay = await Api_order_pay_ctn({ orderId: _order2.id!, });
                     Taro.showLoading({ mask: true, title: "支付中...", });
                     await try_Taro_requestPayment({ ...res_pay, package: res_pay.packageStr });
-
                     try_Taro_hideLoading();
                     page_list_update((p) => ({ ...p, list: p.list.filter(eee => eee.id !== order.id) }));
-
                     if (!await try_Taro_showModal({
                       title: "支付成功",
                       content: `订单移到"已付款"列表`,
