@@ -148,7 +148,7 @@ const Index: FC = () => {
     </ComScrollView>
     <View className='ww dll pt10'>
       <View className='ww dr mb10'>
-        <ComAddressSwitchor className="ww bcctrans" isShort isIcon addressPlaceholder='请填写收货地址' title='收货人:' address={address}
+        <ComAddressSwitchor className="ww bcctrans" isShort addressPlaceholder='请填写收货地址' title='收货人:' address={address}
           onClick={async (e) => {
             const res_address = await try_Taro_chooseAddress(true);
             setAddress(res_address);
@@ -156,7 +156,7 @@ const Index: FC = () => {
         {/* <ComButton className='cccgreen bborder ml10 nw'>到付</ComButton> */}
       </View>
       <View className='ww dr mb10'>
-        <ComAddressSwitchor className="ww mr10 bcctrans" isShort title='团:' address={roo___my_dept(selfInfo_S)} />
+        <ComAddressSwitchor className="ww mr10 bcctrans" isShort isIcon title='团:' address={roo___my_dept(selfInfo_S)} url='/pages_user/user_regiment_list_map' />
         <ComCartPrice className='bcctrans' totalPrice={String(cart.reduce((sum, item) => sum + (item.price * 100), 0) / 100)} num={String(cart.length)} />
         <ComButton className='bccyellow ml10 nw' onClickO={async () => {
           if (!Boolean(cart?.length)) { throw new ErrorR("购物车为空", true); }
