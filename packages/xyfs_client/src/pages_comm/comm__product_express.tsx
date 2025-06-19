@@ -147,11 +147,9 @@ const IIIOrderPayUser: FC<{}> = ({ }) => {
             await utils_validate_express("send", express_S?.productList?.[0]?.sendMan!);
             if (!express_S?.productList?.[0]?.itemType) { throw new ErrorR("请输入品名", true); }
             Taro.showLoading({ mask: true, title: "提交中...", });
-            console.log("xxxxxxxxxxxxxxxxx", useSTExpress.getState().express);
             await Api_order_pre_ctn({ ...useSTExpress.getState().express, nowPay: false });
             try_Taro_hideLoading();
-
-            if (await try_Taro_showModal({ title: "提示", content: "下单成功", confirmText: "查看订单", cancelText: "继续下单", })) {
+            if (await try_Taro_showModal({ title: "下单成功", content: "已通知团长，尽快上门取件", confirmText: "查看订单", cancelText: "继续下单", })) {
               Taro.redirectTo({ url: `/pages_user/user_orders?${coo___objToUrl({ order_ST: String(Order_ST.待付款) })}` });
             } else {
               useSTExpress.getState().sett({ ___show: false });
