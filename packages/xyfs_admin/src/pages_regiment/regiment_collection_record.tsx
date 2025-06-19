@@ -96,7 +96,7 @@ const Index: FC<{}> = ({ }) => {
           <IIIWallet />
           {(page_paymentList === null || page_loading) && <ComLoading className='mb10'></ComLoading>}
           {(page_paymentList !== null && !page_loading) && <>
-            <ComButton className='cccplh mb10 bccback'>今天</ComButton>
+            <ComButton className='cccplh mb10 bccback' hoverClass="none">今天</ComButton>
             <IIIPaymentDetailToday className='mb10 bccwhite' paymentDetailToday={page_paymentDetail.list!} />
             <IIIPaymentList onSetPaymentDetailSomeDay={(e) => setPaymentDetailSomeDay(e)} page_paymentList={page_paymentList!} />
           </>}
@@ -117,7 +117,7 @@ const IIIPaymentDetailToday: FC<{
   return <>
     {paymentDetailToday && Boolean(paymentDetailToday.length) &&
       <View className={`prl10  IOO  ww pt10 pb10 ${className}`}>
-        {Boolean(paymentDetailToday?.length) && <ComButton ll className=' cccplh mb10'>支持查看近10条收款明细，更多请→查看明细</ComButton>}
+        {Boolean(paymentDetailToday?.length) && <ComButton ll className=' cccplh mb10' hoverClass="none">支持查看近10条收款明细，更多请→查看明细</ComButton>}
         {paymentDetailToday?.map((e) => <IIIPaymentDetailItem key={e.id} item={e}></IIIPaymentDetailItem>)}
       </View>
     }

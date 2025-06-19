@@ -131,7 +131,7 @@ const CartItemEditor: FC<{ cartItem: Product_Dryclean; onSetCart: (e: Product_Dr
       ...(cartItem.affixOptions ?? []),
     ].filter((e) => Boolean(e.price)),
   });
-  console.log("bbb.", form);
+
   const [pictureUrl, setPictureUrl] = useState<string>(cartItem.img ?? "");
   const [remark, setRemark] = useState("");
   const [quantity, setQuantity] = useState(cartItem.quantity ? cartItem.quantity : 1);
@@ -164,7 +164,7 @@ const CartItemEditor: FC<{ cartItem: Product_Dryclean; onSetCart: (e: Product_Dr
             </View>
           </View>
 
-          <ComButton className='bccyellow' onClick={async () => {
+          <ComButton className='bccyellow nw' onClick={async () => {
             if (pictureUrl.split(",").length <= get_dev_value(3, 0)!) { throw new Error("请至少上传4张图片"); }
             onToggle();
             Taro.showLoading({ mask: true, title: "添加..." });
