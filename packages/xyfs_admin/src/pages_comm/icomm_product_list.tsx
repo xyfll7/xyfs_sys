@@ -89,7 +89,7 @@ const Index: FC = () => {
               });
               try_Taro_hideLoading();
               setQrcode(_src);
-            }}>生成二维码</ComButton>
+            }}>二维码</ComButton>
           </View>
         </View>;
       })}
