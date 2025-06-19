@@ -1,6 +1,6 @@
 // :: pages_comm/icomm_orders_dryclean
 import { Text, View, ViewProps } from "@tarojs/components";
-import Taro from "@tarojs/taro";
+import Taro, { useDidShow } from "@tarojs/taro";
 import { OrderInfo, Pagination, Product_Dryclean } from "@xyfs/taro_uii";
 import { Api_order_cancel_ctn, Api_order_list_ctn, Api_order_orderProductCode_ctn, Api_order_pay_ctn, Api_order_receiveNotify_ctn, Api_order_shipments_ctn } from '@xyfs/taro_uii/api/api__orders';
 import { dryclean_sharer } from "@xyfs/taro_uii/compages/CPDryclean";
@@ -48,6 +48,11 @@ const Index: FC<{}> = ({ }) => {
     }), [orderType, searchValue]);
   const { page, page_loading, page_list_get, page_list_update, page_init } = useHook_pageListNew(___page_getter);
   const hasRole = roo___has_role(selfInfo_S, ["REGIMENT"]);
+
+  useDidShow(() => {
+    page_init();
+    page_list_get(page);
+  });
   return <MMMAAPage>
     <ComNav>
       <View className='ww prl10'>

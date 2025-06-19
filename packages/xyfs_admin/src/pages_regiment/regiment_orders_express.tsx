@@ -1,6 +1,6 @@
 // :: pages_regiment/regiment_orders_express
 import { Picker, Text, View } from "@tarojs/components";
-import Taro from "@tarojs/taro";
+import Taro, { useDidShow } from "@tarojs/taro";
 import { OrderInfo, Pagination, Product_Express } from "@xyfs/taro_uii";
 import { Api_logistic_waybill_ctn } from '@xyfs/taro_uii/api/api__logistics';
 import { Api_order_cancel_ctn, Api_order_incrPrintTimes_ctn, Api_order_list_ctn, Api_order_pay_ctn, Api_order_remove_ctn } from '@xyfs/taro_uii/api/api__orders';
@@ -52,6 +52,11 @@ const Index: FC<{}> = ({ }) => {
       keyword: searchValue,
     }), [tabIndex, searchValue, queryType, date]);
   const { page, page_loading, page_list_get, page_list_update, page_init } = useHook_pageListNew(___page_getter);
+
+  useDidShow(() => {
+    page_init();
+    page_list_get(page);
+  });
 
   return <MMMAAPage>
     <ComNav>
