@@ -1,9 +1,9 @@
-import { BaseEventOrig, ScrollView, ScrollViewProps, View } from "@tarojs/components";
-import { useRef, useState } from "react";
+import { BaseEventOrig, ScrollView, ScrollViewProps, Slot, View } from "@tarojs/components";
+import React, { useRef, useState } from "react";
 import { getMyEnv } from "../env";
 import { ComTabBarLine } from "./ComTabBarLine";
 
-export const ComScrollView = (
+const ComScrollView = (
   {
     className = "IOO",
     onScroll,
@@ -39,7 +39,7 @@ export const ComScrollView = (
       scrollWithAnimation
       fastDeceleration
       scrollIntoView={props.scrollIntoView}
-      refresherThreshold={0}
+      refresherThreshold={45}
       upperThreshold={props.upperThreshold ?? 50}
       lowerThreshold={props.lowerThreshold ?? 300}
       refresherBackground='transparent'
@@ -48,10 +48,10 @@ export const ComScrollView = (
       refresherEnabled={props.refresherEnabled}
       onScroll={(e) => { onScroll?.(e, props.upperThreshold ?? 0); }}
       onScrollToUpper={props.onScrollToUpper}
-      onRefresherRefresh={(e) => {
+      onRefresherPulling={() => { setTriggered(true); }}
+      onRefresherRefresh={async (e) => {
         if (props.onRefresherRefresh) {
-          setTriggered(true);
-          props.onRefresherRefresh?.(e);
+          await props.onRefresherRefresh?.(e);
           setTriggered(false);
         }
       }}
@@ -61,6 +61,9 @@ export const ComScrollView = (
         await props.onScrollToLower?.(e);
         isScrolling.current = false;
       }}>
+      <Slot className="ww" name='refresher'>
+        <View className="ww  cccplh pb20 pl20">刷新...</View>
+      </Slot>
       <View className='dll ww'>
         {props.children}
       </View>
@@ -68,3 +71,9 @@ export const ComScrollView = (
     {process.env.TARO_APP_CLIENT === getMyEnv().appId && <ComTabBarLine className='mt6 mb6' />}
   </View>;
 };
+
+
+export {
+  ComScrollView
+};
+

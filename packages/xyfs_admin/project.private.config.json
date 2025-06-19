@@ -10,11 +10,18 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages_regiment/regiment_orders_express",
+          "pathName": "pages_regiment/regiment_orders_express",
+          "query": "order_ST=4",
+          "scene": null,
+          "launchMode": "default"
+        },
+        {
           "name": "pages_agent/agent__express_search",
           "pathName": "pages_comm/comm__express_path",
           "query": "express_share_id=84vlq75_sxp4e2&channel=2",
-          "scene": null,
-          "launchMode": "default"
+          "launchMode": "default",
+          "scene": null
         },
         {
           "name": "pages_user/sub_user_dept",

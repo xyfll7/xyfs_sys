@@ -53,9 +53,6 @@ const Index: FC<{}> = ({ }) => {
     }), [tabIndex, searchValue, queryType, date]);
   const { page, page_loading, page_list_get, page_list_update, page_init } = useHook_pageListNew(___page_getter);
 
-
-
-
   return <MMMAAPage>
     <ComNav>
       <View className='ww prl10 ww'>
@@ -97,7 +94,7 @@ const Index: FC<{}> = ({ }) => {
         </ComSearcher>
       </View>
     </ComNav>
-    <ComScrollView onScrollToLower={async () => { page_list_get(page); }}>
+    <ComScrollView onScrollToLower={async () => { page_list_get(page); }} refresherEnabled onRefresherRefresh={async () => { page_init(); await page_list_get(page); }}>
       {page.list?.map((e) => {
         const ee1 = e as OrderInfo<Product_Express>;
         return <View className='bccwhite IOO mb10 ww' key={e.id}>
