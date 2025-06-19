@@ -200,13 +200,13 @@ const Index: FC = () => {
               <View className='ww mb10 dy' >
                 <ComButton ll className='w5rem bccwhite nw' hoverClass='none'>负责人</ComButton>
                 <ComButton ll className='flx1 cccplh bccback' hoverClass='none'>
-                  <ComInput type='idcard' placeholder='请输入身份证号' value={realName} onInput={(eee) => { setRealName(eee.detail.value); }} ></ComInput>
+                  <ComInput placeholder='请输入负责姓名' value={realName} onInput={(eee) => { setRealName(eee.detail.value); }} ></ComInput>
                 </ComButton>
               </View>
               <View className='ww mb10 dy' >
                 <ComButton ll className='w5rem bccwhite nw' hoverClass='none'>实名</ComButton>
                 <ComButton ll className='flx1 cccplh bccback mr10' hoverClass='none'>
-                  <ComInput type='idcard' placeholder='请输入身份证号' value={realId} onInput={(eee) => { setRealId(eee.detail.value); }} ></ComInput>
+                  <ComInput type='idcard' placeholder='请输入负责人身份证号' value={realId} onInput={(eee) => { setRealId(eee.detail.value); }} ></ComInput>
                 </ComButton>
                 <ComButton rr className="bccgreen cccwhite" onClick={async () => {
                   if (!realName) { Taro.showToast({ icon: "none", title: "请输入负责姓名", }); return; }
