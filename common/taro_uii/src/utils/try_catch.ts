@@ -407,6 +407,9 @@ export async function try_Taro_hideLoading() {
 
 export async function try_Taro_saveImageToPhotosAlbum(option: Taro.saveImageToPhotosAlbum.Option) {
   const res = await Taro.saveImageToPhotosAlbum(option);
+  if (res.errMsg !== "saveImageToPhotosAlbum:ok") {
+    throw new Error("保存图片到相册失败");
+  }
 }
 
 

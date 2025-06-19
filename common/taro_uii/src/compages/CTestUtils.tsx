@@ -37,8 +37,7 @@ const CTestUtils: FC = () => {
       }}>生成二维码</ComButton>
       <ComImage style={{ width: "10rem" }} src={qrcode} onClick={async () => {
         if (qrcode) {
-          const res = await try_Taro_saveImageToPhotosAlbum({ filePath: qrcode, });
-          console.log("保存二维码到相册::", res);
+          await try_Taro_saveImageToPhotosAlbum({ filePath: qrcode, });
         }
       }}></ComImage>
     </ComScrollView>
