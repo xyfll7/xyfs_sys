@@ -1,7 +1,7 @@
 // :: pages_regiment/regiment_invitor
 import { Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
-import { DeptInfo, OrderInfo, ProductBase } from '@xyfs/taro_uii';
+import { DeptInfo, OrderInfo, Pagination, ProductBase } from '@xyfs/taro_uii';
 import { Api_order_query_ctn } from '@xyfs/taro_uii/api/api__orders';
 import { Api_dept_groupLeader_ctn } from '@xyfs/taro_uii/api/api__users';
 import { ComButton, ComButtonOpen } from '@xyfs/taro_uii/components/ComButton';
@@ -15,9 +15,9 @@ import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { roo___has_role } from '@xyfs/taro_uii/src/roles';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
 import { try_Taro_navigateBack, try_Taro_navigateTo } from '@xyfs/taro_uii/utils/try_catch';
-import { useHook_getCurrentInstance } from '@xyfs/taro_uii/utils/useHooks';
+import { useHook_getCurrentInstance, useHook_pageListNew } from '@xyfs/taro_uii/utils/useHooks';
 import { coo___objToUrl, coo___urlToObj } from '@xyfs/utils/util';
-import { FC, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 
 definePageConfig({ enableShareAppMessage: true, navigationStyle: "custom", disableScroll: true, });
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
@@ -108,16 +108,17 @@ const IIIBringGoods: FC<{ managerUser: DeptInfo; }> = ({ managerUser }) => {
 
 const IIIGroupLeaders: FC<{ deptInfo: DeptInfo; }> = ({ deptInfo }) => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
-  const [groupLeaders, setGroupLeaders] = useState<DeptInfo[] | null>(null);
-  useEffect(() => {
-    Api_dept_groupLeader_ctn({}).then(res => {
-      setGroupLeaders(res);
-    });
-  }, []);
+
+  const ___page_getter = useCallback(async (p: Pagination<unknown>) =>
+    await Api_dept_groupLeader_ctn({
+      ...p,
+      keyword: ""
+    }), []);
+  const { page, page_loading, page_list_get, page_list_update, page_init } = useHook_pageListNew(___page_getter,);
 
   return <>
-    {!groupLeaders && <ComLoading />}
-    {groupLeaders?.map(e => {
+    {!page.list && <ComLoading />}
+    {page.list?.map(e => {
       return <View key={e.deptId} className='mb10 dbtc bccwhite ww ioo pt10 prl10' onClick={() => {
         try_Taro_navigateTo({ url: `/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ G_D: e.deptId, })) })}` });
       }}>
@@ -136,5 +137,6 @@ const IIIGroupLeaders: FC<{ deptInfo: DeptInfo; }> = ({ deptInfo }) => {
         </ComButtonOpen>
       </View>;
     })}
+    <ComLoading className='mb10' isLastPage={page?.isLastPage} loading={page_loading} onLoadMore={() => page_list_get(page)} />
   </>;
 };
