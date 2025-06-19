@@ -10,11 +10,18 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages_user/user_orders",
+          "pathName": "pages_user/user_orders",
+          "query": "scene=pay",
+          "scene": null,
+          "launchMode": "default"
+        },
+        {
           "name": "pages/group_buy",
           "pathName": "pages/group_buy",
           "query": "scene=G_D%253D201",
-          "scene": null,
-          "launchMode": "default"
+          "launchMode": "default",
+          "scene": null
         },
         {
           "name": "pages_user/user_regiment_list_map",
