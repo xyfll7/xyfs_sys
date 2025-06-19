@@ -37,10 +37,10 @@ const Index: FC<{}> = ({ }) => {
     <ComNav>
       <View className='ww'>
         <ComNavBarA className='mb10 pl10'>
-          <ComButton ll className='bcctrans cccplh ml10'>下载任务列表</ComButton>
+          <ComButton ll className='bcctrans cccplh ml10' hoverClass="none">下载任务列表</ComButton>
         </ComNavBarA>
         <View className='dbtc ww prl10'>
-          <ComButton className='bccback mb10 cccplh nw1'>您下载的对账单会显示在这个页面</ComButton>
+          <ComButton className='bccback mb10 cccplh nw1' hoverClass="none">您下载的对账单会显示在这个页面</ComButton>
           <ComButton className='mb10 nw cccgreen' onClick={() => { page_init(); }}>刷新</ComButton>
         </View>
         {roo___has_role(selfInfo_S, ["AGENT"]) &&
