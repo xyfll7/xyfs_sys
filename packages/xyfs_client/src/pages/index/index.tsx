@@ -25,7 +25,7 @@ import { try_Taro_hideLoading, try_Taro_navigateBack, try_Taro_navigateTo } from
 import { useHook_pageListNew } from '@xyfs/taro_uii/utils/useHooks';
 import { utils_get_capsule } from '@xyfs/taro_uii/utils/util';
 import { coo___objToUrl } from '@xyfs/utils/util';
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { FC, forwardRef, useCallback, useEffect, useImperativeHandle, useState } from 'react';
 import { AVATARS } from '../../avatars';
 
 definePageConfig({
@@ -41,9 +41,10 @@ export default function COMSELFWarp() { return <ComSELFView><Index></Index></Com
 const Index: FC = () => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const ref_banner = React.useRef<{ setIsHeaderBack: (e: boolean) => void; }>(null);
+  const ref_groupLeaders = React.useRef<{ refresh: () => void; }>(null);
   const { capRight } = utils_get_capsule();
-  const [refreshTime, setRefreshTime] = useState(0);
-  console.log("Index selfInfo_S", selfInfo_S);
+
+
   return <MMMAAPage share={roo___has_role(selfInfo_S!.managerUser!, ["REGIMENT"]) ? { page: `/pages/index/index?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ R_D: Number(selfInfo_S.managerUser?.mobile).toString(36) })) })}`, } : undefined}>
     <View className='ww'>
       <ComBanner ref={ref_banner} maskHightT='70%' maskHightF='10vh' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/farmer_0.webp' />
@@ -90,7 +91,7 @@ const Index: FC = () => {
     </View>
     <ComScrollView className='IOO' upperThreshold={200}
       refresherEnabled
-      onRefresherRefresh={async () => { setRefreshTime(Date.now()); }}
+      onRefresherRefresh={async () => { ref_groupLeaders.current?.refresh(); }}
       onScroll={(e, top) => { if (e.detail.scrollTop > top) { ref_banner.current?.setIsHeaderBack(true); } }}
       onScrollToUpper={() => { ref_banner.current?.setIsHeaderBack(false); }}>
 
@@ -107,8 +108,8 @@ const Index: FC = () => {
 
 
 
-      <IIIGroupLeaders key={refreshTime} />
-      {selfInfo_S.channelId && <IIIBringGoods channelId={selfInfo_S.channelId} key={refreshTime} />}
+      <IIIGroupLeaders ref={ref_groupLeaders} />
+      {selfInfo_S.channelId && <IIIBringGoods channelId={selfInfo_S.channelId} />}
 
 
       {getMyEnv().platform === "devtools" &&
@@ -286,10 +287,8 @@ const IIIRegimentAssistList: FC<{}> = ({ }) => {
 };
 
 
-const IIIGroupLeaders: FC = () => {
+const IIIGroupLeaders = forwardRef(({ }, ref) => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
-
-
 
   const ___page_getter = useCallback(async (p: Pagination<unknown>) =>
     await Api_dept_groupLeader_ctn({
@@ -297,7 +296,14 @@ const IIIGroupLeaders: FC = () => {
       keyword: ""
     }), []);
   const { page, page_loading, page_list_get, page_list_update, page_init } = useHook_pageListNew(___page_getter,);
-  console.log("IIIGroupLeaders page", page, page_loading);
+
+  useImperativeHandle(ref, () => ({
+    refresh: () => {
+      page_init();
+      page_list_get(page);
+    }
+  }));
+
   return <>
     {page.list?.map(e => {
       return <View className='ww dll mb10  bccwhite ww IOO pt10 prl10' key={e.deptId} onClick={() => {
@@ -332,4 +338,4 @@ const IIIGroupLeaders: FC = () => {
     })}
     <ComLoading className='mb10' isLastPage={page?.isLastPage} loading={page_loading} onLoadMore={() => page_list_get(page)} />
   </>;
-};
+});
