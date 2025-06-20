@@ -201,13 +201,11 @@ export function useHook_Fetch<T>(cb: () => Promise<T | null>) {
 
 
 export function useHook_getCurrentInstance<T>() {
-  const ref = useRef<Taro.PageInstance>();
+  const ref = useRef<Taro.PageInstance | null>(null);
   const { page } = Taro.getCurrentInstance();
-
-  if (page) {
+  if (!ref.current) {
     ref.current = page;
   }
-
   const obj: Record<string, any> = {};
   const options = ref.current?.options;
   options && Object.keys(options).map(key => {
