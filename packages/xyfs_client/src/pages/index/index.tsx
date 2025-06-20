@@ -42,6 +42,7 @@ const Index: FC = () => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const ref_banner = React.useRef<{ setIsHeaderBack: (e: boolean) => void; }>(null);
   const ref_groupLeaders = React.useRef<{ refresh: () => void; }>(null);
+  const ref_bringGoods = React.useRef<{ refresh: () => void; }>(null);
   const { capRight } = utils_get_capsule();
 
 
@@ -91,7 +92,7 @@ const Index: FC = () => {
     </View>
     <ComScrollView className='IOO' upperThreshold={200}
       refresherEnabled
-      onRefresherRefresh={async () => { ref_groupLeaders.current?.refresh(); }}
+      onRefresherRefresh={async () => { ref_groupLeaders.current?.refresh(); ref_bringGoods.current?.refresh(); }}
       onScroll={(e, top) => { if (e.detail.scrollTop > top) { ref_banner.current?.setIsHeaderBack(true); } }}
       onScrollToUpper={() => { ref_banner.current?.setIsHeaderBack(false); }}>
 
@@ -109,7 +110,7 @@ const Index: FC = () => {
 
 
       <IIIGroupLeaders ref={ref_groupLeaders} />
-      {selfInfo_S.channelId && <IIIBringGoods channelId={selfInfo_S.channelId} />}
+      {selfInfo_S.channelId && <IIIBringGoods ref={ref_bringGoods} channelId={selfInfo_S.channelId} />}
 
 
       {getMyEnv().platform === "devtools" &&
@@ -127,10 +128,12 @@ const Index: FC = () => {
 
 
 
-const IIIBringGoods = React.memo(({ className, channelId, }: { className?: string; channelId?: string; }) => {
+const IIIBringGoods = forwardRef(({ className, channelId, }: { className?: string; channelId?: string; }, ref) => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const [productList, setProductList] = useState<any[]>();
-  useEffect(() => {
+
+
+  const _get_data = useCallback(async () => {
     setProductList(undefined);
     if (channelId) {
       Api_common_productList_ctn().then((res) => {
@@ -138,6 +141,17 @@ const IIIBringGoods = React.memo(({ className, channelId, }: { className?: strin
       });
     }
   }, [channelId]);
+
+  useEffect(() => {
+    _get_data();
+  }, [_get_data]);
+
+  useImperativeHandle(ref, () => ({
+    refresh: () => {
+      _get_data();
+    }
+  }));
+
   const customContent = true;
   return <View className={`${className} ww dll`}>
     {!productList && <ComLoading className='mb10'></ComLoading>}
