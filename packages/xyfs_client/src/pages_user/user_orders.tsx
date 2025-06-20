@@ -116,8 +116,14 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
                       Taro.showLoading({ mask: true, title: "打印中...", });
                       await Api_order_print_ctn({ orderId: _order0.id!, printerId: _order0.printerId!, });
                       Taro.showToast({ icon: "none", title: '打印任务提交成功', });
-                    } else {
-                      Taro.showToast({ icon: "none", title: '支付成功，订单移入已付款', });
+                    }
+                    if (!await try_Taro_showModal({
+                      title: "支付成功",
+                      content: `订单移到"已付款"列表`,
+                      confirmText: "知道了",
+                      cancelText: "查看订单"
+                    })) {
+                      setOrderType(Order_ST.已付款);
                     }
                   }}>
                   <ComSquare className='icon-wxpay mr4' style={{ width: "calc(1.3 * var(--rem_base))" }} />
