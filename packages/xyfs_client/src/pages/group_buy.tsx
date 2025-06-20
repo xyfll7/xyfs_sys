@@ -45,7 +45,7 @@ const Index: FC = () => {
   const { options } = useHook_getCurrentInstance<{ scene?: string; }>();
   const { G_D } = coo___urlToObj<{ G_D?: string; }>(options.scene);
 
-  const [isHeaderBack, setIsHeaderBack] = useState(false);
+
   const [type, setType] = useState(1);
   const isBanner = true;
   const [address, setAddress] = useState<AddressInfo | undefined>(selfInfo_S.defaultRecManAddress);
@@ -73,11 +73,11 @@ const Index: FC = () => {
   const [product, setProduct] = useState<any>(
     // { "id": 6, "name": "延安山地苹果", "sketch": null, "intro": "重量6-7斤/12枚装/果径80-85", "keywords": null, "tags": null, "price": 58, "weight": 1, "marketPrice": null, "stock": 30, "warningStock": null, "limitQuantity": null, "attachUrl": "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/product_image/oGwbL5PVdCTyoE2sYHAq2bdNA9BY/_1731288105472_0.png", "userId": "oGwbL5PVdCTyoE2sYHAq2bdNA9BY", "status": 1, "sort": 2, "lastUpdateTime": "2024-11-11 09:21:56", "delFlag": "0", "createBy": "oGwbL5PVdCTyoE2sYHAq2bdNA9BY", "createTime": "2024-11-11 09:21:56", "updateBy": null, "updateTime": null, "remark": "", "userName": "王理代", "userMobile": "17319969379", "userAvatar": "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/comm_avatar/default/狗2@1x.webp", "totalSaleStock": null, "saleStock": null, "orderUser": null }
   );
-
+  const ref_banner = React.useRef<{ setIsHeaderBack: (e: boolean) => void; }>(null);
   return <MMMAAPage className={`${isBanner ? "" : "bccback"}`}>
     <View className='ww'>
       {isBanner &&
-        <ComBanner className={`${isBanner ? "" : "bccback"}`} isHeaderBack={isHeaderBack} maskHightT='70%' maskHightF='10vh' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/farmer_0.webp' />
+        <ComBanner ref={ref_banner} className={`${isBanner ? "" : "bccback"}`} maskHightT='70%' maskHightF='10vh' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/farmer_0.webp' />
       }
       <ComNav className='mb10 prl10' isRight>
         <ComNavBarA className='mb10 '>
@@ -92,8 +92,8 @@ const Index: FC = () => {
 
     </View>
     <ComScrollView className='IOO ' upperThreshold={200}
-      onScroll={(e, top) => { if (e.detail.scrollTop > top) { setIsHeaderBack(true); } }}
-      onScrollToUpper={() => { setIsHeaderBack(false); }}>
+      onScroll={(e, top) => { if (e.detail.scrollTop > top) { ref_banner.current?.setIsHeaderBack(true); } }}
+      onScrollToUpper={() => { ref_banner.current?.setIsHeaderBack(false); }}>
       <View className='ww dll prl10'>
         <ComButton ll className={`mb10 cccplh bcctrans nw1 `} hoverClass='none'>今日下单明日送达 🚗 🛵 🎁</ComButton>
       </View>

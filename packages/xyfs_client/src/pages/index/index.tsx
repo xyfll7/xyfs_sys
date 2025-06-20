@@ -40,15 +40,15 @@ definePageConfig({
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC = () => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
-  const [isHeaderBack, setIsHeaderBack] = useState(false);
+  const ref_banner = React.useRef<{ setIsHeaderBack: (e: boolean) => void; }>(null);
   const { capRight } = utils_get_capsule();
   const [refreshTime, setRefreshTime] = useState(0);
+  console.log("Index selfInfo_S", selfInfo_S);
   return <MMMAAPage share={roo___has_role(selfInfo_S!.managerUser!, ["REGIMENT"]) ? { page: `/pages/index/index?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ R_D: Number(selfInfo_S.managerUser?.mobile).toString(36) })) })}`, } : undefined}>
     <View className='ww'>
-      <ComBanner isHeaderBack={isHeaderBack} maskHightT='70%' maskHightF='10vh' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/farmer_0.webp' />
+      <ComBanner ref={ref_banner} maskHightT='70%' maskHightF='10vh' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/farmer_0.webp' />
       <ComNav>
         <View className='ww'>
-
           <View className='z2 transall mb10' style={{ paddingRight: true ? `${capRight}px` : "0px", }}>
             <View className='dbtc pl10'>
               <MMMLogo />
@@ -91,8 +91,8 @@ const Index: FC = () => {
     <ComScrollView className='IOO' upperThreshold={200}
       refresherEnabled
       onRefresherRefresh={async () => { setRefreshTime(Date.now()); }}
-      onScroll={(e, top) => { if (e.detail.scrollTop > top) { setIsHeaderBack(true); } }}
-      onScrollToUpper={() => { setIsHeaderBack(false); }}>
+      onScroll={(e, top) => { if (e.detail.scrollTop > top) { ref_banner.current?.setIsHeaderBack(true); } }}
+      onScrollToUpper={() => { ref_banner.current?.setIsHeaderBack(false); }}>
 
       <IIIMainNavigator className='mb10  ' />
 
