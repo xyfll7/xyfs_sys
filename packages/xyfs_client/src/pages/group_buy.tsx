@@ -277,9 +277,12 @@ const IIIItem = ({ item, type, onAdd, onSub, onDetail, count }: { count: number,
 
 const IIIUsers = React.memo(({ deptId }: { deptId: string; }) => {
   const [users, setUsers] = useState<any[] | null>(null);
+  const [loading, setLoading] = useState(false);
   const Api_goods_groupBuyingUserList_ctn_callback = useCallback(async () => {
     if (!deptId) { return; }
+    setLoading(true);
     const res = await Api_goods_groupBuyingUserList_ctn({ queryDeptId: deptId });
+    setLoading(false);
     setUsers(res);
   }, [deptId]);
   useEffect(() => {
@@ -292,7 +295,7 @@ const IIIUsers = React.memo(({ deptId }: { deptId: string; }) => {
 
 
   return <View className='ww prl10 dll'>
-    <ComButton ll className='ml10 bcctrans mb10 cccplh' hoverClass='none'>今日跟团用户</ComButton>
+    <ComButton ll className='ml10 bcctrans mb10 cccplh' hoverClass='none'>今日跟团用户{loading ? '...' : ''}</ComButton>
     {users?.map((e, i) => {
       return <View className='dy mb10 ww' key={i}>
         <ComImage className='mr10 oo ovh' src={e.avatar}></ComImage>
