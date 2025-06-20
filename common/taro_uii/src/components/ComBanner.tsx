@@ -10,13 +10,13 @@ const _default_image = [
   "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/back_image_2025-06-03_004.png",
 ].sort(() => Math.random() - 0.5)[0];
 
-export function ComBanner({
+export const ComBanner = ({
   isHeaderBack,
   maskHightF = "80vw",
   maskHightT = "100%",
   className = "",
   src = _default_image,
-  onClick }: { className?: string; isHeaderBack: boolean; src?: string; maskHightF?: string; maskHightT?: string; onClick?: () => void; }) {
+  onClick }: { className?: string; isHeaderBack: boolean; src?: string; maskHightF?: string; maskHightT?: string; onClick?: () => void; }) => {
 
   const str0___ = utils_str_includes(["bccwhite"], className) ? "linear-gradient(0deg, var(--color_white) 40%, rgba(0, 0, 0, 0) 100%);" : "linear-gradient(0deg, var(--color_back) 40%, rgba(0, 0, 0, 0) 100%);";
   const str1___ = utils_str_includes(["bccwhite"], className) ? "linear-gradient(0deg, var(--color_white) 95%, rgba(0, 0, 0, 0) 100%);" : "linear-gradient(0deg, var(--color_back) 55%, rgba(0, 0, 0, 0) 100%);";
