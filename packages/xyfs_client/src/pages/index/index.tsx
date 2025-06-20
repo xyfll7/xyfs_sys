@@ -7,7 +7,7 @@ import { Api_common_productList_ctn } from '@xyfs/taro_uii/api/api__shop';
 import { Api_dept_groupLeader_ctn, Api_user_edit_ctn } from '@xyfs/taro_uii/api/api__users';
 import CPRegimentAssist from '@xyfs/taro_uii/compages/CPRegimentAssist';
 import { ComAddressSwitchor } from '@xyfs/taro_uii/components/ComAddressSwitchor';
-import { ComBannerMemo } from '@xyfs/taro_uii/components/ComBanner';
+import { ComBanner } from '@xyfs/taro_uii/components/ComBanner';
 import { ComButton, ComButtonOpen } from '@xyfs/taro_uii/components/ComButton';
 import { ComImage, ComImageStack } from '@xyfs/taro_uii/components/ComImage';
 import { ComLoading } from '@xyfs/taro_uii/components/ComLoading';
@@ -42,12 +42,10 @@ const Index: FC = () => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const [isHeaderBack, setIsHeaderBack] = useState(false);
   const { capRight } = utils_get_capsule();
+  const [refreshTime, setRefreshTime] = useState(0);
   return <MMMAAPage share={roo___has_role(selfInfo_S!.managerUser!, ["REGIMENT"]) ? { page: `/pages/index/index?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ R_D: Number(selfInfo_S.managerUser?.mobile).toString(36) })) })}`, } : undefined}>
     <View className='ww'>
-      {/* <ComBannerMemo isHeaderBack={isHeaderBack} src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/back_image_25.jpg' /> */}
-      <ComBannerMemo isHeaderBack={isHeaderBack} maskHightT='70%' maskHightF='10vh' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/farmer_0.webp' />
-      {/* <ComBannerMemo isHeaderBack={isHeaderBack} src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/yanan_3.jpg' /> */}
-      {/* <ComBannerMemo isHeaderBack={isHeaderBack} maskHightT='70%' maskHightF='10vh' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/yanan_4.webp' /> */}
+      <ComBanner isHeaderBack={isHeaderBack} maskHightT='70%' maskHightF='10vh' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/farmer_0.webp' />
       <ComNav>
         <View className='ww'>
 
@@ -91,6 +89,8 @@ const Index: FC = () => {
       </ComNav>
     </View>
     <ComScrollView className='IOO' upperThreshold={200}
+      refresherEnabled
+      onRefresherRefresh={async () => { setRefreshTime(Date.now()); }}
       onScroll={(e, top) => { if (e.detail.scrollTop > top) { setIsHeaderBack(true); } }}
       onScrollToUpper={() => { setIsHeaderBack(false); }}>
 
@@ -107,11 +107,8 @@ const Index: FC = () => {
 
 
 
-      <IIIGroupLeaders />
-      {selfInfo_S.channelId && <IIIBringGoods channelId={selfInfo_S.channelId} />}
-
-      {/* <IIIRegimentAssistList /> */}
-
+      <IIIGroupLeaders key={refreshTime} />
+      {selfInfo_S.channelId && <IIIBringGoods channelId={selfInfo_S.channelId} key={refreshTime} />}
 
 
       {getMyEnv().platform === "devtools" &&
@@ -300,7 +297,7 @@ const IIIGroupLeaders: FC = () => {
       keyword: ""
     }), []);
   const { page, page_loading, page_list_get, page_list_update, page_init } = useHook_pageListNew(___page_getter,);
-
+  console.log("IIIGroupLeaders page", page, page_loading);
   return <>
     {page.list?.map(e => {
       return <View className='ww dll mb10  bccwhite ww IOO pt10 prl10' key={e.deptId} onClick={() => {

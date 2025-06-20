@@ -10,11 +10,18 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages/test/ctest_index",
+          "pathName": "pages/test/ctest_index",
+          "query": "",
+          "scene": null,
+          "launchMode": "default"
+        },
+        {
           "name": "pages/group_buy",
           "pathName": "pages/group_buy",
           "query": "scene=G_D%253D201",
-          "scene": null,
-          "launchMode": "default"
+          "launchMode": "default",
+          "scene": null
         },
         {
           "name": "pages_user/user_orders",

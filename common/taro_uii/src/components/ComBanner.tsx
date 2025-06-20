@@ -1,6 +1,5 @@
 
 import { RootPortal, View } from '@tarojs/components';
-import React from 'react';
 import { utils_str_includes } from '../utils/util';
 import { ComImage } from './ComImage';
 
@@ -11,7 +10,7 @@ const _default_image = [
   "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/back_image_2025-06-03_004.png",
 ].sort(() => Math.random() - 0.5)[0];
 
-function ComBanner({
+export function ComBanner({
   isHeaderBack,
   maskHightF = "80vw",
   maskHightT = "100%",
@@ -40,4 +39,3 @@ function ComBanner({
   </RootPortal>;
 }
 
-export const ComBannerMemo = React.memo(ComBanner);
