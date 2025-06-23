@@ -32,7 +32,7 @@ export const ComBanner = forwardRef(({
   return <RootPortal style={{ zIndex: -1 }}>
     <View className={`root-portal ${className}`} style={{ position: "absolute", top: "0vw", right: "0vw", width: "100vw", zIndex: -1 }}>
       <View className='ww'>
-        <View className='dxy ww ovh ioo' style={{ paddingBottom: "0.1rem" }}>
+        <View className='dxy ww ovh ioo' style={{ paddingBottom: "0.2rem" }}>
           <ComImage className='ioo z1' style={{ height: "auto", width: "100vw" }} mode='widthFix'
             src={src}
             onClick={onClick} />
