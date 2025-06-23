@@ -100,11 +100,20 @@ export const ComCardOrderDryclean: FC<{
   return <View className={`bccwhite prl10 IOO pt10 ww ${className}`}>
     <View className='dbtc ww mb10 '>
       <MMMOrderUser order={order} />
-      <View className='dy'>
-        {order.orderStatus === Order_ST.待付款 && order.pickUpType == PickUp_ST.上门取件 && <ComButton rr className='cccplh bccyellow  nw' >{PickUp_ST[order.pickUpType!]}</ComButton>}
-        {order.orderStatus === Order_ST.退款中 && <ComButton rr className='cccprice  bccwhite nw' hoverClass='none'>退款中</ComButton>}
-        {order.orderStatus === Order_ST.已退款 && <ComButton rr className='cccplh  bccwhite nw' hoverClass='none'>已退款</ComButton>}
-        <ComButton rr className='cccgreen  nw'>{Product_category_ST[order.orderType!]}</ComButton>
+      <View className="dy">
+        {coo___isNumber(order.deliveryStatus) &&
+          <View className={`dy ${new Map([
+            [Order_deliveryStatus_ST.待发货, 'cccprice'],
+            [Order_deliveryStatus_ST.待收货, 'cccgreen'],
+            [Order_deliveryStatus_ST.已签收, 'cccplh']])
+            .get(order.deliveryStatus!)}`}>{Order_deliveryStatus_ST[order.deliveryStatus!]}</View>
+        }
+        <View className='dy'>
+          {order.orderStatus === Order_ST.待付款 && order.pickUpType == PickUp_ST.上门取件 && <ComButton rr className='cccplh bccyellow  nw' >{PickUp_ST[order.pickUpType!]}</ComButton>}
+          {order.orderStatus === Order_ST.退款中 && <ComButton rr className='cccprice  bccwhite nw' hoverClass='none'>退款中</ComButton>}
+          {order.orderStatus === Order_ST.已退款 && <ComButton rr className='cccplh  bccwhite nw' hoverClass='none'>已退款</ComButton>}
+          <ComButton rr className='cccgreen  nw'>{Product_category_ST[order.orderType!]}</ComButton>
+        </View>
       </View>
     </View>
     <ComAddressSwitchor ll rr className='mb10 ww' address={order?.userAddress} title='收:' time={`${order.orderTimeFormat}`}

@@ -267,6 +267,7 @@ export async function try_Taro_showModal(option?: Taro.showModal.Option) {
       return false;
     }
   } catch (err) {
+    console.error("显示模态框失败", err);
     throw new ErrorR(err);
   }
 

@@ -18,7 +18,7 @@ import { ComSearcher } from '@xyfs/taro_uii/components/ComSearcher';
 import { ComSquare } from "@xyfs/taro_uii/components/ComSquare";
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { MMMShare } from "@xyfs/taro_uii/components/MMMShare";
-import { ErrorR, Order_ST, Product_category_ST } from "@xyfs/taro_uii/src/config";
+import { Order_ST, Product_category_ST } from "@xyfs/taro_uii/src/config";
 import { getMyEnv } from "@xyfs/taro_uii/src/env";
 import { roo___has_role } from "@xyfs/taro_uii/src/roles";
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
@@ -90,16 +90,16 @@ const Index: FC<{}> = ({ }) => {
               })} />
             <View>{order.transactionId}</View>
             <View className='dr dwp prl10 ww'>
-              {true &&
-                <ComButton rr className="mb10 bborder ml10" onClick={async () => {
+              {getMyEnv().envVersion === "develop" &&
+                <ComButton rr className="mb10 bccprice ml10 cccwhite" onClick={async () => {
                   Taro.showLoading({ mask: true, title: "提醒中..." });
                   const res = await Api_order_receiveNotify_ctn({ orderId: order.id! });
                   try_Taro_hideLoading();
                   Taro.showToast({ icon: "none", title: "已提醒" });
                 }}>提醒收货</ComButton>
               }
-              {true &&
-                <ComButton rr className="mb10 bborder ml10" onClick={async () => {
+              {getMyEnv().envVersion === "develop" &&
+                <ComButton rr className="mb10 bccprice ml10 cccwhite" onClick={async () => {
                   Taro.showLoading({ mask: true, title: "发货中..." });
                   const res = await Api_order_shipments_ctn({ orderId: order.id! });
                   try_Taro_hideLoading();
@@ -164,13 +164,14 @@ const Index: FC<{}> = ({ }) => {
                       title: "支付成功",
                       content: `订单移到"已支付"列表`,
                       confirmText: "知道了",
-                      cancelText: "查看订单 "
+                      cancelText: "查看订单"
                     })) {
                       page_init();
                       setOrderType(Order_ST.已付款);
                     }
-                  } catch {
-                    throw new ErrorR("支付失败", true);
+                  } catch (err) {
+                    console.error("取消支付——————", err);
+                    throw new Error("取消支付");
                   } finally {
                     try_Taro_hideLoading();
                   }

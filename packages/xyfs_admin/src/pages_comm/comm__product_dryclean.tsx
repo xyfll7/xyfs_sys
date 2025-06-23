@@ -85,7 +85,7 @@ const Index: FC<{}> = ({ }) => {
                 title: "支付成功",
                 content: `订单移到"已支付"列表`,
                 confirmText: "知道了",
-                cancelText: "查看订单 "
+                cancelText: "查看订单"
               })) {
                 await try_Taro_navigateTo({ url: `/pages_comm/icomm_orders_dryclean?order_ST=${Order_ST.已付款}` });
               }
