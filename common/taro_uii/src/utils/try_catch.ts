@@ -121,6 +121,13 @@ export async function try_Taro_navigateTo(option: Taro.navigateTo.Option & { rou
     throw new ErrorR(err);
   }
 }
+export async function try_Taro_reLaunch(option: Taro.reLaunch.Option) {
+  try {
+    await Taro.reLaunch(option);
+  } catch (err) {
+    throw new ErrorR(err);
+  }
+}
 export async function try_Taro_chooseMedia(option: Taro.chooseMedia.Option): Promise<Taro.chooseMedia.ChooseMedia[]> {
   try {
     const res = await Taro.chooseMedia({

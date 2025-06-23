@@ -17,7 +17,7 @@ import { Order_ST } from '@xyfs/taro_uii/src/config';
 import { roo___has_role } from '@xyfs/taro_uii/src/roles';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
 import { OrderInfo, Product_Dryclean } from '@xyfs/taro_uii/type_product';
-import { try_Taro_hideLoading, try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
+import { try_Taro_hideLoading, try_Taro_reLaunch, try_Taro_requestPayment, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
 import { useHook_getCurrentInstance } from '@xyfs/taro_uii/utils/useHooks';
 import { utils_get_qrcode } from '@xyfs/taro_uii/utils/util';
 import { coo___objToUrl } from '@xyfs/utils/util';
@@ -87,7 +87,7 @@ const Index: FC<{}> = ({ }) => {
                 confirmText: "知道了",
                 cancelText: "查看订单"
               })) {
-                await try_Taro_navigateTo({ url: `/pages_comm/icomm_orders_dryclean?order_ST=${Order_ST.已付款}` });
+                await try_Taro_reLaunch({ url: `/pages_comm/icomm_orders_dryclean?order_ST=${Order_ST.已付款}` });
               }
             } catch (err) {
               if (!await try_Taro_showModal({
@@ -96,7 +96,7 @@ const Index: FC<{}> = ({ }) => {
                 confirmText: "知道了",
                 cancelText: "查看订单"
               })) {
-                await try_Taro_navigateTo({ url: `/pages_comm/icomm_orders_dryclean?order_ST=${Order_ST.待付款}` });
+                await try_Taro_reLaunch({ url: `/pages_comm/icomm_orders_dryclean?order_ST=${Order_ST.待付款}` });
               }
             } finally {
               setCart([]);
