@@ -154,8 +154,8 @@ const IIIBringGoods = forwardRef(({ className, channelId, }: { className?: strin
 
   const customContent = true;
   return <View className={`${className} ww dll`}>
-    {!productList && <ComLoading className='mb10'></ComLoading>}
-    {productList?.length === 0 && <ComLoading className='mb10' isEmpty></ComLoading>}
+    {/* {!productList && <ComLoading className='mb10'></ComLoading>}
+    {productList?.length === 0 && <ComLoading className='mb10' isEmpty></ComLoading>} */}
     {productList && [...productList].map((item, index) => {
       const product = item.product[0];
       return <View className='ww  dll' key={index}>
