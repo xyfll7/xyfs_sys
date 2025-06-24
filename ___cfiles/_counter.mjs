@@ -28,8 +28,9 @@ function Salary_Statistics_Table() {
       }
       return ccc;
     }, [0, 0]);
+
     if (count) {
-      strs.push(`${index += 1},${sheet.data?.[1]?.join(',')},${count.join(',')}`);
+      strs.push(`${index += 1},${sheet.data?.[0]?.join(',')},${count.join(',')}`);
     }
   });
   const result = strs.join('\n');

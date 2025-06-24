@@ -265,13 +265,11 @@ export async function try_Taro_cloud_uploadFile(path: string, cloudPath?: string
     throw new Error("上传媒体文件错误");
   }
 }
-export async function try_Taro_showModal(option?: Taro.showModal.Option) {
+export async function try_Taro_showModal(option?: Taro.showModal.Option & { editable?: boolean; placeholderText?: string; }): Promise<Taro.showModal.SuccessCallbackResult & { content: string; } | undefined> {
   try {
     const res = await Taro.showModal(option);
     if (res.errMsg === "showModal:ok" && res.confirm) {
-      return true;
-    } else {
-      return false;
+      return res as Taro.showModal.SuccessCallbackResult & { content: string; };
     }
   } catch (err) {
     console.error("显示模态框失败", err);

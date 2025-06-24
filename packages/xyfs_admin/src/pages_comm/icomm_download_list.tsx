@@ -15,7 +15,7 @@ import { useSTSelf } from "@xyfs/taro_uii/store/store";
 import { try_Taro_hideLoading, try_Taro_openDocument, try_Taro_setClipboardData, try_Taro_shareFileMessage, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
 import { useHook_pageListNew } from "@xyfs/taro_uii/utils/useHooks";
 import { utils_downloadFile_saveFile } from "@xyfs/taro_uii/utils/util";
-import { coo___00String_number, coo___ios_date } from "@xyfs/utils/util";
+import { coo___00String_number, coo___ios_date, coo___isNumber } from "@xyfs/utils/util";
 import { differenceInMinutes, format } from "date-fns";
 import { FC, useCallback } from "react";
 
@@ -43,11 +43,15 @@ const Index: FC<{}> = ({ }) => {
           <ComButton className='bccback mb10 cccplh nw1' hoverClass="none">您下载的对账单会显示在这个页面</ComButton>
           <ComButton className='mb10 nw cccgreen' onClick={() => { page_init(); }}>刷新</ComButton>
         </View>
-        {roo___has_role(selfInfo_S, ["AGENT"]) &&
+        {roo___has_role(selfInfo_S, ["AGENT", "ADMIN"]) &&
           <View className='dr ww prl10'>
             <ComButton className='mb10 nw cccgreen' onClick={async () => {
-              await try_Taro_setClipboardData({ data: page.list?.map(e => e.url).join("\n") });
-              Taro.showToast({ icon: "none", title: "已复制下载链接", });
+              const res = await try_Taro_showModal({ title: "提示", editable: true, placeholderText: "请输入要下载的数量" });
+              if (res && res.content) {
+                if (!coo___isNumber(res.content) || Number(res.content) <= 0) { throw new Error("请输入正确的数字"); }
+                await try_Taro_setClipboardData({ data: page.list.slice(0, Number(res.content))?.map(e => e.url).join("\n") });
+                Taro.showToast({ icon: "none", title: "已复制下载链接", });
+              }
             }}>批量复制下载链接</ComButton>
           </View>
         }
