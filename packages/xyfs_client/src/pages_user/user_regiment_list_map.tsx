@@ -35,7 +35,7 @@ const Index: FC<{}> = ({ }) => {
     <View>
       <ComNav className='fixed-top bcctrans z99 prl10' onClick={() => { setToggle(true); }}>
         <ComNavBarA className='mb10 pl10' onClick={() => { setToggle(true); }}>
-          <ComButton ll className='ml10 bcctrans cccplh' >附近的团长</ComButton>
+          <ComButton ll className='ml10 bcctrans cccplh' hoverClass='none'>附近的团长</ComButton>
         </ComNavBarA>
       </ComNav>
       <IIIRegimentList toggle={toggle} onToggle={(e) => { setToggle(e); }} />
