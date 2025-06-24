@@ -83,7 +83,7 @@ const IIIRegimentList = ({ toggle, onToggle }: { toggle: boolean; onToggle: (e: 
       }} />
     }
 
-    <View className='pa ww prl10 z9 dll transall safe-bottom' style={{ bottom: "0rem", height: toggle ? "25vh" : "85vh" }}>
+    <View className='pa ww prl10 z9 dll transall safe-bottom' style={{ bottom: "0rem", height: toggle ? "27vh" : "77vh" }}>
       <View className='ww hh bccback IOO ovh mb10 dll prl10 pb10 ' style={{}}>
         <View className='ww' onClick={() => onToggle(!toggle)}>
           <ComTabBarLine className='mbt6' isShort />
@@ -92,10 +92,12 @@ const IIIRegimentList = ({ toggle, onToggle }: { toggle: boolean; onToggle: (e: 
             <ComButton rr className='mb10 bccback cccplh'>{toggle ? "展开" : "收起"}</ComButton>
           </View>
         </View>
-        <ComSearcher className='mb10' isShowSearcher disabled={page_loading} onSetSearchValue={(e) => {
-          page_init();
-          setSearchValue(`${e}`);
-        }} />
+        {!toggle &&
+          <ComSearcher className='mb10' isShowSearcher disabled={page_loading} onSetSearchValue={(e) => {
+            page_init();
+            setSearchValue(`${e}`);
+          }} />
+        }
         <ComAuth
           isHiddenNav
           className='prl0'

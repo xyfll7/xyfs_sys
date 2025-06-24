@@ -124,6 +124,8 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
                       cancelText: "查看订单"
                     })) {
                       setOrderType(Order_ST.已付款);
+                      page_init();
+                      page_list_get(page);
                     }
                   }}>
                   <ComSquare className='icon-wxpay mr4' style={{ width: "calc(1.3 * var(--rem_base))" }} />
@@ -170,6 +172,8 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
                     cancelText: "查看订单"
                   })) {
                     setOrderType(Order_ST.已付款);
+                    page_init();
+                    page_list_get(page);
                   }
                 }}>
                 <ComSquare className='icon-wxpay mr4' style={{ width: "calc(1.3 * var(--rem_base))" }} />
@@ -198,6 +202,8 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
                   cancelText: "查看订单"
                 })) {
                   setOrderType(Order_ST.已付款);
+                  page_init();
+                  page_list_get(page);
                 }
               }}>
               <ComSquare className='icon-wxpay mr4' style={{ width: "calc(1.3 * var(--rem_base))" }} />
@@ -269,6 +275,8 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
                       cancelText: "查看订单"
                     })) {
                       setOrderType(Order_ST.已付款);
+                      page_init();
+                      page_list_get(page);
                     }
                   }}>
                   <ComSquare className='icon-wxpay mr4' style={{ width: "calc(1.3 * var(--rem_base))" }} />
