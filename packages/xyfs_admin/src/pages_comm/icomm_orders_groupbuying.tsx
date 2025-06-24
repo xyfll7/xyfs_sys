@@ -75,34 +75,34 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
 
   const IS_PURE_PRINT = roo___has_role(selfInfo_S, ["GROUPLEADER"]);
   const model = (() => {
-    if (true && IS_PURE_PRINT) {
+    if (IS_PURE_PRINT) {
       return "print";
     } else {
       return Boolean(order.productList?.filter(e => !e.waybillId)?.length) ? "waybill" : "print";
     }
   })();
-
-  const [products, setProducts] = useState({
+  console.log("sssssorder", order.productList);
+  const [printProducts, setPrintProducts] = useState({
     "waybill": () => order.productList?.filter(e => !e.waybillId)!,
-    "print": () => IS_PURE_PRINT ? order.productList! : coo___unique_arr(order.productList!, "waybillId")
+    "print": () => IS_PURE_PRINT ? order.productList?.filter(e => !e.printTimes)! : coo___unique_arr(order.productList!, "waybillId")
   }[model]);
 
   return <View className='dll ww mb10 bccwhite ioo' key={order.id}>
-    <ComCardOrderBringGoods isPurePrint={IS_PURE_PRINT} className='ww mb10' model={model} isShowSelector={roo___has_role(selfInfo_S, ['MERCHANT', "GROUPLEADER"])} key={order.id} products={products} order={order}
+    <ComCardOrderBringGoods isPurePrint={IS_PURE_PRINT} className='ww mb10' model={model} isShowSelector={roo___has_role(selfInfo_S, ['MERCHANT', "GROUPLEADER"])} key={order.id} printProducts={printProducts} order={order}
       onSelectOrder={(e) => {
         if (roo___has_role(selfInfo_S, ['MERCHANT'])) {
-          if (model === "waybill" && utils_arr_includes([e.id!], products.map(ee => ee.id!))) {
-            setProducts(products.filter(ee => ee.id !== e.id));
-          } else if (model === "print" && utils_arr_includes([e.waybillId!], products.map(ee => ee.waybillId!))) {
-            setProducts(products.filter(ee => ee.waybillId !== e.waybillId));
+          if (model === "waybill" && utils_arr_includes([e.id!], printProducts.map(ee => ee.id!))) {
+            setPrintProducts(printProducts.filter(ee => ee.id !== e.id));
+          } else if (model === "print" && utils_arr_includes([e.waybillId!], printProducts.map(ee => ee.waybillId!))) {
+            setPrintProducts(printProducts.filter(ee => ee.waybillId !== e.waybillId));
           } else {
-            setProducts([...products, e].sort((a, b) => Number(a.id) - Number(b.id)));
+            setPrintProducts([...printProducts, e].sort((a, b) => Number(a.id) - Number(b.id)));
           }
         } else if (IS_PURE_PRINT) {
-          if (model === "print" && utils_arr_includes([e.id!], products.map(ee => ee.id!))) {
-            setProducts(products.filter(ee => ee.id !== e.id));
+          if (model === "print" && utils_arr_includes([e.id!], printProducts.map(ee => ee.id!))) {
+            setPrintProducts(printProducts.filter(ee => ee.id !== e.id));
           } else {
-            setProducts([...products, e].sort((a, b) => Number(a.id) - Number(b.id)));
+            setPrintProducts([...printProducts, e].sort((a, b) => Number(a.id) - Number(b.id)));
           }
         }
 
@@ -134,26 +134,26 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
       }}>退款</ComButton>
       }
       {model === "waybill" && order.orderStatus === Order_ST.已付款 && roo___has_role(selfInfo_S, ['MERCHANT', "GROUPLEADER"]) && <ComButton className='ml10 mb10 ml10 bborder' onClick={async () => {
-        if (!products.length) { Taro.showToast({ icon: "none", title: "至少选择一件商品" }); return; }
+        if (!printProducts.length) { Taro.showToast({ icon: "none", title: "至少选择一件商品" }); return; }
         Taro.showLoading({ mask: true, title: "获取中..." });
         const res = await Api_logistic_createWaybill_ctn({
           deliveryId: selfInfo_S.logistics?.[0]?.deliveryId!,
           orderId: order.id!,
-          orderProductIds: products.map(e => e.id!),
+          orderProductIds: printProducts.map(e => e.id!),
         });
         const model_new = Boolean(res.productList?.filter(e => !e.waybillId)?.length) ? "waybill" : "print";
         ({
-          "waybill": () => { setProducts(res.productList?.filter(e => !e.waybillId)!); },
-          "print": () => { setProducts(res.productList!); },
+          "waybill": () => { setPrintProducts(res.productList?.filter(e => !e.waybillId)!); },
+          "print": () => { setPrintProducts(res.productList!); },
         })[model_new]();
         onUpdateOrderItem(res);
         Taro.showToast({ icon: "none", title: "成功" });
       }}>
-        <View className='cccprice'>{products?.map(e => order.productList?.findIndex(ee => ee.id === e.id)! + 1).join(",")}</View>
+        <View className='cccprice'>{printProducts?.map(e => order.productList?.findIndex(ee => ee.id === e.id)! + 1).join(",")}</View>
         <View className='cccgreen'>获取面单</View>
       </ComButton>}
       {model === "print" && order.orderStatus === Order_ST.已付款 && roo___has_role(selfInfo_S, ['MERCHANT', "GROUPLEADER"]) && <ComButton rr className='ml10 bborder mb10 nw' onClick={async () => {
-        if (!products.length) { Taro.showToast({ icon: "none", title: "至少选择一件商品" }); return; }
+        if (!printProducts.length) { Taro.showToast({ icon: "none", title: "至少选择一件商品" }); return; }
         const [, res_item] = await try_Taro_showActionSheet({
           alertText: "打印方式",
           itemList: ["合单打印", "分单打印"],
@@ -163,9 +163,9 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
             return {
               cpcl: (() => {
                 if (order.productList?.some(e => e.waybillId)) {
-                  return [on_get_printer_str_order_bing_goods_waybill({ ...order, productList: products, __product: order.productList?.[0] }, "merge", blue_device)];
+                  return [on_get_printer_str_order_bing_goods_waybill({ ...order, productList: printProducts, __product: order.productList?.[0] }, "merge", blue_device)];
                 } else {
-                  return [on_get_printer_str_order_bing_goods({ ...order, productList: products, __product: order.productList?.[0] }, "merge", blue_device)];
+                  return [on_get_printer_str_order_bing_goods({ ...order, productList: printProducts, __product: order.productList?.[0] }, "merge", blue_device)];
                 }
               })()
             };
@@ -174,7 +174,7 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
         if (res_item === "分单打印") {
           await on_start_print((blue_device) => {
             return {
-              cpcl: products!.map((eee, index) => {
+              cpcl: printProducts!.map((eee, index) => {
                 const count = order.productList?.filter(e => e.waybillId === eee.waybillId).length;
                 if (eee.waybillId) {
                   return on_get_printer_str_order_bing_goods_waybill({ ...order, __product: eee, __index: index, __count: count }, "divide", blue_device);
@@ -187,7 +187,7 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
         }
 
         Taro.showLoading({ mask: true, title: "更新打印次数..." });
-        const print_orders = order.productList?.filter(e => products.some(ee => ee.waybillId === e.waybillId))?.map(e => e.id!);
+        const print_orders = order.productList?.filter(e => printProducts.some(ee => ee.waybillId === e.waybillId))?.map(e => e.id!);
         await Api_order_incrPrintTimes_ctn({ orderId: order.id!, orderProductIds: print_orders }); // 增加打印次数
         // 本地更新打印次数
         onUpdateOrderItem({
@@ -195,11 +195,11 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
           productList: order.productList?.map(ee => print_orders?.some(eee => eee === ee.id) ? ({ ...ee, printTimes: ee.printTimes! += 1 }) : ee)
         });
         // 反选
-        setProducts(order.productList?.filter(ee => !print_orders?.some(eee => eee === ee.id))!);
+        setPrintProducts(order.productList?.filter(ee => !print_orders?.some(eee => eee === ee.id))!);
         Taro.showToast({ icon: "none", title: "打印完成", });
       }}>
-        {IS_PURE_PRINT && <View className='cccprice'>{products?.map(e => order.productList?.findIndex(ee => ee.id === e.id)! + 1).join(",")}</View>}
-        {!IS_PURE_PRINT && <View className='cccprice'>{products?.map(e => order.productList?.findIndex(ee => ee.waybillId === e.waybillId)! + 1).join(",")}</View>}
+        {IS_PURE_PRINT && <View className='cccprice'>{printProducts?.map(e => order.productList?.findIndex(ee => ee.id === e.id)! + 1).join(",")}</View>}
+        {!IS_PURE_PRINT && <View className='cccprice'>{printProducts?.map(e => order.productList?.findIndex(ee => ee.waybillId === e.waybillId)! + 1).join(",")}</View>}
         <View className='cccgreen'>打印</View>
       </ComButton>
       }

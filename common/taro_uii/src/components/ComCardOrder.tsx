@@ -185,12 +185,12 @@ export const ComCardOrderDryclean: FC<{
 export const ComCardOrderBringGoods: FC<{
   className?: string;
   order: OrderInfo<Product_Publish>;
-  products?: Product_Publish[];
+  printProducts?: Product_Publish[];
   model?: "waybill" | "print",
   isPurePrint?: boolean;
   isShowSelector?: boolean;
   onSelectOrder?: (e: Product_Publish) => void;
-}> = ({ order, className = "", isPurePrint = false, model, products, onSelectOrder, isShowSelector = false }) => {
+}> = ({ order, className = "", isPurePrint = false, model, printProducts, onSelectOrder, isShowSelector = false }) => {
   return <View className={`bccwhite prl10 ioo pt10 ww ${className}`}>
     <View className='dbtc ww mb10'>
       <MMMOrderUser order={order} />
@@ -213,18 +213,18 @@ export const ComCardOrderBringGoods: FC<{
         return <View className='dtl ww bccback mb10 ioo pr' key={i}>
           {model === "waybill" && isShowSelector && order.orderStatus === Order_ST.已付款 &&
             <View className='pa z1 ' style={{ top: "0rem", left: '0rem' }} onClick={() => { onSelectOrder?.(e); }} >
-              <View className={`${utils_arr_includes([e.id!], (products?.map(ee => ee.id!)!),) ? 'bccred' : 'bccback '} dxy cccwhite o6`} style={{ minWidth: "calc(1.2 * var(--rem_base))", minHeight: "calc(1.2 * var(--rem_base))" }}>
+              <View className={`${utils_arr_includes([e.id!], (printProducts?.map(ee => ee.id!)!),) ? 'bccred' : 'bccback '} dxy cccwhite o6`} style={{ minWidth: "calc(1.2 * var(--rem_base))", minHeight: "calc(1.2 * var(--rem_base))" }}>
                 <View className='fs07'>{i + 1}</View>
               </View>
             </View>
           }
           {model === "print" && isShowSelector && order.orderStatus === Order_ST.已付款 &&
             <View className='pa z1 ' style={{ top: "0rem", left: '0rem' }} onClick={() => { onSelectOrder?.(e); }} >
-              {!isPurePrint && <View className={`${utils_arr_includes([e.waybillId!], (products?.map(ee => ee.waybillId!)!),) ? ' bccgreen' : 'bccback '} dxy cccwhite o6`} style={{ minWidth: "calc(1.2 * var(--rem_base))", minHeight: "calc(1.2 * var(--rem_base))" }}>
+              {!isPurePrint && <View className={`${utils_arr_includes([e.waybillId!], (printProducts?.map(ee => ee.waybillId!)!),) ? ' bccgreen' : 'bccback '} dxy cccwhite o6`} style={{ minWidth: "calc(1.2 * var(--rem_base))", minHeight: "calc(1.2 * var(--rem_base))" }}>
                 <View className='fs07'>{order?.productList?.findIndex(ee => ee.waybillId === e.waybillId)! + 1}</View>
               </View>}
               {isPurePrint &&
-                <View className={`${utils_arr_includes([e.id!], (products?.map(ee => ee.id!)!),) ? ' bccgreen' : 'bccback '} dxy cccwhite o6`} style={{ minWidth: "calc(1.2 * var(--rem_base))", minHeight: "calc(1.2 * var(--rem_base))" }}>
+                <View className={`${utils_arr_includes([e.id!], (printProducts?.map(ee => ee.id!)!),) ? ' bccgreen' : 'bccback '} dxy cccwhite o6`} style={{ minWidth: "calc(1.2 * var(--rem_base))", minHeight: "calc(1.2 * var(--rem_base))" }}>
                   <View className='fs07'>{i + 1}</View>
                 </View>
               }
