@@ -154,9 +154,9 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
       </ComButton>}
       {model === "print" && order.orderStatus === Order_ST.已付款 && roo___has_role(selfInfo_S, ['MERCHANT', "GROUPLEADER"]) && <ComButton rr className='ml10 bborder mb10 nw' onClick={async () => {
         if (!printProducts.length) { Taro.showToast({ icon: "none", title: "至少选择一件商品" }); return; }
-        const [, res_item] = await try_Taro_showActionSheet({
-          alertText: "打印方式",
-          itemList: ["合单打印", "分单打印"],
+        const [, res_item] = await try_Taro_showActionSheet<"合单打印" | "分单打印">({
+          alertText: "请选择打印方式",
+          itemList: order.productList?.length === 1 ? ["合单打印"] : ["合单打印", "分单打印"],
         });
         if (res_item === "合单打印") {
           await on_start_print((blue_device) => {
