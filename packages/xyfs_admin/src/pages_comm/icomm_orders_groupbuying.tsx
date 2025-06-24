@@ -81,7 +81,6 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
       return Boolean(order.productList?.filter(e => !e.waybillId)?.length) ? "waybill" : "print";
     }
   })();
-  console.log("sssssorder", order.productList);
   const [printProducts, setPrintProducts] = useState({
     "waybill": () => order.productList?.filter(e => !e.waybillId)!,
     "print": () => IS_PURE_PRINT ? order.productList?.filter(e => !e.printTimes)! : coo___unique_arr(order.productList!, "waybillId")
@@ -153,6 +152,8 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
         <View className='cccgreen'>获取面单</View>
       </ComButton>}
       {model === "print" && order.orderStatus === Order_ST.已付款 && roo___has_role(selfInfo_S, ['MERCHANT', "GROUPLEADER"]) && <ComButton rr className='ml10 bborder mb10 nw' onClick={async () => {
+        console.log("order", order);
+        throw new Error("请先获取面单");
         if (!printProducts.length) { Taro.showToast({ icon: "none", title: "至少选择一件商品" }); return; }
         const [, res_item] = await try_Taro_showActionSheet<"合单打印" | "分单打印">({
           alertText: "请选择打印方式",
