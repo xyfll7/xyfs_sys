@@ -106,7 +106,7 @@ interface OrderInfo<T> {
   mobile?: string;
   printTimes?: number;  // 打印次数
   transactionId?: string;  // 打印次数
-  deliveryStatus?: Order_deliveryStatus_ST; // 0 待发货 1 待收货 2 已签收
+  deliveryStatus?: Order_deliveryStatus_ST;
   orderType?: Product_category_ST; // 供应商类型
   payStatus?: 0 | 1; // 供应商类型
   deptId?: string; // 团长OPENID 该商品由该团长卖出
