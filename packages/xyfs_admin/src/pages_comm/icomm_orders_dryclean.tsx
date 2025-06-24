@@ -22,7 +22,7 @@ import { Order_ST, Product_category_ST } from "@xyfs/taro_uii/src/config";
 import { getMyEnv } from "@xyfs/taro_uii/src/env";
 import { roo___has_role } from "@xyfs/taro_uii/src/roles";
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
-import { try_Taro_hideLoading, try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_scanCode, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
+import { try_Taro_hideLoading, try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_scanCode, try_Taro_setClipboardData, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
 import { useHook_getCurrentInstance, useHook_pageListNew, useHook_Reducer } from '@xyfs/taro_uii/utils/useHooks';
 import { utils_get_qrcode, utils_show_button } from "@xyfs/taro_uii/utils/util";
 import { coo___objToUrl } from "@xyfs/utils/util";
@@ -88,7 +88,7 @@ const Index: FC<{}> = ({ }) => {
                 page_list_update(p => ({ ...p, list: p.list.map(item => item.id === res.id ? res : item) }));
                 Taro.showToast({ icon: "none", title: "绑定成功", });
               })} />
-            <View>{order.transactionId}</View>
+
             <View className='dr dwp prl10 ww'>
               {getMyEnv().envVersion === "develop" &&
                 <ComButton rr className="mb10 bccprice ml10 cccwhite" onClick={async () => {
@@ -189,7 +189,9 @@ const Index: FC<{}> = ({ }) => {
 
 
             </View>
-
+            {getMyEnv().envVersion === "develop" &&
+              <ComButton className="mb10" onClick={async () => { await try_Taro_setClipboardData({ data: order.transactionId! }); }}>{order.transactionId}</ComButton>
+            }
           </View>;
         } else {
           return null;

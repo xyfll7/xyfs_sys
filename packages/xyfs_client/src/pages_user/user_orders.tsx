@@ -15,9 +15,10 @@ import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
 import { ComSquare } from "@xyfs/taro_uii/components/ComSquare";
 import { ComSELFView, MMMAAPage } from "@xyfs/taro_uii/components/MMMAAPage";
 import { Order_deliveryStatus_ST, Order_ST, Product_category_ST } from "@xyfs/taro_uii/src/config";
+import { getMyEnv } from "@xyfs/taro_uii/src/env";
 import { useSTExpress } from "@xyfs/taro_uii/store/store";
 import { OrderInfo, Product_Express, ProductBase } from "@xyfs/taro_uii/type_product";
-import { try_Taro_hideLoading, try_Taro_openBusinessView, try_Taro_requestPayment, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
+import { try_Taro_hideLoading, try_Taro_openBusinessView, try_Taro_requestPayment, try_Taro_setClipboardData, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
 import { useHook_getCurrentInstance, useHook_pageListNew } from "@xyfs/taro_uii/utils/useHooks";
 import { coo___urlToObj } from "@xyfs/utils/util";
 import { FC, useCallback, useEffect, useState } from "react";
@@ -283,7 +284,9 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
                   <Text className='nw'>支付</Text>
                 </ComButton>}
             </View>
-            <View>{order.transactionId}</View>
+            {getMyEnv().envVersion === "develop" &&
+              <ComButton className="mb10" onClick={async () => { await try_Taro_setClipboardData({ data: order.transactionId! }); }}>{order.transactionId}</ComButton>
+            }
           </View>;
         }
         return null;
