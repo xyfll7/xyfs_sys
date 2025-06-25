@@ -1,6 +1,6 @@
 {
 	"name": "@xyfs/taro_uii",
-	"version": "2.3.15",
+	"version": "2.3.16",
 	"private": false,
 	"publishConfig": {
 		"access": "public"
