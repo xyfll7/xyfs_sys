@@ -42,7 +42,7 @@ const Index: FC = () => {
       <View className='ds flx1 ww mb10 '>
         <ComBanner isHeaderBack />
         <MMMLogo className='ml10' />
-        <ComButton ll className='mr10 cccplh bcctrans' ><Text className='wm6rem nw1'>{selfInfo_S!.name}</Text> </ComButton>
+        <ComButton ll className='mr10 cccplh bcctrans' hoverClass="none"><Text className='wm6rem nw1'>{selfInfo_S!.name}</Text> </ComButton>
       </View>
     </ComNav>
     <ComScrollView className='IOO'>
