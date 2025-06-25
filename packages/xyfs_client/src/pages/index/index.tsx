@@ -48,7 +48,7 @@ const Index: FC = () => {
 
   return <MMMAAPage share={roo___has_role(selfInfo_S!.managerUser!, ["REGIMENT"]) ? { page: `/pages/index/index?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ R_D: Number(selfInfo_S.managerUser?.mobile).toString(36) })) })}`, } : undefined}>
     <View className='ww'>
-      <ComBanner ref={ref_banner} maskHightT='70%' maskHightF='10vh' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/farmer_0.webp' />
+      <ComBanner ref={ref_banner} maskHightT='70%' maskHightF='10vh' />
       <ComNav>
         <View className='ww'>
           <View className='z2 transall mb10' style={{ paddingRight: true ? `${capRight}px` : "0px", }}>
@@ -68,11 +68,11 @@ const Index: FC = () => {
 
           {roo___has_role(selfInfo_S!.deptInfo!, ["REGIMENT"]) &&
             <View className='mb10 dbtc prl10 transall' style={{ paddingRight: false ? `${capRight}px` : "0px", opacity: false ? "0" : "1", height: false ? "0rem" : "calc(2 * var(--rem_base)) !important", }}>
-              <ComAddressSwitchor className='bcctrans01-dark mr10' title='团长:' isShort isIcon address={roo___my_dept(selfInfo_S)} url='/pages_user/user_regiment_list_map' />
+              <ComAddressSwitchor className='bcctrans01-dark mr10 ww' hoverClass='none' title='团长:' isShort isIcon address={roo___my_dept(selfInfo_S)} url='/pages_user/user_regiment_list_map' />
               <View className='dy'>
                 <ComButton className='bcctrans01-dark mr10 nw cccplh' url='/pages_user/user_orders'>订单</ComButton>
                 {getMyEnv().isDeveloping && <ComButton className='bccyellow nw fwb' url='/pages_comm/comm__publisher'>
-                  <Text className='cccgreen'>+</Text>发布
+                  <Text className='cccgreen'>+</Text>发布1
                 </ComButton>
                 }
               </View>

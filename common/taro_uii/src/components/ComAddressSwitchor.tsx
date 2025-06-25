@@ -16,7 +16,7 @@ export const ComAddressSwitchor: FC<ViewProps & MyButtonProps & {
 }> = ({ isIcon = false, time, isShort = false, url, className, address, onClick, title, addressPlaceholder = "暂无地址", ...props }) => {
   const __address = utils_addressInfoToString(address, isShort, addressPlaceholder);
   const __name = (address as DeptInfo)?.deptName ?? address?.name;
-  return <ComButton className={`${className}`} onClick={onClick} url={url} {...props}>
+  return <ComButton className={`${className}`} onClick={onClick} url={url} {...props} >
     <View className="ww dbtc">
       <View className='dll ww'>
         <View className='dbtc ww'>

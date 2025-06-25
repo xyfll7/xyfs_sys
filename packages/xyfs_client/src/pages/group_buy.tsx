@@ -77,7 +77,7 @@ const Index: FC = () => {
   return <MMMAAPage className={`${isBanner ? "" : "bccback"}`}>
     <View className='ww'>
       {isBanner &&
-        <ComBanner ref={ref_banner} className={`${isBanner ? "" : "bccback"}`} maskHightT='70%' maskHightF='10vh' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/farmer_0.webp' />
+        <ComBanner ref={ref_banner} className={`${isBanner ? "" : "bccback"}`} maskHightT='70%' maskHightF='10vh' />
       }
       <ComNav className='mb10 prl10' isRight>
         <ComNavBarA className='mb10 '>
