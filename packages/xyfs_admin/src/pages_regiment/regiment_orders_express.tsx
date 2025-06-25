@@ -37,7 +37,7 @@ const Index: FC<{}> = ({ }) => {
   const [showQRCode, setShowQRCode] = useState<boolean>(false);
   const { options } = useHook_getCurrentInstance<{ order_ST: string; }>();
   const [date, setDate] = useState<string>("");
-  const [tabIndex, setTabIndex] = useState<Order_ST>(Number(options.order_ST ?? Order_ST.待付款));
+  const [orderType, setOrderType] = useState<Order_ST>(Number(options.order_ST ?? Order_ST.待付款));
 
   const [searchValue, setSearchValue] = useHook_Reducer("");
   const [queryType, setQueryType] = useState<0 | 1>(0); //0 默认， 1 按部门查询
@@ -46,16 +46,18 @@ const Index: FC<{}> = ({ }) => {
     await Api_order_list_ctn({
       ...p,
       orderDate: date,
-      orderStatus: tabIndex,
+      orderStatus: orderType,
       orderType: 1, // 全部0, 快递1 干洗2 未知3
       queryType: queryType,
       keyword: searchValue,
-    }), [tabIndex, searchValue, queryType, date]);
+    }), [orderType, searchValue, queryType, date]);
   const { page, page_loading, page_list_get, page_list_update, page_init } = useHook_pageListNew(___page_getter);
 
   useDidShow(() => {
-    page_init();
-    page_list_get(page);
+    if (orderType === Order_ST.待付款) {
+      page_init();
+      page_list_get();
+    }
   });
 
   return <MMMAAPage>
@@ -73,13 +75,13 @@ const Index: FC<{}> = ({ }) => {
         <View className='dbtc '>
           <ComListTypeSelectorNew
             className='ww' disabled={page_loading} enumData={Order_ST} typeList={[Order_ST.待付款, Order_ST.已付款, Order_ST.已退款]}
-            tabType={tabIndex} setTab={(e) => { page_init(); setTabIndex(e); }} />
+            tabType={orderType} setTab={(e) => { page_init(); setOrderType(e); }} />
           <ComButton className={`nw mb10  ${queryType === 0 ? 'cccplh' : "bccyellow"}`} onClick={() => {
             page_init();
             setQueryType(queryType === 0 ? 1 : 0);
           }}>部门</ComButton>
         </View>
-        <ComSearcher className='mb10' isShowSearcher date={date} disabled={Boolean(page_loading)} isShowScan={[Order_ST.已付款, Order_ST.已退款].includes(tabIndex)}
+        <ComSearcher className='mb10' isShowSearcher date={date} disabled={Boolean(page_loading)} isShowScan={[Order_ST.已付款, Order_ST.已退款].includes(orderType)}
           onClear={() => setDate("")}
           onSetSearchValue={(e) => {
             setDate("");

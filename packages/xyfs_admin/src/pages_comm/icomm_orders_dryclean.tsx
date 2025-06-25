@@ -50,8 +50,10 @@ const Index: FC<{}> = ({ }) => {
   const hasRole = roo___has_role(selfInfo_S, ["REGIMENT"]);
 
   useDidShow(() => {
-    page_init();
-    page_list_get(page);
+    if (orderType === Order_ST.待付款) {
+      page_init();
+      page_list_get();
+    }
   });
   return <MMMAAPage>
     <ComNav>
