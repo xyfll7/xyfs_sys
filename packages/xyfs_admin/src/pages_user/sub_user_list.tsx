@@ -47,7 +47,7 @@ const Index: FC<{}> = ({ }) => {
     <ComNav>
       <View className='ww prl10'>
         <ComNavBarA className='mb10'>
-          <ComButton ll className='bcctrans cccplh ml10' >子用户列表</ComButton>
+          <ComButton ll className='bcctrans cccplh ml10' hoverClass="none">子用户列表</ComButton>
         </ComNavBarA>
         <ComSearcher className='mb10' isShowSearcher disabled={page_loading} onSetSearchValue={(e) => {
           page_init();
