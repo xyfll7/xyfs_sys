@@ -16,9 +16,9 @@ export const ComBanner = forwardRef(({
   maskHightF = "80vw",
   maskHightT = "100%",
   className = "",
+  imageWidth = "100vw",
   src = _default_image,
-  onClick }: { className?: string; isHeaderBack?: boolean; src?: string; maskHightF?: string; maskHightT?: string; onClick?: () => void; }, ref) => {
-
+  onClick }: { className?: string; imageWidth?: string, isHeaderBack?: boolean; src?: string; maskHightF?: string; maskHightT?: string; onClick?: () => void; }, ref) => {
   const str0___ = utils_str_includes(["bccwhite"], className) ? "linear-gradient(0deg, var(--color_white) 40%, rgba(0, 0, 0, 0) 100%);" : "linear-gradient(0deg, var(--color_back) 40%, rgba(0, 0, 0, 0) 100%);";
   const str1___ = utils_str_includes(["bccwhite"], className) ? "linear-gradient(0deg, var(--color_white) 95%, rgba(0, 0, 0, 0) 100%);" : "linear-gradient(0deg, var(--color_back) 55%, rgba(0, 0, 0, 0) 100%);";
   const [isHeaderBack_, setIsHeaderBack_] = useState(isHeaderBack);
@@ -33,7 +33,7 @@ export const ComBanner = forwardRef(({
     <View className={`root-portal ${className}`} style={{ position: "absolute", top: "0vw", right: "0vw", width: "100vw", zIndex: -1 }}>
       <View className='ww'>
         <View className='dxy ww ovh ioo' style={{ paddingBottom: "0.2rem" }}>
-          <ComImage className='ioo z1' style={{ height: "auto", width: "100vw" }} mode='widthFix'
+          <ComImage className='ioo z1' style={{ height: "auto", width: imageWidth }} mode='widthFix'
             src={src}
             onClick={onClick} />
         </View>

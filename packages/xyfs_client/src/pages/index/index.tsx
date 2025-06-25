@@ -48,7 +48,7 @@ const Index: FC = () => {
 
   return <MMMAAPage share={roo___has_role(selfInfo_S!.managerUser!, ["REGIMENT"]) ? { page: `/pages/index/index?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ R_D: Number(selfInfo_S.managerUser?.mobile).toString(36) })) })}`, } : undefined}>
     <View className='ww'>
-      <ComBanner ref={ref_banner} maskHightT='70%' maskHightF='10vh' />
+      <ComBanner ref={ref_banner} maskHightT='70%' maskHightF='10vh' imageWidth='135vw' />
       <ComNav>
         <View className='ww'>
           <View className='z2 transall mb10' style={{ paddingRight: true ? `${capRight}px` : "0px", }}>

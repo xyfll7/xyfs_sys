@@ -100,7 +100,7 @@ export const ComCardOrderDryclean: FC<{
   return <View className={`bccwhite prl10 IOO pt10 ww ${className}`}>
     <View className='dbtc ww mb10 '>
       <MMMOrderUser order={order} />
-      <View className="dy">
+      <View className="dy nw">
         {coo___isNumber(order.deliveryStatus) &&
           <View className={`dy ${new Map([
             [Order_deliveryStatus_ST.待发货, 'cccprice'],
@@ -196,7 +196,7 @@ export const ComCardOrderBringGoods: FC<{
       <MMMOrderUser order={order} />
       <View className="dy">
         {coo___isNumber(order.deliveryStatus) &&
-          <View className={`dy ${new Map([
+          <View className={`dy nw ${new Map([
             [Order_deliveryStatus_ST.待发货, 'cccprice'],
             [Order_deliveryStatus_ST.待收货, 'cccgreen'],
             [Order_deliveryStatus_ST.已签收, 'cccplh']])
