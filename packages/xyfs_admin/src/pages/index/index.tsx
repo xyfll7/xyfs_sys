@@ -57,7 +57,7 @@ const Index: FC = () => {
       <IIISettings />
 
       <View className='dll ww'>
-        <ComButton className='bccback mb10 cccplh'>我</ComButton>
+        <ComButton className='bccback mb10 cccplh' hoverClass="none">我</ComButton>
         <View className='dy'>
           <ComButton className='dbtc mb10 mr10  bccback' url='/pages_user/sub_user_register'>
             <ComImage compress className='mr10 oo ovh' src={selfInfo_S?.avatar} />
@@ -98,7 +98,7 @@ const IIIShareInviteCard = ({ selfInfo_S, ...props }: { selfInfo_S: DeptInfo; } 
 const IIISettings = ({ ...props }: ViewProps) => {
   const selfInfo_S = useSTSelf(e => e.selfInfo);
   return <>
-    <ComButton {...props} className='mb10 cccplh mr10 bccback' >设置</ComButton>
+    <ComButton {...props} className='mb10 cccplh mr10 bccback' hoverClass="none">设置</ComButton>
     <View className='dy dwp'>
       {roo___has_role(selfInfo_S!, ["REGIMENT", "SCANNER", "MERCHANT", "GROUPLEADER"]) &&
         <ComButton className='mb10 bccwhite nw mr10' url='/pages_comm/icomm_printer'>蓝牙设备</ComButton>

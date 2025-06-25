@@ -54,7 +54,7 @@ const Index: FC = () => {
     {selfInfo_S.deptId &&
       <ComScrollView>
         <>
-          <ComButton ll className='bccback mb10 prl10 cccplh'>我的信息</ComButton>
+          <ComButton ll className='bccback mb10 prl10 cccplh' hoverClass="none">我的信息</ComButton>
           <View className='ioo bccwhite pt10 dll mb10 prl10 ww'>
             <View className='ww mb10 dy' >
               <ComButton ll className='w5rem bccwhite'>姓名</ComButton>
