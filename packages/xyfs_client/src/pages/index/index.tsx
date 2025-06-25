@@ -68,11 +68,11 @@ const Index: FC = () => {
 
           {roo___has_role(selfInfo_S!.deptInfo!, ["REGIMENT"]) &&
             <View className='mb10 dbtc prl10 transall' style={{ paddingRight: false ? `${capRight}px` : "0px", opacity: false ? "0" : "1", height: false ? "0rem" : "calc(2 * var(--rem_base)) !important", }}>
-              <ComAddressSwitchor className='bcctrans01-dark mr10 ww' hoverClass='none' title='团长:' isShort isIcon address={roo___my_dept(selfInfo_S)} url='/pages_user/user_regiment_list_map' />
+              <ComAddressSwitchor className='bcctrans01-dark mr10 ww' title='团长:' isShort isIcon address={roo___my_dept(selfInfo_S)} url='/pages_user/user_regiment_list_map' />
               <View className='dy'>
                 <ComButton className='bcctrans01-dark mr10 nw cccplh' url='/pages_user/user_orders'>订单</ComButton>
                 {getMyEnv().isDeveloping && <ComButton className='bccyellow nw fwb' url='/pages_comm/comm__publisher'>
-                  <Text className='cccgreen'>+</Text>发布1
+                  <Text className='cccgreen'>+</Text>发布
                 </ComButton>
                 }
               </View>
