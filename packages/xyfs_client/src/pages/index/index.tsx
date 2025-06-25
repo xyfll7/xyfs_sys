@@ -92,7 +92,7 @@ const Index: FC = () => {
     </View>
     <ComScrollView className='IOO' upperThreshold={200}
       refresherEnabled
-      onRefresherRefresh={async () => { ref_groupLeaders.current?.refresh(); ref_bringGoods.current?.refresh(); }}
+      onRefresherRefresh={async () => { await ref_groupLeaders.current?.refresh(); await ref_bringGoods.current?.refresh(); }}
       onScroll={(e, top) => { if (e.detail.scrollTop > top) { ref_banner.current?.setIsHeaderBack(true); } }}
       onScrollToUpper={() => { ref_banner.current?.setIsHeaderBack(false); }}>
 
@@ -147,8 +147,8 @@ const IIIBringGoods = forwardRef(({ className, channelId, }: { className?: strin
   }, [_get_data]);
 
   useImperativeHandle(ref, () => ({
-    refresh: () => {
-      _get_data();
+    refresh: async () => {
+      await _get_data();
     }
   }));
 
@@ -312,9 +312,9 @@ const IIIGroupLeaders = forwardRef(({ }, ref) => {
   const { page, page_loading, page_list_get, page_list_update, page_init } = useHook_pageListNew(___page_getter,);
 
   useImperativeHandle(ref, () => ({
-    refresh: () => {
+    refresh: async () => {
       page_init();
-      page_list_get(page);
+      await page_list_get(page);
     }
   }));
 

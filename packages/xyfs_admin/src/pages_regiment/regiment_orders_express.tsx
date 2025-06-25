@@ -99,7 +99,8 @@ const Index: FC<{}> = ({ }) => {
         </ComSearcher>
       </View>
     </ComNav>
-    <ComScrollView onScrollToLower={async () => { page_list_get(page); }} refresherEnabled onRefresherRefresh={async () => { page_init(); await page_list_get(page); }}>
+    <ComScrollView onScrollToLower={async () => { page_list_get(page); }} refresherEnabled
+      onRefresherRefresh={async () => { page_init(); await page_list_get(); }}>
       {page.list?.map((e) => {
         const ee1 = e as OrderInfo<Product_Express>;
         return <View className='bccwhite IOO mb10 ww' key={e.id}>
