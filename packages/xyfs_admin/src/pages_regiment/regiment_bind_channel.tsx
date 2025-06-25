@@ -73,6 +73,19 @@ const IIIBindAccountList: FC<{}> = ({ }) => {
 
     // token: "TokensphmAL8GAKrPRor", // 令牌
     // encodingAesKey: "P0pbl2HlnJoOzehcS9fvlqNxr2XWFxNMUtiHfSStRj4",  // 密钥
+
+
+    // // 王红霞
+    // channelId: "sphm4MmR2fgsCTD", // 视频号ID
+
+    // talentId: "wx8a336f656a012e4b", // 带货者ID
+    // talentSecret: "b55f4da865306f7a388aca4c5039299b", // 带货者密钥
+
+    // windowId: "wxc22113120818e2bc", // 橱窗
+    // windowSecret: "fc986dcc3414c2eb445b99f6bc218ff1", // 橱窗密钥
+
+    // token: "TOKENsphm4MmR2fgsCTD", // 令牌
+    // encodingAesKey: "wJvDUEmr1S6PY9ghjuKhshLRltdsQfpqD51acyT9MUM",  // 密钥
   });
 
   return <>
@@ -92,7 +105,7 @@ const IIIBindAccountList: FC<{}> = ({ }) => {
 
 
       {selfInfo_S.channelId && <ComButton className="mb10 bccback" hoverClass="none">已绑定视频号ID: <Text className="cccgreen ml10">{selfInfo_S.channelId}</Text> </ComButton>}
-      {!selfInfo_S.channelId && <ComButton className="mb10 bccback" hoverClass="none">尚未绑定 </ComButton>}
+      {!selfInfo_S.channelId && <ComButton className="mb10 bccback" hoverClass="none">尚未绑定</ComButton>}
 
 
 
@@ -232,6 +245,7 @@ const IIIBindAccountList: FC<{}> = ({ }) => {
 // Token令牌 Tokenrenhui
 // 消息密钥 j0FHC1Grq9suY9mjSQXuTKxEx3HbbWA1pxbE4GniL7R;
 
+// https://el-prod-63173-10-1306790653.sh.run.tcloudbase.com/api/wechat/channels/
 // https://el-main-63173-10-1306790653.sh.run.tcloudbase.com/api/wechat/channels/sph7OSpmev0O3p5
 
 // 王肇
@@ -247,4 +261,5 @@ const IIIBindAccountList: FC<{}> = ({ }) => {
 // Token令牌 TokensphmAL8GAKrPRor
 // 消息密钥 P0pbl2HlnJoOzehcS9fvlqNxr2XWFxNMUtiHfSStRj4
 
+// https://el-prod-63173-10-1306790653.sh.run.tcloudbase.com/api/wechat/channels/
 // https://el-main-63173-10-1306790653.sh.run.tcloudbase.com/api/wechat/channels/sphmAL8GAKrPRor
