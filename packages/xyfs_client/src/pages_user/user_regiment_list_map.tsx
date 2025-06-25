@@ -83,7 +83,7 @@ const IIIRegimentList = ({ toggle, onToggle }: { toggle: boolean; onToggle: (e: 
       }} />
     }
 
-    <View className='pa ww prl10 z9 dll transall safe-bottom' style={{ bottom: "0rem", height: toggle ? "27vh" : "77vh" }}>
+    <View className='pa ww prl10 z9 dll transall safe-bottom' style={{ bottom: "0rem", height: toggle ? "37vh" : "77vh" }}>
       <View className='ww hh bccback IOO ovh mb10 dll prl10 pb10 ' style={{}}>
         <View className='ww' onClick={() => onToggle(!toggle)}>
           <ComTabBarLine className='mbt6' isShort />
