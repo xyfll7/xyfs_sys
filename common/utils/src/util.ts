@@ -171,7 +171,7 @@ export function coo___unique_arr<T extends Record<string, any>>(arr: T[], key: s
 }
 
 // 隐私字符串
-export function coo___privacy_string(str: string, options: { isPhone?: boolean; placeholder?: string; } = { isPhone: false, }) {
+export function coo___string_privacy(str: string, options: { isPhone?: boolean; placeholder?: string; } = { isPhone: false, }) {
   if (!str) { return options.placeholder; }
   if (options.isPhone) {
     str = str.slice(0, 3) + '****' + str.slice(7);
@@ -189,7 +189,8 @@ export function coo___privacy_string(str: string, options: { isPhone?: boolean; 
   }
 }
 
-export function coo___00String_number(num: string | number, len: number) {
+// 当数字字符串长度小于设定长度时，在前面加0
+export function coo___string_pad_number(num: string | number, len: number) {
   num = parseInt(String(num), 10);//转数据类型，以十进制自增
   num = num.toString();//转为字符串
   while (num.length < len) {//当字符串长度小于设定长度时，在前面加0
@@ -197,4 +198,24 @@ export function coo___00String_number(num: string | number, len: number) {
   }
   //如果字符串长度超过设定长度只做自增处理。
   return num;
+}
+
+/**
+ * Truncates a string to a specified maximum length, with optional ellipsis and retain settings.
+ * @param str - The string to be truncated.
+ * @param maxLength - The maximum length of the resulting string.
+ * @param options - Optional settings for truncation.
+ * @param options.ellipsis - Optional The ellipsis character(s) to use, defaults to '...'.
+ * @param options.retain - Optional Number of characters to retain from the start, defaults to 0.
+ * @returns The truncated string.
+ */
+export function coo___string_truncate(str: string, maxLength: number, options?: { ellipsis?: string; retain?: number; /**保留字符串的前几位 */ }): string {
+  const _ellipsis = options?.ellipsis || '...';
+  const _retain = options?.retain || 0;
+  const _start_str = str.slice(0, _retain);
+  if (str.length > maxLength) {
+    return `${_start_str}${_ellipsis}${str.slice(-maxLength)}`;
+  } else {
+    return str;
+  }
 }

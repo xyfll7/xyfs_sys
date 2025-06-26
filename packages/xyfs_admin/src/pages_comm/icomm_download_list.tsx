@@ -15,7 +15,7 @@ import { useSTSelf } from "@xyfs/taro_uii/store/store";
 import { try_Taro_hideLoading, try_Taro_openDocument, try_Taro_setClipboardData, try_Taro_shareFileMessage, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
 import { useHook_pageListNew } from "@xyfs/taro_uii/utils/useHooks";
 import { utils_downloadFile_saveFile } from "@xyfs/taro_uii/utils/util";
-import { coo___00String_number, coo___ios_date, coo___isNumber } from "@xyfs/utils/util";
+import { coo___ios_date, coo___isNumber, coo___string_pad_number } from "@xyfs/utils/util";
 import { differenceInMinutes, format } from "date-fns";
 import { FC, useCallback } from "react";
 
@@ -94,7 +94,7 @@ const Index: FC<{}> = ({ }) => {
             }}>
               {differenceInMinutes(coo___ios_date(), coo___ios_date(e.createTime)) > ___time * 60 * 2 ? <Text className='cccplh'>该文件已过时，请去下载最新文件</Text> :
                 <View className='dbtc ww '>
-                  <Text className='nw mr10 cccplh'>{coo___00String_number(i + 1, 3)}</Text>
+                  <Text className='nw mr10 cccplh'>{coo___string_pad_number(i + 1, 3)}</Text>
                   {e.type === 1 &&
                     <View className='dbtc ww'>
                       {e.url && <><Text className='wm15rem nw1 '> {file_name}</Text><Text className='cccgreen'>  _完成</Text></>}

@@ -1,6 +1,6 @@
 import Taro from "@tarojs/taro";
 import GBK from "@xyfs/utils/gbk";
-import { coo___JSON_str_code, coo___async_sleep, coo___divide_array_to_n_parts, coo___ios_date, coo___privacy_phone, coo___privacy_string } from "@xyfs/utils/util";
+import { coo___JSON_str_code, coo___async_sleep, coo___divide_array_to_n_parts, coo___ios_date, coo___privacy_phone, coo___string_privacy, coo___string_truncate } from "@xyfs/utils/util";
 import { format } from "date-fns";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { PreBarCodeDryclean } from "../../../types/type_index";
@@ -266,7 +266,7 @@ export function on_get_printer_str_order_express(_order: OrderInfo<Product_Expre
   const sendManName = `${_order.__product?.sendMan?.realName?.charAt(0)}* ${_order.__product?.sendMan?.mobile?.slice(0, 3)}****${_order.__product?.sendMan?.mobile?.slice(-4)}`.slice(0, 20);
 
 
-  const orderUserName = _order.appid == process.env.TARO_APP_CLIENT ? coo___privacy_string(_order.userName ?? '匿名') : `${_order.userName}`;
+  const orderUserName = _order.appid == process.env.TARO_APP_CLIENT ? coo___string_privacy(_order.userName ?? '匿名') : `${_order.userName}`;
 
 
   if (type === "cpcl") {
@@ -414,13 +414,19 @@ export function on_get_printer_str_order_bing_goods(_order: OrderInfo<Product_Dr
 
 
   const ___rec = _order.userAddress; // 用户地址
-  const recName = `${___rec?.name} ${coo___privacy_phone(___rec?.mobile)}`.slice(0, 20);
+  const recName = `${coo___string_truncate(___rec?.name!, 4, { ellipsis: "***", retain: 1 })} ${coo___privacy_phone(___rec?.mobile)}`.slice(0, 20);
   const recAddr = utils_addressInfoToString(___rec);
+
+
   const ___regiment = _order.deptAddress; // 团长地址
+  const regimentName = `${coo___string_truncate(___regiment?.name!, 4, { ellipsis: "***", retain: 1 })} ${___regiment?.mobile}`.slice(0, 20);
+  const regimentAddr = utils_addressInfoToString(___regiment, true);
 
   const ___merchant = _order.__product?.merchantAddress; // 商家地址
-  const merchantName = `${___merchant?.name} ${___merchant?.mobile}`.slice(0, 20);
+  const merchantName = `${coo___string_truncate(___merchant?.name!, 4, { ellipsis: "***", retain: 1 })} ${___merchant?.mobile}`.slice(0, 20);
   const merchantAddr = utils_addressInfoToString(___merchant, true);
+
+
 
   const ___intro = _order.__product?.intro ?? ""; // 商品简介
 
@@ -446,6 +452,16 @@ export function on_get_printer_str_order_bing_goods(_order: OrderInfo<Product_Dr
     `LINE ${X_} ${Y_ += 30} ${P_w} ${Y_} ${L_H}`, // -----------
 
     `SETMAG 2 2`,
+    `${T_0} 0 ${X_} ${Y_ += 10} 团`,
+    `SETMAG 0 0`,
+    `${T_0} 0 ${X_ + 60} ${Y_} ${regimentName}`,
+    ...(() => coo___divide_array_to_n_parts(regimentAddr?.split(""), 20)
+      .map(e => e.join(""))
+      .map(e => `${T_0} 0 ${X_ + 60} ${Y_ += 30} ${e}`)
+    )(),
+    `LINE ${X_} ${Y_ += 30} ${P_w} ${Y_} ${L_H}`, // -----------
+
+    `SETMAG 2 2`,
     `${T_0} 0 ${X_} ${Y_ += 10} 商`,
     `SETMAG 0 0`,
     `${T_0} 0 ${X_ + 60} ${Y_} ${merchantName}`,
@@ -457,9 +473,6 @@ export function on_get_printer_str_order_bing_goods(_order: OrderInfo<Product_Dr
 
     `BARCODE 128 1 1 80 ${X_ + 30} ${Y_ += 10} ${_order.outTradeNo?.toUpperCase()}`,
     `${T_0} 0 ${X_ + 60} ${Y_ += 80 + 10} ${_order.outTradeNo?.toUpperCase()}`,
-
-    `${T_0} 0 ${X_} ${Y_ += 30} 团长：${___regiment?.name?.slice(0, 10)}  ${___regiment?.mobile}`,
-
 
     ... (() => {
       if (type === "divide") {  // 分单打印
@@ -483,7 +496,6 @@ export function on_get_printer_str_order_bing_goods(_order: OrderInfo<Product_Dr
       }
       return [];
     })(),
-
 
     `FORM`,
     `PRINT`,
