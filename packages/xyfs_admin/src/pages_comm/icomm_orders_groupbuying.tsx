@@ -161,10 +161,11 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
           await on_start_print((blue_device) => {
             return {
               cpcl: (() => {
+                const count = order.productList?.length;
                 if (order.productList?.some(e => e.waybillId)) {
-                  return [on_get_printer_str_order_bing_goods_waybill({ ...order, productList: printProducts, __product: order.productList?.[0] }, "merge", blue_device)];
+                  return [on_get_printer_str_order_bing_goods_waybill({ ...order, productList: printProducts, __product: order.productList?.[0], __count: count }, "merge", blue_device)];
                 } else {
-                  return [on_get_printer_str_order_bing_goods({ ...order, productList: printProducts, __product: order.productList?.[0] }, "merge", blue_device)];
+                  return [on_get_printer_str_order_bing_goods({ ...order, productList: printProducts, __product: order.productList?.[0], __count: count }, "merge", blue_device)];
                 }
               })()
             };
@@ -174,7 +175,7 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
           await on_start_print((blue_device) => {
             return {
               cpcl: printProducts!.map((eee, index) => {
-                const count = order.productList?.filter(e => e.waybillId === eee.waybillId).length;
+                const count = order.productList?.length;
                 if (eee.waybillId) {
                   return on_get_printer_str_order_bing_goods_waybill({ ...order, __product: eee, __index: index, __count: count }, "divide", blue_device);
                 } else {
