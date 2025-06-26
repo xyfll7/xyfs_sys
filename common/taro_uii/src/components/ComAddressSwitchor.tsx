@@ -17,17 +17,17 @@ export const ComAddressSwitchor: FC<ViewProps & MyButtonProps & {
   const __address = utils_addressInfoToString(address, isShort, addressPlaceholder);
   const __name = (address as DeptInfo)?.deptName ?? address?.name;
   return <ComButton className={`${className}`} onClick={onClick} url={url} {...props} >
-    <View className="ww dbtc">
+    <View className="ww dbtc cccwhite">
       <View className='dll ww'>
-        <View className='dbtc ww'>
-          <View className='dy h1rem cccplh' style={{ maxHeight: "var(--rem_base)", lineHeight: "var(--rem_base)" }}>
-            <Text className='cccplh nw'>{title}</Text>
-            <Text className={`nw1 wm6rem ${__name ?? "cccplh"}`}>{__name ?? "无"}</Text>
+        <View className='dbtc ww '>
+          <View className='dy h1rem ' style={{ maxHeight: "var(--rem_base)", lineHeight: "var(--rem_base)" }}>
+            <Text className=' nw'>{title}</Text>
+            <Text className={`nw1 wm6rem ${__name ?? ""}`}>{__name ?? "无"}</Text>
             <Text className='nw1 mr6 '>{address?.mobile}</Text>
           </View>
-          <View className='cccplh fs08 nw'>{time}</View>
+          <View className=' fs08 nw'>{time}</View>
         </View>
-        <View className='h1rem nw1 fs08 cccplh' style={{ maxHeight: "var(--rem_base)", lineHeight: "var(--rem_base)" }}>
+        <View className='h1rem nw1 fs08 ' style={{ maxHeight: "var(--rem_base)", lineHeight: "var(--rem_base)" }}>
           {__address ? __address : addressPlaceholder}
         </View>
       </View>

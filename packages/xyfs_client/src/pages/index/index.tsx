@@ -60,7 +60,7 @@ const Index: FC = () => {
                   <View className=' ioo dxy fs08  bcctrans05' style={{ width: "calc(1.2 * var(--rem_base))", height: "calc(1.2 * var(--rem_base))" }}>我</View>
                 </View>
               </View>
-              <ComButton className='flx1  ioo dbtc cccplh bcctrans01-dark' hoverClass='none' >
+              <ComButton className='flx1  ioo dbtc cccwhite bcctrans01-dark' hoverClass='none' >
                 <Text>~</Text><Text> 搜 </Text>
               </ComButton>
             </View>
@@ -70,7 +70,7 @@ const Index: FC = () => {
             <View className='mb10 dbtc prl10 transall' style={{ paddingRight: false ? `${capRight}px` : "0px", opacity: false ? "0" : "1", height: false ? "0rem" : "calc(2 * var(--rem_base)) !important", }}>
               <ComAddressSwitchor className='bcctrans01-dark mr10 ww' title='团长:' isShort isIcon address={roo___my_dept(selfInfo_S)} url='/pages_user/user_regiment_list_map' />
               <View className='dy'>
-                <ComButton className='bcctrans01-dark mr10 nw cccplh' url='/pages_user/user_orders'>订单</ComButton>
+                <ComButton className='bcctrans01-dark mr10 nw cccwhite' url='/pages_user/user_orders'>订单</ComButton>
                 {getMyEnv().isDeveloping && <ComButton className='bccyellow nw fwb' url='/pages_comm/comm__publisher'>
                   <Text className='cccgreen'>+</Text>发布
                 </ComButton>
