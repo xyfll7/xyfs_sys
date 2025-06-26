@@ -98,9 +98,6 @@ const Index: FC = () => {
 
       <IIIMainNavigator className='mb10  ' />
 
-
-
-
       <View className='prl10 ww'>
         <View className='dxy bccgreen fs07 IOO prl10 pbt10 cccwhite ww mb20'>
           欢迎访问小象心选管，我们是一个专注于为您提供优质商品和服务的平台。我们致力于为您带来更好的购物体验。
