@@ -487,7 +487,7 @@ export function on_get_printer_str_order_bing_goods(_order: OrderInfo<Product_Dr
       }
       if (type === "merge") {  // 合单打印
         return [
-          `${T_0} 0 ${X_} ${Y_ += 30} 商品总数量 共${_order.productList?.length}件   [[[合单]]]`,
+          `${T_0} 0 ${X_} ${Y_ += 30} 商品总数量 共${_order.productList?.length}-${_order.__count}件   [[[合单]]]`,
           ...(() => _order.productList?.map((e, i) => [
             `${T_0} 0 ${X_} ${Y_ += 30} ${i + 1}/${_order.productList?.length}${e.name?.substring(0, 10)}`,
           ]).flat()!
