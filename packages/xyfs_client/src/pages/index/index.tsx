@@ -41,8 +41,8 @@ export default function COMSELFWarp() { return <ComSELFView><Index></Index></Com
 const Index: FC = () => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const ref_banner = React.useRef<{ setIsHeaderBack: (e: boolean) => void; }>(null);
-  const ref_groupLeaders = React.useRef<{ refresh: () => void; }>(null);
-  const ref_bringGoods = React.useRef<{ refresh: () => void; }>(null);
+  const ref_groupLeaders = React.useRef<{ refresh: () => Promise<void>; }>(null);
+  const ref_bringGoods = React.useRef<{ refresh: () => Promise<void>; }>(null);
   const { capRight } = utils_get_capsule();
 
 
@@ -92,7 +92,7 @@ const Index: FC = () => {
     </View>
     <ComScrollView className='IOO' upperThreshold={200}
       refresherEnabled
-      onRefresherRefresh={async () => { await ref_groupLeaders.current?.refresh(); await ref_bringGoods.current?.refresh(); }}
+      onRefresherRefresh={async () => { await ref_groupLeaders.current?.refresh(); ref_bringGoods.current?.refresh(); }}
       onScroll={(e, top) => { if (e.detail.scrollTop > top) { ref_banner.current?.setIsHeaderBack(true); } }}
       onScrollToUpper={() => { ref_banner.current?.setIsHeaderBack(false); }}>
 
@@ -136,9 +136,8 @@ const IIIBringGoods = forwardRef(({ className, channelId, }: { className?: strin
   const _get_data = useCallback(async () => {
     setProductList(undefined);
     if (channelId) {
-      Api_common_productList_ctn().then((res) => {
-        setProductList(res);
-      });
+      const res = await Api_common_productList_ctn();
+      setProductList(res);
     }
   }, [channelId]);
 
@@ -314,7 +313,7 @@ const IIIGroupLeaders = forwardRef(({ }, ref) => {
   useImperativeHandle(ref, () => ({
     refresh: async () => {
       page_init();
-      await page_list_get(page);
+      await page_list_get();
     }
   }));
 
