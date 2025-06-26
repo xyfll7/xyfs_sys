@@ -16,8 +16,9 @@ export const ComAddressSwitchor: FC<ViewProps & MyButtonProps & {
 }> = ({ isIcon = false, time, isShort = false, url, className, address, onClick, title, addressPlaceholder = "暂无地址", ...props }) => {
   const __address = utils_addressInfoToString(address, isShort, addressPlaceholder);
   const __name = (address as DeptInfo)?.deptName ?? address?.name;
-  return <ComButton className={`${className}`} onClick={onClick} url={url} {...props} >
-    <View className="ww dbtc cccwhite">
+  const __ccc_color = className?.includes("ccc") ? "" : "cccplh";
+  return <ComButton className={`${className} ${__ccc_color}`} onClick={onClick} url={url} {...props} >
+    <View className="ww dbtc ">
       <View className='dll ww'>
         <View className='dbtc ww '>
           <View className='dy h1rem ' style={{ maxHeight: "var(--rem_base)", lineHeight: "var(--rem_base)" }}>
