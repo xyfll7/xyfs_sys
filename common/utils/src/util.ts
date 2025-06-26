@@ -209,7 +209,7 @@ export function coo___string_pad_number(num: string | number, len: number) {
  * @param options.retain - Optional Number of characters to retain from the start, defaults to 0.
  * @returns The truncated string.
  */
-export function coo___string_truncate(str: string, maxLength: number, options?: { ellipsis?: string; retain?: number; /**保留字符串的前几位 */ }): string {
+export function coo___string_truncate_start(str: string, maxLength: number, options?: { ellipsis?: string; retain?: number; /**保留字符串的前几位 */ }): string {
   const _ellipsis = options?.ellipsis || '...';
   const _retain = options?.retain || 0;
   const _start_str = str.slice(0, _retain);
@@ -218,4 +218,9 @@ export function coo___string_truncate(str: string, maxLength: number, options?: 
   } else {
     return str;
   }
+}
+
+
+export function coo___string_truncate_end(str: string, maxLength: number): string {
+  return str.length > maxLength ? str.slice(0, maxLength) + '...' : str;
 }

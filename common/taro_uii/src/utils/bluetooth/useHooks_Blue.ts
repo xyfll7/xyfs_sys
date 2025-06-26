@@ -1,6 +1,6 @@
 import Taro from "@tarojs/taro";
 import GBK from "@xyfs/utils/gbk";
-import { coo___JSON_str_code, coo___async_sleep, coo___divide_array_to_n_parts, coo___ios_date, coo___privacy_phone, coo___string_privacy, coo___string_truncate } from "@xyfs/utils/util";
+import { coo___JSON_str_code, coo___async_sleep, coo___divide_array_to_n_parts, coo___ios_date, coo___privacy_phone, coo___string_privacy, coo___string_truncate_end } from "@xyfs/utils/util";
 import { format } from "date-fns";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { PreBarCodeDryclean } from "../../../types/type_index";
@@ -414,16 +414,16 @@ export function on_get_printer_str_order_bing_goods(_order: OrderInfo<Product_Dr
 
 
   const ___rec = _order.userAddress; // 用户地址
-  const recName = `${coo___string_truncate(___rec?.name!, 4, { ellipsis: "***", retain: 1 })} ${coo___privacy_phone(___rec?.mobile)}`.slice(0, 20);
+  const recName = `${coo___string_privacy(___rec?.name!)} ${coo___privacy_phone(___rec?.mobile)}`.slice(0, 20);
   const recAddr = utils_addressInfoToString(___rec);
 
 
   const ___regiment = _order.deptAddress; // 团长地址
-  const regimentName = `${coo___string_truncate(___regiment?.name!, 4, { ellipsis: "***", retain: 1 })} ${___regiment?.mobile}`.slice(0, 20);
+  const regimentName = `${coo___string_truncate_end(___regiment?.name!, 5)} ${___regiment?.mobile}`.slice(0, 20);
   const regimentAddr = utils_addressInfoToString(___regiment, true);
 
   const ___merchant = _order.__product?.merchantAddress; // 商家地址
-  const merchantName = `${coo___string_truncate(___merchant?.name!, 4, { ellipsis: "***", retain: 1 })} ${___merchant?.mobile}`.slice(0, 20);
+  const merchantName = `${coo___string_truncate_end(___merchant?.name!, 5)} ${___merchant?.mobile}`.slice(0, 20);
   const merchantAddr = utils_addressInfoToString(___merchant, true);
 
 
