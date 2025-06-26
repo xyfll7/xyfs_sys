@@ -153,7 +153,7 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
       </ComButton>}
       {model === "print" && order.orderStatus === Order_ST.已付款 && roo___has_role(selfInfo_S, ['MERCHANT', "GROUPLEADER"]) && <ComButton rr className='ml10 bborder mb10 nw' onClick={async () => {
         console.log("order", order);
-        throw new Error("请先获取面单");
+        throw new Error("打印order看看啊");
         if (!printProducts.length) { Taro.showToast({ icon: "none", title: "至少选择一件商品" }); return; }
         const [, res_item] = await try_Taro_showActionSheet<"合单打印" | "分单打印">({
           alertText: "请选择打印方式",
