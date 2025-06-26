@@ -197,7 +197,7 @@ const IIImmmREGIMENT = ({ ...props }: ViewProps) => {
         <ComImage compress className='bcctrans' icon style={{ width: "20vw", height: "20vw" }} mode='aspectFit' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/express.png' />
       </View>
       <View className='pt10 prl10  ww  dll ' >
-        <ComButton ll className='mb10 cccplh' >团长/快递业务</ComButton>
+        <ComButton ll className='mb10 cccplh' hoverClass="none">团长/快递业务</ComButton>
         <View className='dy dwp'>
           <ComButton ll className='fwb mb10 mr10 bborder' url='/pages_comm/comm__product_express'>快递</ComButton>
         </View>
@@ -215,7 +215,7 @@ const IIImmmREGIMENT = ({ ...props }: ViewProps) => {
         <ComImage compress className='bcctrans' style={{ width: "25vw", height: "15vw" }} icon mode='aspectFit' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/dryclean.png' />
       </View>
       <View className='pt10 prl10  ww  dll ' >
-        <ComButton ll className='mb10 cccplh '>团长/干洗业务</ComButton>
+        <ComButton ll className='mb10 cccplh ' hoverClass="none">团长/干洗业务</ComButton>
         <View className='dy dwp'>
           <ComButton ll className='  fwb mb10 mr10 bborder' url='/pages_comm/comm__product_dryclean'>干洗</ComButton>
           <ComButton ll className='mb10  mr10 bborder' url='/pages_comm/icomm_scaner'>扫码揽件</ComButton>
@@ -232,7 +232,7 @@ const IIImmmREGIMENT = ({ ...props }: ViewProps) => {
         <ComImage compress className='bcctrans' style={{ width: "30vw", height: "15vw" }} mode='aspectFit' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/shaoping_bag.png' />
       </View>
       <View className='pt10 prl10  ww  dll ' >
-        <ComButton ll className='mb10 cccplh '>团长/团购业务/订单</ComButton>
+        <ComButton ll className='mb10 cccplh ' hoverClass="none">团长/团购业务/订单</ComButton>
         <View className='dy dwp'>
           <ComButton ll className=' nw mb10 mr10 bborder' url={`/pages_comm/icomm_orders_groupbuying?order_ST=${Order_ST.已付款}`}>已付款 </ComButton>
           <ComButton ll className=' nw mb10 mr10 bborder' url={`/pages_comm/icomm_orders_groupbuying?order_ST=${Order_ST.已退款}`}>已退款 </ComButton>
@@ -245,7 +245,7 @@ const IIImmmREGIMENT = ({ ...props }: ViewProps) => {
           <ComImage compress className='bcctrans' style={{ width: "20vw", height: "15vw" }} mode='aspectFit' src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/myfiles_xyfll7/helps.png' />
         </View>
         <View className='pt10 prl10 ww dll'>
-          <ComButton ll className='mb10 cccplh'>团长/帮忙业务</ComButton>
+          <ComButton ll className='mb10 cccplh' hoverClass="none">团长/帮忙业务</ComButton>
           <View className='dy dwp'>
             <ComButton ll className='mb10 dy bborder fwb' onClick={async () => {
               await try_Taro_navigateToMiniProgram({
@@ -303,7 +303,7 @@ const IIImmmGUIDE = ({ ...props }: ViewProps) => {
   const [qrcode, setQrcode] = useState<string | null>(null);
   return <>
     <View className={`bccwhite ww dll mb10 pt10 prl10 IOO ${props.className}`}>
-      <ComButton ll className='mb10 cccplh bccwhite mr10'>导游/带货</ComButton>
+      <ComButton ll className='mb10 cccplh bccwhite mr10' hoverClass="none">导游/带货</ComButton>
       <IIIShareInviteCard selfInfo_S={selfInfo_S!} />
       <View className='dy dwp'>
         <ComButton ll className='mb10 bborder nw mr10' onClick={async () => {
@@ -345,7 +345,7 @@ const IIImmmGROUPLEADER = ({ ...props }: ViewProps) => {
   }
   return <>
     <View className={`bccwhite ww dll mb10 pt10 prl10 IOO ${props.className}`}>
-      <ComButton ll className='mb10 cccplh bccwhite mr10'>团主/卖货</ComButton>
+      <ComButton ll className='mb10 cccplh bccwhite mr10' hoverClass="none">团主/卖货</ComButton>
       <View className="dy ">
         <ComButton ll className='bborder mb10 mr10' url='/pages_comm/comm__publisher'>
           发布商品
