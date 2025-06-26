@@ -35,7 +35,9 @@ export function ComButton({
     className={`${props.className} ${back} ${rr ? "" : "pr10"} ${ll ? "" : "pl10"} ${props.disabled ? "disabled bccwhite" : ""} transall ioo dy`}
 
     hoverClass={(() => {
-      if (props.disabled) {
+      if (props.hoverClass === "none") {
+        return "none";
+      } else if (props.disabled) {
         return "none";
       } else if (utils_str_includes(["bccyellow", "bccgreen"], props.className)) {
         return "bccwhite cccplh";
