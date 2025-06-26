@@ -46,6 +46,7 @@ const bluetoothAdapterState_Store = {
     // })();
 
     Blue_onBluetoothAdapterStateChange(e => {
+
       bluetoothAdapterState_Store.status = {
         available: e.available,
         discovering: e.discovering
@@ -60,11 +61,14 @@ const bluetoothAdapterState_Store = {
 export function useINHooks_Blue_devices() {
   const [devices, setDevices] = useState<Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice[]>();
   const state = useSyncExternalStore(bluetoothAdapterState_Store.sub, () => bluetoothAdapterState_Store.status);
+
   console.log("查找到的蓝牙设备列表:", devices);
-  const startBlue = async () => {
+  const startBlue = async (isOpen = true) => {
     setDevices(undefined);
     // 启动蓝牙模块
-    await Blue___openBluetoothAdapter();
+    if (isOpen) {
+      await Blue___openBluetoothAdapter();
+    }
     console.info("1_蓝牙模块初始化成功");
     const res_devices0 = await Blue_getConnectedBluetoothDevices(SERVICE_UUIDs);
     console.info("2_获取已连接的蓝牙设备", res_devices0);
@@ -93,6 +97,11 @@ export function useINHooks_Blue_devices() {
       return ___arr;
     }
   };
+  useEffect(() => {
+    if (state.available) {
+      startBlue(false);
+    }
+  }, [state]);
   useEffect(() => {
     startBlue();
     return () => {
