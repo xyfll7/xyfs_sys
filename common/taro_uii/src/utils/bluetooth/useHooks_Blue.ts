@@ -438,7 +438,7 @@ export function on_get_printer_str_order_bing_goods(_order: OrderInfo<Product_Dr
     `${T_0} 0 ${X_} ${Y_ = 60} ${format(coo___ios_date(_order?.lastPrintTime ?? coo___ios_date().getTime()), "yyyy-MM-dd HH:mm:ss")}`,
     `LINE ${X_} ${Y_ += 26} ${P_w} ${Y_} ${L_H}`, // -----------
 
-    `BARCODE 128 1 1 80 ${X_ + 30} ${Y_ += 10} ${_order.outTradeNo?.toUpperCase()}`,
+    `BARCODE 128 1 1 80 ${X_ + 60} ${Y_ += 10} ${_order.outTradeNo?.toUpperCase()}`,
     `${T_0} 0 ${X_ + 60} ${Y_ += 80 + 10} ${_order.outTradeNo?.toUpperCase()}`,
     `LINE ${X_} ${Y_ += 30} ${P_w} ${Y_} ${L_H}`, // -----------
     `SETMAG 2 2`,
@@ -471,7 +471,7 @@ export function on_get_printer_str_order_bing_goods(_order: OrderInfo<Product_Dr
     )(),
     `LINE ${X_} ${Y_ += 30} ${P_w} ${Y_} ${L_H}`, // -----------
 
-    `BARCODE 128 1 1 80 ${X_ + 30} ${Y_ += 10} ${_order.outTradeNo?.toUpperCase()}`,
+    `BARCODE 128 1 1 80 ${X_ + 60} ${Y_ += 10} ${_order.outTradeNo?.toUpperCase()}`,
     `${T_0} 0 ${X_ + 60} ${Y_ += 80 + 10} ${_order.outTradeNo?.toUpperCase()}`,
 
     ... (() => {
