@@ -11,7 +11,6 @@ import { ComNavBarA } from "../components/ComNavBarA";
 import { ComScrollView } from "../components/ComScrollView";
 import { ComSquare } from "../components/ComSquare";
 import { MMMAAPage } from "../components/MMMAAPage";
-import { MMMAdBanner } from "../components/MMMAdBanner";
 import { Product_category_ST } from "../config";
 import { useHook_getCurrentInstance } from "../utils/useHooks";
 
@@ -35,7 +34,7 @@ const CPExpressPath: FC = () => {
   return <MMMAAPage>
     <ComNav>
       <ComNavBarA className='mb10 pl10'>
-        <ComButton ll className='bcctrans cccplh ml10' >运单详情</ComButton>
+        <ComButton ll className='bcctrans cccplh ml10' hoverClass="none">运单详情</ComButton>
       </ComNavBarA>
     </ComNav>
     <ComScrollView>
@@ -53,18 +52,18 @@ const CPExpressPath: FC = () => {
         <>
           {path?.map((e) => {
             return <View key={e.waybillId} className='ww dll'>
-              <ComButton className='bcctrans mb10 cccplh' hoverClass='none'>运单号:{e.waybillId}</ComButton>
+              <ComButton className='mb10 cccplh bccback' hoverClass='none'>运单号:{e.waybillId}</ComButton>
               {e.path && e.path?.length === 0 && <ComLoading className='mb10' isEmpty>待揽件</ComLoading>}
               {e.path && e.path?.length !== 0 &&
-                <View className='bccwhite IOO pt10 mb10 dll ww'>
+                <View className='pt10 mb10 dll ww'>
                   {e.path.map(ee => {
-                    return <View key={ee.time} className='ds prl10 '>
-                      <ComSquare className='mr10 dxy bcctrans' style={{ height: "calc(1.4 * var(--rem_base))" }}>
+                    return <View key={ee.time} className='ds prl10 ww'>
+                      <ComSquare className='mr10 dxy' style={{ height: "calc(1.4 * var(--rem_base))" }}>
                         <ComSquare className='oo bccgreen' style={{ width: "calc(0.5625 * var(--rem_base))" }} />
                       </ComSquare>
-                      <ComButton ll className='mb10 ww'>
+                      <ComButton ll className='mb10 ww  bccback' hoverClass="none">
                         <View>
-                          <View>{ee.description.replace(/【/g, "[").replace(/】/g, "] ")}</View>
+                          <View className="cccplh">{ee.description.replace(/【/g, "[").replace(/】/g, "] ")}</View>
                           <View className='cccplh fs08'>{ee.time}</View>
                         </View>
                       </ComButton>
@@ -74,7 +73,7 @@ const CPExpressPath: FC = () => {
               }
             </View>;
           })}
-          <MMMAdBanner className='mb10' />
+          {/* <MMMAdBanner className='mb10' /> */}
         </>
       }
     </ComScrollView>

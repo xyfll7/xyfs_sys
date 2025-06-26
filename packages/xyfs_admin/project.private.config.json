@@ -10,11 +10,32 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages_comm/comm__express_path",
+          "pathName": "pages_comm/comm__express_path",
+          "query": "express_share_id=1935322077715931136",
+          "scene": null,
+          "launchMode": "default"
+        },
+        {
+          "name": "pages_comm/comm__express_path",
+          "pathName": "pages_comm/comm__express_path",
+          "query": "express_share_id=1937520668475826176",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages_regiment/regiment_orders_express",
+          "pathName": "pages_regiment/regiment_orders_express",
+          "query": "order_ST=2",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages_comm/icomm_orders_groupbuying",
           "pathName": "pages_comm/icomm_orders_groupbuying",
           "query": "order_ST=2",
-          "scene": null,
-          "launchMode": "default"
+          "launchMode": "default",
+          "scene": null
         },
         {
           "name": "pages_regiment/regiment_orders_express",
