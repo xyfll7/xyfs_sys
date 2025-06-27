@@ -46,7 +46,7 @@ const Index: FC = () => {
   return <MMMAAPage isNeedAnyRole={false} isNeedAnyDept={false}>
     <ComNav>
       <ComNavBarA className='mb10 pl10'>
-        <ComButton ll className='bcctrans cccplh ml10' >
+        <ComButton ll className='bcctrans cccplh ml10' hoverClass="none">
           {selfInfo_S.deptId ? '我' : '报名团长'}
         </ComButton>
       </ComNavBarA>
@@ -57,7 +57,7 @@ const Index: FC = () => {
           <ComButton ll className='bccback mb10 prl10 cccplh' hoverClass="none">我的信息</ComButton>
           <View className='ioo bccwhite pt10 dll mb10 prl10 ww'>
             <View className='ww mb10 dy' >
-              <ComButton ll className='w5rem bccwhite'>姓名</ComButton>
+              <ComButton ll className='w5rem bccwhite' hoverClass="none">姓名</ComButton>
               <ComButton ll className='flx1 cccplh bccback'>
                 <ComInput type='nickname' confirmType="done" value={userForm.name}
                   onInput={(e) => { setUserForm({ name: e.detail.value }); }}
@@ -77,7 +77,7 @@ const Index: FC = () => {
             </View>
 
             <View className='dy ww mb10'>
-              <ComButton ll className='w5rem bccwhite'>手机号</ComButton>
+              <ComButton ll className='w5rem bccwhite' hoverClass="none">手机号</ComButton>
               <ComButtonOpen ll className='cccplh dy bccback ww ' id='getPhoneNumber' openType='getPhoneNumber' onClick={() => {
                 Taro.showLoading({ mask: true, title: "获取手机号..." });
               }} onGetPhoneNumber={async (e) => {
@@ -109,7 +109,7 @@ const Index: FC = () => {
             {selfInfo_S.depts?.map(e => {
               return <View key={e.deptId} className='mb10 bccwhite ww ioo pt10 dll prl10'>
                 <View className='dbtc ww mb10 '>
-                  <ComButton ll className=''>
+                  <ComButton ll hoverClass="none">
                     <Text className='nw1'>
                       {e.deptName}
                     </Text>
