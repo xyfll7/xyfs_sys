@@ -10,11 +10,18 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages_comm/comm__publisher",
+          "pathName": "pages_comm/comm__publisher",
+          "query": "",
+          "scene": null,
+          "launchMode": "default"
+        },
+        {
           "name": "pages_comm/comm__express_path",
           "pathName": "pages_comm/comm__express_path",
           "query": "express_share_id=1935322077715931136",
-          "scene": null,
-          "launchMode": "default"
+          "launchMode": "default",
+          "scene": null
         },
         {
           "name": "pages_comm/comm__express_path",

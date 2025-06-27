@@ -6,7 +6,7 @@ import { ComImage } from "../components/ComImage";
 const PublishCard: FC<ViewProps & { data: any; onMai?: (e: any) => void; }> = ({ data, onMai, ...props }) => {
 
   return <View className={`${props.className} ww dll`}>
-    <ComButton ll className='fwb'>{data.name}</ComButton>
+    <ComButton ll className='fwb' hoverClass="none">{data.name}</ComButton>
     <View className='mb10'>
       <Text className='cccplh'>{data.intro}</Text>
     </View>

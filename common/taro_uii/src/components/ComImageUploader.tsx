@@ -18,7 +18,7 @@ export const ComImageUploader: FC<{
   folder?: string;
   count?: number;
   sourceType?: (keyof Taro.chooseMedia.sourceType)[],
-}> = ({ count = 9, deleteView, className, images, sourceType = ["album", "camera"], addTitle = "好物配好图", size = "calc(5 * var(--rem_base))", onSetImages, upLoader }) => {
+}> = ({ count = 9, deleteView, className, images, sourceType = ["album", "camera"], addTitle = "好物配好图", size = "calc(5.5 * var(--rem_base))", onSetImages, upLoader }) => {
   const _images = images.split(",").filter(e => e !== "");
   const isLoading = _images.find(e => utils_str_includes(["http://", "wxfile://"], e));
   return <View className={`ds dwp ${className}`}>
