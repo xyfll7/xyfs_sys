@@ -38,7 +38,7 @@ const Index: FC = () => {
   return <MMMAAPage isNeedRegiment={false} >
     <ComNav isRight className="prl10">
       <ComNavBarA className='mb10'>
-        <ComButton ll className='bcctrans ml10 cccplh'>商品列表</ComButton>
+        <ComButton ll className='bcctrans ml10 cccplh' hoverClass="none">商品列表</ComButton>
       </ComNavBarA>
       <ComListTypeSelectorNew className='' disabled={page_loading} enumData={{ "1": "销售中", "-1": "已下架", 销售中: 1, 已下架: -1 }} typeList={[1, -1]} tabType={tabType} setTab={(e) => { page_init(); setTabType(e); }} />
     </ComNav>
