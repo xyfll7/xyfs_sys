@@ -1,6 +1,7 @@
 // :: pages_comm/comm__publisher
 import { Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
+import { Product_Publish } from '@xyfs/taro_uii';
 import { Api_goods_publish_ctn } from '@xyfs/taro_uii/api/api__goods';
 import { Api_productCategory_list_ctn } from '@xyfs/taro_uii/api/api__product';
 import { ComButton } from '@xyfs/taro_uii/components/ComButton';
@@ -15,7 +16,7 @@ import { ComSELFView, MMMAAPage, } from '@xyfs/taro_uii/components/MMMAAPage';
 import { roo___has_role } from '@xyfs/taro_uii/src/roles';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
 import { try_Taro_cloud_uploadFile, try_Taro_hideLoading, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
-import { useHook_Reducer } from '@xyfs/taro_uii/utils/useHooks';
+import { useHook_getCurrentInstance, useHook_Reducer } from '@xyfs/taro_uii/utils/useHooks';
 import { utils_validate_upload_product } from '@xyfs/taro_uii/utils/validator';
 import { coo___get_price, coo___ios_date } from '@xyfs/utils/util';
 import { FC, useEffect, useState } from 'react';
@@ -30,6 +31,10 @@ export default function COMSELFWarp() { return <ComSELFView><IIIPublisherAdmin /
 
 
 export const IIIPublisherAdmin: FC = () => {
+
+  const { options } = useHook_getCurrentInstance<Product_Publish>(true);
+
+
   const [form, setForm] = useHook_Reducer({
     str: "",
     price: "0.00",

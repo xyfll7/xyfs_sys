@@ -200,21 +200,31 @@ export function useHook_Fetch<T>(cb: () => Promise<T | null>) {
 
 
 
-export function useHook_getCurrentInstance<T>() {
+export function useHook_getCurrentInstance<T>(isStorage: boolean = false) {
   const ref = useRef<Taro.PageInstance | null>(null);
   const { page } = Taro.getCurrentInstance();
   if (!ref.current) {
     ref.current = page;
   }
-  const obj: Record<string, any> = {};
-  const options = ref.current?.options;
-  options && Object.keys(options).map(key => {
-    const value = options[key] as any;
-    obj[key] = decodeURIComponent(value);
-  });
+  if (!isStorage) {
+    const obj: Record<string, any> = {};
+    const options = ref.current?.options;
+    options && Object.keys(options).map(key => {
+      const value = options[key] as any;
+      obj[key] = decodeURIComponent(value);
+    });
+    return {
+      ...ref.current,
+      options: obj as T
+    };
+  } else {
+    const res = Taro.getStorageSync("DATA");
+    return {
+      ...ref.current,
+      options: res as T
+    };
+  }
 
-  return {
-    ...ref.current,
-    options: obj as T
-  };
+
+
 }

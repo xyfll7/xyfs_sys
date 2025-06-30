@@ -16,7 +16,7 @@ import { ComPopupNew } from "@xyfs/taro_uii/components/ComPopupNew";
 import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
 import { ComSELFView, MMMAAPage } from "@xyfs/taro_uii/components/MMMAAPage";
 import { useSTSelf } from "@xyfs/taro_uii/store/store";
-import { try_Taro_hideLoading, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
+import { try_Taro_hideLoading, try_Taro_navigateTo, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
 import { useHook_pageListNew } from "@xyfs/taro_uii/utils/useHooks";
 import { utils_get_qrcode } from "@xyfs/taro_uii/utils/util";
 import { coo___get_price, coo___objToUrl } from "@xyfs/utils/util";
@@ -91,6 +91,10 @@ const Index: FC = () => {
               }}>上架</ComButton>
             }
             <ComButton rr className='mb10 bborder ml10' onClick={async () => { setProduct(e); }}>改库存</ComButton>
+            <ComButton rr className='mb10 bborder ml10' onClick={async () => {
+              Taro.setStorageSync("DATA", e);
+              await try_Taro_navigateTo({ url: `/pages_comm/comm__publisher` });
+            }}>编辑</ComButton>
           </View>
         </View>;
       })}
