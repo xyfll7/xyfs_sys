@@ -1,7 +1,5 @@
 import { View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
-
-
 import { FC, } from 'react';
 import { try_Taro_chooseMedia } from '../utils/try_catch';
 import { utils_str_includes } from '../utils/util';
