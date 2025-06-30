@@ -19,7 +19,7 @@ import { useSTSelf } from "@xyfs/taro_uii/store/store";
 import { try_Taro_hideLoading, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
 import { useHook_pageListNew } from "@xyfs/taro_uii/utils/useHooks";
 import { utils_get_qrcode } from "@xyfs/taro_uii/utils/util";
-import { coo___objToUrl } from "@xyfs/utils/util";
+import { coo___get_price, coo___objToUrl } from "@xyfs/utils/util";
 import { FC, useCallback, useState } from "react";
 
 definePageConfig({ enableShareAppMessage: true, navigationStyle: "custom", disableScroll: true, });
@@ -119,25 +119,31 @@ const Index: FC = () => {
 
 
 const IIIStock = ({ onClose, product }: { onClose: () => void; product: Product_Publish; }) => {
-  const [stock, setStock] = useState<number>(0);
+  const [stock, setStock] = useState<string>(product?.stock?.toString()!);
   return <View className='ww dll prl10'>
-    <ComNavBarB className='mb10 ww' onClose={() => { onClose(); }}><ComButton className='fwb bccback'>修改库存</ComButton></ComNavBarB>
-    <View className='ww dy prl10 mr10'>
+    <ComNavBarB className='mb10 ww' onClose={() => { onClose(); }}><ComButton className='fwb bccback' hoverClass="none">修改库存</ComButton></ComNavBarB>
+    <View className='ww dy prl10 '>
       <ComButton ll rr className='bccbacktab flx1  mb10' hoverClass='none'>
-        <ComInput className="bccred" value={stock.toString()} />
-        <ComButton className='cccgreen w2rem dxy bccbacktab' onClick={async () => {
-          setStock(stock - 1);
-        }}>-</ComButton>
-        <ComButton className='cccgreen  w2rem dxy bccbacktab' onClick={async () => {
-          setStock(stock + 1);
-        }}>+</ComButton>
+        <ComInput value={stock.toString()}
+          onBlur={() => { stock === "" && setStock("0"); }}
+          onFocus={() => { stock === "0" && setStock(""); }}
+          onInput={(e) => setStock(coo___get_price(e.detail.value, stock, { isDecimal: false, integerLength: 4 }))} />
       </ComButton>
-      <ComButton rr className='cccgreen mb10 bborder' onClick={async () => {
+      <ComButton className='cccgreen w2rem dxy bccwhite ml10 mb10' onClick={async () => {
+        if (Number(stock) > 0) {
+          setStock(String(Number(stock) - 1));
+        } else {
+          Taro.showToast({ icon: "none", title: "库存不能小于0" });
+        }
+      }}>-</ComButton>
+      <ComButton className='cccgreen  w2rem dxy bccwhite ml10 mb10' onClick={async () => {
+        setStock(String(Number(stock) + 1));
+      }}>+</ComButton>
+      <ComButton rr className='cccgreen mb10 bccwhite ml10 ' onClick={async () => {
         Taro.showLoading({ mask: true, title: "修改中..." });
         await Api_goods_stockSetting_ctn({ id: product.id!, stock: String(stock) });
         Taro.showToast({ icon: "none", title: "修改成功" });
       }}>修改</ComButton>
-
     </View>
   </View>;
 };

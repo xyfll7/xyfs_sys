@@ -89,7 +89,8 @@ export const IIIPublisherAdmin: FC = () => {
       </ComButton>
       <ComButton className='bccbacktab mb10 dy' hoverClass='none'>
         <Text className='nw cccplh mr6'>库存</Text>
-        <ComInput className='cccprice' type='digit' confirmType='done' value={form.stock} placeholder='请输入库存数量' onBlur={() => { form.stock === "" && setForm({ stock: "0" }); }}
+        <ComInput className='cccprice' type='digit' confirmType='done' value={form.stock} placeholder='请输入库存数量'
+          onBlur={() => { form.stock === "" && setForm({ stock: "0" }); }}
           onFocus={() => { form.stock === "0" && setForm({ stock: "" }); }}
           onInput={(e) => setForm({ stock: coo___get_price(e.detail.value, form.stock, { isDecimal: false, integerLength: 4 }) })} />
       </ComButton>
