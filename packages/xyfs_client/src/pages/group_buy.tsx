@@ -46,7 +46,7 @@ const Index: FC = () => {
   const { G_D } = coo___urlToObj<{ G_D?: string; }>(options.scene);
 
 
-  const [type, setType] = useState(1);
+  const [type, setType] = useState<"visualEdition" | "simpleEdition">("simpleEdition");
   const isBanner = true;
   const [address, setAddress] = useState<AddressInfo | undefined>(selfInfo_S.defaultRecManAddress);
 
@@ -103,8 +103,8 @@ const Index: FC = () => {
             <View className='ww dr'>
               <ComButton rr className={`mb10 cccplh bborder `} onClick={() => { setCart([]); }}>清空</ComButton>
               <ComButton rr className={`mb10 cccplh nw ml10 bborder `} onClick={() => {
-                setType(type == 0 ? 1 : 0);
-              }}>{new Map([[0, "图文版"], [1, "简洁版"]]).get(type)} </ComButton>
+                setType(type == "simpleEdition" ? "visualEdition" : "simpleEdition");
+              }}>{new Map([["visualEdition", "图文版"], ["simpleEdition", "简洁版"]]).get(type)} </ComButton>
               <ComButton rr className={`cccplh mb10 ml10 bborder `} onClick={async () => {
                 Taro.showLoading({ title: "获取短链中...", mask: true });
                 const res = await Api_common_getShortLink_ctn({
@@ -223,8 +223,8 @@ const Index: FC = () => {
   </MMMAAPage>;
 };
 
-const IIIItem = ({ item, type, onAdd, onSub, onDetail, count }: { count: number, item: any; type: number; onAdd: () => void, onSub: () => void; onDetail: () => void; }) => {
-  if (type == 1) {
+const IIIItem = ({ item, type, onAdd, onSub, onDetail, count }: { count: number, item: any; type: "visualEdition" | "simpleEdition"; onAdd: () => void, onSub: () => void; onDetail: () => void; }) => {
+  if (type == "simpleEdition") {
     return <View className='dll ww bccback IOO prl10 mb10'  >
       <View className='dbtc ww'>
         <View className='pt4 dll ww' onClick={onDetail}>
