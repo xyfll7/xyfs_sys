@@ -72,7 +72,7 @@ export const IIIPublisherAdmin: FC = () => {
         <View className='ww '>
           <ComTextarea className='ww ' minHeight='calc(2 * var(--rem_base))' confirmType='return' value={form.str} placeholder='请录入商品名称/简介 ~'
             onInputText={(e) => { setForm({ str: e }); }} />
-          <View className='fs08 cccplh'>注:点击换行后，第一行为标题</View>
+          <View className='fs08 cccplh'>注: 点击换行后, 第一行为标题</View>
         </View>
       </ComButton>
       <ComImageUploader images={form.pictureUrl} onSetImages={(e) => { setForm({ pictureUrl: e.join(",") }); }} upLoader={async (e) => {
