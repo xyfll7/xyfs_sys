@@ -137,7 +137,17 @@ const Index: FC = () => {
             [...page.list].map((item, index) => <IIIItem item={item} key={index} type={type}
               count={cart.filter(e => e.id === item.id).length}
               onDetail={() => { setProduct(item); }}
-              onAdd={() => { setCart((e) => [...e, { ...item }]); }}
+              onAdd={() => {
+                // 添加数量不能超过剩余库存
+                setCart((e) => {
+                  const count = e.filter(ee => ee.id === item.id).length;
+                  if (count >= item.stock) {
+                    Taro.showToast({ icon: "none", title: "已达最大库存" });
+                    return e;
+                  }
+                  return [...e, { ...item }];
+                });
+              }}
               onSub={() => { setCart(cart.filter((_, i) => cart.findIndex(e => e.id === item.id) != i)); }} />)
           }
         </View>
@@ -231,8 +241,8 @@ const IIIItem = ({ item, type, onAdd, onSub, onDetail, count }: { count: number,
           <ComButton ll className='bccback' hoverClass='none'>
             <View className='dbase'>
               <Text className='nw1 mr6'>{item.name}</Text>
-              <Text className='nw cccprice'>¥{item.price}</Text>
-              {count > 0 && <View className='bcctrans cccprice nw fs08'> /{count}</View>}
+              <Text className='nw cccprice mr6'>¥{item.price}</Text>
+              {count > 0 && <View className='bcctrans cccprice nw fs08'> {count}<Text className='cccplh'>/{item.stock}</Text> </View>}
             </View>
           </ComButton>
           <View className='cccplh mb10 nw1'>{item.intro ? item.intro : "没有简介"}</View>

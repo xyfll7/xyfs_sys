@@ -147,7 +147,9 @@ const IIIStock = ({ onClose, product, onUpdateStock }: { onClose: () => void; pr
       }}>+</ComButton>
     </View>
     <View>
-      <ComButton className='cccplh bccback' hoverClass="none">当前库存 {product.stock}  + {Number(stock) - Number(product.stock)} </ComButton>
+      <ComButton className='cccplh bccback' hoverClass="none">
+        当前库存 {product.stock} {Number(stock) - Number(product.stock) > 0 ? "+" : "-"} {Math.abs(Number(stock) - Number(product.stock))}
+      </ComButton>
       <ComButton className='cccplh bccback mb10' hoverClass="none">改后库存 {Number(stock)} </ComButton>
     </View>
     <View className='ww prl10 dr'>
