@@ -102,7 +102,9 @@ const Index: FC = () => {
     <View>
       {product &&
         <ComPopupNew className=' ww' >
-          <IIIStock onClose={() => { setProduct(undefined); }} product={product} />
+          <IIIStock onClose={() => { setProduct(undefined); }} product={product} onUpdateStock={(stock) => {
+            page_list_update((p) => ({ ...p, list: p.list.map(eee => eee.id === product.id ? { ...eee, stock: stock } : eee) }));
+          }} />
         </ComPopupNew>
       }
       {Boolean(qrcode) &&
@@ -118,9 +120,8 @@ const Index: FC = () => {
 };
 
 
-const IIIStock = ({ onClose, product }: { onClose: () => void; product: Product_Publish; }) => {
+const IIIStock = ({ onClose, product, onUpdateStock }: { onClose: () => void; product: Product_Publish; onUpdateStock: (stock: number) => void; }) => {
   const [stock, setStock] = useState<string>(product?.stock?.toString()!);
-  const [delta, setDelta] = useState<number>(0);
   return <View className='ww dll prl10'>
     <ComNavBarB className='mb10 ww' onClose={() => { onClose(); }}><ComButton className='fwb bccback' hoverClass="none">修改库存</ComButton></ComNavBarB>
     <View>
@@ -146,14 +147,16 @@ const IIIStock = ({ onClose, product }: { onClose: () => void; product: Product_
       }}>+</ComButton>
     </View>
     <View>
-      <ComButton className='cccplh bccback' hoverClass="none">当前库存 {product.stock}</ComButton>
-      <ComButton className='cccplh bccback mb10' hoverClass="none">改后库存 {Number(stock) + delta} = {product.stock} + {Number(stock) - Number(product.stock)} </ComButton>
+      <ComButton className='cccplh bccback' hoverClass="none">当前库存 {product.stock}  + {Number(stock) - Number(product.stock)} </ComButton>
+      <ComButton className='cccplh bccback mb10' hoverClass="none">改后库存 {Number(stock)} </ComButton>
     </View>
     <View className='ww prl10 dr'>
       <ComButton className='mb10   bccgreen  dxy cccwhite' onClick={async () => {
         Taro.showLoading({ mask: true, title: "修改中..." });
         await Api_goods_stockSetting_ctn({ id: product.id!, stock: String(stock) });
         Taro.showToast({ icon: "none", title: "修改成功" });
+        onClose();
+        onUpdateStock(Number(stock));
       }}>确认修改</ComButton>
     </View>
   </View>;
