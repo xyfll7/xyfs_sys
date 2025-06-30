@@ -7,18 +7,18 @@ const PublishCard: FC<ViewProps & { data: any; onMai?: (e: any) => void; }> = ({
 
   return <View className={`${props.className} ww dll`}>
     <ComButton ll className='fwb' hoverClass="none">{data.name}</ComButton>
-    <View className='mb10'>
-      <Text className='cccplh'>{data.intro}</Text>
+    <View className=''>
+      <Text className='cccplh'>{data.intro ? data.intro : "该商品暂无简介"}</Text>
     </View>
     <View className='mb10 dbase'>
       <Text className='cccprice fs08 '>¥</Text>
-      <Text className='cccprice fs13 fwb '>{data.price}</Text>
-      <Text className='cccplh fs08 dbase '>/{data.saleStock ? data.saleStock : 0} 已售</Text>
-      <Text className='cccplh fs08 dbase '>/{data.stock} 库存</Text>
+      <Text className='cccprice fs13 fwb mr6'>{data.price}</Text>
+      <Text className='cccplh fs08 dbase mr6'>{data.saleStock ? data.saleStock : 0} 已售</Text>
+      <Text className='cccplh fs08 dbase mr6'>{data.stock} 库存</Text>
     </View>
     <View className='dy mb10'>
       {data.attachUrl.split(",")?.slice(0, 3).map((e, i) =>
-        <ComImage style={{ width: "28vw" }} compress='200' className='mr4 ioo ovh' key={i} src={e} />)}
+        <ComImage style={{ width: "4rem" }} compress='200' className='mr4 ioo ovh' key={i} src={e} />)}
     </View>
     <View className='ww dr'>
       {/* {Boolean(data.assistList?.length) ? <View className='dy'>
