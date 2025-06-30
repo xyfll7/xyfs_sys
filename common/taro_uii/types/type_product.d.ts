@@ -47,6 +47,7 @@ export interface Product_Publish extends ProductBase, Time_Base {
   waybillId?: string;
   pictureUrl?: string;
   price?: string;
+  stock?: number;
   totalPrice?: number;
   printTimes?: number;
   orderId?: string;

@@ -1,11 +1,12 @@
 // :: pages_comm/icomm_product_list
 import { View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
-import { Pagination } from "@xyfs/taro_uii";
+import { Pagination, Product_Publish } from "@xyfs/taro_uii";
 import { Api_goods_down_ctn, Api_goods_list_ctn, Api_goods_remove_ctn, Api_goods_stockSetting_ctn, Api_goods_up_ctn } from "@xyfs/taro_uii/api/api__goods";
 import CPRegimentAssist from "@xyfs/taro_uii/compages/CPRegimentAssist";
 import { ComButton } from "@xyfs/taro_uii/components/ComButton";
 import { ComImage } from "@xyfs/taro_uii/components/ComImage";
+import { ComInput } from "@xyfs/taro_uii/components/ComInput";
 import { ComListTypeSelectorNew } from "@xyfs/taro_uii/components/ComListTypeSelectorNew";
 import { ComLoading } from "@xyfs/taro_uii/components/ComLoading";
 import { ComNav } from "@xyfs/taro_uii/components/ComNav";
@@ -35,6 +36,8 @@ const Index: FC = () => {
       status: tabType,
     }), [tabType]);
   const { page, page_loading, page_list_get, page_list_update, page_init } = useHook_pageListNew(___page_getter);
+  const [product, setProduct] = useState<Product_Publish>();
+  console.log("product::", product);
   return <MMMAAPage isNeedRegiment={false} >
     <ComNav isRight className="prl10">
       <ComNavBarA className='mb10'>
@@ -76,10 +79,11 @@ const Index: FC = () => {
               }}>上架</ComButton>
             }
             <ComButton rr className='mb10 bborder ml10' onClick={async () => {
-              const res = await Api_goods_stockSetting_ctn({ id: e.id, stock: String(e.stock) });
-
-            }}>编辑</ComButton>
-
+              setProduct(e);
+              // Taro.showLoading({ mask: true, title: "修改中..." });
+              // const res = await Api_goods_stockSetting_ctn({ id: e.id, stock: String(e.stock) });
+              // Taro.showToast({ icon: "none", title: "修改成功" });
+            }}>改库存</ComButton>
             <ComButton rr className='mb10 bborder ml10' onClick={async () => {
               Taro.showLoading({ mask: true, title: "生成中..." });
               const _src = await utils_get_qrcode({
@@ -96,6 +100,11 @@ const Index: FC = () => {
       <ComLoading className='mb10' isLastPage={page.isLastPage} loading={page_loading} onLoadMore={() => page_list_get(page)} />
     </ComScrollView>
     <View>
+      {product &&
+        <ComPopupNew className=' ww' >
+          <IIIStock onClose={() => { setProduct(undefined); }} product={product} />
+        </ComPopupNew>
+      }
       {Boolean(qrcode) &&
         <ComPopupNew className=' ww' >
           <View className='ww dll prl10'>
@@ -109,3 +118,26 @@ const Index: FC = () => {
 };
 
 
+const IIIStock = ({ onClose, product }: { onClose: () => void; product: Product_Publish; }) => {
+  const [stock, setStock] = useState<number>(0);
+  return <View className='ww dll prl10'>
+    <ComNavBarB className='mb10 ww' onClose={() => { onClose(); }}><ComButton className='fwb bccback'>修改库存</ComButton></ComNavBarB>
+    <View className='ww dy prl10 mr10'>
+      <ComButton ll rr className='bccbacktab flx1  mb10' hoverClass='none'>
+        <ComInput className="bccred" value={stock.toString()} />
+        <ComButton className='cccgreen w2rem dxy bccbacktab' onClick={async () => {
+          setStock(stock - 1);
+        }}>-</ComButton>
+        <ComButton className='cccgreen  w2rem dxy bccbacktab' onClick={async () => {
+          setStock(stock + 1);
+        }}>+</ComButton>
+      </ComButton>
+      <ComButton rr className='cccgreen mb10 bborder' onClick={async () => {
+        Taro.showLoading({ mask: true, title: "修改中..." });
+        await Api_goods_stockSetting_ctn({ id: product.id!, stock: String(stock) });
+        Taro.showToast({ icon: "none", title: "修改成功" });
+      }}>修改</ComButton>
+
+    </View>
+  </View>;
+};
