@@ -70,8 +70,8 @@ const Index: FC = () => {
             <View className='mb10 dbtc prl10 transall' style={{ paddingRight: false ? `${capRight}px` : "0px", opacity: false ? "0" : "1", height: false ? "0rem" : "calc(2 * var(--rem_base)) !important", }}>
               <ComAddressSwitchor className='bcctrans01-dark mr10 ww cccwhite' title='团长:' isShort isIcon address={roo___my_dept(selfInfo_S)} url='/pages_user/user_regiment_list_map' />
               <View className='dy'>
-                <ComButton className='bcctrans01-dark mr10 nw cccwhite' url='/pages_user/user_orders'>订单</ComButton>
-                {getMyEnv().isDeveloping && <ComButton className='bccyellow nw fwb' url='/pages_comm/comm__publisher'>
+                <ComButton className='bcctrans01-dark  nw cccwhite' url='/pages_user/user_orders'>订单</ComButton>
+                {getMyEnv().isDeveloping && <ComButton className='bccyellow nw fwb ml10' url='/pages_comm/comm__publisher'>
                   <Text className='cccgreen'>+</Text>发布
                 </ComButton>
                 }
