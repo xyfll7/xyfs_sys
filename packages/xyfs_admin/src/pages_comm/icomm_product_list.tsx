@@ -25,7 +25,7 @@ import { FC, useCallback, useState } from "react";
 definePageConfig({ enableShareAppMessage: true, navigationStyle: "custom", disableScroll: true, });
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC = () => {
-  // deptId=oGwbL5MUeSNxxA4o0oOmb_FUjE7g
+  const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const [tabType, setTabType] = useState<-1 | 1>(1); // 1=>上架, -1=>下架
   const [qrcode, setQrcode] = useState<string | null>(null);
   const ___page_getter = useCallback(async (p: Pagination<unknown>) =>
@@ -37,13 +37,25 @@ const Index: FC = () => {
     }), [tabType]);
   const { page, page_loading, page_list_get, page_list_update, page_init } = useHook_pageListNew(___page_getter);
   const [product, setProduct] = useState<Product_Publish>();
-  console.log("product::", product);
+
   return <MMMAAPage isNeedRegiment={false} >
-    <ComNav isRight className="prl10">
+    <ComNav className="prl10 ww">
       <ComNavBarA className='mb10'>
         <ComButton ll className='bcctrans ml10 cccplh' hoverClass="none">商品列表</ComButton>
       </ComNavBarA>
-      <ComListTypeSelectorNew className='' disabled={page_loading} enumData={{ "1": "销售中", "-1": "已下架", 销售中: 1, 已下架: -1 }} typeList={[1, -1]} tabType={tabType} setTab={(e) => { page_init(); setTabType(e); }} />
+      <View className="dbtc ww">
+        <ComListTypeSelectorNew disabled={page_loading} enumData={{ "1": "销售中", "-1": "已下架", 销售中: 1, 已下架: -1 }} typeList={[1, -1]} tabType={tabType} setTab={(e) => { page_init(); setTabType(e); }} />
+        <ComButton className='mb10  ml10 nw cccgreen bccback' onClick={async () => {
+          Taro.showLoading({ mask: true, title: "生成中..." });
+          const _src = await utils_get_qrcode({
+            appid: process.env.TARO_APP_CLIENT,
+            page: "pages/group_buy",
+            scene: coo___objToUrl({ G_D: selfInfo_S.deptId, }),
+          });
+          try_Taro_hideLoading();
+          setQrcode(_src);
+        }}>分享</ComButton>
+      </View>
     </ComNav>
     <ComScrollView>
       {page.list?.map((e) => {
@@ -78,22 +90,7 @@ const Index: FC = () => {
                 }
               }}>上架</ComButton>
             }
-            <ComButton rr className='mb10 bborder ml10' onClick={async () => {
-              setProduct(e);
-              // Taro.showLoading({ mask: true, title: "修改中..." });
-              // const res = await Api_goods_stockSetting_ctn({ id: e.id, stock: String(e.stock) });
-              // Taro.showToast({ icon: "none", title: "修改成功" });
-            }}>改库存</ComButton>
-            <ComButton rr className='mb10 bborder ml10' onClick={async () => {
-              Taro.showLoading({ mask: true, title: "生成中..." });
-              const _src = await utils_get_qrcode({
-                appid: process.env.TARO_APP_CLIENT,
-                page: "pages/index/index",
-                scene: coo___objToUrl({ R_D: Number(useSTSelf.getState().selfInfo!.mobile).toString(36), O_D: String(e.id), }),
-              });
-              try_Taro_hideLoading();
-              setQrcode(_src);
-            }}>二维码</ComButton>
+            <ComButton rr className='mb10 bborder ml10' onClick={async () => { setProduct(e); }}>改库存</ComButton>
           </View>
         </View>;
       })}
@@ -110,7 +107,7 @@ const Index: FC = () => {
       {Boolean(qrcode) &&
         <ComPopupNew className=' ww' >
           <View className='ww dll prl10'>
-            <ComNavBarB className='mb10 ww' onClose={() => { setQrcode(null); }}><ComButton className='fwb bccback'>二维码</ComButton></ComNavBarB>
+            <ComNavBarB className='mb10 ww' onClose={() => { setQrcode(null); }}><ComButton className='fwb bccback' hoverClass="none">二维码</ComButton></ComNavBarB>
             <ComImage className='mb10 scc' style={{ width: "calc(10 * var(--rem_base))" }} src={qrcode!} />
           </View>
         </ComPopupNew>
