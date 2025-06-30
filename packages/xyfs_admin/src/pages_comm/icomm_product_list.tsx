@@ -44,7 +44,7 @@ const Index: FC = () => {
     </ComNav>
     <ComScrollView>
       {page.list?.map((e) => {
-        return <View className='ovh ioo bccwhite pt10 mb10 ww prl10' key={e.id}>
+        return <View className='ovh IOO bccwhite pt10 mb10 ww prl10' key={e.id}>
           <CPRegimentAssist.PublishCard data={e}></CPRegimentAssist.PublishCard>
           <View className='dr ww dwp'>
             <ComButton rr className='mb10 bborder cccplh' onClick={async () => {
