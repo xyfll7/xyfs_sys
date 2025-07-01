@@ -208,7 +208,7 @@ const IIIBringGoods = forwardRef(({ className, channelId, }: { className?: strin
               sharePath={`/pages/index/index?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ R_D: Number(selfInfo_S.managerUser?.mobile).toString(36) })) })}`}>
               <View className='dbase'>
                 {selfInfo_S.managerUser && <Text className='fs07 mr4 cccorange' >¥</Text>}
-                <Text className='cccplh mr4'>分享</Text>
+                <Text className='cccplh'>分享</Text>
               </View>
             </ComButtonOpen>
           </View>
@@ -328,7 +328,7 @@ const IIIGroupLeaders = forwardRef(({ }, ref) => {
               sharePath={`/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ G_D: e.deptId, })), R_D: Number(selfInfo_S.managerUser?.mobile).toString(36) })}`}>
               <View className='dbase'>
                 <Text className='fs07 mr4 cccorange' >¥</Text>
-                <Text className='cccplh mr4'>分享</Text>
+                <Text className='cccplh'>分享</Text>
               </View>
             </ComButtonOpen>}
         </View>
