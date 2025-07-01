@@ -206,28 +206,24 @@ export function useHook_getCurrentInstance<T>(isFromStorage: boolean = false): O
       const res = Taro.getStorageSync("DATA");
       Taro.removeStorageSync("DATA");
       if (!res) {
-        return { ...ref.current!, options: undefined };
+        ref.current = { ...ref.current!, options: undefined };
+        return ref.current;
       } else {
-        ref.current = {
-          ...ref.current!,
-          options: res as T
-        };
+        ref.current = { ...ref.current!, options: res as T };
       }
+    } else {
+      const obj: Record<string, any> = {};
+      const options = coo___obj_isEmpty(ref.current?.options as object) ? undefined : ref.current?.options;
+      options && Object.keys(options).map(key => {
+        const value = options[key] as any;
+        obj[key] = decodeURIComponent(value);
+      });
+      ref.current = {
+        ...ref.current!,
+        options: obj as T
+      };
     }
   }
-  if (!isFromStorage) {
-    const obj: Record<string, any> = {};
-    const options = coo___obj_isEmpty(ref.current?.options as object) ? undefined : ref.current?.options;
 
-    options && Object.keys(options).map(key => {
-      const value = options[key] as any;
-      obj[key] = decodeURIComponent(value);
-    });
-    return {
-      ...ref.current!,
-      options: obj as T
-    };
-  } else {
-    return ref.current;
-  }
+  return ref.current;
 }
