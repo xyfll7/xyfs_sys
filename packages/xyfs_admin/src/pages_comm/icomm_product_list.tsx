@@ -147,13 +147,11 @@ const IIIStock = ({ onClose, product, onUpdateStock }: { onClose: () => void; pr
         setStock(String(Number(stock) + 1));
       }}>+</ComButton>
     </View>
-    <View>
-      <ComButton className='cccplh bccback' hoverClass="none">
-        <Text>当前库存 {product.stock}</Text>
-        <Text className="w1rem dxy">{Number(stock) - Number(product.stock) < 0 ? "-" : "+"}</Text>
-        <Text>{Math.abs(Number(stock) - Number(product.stock))}</Text>
-      </ComButton>
-    </View>
+    <ComButton className='cccplh bccback' hoverClass="none">
+      <Text>当前库存 {product.stock}</Text>
+      <Text className="w1rem dxy">{Number(stock) - Number(product.stock) < 0 ? "-" : "+"}</Text>
+      <Text>{Math.abs(Number(stock) - Number(product.stock))}</Text>
+    </ComButton>
     <View className='ww prl10 dr'>
       <ComButton className='mb10   bccgreen  dxy cccwhite' onClick={async () => {
         Taro.showLoading({ mask: true, title: "修改中..." });
