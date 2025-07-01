@@ -10,7 +10,6 @@ import { ComLoading } from '@xyfs/taro_uii/components/ComLoading';
 import { ComNav } from '@xyfs/taro_uii/components/ComNav';
 import { ComNavBarA } from '@xyfs/taro_uii/components/ComNavBarA';
 import { ComScrollView } from '@xyfs/taro_uii/components/ComScrollView';
-import { ComSquare } from '@xyfs/taro_uii/components/ComSquare';
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { roo___has_role } from '@xyfs/taro_uii/src/roles';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
@@ -133,7 +132,6 @@ const IIIGroupLeaders: FC<{ deptInfo: DeptInfo; }> = ({ deptInfo }) => {
             {selfInfo_S.managerUser && <Text className='fs07 mr4 cccorange' >¥</Text>}
             <Text className='cccplh mr4'>分享</Text>
           </View>
-          <ComSquare className='icon-share' style={{ width: "calc(1 * var(--rem_base))" }} />
         </ComButtonOpen>
       </View>;
     })}

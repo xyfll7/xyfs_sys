@@ -14,7 +14,6 @@ import { ComLoading } from '@xyfs/taro_uii/components/ComLoading';
 import { ComNav } from '@xyfs/taro_uii/components/ComNav';
 import { ComPrice } from '@xyfs/taro_uii/components/ComPrice';
 import { ComScrollView } from '@xyfs/taro_uii/components/ComScrollView';
-import { ComSquare } from '@xyfs/taro_uii/components/ComSquare';
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { MMMFooter } from '@xyfs/taro_uii/components/MMMFooter';
 import { MMMLogo } from '@xyfs/taro_uii/components/MMMLogo';
@@ -203,7 +202,7 @@ const IIIBringGoods = forwardRef(({ className, channelId, }: { className?: strin
             <ComImageStack className='mr6' length={6} avatars={AVATARS.sort(() => Math.random() - 0.5).slice(0, 3)}>
             </ComImageStack>
 
-            <ComButtonOpen className='cccgreen bborder slr' id='send_express'
+            <ComButtonOpen className='cccgreen bcctrans slr' id='send_express'
               shareTitle={`${selfInfo_S.managerUser?.name} 团长 邀您买东西啦`}
               openType='share'
               sharePath={`/pages/index/index?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ R_D: Number(selfInfo_S.managerUser?.mobile).toString(36) })) })}`}>
@@ -211,7 +210,6 @@ const IIIBringGoods = forwardRef(({ className, channelId, }: { className?: strin
                 {selfInfo_S.managerUser && <Text className='fs07 mr4 cccorange' >¥</Text>}
                 <Text className='cccplh mr4'>分享</Text>
               </View>
-              <ComSquare className='icon-share' style={{ width: "calc(1 * var(--rem_base))" }} />
             </ComButtonOpen>
           </View>
         </View>
@@ -324,7 +322,7 @@ const IIIGroupLeaders = forwardRef(({ }, ref) => {
             {e.deptName}
           </ComButton>
           {selfInfo_S.managerUser &&
-            <ComButtonOpen rr className='cccgreen bborder mb10 ml10' id='send_express'
+            <ComButtonOpen rr className='cccgreen bcctrans mb10 ml10' id='send_express'
               shareTitle={`${selfInfo_S.managerUser?.name} 团长 邀您买东西啦`}
               openType='share'
               sharePath={`/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ G_D: e.deptId, })), R_D: Number(selfInfo_S.managerUser?.mobile).toString(36) })}`}>
@@ -332,7 +330,6 @@ const IIIGroupLeaders = forwardRef(({ }, ref) => {
                 <Text className='fs07 mr4 cccorange' >¥</Text>
                 <Text className='cccplh mr4'>分享</Text>
               </View>
-              <ComSquare className='icon-share' style={{ width: "calc(1 * var(--rem_base))" }} />
             </ComButtonOpen>}
         </View>
         <View className='dll ww' >
