@@ -202,6 +202,18 @@ export function useHook_getCurrentInstance<T>(isFromStorage: boolean = false): O
   const { page } = Taro.getCurrentInstance();
   if (!ref.current) {
     ref.current = page as Omit<Taro.PageInstance, 'options'> & { options?: T; };
+    if (isFromStorage) {
+      const res = Taro.getStorageSync("DATA");
+      Taro.removeStorageSync("DATA");
+      if (!res) {
+        return { ...ref.current!, options: undefined };
+      } else {
+        ref.current = {
+          ...ref.current!,
+          options: res as T
+        };
+      }
+    }
   }
   if (!isFromStorage) {
     const obj: Record<string, any> = {};
@@ -216,16 +228,6 @@ export function useHook_getCurrentInstance<T>(isFromStorage: boolean = false): O
       options: obj as T
     };
   } else {
-    const res = Taro.getStorageSync("DATA");
-    Taro.removeStorageSync("DATA");
-    if (!res) {
-      return { ...ref.current!, options: undefined };
-    } else {
-      ref.current = {
-        ...ref.current!,
-        options: res as T
-      };
-      return ref.current;
-    }
+    return ref.current;
   }
 }

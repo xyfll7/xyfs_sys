@@ -26,14 +26,14 @@ definePageConfig({ navigationStyle: "custom", enableShareAppMessage: true, disab
 export default function COMSELFWarp() { return <ComSELFView><IIIPublisherAdmin /></ComSELFView>; };
 
 export const IIIPublisherAdmin: FC = () => {
-  const { options: product } = useHook_getCurrentInstance<Product_Publish>(false);
+  const { options: product, ...abc } = useHook_getCurrentInstance<Product_Publish>(true);
 
   const [form, setForm] = useHook_Reducer({
     str: product ? `${product?.name}${product?.intro}` : "",
     price: product ? product.price! : "0.00",
-    pictureUrl: product ? product.pictureUrl! : "",
+    attachUrl: product?.attachUrl ? product.attachUrl : "",
     categoryId: product ? 0 : 0,
-    stock: product ? String(product.stock!) : "0"
+    stock: product ? String(product.stock ?? "0") : "0"
   });
 
 
@@ -45,7 +45,7 @@ export const IIIPublisherAdmin: FC = () => {
           await utils_validate_upload_product(form);
           Taro.showLoading({ mask: true, title: "发布中..." });
           await Api_goods_publish_ctn({
-            attachUrl: form.pictureUrl,
+            attachUrl: form.attachUrl,
             price: Number(form.price),
             name: form.str.split("\n")[0] ?? "",
             remark: "",
@@ -61,7 +61,11 @@ export const IIIPublisherAdmin: FC = () => {
             Taro.redirectTo({ url: "/pages/index/index" });
           }
         }}>
-          <Text className='cccgreen'>+</Text>发布
+          <View className='dbase'>
+            <Text className='cccgreen fs08 mr2'>{product ? "#" : "+"}</Text>
+            <Text>{product ? "修改" : "发布"}</Text>
+          </View>
+
         </ComButton>
       </ComNavBarA>
     </ComNav>
@@ -73,7 +77,7 @@ export const IIIPublisherAdmin: FC = () => {
           <View className='fs08 cccplh'>注: 点击换行后, 第一行为标题</View>
         </View>
       </ComButton>
-      <ComImageUploader images={form.pictureUrl} onSetImages={(e) => { setForm({ pictureUrl: e.join(",") }); }} upLoader={async (e) => {
+      <ComImageUploader images={form.attachUrl} onSetImages={(e) => { setForm({ attachUrl: e.join(",") }); }} upLoader={async (e) => {
         const res_cloud_files = await Promise.all(e.map(async (ee, ii) => ({
           ...await try_Taro_cloud_uploadFile(ee, `product_image/${useSTSelf.getState().selfInfo?.OPENID}/_${coo___ios_date().getTime()}_${ii}`)
         })));
