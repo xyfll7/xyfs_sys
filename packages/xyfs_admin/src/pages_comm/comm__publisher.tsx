@@ -21,26 +21,19 @@ import { utils_validate_upload_product } from '@xyfs/taro_uii/utils/validator';
 import { coo___get_price, coo___ios_date } from '@xyfs/utils/util';
 import { FC, useEffect, useState } from 'react';
 
-
 definePageConfig({ navigationStyle: "custom", enableShareAppMessage: true, disableScroll: true });
-
 
 export default function COMSELFWarp() { return <ComSELFView><IIIPublisherAdmin /></ComSELFView>; };
 
-
-
-
 export const IIIPublisherAdmin: FC = () => {
-
   const { options: product } = useHook_getCurrentInstance<Product_Publish>(false);
 
-  console.log("IIIPublisherAdmin options", product);
   const [form, setForm] = useHook_Reducer({
-    str: "",
-    price: "0.00",
-    pictureUrl: "",
-    categoryId: 0,
-    stock: "0"
+    str: product ? `${product?.name}${product?.intro}` : "",
+    price: product ? product.price! : "0.00",
+    pictureUrl: product ? product.pictureUrl! : "",
+    categoryId: product ? 0 : 0,
+    stock: product ? String(product.stock!) : "0"
   });
 
 

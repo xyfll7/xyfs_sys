@@ -17,6 +17,13 @@
           "launchMode": "default"
         },
         {
+          "name": "pages_comm/icomm_product_list",
+          "pathName": "pages_comm/icomm_product_list",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages_comm/comm__publisher",
           "pathName": "pages_comm/comm__publisher",
           "query": "",
