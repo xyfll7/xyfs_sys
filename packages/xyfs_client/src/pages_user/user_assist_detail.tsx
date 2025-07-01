@@ -32,10 +32,10 @@ const Index: FC = () => {
   const [isHeaderBack, setIsHeaderBack] = useState(false);
   useEffect(() => {
     (async () => {
-      const res = await Api_assist_info_ctn({ id: options.assist_item_id });
+      const res = await Api_assist_info_ctn({ id: options?.assist_item_id });
       setData(res);
     })();
-  }, [options.assist_item_id]);
+  }, [options?.assist_item_id]);
 
   const [address, setAddress] = useState<AddressInfo | null>(useSTSelf?.getState().selfInfo?.defaultRecManAddress ?? null);
 

@@ -48,7 +48,7 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
     if (isPay) {
       return Order_ST.已付款;
     } else {
-      return options.order_ST ? (Number(options.order_ST) as Order_ST) : Order_ST.待付款;
+      return options?.order_ST ? (Number(options?.order_ST) as Order_ST) : Order_ST.待付款;
     }
   })());
 
@@ -302,7 +302,7 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
 
 const useProductDryCleanEditor = () => {
   const { options } = useHook_getCurrentInstance<{ scene?: string; }>();
-  const { O_D } = coo___urlToObj<{ O_D?: string; }>(options.scene);
+  const { O_D } = coo___urlToObj<{ O_D?: string; }>(options?.scene);
   const [isShare, setIsShare] = useState<boolean | null>(null);
   const [order, setOrder] = useState<any | true | null>(null);
   const [isPay, setIsPay] = useState(false);

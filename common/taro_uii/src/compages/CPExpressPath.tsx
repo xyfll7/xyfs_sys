@@ -30,7 +30,7 @@ const CPExpressPath: FC = () => {
         setPath([...res]);
       }
     })();
-  }, [options.express_share_id]);
+  }, [options?.express_share_id]);
   return <MMMAAPage>
     <ComNav>
       <ComNavBarA className='mb10 pl10'>

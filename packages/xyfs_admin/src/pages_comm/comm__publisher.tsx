@@ -32,9 +32,9 @@ export default function COMSELFWarp() { return <ComSELFView><IIIPublisherAdmin /
 
 export const IIIPublisherAdmin: FC = () => {
 
-  const { options } = useHook_getCurrentInstance<Product_Publish>(true);
+  const { options: product } = useHook_getCurrentInstance<Product_Publish>(false);
 
-
+  console.log("IIIPublisherAdmin options", product);
   const [form, setForm] = useHook_Reducer({
     str: "",
     price: "0.00",

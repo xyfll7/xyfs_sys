@@ -7,14 +7,14 @@ import { ComNav } from "../components/ComNav";
 import { ComNavBarA } from "../components/ComNavBarA";
 import { MMMAAPage } from "../components/MMMAAPage";
 import { try_Taro_cloud_uploadFile } from "../utils/try_catch";
-import { utils_get_page_opener } from "../utils/util";
 import { useHook_getCurrentInstance } from "../utils/useHooks";
+import { utils_get_page_opener } from "../utils/util";
 
 const CPImageCropper: FC = () => {
   const { safeArea } = Taro.getWindowInfo();
   const { options } = useHook_getCurrentInstance<{ imgSrc?: string; }>();
   const cfg = {
-    imgSrc: options.imgSrc,
+    imgSrc: options?.imgSrc,
     width: 250, //宽度
     height: 100, //高度
     min_width: 50,

@@ -1,5 +1,5 @@
 import Taro, { useError, useShareAppMessage, useUnhandledRejection } from "@tarojs/taro";
-import { coo___ios_date } from "@xyfs/utils/util";
+import { coo___ios_date, coo___obj_empty } from "@xyfs/utils/util";
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { Pagination } from "../../types/type_index";
 import { ErrorR } from "../config";
@@ -164,7 +164,6 @@ export function useHook_pageListNew<P, T extends Pagination<P[]>>(cb: (a: Pagina
   };
 }
 
-
 export function useHook_Fetch<T>(cb: () => Promise<T | null>) {
   const [loading, setLoading] = useState(false);
   const [refreshTime, setRefreshTime] = useState(coo___ios_date().getTime());
@@ -198,33 +197,35 @@ export function useHook_Fetch<T>(cb: () => Promise<T | null>) {
   };
 }
 
-
-
-export function useHook_getCurrentInstance<T>(isFromStorage: boolean = false) {
-  const ref = useRef<Taro.PageInstance | null>(null);
+export function useHook_getCurrentInstance<T>(isFromStorage: boolean = false): Omit<Taro.PageInstance, 'options'> & { options?: T; } {
+  const ref = useRef<Omit<Taro.PageInstance, 'options'> & { options?: T; } | null>(null);
   const { page } = Taro.getCurrentInstance();
   if (!ref.current) {
-    ref.current = page;
+    ref.current = page as Omit<Taro.PageInstance, 'options'> & { options?: T; };
   }
   if (!isFromStorage) {
     const obj: Record<string, any> = {};
-    const options = ref.current?.options;
+    const options = coo___obj_empty(ref.current?.options as object) ? undefined : ref.current?.options;
+
     options && Object.keys(options).map(key => {
       const value = options[key] as any;
       obj[key] = decodeURIComponent(value);
     });
     return {
-      ...ref.current,
+      ...ref.current!,
       options: obj as T
     };
   } else {
     const res = Taro.getStorageSync("DATA");
-    return {
-      ...ref.current,
-      options: res as T
-    };
+    Taro.removeStorageSync("DATA");
+    if (!res) {
+      return { ...ref.current!, options: undefined };
+    } else {
+      ref.current = {
+        ...ref.current!,
+        options: res as T
+      };
+      return ref.current;
+    }
   }
-
-
-
 }

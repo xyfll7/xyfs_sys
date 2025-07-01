@@ -28,8 +28,8 @@ const Index: FC = () => {
     await Api_assist_list_ctn({
       ...p,
       keyword: "",
-      userId: options.user_id
-    }), [options.user_id]);
+      userId: options?.user_id
+    }), [options?.user_id]);
   const { page, } = useHook_pageListNew(___page_getter,);
   if (!page.list) {
     return <ComNav className='prl10'>

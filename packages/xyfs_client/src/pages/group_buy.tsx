@@ -43,7 +43,7 @@ export default function COMSELFWarp() { return <ComSELFView><Index></Index></Com
 const Index: FC = () => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const { options } = useHook_getCurrentInstance<{ scene?: string; }>();
-  const { G_D } = coo___urlToObj<{ G_D?: string; }>(options.scene);
+  const { G_D } = coo___urlToObj<{ G_D?: string; }>(options?.scene);
 
 
   const [type, setType] = useState<"visualEdition" | "simpleEdition">("simpleEdition");

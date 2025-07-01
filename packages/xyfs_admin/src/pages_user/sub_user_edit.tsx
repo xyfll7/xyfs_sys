@@ -51,10 +51,10 @@ const IIImyUserEditorAGENT: FC = () => {
   const [userInfo, setUserInfo] = useState<DeptInfo | null>(null);
   useEffect(() => {
     (async () => {
-      const res = await Api_user_info_ctn({ userId: options.userId! });
+      const res = await Api_user_info_ctn({ userId: options?.userId! });
       setUserInfo(res);
     })();
-  }, [options.userId]);
+  }, [options?.userId]);
   const [show, setShow] = useState(false);
   return <>
     {!userInfo && <ComLoading className='mb10'></ComLoading>}
@@ -107,7 +107,7 @@ const IIImyUserEditorAGENT: FC = () => {
                     const res_modal = await try_Taro_showModal({ title: "提示", content: "您确定要移出该部门？" });
                     if (res_modal) {
                       Taro.showLoading({ mask: true, title: "移出中..." });
-                      const res = await Api_user_info_ctn({ userId: options.userId! });
+                      const res = await Api_user_info_ctn({ userId: options?.userId! });
                       setUserInfo(res);
                       Taro.showToast({ icon: "none", title: "完成" });
                     }
@@ -154,10 +154,10 @@ const IIImyUserEditorSUPPLIER: FC = () => {
   const [userInfo, setUserInfo] = useState<DeptInfo | null>(null);
   useEffect(() => {
     (async () => {
-      const res = await Api_user_info_ctn({ userId: options.userId! });
+      const res = await Api_user_info_ctn({ userId: options?.userId! });
       setUserInfo(res);
     })();
-  }, [options.userId]);
+  }, [options?.userId]);
   return <>
     {!userInfo && <ComLoading className='mb10'></ComLoading>}
     {userInfo && <View key={userInfo.id} className='mb10 ww dll ww prl10 pt10 ioo bccwhite'>

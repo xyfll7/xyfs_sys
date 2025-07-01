@@ -27,7 +27,7 @@ import { utils_validate_express } from "../utils/validator";
 
 const CPAddressList: FC = () => {
   const { options } = useHook_getCurrentInstance<{ manType: AddressManType; }>();
-  const [addressType, setAddressType] = useState<Address_T>(options.manType === "send" ? Address_T.寄件地址 : Address_T.收件地址);
+  const [addressType, setAddressType] = useState<Address_T>(options?.manType === "send" ? Address_T.寄件地址 : Address_T.收件地址);
 
   const [searchValue, setSearchValue] = useHook_Reducer("");
 

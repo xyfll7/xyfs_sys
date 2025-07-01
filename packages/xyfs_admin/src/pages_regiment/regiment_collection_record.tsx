@@ -28,7 +28,7 @@ const Index: FC<{}> = ({ }) => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const { options } = useHook_getCurrentInstance<{ OPENID?: string; regimentName?: string; }>();
   const [date, setDate] = useState<string>(format(coo___ios_date(), "yyyy-MM-dd"));
-  const _OPENID = options.OPENID ?? selfInfo_S?.OPENID;
+  const _OPENID = options?.OPENID ?? selfInfo_S?.OPENID;
 
   const [paymentDetailSomeDay, setPaymentDetailSomeDay] = useState<any | null>(null);
 

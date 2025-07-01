@@ -37,7 +37,7 @@ const Index: FC<{}> = ({ }) => {
   const [showQRCode, setShowQRCode] = useState<boolean>(false);
   const { options } = useHook_getCurrentInstance<{ order_ST: string; }>();
   const [date, setDate] = useState<string>("");
-  const [orderType, setOrderType] = useState<Order_ST>(Number(options.order_ST ?? Order_ST.待付款));
+  const [orderType, setOrderType] = useState<Order_ST>(Number(options?.order_ST ?? Order_ST.待付款));
 
   const [searchValue, setSearchValue] = useHook_Reducer("");
   const [queryType, setQueryType] = useState<0 | 1>(0); //0 默认， 1 按部门查询

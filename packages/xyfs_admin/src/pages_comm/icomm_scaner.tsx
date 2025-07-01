@@ -47,7 +47,7 @@ export default function COMSELFWarp() {
 const Index: FC = () => {
   const role = useSTSelf.getState().selfInfo?.roles?.find(e => (["REGIMENT", "DRIVER", "SCANNER"] as ROLE_KEY[]).includes(e.roleKey));
   const { options } = useHook_getCurrentInstance<{ isShow: string; }>();
-  const [show, setShow] = useState(options.isShow ? true : false);
+  const [show, setShow] = useState(options?.isShow ? true : false);
   const ___page_getter = useCallback(async (p: Pagination<unknown>) =>
     await Api_logistic_list_ctn<Pagination<OrderInfo<Product_Dryclean>[]>>({
       ...p,

@@ -68,7 +68,7 @@ const IIIExpress: FC<{ managerUser: DeptInfo; }> = ({ managerUser }) => {
 const IIIDryclean: FC<{ managerUser: DeptInfo; }> = ({ managerUser }) => {
   const [order, setOrder] = useState<OrderInfo<ProductBase> | null>(null);
   const { options } = useHook_getCurrentInstance<{ scene?: string; }>();
-  const { O_D } = coo___urlToObj<{ O_D?: string; }>(options.scene);
+  const { O_D } = coo___urlToObj<{ O_D?: string; }>(options?.scene);
   useEffect(() => {
     (async () => {
       if (O_D) {

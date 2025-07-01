@@ -30,7 +30,7 @@ const Index: FC<{}> = ({ }) => {
   const [show, setShow] = useState(false);
 
   const { options } = useHook_getCurrentInstance<{ order_info: string; }>();
-  const _order: OrderInfo<Product_Dryclean> | undefined = options.order_info && JSON.parse(decodeURIComponent(decodeURIComponent(options.order_info)));
+  const _order: OrderInfo<Product_Dryclean> | undefined = options?.order_info && JSON.parse(decodeURIComponent(decodeURIComponent(options.order_info)));
   const [cartItem, setCartItem] = useState<Product_Dryclean | null>(null);
 
   const [user, setUser] = useState({
@@ -40,7 +40,7 @@ const Index: FC<{}> = ({ }) => {
   const [cart, setCart] = useState<Product_Dryclean[]>([]);
   useEffect(() => {
     (async () => {
-      if (options.order_info) {
+      if (options?.order_info) {
         await Api_cart_clear_ctn();
         setCart([]);
       } else {
@@ -48,7 +48,7 @@ const Index: FC<{}> = ({ }) => {
         setCart(res);
       }
     })();
-  }, [options.order_info]);
+  }, [options?.order_info]);
 
 
   const __isShare = Boolean(cart.length) && /^(1)\d{10}$/.test(user.mobile);

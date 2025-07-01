@@ -35,7 +35,7 @@ const Index: FC<{}> = ({ }) => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const { options } = useHook_getCurrentInstance<{ order_ST?: Order_ST; }>();
 
-  const [orderType, setOrderType] = useState<Order_ST>(options.order_ST ?? Order_ST.待付款);
+  const [orderType, setOrderType] = useState<Order_ST>(options?.order_ST ?? Order_ST.待付款);
   const [searchValue, setSearchValue] = useHook_Reducer("");
   const [showQR, setShowQR] = useState("");
 
