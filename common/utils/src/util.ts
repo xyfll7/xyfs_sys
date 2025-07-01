@@ -141,7 +141,7 @@ export function coo___get_price(value: string, price: string,
 
 }
 
-export function coo___obj_empty(obj: object) {
+export function coo___obj_isEmpty(obj: object) {
   return Reflect.ownKeys(obj).length === 0;
 }
 

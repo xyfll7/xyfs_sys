@@ -1,5 +1,5 @@
 import Taro, { useError, useShareAppMessage, useUnhandledRejection } from "@tarojs/taro";
-import { coo___ios_date, coo___obj_empty } from "@xyfs/utils/util";
+import { coo___ios_date, coo___obj_isEmpty } from "@xyfs/utils/util";
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { Pagination } from "../../types/type_index";
 import { ErrorR } from "../config";
@@ -205,7 +205,7 @@ export function useHook_getCurrentInstance<T>(isFromStorage: boolean = false): O
   }
   if (!isFromStorage) {
     const obj: Record<string, any> = {};
-    const options = coo___obj_empty(ref.current?.options as object) ? undefined : ref.current?.options;
+    const options = coo___obj_isEmpty(ref.current?.options as object) ? undefined : ref.current?.options;
 
     options && Object.keys(options).map(key => {
       const value = options[key] as any;
