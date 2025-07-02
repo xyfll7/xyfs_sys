@@ -98,9 +98,9 @@ export const IIIPublisherAdmin: FC = () => {
       </ComButton>
       {product &&
         <ComButton className='cccplh bccback' hoverClass="none">
-          <Text>当前库存 12</Text>
-          <Text className="w1rem dxy">{Number("12") - Number("12") < 0 ? "-" : "+"}</Text>
-          <Text>{Math.abs(Number("12") - Number("12"))}</Text>
+          <Text>当前库存 {product.stock}</Text>
+          <Text className="w1rem dxy">{Number(form.stock) - Number(product.stock) < 0 ? "-" : "+"}</Text>
+          <Text>{Math.abs(Number(form.stock) - Number(product.stock))}</Text>
         </ComButton>
       }
       {roo___has_role(useSTSelf.getState().selfInfo, ["SUPPLIER"]) &&
