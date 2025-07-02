@@ -1,5 +1,5 @@
 import Taro, { useError, useShareAppMessage, useUnhandledRejection } from "@tarojs/taro";
-import { coo___ios_date, coo___obj_isEmpty } from "@xyfs/utils/util";
+import { coo___obj_isEmpty } from "@xyfs/utils/util";
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { Pagination } from "../../types/type_index";
 import { ErrorR } from "../config";
@@ -101,7 +101,6 @@ export function useHook_Error(params?: { isShowBug?: boolean; isPrintBug?: boole
 export function useHook_pageListNew<P, T extends Pagination<P[]>>(cb: (a: Pagination<unknown>) => Promise<T | null>, options?: { isLoadFirstRun?: boolean, pageSize?: number; }) {
   const ___options = { isLoadFirstRun: true, ...options };
   const [pageLoading, setPageLoading] = useState(!___options.isLoadFirstRun ? false : true);
-  const [refreshTime, setRefreshTime] = useState(coo___ios_date().getTime());
   const [page, setPage] = useState<T>({
     pageNum: 0,
     nextPage: 0,
@@ -114,14 +113,13 @@ export function useHook_pageListNew<P, T extends Pagination<P[]>>(cb: (a: Pagina
       isFirstRun.current = false;
       loadTimes.current = 0;
     }
-
     setPage(() => ({
       pageNum: 0,
       nextPage: 0,
       isLastPage: undefined,
       list: [] as P[],
     } as T));
-    setRefreshTime(coo___ios_date().getTime());
+    await page_list_get();
   }
 
   function page_list_update(up: (page: T) => T) { setPage((e) => up(e)); }
@@ -138,7 +136,6 @@ export function useHook_pageListNew<P, T extends Pagination<P[]>>(cb: (a: Pagina
     const res = await cb({
       pageSize: ___options?.pageSize ?? 5,
       pageNum: _page?.nextPage ?? 1,
-      refreshTime: refreshTime,
     } as T);
     if (res) {
       setPage((e) => ({
@@ -151,7 +148,7 @@ export function useHook_pageListNew<P, T extends Pagination<P[]>>(cb: (a: Pagina
     }
     ___isLoading.current = false;
     setPageLoading(false);
-  }, [cb, ___options?.pageSize, refreshTime]);
+  }, [cb, ___options?.pageSize]);
   useEffect(() => { (async () => await page_list_get())(); }, [page_list_get]);
   return {
     page_loading: pageLoading,
@@ -166,11 +163,10 @@ export function useHook_pageListNew<P, T extends Pagination<P[]>>(cb: (a: Pagina
 
 export function useHook_Fetch<T>(cb: () => Promise<T | null>) {
   const [loading, setLoading] = useState(false);
-  const [refreshTime, setRefreshTime] = useState(coo___ios_date().getTime());
   const [data, setData] = useState<T>(null as T);
-  function data_init() {
+  async function data_init() {
     setData(() => (null as T));
-    setRefreshTime(coo___ios_date().getTime());
+    await data_get();
   }
 
   function data_update(up: (page: T) => T) { setData((e) => up(e)); }
@@ -181,8 +177,8 @@ export function useHook_Fetch<T>(cb: () => Promise<T | null>) {
     const res = await cb();
     if (res) { setData(res as T); }
     setLoading(false);
-    console.info("refreshTime", refreshTime);
-  }, [cb, refreshTime]);
+
+  }, [cb]);
 
 
   useEffect(() => {
