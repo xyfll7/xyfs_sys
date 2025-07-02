@@ -27,7 +27,6 @@ export default function COMSELFWarp() { return <ComSELFView><IIIPublisherAdmin /
 
 export const IIIPublisherAdmin: FC = () => {
   const { options: product, clearRef } = useHook_getCurrentInstance<Product_Publish>(true);
-  console.log("pppp:", product);
   const [form, setForm] = useHook_Reducer({
     str: product ? `${product?.name}${product?.intro}` : "",
     price: product ? product.price! : "0.00",
@@ -35,8 +34,6 @@ export const IIIPublisherAdmin: FC = () => {
     categoryId: product ? 0 : 0,
     stock: product ? String(product.stock ?? "0") : "0"
   });
-
-
 
   return <MMMAAPage>
     <ComNav isRight>
@@ -56,11 +53,11 @@ export const IIIPublisherAdmin: FC = () => {
             weight: 1,
           });
           try_Taro_hideLoading();
-          if (await try_Taro_showModal({ title: "提示", content: "发布成功", cancelText: "返回首页", confirmText: "继续发布" })) {
+          if (await try_Taro_showModal({ title: "提示", content: product ? "修改成功" : "发布成功", cancelText: "返回", confirmText: "继续发布" })) {
             clearRef();
             setForm(null);
           } else {
-            Taro.redirectTo({ url: "/pages/index/index" });
+            Taro.navigateBack({ delta: 1 });
           }
         }}>
           <View className='dbase'>

@@ -13,7 +13,7 @@ const PublishCard: FC<ViewProps & { data: any; onMai?: (e: any) => void; }> = ({
     <View className='mb10 dbase'>
       <Text className='cccprice fs08 '>¥</Text>
       <Text className='cccprice fs13 fwb mr6'>{data.price}</Text>
-      <Text className='cccplh fs08 dbase mr6'>{data.saleStock ? data.saleStock : 0} 已售</Text>
+      <Text className='cccplh fs08 dbase mr6'>{data.saleStock}~{data.totalSaleStock} 已售</Text>
       <Text className='cccplh fs08 dbase mr6'>{data.stock} 库存</Text>
     </View>
     <View className='dy mb10'>
