@@ -125,9 +125,7 @@ const IIIStock = ({ onClose, product, onUpdateStock }: { onClose: () => void; pr
   const [stock, setStock] = useState<string>(product?.stock?.toString()!);
   return <View className='ww dll prl10'>
     <ComNavBarB className='mb10 ww' onClose={() => { onClose(); }}><ComButton className='fwb bccback' hoverClass="none">修改库存</ComButton></ComNavBarB>
-    <View>
-      <ComButton className='cccplh bccback mb10' hoverClass="none">{product.name}</ComButton>
-    </View>
+    <ComButton className='cccplh bccback mb10' hoverClass="none">{product.name}</ComButton>
     <View className='ww dy prl10 '>
       <ComButton ll rr className='bccbacktab flx1  mb10' hoverClass='none'>
         <Text className='mr6 nw cccplh'>改后库存</Text>

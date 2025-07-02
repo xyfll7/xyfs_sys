@@ -26,7 +26,7 @@ definePageConfig({ navigationStyle: "custom", enableShareAppMessage: true, disab
 export default function COMSELFWarp() { return <ComSELFView><IIIPublisherAdmin /></ComSELFView>; };
 
 export const IIIPublisherAdmin: FC = () => {
-  const { options: product, ...abc } = useHook_getCurrentInstance<Product_Publish>(true);
+  const { options: product, } = useHook_getCurrentInstance<Product_Publish>(true);
   console.log("pppp:", product);
   const [form, setForm] = useHook_Reducer({
     str: product ? `${product?.name}${product?.intro}` : "",
@@ -90,12 +90,19 @@ export const IIIPublisherAdmin: FC = () => {
           onInput={(e) => setForm({ price: coo___get_price(e.detail.value, form.price) })} />
       </ComButton>
       <ComButton className='bccbacktab mb10 dy' hoverClass='none'>
-        <Text className='nw cccplh mr6'>库存</Text>
+        <Text className='nw cccplh mr6'> {product ? "改后库存" : "库存"}</Text>
         <ComInput className='cccprice' type='digit' confirmType='done' value={form.stock} placeholder='请输入库存数量'
           onBlur={() => { form.stock === "" && setForm({ stock: "0" }); }}
           onFocus={() => { form.stock === "0" && setForm({ stock: "" }); }}
           onInput={(e) => setForm({ stock: coo___get_price(e.detail.value, form.stock, { isDecimal: false, integerLength: 4 }) })} />
       </ComButton>
+      {product &&
+        <ComButton className='cccplh bccback' hoverClass="none">
+          <Text>当前库存 12</Text>
+          <Text className="w1rem dxy">{Number("12") - Number("12") < 0 ? "-" : "+"}</Text>
+          <Text>{Math.abs(Number("12") - Number("12"))}</Text>
+        </ComButton>
+      }
       {roo___has_role(useSTSelf.getState().selfInfo, ["SUPPLIER"]) &&
         <IIIProductCategories categoryId={form.categoryId} onSetForm={(e) => {
           setForm({ categoryId: e });
@@ -135,3 +142,5 @@ const IIIProductCategories: FC<{ categoryId: number, onSetForm: (categoryId: num
     </View>}
   </>;
 };
+
+
