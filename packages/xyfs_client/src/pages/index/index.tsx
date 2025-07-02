@@ -305,7 +305,7 @@ const IIIGroupLeaders = forwardRef(({ }, ref) => {
   const { page, page_loading, page_list_get, page_list_update, page_init } = useHook_pageListNew(___page_getter,);
 
   useImperativeHandle(ref, () => ({
-    refresh: async () => { await page_init(); }
+    refresh: async () => { await page_init({isRefresh:true}); }
   }));
 
   return <>

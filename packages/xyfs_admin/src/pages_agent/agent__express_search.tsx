@@ -155,7 +155,7 @@ const Index: FC = () => {
           </ComButton>
         </View>
         <View className='dr mb10'>
-          <ComButton ll className='ml10 nw' onClick={() => { setForm(null); setSearchValue(null); page_init(true); }}>清空</ComButton>
+          <ComButton ll className='ml10 nw' onClick={() => { setForm(null); setSearchValue(null); page_init({ isStop: true }); }}>清空</ComButton>
           <ComButton ll className={`ml10 nw  ${form.orderType == 1 ? "bccgreen cccwhite" : "cccgreen"}`} onClick={() => {
             if (page_loading) { throw new Error("正在加载中，请稍后再试"); }
             setForm({ orderType: 1 });

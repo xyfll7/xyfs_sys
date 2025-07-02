@@ -65,7 +65,7 @@ const Index: FC = () => {
       </View>
     </ComNav>
     <ComScrollView
-      onRefresherRefresh={async () => { await page_init(); }}>
+      onRefresherRefresh={async () => { await page_init({ isRefresh: true }); }}>
       {page.list?.map((e) => {
         return <View className='ovh IOO bccwhite pt10 mb10 ww prl10' key={e.id}>
           <CPRegimentAssist.PublishCard data={e}></CPRegimentAssist.PublishCard>

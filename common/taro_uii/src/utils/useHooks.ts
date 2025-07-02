@@ -109,7 +109,9 @@ export function useHook_pageListNew<P, T extends Pagination<P[]>>(cb: (a: Pagina
     list: [] as P[],
     total: 0,
   } as T);
-  async function page_init(isStop: boolean = false) {
+  async function page_init(params?: { isStop?: boolean; isRefresh?: boolean; }) {
+    const isStop = params?.isStop ?? false;
+    const isRefresh = params?.isRefresh ?? false;
     if (isStop) {
       isFirstRun.current = false;
       loadTimes.current = 0;
@@ -121,7 +123,12 @@ export function useHook_pageListNew<P, T extends Pagination<P[]>>(cb: (a: Pagina
       isLastPage: undefined,
       list: [] as P[],
     } as T));
-    setRefreshTime(coo___ios_date().getTime());
+    if (isRefresh) {
+      await page_list_get();
+    } else {
+      setRefreshTime(coo___ios_date().getTime());
+    }
+
   }
 
   function page_list_update(up: (page: T) => T) { setPage((e) => up(e)); }

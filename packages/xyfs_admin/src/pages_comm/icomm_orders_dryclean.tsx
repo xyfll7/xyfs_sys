@@ -72,7 +72,7 @@ const Index: FC<{}> = ({ }) => {
       </View>
     </ComNav>
     <ComScrollView onScrollToLower={async () => { page_list_get(page); }}
-      onRefresherRefresh={async () => { await page_init(); }} >
+      onRefresherRefresh={async () => { await page_init({ isRefresh: true }); }} >
       {page.list?.map((order) => {
         if (order.orderType === Product_category_ST.干洗) {
           const _order1 = order as OrderInfo<Product_Dryclean>;
