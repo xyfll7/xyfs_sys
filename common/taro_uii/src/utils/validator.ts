@@ -153,7 +153,7 @@ export async function utils_validate_upload_product<T extends Values>(obj: T): P
         }
       },
     },
-    pictureUrl: {
+    attachUrl: {
       type: "string",
       required: true,
       message: "请至少上传一张图片"

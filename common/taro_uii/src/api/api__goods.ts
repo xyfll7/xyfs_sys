@@ -6,7 +6,7 @@ export async function Api_goods_publish_ctn(params: {
   createBy?: string;
   createTime?: string;// "2024-06-19T02:51:21.906Z",
   delFlag?: string;
-  id?: number; // 0,
+  id?: string; // 0,
   intro?: string;
   name?: string;
   lastUpdateTime?: string; // "2024-06-19T02:51:21.906Z",

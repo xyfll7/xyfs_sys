@@ -197,7 +197,7 @@ export function useHook_Fetch<T>(cb: () => Promise<T | null>) {
   };
 }
 
-export function useHook_getCurrentInstance<T>(isFromStorage: boolean = false): Omit<Taro.PageInstance, 'options'> & { options?: T; } {
+export function useHook_getCurrentInstance<T>(isFromStorage: boolean = false): Omit<Taro.PageInstance, 'options'> & { options?: T; clearRef: () => void; } {
   const ref = useRef<Omit<Taro.PageInstance, 'options'> & { options?: T; } | null>(null);
   const { page } = Taro.getCurrentInstance();
   if (!ref.current) {
@@ -207,7 +207,6 @@ export function useHook_getCurrentInstance<T>(isFromStorage: boolean = false): O
       Taro.removeStorageSync("DATA");
       if (!res) {
         ref.current = { ...ref.current!, options: undefined };
-        return ref.current;
       } else {
         ref.current = { ...ref.current!, options: res as T };
       }
@@ -225,5 +224,9 @@ export function useHook_getCurrentInstance<T>(isFromStorage: boolean = false): O
     }
   }
 
-  return ref.current;
+  function clearRef() {
+    ref.current = null;
+  }
+
+  return { ...ref.current, clearRef };
 }

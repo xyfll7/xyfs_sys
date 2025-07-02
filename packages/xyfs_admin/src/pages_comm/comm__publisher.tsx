@@ -26,7 +26,7 @@ definePageConfig({ navigationStyle: "custom", enableShareAppMessage: true, disab
 export default function COMSELFWarp() { return <ComSELFView><IIIPublisherAdmin /></ComSELFView>; };
 
 export const IIIPublisherAdmin: FC = () => {
-  const { options: product, } = useHook_getCurrentInstance<Product_Publish>(true);
+  const { options: product, clearRef } = useHook_getCurrentInstance<Product_Publish>(true);
   console.log("pppp:", product);
   const [form, setForm] = useHook_Reducer({
     str: product ? `${product?.name}${product?.intro}` : "",
@@ -42,9 +42,11 @@ export const IIIPublisherAdmin: FC = () => {
     <ComNav isRight>
       <ComNavBarA className='mb10 ww pl10'>
         <ComButton className='bccyellow slr mr10 fwb' onClick={async () => {
+          console.log("form:", form);
           await utils_validate_upload_product(form);
           Taro.showLoading({ mask: true, title: "发布中..." });
           await Api_goods_publish_ctn({
+            id: product?.id ?? undefined,
             attachUrl: form.attachUrl,
             price: Number(form.price),
             name: form.str.split("\n")[0] ?? "",
@@ -53,10 +55,10 @@ export const IIIPublisherAdmin: FC = () => {
             stock: form.stock === "" ? 0 : Number(form.stock),
             weight: 1,
           });
-          setForm(null);
           try_Taro_hideLoading();
           if (await try_Taro_showModal({ title: "提示", content: "发布成功", cancelText: "返回首页", confirmText: "继续发布" })) {
-            Taro.showToast({ icon: "none", title: "发布成功" });
+            clearRef();
+            setForm(null);
           } else {
             Taro.redirectTo({ url: "/pages/index/index" });
           }
