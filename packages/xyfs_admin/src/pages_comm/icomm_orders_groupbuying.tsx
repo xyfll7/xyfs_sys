@@ -203,7 +203,7 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
         <View className='cccgreen'>打印</View>
       </ComButton>
       }
-      {order.deliveryStatus === Order_deliveryStatus_ST.待发货 &&
+      {order.deliveryStatus === Order_deliveryStatus_ST.待发货 && order.orderStatus === Order_ST.已付款 &&
         <ComButton rr className="mb10 bborder ml10" onClick={async () => {
           Taro.showLoading({ mask: true, title: "发货中..." });
           const res = await Api_order_shipments_ctn({ orderId: order.id! });
