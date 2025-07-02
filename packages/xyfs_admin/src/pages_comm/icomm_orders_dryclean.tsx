@@ -100,7 +100,7 @@ const Index: FC<{}> = ({ }) => {
                   Taro.showToast({ icon: "none", title: "已提醒" });
                 }}>提醒收货</ComButton>
               }
-              {getMyEnv().envVersion === "develop" &&
+              {getMyEnv().envVersion === "develop" && order.orderStatus === Order_ST.已付款 &&
                 <ComButton rr className="mb10 bccprice ml10 cccwhite" onClick={async () => {
                   Taro.showLoading({ mask: true, title: "发货中..." });
                   const res = await Api_order_shipments_ctn({ orderId: order.id! });
