@@ -67,7 +67,7 @@ const Index: FC = () => {
       queryDeptId: G_D
     });
   }, [G_D]);
-  const { page, page_loading, page_list_get } = useHook_pageListNew(___page_getter,);
+  const { page, page_loading, page_init, page_list_get } = useHook_pageListNew(___page_getter,);
   const [cart, setCart] = useState<any[]>([]);
 
   const [product, setProduct] = useState<any>(
@@ -187,6 +187,7 @@ const Index: FC = () => {
             }
           } finally {
             setCart([]);
+            page_init();
             try_Taro_hideLoading();
             // 如果个人信息中没有默认的用户收件地址，则更新用户收件地址
             if (!selfInfo_S.defaultRecManAddress) {

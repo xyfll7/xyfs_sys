@@ -40,7 +40,6 @@ const Index: FC = () => {
   useDidShow(() => {
     if (!page_loading && tabType === 1) {
       page_init();
-      page_list_get();
     }
   });
 

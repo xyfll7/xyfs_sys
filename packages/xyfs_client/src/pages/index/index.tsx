@@ -307,8 +307,7 @@ const IIIGroupLeaders = forwardRef(({ }, ref) => {
 
   useImperativeHandle(ref, () => ({
     refresh: async () => {
-      page_init();
-      await page_list_get();
+      page_init(); await page_list_get();
     }
   }));
 

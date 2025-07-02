@@ -56,7 +56,6 @@ const Index: FC<{}> = ({ }) => {
   useDidShow(() => {
     if (!page_loading && orderType === Order_ST.待付款) {
       page_init();
-      page_list_get();
     }
   });
 
