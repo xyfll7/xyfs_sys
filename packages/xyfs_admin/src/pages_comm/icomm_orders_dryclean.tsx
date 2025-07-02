@@ -71,7 +71,8 @@ const Index: FC<{}> = ({ }) => {
         <ComSearcher className='mb10' isShowSearcher onSetSearchValue={(e) => { page_init(); setSearchValue(e); }} ></ComSearcher>
       </View>
     </ComNav>
-    <ComScrollView onScrollToLower={async () => { page_list_get(page); }} onRefresherRefresh={async () => { page_init(); await page_list_get(); }} >
+    <ComScrollView onScrollToLower={async () => { page_list_get(page); }}
+      onRefresherRefresh={async () => { await page_init(); }} >
       {page.list?.map((order) => {
         if (order.orderType === Product_category_ST.干洗) {
           const _order1 = order as OrderInfo<Product_Dryclean>;

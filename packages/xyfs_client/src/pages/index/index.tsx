@@ -94,7 +94,7 @@ const Index: FC = () => {
       onScroll={(e, top) => { if (e.detail.scrollTop > top) { ref_banner.current?.setIsHeaderBack(true); } }}
       onScrollToUpper={() => { ref_banner.current?.setIsHeaderBack(false); }}>
 
-      <IIIMainNavigator className='mb10  ' />
+      <IIIMainNavigator className='mb10' />
 
       {/* <View className='prl10 ww'>
         <View className='dxy bccgreen fs07 IOO prl10 pbt10 cccwhite ww mb20'>
@@ -305,9 +305,7 @@ const IIIGroupLeaders = forwardRef(({ }, ref) => {
   const { page, page_loading, page_list_get, page_list_update, page_init } = useHook_pageListNew(___page_getter,);
 
   useImperativeHandle(ref, () => ({
-    refresh: async () => {
-      page_init(); await page_list_get();
-    }
+    refresh: async () => { await page_init(); }
   }));
 
   return <>

@@ -109,7 +109,7 @@ export function useHook_pageListNew<P, T extends Pagination<P[]>>(cb: (a: Pagina
     list: [] as P[],
     total: 0,
   } as T);
-  function page_init(isStop: boolean = false) {
+  async function page_init(isStop: boolean = false) {
     if (isStop) {
       isFirstRun.current = false;
       loadTimes.current = 0;
