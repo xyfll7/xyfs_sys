@@ -54,7 +54,7 @@ const Index: FC<{}> = ({ }) => {
   const { page, page_loading, page_list_get, page_list_update, page_init } = useHook_pageListNew(___page_getter);
 
   useDidShow(() => {
-    if (orderType === Order_ST.待付款) {
+    if (!page_loading && orderType === Order_ST.待付款) {
       page_init();
       page_list_get();
     }

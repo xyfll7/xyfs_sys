@@ -1,6 +1,6 @@
 // :: pages_comm/icomm_product_list
 import { Text, View } from "@tarojs/components";
-import Taro from "@tarojs/taro";
+import Taro, { useDidShow } from "@tarojs/taro";
 import { Pagination, Product_Publish } from "@xyfs/taro_uii";
 import { Api_goods_down_ctn, Api_goods_list_ctn, Api_goods_remove_ctn, Api_goods_stockSetting_ctn, Api_goods_up_ctn } from "@xyfs/taro_uii/api/api__goods";
 import CPRegimentAssist from "@xyfs/taro_uii/compages/CPRegimentAssist";
@@ -37,6 +37,12 @@ const Index: FC = () => {
     }), [tabType]);
   const { page, page_loading, page_list_get, page_list_update, page_init } = useHook_pageListNew(___page_getter);
   const [product, setProduct] = useState<Product_Publish>();
+  useDidShow(() => {
+    if (!page_loading && tabType === 1) {
+      page_init();
+      page_list_get();
+    }
+  });
 
   return <MMMAAPage isNeedRegiment={false} >
     <ComNav className="prl10 ww">

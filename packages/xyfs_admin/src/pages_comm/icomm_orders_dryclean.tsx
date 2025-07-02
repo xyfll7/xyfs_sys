@@ -50,7 +50,7 @@ const Index: FC<{}> = ({ }) => {
   const hasRole = roo___has_role(selfInfo_S, ["REGIMENT"]);
 
   useDidShow(() => {
-    if (orderType === Order_ST.待付款) {
+    if (!page_loading && orderType === Order_ST.待付款) {
       page_init();
       page_list_get();
     }
