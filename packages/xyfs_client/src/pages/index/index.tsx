@@ -90,7 +90,6 @@ const Index: FC = () => {
       </ComNav>
     </View>
     <ComScrollView className='IOO' upperThreshold={200}
-      refresherEnabled
       onRefresherRefresh={async () => { ref_bringGoods.current?.refresh(); await ref_groupLeaders.current?.refresh(); }}
       onScroll={(e, top) => { if (e.detail.scrollTop > top) { ref_banner.current?.setIsHeaderBack(true); } }}
       onScrollToUpper={() => { ref_banner.current?.setIsHeaderBack(false); }}>
