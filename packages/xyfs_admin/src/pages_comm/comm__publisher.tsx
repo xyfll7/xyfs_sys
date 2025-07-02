@@ -69,7 +69,7 @@ export const IIIPublisherAdmin: FC = () => {
       </ComNavBarA>
     </ComNav>
     <ComScrollView>
-      <ComButton className='bccbacktab mb10 ww pbt10' hoverClass='none'>
+      <ComButton className='bccbacktab mb10 ww pbt10 IOO' hoverClass='none'>
         <View className='ww '>
           <ComTextarea className='ww ' minHeight='calc(2 * var(--rem_base))' confirmType='return' value={form.str} placeholder='请录入商品名称/简介 ~'
             onInputText={(e) => { setForm({ str: e }); }} />
