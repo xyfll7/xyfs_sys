@@ -62,7 +62,7 @@ const Index: FC = () => {
         }}>分享</ComButton>
       </View>
     </ComNav>
-    <ComScrollView>
+    <ComScrollView onRefresherRefresh={async () => { page_init(); }}>
       {page.list?.map((e) => {
         return <View className='ovh IOO bccwhite pt10 mb10 ww prl10' key={e.id}>
           <CPRegimentAssist.PublishCard data={e}></CPRegimentAssist.PublishCard>

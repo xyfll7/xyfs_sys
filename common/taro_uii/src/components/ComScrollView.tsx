@@ -45,7 +45,7 @@ const ComScrollView = (
       refresherBackground='transparent'
       refresherDefaultStyle='none'
       refresherTriggered={triggered}
-      refresherEnabled={props.refresherEnabled}
+      refresherEnabled={!!props.onRefresherRefresh}
       onScroll={(e) => { onScroll?.(e, props.upperThreshold ?? 0); }}
       onScrollToUpper={props.onScrollToUpper}
       onRefresherPulling={() => { setTriggered(true); }}
