@@ -396,7 +396,7 @@ export async function try_Taro_requestPayment(data: Taro.requestPayment.Option) 
   try {
     const res_payment = await Taro.requestPayment({ ...data });
     if (res_payment.errMsg !== "requestPayment:ok") {
-      throw new Error("支付失败");
+      throw new Error("取消支付");
     }
   } catch (err) {
     throw new ErrorR(err);
