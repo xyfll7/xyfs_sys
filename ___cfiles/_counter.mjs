@@ -8,8 +8,9 @@ const __dirname = path.dirname(__filename);
 const dir = './test/';
 const files = fs.readdirSync(dir);
 try {
-  // Postal_Order_Form();
-  Salary_Statistics_Table();
+  Postal_Order_Form();
+  // ShunFeng_Order_Form();
+  // Salary_Statistics_Table();
 } catch (err) {
   console.log(err);
 }
@@ -56,5 +57,27 @@ function Postal_Order_Form() {
   });
   const result = strs.join('\n');
   fs.writeFileSync(`${__dirname}/_test_postal.csv`, result);
+  console.log("Done!");
+}
+
+function ShunFeng_Order_Form() {
+
+  const strs = [];
+  files.filter(e => e.includes(".csv")).forEach((file, index) => {
+    const workSheetsFromFile = xlsx.parse(`${__dirname}/${dir}/${file}`);
+    const sheet = workSheetsFromFile[0];
+    const count = sheet.data.filter((iii, index) => {
+      if (iii[15]?.includes("顺丰")) {
+        return true;
+      }
+      return false;
+    });
+    console.log(count[0]);
+    if (count[0]) {
+      strs.push(`${count[0].join(',')}`);
+    }
+  });
+  const result = strs.join('\n');
+  fs.writeFileSync(`${__dirname}/_test_shun_feng.csv`, result);
   console.log("Done!");
 }
