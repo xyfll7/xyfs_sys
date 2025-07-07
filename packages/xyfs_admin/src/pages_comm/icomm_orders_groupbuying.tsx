@@ -214,7 +214,7 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
       }
 
     </View>
-    {getMyEnv().envVersion === "develop" &&
+    {getMyEnv().envVersion === "develop" && order.transactionId &&
       <ComButton className="mb10" onClick={async () => { await try_Taro_setClipboardData({ data: order.transactionId! }); }}>{order.transactionId}</ComButton>
     }
 
