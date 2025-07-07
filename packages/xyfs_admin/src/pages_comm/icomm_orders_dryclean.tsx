@@ -35,7 +35,7 @@ const Index: FC<{}> = ({ }) => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const { options } = useHook_getCurrentInstance<{ order_ST?: Order_ST; }>();
 
-  const [orderType, setOrderType] = useState<Order_ST>(options?.order_ST ?? Order_ST.待付款);
+  const [orderType, setOrderType] = useState<Order_ST>(Number(options?.order_ST) ?? Order_ST.待付款);
   const [searchValue, setSearchValue] = useHook_Reducer("");
   const [showQR, setShowQR] = useState("");
 
@@ -52,6 +52,7 @@ const Index: FC<{}> = ({ }) => {
   useDidShow(() => {
     if (!page_loading && orderType === Order_ST.待付款) {
       page_init();
+      // page_list_get();
     }
   });
   return <MMMAAPage>
@@ -100,12 +101,7 @@ const Index: FC<{}> = ({ }) => {
                   Taro.showToast({ icon: "none", title: "已提醒" });
                 }}>提醒收货</ComButton>
               }
-              {getMyEnv().envVersion === "develop" && hasRole && _order1.orderStatus === Order_ST.待付款 &&
-                <ComButton rr className='mb10 ml10 bccprice cccwhite' onClick={async () => {
-                  Taro.setStorageSync("DATA", _order1);
-                  await try_Taro_navigateTo({ url: `/pages_comm/comm__product_dryclean` });
-                }}><Text >修改</Text></ComButton>
-              }
+
 
               {getMyEnv().envVersion === "develop" && order.orderStatus === Order_ST.已付款 &&
                 <ComButton rr className="mb10 bccprice ml10 cccwhite" onClick={async () => {
@@ -152,7 +148,11 @@ const Index: FC<{}> = ({ }) => {
                 </ComButton>
               }
 
-
+              {hasRole && _order1.orderStatus === Order_ST.待付款 && !_order1.productList?.length &&
+                <ComButton rr className='mb10 bborder ml10' onClick={async () => {
+                  await try_Taro_navigateTo({ url: `/pages_comm/comm__product_dryclean?order_info=${encodeURIComponent(JSON.stringify(_order1))}` });
+                }}><Text className='cccgreen'>修改</Text></ComButton>
+              }
               {hasRole && Boolean(_order1.productList?.length) && _order1.orderStatus === Order_ST.待付款 &&
                 <ComButton rr className='ml10 mb10 bborder'
                   onClick={async () => {
