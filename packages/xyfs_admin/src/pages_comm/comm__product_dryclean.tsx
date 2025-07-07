@@ -29,9 +29,16 @@ export default function COMSELFWarp() { return <ComSELFView isRefreshSelfInfo_SE
 const Index: FC<{}> = ({ }) => {
   const [show, setShow] = useState(false);
 
-  const { options } = useHook_getCurrentInstance<{ order_info: string; }>();
-  const _order: OrderInfo<Product_Dryclean> | undefined = options?.order_info && JSON.parse(decodeURIComponent(decodeURIComponent(options.order_info)));
+  // const { options } = useHook_getCurrentInstance<{ order_info: string; }>();
+  // const _order: OrderInfo<Product_Dryclean> | undefined = options?.order_info && JSON.parse(decodeURIComponent(decodeURIComponent(options.order_info)));
+  const { options: _order } = useHook_getCurrentInstance<OrderInfo<Product_Dryclean>>(true);
+
+
+
+
   const [cartItem, setCartItem] = useState<Product_Dryclean | null>(null);
+
+  console.log("cartItem::", cartItem);
 
   const [user, setUser] = useState({
     name: _order?.userAddress?.name ?? "",
@@ -40,7 +47,7 @@ const Index: FC<{}> = ({ }) => {
   const [cart, setCart] = useState<Product_Dryclean[]>([]);
   useEffect(() => {
     (async () => {
-      if (options?.order_info) {
+      if (_order) {
         await Api_cart_clear_ctn();
         setCart([]);
       } else {
@@ -48,7 +55,7 @@ const Index: FC<{}> = ({ }) => {
         setCart(res);
       }
     })();
-  }, [options?.order_info]);
+  }, [_order]);
 
 
   const __isShare = Boolean(cart.length) && /^(1)\d{10}$/.test(user.mobile);

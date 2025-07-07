@@ -141,7 +141,7 @@ const Index: FC = () => {
                 setCart((e) => {
                   const count = e.filter(ee => ee.id === item.id).length;
                   if (count >= item.stock) {
-                    Taro.showToast({ icon: "none", title: "已达最大库存" });
+                    Taro.showToast({ icon: "none", title: "库存不足" });
                     return e;
                   }
                   return [...e, { ...item }];
