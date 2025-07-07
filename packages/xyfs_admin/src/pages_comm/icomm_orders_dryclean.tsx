@@ -188,11 +188,9 @@ const Index: FC<{}> = ({ }) => {
                   <ComSquare style={{ width: "calc(1.3 * var(--rem_base))" }} className='icon-wxpay mr4' />付
                 </ComButton>
               }
-
-
             </View>
-            {getMyEnv().envVersion === "develop" &&
-              <ComButton className="mb10" onClick={async () => { await try_Taro_setClipboardData({ data: order.transactionId! }); }}>{order.transactionId}</ComButton>
+            {getMyEnv().envVersion === "develop" && order.transactionId &&
+              <ComButton className="mb10" onClick={async () => { await try_Taro_setClipboardData({ data: order.transactionId! }); }}>11{order.transactionId}</ComButton>
             }
           </View>;
         } else {
