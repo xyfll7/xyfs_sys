@@ -80,7 +80,7 @@ const Index: FC<{}> = ({ }) => {
             <ComCardOrderDryclean className='ww' key={_order1.id} order={_order1}
               onBindCode={utils_show_button(roo___has_role(selfInfo_S, ["REGIMENT"]), async (e) => {
                 Taro.showLoading({ mask: true, title: "扫码中...", });
-                const res_code = getMyEnv().platform === "devtools" ? "1000003" : await try_Taro_scanCode<string>({ type: "CODABAR", scanType: ["barCode"] });
+                const res_code = getMyEnv().platform === "devtools" ? "1000009" : await try_Taro_scanCode<string>({ type: "CODABAR", scanType: ["barCode"] });
                 Taro.showLoading({ mask: true, title: "绑定中...", });
                 const res = await Api_order_orderProductCode_ctn({
                   code: res_code,
@@ -149,7 +149,8 @@ const Index: FC<{}> = ({ }) => {
 
               {hasRole && _order1.orderStatus === Order_ST.待付款 && !_order1.productList?.length &&
                 <ComButton rr className='mb10 bborder ml10' onClick={async () => {
-                  await try_Taro_navigateTo({ url: `/pages_comm/comm__product_dryclean?order_info=${encodeURIComponent(JSON.stringify(_order1))}` });
+                  Taro.setStorageSync("DATA", _order1);
+                  await try_Taro_navigateTo({ url: `/pages_comm/comm__product_dryclean` });
                 }}><Text className='cccgreen'>修改</Text></ComButton>
               }
               {hasRole && Boolean(_order1.productList?.length) && _order1.orderStatus === Order_ST.待付款 &&

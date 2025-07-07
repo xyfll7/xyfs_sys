@@ -38,7 +38,6 @@ const Index: FC<{}> = ({ }) => {
 
   const [cartItem, setCartItem] = useState<Product_Dryclean | null>(null);
 
-  console.log("cartItem::", cartItem);
 
   const [user, setUser] = useState({
     name: _order?.userAddress?.name ?? "",

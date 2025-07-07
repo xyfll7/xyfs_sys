@@ -403,7 +403,7 @@ export async function dryclean_sharer(orderCode: string) {
 }
 
 export const Sharer: FC<MyButtonProps & ViewProps & { onGetOrderCode: () => Promise<string>, isShare: boolean, onClearCart?: () => void; isBborder?: boolean; }> = ({ isShare, onGetOrderCode, onClearCart, isBborder = false, ...props }) => {
-  return <ComQRCode rr={props.rr} className={`ml10  ${isBborder ? 'bborder' : ''}  ${isShare ? "" : "cccplh"} ${props.className}`}
+  return <ComQRCode rr={props.rr} className={`${isBborder ? 'bborder' : ''}  ${isShare ? "" : "cccplh"} ${props.className}`}
     onPreTap={async () => {
       const res_orderCode = await onGetOrderCode();
       if (!isShare) { throw new Error('购物车是空的～'); }
