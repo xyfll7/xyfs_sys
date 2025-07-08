@@ -31,3 +31,9 @@ export const ComLoading: FC<ViewProps & MyButtonProps & {
       <View className='vbh' style={{ width: "0.1rem" }}>垫</View>
     </ComButton>;
   };
+
+
+
+export const ComLoading___ = () => {
+  return <View className="loading___" style={{ display: "inline-block" }}></View>;
+};

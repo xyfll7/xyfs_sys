@@ -1,6 +1,7 @@
 import { BaseEventOrig, ScrollView, ScrollViewProps, Slot, View } from "@tarojs/components";
 import React, { useRef, useState } from "react";
 import { getMyEnv } from "../env";
+import { ComLoading___ } from "./ComLoading";
 import { ComTabBarLine } from "./ComTabBarLine";
 
 const ComScrollView = (
@@ -62,7 +63,7 @@ const ComScrollView = (
         isScrolling.current = false;
       }}>
       <Slot className="ww" name='refresher'>
-        <View className="ww  cccplh pb20 pl20">刷新...</View>
+        <View className="ww  cccplh pb20 pl20 ">刷新<ComLoading___ /> </View>
       </Slot>
       <View className='dll ww'>
         {props.children}
