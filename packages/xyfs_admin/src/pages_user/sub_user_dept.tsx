@@ -80,8 +80,8 @@ const Index: FC<{}> = ({ }) => {
                 <Text className="nw1"> {_dept?.deptName}</Text>
               </View>
             </ComButton>
-            <View className='ww  dy'>
-              <ComButton rr className='ml10 mb10 cccplh bborder ww nw' onClick={async () => {
+            <View className='ww dr'>
+              <ComButton rr className='ml10 mb10 cccplh bborder  nw' onClick={async () => {
                 const [, res_item] = await try_Taro_showActionSheet({ itemList: ["修改部门", "删除部门"] });
                 if (res_item === "修改部门") {
                   setDept(_dept);
