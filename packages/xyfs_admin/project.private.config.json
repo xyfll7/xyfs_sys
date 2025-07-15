@@ -10,11 +10,18 @@
     "miniprogram": {
       "list": [
         {
-          "name": "pages_comm/icomm_product_list",
-          "pathName": "pages_comm/icomm_product_list",
+          "name": "pages_user/sub_user_register",
+          "pathName": "pages_user/sub_user_register",
           "query": "",
           "scene": null,
           "launchMode": "default"
+        },
+        {
+          "name": "pages_comm/icomm_product_list",
+          "pathName": "pages_comm/icomm_product_list",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         },
         {
           "name": "pages_comm/icomm_orders_dryclean",

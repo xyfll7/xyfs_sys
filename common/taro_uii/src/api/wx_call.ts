@@ -27,8 +27,8 @@ export async function wx_call_container<OUT = void>({ path, data, params, method
         "ENV-Version": env.envVersion,
         "SYS-Version": env.version, // "2.2.52", //
         "X-WX-SERVICE": ({
-          "develop": ({ develop: "el-main", trial: "el-prod", release: "el-prod" })[env.envSimulate],
-          "trial": "el-prod",
+          "develop": ({ develop: "el-main", trial: "el-main", release: "el-prod" })[env.envSimulate],
+          "trial": "el-main",
           "release": "el-prod"
         })[env.envVersion!],
         "content-type": "application/json",

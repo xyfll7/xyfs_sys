@@ -10,7 +10,7 @@ const ___envSimulate = "develop";
 // cSpell: disable;
 const OPENID_DEV___ =
   // @ts-ignore
-  // "13379111532" ||  //
+  // "18729966151" ||  //
   ////////////////////////////////////////////////
   // "oGwbL5D1WtsGTuLhWneaepYuHW3k" ||  // 何旭东
   // "oGwbL5OLhRpOKRWrkVNSMqXuGPaE" ||  // 我妈
@@ -41,7 +41,7 @@ process.env.NODE_ENV === "development" && Taro.clearStorageSync();
 // Package.version = "1.0.47";
 const envObj: Record<EnvVersion, Environment> = {
   release: { ctnId: process.env.TARO_APP_CTN_PRO, envSimulate: "release", version: Package.version, appId: "" },
-  trial: { ctnId: process.env.TARO_APP_CTN_PRO, envSimulate: "release", version: Package.version, appId: "" },
+  trial: { ctnId: process.env.TARO_APP_CTN_PRO, envSimulate: "trial", version: Package.version, appId: "" },
   develop: {
     ctnId: process.env.TARO_APP_CTN_DEV, envSimulate: ___envSimulate, version: Package.version, appId: "", OPENID: OPENID_DEV___ ? OPENID_DEV___ : undefined,
     // isDeveloping: true  // 开发中的功能 /// 这个没问题，只有dev环境才有这个参数，不用删除

@@ -13,7 +13,7 @@
     "iit": "release-it",
     "update:project": "pnpm --filter @xyfs/taro_* --filter @xyfs/xyfs_* exec taro update project 4.1.2",
     "clean": "sudo rimraf --glob pnpm-lock.yaml ci___/node_modules common/**/node_modules common/**/dist* packages*/**/node_modules packages*/**/dist* packages*/**/build* packages*/**/.swc && rimraf node_modules",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "devDependencies": {
     "@changesets/cli": "^2.28.1",
