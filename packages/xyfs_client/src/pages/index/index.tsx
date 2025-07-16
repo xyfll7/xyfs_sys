@@ -305,7 +305,7 @@ const IIIGroupLeaders = forwardRef(({ }, ref) => {
   const { page, page_loading, page_list_get, page_list_update, page_init } = useHook_pageListNew(___page_getter,);
 
   useImperativeHandle(ref, () => ({
-    refresh: async () => { await page_init({isRefresh:true}); }
+    refresh: async () => { await page_init({ isRefresh: true }); }
   }));
 
   return <>
@@ -332,7 +332,7 @@ const IIIGroupLeaders = forwardRef(({ }, ref) => {
           {e.products.map((p, i) => <View className='dy mb10 ww' key={i}>
             <ComImage className='mr10' src={p.attachUrl?.split(",")[0]} style={{ width: "2.5rem", height: "2.5rem" }} />
             <ComButton rr ll className='ww  dbtc' hoverClass='none'>
-              <Text className='nw1 mr10'>{p.name}</Text>
+              <Text className='nw1 mr10'>{p.name}11</Text>
               <ComPrice className='cccprice' price={Number(p.price)}></ComPrice>
             </ComButton>
           </View>)}
