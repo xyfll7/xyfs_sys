@@ -49,8 +49,8 @@ const Index: FC = () => {
   const [type, setType] = useState<"visualEdition" | "simpleEdition">("simpleEdition");
   const isBanner = true;
   const [address, setAddress] = useState<AddressInfo | undefined>(selfInfo_S.defaultRecManAddress);
-
   const [deptInfo, setDeptInfo] = useState<DeptInfo | null>(null);
+  const [isShowMore, setIsShowMore] = useState(false);
   useEffect(() => {
     (async () => {
       if (!G_D) { return; }
@@ -74,6 +74,8 @@ const Index: FC = () => {
     // { "id": 6, "name": "延安山地苹果", "sketch": null, "intro": "重量6-7斤/12枚装/果径80-85", "keywords": null, "tags": null, "price": 58, "weight": 1, "marketPrice": null, "stock": 30, "warningStock": null, "limitQuantity": null, "attachUrl": "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/product_image/oGwbL5PVdCTyoE2sYHAq2bdNA9BY/_1731288105472_0.png", "userId": "oGwbL5PVdCTyoE2sYHAq2bdNA9BY", "status": 1, "sort": 2, "lastUpdateTime": "2024-11-11 09:21:56", "delFlag": "0", "createBy": "oGwbL5PVdCTyoE2sYHAq2bdNA9BY", "createTime": "2024-11-11 09:21:56", "updateBy": null, "updateTime": null, "remark": "", "userName": "王理代", "userMobile": "17319969379", "userAvatar": "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/comm_avatar/default/狗2@1x.webp", "totalSaleStock": null, "saleStock": null, "orderUser": null }
   );
   const ref_banner = React.useRef<{ setIsHeaderBack: (e: boolean) => void; }>(null);
+
+  deptInfo && (deptInfo.shopAnnouncement = "动物造型橡皮擦 🍒🐰​#可爱到犯规的橡皮擦来啦！有呆萌的小兔子、憨态可掬的小熊等造型🐻。它们不仅颜值高，擦除力也超强，轻轻一擦，字迹消失无踪，还不会损伤纸张哦～📝");
   return <MMMAAPage className={`${isBanner ? "" : "bccback"}`}>
     <View className='ww'>
       {isBanner &&
@@ -95,7 +97,14 @@ const Index: FC = () => {
       onScroll={(e, top) => { if (e.detail.scrollTop > top) { ref_banner.current?.setIsHeaderBack(true); } }}
       onScrollToUpper={() => { ref_banner.current?.setIsHeaderBack(false); }}>
       <View className='ww dll prl10'>
-        <ComButton ll className={`mb10 cccplh bcctrans nw1 `} hoverClass='none'>今日下单明日送达 🚗 🛵 🎁</ComButton>
+        <ComButton ll className={`bcctrans nw1 fwb`} hoverClass='none'>{deptInfo?.shopAnnouncement?.split("#")[0]}</ComButton>
+        {deptInfo?.shopAnnouncement?.split("#")[1] &&
+          <ComButton rr ll className='mb10 bcctrans' hoverClass='none' onClick={() => setIsShowMore(e => !e)}>
+            <View className={`${isShowMore ? '' : 'nw3'}`} style={{ textAlign: 'left' }}>
+              {deptInfo?.shopAnnouncement.split("#")[1]}
+            </View>
+          </ComButton>
+        }
       </View>
       {page.pageNum !== 0 && Boolean(page.list.length) &&
         <View className='dll ww bccwhite pt10 mb10 prl10 IOO'>
