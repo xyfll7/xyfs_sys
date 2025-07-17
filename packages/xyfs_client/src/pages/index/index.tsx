@@ -363,7 +363,9 @@ const IIICard1 = ({ dept_products }: { dept_products: DeptInfo & { products: Pro
           <ComButton ll hoverClass='none'>
             <View className='dll'>
               <View >{dept_products.deptName}</View>
-              <View className='lh100 fs07 cccorange'>万人跟团</View>
+              <View className='h1rem dy'>
+                <View className='lh100 fs07 cccorange'>万人跟团</View>
+              </View>
             </View>
           </ComButton>
         </View>
