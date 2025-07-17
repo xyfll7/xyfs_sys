@@ -170,7 +170,6 @@ const Index: FC = () => {
             const res_address = await try_Taro_chooseAddress(true);
             setAddress(res_address);
           }} />
-        {/* <ComButton className='cccgreen bborder ml10 nw'>到付</ComButton> */}
       </View>
       <View className='ww dr mb10'>
         <ComAddressSwitchor className="ww mr10 bcctrans" isShort isIcon title='团:' address={roo___my_dept(selfInfo_S)} url='/pages_user/user_regiment_list_map' />
