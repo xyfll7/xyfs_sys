@@ -1,7 +1,7 @@
 // :: pages/index/index
 import { Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
-import { Pagination } from '@xyfs/taro_uii';
+import { DeptInfo, Pagination, Product_Publish } from '@xyfs/taro_uii';
 import { Api_assist_explore_ctn } from '@xyfs/taro_uii/api/api__assist';
 import { Api_common_productList_ctn } from '@xyfs/taro_uii/api/api__shop';
 import { Api_dept_groupLeader_ctn, Api_user_edit_ctn } from '@xyfs/taro_uii/api/api__users';
@@ -310,35 +310,95 @@ const IIIGroupLeaders = forwardRef(({ }, ref) => {
 
   return <>
     {page.list?.map(e => {
-      return <View className='ww dll mb10  bccwhite ww IOO pt10 prl10' key={e.deptId} onClick={() => {
-        try_Taro_navigateTo({ url: `/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ G_D: e.deptId, })) })}` });
-      }}>
-        <View className='dbtc ww' >
-          <ComButton ll className='mb10' hoverClass='none'>
-            {e.deptName}
-          </ComButton>
-          {selfInfo_S.managerUser &&
-            <ComButtonOpen rr className='cccgreen bcctrans mb10 ml10' id='send_express'
-              shareTitle={`${selfInfo_S.managerUser?.name} 团长 邀您买东西啦`}
-              openType='share'
-              sharePath={`/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ G_D: e.deptId, })), R_D: Number(selfInfo_S.managerUser?.mobile).toString(36) })}`}>
-              <View className='dbase'>
-                <Text className='fs07 mr4 cccorange' >¥</Text>
-                <Text className='cccplh'>分享</Text>
-              </View>
-            </ComButtonOpen>}
-        </View>
-        <View className='dll ww' >
-          {e.products.map((p, i) => <View className='dy mb10 ww' key={i}>
-            <ComImage className='mr10' src={p.attachUrl?.split(",")[0]} style={{ width: "2.5rem", height: "2.5rem" }} />
-            <ComButton rr ll className='ww  dbtc' hoverClass='none'>
-              <Text className='nw1 mr10'>{p.name}11</Text>
-              <ComPrice className='cccprice' price={Number(p.price)}></ComPrice>
-            </ComButton>
-          </View>)}
-        </View>
-      </View>;
+      return (<IIICard1 dept_products={e} />);
     })}
     <ComLoading className='mb10' isLastPage={page?.isLastPage} loading={page_loading} onLoadMore={() => page_list_get(page)} />
   </>;
 });
+
+
+const IIICard0 = ({ dept_products }: { dept_products: DeptInfo & { products: Product_Publish[]; }; }) => {
+  const selfInfo_S = useSTSelf(s => s.selfInfo!);
+  return (
+    <View className='ww dll mb10  bccwhite ww IOO pt10 prl10' key={dept_products.deptId}
+      onClick={() => {
+        try_Taro_navigateTo({ url: `/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ G_D: dept_products.deptId, })) })}` });
+      }}>
+      <View className='dbtc ww' >
+        <ComButton ll className='mb10' hoverClass='none'>
+          {dept_products.deptName}
+        </ComButton>
+        {selfInfo_S.managerUser &&
+          <ComButtonOpen rr className='cccgreen bcctrans mb10 ml10' id='send_express'
+            shareTitle={`${selfInfo_S.managerUser?.name} 团长 邀您买东西啦`}
+            openType='share'
+            sharePath={`/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ G_D: dept_products.deptId, })), R_D: Number(selfInfo_S.managerUser?.mobile).toString(36) })}`}>
+            <View className='dbase'>
+              <Text className='fs07 mr4 cccorange' >¥</Text>
+              <Text className='cccplh'>分享</Text>
+            </View>
+          </ComButtonOpen>}
+      </View>
+      <View className='dll ww' >
+        {dept_products.products.map((p, i) => <View className='dy mb10 ww' key={i}>
+          <ComImage className='mr10' src={p.attachUrl?.split(",")[0]} style={{ width: "2.5rem", height: "2.5rem" }} />
+          <ComButton rr ll className='ww  dbtc' hoverClass='none'>
+            <Text className='nw1 mr10'>{p.name}</Text>
+            <ComPrice className='cccprice' price={Number(p.price)}></ComPrice>
+          </ComButton>
+        </View>)}
+      </View>
+    </View>);
+};
+const IIICard1 = ({ dept_products }: { dept_products: DeptInfo & { products: Product_Publish[]; }; }) => {
+  const selfInfo_S = useSTSelf(s => s.selfInfo!);
+  return (
+    <View className='ww dll mb10  bccwhite ww IOO pt10 prl10' key={dept_products.deptId}
+      onClick={() => {
+        try_Taro_navigateTo({ url: `/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ G_D: dept_products.deptId, })) })}` });
+      }}>
+      <View className='dbtc ww mb10' >
+        <View className='dy ww'>
+          <ComImage className='mr10' src={dept_products.avatar} />
+          <ComButton ll hoverClass='none'>
+            <View className='dll'>
+              <View >{dept_products.deptName}</View>
+              <View className='lh100 fs07 cccorange'>万人跟团</View>
+            </View>
+          </ComButton>
+        </View>
+        {selfInfo_S.managerUser &&
+          <ComButtonOpen rr className='cccgreen bcctrans  ml10' id='send_express'
+            shareTitle={`${selfInfo_S.managerUser?.name} 团长 邀您买东西啦`}
+            openType='share'
+            sharePath={`/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ G_D: dept_products.deptId, })), R_D: Number(selfInfo_S.managerUser?.mobile).toString(36) })}`}>
+            <View className='dbase'>
+              <Text className='fs07 mr4 cccorange' >¥</Text>
+              <Text className='cccplh nw'>分享</Text>
+            </View>
+          </ComButtonOpen>}
+      </View>
+      <View>
+        <ComButton rr ll className='mb10 ' hoverClass='none'>
+          <View className='nw3' style={{ textAlign: 'left' }}>
+            {dept_products.name}
+          </View>
+        </ComButton>
+      </View>
+      <View className='ww' style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "calc(6 * var(--change_base))", }}>
+        {dept_products.products.map((p, i) => <View className='dll mb10 ww' key={i}>
+          <ComImage src={p.attachUrl?.split(",")[0]} style={{ width: "100%", aspectRatio: "1/1" }} />
+        </View>)}
+      </View>
+      <View className='ww' style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "calc(6 * var(--change_base))", }}>
+        {dept_products.products.map((p, i) => <View className='dll mb10 ww' key={i}>
+          <ComButton rr ll className='ww  dbtc ' hoverClass='none'>
+            <Text className='nw1 mr10'>{p.name}</Text>
+          </ComButton>
+          <ComButton rr ll className='ww  dbtc ' hoverClass='none'>
+            <ComPrice className='cccprice' price={Number(p.price)}></ComPrice>
+          </ComButton>
+        </View>)}
+      </View>
+    </View>);
+};
