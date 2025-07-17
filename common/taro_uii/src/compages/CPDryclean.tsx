@@ -265,17 +265,17 @@ const ProductCategoryCard: FC<{ productCategory: Record<string, Product_Dryclean
 
   return Object.keys(productCategory).map(e => {
     return <View className='bccwhite IOO prl10 pt10 mb10 ww ovh dll' key={e}>
-      <ComButton ll className='bccwhite cccplh mb10'>{e}</ComButton>
+      <ComButton ll className='bccwhite cccplh mb10' hoverClass="none">{e}</ComButton>
       <View className='ww dll  ioo ovh'>
         {productCategory?.[e]?.map((ee, ii) => {
           const cartItems = cart?.filter(eee => eee.productId == (ee.productId ?? ee.id));
           return <View className={`flx1  ioo ww  dll ${ii % 2 === 0 ? "mr10" : ""}`} style={{ minWidth: "30vw" }} key={ee.id}>
-            <View className='ww dtl bccback ioo ovh mb10'>
+            <View className='ww dtl  ioo ovh mb10'>
               <ComImage style={{ width: "20vw" }} className='ovh ol6 bccbacktab' src={ee.pictureUrl?.split(",")[0]} />
               <View className='ww hh  dbtl'>
-                <ComButton className='nw bccback'>{ee.intro ? ee.intro : e}</ComButton>
+                <ComButton className='nw' hoverClass="none">{ee.intro ? ee.intro : e}</ComButton>
                 <View className='dbtc ww'>
-                  <ComButton className='cccprice bccback'><Text className='mr2'>¥</Text>{ee.price}</ComButton>
+                  <ComButton className='cccprice ' hoverClass="none"><Text className='mr2'>¥</Text>{ee.price}</ComButton>
                   {getMyEnv().appId === process.env.TARO_APP_ADMIN &&
                     <ComButton rr className='bccwhite' onClick={() => onCartEdit?.(ee)}><Text className='cccgreen'>+</Text><Text >加</Text></ComButton>
                   }
