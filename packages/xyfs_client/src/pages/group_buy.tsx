@@ -75,7 +75,6 @@ const Index: FC = () => {
   );
   const ref_banner = React.useRef<{ setIsHeaderBack: (e: boolean) => void; }>(null);
 
-  deptInfo && (deptInfo.shopAnnouncement = "动物造型橡皮擦 🍒🐰​#可爱到犯规的橡皮擦来啦！有呆萌的小兔子、憨态可掬的小熊等造型🐻。它们不仅颜值高，擦除力也超强，轻轻一擦，字迹消失无踪，还不会损伤纸张哦～📝");
   return <MMMAAPage className={`${isBanner ? "" : "bccback"}`}>
     <View className='ww'>
       {isBanner &&
