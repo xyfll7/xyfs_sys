@@ -381,11 +381,13 @@ const IIICard1 = ({ dept_products }: { dept_products: DeptInfo & { products: Pro
           </ComButtonOpen>}
       </View>
       <View>
-        <ComButton rr ll className='mb10 ' hoverClass='none'>
-          <View className='nw3' style={{ textAlign: 'left' }}>
-            {dept_products.name}
-          </View>
-        </ComButton>
+        {dept_products.shopAnnouncement &&
+          <ComButton rr ll className='mb10 ' hoverClass='none'>
+            <View className='nw3' style={{ textAlign: 'left' }}>
+              {dept_products.shopAnnouncement}
+            </View>
+          </ComButton>
+        }
       </View>
       <View className='ww' style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "calc(6 * var(--change_base))", }}>
         {dept_products.products.map((p, i) => <View className='dll mb10 ww' key={i}>

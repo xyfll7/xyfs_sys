@@ -42,6 +42,7 @@ export interface DeptInfo extends BaseUserInfo, AddressInfo {
   theme?: string;
   is_silence_color?: boolean; // 默哀色
   deptName?: string;
+  shopAnnouncement?: string;
   parentDeptId?: string;  // 发布者（团长）的上级代理OPENID
   channelId?: string;
   supplierTypeDictIds: string,
