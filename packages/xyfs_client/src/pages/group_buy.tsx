@@ -84,7 +84,7 @@ const Index: FC = () => {
           <View className='ww dbtc ml10'>
             <View className='dy' >
               <ComImage className='mr10' src={deptInfo?.avatar} />
-              <ComButton ll className="cccorange  fs13 fwb bcctrans" hoverClass='none'><Text className='nw1'> {deptInfo?.deptName ?? "..."}</Text></ComButton>
+              <ComButton ll className="fs13 fwb bcctrans" hoverClass='none'><Text className='nw1'> {deptInfo?.deptName ?? "..."}</Text></ComButton>
             </View>
           </View>
         </ComNavBarA>
