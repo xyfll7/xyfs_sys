@@ -144,7 +144,9 @@
   }
 }
 
-
+.iio{
+  border-radius:calc(3 * var(--change_base)) !important;
+}
 
 .ioo{
   border-radius:calc(10 * var(--change_base)) !important;
