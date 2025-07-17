@@ -8,9 +8,9 @@ const __dirname = path.dirname(__filename);
 const dir = './test/';
 const files = fs.readdirSync(dir);
 try {
-  Postal_Order_Form();
+  // Postal_Order_Form();
   // ShunFeng_Order_Form();
-  // Salary_Statistics_Table();
+  Salary_Statistics_Table();
 } catch (err) {
   console.log(err);
 }
