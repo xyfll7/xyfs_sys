@@ -74,7 +74,9 @@ const Index: FC = () => {
     // { "id": 6, "name": "延安山地苹果", "sketch": null, "intro": "重量6-7斤/12枚装/果径80-85", "keywords": null, "tags": null, "price": 58, "weight": 1, "marketPrice": null, "stock": 30, "warningStock": null, "limitQuantity": null, "attachUrl": "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/product_image/oGwbL5PVdCTyoE2sYHAq2bdNA9BY/_1731288105472_0.png", "userId": "oGwbL5PVdCTyoE2sYHAq2bdNA9BY", "status": 1, "sort": 2, "lastUpdateTime": "2024-11-11 09:21:56", "delFlag": "0", "createBy": "oGwbL5PVdCTyoE2sYHAq2bdNA9BY", "createTime": "2024-11-11 09:21:56", "updateBy": null, "updateTime": null, "remark": "", "userName": "王理代", "userMobile": "17319969379", "userAvatar": "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/comm_avatar/default/狗2@1x.webp", "totalSaleStock": null, "saleStock": null, "orderUser": null }
   );
   const ref_banner = React.useRef<{ setIsHeaderBack: (e: boolean) => void; }>(null);
-
+  if (deptInfo) {
+    deptInfo.shopAnnouncement = deptInfo.shopAnnouncement ? deptInfo.shopAnnouncement : "测试—_-橡皮擦擦 🍒🐰​#测试—_-可爱到犯规的橡皮擦来啦！有呆萌的小兔子、憨态可掬的小熊等造型🐻。它们不仅颜值高，擦除力也超强，轻轻一擦，字迹消失无踪，还不会损伤纸张哦～📝";
+  }
   return <MMMAAPage className={`${isBanner ? "" : "bccback"}`}>
     <View className='ww'>
       {isBanner &&
@@ -224,11 +226,11 @@ const Index: FC = () => {
             <View className=' dll ww prl10' >
               <ComButton ll className='bccback' hoverClass='none'>
                 <View className='dbase'>
-                  <Text className='nw1 mr6'>{product.name}</Text>
+                  <Text className='nw1 mr6'>{product.name?.split("#")[0]}</Text>
                   <Text className='nw cccprice'>¥{product.price}</Text>
                 </View>
               </ComButton>
-              <View className='cccplh mb10 '>{product.intro ? product.intro : "没有简介"}</View>
+              <View className='cccplh mb10 '>{product.name?.split("#")[1] ? product.name?.split("#")[1] : "没有简介"}</View>
             </View>
             {product.attachUrl.split(",").map((e, i) => {
               return <ComImage className='mb10' style={{ width: "100%" }} compress="300" mode='widthFix' src={e}></ComImage>;
@@ -247,12 +249,12 @@ const IIIItem = ({ item, type, onAdd, onSub, onDetail, count }: { count: number,
         <View className='pt4 dll ww' onClick={onDetail}>
           <ComButton ll className='bccback' hoverClass='none'>
             <View className='dbase'>
-              <Text className='nw1 mr6'>{item.name}</Text>
+              <Text className='nw1 mr6'>{item.name?.split("#")[0]}</Text>
               <Text className='nw cccprice mr6'>¥{item.price}</Text>
               {count > 0 && <View className='bcctrans cccprice nw fs08'> {count}<Text className='cccplh'>/{item.stock}</Text> </View>}
             </View>
           </ComButton>
-          <View className='cccplh mb10 nw1'>{item.intro ? item.intro : "没有简介"}</View>
+          <View className='cccplh mb10 nw1'>{item.name?.split("#")[1] ? item.name?.split("#")[1] : "没有简介"}</View>
         </View>
         <View className='dy'>
           <View>
@@ -267,12 +269,12 @@ const IIIItem = ({ item, type, onAdd, onSub, onDetail, count }: { count: number,
       <View onClick={onDetail} >
         <ComButton ll className='bcctrans' hoverClass='none'>
           <View className='dbase'>
-            <Text className='nw1 mr6 '>{item.name}</Text>
+            <Text className='nw1 mr6 '>{item.name?.split("#")[0]}</Text>
             <Text className='nw cccprice'>¥{item.price}</Text>
             {count > 0 && <View className='bcctrans cccprice nw fs08'> /{count}</View>}
           </View>
         </ComButton>
-        <View className='cccplh mb10 nw2'>{item.intro ? item.intro : "没有简介"}</View>
+        <View className='cccplh mb10 nw2'>{item.name?.split("#")[1] ? item.name?.split("#")[1] : "没有简介"}</View>
       </View>
       <View className='ww dbl'>
         <View className='dy mb10 ww ' onClick={onDetail}>
