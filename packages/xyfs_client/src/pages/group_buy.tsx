@@ -24,7 +24,6 @@ import { Pagination } from '@xyfs/taro_uii/type_index';
 import { AddressInfo, DeptInfo } from '@xyfs/taro_uii/type_user';
 import { try_Taro_chooseAddress, try_Taro_hideLoading, try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_setClipboardData, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
 import { useHook_getCurrentInstance, useHook_pageListNew } from '@xyfs/taro_uii/utils/useHooks';
-
 import { coo___objToUrl, coo___string_privacy, coo___urlToObj } from '@xyfs/utils/util';
 import React, { FC, useCallback, useEffect, useState } from 'react';
 
@@ -35,17 +34,11 @@ definePageConfig({
   // "renderer": "skyline",
 });
 
-
-
-
-
 export default function COMSELFWarp() { return <ComSELFView><Index></Index></ComSELFView>; };
 const Index: FC = () => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const { options } = useHook_getCurrentInstance<{ scene?: string; }>();
   const { G_D } = coo___urlToObj<{ G_D?: string; }>(options?.scene);
-
-
   const [type, setType] = useState<"visualEdition" | "simpleEdition">("simpleEdition");
   const isBanner = true;
   const [address, setAddress] = useState<AddressInfo | undefined>(selfInfo_S.defaultRecManAddress);
@@ -75,7 +68,7 @@ const Index: FC = () => {
   );
   const ref_banner = React.useRef<{ setIsHeaderBack: (e: boolean) => void; }>(null);
   if (deptInfo) {
-    deptInfo.shopAnnouncement = deptInfo.shopAnnouncement ? deptInfo.shopAnnouncement : "测试—_-橡皮擦擦 🍒🐰​#测试—_-可爱到犯规的橡皮擦来啦！有呆萌的小兔子、憨态可掬的小熊等造型🐻。它们不仅颜值高，擦除力也超强，轻轻一擦，字迹消失无踪，还不会损伤纸张哦～📝";
+    deptInfo.shopAnnouncement = deptInfo.shopAnnouncement ? deptInfo.shopAnnouncement : "这个人很懒 🍒🐰​#这个人很懒,根本就不想写公告📝";
   }
   return <MMMAAPage className={`${isBanner ? "" : "bccback"}`}>
     <View className='ww'>
