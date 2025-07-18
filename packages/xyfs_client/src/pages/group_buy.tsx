@@ -39,7 +39,7 @@ const Index: FC = () => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const { options } = useHook_getCurrentInstance<{ scene?: string; }>();
   const { G_D } = coo___urlToObj<{ G_D?: string; }>(options?.scene);
-  const [type, setType] = useState<"visualEdition" | "simpleEdition">("visualEdition");
+  const [type, setType] = useState<"visualEdition" | "simpleEdition">("simpleEdition");
   const [address, setAddress] = useState<AddressInfo | undefined>(selfInfo_S.defaultRecManAddress);
   const [deptInfo, setDeptInfo] = useState<DeptInfo | null>(null);
   const [isShowMore, setIsShowMore] = useState(false);
@@ -89,10 +89,10 @@ const Index: FC = () => {
       onScroll={(e, top) => { if (e.detail.scrollTop > top) { ref_banner.current?.setIsHeaderBack(true); } }}
       onScrollToUpper={() => { ref_banner.current?.setIsHeaderBack(false); }}>
       <View className='ww dll prl10'>
-        <ComButton ll className={`bcctrans nw1 fwb`} hoverClass='none'>{deptInfo?.shopAnnouncement?.split("#")[0]}</ComButton>
+        <ComButton ll className={`bcctrans nw1 `} hoverClass='none'>{deptInfo?.shopAnnouncement?.split("#")[0]}</ComButton>
         {deptInfo?.shopAnnouncement?.split("#")[1] &&
           <ComButton rr ll className='mb10 bcctrans' hoverClass='none' onClick={() => setIsShowMore(e => !e)}>
-            <View className={`${isShowMore ? '' : 'nw3'}`} style={{ textAlign: 'left' }}>
+            <View className={`${isShowMore ? '' : 'nw3'} cccplh`} style={{ textAlign: 'left' }}>
               {deptInfo?.shopAnnouncement.split("#")[1]}
             </View>
           </ComButton>
@@ -208,7 +208,7 @@ const Index: FC = () => {
             <ComButton rr className=' bccyellow h2rem nw mr10' onClick={() => {
               setCart((e) => [...e, { ...product }]);
               Taro.showToast({ icon: "none", title: "已加购" });
-            }} >+ 加购</ComButton>
+            }} >+ 加</ComButton>
           </View>
         </ComNavBarB>
         <ComScrollView className='IOO'>
@@ -234,38 +234,34 @@ const Index: FC = () => {
 
 const IIIItem = ({ item, type, onAdd, onSub, onDetail, count }: { count: number, item: any; type: "visualEdition" | "simpleEdition"; onAdd: () => void, onSub: () => void; onDetail: () => void; }) => {
   if (type == "simpleEdition") {
-    return <View className='dll ww bccbacktabx IOO prl10 mb10 bccwhite'  >
+    return <View className='dll ww bccbacktabx IOO prl10 pt10 mb10 bccwhite'  >
       <View className='dbtc ww'>
         <View className='dll ww' onClick={onDetail}>
-          <ComButton ll className='bcctrans' hoverClass='none'>
-            <View className='dbase'>
-              <Text className='nw1 mr6'>{item.name?.split("#")[0]}</Text>
-              <Text className='nw cccprice mr6'>¥{item.price}</Text>
-              {count > 0 && <View className='bcctrans cccprice nw fs08'> {count}<Text className='cccplh'>/{item.stock}</Text> </View>}
-            </View>
-          </ComButton>
+          <View className='dbase'>
+            <Text className='nw1 mr6'>{item.name?.split("#")[0]}</Text>
+            <Text className='nw cccprice mr6'>¥{item.price}</Text>
+            {count > 0 && <View className='bcctrans cccprice nw fs08'> {count}<Text className='cccplh'>/{item.stock}</Text> </View>}
+          </View>
           <View style={{ minHeight: '2rem' }}>
             <View className='cccplh mb10 nw1'>{item.name?.split("#")[1] ? item.name?.split("#")[1] : "没有简介"}</View>
           </View>
         </View>
-        <View className='dy'>
+        <View className='dy mb10'>
           <View>
-            <ComButton className={`bccback cccgreen ${count > 0 ? "" : "vbh"}`} hoverClass='none' onClick={onSub}>-</ComButton>
+            <ComButton className={`bccback cccgreen ${count > 0 ? "" : "vbh"}`} onClick={onSub}>-</ComButton>
           </View>
-          <ComButton rr className='bccwhite nw ml10 cccgreen' onClick={onAdd}>+ 加</ComButton>
+          <ComButton rr className='bccback nw ml10 cccgreen' hoverClass='none' onClick={onAdd}>+ 加</ComButton>
         </View>
       </View>
     </View>;
   } else {
-    return <View className='dll ww bccbacktabx IOO prl10 mb10 bccwhite' >
+    return <View className='dll ww bccbacktabx IOO prl10 pt10 mb10 bccwhite' >
       <View onClick={onDetail} >
-        <ComButton ll className='bcctrans' hoverClass='none'>
-          <View className='dbase'>
-            <Text className='nw1 mr6 '>{item.name?.split("#")[0]}</Text>
-            <Text className='nw cccprice'>¥{item.price}</Text>
-            {count > 0 && <View className='bcctrans cccprice nw fs08'> /{count}</View>}
-          </View>
-        </ComButton>
+        <View className='dbase'>
+          <Text className='nw1 mr6 '>{item.name?.split("#")[0]}</Text>
+          <Text className='nw cccprice'>¥{item.price}</Text>
+          {count > 0 && <View className='bcctrans cccprice nw fs08'> /{count}</View>}
+        </View>
         <View className='cccplh mb10 nw2'>{item.name?.split("#")[1] ? item.name?.split("#")[1] : "没有简介"}</View>
       </View>
       <View className='ww dbl'>
@@ -276,7 +272,7 @@ const IIIItem = ({ item, type, onAdd, onSub, onDetail, count }: { count: number,
         </View>
         <View className='dbl dr mb10'>
           <View>
-            <ComButton className={`bccback cccgreen ${count > 0 ? "" : "vbh"}`} hoverClass='none' onClick={onSub}>-</ComButton>
+            <ComButton className={`bccback cccgreen ${count > 0 ? "" : "vbh"}`} onClick={onSub}>-</ComButton>
           </View>
           <ComButton rr className='ml10 bccyellow h2rem nw' onClick={onAdd} >+ 加</ComButton>
         </View>
