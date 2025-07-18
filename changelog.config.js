@@ -35,7 +35,7 @@ module.exports = {
   disableEmoji: false,
   format: '{type}{scope}: {emoji}{subject}',
   list: [...Object.keys(_types)],
-  maxMessageLength: 128,
+  maxMessageLength: 200,
   minMessageLength: 3,
   questions: ['type', 'scope', 'subject', 'issues'],
   scopes: ['project', 'client', 'admin', 'cloud'],
