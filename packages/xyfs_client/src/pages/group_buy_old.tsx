@@ -39,7 +39,7 @@ const Index: FC = () => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   const { options } = useHook_getCurrentInstance<{ scene?: string; }>();
   const { G_D } = coo___urlToObj<{ G_D?: string; }>(options?.scene);
-  const [type, setType] = useState<"visualEdition" | "simpleEdition">("visualEdition");
+  const [type, setType] = useState<"visualEdition" | "simpleEdition">("simpleEdition");
   const [address, setAddress] = useState<AddressInfo | undefined>(selfInfo_S.defaultRecManAddress);
   const [deptInfo, setDeptInfo] = useState<DeptInfo | null>(null);
   const [isShowMore, setIsShowMore] = useState(false);
@@ -99,14 +99,14 @@ const Index: FC = () => {
         }
       </View>
       {page.pageNum !== 0 && Boolean(page.list.length) &&
-        <View className='dll ww IOO'>
+        <View className='dll ww bccwhite pt10 mb10 prl10 IOO'>
           <View className='ww dll prl10'>
             <View className='ww dr'>
-              <ComButton rr className={`mb10 cccplh bccbacktab `} hoverClass='none' onClick={() => { setCart([]); }}>清空</ComButton>
-              <ComButton rr className={`mb10 cccplh bccbacktab nw ml10  `} hoverClass='none' onClick={() => {
+              <ComButton rr className={`mb10 cccplh bborder `} onClick={() => { setCart([]); }}>清空</ComButton>
+              <ComButton rr className={`mb10 cccplh nw ml10 bborder `} onClick={() => {
                 setType(type == "simpleEdition" ? "visualEdition" : "simpleEdition");
               }}>{new Map([["visualEdition", "图文版"], ["simpleEdition", "简洁版"]]).get(type)} </ComButton>
-              <ComButton rr className={`cccplh mb10 ml10 bccbacktab `} hoverClass='none' onClick={async () => {
+              <ComButton rr className={`cccplh mb10 ml10 bborder `} onClick={async () => {
                 Taro.showLoading({ title: "获取短链中...", mask: true });
                 const res = await Api_common_getShortLink_ctn({
                   pageUrl: `pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ G_D: G_D, R_D: Number(selfInfo_S.managerUser?.mobile).toString(36) })) })}`,
@@ -121,7 +121,7 @@ const Index: FC = () => {
                   <Text className='mr4'>短链</Text>
                 </View>
               </ComButton>
-              <ComButtonOpen rr className={`cccplh mb10 ml10  bccbacktab`} hoverClass='none' id='send_express'
+              <ComButtonOpen rr className={`cccplh mb10 ml10 bborder `} id='send_express'
                 shareTitle={`${selfInfo_S.managerUser?.name} 团长 邀您买东西啦`}
                 openType='share'
                 sharePath={`/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ G_D: G_D, R_D: Number(selfInfo_S.managerUser?.mobile).toString(36) })) })}`}>
@@ -130,6 +130,7 @@ const Index: FC = () => {
                   <Text className='mr4'>分享</Text>
                 </View>
               </ComButtonOpen>
+
             </View>
           </View>
           {
@@ -201,7 +202,7 @@ const Index: FC = () => {
       </View>
     </View>
     {product && <ComPopupNew onClose={() => { setProduct(null); }}  >
-      <View className='dll prl10' style={{ height: "80vh", }}>
+      <View className='dll prl10' style={{ height: "70vh", }}>
         <ComNavBarB className='mb10 ww' onClose={() => { setProduct(null); }} >
           <View className='ww dbtc'>
             <ComButton className='fwb bccback' hoverClass="none">详情</ComButton>
@@ -234,30 +235,28 @@ const Index: FC = () => {
 
 const IIIItem = ({ item, type, onAdd, onSub, onDetail, count }: { count: number, item: any; type: "visualEdition" | "simpleEdition"; onAdd: () => void, onSub: () => void; onDetail: () => void; }) => {
   if (type == "simpleEdition") {
-    return <View className='dll ww bccbacktabx IOO prl10 mb10 bccwhite'  >
+    return <View className='dll ww bccback IOO prl10 mb10'  >
       <View className='dbtc ww'>
-        <View className='dll ww' onClick={onDetail}>
-          <ComButton ll className='bcctrans' hoverClass='none'>
+        <View className='pt4 dll ww' onClick={onDetail}>
+          <ComButton ll className='bccback' hoverClass='none'>
             <View className='dbase'>
               <Text className='nw1 mr6'>{item.name?.split("#")[0]}</Text>
               <Text className='nw cccprice mr6'>¥{item.price}</Text>
               {count > 0 && <View className='bcctrans cccprice nw fs08'> {count}<Text className='cccplh'>/{item.stock}</Text> </View>}
             </View>
           </ComButton>
-          <View style={{ minHeight: '2rem' }}>
-            <View className='cccplh mb10 nw1'>{item.name?.split("#")[1] ? item.name?.split("#")[1] : "没有简介"}</View>
-          </View>
+          <View className='cccplh mb10 nw1'>{item.name?.split("#")[1] ? item.name?.split("#")[1] : "没有简介"}</View>
         </View>
         <View className='dy'>
           <View>
-            <ComButton className={`bccback cccgreen ${count > 0 ? "" : "vbh"}`} hoverClass='none' onClick={onSub}>-</ComButton>
+            <ComButton className={`bccbacktab cccgreen ${count > 0 ? "" : "vbh"}`} hoverClass='none' onClick={onSub}>-</ComButton>
           </View>
           <ComButton rr className='bccwhite nw ml10 cccgreen' onClick={onAdd}>+ 加</ComButton>
         </View>
       </View>
     </View>;
   } else {
-    return <View className='dll ww bccbacktabx IOO prl10 mb10 bccwhite' >
+    return <View className='dll ww bccback pt10 IOO prl10 mb10' >
       <View onClick={onDetail} >
         <ComButton ll className='bcctrans' hoverClass='none'>
           <View className='dbase'>
@@ -269,16 +268,16 @@ const IIIItem = ({ item, type, onAdd, onSub, onDetail, count }: { count: number,
         <View className='cccplh mb10 nw2'>{item.name?.split("#")[1] ? item.name?.split("#")[1] : "没有简介"}</View>
       </View>
       <View className='ww dbl'>
-        <View className='mb10 ww mr10' onClick={onDetail} style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "calc(6 * var(--change_base))", }}>
+        <View className='dy mb10 ww ' onClick={onDetail}>
           {item.attachUrl?.split(",").slice(0, 3).map((e, i) => {
-            return <ComImage src={e} key={i} style={{ width: "100%", aspectRatio: "1/1" }} />;
+            return <ComImage className='mr10' style={{ width: '4rem' }} src={e} key={i}></ComImage>;
           })}
         </View>
-        <View className='dbl dr mb10'>
+        <View className='dbl dr ww mb10' >
           <View>
-            <ComButton className={`bccback cccgreen ${count > 0 ? "" : "vbh"}`} hoverClass='none' onClick={onSub}>-</ComButton>
+            <ComButton className={`bccbacktab cccgreen ${count > 0 ? "" : "vbh"}`} hoverClass='none' onClick={onSub}>-</ComButton>
           </View>
-          <ComButton rr className='ml10 bccyellow h2rem nw' onClick={onAdd} >+ 加</ComButton>
+          <ComButton rr className='ml10 bccyellow h2rem nw' onClick={onAdd} >+ 加购</ComButton>
         </View>
       </View>
     </View>;
