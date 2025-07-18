@@ -383,7 +383,7 @@ const IIICard1 = ({ dept_products }: { dept_products: DeptInfo & { products: Pro
       <View>
         {dept_products.shopAnnouncement &&
           <ComButton rr ll className='mb10 ' hoverClass='none'>
-            <View className='nw3' style={{ textAlign: 'left' }}>
+            <View className='nw3 cccplh' style={{ textAlign: 'left' }}>
               {dept_products.shopAnnouncement}
             </View>
           </ComButton>
@@ -394,14 +394,10 @@ const IIICard1 = ({ dept_products }: { dept_products: DeptInfo & { products: Pro
           <ComImage src={p.attachUrl?.split(",")[0]} style={{ width: "100%", aspectRatio: "1/1" }} />
         </View>)}
       </View>
-      <View className='ww' style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "calc(6 * var(--change_base))", }}>
-        {dept_products.products.map((p, i) => <View className='dll mb10 ww' key={i}>
-          <ComButton rr ll className='ww  dbtc ' hoverClass='none'>
-            <Text className='nw1 mr10'>{p.name}</Text>
-          </ComButton>
-          <ComButton rr ll className='ww  dbtc ' hoverClass='none'>
-            <ComPrice className='cccprice' price={Number(p.price)}></ComPrice>
-          </ComButton>
+      <View className='ww mb10' style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "calc(6 * var(--change_base))", }}>
+        {dept_products.products.map((p, i) => <View className='dll ww' key={i}>
+          <View className='nw1 mr10'>{p.name}</View>
+          <ComPrice className='cccprice' price={Number(p.price)} />
         </View>)}
       </View>
     </View>);
