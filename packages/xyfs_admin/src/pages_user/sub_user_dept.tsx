@@ -216,7 +216,7 @@ const Index: FC<{}> = ({ }) => {
     {deptUserList && <ComPopupNew onClose={() => setDept(null)}>
       <View className='dll prl10' style={{ height: "70vh" }}>
         <ComNavBarB className='mb10' onClose={() => setDeptUserList(null)}>
-          <View className='dy'><ComButton className='fwb bccback'>部门用户</ComButton></View>
+          <View className='dy'><ComButton className='fwb bccback' hoverClass="none">部门用户</ComButton></View>
         </ComNavBarB>
         <ComButton className='mb10 bcctrans' hoverClass='none'>
           <View className='dy'>
