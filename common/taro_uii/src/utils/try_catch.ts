@@ -270,6 +270,8 @@ export async function try_Taro_showModal(option?: Taro.showModal.Option & { edit
     const res = await Taro.showModal(option);
     if (res.errMsg === "showModal:ok" && res.confirm) {
       return res as Taro.showModal.SuccessCallbackResult & { content: string; };
+    } else {
+      throw new Error(res.errMsg);
     }
   } catch (err) {
     console.error("显示模态框失败", err);
