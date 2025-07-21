@@ -11,9 +11,8 @@ export const ComAddressSwitchor: FC<ViewProps & MyButtonProps & {
   address?: AddressInfo | DeptInfo | null;
   url?: string,
   isShort?: boolean;
-  isIcon?: boolean;
   addressPlaceholder?: string;
-}> = ({ isIcon = false, time, isShort = false, url, className, address, onClick, title, addressPlaceholder = "暂无地址", ...props }) => {
+}> = ({ time, isShort = false, url, className, address, onClick, title, addressPlaceholder = "暂无地址", ...props }) => {
   const __address = utils_addressInfoToString(address, isShort, addressPlaceholder);
   const __name = (address as DeptInfo)?.deptName ?? address?.name;
   const __ccc_color = className?.includes("ccc") ? "" : "cccplh";
@@ -32,7 +31,7 @@ export const ComAddressSwitchor: FC<ViewProps & MyButtonProps & {
           {__address ? __address : addressPlaceholder}
         </View>
       </View>
-      {isIcon && url && <ComSquare className='icon-chevron-right' />}
+      {url && <ComSquare className='icon-chevron-right' />}
     </View>
   </ComButton>;
 };

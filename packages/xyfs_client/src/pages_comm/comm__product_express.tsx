@@ -138,7 +138,7 @@ const IIIOrderPayUser: FC<{}> = ({ }) => {
       }} />
       <View className='mb10 dbtc ww '>
         {/* 团长信息 */}
-        <ComAddressSwitchor className='bccback mr10 ww' isShort isIcon address={roo___my_dept(selfInfo_S)} url='/pages_user/user_regiment_list_map' />
+        <ComAddressSwitchor className='bccback mr10 ww' isShort address={roo___my_dept(selfInfo_S)} url='/pages_user/user_regiment_list_map' />
         <ComButton className='bccyellow fwb nw'
           onClick={async () => {
             if (!selfInfo_S?.mobile) { throw new ErrorR("请先“手机号快捷登录”!", true); }
