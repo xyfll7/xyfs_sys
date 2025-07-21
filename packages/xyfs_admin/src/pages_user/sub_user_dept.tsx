@@ -227,7 +227,7 @@ const Index: FC<{}> = ({ }) => {
         <ComScrollView className=''>
           {deptUserList.map(e => {
             return <View key={e.id} className='ww ioo bccwhite mb10 prl10 pt10'>
-              <ComButton ll className='mb10 nw1' hoverClass='none' >
+              <ComButton ll rr className='mb10 nw1' hoverClass='none' >
                 <View className=' ww '>
                   <View className='nw1 ww dbtc'>
                     <Text > {e.name}</Text>
