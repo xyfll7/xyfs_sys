@@ -41,37 +41,56 @@ export const useSTDicts = create<State_Dicts>((set) => ({
 }));
 
 interface State_SelfInfo {
-  selfInfo: DeptInfo | null;
-  sett: (selfInfo?: DeptInfo) => Promise<DeptInfo>;
+  selfInfo?: DeptInfo;
+  sett: (selfInfo?: DeptInfo) => Promise<DeptInfo | undefined>;
   setSelfInfoTheme: (theme: keyof Taro.onThemeChange.ITheme) => void;
 }
 const ___Api_login_rqs = throttle(Api_login_rqs, 3000, { leading: true });
 export const useSTSelf = create<State_SelfInfo>((set, get) => ({
-  selfInfo: null,
+  selfInfo: undefined,
   sett: async (selfInfo) => {
-    const res = Taro.getAppBaseInfo();
-    const theme = res.theme ?? "light";
-    if (selfInfo) {
-      Taro.setStorageSync("OPENID", selfInfo.OPENID);
-      Taro.setStorageSync("DEPTID", selfInfo.deptId);
-      set((s) => ({ selfInfo: { theme, ...s.selfInfo, ...selfInfo, } }));
-      return { theme, ...get().selfInfo, ...selfInfo, };
-    }
-    const res_selfInfo = await ___Api_login_rqs();
-    if (res_selfInfo) { // 这里不能删，因为throttle截流 被拦截了的调用会返回 undefined
-      Taro.setStorageSync("OPENID", res_selfInfo.OPENID);
-      Taro.setStorageSync("DEPTID", res_selfInfo.deptId);
-      if (JSON.stringify(get().selfInfo) !== JSON.stringify(res_selfInfo)) { // 如果获取的数据和本地数据一样则不刷新
-        set((s) => ({ selfInfo: { theme, ...s.selfInfo, ...res_selfInfo, } }));
+    return ___sort_primary_role(await (async () => {
+      const res = Taro.getAppBaseInfo();
+      const theme = res.theme ?? "light";
+      if (selfInfo) {
+        Taro.setStorageSync("OPENID", selfInfo.OPENID);
+        Taro.setStorageSync("DEPTID", selfInfo.deptId);
+        set((s) => ({ selfInfo: { theme, ...s.selfInfo, ...selfInfo, } }));
+        return { theme, ...get().selfInfo, ...selfInfo, };
       }
-      return { theme, ...get().selfInfo, ...res_selfInfo };
-    }
-    return get().selfInfo!;
+      const res_selfInfo = await ___Api_login_rqs();
+      if (res_selfInfo) { // 这里不能删，因为throttle截流 被拦截了的调用会返回 undefined
+        Taro.setStorageSync("OPENID", res_selfInfo.OPENID);
+        Taro.setStorageSync("DEPTID", res_selfInfo.deptId);
+        if (JSON.stringify(get().selfInfo) !== JSON.stringify(res_selfInfo)) { // 如果获取的数据和本地数据一样则不刷新
+          set((s) => ({ selfInfo: { theme, ...s.selfInfo, ...res_selfInfo, } }));
+        }
+        return { theme, ...get().selfInfo, ...res_selfInfo };
+      }
+      return get().selfInfo!;
+    })());
   },
   setSelfInfoTheme: (theme) => {
     set(({ selfInfo }) => ({ selfInfo: { ...selfInfo!, theme: theme } }));
   }
 }));
+
+function ___sort_primary_role(dept?: DeptInfo) {
+  const priorityRoles = ['REGIMENT', 'GUID'];
+  if (!dept?.roles) { return dept; }
+  return {
+    ...dept, roles: dept?.roles?.sort((a, b) => {
+      const aPriority = priorityRoles.includes(a.roleKey);
+      const bPriority = priorityRoles.includes(b.roleKey);
+      // 如果a是优先角色，b不是，a排在前面
+      if (aPriority && !bPriority) return -1;
+      // 如果b是优先角色，a不是，b排在前面
+      if (!aPriority && bPriority) return 1;
+      // 其他情况保持原顺序
+      return 0;
+    })
+  };
+}
 
 interface State_Express {
   express: OrderInfo<Product_Express> & { ___show?: boolean, };

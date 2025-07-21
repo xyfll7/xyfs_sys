@@ -376,7 +376,7 @@ export function ComSELFView({ isRefreshSelfInfo_SEveryTime, ...props }: ViewProp
 
 
 
-const useHook_selfInfo_show = ({ isRefreshSelfInfo_SEveryTime = false, }: { isRefreshSelfInfo_SEveryTime?: boolean; } = {}): [DeptInfo | null, boolean] => {
+const useHook_selfInfo_show = ({ isRefreshSelfInfo_SEveryTime = false, }: { isRefreshSelfInfo_SEveryTime?: boolean; } = {}): [DeptInfo | undefined, boolean] => {
   const { options } = useHook_getCurrentInstance<{ scene?: string; }>();
   const { R_D } = coo___urlToObj<{ R_D?: string; }>(options?.scene);
   const _R_D = R_D ? String(parseInt(R_D, 36)) : undefined;
@@ -394,7 +394,7 @@ const useHook_selfInfo_show = ({ isRefreshSelfInfo_SEveryTime = false, }: { isRe
       setIsLoadSelf(false);
     }
   });
-  return _R_D ? [selfInfo?.deptId ? selfInfo : null, isLoadSelf] : [selfInfo, isLoadSelf];
+  return _R_D ? [selfInfo?.deptId ? selfInfo : undefined, isLoadSelf] : [selfInfo, isLoadSelf];
 }
 
 
