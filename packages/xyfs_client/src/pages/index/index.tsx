@@ -65,26 +65,16 @@ const Index: FC = () => {
             </View>
           </View>
 
-          {roo___has_role(selfInfo_S!.deptInfo!, ["REGIMENT"]) &&
-            <View className='mb10 dbtc prl10 transall' style={{ paddingRight: false ? `${capRight}px` : "0px", opacity: false ? "0" : "1", height: false ? "0rem" : "calc(2 * var(--rem_base)) !important", }}>
-              <ComAddressSwitchor className='bcctrans01-dark mr10 ww cccwhite' title='团长:' isShort isIcon address={roo___my_dept(selfInfo_S)} url='/pages_user/user_regiment_list_map' />
-              <View className='dy'>
-                <ComButton className='bcctrans01-dark  nw cccwhite' url='/pages_user/user_orders'>订单</ComButton>
-                {getMyEnv().isDeveloping && <ComButton className='bccyellow nw fwb ml10' url='/pages_comm/comm__publisher'>
-                  <Text className='cccgreen'>+</Text>发布
-                </ComButton>
-                }
-              </View>
+          <View className='mb10 dbtc prl10 transall' style={{ paddingRight: false ? `${capRight}px` : "0px", opacity: false ? "0" : "1", height: false ? "0rem" : "calc(2 * var(--rem_base)) !important", }}>
+            <ComAddressSwitchor className='bcctrans01-dark mr10 ww cccwhite' title='团:' isShort address={roo___my_dept(selfInfo_S)} url={roo___has_role(selfInfo_S!.deptInfo!, ["REGIMENT"]) ? '/pages_user/user_regiment_list_map' : undefined} />
+            <View className='dy'>
+              <ComButton className='bcctrans01-dark  nw cccwhite' url='/pages_user/user_orders'>订单</ComButton>
+              {getMyEnv().isDeveloping && <ComButton className='bccyellow nw fwb ml10' url='/pages_comm/comm__publisher'>
+                <Text className='cccgreen'>+</Text>发布
+              </ComButton>
+              }
             </View>
-          }
-          {roo___has_role(selfInfo_S!.deptInfo!, ["GUIDE"]) &&
-            <View className='mb10 dbtc prl10 transall' style={{ paddingRight: false ? `${capRight}px` : "0px", opacity: false ? "0" : "1", height: false ? "0rem" : "calc(2 * var(--rem_base)) !important", }}>
-              <ComAddressSwitchor className='bcctrans01-dark mr10 ww' title='导游:' isShort isIcon address={roo___my_dept(selfInfo_S)} />
-              <View className='dy'>
-                <ComButton className='bcctrans01-dark nw cccplh' url='/pages_user/user_orders'>订单</ComButton>
-              </View>
-            </View>
-          }
+          </View>
 
         </View>
       </ComNav>
@@ -95,14 +85,6 @@ const Index: FC = () => {
       onScrollToUpper={() => { ref_banner.current?.setIsHeaderBack(false); }}>
 
       <IIIMainNavigator className='mb10' />
-
-      {/* <View className='prl10 ww'>
-        <View className='dxy bccgreen fs07 IOO prl10 pbt10 cccwhite ww mb20'>
-          欢迎访问小象心选管，我们是一个专注于为您提供优质商品和服务的平台。我们致力于为您带来更好的购物体验。
-        </View>
-      </View> */}
-
-
 
       <IIIGroupLeaders ref={ref_groupLeaders} />
       {selfInfo_S.channelId && <IIIBringGoods ref={ref_bringGoods} channelId={selfInfo_S.channelId} />}
@@ -156,10 +138,10 @@ const IIIBringGoods = forwardRef(({ className, channelId, }: { className?: strin
         {/*@ts-ignore*/}
         <View className='dll IOO mb10 ww' style={{
           background: [
-            "linear-gradient(170deg,#fcfefc, #f4faee, #e6f2d7, #cfebc0);",
-            "linear-gradient(170deg,#fff9f6, #fff0e7, #ffe1cc, #ffcfb3);",
-            "linear-gradient(170deg,#fffef8, #fef8d9, #fdefb0, #fde68a);",
-            "linear-gradient(170deg,#fbfcfd, #f0f3fa, #dee7f1, #cfdced);",
+            "linear-gradient(170deg, #fcfefc, #f4faee, #e6f2d7, #cfebc0);",
+            "linear-gradient(170deg, #fff9f6, #fff0e7, #ffe1cc, #ffcfb3);",
+            "linear-gradient(170deg, #fffef8, #fef8d9, #fdefb0, #fde68a);",
+            "linear-gradient(170deg, #fbfcfd, #f0f3fa, #dee7f1, #cfdced);",
           ][index % 4]
         }}>
           <View className='prl10 pt10 dy mb10 ww '>
