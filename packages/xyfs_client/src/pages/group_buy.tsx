@@ -170,13 +170,13 @@ const Index: FC = () => {
           if (!Boolean(cart?.length)) { throw new ErrorR("购物车为空", true); }
           if (!Boolean(address)) { throw new ErrorR("请选择收货地址", true); }
           Taro.showLoading({ mask: true, title: "支付中...", });
-          const res_pay = await Api_goodsCart_preOrder_ctn({
+          const { payParam } = await Api_goodsCart_preOrder_ctn({
             goodsItems: cart?.map(e => ({ id: e.id }))!,
             recMan: address!,
           });
           try {
             Taro.showLoading({ mask: true, title: "支付..." });
-            await try_Taro_requestPayment({ ...res_pay, package: res_pay.packageStr });
+            await try_Taro_requestPayment({ ...payParam, package: payParam.packageStr });
             if (!await try_Taro_showModal({ title: "支付成功", content: `订单移到"已支付"列表`, confirmText: "知道了", cancelText: "查看订单" })) {
               try_Taro_navigateTo({ url: `/pages_user/user_orders?order_ST=${Order_ST.已付款}` });
             }
@@ -196,7 +196,7 @@ const Index: FC = () => {
           }
         }}>
           <ComSquare style={{ width: "calc(1.3 * var(--rem_base))" }} className='icon-wxpay mr4' />
-          <Text>买</Text>
+          <Text>买1</Text>
         </ComButton>
       </View>
     </View>
@@ -234,7 +234,7 @@ const Index: FC = () => {
 
 const IIIItem = ({ item, type, onAdd, onSub, onDetail, count }: { count: number, item: any; type: "visualEdition" | "simpleEdition"; onAdd: () => void, onSub: () => void; onDetail: () => void; }) => {
   if (type == "simpleEdition") {
-    return <View className='dll ww bccbacktabx IOO prl10 pt10 mb10 bccwhite'  >
+    return <View className='dll ww IOO prl10 pt10 mb10 bccwhite'  >
       <View className='dbtc ww'>
         <View className='dll ww' onClick={onDetail}>
           <View className='dbase'>
@@ -255,7 +255,7 @@ const IIIItem = ({ item, type, onAdd, onSub, onDetail, count }: { count: number,
       </View>
     </View>;
   } else {
-    return <View className='dll ww bccbacktabx IOO prl10 pt10 mb10 bccwhite' >
+    return <View className='dll ww IOO prl10 pt10 mb10 bccwhite' >
       <View onClick={onDetail} >
         <View className='dbase'>
           <Text className='nw1 mr6 '>{item.name?.split("#")[0]}</Text>

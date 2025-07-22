@@ -89,7 +89,10 @@ export async function Api_goodsCart_clear_ctn(params: {
 export async function Api_goodsCart_preOrder_ctn(params: {
   "goodsItems": { id: string; }[],
   "recMan": AddressInfo,
-}): Promise<any> {
+}): Promise<{
+  outOfStock: any;
+  payParam: any;
+}> {
   const res = await wx_call_container<any>({
     path: "/goodsCart/preOrder",
     data: { ...params }
