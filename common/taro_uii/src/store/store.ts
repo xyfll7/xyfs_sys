@@ -78,8 +78,8 @@ export const useSTSelf = create<State_SelfInfo>((set, get) => ({
 function ___sort_primary_role(dept?: DeptInfo) {
   const priorityRoles = ['REGIMENT', 'GUID'];
   if (!dept?.roles) { return dept; }
-  return {
-    ...dept, roles: dept?.roles?.sort((a, b) => {
+  const _obj = {
+    ...dept, roles: dept.roles.sort((a, b) => {
       const aPriority = priorityRoles.includes(a.roleKey);
       const bPriority = priorityRoles.includes(b.roleKey);
       // 如果a是优先角色，b不是，a排在前面
@@ -90,6 +90,10 @@ function ___sort_primary_role(dept?: DeptInfo) {
       return 0;
     })
   };
+  if (getMyEnv().platform == "android" || getMyEnv().platform == "ios") {
+    console.info("selfInfo::", _obj);
+  }
+  return _obj;
 }
 
 interface State_Express {
