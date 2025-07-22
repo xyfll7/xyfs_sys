@@ -196,7 +196,7 @@ const Index: FC = () => {
           }
         }}>
           <ComSquare style={{ width: "calc(1.3 * var(--rem_base))" }} className='icon-wxpay mr4' />
-          <Text>买1</Text>
+          <Text>买</Text>
         </ComButton>
       </View>
     </View>
