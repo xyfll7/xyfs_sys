@@ -189,7 +189,7 @@ const IIIBringGoods = forwardRef(({ className, channelId, }: { className?: strin
               sharePath={`/pages/index/index?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ R_D: Number(selfInfo_S.managerUser?.mobile).toString(36) })) })}`}>
               <View className='dbase'>
                 {selfInfo_S.managerUser && <Text className='fs07 mr4 cccorange' >¥</Text>}
-                <Text className='cccplh'>分享</Text>
+                <Text className='cccplh nw'>分享</Text>
               </View>
             </ComButtonOpen>
           </View>
@@ -317,7 +317,7 @@ const IIICard0 = ({ dept_products }: { dept_products: DeptInfo & { products: Pro
             sharePath={`/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ G_D: dept_products.deptId, })), R_D: Number(selfInfo_S.managerUser?.mobile).toString(36) })}`}>
             <View className='dbase'>
               <Text className='fs07 mr4 cccorange' >¥</Text>
-              <Text className='cccplh'>分享</Text>
+              <Text className='cccplh nw'>分享</Text>
             </View>
           </ComButtonOpen>}
       </View>
