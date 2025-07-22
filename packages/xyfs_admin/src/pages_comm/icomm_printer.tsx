@@ -3,7 +3,7 @@ import { Text, View } from '@tarojs/components';
 import Taro from "@tarojs/taro";
 import { ComAuth, ComAuthMore } from '@xyfs/taro_uii/components/ComAuth';
 import { ComButton } from '@xyfs/taro_uii/components/ComButton';
-import { ComLoading } from '@xyfs/taro_uii/components/ComLoading';
+import { ComLoading, ComLoadingiii } from '@xyfs/taro_uii/components/ComLoading';
 import { ComNav } from '@xyfs/taro_uii/components/ComNav';
 import { ComNavBarA } from '@xyfs/taro_uii/components/ComNavBarA';
 import { ComScrollView } from '@xyfs/taro_uii/components/ComScrollView';
@@ -97,7 +97,7 @@ const IIIBlueList: FC = () => {
     <IIIComMyBluePrinter />
     <View className='dbtc ww'>
       <ComButton className='cccplh mb10 dy mr10' >扫描蓝牙设备
-        {state?.discovering && <View className='ml6 loading-small'></View>}
+        {state?.discovering && <ComLoadingiii className='ml2' />}
       </ComButton>
       <View className='dy'>
         <ComButton rr className='mb10 cccgreen mr10' onClick={async () => { await stopBlue(); }}>暂停</ComButton>
