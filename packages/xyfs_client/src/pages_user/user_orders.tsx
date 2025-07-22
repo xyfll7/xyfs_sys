@@ -73,7 +73,7 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
     <ComNav>
       <View className='ww'>
         <ComNavBarA className='mb10 pl10'>
-          <ComButton ll className='bcctrans cccplh ml10' >我的订单</ComButton>
+          <ComButton ll className='bcctrans cccplh ml10' hoverClass="none">我的订单</ComButton>
         </ComNavBarA>
         <ComListTypeSelectorNew className='ml10  ww' disabled={page_loading} enumData={Order_ST} typeList={[Order_ST.待付款, Order_ST.已付款, Order_ST.已退款]}
           tabType={orderType} setTab={(e) => { setOrderType(e); page_init(); }} />
