@@ -158,12 +158,12 @@ page {
 }
 
 .cccplh.border{
-  border: solid 1rpx rgba(128, 128, 128, 0.2);
+  border: solid 1rpx rgba(128, 128, 128, 0.25);
 }
 
 @supports (color: color-mix(in lch, red, blue)) {
 .cccplh.border{
-  border: solid 1rpx color-mix(in srgb, var(--color_plh) 20%, transparent);
+  border: solid 1rpx color-mix(in srgb, var(--color_plh) 25%, transparent);
 }
 }
 
@@ -173,12 +173,12 @@ page {
 }
 
 .cccprice.border{
-  border: solid 1rpx rgba(255, 82, 82, 0.2);
+  border: solid 1rpx rgba(255, 82, 82, 0.25);
 }
 
 @supports (color: color-mix(in lch, red, blue)) {
 .cccprice.border{
-  border: solid 1rpx color-mix(in srgb, var(--color_price) 20%, transparent);
+  border: solid 1rpx color-mix(in srgb, var(--color_price) 25%, transparent);
 }
 }
 
@@ -188,12 +188,12 @@ page {
 }
 
 .cccgreen.border{
-  border: solid 1rpx rgba(7, 193, 97, 0.2);
+  border: solid 1rpx rgba(7, 193, 97, 0.25);
 }
 
 @supports (color: color-mix(in lch, red, blue)) {
 .cccgreen.border{
-  border: solid 1rpx color-mix(in srgb, var(--color_green) 20%, transparent);
+  border: solid 1rpx color-mix(in srgb, var(--color_green) 25%, transparent);
 }
 }
 
@@ -203,12 +203,12 @@ page {
 }
 
 .cccyellow.border{
-  border: solid 1rpx rgba(245, 239, 6, 0.2);
+  border: solid 1rpx rgba(245, 239, 6, 0.25);
 }
 
 @supports (color: color-mix(in lch, red, blue)) {
 .cccyellow.border{
-  border: solid 1rpx color-mix(in srgb, var(--color_yellow) 20%, transparent);
+  border: solid 1rpx color-mix(in srgb, var(--color_yellow) 25%, transparent);
 }
 }
 
@@ -218,12 +218,12 @@ page {
 }
 
 .cccorange.border{
-  border: solid 1rpx rgba(255, 165, 0, 0.2);
+  border: solid 1rpx rgba(255, 165, 0, 0.25);
 }
 
 @supports (color: color-mix(in lch, red, blue)) {
 .cccorange.border{
-  border: solid 1rpx color-mix(in srgb, var(--color_orange) 20%, transparent);
+  border: solid 1rpx color-mix(in srgb, var(--color_orange) 25%, transparent);
 }
 }
 
@@ -233,12 +233,12 @@ page {
 }
 
 .cccbrown.border{
-  border: solid 1rpx rgba(184, 134, 11, 0.2);
+  border: solid 1rpx rgba(184, 134, 11, 0.25);
 }
 
 @supports (color: color-mix(in lch, red, blue)) {
 .cccbrown.border{
-  border: solid 1rpx color-mix(in srgb, var(--color_brown) 20%, transparent);
+  border: solid 1rpx color-mix(in srgb, var(--color_brown) 25%, transparent);
 }
 }
 

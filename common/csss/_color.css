@@ -20,41 +20,41 @@
   color: var(--color_plh) !important;
 }
 .cccplh.border{
-  border: solid 1rpx color-mix(in srgb, var(--color_plh) 20%, transparent);
+  border: solid 1rpx color-mix(in srgb, var(--color_plh) 25%, transparent);
 }
 
 .cccprice {
   color: var(--color_price) !important;
 }
 .cccprice.border{
-  border: solid 1rpx color-mix(in srgb, var(--color_price) 20%, transparent);
+  border: solid 1rpx color-mix(in srgb, var(--color_price) 25%, transparent);
 }
 
 .cccgreen {
   color: var(--color_green) !important;
 }
 .cccgreen.border{
-  border: solid 1rpx color-mix(in srgb, var(--color_green) 20%, transparent);
+  border: solid 1rpx color-mix(in srgb, var(--color_green) 25%, transparent);
 }
 
 .cccyellow {
   color: var(--color_yellow) !important;
 }
 .cccyellow.border{
-  border: solid 1rpx color-mix(in srgb, var(--color_yellow) 20%, transparent);
+  border: solid 1rpx color-mix(in srgb, var(--color_yellow) 25%, transparent);
 }
 
 .cccorange{
   color: var(--color_orange) !important;
 }
 .cccorange.border{
-  border: solid 1rpx color-mix(in srgb, var(--color_orange) 20%, transparent);
+  border: solid 1rpx color-mix(in srgb, var(--color_orange) 25%, transparent);
 }
 .cccbrown{
   color: var(--color_brown) !important;
 }
 .cccbrown.border{
-  border: solid 1rpx color-mix(in srgb, var(--color_brown) 20%, transparent);
+  border: solid 1rpx color-mix(in srgb, var(--color_brown) 25%, transparent);
 }
 
 
