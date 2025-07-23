@@ -43,6 +43,7 @@ export interface Product_Publish extends ProductBase, Time_Base {
   picUrl?: string; // 存货数量
   name?: string;
   intro?: string;
+  totalSaleStock?: string;
   attachUrl?: string;
   currentPrice?: string;
   waybillId?: string;
