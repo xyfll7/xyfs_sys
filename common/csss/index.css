@@ -7,8 +7,8 @@
   --color_price: hsla(0, 100%, 66%);
   --color_green: #07c161;
   --color_yellow: rgb(245, 239, 6);
-  --color_orange:#B8860B;
-  --color_brown:#996515;
+  --color_orange:#FFA500;
+  --color_brown:#B8860B;
   --color_red: rgba(255, 0, 0);
   --color_black: #2d2d2d;
   --color_trans: transparent;
@@ -213,12 +213,12 @@ page {
 }
 
 .cccorange{
-  color: #B8860B !important;
+  color: #FFA500 !important;
   color: var(--color_orange) !important;
 }
 
 .cccorange.border{
-  border: solid 1rpx rgba(184, 134, 11, 0.2);
+  border: solid 1rpx rgba(255, 165, 0, 0.2);
 }
 
 @supports (color: color-mix(in lch, red, blue)) {
@@ -228,12 +228,12 @@ page {
 }
 
 .cccbrown{
-  color: #996515 !important;
+  color: #B8860B !important;
   color: var(--color_brown) !important;
 }
 
 .cccbrown.border{
-  border: solid 1rpx rgba(153, 101, 21, 0.2);
+  border: solid 1rpx rgba(184, 134, 11, 0.2);
 }
 
 @supports (color: color-mix(in lch, red, blue)) {
