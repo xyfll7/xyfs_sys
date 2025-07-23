@@ -60,16 +60,6 @@ export function utils_string_to_char_code(str0: string) {
   }, "")}`;
 }
 
-// 查找数组中重复元素
-export function utils_duplicates(arr: any[]) {
-  const temp: any[] = [];
-  arr.forEach((item) => {
-    if (arr.indexOf(item) != arr.lastIndexOf(item) && temp.indexOf(item) == -1) {
-      temp.push(item);
-    }
-  });
-  return temp;
-}
 
 
 export async function utils_get_qrcode({ page, scene, appid, fileType = ".png" }: { appid?: string; page: string; scene: string; fileType?: ".png"; }): Promise<string> {
