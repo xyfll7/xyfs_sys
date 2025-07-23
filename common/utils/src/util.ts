@@ -56,7 +56,50 @@ export function coo___arr_random(arr: string[], params: { min?: number, max?: nu
   }
 };
 
+/** 数组方法
+ * 对象数组去重值
+ * 不改变去重后的数组顺序
+ */
+export function coo___arr_remove_duplicate_objects<T extends Record<string, unknown>>(arr: T[] | null | undefined, key: keyof T): T[] {
+  if (!arr) return [];
+  const seen = new Map<T[keyof T], T>();
+  return arr.filter((item) => {
+    const keyValue = item[key];
+    if (!seen.has(keyValue)) {
+      seen.set(keyValue, item);
+      return true;
+    }
+    return false;
+  });
+}
 
+/** 数组方法
+ * 逐个删除重复元素的方法（改进版）
+ * 不改变去重后的数组顺序
+ */
+export function coo___arr_remove_one_duplicate_by_id<T extends Record<string, unknown>>(arr: T[], key: keyof T, targetId: T[keyof T]): T[] {
+  // 先找到所有匹配的元素索引
+  const matchingIndices: number[] = [];
+  arr.forEach((item, index) => {
+    if (item[key] === targetId) {
+      matchingIndices.push(index);
+    }
+  });
+
+  // 如果没有匹配的元素，直接返回原数组
+  if (matchingIndices.length === 0) {
+    return [...arr];
+  }
+
+  // 如果只有一个匹配的元素，删除它
+  if (matchingIndices.length === 1) {
+    return arr.filter((_, index) => index !== matchingIndices[0]);
+  }
+
+  // 如果有多个匹配的元素，删除第二个（保留第一个）
+  const indexToRemove = matchingIndices[1];
+  return arr.filter((_, index) => index !== indexToRemove);
+}
 
 // 兼容部分ios手机时间格式（部分ios手机不支持yyyy-MM-dd hh:mm:ss格式)
 export function coo___ios_date(value?: number | string): Date {
