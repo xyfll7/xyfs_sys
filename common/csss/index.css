@@ -7,6 +7,7 @@
   --color_price: hsla(0, 100%, 66%);
   --color_green: #07c161;
   --color_yellow: rgb(245, 239, 6);
+  --color_orange: #FFA500;
   --color_red: rgba(255, 0, 0);
   --color_black: #2d2d2d;
   --color_trans: transparent;
@@ -162,9 +163,29 @@ page {
   color: var(--color_plh) !important;
 }
 
+.cccplh.border{
+  border: solid 1rpx rgba(128, 128, 128, 0.2);
+}
+
+@supports (color: color-mix(in lch, red, blue)) {
+.cccplh.border{
+  border: solid 1rpx color-mix(in srgb, var(--color_plh) 20%, transparent);
+}
+}
+
 .cccprice {
   color: hsla(0, 100%, 66%) !important;
   color: var(--color_price) !important;
+}
+
+.cccprice.border{
+  border: solid 1rpx rgba(255, 82, 82, 0.2);
+}
+
+@supports (color: color-mix(in lch, red, blue)) {
+.cccprice.border{
+  border: solid 1rpx color-mix(in srgb, var(--color_price) 20%, transparent);
+}
 }
 
 .cccgreen {
@@ -172,9 +193,44 @@ page {
   color: var(--color_green) !important;
 }
 
+.cccgreen.border{
+  border: solid 1rpx rgba(7, 193, 97, 0.2);
+}
+
+@supports (color: color-mix(in lch, red, blue)) {
+.cccgreen.border{
+  border: solid 1rpx color-mix(in srgb, var(--color_green) 20%, transparent);
+}
+}
+
 .cccyellow {
   color: rgb(245, 239, 6) !important;
   color: var(--color_yellow) !important;
+}
+
+.cccyellow.border{
+  border: solid 1rpx rgba(245, 239, 6, 0.2);
+}
+
+@supports (color: color-mix(in lch, red, blue)) {
+.cccyellow.border{
+  border: solid 1rpx color-mix(in srgb, var(--color_yellow) 20%, transparent);
+}
+}
+
+.cccorange{
+  color: #FFA500 !important;
+  color: var(--color_orange) !important;
+}
+
+.cccorange.border{
+  border: solid 1rpx rgba(255, 165, 0, 0.2);
+}
+
+@supports (color: color-mix(in lch, red, blue)) {
+.cccorange.border{
+  border: solid 1rpx color-mix(in srgb, var(--color_orange) 20%, transparent);
+}
 }
 
 .bccback {

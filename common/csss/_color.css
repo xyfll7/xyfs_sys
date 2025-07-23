@@ -19,17 +19,36 @@
 .cccplh {
   color: var(--color_plh) !important;
 }
+.cccplh.border{
+  border: solid 1rpx color-mix(in srgb, var(--color_plh) 20%, transparent);
+}
 
 .cccprice {
   color: var(--color_price) !important;
+}
+.cccprice.border{
+  border: solid 1rpx color-mix(in srgb, var(--color_price) 20%, transparent);
 }
 
 .cccgreen {
   color: var(--color_green) !important;
 }
+.cccgreen.border{
+  border: solid 1rpx color-mix(in srgb, var(--color_green) 20%, transparent);
+}
 
 .cccyellow {
   color: var(--color_yellow) !important;
+}
+.cccyellow.border{
+  border: solid 1rpx color-mix(in srgb, var(--color_yellow) 20%, transparent);
+}
+
+.cccorange{
+  color: var(--color_orange) !important;
+}
+.cccorange.border{
+  border: solid 1rpx color-mix(in srgb, var(--color_orange) 20%, transparent);
 }
 
 .bccback {
