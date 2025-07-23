@@ -50,9 +50,21 @@
 .cccorange.border{
   border: solid 1rpx color-mix(in srgb, var(--color_orange) 20%, transparent);
 }
+.cccbrown{
+  color: var(--color_brown) !important;
+}
+.cccbrown.border{
+  border: solid 1rpx color-mix(in srgb, var(--color_brown) 20%, transparent);
+}
+
+
 
 .bccback {
   background-color: var(--color_back) !important;
+}
+
+.bccblack {
+  background-color: var(--color_black) !important;
 }
 
 .bccred {
