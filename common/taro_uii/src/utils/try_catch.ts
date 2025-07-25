@@ -118,9 +118,12 @@ export async function try_Taro_navigateBack(extraData?: TaroGeneral.IAnyObject) 
       await Taro.navigateBackMiniProgram({ extraData });
     }
     await Taro.navigateBack();
-  } catch {
+  } catch (err) {
     try {
-      Taro.reLaunch({ url: "/pages/index/index" });
+      const route = Taro.getCurrentPages().at(-1)?.route;
+      if (route !== "pages/index/index") {
+        Taro.reLaunch({ url: "/pages/index/index" });
+      }
     } catch (errr) {
       throw new ErrorR(errr);
     }
