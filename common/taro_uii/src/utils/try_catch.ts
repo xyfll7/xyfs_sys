@@ -27,6 +27,20 @@ async function try_Taro_scanCode<T>(params?: Taro.scanCode.Option & { type?: key
   }
 }
 export { try_Taro_scanCode };
+
+/**
+ * 同步获取存储数据。
+ *
+ * @template T - 返回值的类型
+ * @param key - 存储的键名。当键名为 `"OPENID"` 时，`env` 参数为必填。
+ * @param env - 环境配置，仅当 `key` 为 `"OPENID"` 时需要。
+ * @returns 返回存储的值，类型为 `T` 或 `null`（若键不存在）。
+ * @remarks
+ * - 当 `key` 为 `"OPENID"` 时，必须提供 `env` 参数。
+ * - 当 `key` 不为 `"OPENID"` 时，不应传递 `env` 参数。
+ */
+export function Taro_getStorageSync<T>(key: "OPENID", env: Environment): T | null;
+export function Taro_getStorageSync<T>(key: Exclude<string, "OPENID">): T | null;
 export function Taro_getStorageSync<T>(key: string, env?: Environment): T | null {
   if (key === "OPENID" && env?.OPENID && env.envVersion === "develop") {
     return env.OPENID as T;

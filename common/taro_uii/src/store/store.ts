@@ -189,7 +189,7 @@ interface State_Blue {
 }
 
 export const useSTBlueDevices = create<State_Blue>((set) => ({
-  blueDevices: Taro_getStorageSync<Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice[]>(___MY_BLUE_DEVICES___, getMyEnv()) ?? [],
+  blueDevices: Taro_getStorageSync<Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice[]>(___MY_BLUE_DEVICES___) ?? [],
   sett: (devices) => set(() => {
     Taro.setStorageSync(___MY_BLUE_DEVICES___, devices);
     return { blueDevices: devices };

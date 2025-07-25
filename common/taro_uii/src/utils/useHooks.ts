@@ -4,7 +4,7 @@ import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { Pagination } from "../../types/type_index";
 import { ErrorR } from "../config";
 import { getMyEnv } from "../env";
-import { try_Taro_getLocation } from "./try_catch";
+import { Taro_getStorageSync, try_Taro_getLocation } from "./try_catch";
 
 
 export function useHook_Reducer<T>(data: T): [T, React.Dispatch<Partial<T> | null>] {
@@ -210,7 +210,7 @@ export function useHook_getCurrentInstance<T>(isFromStorage: boolean = false): O
   if (!ref.current) {
     ref.current = page as Omit<Taro.PageInstance, 'options'> & { options?: T; };
     if (isFromStorage) {
-      const res = Taro.getStorageSync("DATA");
+      const res = Taro_getStorageSync<T>("DATA");
       Taro.removeStorageSync("DATA");
       if (!res) {
         ref.current = { ...ref.current!, options: undefined };
