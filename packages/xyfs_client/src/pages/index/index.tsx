@@ -86,6 +86,36 @@ const Index: FC = () => {
           </View>
         </ComNavBarA>
       </ComNav>
+      <View className='ww dll prl10 bccback ' >
+        <View className='ww dr'>
+          <ComButton rr className={`mb10 cccplh bccbacktab `} hoverClass='none' onClick={() => { setCart([]); }}>清空</ComButton>
+          <ComButton rr className={`cccplh mb10 ml10 bccbacktab `} hoverClass='none' onClick={async () => {
+            Taro.showLoading({ title: "获取短链中...", mask: true });
+            const res = await Api_common_getShortLink_ctn({
+              pageUrl: `pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ G_D: G_D, R_D: Number(selfInfo_S.managerUser?.mobile).toString(36) })) })}`,
+              pageTitle: `${deptInfo?.deptName}`,
+              isPermanent: false
+            });
+            await try_Taro_setClipboardData({ data: res });
+            Taro.showToast({ icon: "none", title: "已复制", });
+          }}>
+            <View className='dbase'>
+              {selfInfo_S.managerUser && <Text className='fs07 mr4 cccorange' >¥</Text>}
+              <Text className='mr4'>短链</Text>
+            </View>
+          </ComButton>
+          <ComButtonOpen rr className={`cccplh mb10 ml10  bccbacktab`} hoverClass='none' id='send_express'
+            shareTitle={`${selfInfo_S.managerUser?.name} 团长 邀您买东西啦`}
+            openType='share'
+            sharePath={`/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ G_D: G_D, R_D: Number(selfInfo_S.managerUser?.mobile).toString(36) })) })}`}>
+            <View className='dbase'>
+              {selfInfo_S.managerUser && <Text className='fs07 mr4 cccorange' >¥</Text>}
+              <Text className='mr4'>分享</Text>
+            </View>
+          </ComButtonOpen>
+          <ComButton className='cccplh mb10 bccbacktab ml10' url='/pages_user/user_orders'>订单</ComButton>
+        </View>
+      </View>
     </View>
     <ComScrollView className='IOO ' upperThreshold={200}
       onScroll={(e, top) => { if (e.detail.scrollTop > top) { ref_banner.current?.setIsHeaderBack(true); } }}
@@ -93,35 +123,7 @@ const Index: FC = () => {
       <Video className='ww IOO mb10' controls={false} loop autoplay src='https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/temp_file/Weixin%20Videos2025-07-22_143936_700.mp4' />
       {page.pageNum !== 0 && Boolean(page.list.length) &&
         <View className='dll ww IOO'>
-          <View className='ww dll prl10 bccback ' >
-            <View className='ww dr'>
-              <ComButton rr className={`mb10 cccplh bccbacktab `} hoverClass='none' onClick={() => { setCart([]); }}>清空</ComButton>
-              <ComButton rr className={`cccplh mb10 ml10 bccbacktab `} hoverClass='none' onClick={async () => {
-                Taro.showLoading({ title: "获取短链中...", mask: true });
-                const res = await Api_common_getShortLink_ctn({
-                  pageUrl: `pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ G_D: G_D, R_D: Number(selfInfo_S.managerUser?.mobile).toString(36) })) })}`,
-                  pageTitle: `${deptInfo?.deptName}`,
-                  isPermanent: false
-                });
-                await try_Taro_setClipboardData({ data: res });
-                Taro.showToast({ icon: "none", title: "已复制", });
-              }}>
-                <View className='dbase'>
-                  {selfInfo_S.managerUser && <Text className='fs07 mr4 cccorange' >¥</Text>}
-                  <Text className='mr4'>短链</Text>
-                </View>
-              </ComButton>
-              <ComButtonOpen rr className={`cccplh mb10 ml10  bccbacktab`} hoverClass='none' id='send_express'
-                shareTitle={`${selfInfo_S.managerUser?.name} 团长 邀您买东西啦`}
-                openType='share'
-                sharePath={`/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ G_D: G_D, R_D: Number(selfInfo_S.managerUser?.mobile).toString(36) })) })}`}>
-                <View className='dbase'>
-                  {selfInfo_S.managerUser && <Text className='fs07 mr4 cccorange' >¥</Text>}
-                  <Text className='mr4'>分享</Text>
-                </View>
-              </ComButtonOpen>
-            </View>
-          </View>
+
           {[...page.list].map((item, index) => <IIIItem0 item={item} key={index}
             count={cart.filter(e => e.id === item.id).length}
             onDetail={() => { setProduct(item); }}
