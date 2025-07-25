@@ -48,8 +48,8 @@ export async function wx_call_container<OUT = void>({ path, data, params, method
     };
 
     const res = (base_url !== "" && env.envVersion === "develop") ?
-      await ___try_Taro_request<_Return>({ ...param }) :
-      await ___try_Taro_callContainer<_Return>(_ctn, { ...param });
+      await ___Taro_request<_Return>({ ...param }) :
+      await ___Taro_callContainer<_Return>(_ctn, { ...param });
     if (res.statusCode === 200) {
       if (res.data.code === 200) {
         return res.data.data;
@@ -82,26 +82,15 @@ export async function get_Taro_ctn() {
     }
   }
 }
-export async function try_Taro_login() {
-  try {
-    const res = await Taro.login();
-    if (res.errMsg === "login:ok") {
-      return res.code;
-    } else {
-      throw new Error(`${res.errMsg}_获取登录code失败`);
-    }
-  } catch (err) {
-    throw new ErrorR(err);
-  }
-}
-async function ___try_Taro_request<T>(option: Taro.request.Option<any, any>) {
+
+async function ___Taro_request<T>(option: Taro.request.Option<any, any>) {
   try {
     return await Taro.request<T>(option);
   } catch (err) {
     throw new ErrorR(err);
   }
 }
-async function ___try_Taro_callContainer<T>(_ctn: Taro.Cloud, option: Taro.cloud.CallContainerParam<any>) {
+async function ___Taro_callContainer<T>(_ctn: Taro.Cloud, option: Taro.cloud.CallContainerParam<any>) {
   try {
     return await _ctn.callContainer<T>(option);
   } catch (err) {

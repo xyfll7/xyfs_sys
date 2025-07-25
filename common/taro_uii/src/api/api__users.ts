@@ -1,7 +1,24 @@
+import Taro from "@tarojs/taro";
 import { AddressInfo, DeptInfo, DICTS_KEYS, Pagination, Printer_Info, Product_Publish } from "../../types";
+import { ErrorR } from "../config";
 import { getMyEnv } from "../env";
 import { Taro_getStorageSync } from "../utils/try_catch";
-import { try_Taro_login, wx_call_container } from "./wx_call";
+import { wx_call_container } from "./wx_call";
+
+
+
+export async function ___Taro_login() {
+  try {
+    const res = await Taro.login();
+    if (res.errMsg === "login:ok") {
+      return res.code;
+    } else {
+      throw new Error(`${res.errMsg}_获取登录code失败`);
+    }
+  } catch (err) {
+    throw new ErrorR(err);
+  }
+}
 
 
 export async function Api_common_getShortLink_ctn(params: {
@@ -116,7 +133,7 @@ export async function Api_login_rqs(params?: { mobile?: string, }): Promise<Dept
   const res = await wx_call_container<DeptInfo>({
     path: "/login",
     data: {
-      code: await (async () => { return Taro_getStorageSync<string>("OPENID", getMyEnv()) ? "" : await try_Taro_login(); })(),
+      code: await (async () => { return Taro_getStorageSync<string>("OPENID", getMyEnv()) ? "" : await ___Taro_login(); })(),
       ...params,
     }
   });
