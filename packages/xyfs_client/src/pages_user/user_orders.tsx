@@ -18,7 +18,7 @@ import { Order_deliveryStatus_ST, Order_ST, Product_category_ST } from "@xyfs/ta
 import { getMyEnv } from "@xyfs/taro_uii/src/env";
 import { useSTExpress } from "@xyfs/taro_uii/store/store";
 import { OrderInfo, Product_Express, ProductBase } from "@xyfs/taro_uii/type_product";
-import { try_Taro_hideLoading, try_Taro_openBusinessView, try_Taro_requestPayment, try_Taro_setClipboardData, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
+import { try_Taro_hideLoading, try_Taro_Promise_openBusinessView, try_Taro_requestPayment, try_Taro_setClipboardData, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
 import { useHook_getCurrentInstance, useHook_pageListNew } from "@xyfs/taro_uii/utils/useHooks";
 import { coo___urlToObj } from "@xyfs/utils/util";
 import { FC, useCallback, useEffect, useState } from "react";
@@ -252,7 +252,7 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
               {order.deliveryStatus === Order_deliveryStatus_ST.待收货 &&
                 <ComButton rr className='ml10 mb10 bccyellow' onClick={async () => {
                   Taro.showLoading({ mask: true, title: "确认中...", });
-                  await try_Taro_openBusinessView(_order2.transactionId!);
+                  await try_Taro_Promise_openBusinessView(_order2.transactionId!);
                   Taro.showToast({ icon: "none", title: "确认收货成功" });
                   page_list_update((p) => ({ ...p, list: p.list.map(eee => eee.id === order.id ? { ...eee, deliveryStatus: Order_deliveryStatus_ST.已签收 } : eee) }));
                 }}>确认收货</ComButton>

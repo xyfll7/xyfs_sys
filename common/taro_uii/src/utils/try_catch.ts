@@ -52,7 +52,8 @@ export function try_Taro_getStorageSync<T>(key: string, env?: Environment): T | 
     return null;
   }
 }
-export function try_Taro_openBusinessView(transactionId: string) {
+
+export function try_Taro_Promise_openBusinessView(transactionId: string) {
   return new Promise<TaroGeneral.CallbackResult>((resolve, reject) => {
     Taro.openBusinessView({
       businessType: 'weappOrderConfirm',
@@ -69,11 +70,8 @@ export function try_Taro_openBusinessView(transactionId: string) {
     });
 
   });
-
-
-
 }
-export function try_Taro_getFileSystemManager_readFile(option: Taro.FileSystemManager.ReadFileOption) {
+export function try_Taro_Promise_getFileSystemManager_readFile(option: Taro.FileSystemManager.ReadFileOption) {
   return new Promise<string | ArrayBuffer>((resolve, reject) => {
     Taro.getFileSystemManager().readFile({
       ...option,
@@ -84,7 +82,7 @@ export function try_Taro_getFileSystemManager_readFile(option: Taro.FileSystemMa
     });
   });
 }
-export function try_Taro_getFileSystemManager_writeFile(option: Taro.FileSystemManager.WriteFileOption) {
+export function try_Taro_Promise_getFileSystemManager_writeFile(option: Taro.FileSystemManager.WriteFileOption) {
   return new Promise<string>((resolve, reject) => {
     Taro.getFileSystemManager().writeFile({
       ...option,
@@ -99,7 +97,7 @@ export function try_Taro_getFileSystemManager_writeFile(option: Taro.FileSystemM
     });
   });
 }
-export function try_Taro_getFileSystemManager_saveFile(option: Taro.FileSystemManager.SaveFileOption) {
+export function try_Taro_Promise_getFileSystemManager_saveFile(option: Taro.FileSystemManager.SaveFileOption) {
   return new Promise<string>((resolve, reject) => {
     Taro.getFileSystemManager().saveFile({
       ...option,

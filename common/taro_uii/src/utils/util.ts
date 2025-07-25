@@ -4,7 +4,7 @@ import { endOfDay, format, lastDayOfMonth, startOfDay, startOfMonth } from "date
 import { AddressInfo, DeptInfo, OrderInfo, Printer_Info, ProductBase } from "../../types";
 import { Api_qrcode_ctn } from "../api/api__users";
 import { roo___my_dept } from "../roles";
-import { try_Taro_chooseMessageFile, try_Taro_downloadFile, try_Taro_getFileSystemManager_readFile, try_Taro_getFileSystemManager_saveFile, try_Taro_getFileSystemManager_writeFile, try_Taro_openDocument, try_Taro_showActionSheet } from "./try_catch";
+import { try_Taro_chooseMessageFile, try_Taro_downloadFile, try_Taro_openDocument, try_Taro_Promise_getFileSystemManager_readFile, try_Taro_Promise_getFileSystemManager_saveFile, try_Taro_Promise_getFileSystemManager_writeFile, try_Taro_showActionSheet } from "./try_catch";
 
 // 订单信息中合并入团长信息
 export function utils_order_merge_servicer_info(selfInfo_S: DeptInfo): OrderInfo<ProductBase> {
@@ -70,7 +70,7 @@ export async function utils_get_qrcode({ page, scene, appid, fileType = ".png" }
     scene: scene ? scene : "0",
   });
   // 注: 开发环境无法生成二维码，只有在真机上才能生成
-  const res = await try_Taro_getFileSystemManager_writeFile({
+  const res = await try_Taro_Promise_getFileSystemManager_writeFile({
     filePath: `${Taro.env.USER_DATA_PATH}/qrcode_${coo___ios_date().getTime()}${fileType}`,
     encoding: "base64",
     data: imageData,
@@ -103,7 +103,7 @@ export function utils_get_start_end_date(date: string) {
 // 打开 excel 表格文件
 export async function utils_open_excel({ url, file_name }: { url: string, file_name: string; }) {
   const res_filePath = await try_Taro_downloadFile({ url });
-  const res_savedFilePath = await try_Taro_getFileSystemManager_saveFile({
+  const res_savedFilePath = await try_Taro_Promise_getFileSystemManager_saveFile({
     tempFilePath: res_filePath!,
     filePath: `${Taro.env.USER_DATA_PATH}/${file_name}`
   });
@@ -111,7 +111,7 @@ export async function utils_open_excel({ url, file_name }: { url: string, file_n
 }
 export async function utils_downloadFile_saveFile({ url, file_name }: { url: string, file_name: string; }) {
   const res_filePath = await try_Taro_downloadFile({ url });
-  const res_savedFilePath = await try_Taro_getFileSystemManager_saveFile({
+  const res_savedFilePath = await try_Taro_Promise_getFileSystemManager_saveFile({
     tempFilePath: res_filePath!,
     filePath: `${Taro.env.USER_DATA_PATH}/${file_name}`
   });
@@ -129,7 +129,7 @@ export async function utils_import_excel(): Promise<string> {
     extension: [".xls", ".xlsx"],
   });
 
-  const res_abc = await try_Taro_getFileSystemManager_readFile({
+  const res_abc = await try_Taro_Promise_getFileSystemManager_readFile({
     filePath: res_message_file?.path ?? "",
     encoding: "base64",
   });
