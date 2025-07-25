@@ -2,7 +2,7 @@ import Taro from "@tarojs/taro";
 import { coo___objToUrl } from "@xyfs/utils/util";
 import { ErrorR } from "../config";
 import { base_url, getMyEnv } from "../env";
-import { Taro_getStorageSync } from "../utils/try_catch";
+import { try_Taro_getStorageSync } from "../utils/try_catch";
 
 export async function wx_call_container<OUT = void>({ path, data, params, method = "POST", header }: {
   path: string;
@@ -20,8 +20,8 @@ export async function wx_call_container<OUT = void>({ path, data, params, method
       path: `/api${_path}`,
       url: `${base_url}/api${_path}`,
       header: {
-        "OPENID": (env.OPENID) ? env.OPENID : Taro_getStorageSync<string>("OPENID", getMyEnv()) ?? "",
-        "DEPTID": (env.DEPTID) ? env.DEPTID : Taro_getStorageSync<string>("DEPTID") ?? "",
+        "OPENID": (env.OPENID) ? env.OPENID : try_Taro_getStorageSync<string>("OPENID", getMyEnv()) ?? "",
+        "DEPTID": (env.DEPTID) ? env.DEPTID : try_Taro_getStorageSync<string>("DEPTID") ?? "",
         "APPID": env.appId,
         "ENV-Simulate": env.envSimulate,
         "ENV-Version": env.envVersion,

@@ -2,7 +2,7 @@ import Taro from "@tarojs/taro";
 import { AddressInfo, DeptInfo, DICTS_KEYS, Pagination, Printer_Info, Product_Publish } from "../../types";
 import { ErrorR } from "../config";
 import { getMyEnv } from "../env";
-import { Taro_getStorageSync } from "../utils/try_catch";
+import { try_Taro_getStorageSync } from "../utils/try_catch";
 import { wx_call_container } from "./wx_call";
 
 
@@ -133,7 +133,7 @@ export async function Api_login_rqs(params?: { mobile?: string, }): Promise<Dept
   const res = await wx_call_container<DeptInfo>({
     path: "/login",
     data: {
-      code: await (async () => { return Taro_getStorageSync<string>("OPENID", getMyEnv()) ? "" : await ___Taro_login(); })(),
+      code: await (async () => { return try_Taro_getStorageSync<string>("OPENID", getMyEnv()) ? "" : await ___Taro_login(); })(),
       ...params,
     }
   });

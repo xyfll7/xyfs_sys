@@ -39,9 +39,9 @@ export { try_Taro_scanCode };
  * - 当 `key` 为 `"OPENID"` 时，必须提供 `env` 参数。
  * - 当 `key` 不为 `"OPENID"` 时，不应传递 `env` 参数。
  */
-export function Taro_getStorageSync<T>(key: "OPENID", env: Environment): T | null;
-export function Taro_getStorageSync<T>(key: Exclude<string, "OPENID">): T | null;
-export function Taro_getStorageSync<T>(key: string, env?: Environment): T | null {
+export function try_Taro_getStorageSync<T>(key: "OPENID", env: Environment): T | null;
+export function try_Taro_getStorageSync<T>(key: Exclude<string, "OPENID">): T | null;
+export function try_Taro_getStorageSync<T>(key: string, env?: Environment): T | null {
   if (key === "OPENID" && env?.OPENID && env.envVersion === "develop") {
     return env.OPENID as T;
   }
@@ -426,7 +426,6 @@ export async function try_Taro_hideLoading() {
     throw new ErrorR(err);
   }
 }
-
 export async function try_Taro_saveImageToPhotosAlbum(option: Taro.saveImageToPhotosAlbum.Option) {
   const res = await Taro.saveImageToPhotosAlbum(option);
   if (res.errMsg !== "saveImageToPhotosAlbum:ok") {
