@@ -155,7 +155,7 @@ const IIIUserHasNoRegiment: FC<{ className: string; }> = ({ className }) => {
       <MMMLogo className='mb10'></MMMLogo>
     </ComNav>
     <View className='dll'>
-      <ComButton className='mb10 cccplh '   >
+      <ComButton className='mb10 cccplh bcctrans' hoverClass="none">
         <View className='dll'>
           <View>只有团长才能为您提供服务</View>
           <View>请先选择一个团长</View>
