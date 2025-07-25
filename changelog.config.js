@@ -30,6 +30,11 @@ const _types = {
     emoji: '🔧',
     value: 'config'
   },
+  refactor: {
+    description: 'Refactor code without changing functionality',
+    emoji: '♻️',
+    value: 'refactor'
+  }
 };
 module.exports = {
   disableEmoji: false,
