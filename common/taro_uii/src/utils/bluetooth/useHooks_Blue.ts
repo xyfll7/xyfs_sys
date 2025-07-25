@@ -175,7 +175,7 @@ export async function on_start_print(___cb: (blue_device?: Taro.onBluetoothDevic
     const { blueDevices } = useSTBlueDevices.getState();
     if (blueDevices.length === 0) {
       //  没有蓝牙打印机 - 弹窗提示用户去配置蓝牙打印机
-      if (Taro.getCurrentPages().slice(-1)?.[0]?.route === "pages_comm/icomm_printer") {
+      if (Taro.getCurrentPages().at(-1)?.route === "pages_comm/icomm_printer") {
         throw new Error("请添加蓝牙打印机");
       } else {
         if (await try_Taro_showModal({ title: "提示", content: "您还没有配置蓝牙打印机", showCancel: false, confirmText: "去配置", })) {
