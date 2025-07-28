@@ -258,9 +258,7 @@ const IIIPageAccess: FC<{ className?: string; }> = ({ className }) => {
   </View>;
 };
 
-const IIISystemUPdate: FC<{
-  className?: string; step: 0 | 1 | 2 | 3;
-}> = ({ className = "", step }) => {
+const IIISystemUPdate: FC<{ className?: string; step: 0 | 1 | 2 | 3; }> = ({ className = "", step }) => {
   return <View className={`${className} ww`}>
     <ComNav>
       <View className='ww prl10'>
