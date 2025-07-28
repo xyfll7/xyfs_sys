@@ -59,7 +59,7 @@ export const MMMAAPage: FC<{
         isNeedAnyDept = false;// 顾客端 关闭部门限制
         break;
     }
-    const step = useSyncExternalStore(updater.sub, () => updater.step);
+    const updateStep = useSyncExternalStore(updater.sub, () => updater.step);
     // const isSystemUpdate = true; // Number(env.version.replaceAll(".", "")) < Number(selfInfo_S.serveVersion?.replaceAll(".", ""));
     const heightV = "100vh";
     const widthV = "100vw";
@@ -72,8 +72,8 @@ export const MMMAAPage: FC<{
         if (isLoading) {
           return <ComNav className='prl20'><ComLoading /></ComNav>;
         }
-        if (Boolean(step)) {
-          return <IIISystemUPdate step={step} />;
+        if (Boolean(updateStep)) {
+          return <IIISystemUPdate step={updateStep} />;
         }
         if (!___is_required_regiment(selfInfo_S, isNeedRegiment)) {
           return <IIIUserHasNoRegiment className='prl10' />;
