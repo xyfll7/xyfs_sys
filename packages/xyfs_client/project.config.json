@@ -3,8 +3,8 @@
   "description": "小象心选_顾客端",
   "setting": {
     "urlCheck": true,
-    "es6": false,
-    "enhance": false,
+    "es6": true,
+    "enhance": true,
     "compileHotReLoad": false,
     "postcss": true,
     "minified": true,
