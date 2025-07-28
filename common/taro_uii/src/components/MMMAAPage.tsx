@@ -68,14 +68,26 @@ export const MMMAAPage: FC<{
       style={{ minWidth: widthV, width: widthV, maxWidth: widthV, height: heightV, minHeight: heightV, maxHeight: heightV, overflow: "hidden" }}
       hoverStopPropagation
       onClick={(e) => { e.stopPropagation(); }}>
-      {isLoading && <ComNav className='prl20'><ComLoading /></ComNav>}
-      {!isLoading && isSystemUpdate && <IIISystemUPdate />}
-      {!isLoading && !isSystemUpdate && !___is_required_regiment(selfInfo_S, isNeedRegiment) && <IIIUserHasNoRegiment className='prl10' />}
-      {!isLoading && !isSystemUpdate && !___is_required_dept(selfInfo_S, isNeedAnyDept) && <IIIUserHasNoDept className='prl10' />}
-      {!isLoading && !isSystemUpdate && !___is_required_role(selfInfo_S, isNeedAnyRole) && <IIIUserHasNoRole className='prl10' />}
-      {!isLoading && !isSystemUpdate && !___is_page_access(isPageAccess) && <IIIPageAccess />}
-      {!isLoading && !isSystemUpdate && ___is_page_access(isPageAccess) && ___is_required_role(selfInfo_S, isNeedAnyRole) && ___is_required_dept(selfInfo_S, isNeedAnyDept) && ___is_required_regiment(selfInfo_S, isNeedRegiment) &&
-        <View className={`${isHideRL ? "" : "prl10"}`} style={{
+      {(() => {
+        if (isLoading) {
+          return <ComNav className='prl20'><ComLoading /></ComNav>;
+        }
+        if (isSystemUpdate) {
+          return <IIISystemUPdate />;
+        }
+        if (!___is_required_regiment(selfInfo_S, isNeedRegiment)) {
+          return <IIIUserHasNoRegiment className='prl10' />;
+        }
+        if (!___is_required_dept(selfInfo_S, isNeedAnyDept)) {
+          return <IIIUserHasNoDept className='prl10' />;
+        }
+        if (!___is_required_role(selfInfo_S, isNeedAnyRole)) {
+          return <IIIUserHasNoRole className='prl10' />;
+        }
+        if (!___is_page_access(isPageAccess)) {
+          return <IIIPageAccess />;
+        }
+        return <View className={`${isHideRL ? "" : "prl10"}`} style={{
           display: "flex",
           flexDirection: "column",
           height: heightV,
@@ -101,8 +113,8 @@ export const MMMAAPage: FC<{
               </View>
             }
           </View>
-        </View>
-      }
+        </View>;
+      })()}
     </View>);
   };
 
