@@ -1,7 +1,7 @@
 import { Text, View, ViewProps } from "@tarojs/components";
 import Taro, { useDidShow, useLoad } from "@tarojs/taro";
 import { coo___urlToObj } from "@xyfs/utils/util";
-import React, { CSSProperties, FC, useEffect, useState, useSyncExternalStore } from "react";
+import React, { CSSProperties, FC, useState, useSyncExternalStore } from "react";
 import { DeptInfo } from "../../types/type_user";
 import { Api_login_rqs } from "../api/api__users";
 import { getMyEnv } from "../env";
@@ -44,7 +44,6 @@ export const MMMAAPage: FC<{
     const selfInfo_S = useSTSelf(s => s.selfInfo!);
     useHook_shareAppMessage({ page: props.share?.page, imageUrl: props.share?.imageUrl });
 
-    const env = getMyEnv();
     let _childrens = React.Children.map(props.children, (e) => e);
     if (isNoHeader) {
       _childrens = [<></>, ...(_childrens ?? [])];
@@ -60,7 +59,8 @@ export const MMMAAPage: FC<{
         isNeedAnyDept = false;// 顾客端 关闭部门限制
         break;
     }
-    const isSystemUpdate = Number(env.version.replaceAll(".", "")) < Number(selfInfo_S.serveVersion?.replaceAll(".", ""));
+    const step = useSyncExternalStore(updater.sub, () => updater.step);
+    // const isSystemUpdate = true; // Number(env.version.replaceAll(".", "")) < Number(selfInfo_S.serveVersion?.replaceAll(".", ""));
     const heightV = "100vh";
     const widthV = "100vw";
     return (<View
@@ -72,8 +72,8 @@ export const MMMAAPage: FC<{
         if (isLoading) {
           return <ComNav className='prl20'><ComLoading /></ComNav>;
         }
-        if (isSystemUpdate) {
-          return <IIISystemUPdate />;
+        if (Boolean(step)) {
+          return <IIISystemUPdate step={step} />;
         }
         if (!___is_required_regiment(selfInfo_S, isNeedRegiment)) {
           return <IIIUserHasNoRegiment className='prl10' />;
@@ -258,43 +258,48 @@ const IIIPageAccess: FC<{ className?: string; }> = ({ className }) => {
   </View>;
 };
 
-const IIISystemUPdate: FC<{ className?: string; }> = ({ className = "" }) => {
-  const [newVersion, applyUpdateNewVersion] = useINHook_newVersionChecker();
+const IIISystemUPdate: FC<{
+  className?: string; step: 0 | 1 | 2 | 3;
+}> = ({ className = "", step }) => {
   return <View className={`${className} ww`}>
     <ComNav>
       <View className='ww prl10'>
-        <MMMLogo className='mb10'></MMMLogo>
+        <MMMLogo className='mb10' />
         <View className='dll mb10'>
-          {newVersion === 0 && <ComButton className='cccplh' >系统升级中: 正在检查新版本...</ComButton>}
-          {newVersion === 1 && <ComButton className='cccplh' >系统升级中: 正在下载新版本...</ComButton>}
-          {newVersion === 2 && <><ComButton className='cccplh mb10' >系统升级: 下载成功</ComButton>
-            <ComButton className='bccyellow mb10' onClick={() => applyUpdateNewVersion()}>立即重启</ComButton></>}
-          {newVersion === 3 && <><ComButton className='cccplh mb10' >系统升级: 下载失败</ComButton>
-            <ComButton className='bccyellow mb10' onClick={() => applyUpdateNewVersion()}>稍后重试</ComButton></>}
+          {step === 1 && <ComButton className='cccplh bccback' hoverClass="none">系统升级中: 正在下载新版本...</ComButton>}
+          {step === 2 && <><ComButton className='cccplh mb10 bccback' hoverClass="none">系统升级: 下载成功</ComButton>
+            <ComButton className='bccyellow mb10' onClick={() => Taro.getUpdateManager().applyUpdate()}>立即重启</ComButton></>}
+          {step === 3 && <><ComButton className='cccplh mb10 bccback' hoverClass="none">系统升级: 下载失败</ComButton>
+            <ComButton className='bccyellow mb10' onClick={() => Taro.getUpdateManager().applyUpdate()}>稍后重试</ComButton></>}
         </View>
-        <MMMFooter></MMMFooter>
+        <MMMFooter />
       </View>
     </ComNav>
   </View>;
 };
 
 
-
-
-
-function useINHook_newVersionChecker(): [number, () => void] {
-  const [newVersion, setNewVersion] = useState<0 | 1 | 2 | 3>(0);
-  const updateManager = Taro.getUpdateManager();
-  useEffect(() => {
-    updateManager.onCheckForUpdate(() => setNewVersion(1));
-    updateManager.onUpdateReady(() => setNewVersion(2));
-    updateManager.onUpdateFailed(() => setNewVersion(3));
-  }, [updateManager]);
-  function applyUpdateNewVersion() {
-    updateManager.applyUpdate();
-  }
-  return [newVersion, applyUpdateNewVersion];
-}
+const updater = {
+  step: 0 as 0 | 1 | 2 | 3, // 0: 检查中, 1:下载中 , 2: 下载完成 , 3: 更新失败
+  sub(cb: () => void) {
+    const updateManager = Taro.getUpdateManager();
+    updateManager.onCheckForUpdate((res) => {
+      if (res.hasUpdate) {
+        updater.step = 1;
+        cb();
+      }
+    });
+    updateManager.onUpdateReady(() => {
+      updater.step = 2;
+      cb();
+    });
+    updateManager.onUpdateFailed(() => {
+      updater.step = 3;
+      cb();
+    });
+    return () => { };
+  },
+};
 
 
 
