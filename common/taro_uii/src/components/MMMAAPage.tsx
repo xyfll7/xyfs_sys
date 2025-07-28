@@ -131,9 +131,13 @@ function ___is_page_access(isPageAccess: boolean | null) {
 }
 
 // 顾客端-验证当前页面是否需要用户选择团长才能访问
-function ___is_required_regiment(selfInfoS: DeptInfo, isNeedDept: boolean = true) {
-  if (isNeedDept) {
-    if (selfInfoS.deptInfo) {
+function ___is_required_regiment(selfInfoS: DeptInfo, isNeedRegiment: boolean = true) {
+  const { appId } = getMyEnv();
+  if (appId === process.env.TARO_APP_ADMIN) {
+    return true; // 管理端不需要团长
+  }
+  if (isNeedRegiment) {
+    if (roo___has_role(selfInfoS, ["REGIMENT", "GUIDE"])) {
       return true;
     } else {
       return false;
@@ -145,6 +149,10 @@ function ___is_required_regiment(selfInfoS: DeptInfo, isNeedDept: boolean = true
 
 // 管理端-验证当前页面必须有权限才能访问否则只能注册
 function ___is_required_role(selfInfoS: DeptInfo, isNeedAnyRole: boolean = true) {
+  const { appId } = getMyEnv();
+  if (appId === process.env.TARO_APP_CLIENT) {
+    return true; // 顾客端不需要权限
+  }
   if (isNeedAnyRole) {
     return roo___has_role(selfInfoS, ["*:*:*"]);
   } else {
