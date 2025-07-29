@@ -174,7 +174,7 @@ const Index: FC = () => {
             </View>
           </ComNavBarB>
           <ComScrollView className='IOO'>
-            {!Boolean(cart?.length) && <View className='dxy ww'><ComLoading className='mb10' isEmpty>购物车空空如也 ~</ComLoading></View>}
+            {!Boolean(cart?.length) && <View className='dxy ww'><ComLoading className='mb10' isEmpty>1购物车空空如也 ~</ComLoading></View>}
             {coo___arr_remove_duplicate_objects(cart, "id").map((item, index) => <IIIItem0 item={item} key={index}
               count={cart.filter(e => e.id === item.id).length}
               onAdd={() => {
@@ -233,7 +233,7 @@ const Index: FC = () => {
               Taro.showToast({ icon: "none", title: "已加购" });
             }} >
               {Boolean(cart.filter(e => e.id === product.id).length) && <View className='pa z1 cccprice fs08 fwb' style={{ top: "0.1rem", left: "0.2rem" }}>{cart.filter(e => e.id === product.id).length}</View>}
-              <ComButton rr className=' bccyellow h2rem nw mr10 fwb' style={{ transform: `skewX(${"-7deg"})` }} >+ 加</ComButton>
+              <ComButton rr className=' bccyellow h2rem nw mr10 fwb' style={{ transform: `skewX(${"-7deg"})`, marginRight: '-0.1rem' }} >+ 加</ComButton>
             </View>
           </View>
         </ComNavBarB>
@@ -323,7 +323,7 @@ const IIIItem0 = ({ item, count, onAdd, onSub, onDetail, }: { count: number, ite
           </View>
           <View className='fs08 cccbrown nw1'>陕北苹果排行版第1名</View>
         </View>
-        <View className=' ww dbtc ioo ovh' style={{ background: "#ffff0029", minHeight: '2.5rem', }}>
+        <View className=' ww dbtc ioo ovh' style={{ minHeight: '2.5rem', }}>
           <View className='dll '>
             <ComPrice className='cccprice ml6' price={5.9} />
             <View className='fs08 cccplh fs07 cccprice ml6'>已售{item.totalSaleStock}件</View>
@@ -332,7 +332,7 @@ const IIIItem0 = ({ item, count, onAdd, onSub, onDetail, }: { count: number, ite
             {Boolean(count) && <ComButton className='bccbacktab cccgreen mr10' hoverClass='none' style={{ transform: `skewX(${"-7deg"})` }} onClick={onSub}>  - </ComButton>}
             <View className='pr' onClick={onAdd}>
               {Boolean(count) && <View className='pa z1 cccprice fs08 fwb' style={{ top: "0.1rem", left: "0.2rem" }}>{count}</View>}
-              <ComButton className='bccyellow fwb' style={{ minHeight: '2.5rem', transform: `skewX(${"-7deg"})` }} >+ 加</ComButton>
+              <ComButton className='bccyellow fwb' style={{ minHeight: '2.5rem', transform: `skewX(${"-7deg"})`, marginRight: '-0.1rem' }} >+ 加</ComButton>
             </View>
           </View>
         </View>
