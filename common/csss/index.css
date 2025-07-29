@@ -157,12 +157,12 @@ page {
   color: var(--color_plh) !important;
 }
 
-.cccplh.border{
+.cccplh.border {
   border: solid 1rpx rgba(128, 128, 128, 0.25);
 }
 
 @supports (color: color-mix(in lch, red, blue)) {
-.cccplh.border{
+.cccplh.border {
   border: solid 1rpx color-mix(in srgb, var(--color_plh) 25%, transparent);
 }
 }
@@ -172,12 +172,12 @@ page {
   color: var(--color_price) !important;
 }
 
-.cccprice.border{
+.cccprice.border {
   border: solid 1rpx rgba(255, 82, 82, 0.25);
 }
 
 @supports (color: color-mix(in lch, red, blue)) {
-.cccprice.border{
+.cccprice.border {
   border: solid 1rpx color-mix(in srgb, var(--color_price) 25%, transparent);
 }
 }
@@ -187,12 +187,12 @@ page {
   color: var(--color_green) !important;
 }
 
-.cccgreen.border{
+.cccgreen.border {
   border: solid 1rpx rgba(7, 193, 97, 0.25);
 }
 
 @supports (color: color-mix(in lch, red, blue)) {
-.cccgreen.border{
+.cccgreen.border {
   border: solid 1rpx color-mix(in srgb, var(--color_green) 25%, transparent);
 }
 }
@@ -202,42 +202,42 @@ page {
   color: var(--color_yellow) !important;
 }
 
-.cccyellow.border{
+.cccyellow.border {
   border: solid 1rpx rgba(245, 239, 6, 0.25);
 }
 
 @supports (color: color-mix(in lch, red, blue)) {
-.cccyellow.border{
+.cccyellow.border {
   border: solid 1rpx color-mix(in srgb, var(--color_yellow) 25%, transparent);
 }
 }
 
-.cccorange{
+.cccorange {
   color: #FFA500 !important;
   color: var(--color_orange) !important;
 }
 
-.cccorange.border{
+.cccorange.border {
   border: solid 1rpx rgba(255, 165, 0, 0.25);
 }
 
 @supports (color: color-mix(in lch, red, blue)) {
-.cccorange.border{
+.cccorange.border {
   border: solid 1rpx color-mix(in srgb, var(--color_orange) 25%, transparent);
 }
 }
 
-.cccbrown{
+.cccbrown {
   color: #B8860B !important;
   color: var(--color_brown) !important;
 }
 
-.cccbrown.border{
+.cccbrown.border {
   border: solid 1rpx rgba(184, 134, 11, 0.25);
 }
 
 @supports (color: color-mix(in lch, red, blue)) {
-.cccbrown.border{
+.cccbrown.border {
   border: solid 1rpx color-mix(in srgb, var(--color_brown) 25%, transparent);
 }
 }
@@ -325,6 +325,11 @@ page {
 
 .bccbacktab {
   background-color: var(--color_back_tab) !important;
+}
+
+.button-hover {
+  background-color: #dedede !important;
+  color: rgba(0, 0, 0, .6) !important;
 }
 
 @keyframes popup-in {

@@ -42,7 +42,7 @@ export function ComButton({
       } else if (utils_str_includes(["bccyellow", "bccgreen"], props.className)) {
         return "bccwhite cccplh";
       } else {
-        return props.hoverClass ?? "bccbacktab";
+        return props.hoverClass ?? "button-hover";
       }
     })()}
     style={{

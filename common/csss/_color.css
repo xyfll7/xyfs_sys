@@ -1,4 +1,3 @@
-
 .sticky-top {
   position: sticky;
   top: 0rem;
@@ -19,41 +18,48 @@
 .cccplh {
   color: var(--color_plh) !important;
 }
-.cccplh.border{
+
+.cccplh.border {
   border: solid 1rpx color-mix(in srgb, var(--color_plh) 25%, transparent);
 }
 
 .cccprice {
   color: var(--color_price) !important;
 }
-.cccprice.border{
+
+.cccprice.border {
   border: solid 1rpx color-mix(in srgb, var(--color_price) 25%, transparent);
 }
 
 .cccgreen {
   color: var(--color_green) !important;
 }
-.cccgreen.border{
+
+.cccgreen.border {
   border: solid 1rpx color-mix(in srgb, var(--color_green) 25%, transparent);
 }
 
 .cccyellow {
   color: var(--color_yellow) !important;
 }
-.cccyellow.border{
+
+.cccyellow.border {
   border: solid 1rpx color-mix(in srgb, var(--color_yellow) 25%, transparent);
 }
 
-.cccorange{
+.cccorange {
   color: var(--color_orange) !important;
 }
-.cccorange.border{
+
+.cccorange.border {
   border: solid 1rpx color-mix(in srgb, var(--color_orange) 25%, transparent);
 }
-.cccbrown{
+
+.cccbrown {
   color: var(--color_brown) !important;
 }
-.cccbrown.border{
+
+.cccbrown.border {
   border: solid 1rpx color-mix(in srgb, var(--color_brown) 25%, transparent);
 }
 
@@ -95,6 +101,7 @@
 .bcctrans {
   background-color: var(--color_trans);
 }
+
 .bcctrans01-dark {
   background-color: var(--color_trans01_dark);
 }
@@ -103,18 +110,23 @@
 .bcctrans03 {
   background-color: var(--color_trans03);
 }
+
 .bcctrans03-dark {
   background-color: var(--color_trans03_dark);
 }
+
 .bcctrans05 {
   background-color: var(--color_trans05);
 }
+
 .bcctrans05-dark {
   background-color: var(--color_trans05_dark);
 }
+
 .bcctrans07-dark {
   background-color: var(--color_trans07_dark);
 }
+
 .bccwhite {
   background-color: var(--color_white) !important;
 }
@@ -125,4 +137,9 @@
 
 .bccbacktab {
   background-color: var(--color_back_tab) !important;
+}
+
+.button-hover {
+  background-color: #dedede !important;
+  color: rgba(0, 0, 0, .6) !important;
 }
