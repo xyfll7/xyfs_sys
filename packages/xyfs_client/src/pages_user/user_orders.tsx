@@ -280,7 +280,7 @@ const IIIOrderList = ({ isPay }: { isPay: boolean; }) => {
                   <Text className='nw'>支付</Text>
                 </ComButton>}
             </View>
-            {getMyEnv().envVersion === "develop" && order.transactionId &&
+            {getMyEnv().platform === "devtools" && order.transactionId &&
               <ComButton className="mb10" onClick={async () => { await try_Taro_setClipboardData({ data: order.transactionId! }); }}>{order.transactionId}</ComButton>
             }
           </View>;

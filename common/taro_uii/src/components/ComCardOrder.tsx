@@ -205,12 +205,12 @@ export const ComCardOrderBringGoods: FC<{
         <ComButton rr className='cccgreen'>{Product_category_ST[order.orderType!]}</ComButton>
       </View>
     </View>
-    <ComAddressSwitchor ll rr className='ww mb10' title='收:' address={order?.userAddress} time={order.orderTimeFormat} />
-    <ComAddressSwitchor ll rr className='ww mb10' title='团:' address={order?.deptAddress} />
+    <ComAddressSwitchor ll rr className='ww mb10' hoverClass="none" title='收:' address={order?.userAddress} time={order.orderTimeFormat} />
+    <ComAddressSwitchor ll rr className='ww mb10' hoverClass="none" title='团:' address={order?.deptAddress} />
 
     <View className='ww'>
       {order?.productList?.map((e, i) => {
-        return <View className='dtl ww bccback mb10 ioo pr' key={i}>
+        return <View className='dtl ww mb10 ioo pr' key={i}>
           {model === "waybill" && isShowSelector && order.orderStatus === Order_ST.已付款 &&
             <View className='pa z1 ' style={{ top: "0rem", left: '0rem' }} onClick={() => { onSelectOrder?.(e); }} >
               <View className={`${utils_arr_includes([e.id!], (printProducts?.map(ee => ee.id!)!),) ? 'bccred' : 'bccback '} dxy cccwhite o6`} style={{ minWidth: "calc(1.2 * var(--rem_base))", minHeight: "calc(1.2 * var(--rem_base))" }}>
@@ -228,16 +228,15 @@ export const ComCardOrderBringGoods: FC<{
                   <View className='fs07'>{i + 1}</View>
                 </View>
               }
-
             </View>
           }
           <ComImage className='mr10' compress={false} src={e.pictureUrl?.split(",")[0] ?? ''} style={{ width: "4rem" }} />
           <View className='ww'>
             <View className='dbtc ww'>
-              <ComButton ll className='bccback'>
+              <ComButton ll hoverClass="none">
                 <View className='nw1'>{e?.name}</View>
               </ComButton>
-              <ComButton rr className='bccback'>
+              <ComButton rr hoverClass="none">
                 <ComPrice price={Number(e?.totalPrice)} />
               </ComButton>
             </View>
