@@ -88,7 +88,12 @@ const Index: FC = () => {
       </ComNav>
       <View className='ww dll prl10 bccback ' >
         <View className='ww dr'>
-          <ComButton rr className={`mb10 cccplh bccbacktab `} hoverClass='none' onClick={() => { setCart([]); }}>清空</ComButton>
+          <ComButton rr className={`mb10 cccplh bccbacktab `} hoverClass='none' onClick={async () => {
+            if (!Boolean(cart?.length)) { Taro.showToast({ icon: "none", title: "购物车为空" }); return; }
+            await try_Taro_showModal({ title: "清空购物车", content: "确定清空购物车吗？", confirmText: "清空", cancelText: "取消" });
+            setCart([]);
+            Taro.showToast({ icon: "none", title: "已清空" });
+          }}>清空</ComButton>
           <ComButton rr className={`cccplh mb10 ml10 bccbacktab `} hoverClass='none' onClick={async () => {
             Taro.showLoading({ title: "获取短链中...", mask: true });
             const res = await Api_common_getShortLink_ctn({
@@ -148,22 +153,28 @@ const Index: FC = () => {
     </ComScrollView>
     <IIICartBar cart={cart} onClick={() => {
       if (!Boolean(cart?.length)) { Taro.showToast({ icon: "none", title: "购物车为空" }); return; }
-      setIsShowCart(true);
+      setIsShowCart(e => !e);
     }} />
-    {isShowCart &&
-      <ComPopupNew onClose={() => { setIsShowCart(false); }} >
+    {!isShowCart &&
+      <ComPopupNew onClose={() => { setIsShowCart(e => !e); }} >
         <View className='dll prl10' style={{ height: "80vh", }}>
-          <ComNavBarB className='mb10 ww' onClose={() => { setIsShowCart(false); }} >
-            <View className='ww dr '>
+          <ComNavBarB className='mb10 ww' onClose={() => { setIsShowCart(e => !e); }} >
+            <View className='ww dy'>
               <ComAddressSwitchor className="ww bcctrans" isShort addressPlaceholder='请填写收货地址' title='收货人:' address={address}
                 onClick={async (e) => {
                   const res_address = await try_Taro_chooseAddress(true);
                   setAddress(res_address);
                 }} />
+              <ComButton rr className="cccplh bccbacktab nw ml10" hoverClass='none' onClick={async () => {
+                if (!Boolean(cart?.length)) { Taro.showToast({ icon: "none", title: "购物车为空" }); return; }
+                await try_Taro_showModal({ title: "清空购物车", content: "确定清空购物车吗？", confirmText: "清空", cancelText: "取消" });
+                setCart([]);
+                Taro.showToast({ icon: "none", title: "已清空" });
+              }}>清空</ComButton>
             </View>
           </ComNavBarB>
           <ComScrollView className='IOO'>
-            {!Boolean(cart?.length) && <ComLoading className='mb10' isEmpty>购物车空空如也 ~</ComLoading>}
+            {!Boolean(cart?.length) && <View className='dxy ww'><ComLoading className='mb10' isEmpty>购物车空空如也 ~</ComLoading></View>}
             {coo___arr_remove_duplicate_objects(cart, "id").map((item, index) => <IIIItem0 item={item} key={index}
               count={cart.filter(e => e.id === item.id).length}
               onAdd={() => {
@@ -201,7 +212,7 @@ const Index: FC = () => {
             } finally {
               setCart([]);
               page_init();
-              setIsShowCart(false);
+              setIsShowCart(e => !e);
               try_Taro_hideLoading();
               // 如果个人信息中没有默认的用户收件地址，则更新用户收件地址
               if (!selfInfo_S.defaultRecManAddress) {
