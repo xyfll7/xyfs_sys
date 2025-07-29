@@ -155,7 +155,7 @@ const Index: FC = () => {
       if (!Boolean(cart?.length)) { Taro.showToast({ icon: "none", title: "购物车为空" }); return; }
       setIsShowCart(e => !e);
     }} />
-    {!isShowCart &&
+    {isShowCart &&
       <ComPopupNew onClose={() => { setIsShowCart(e => !e); }} >
         <View className='dll prl10' style={{ height: "80vh", }}>
           <ComNavBarB className='mb10 ww' onClose={() => { setIsShowCart(e => !e); }} >
