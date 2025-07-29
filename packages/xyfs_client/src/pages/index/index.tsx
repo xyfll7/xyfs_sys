@@ -174,7 +174,7 @@ const Index: FC = () => {
             </View>
           </ComNavBarB>
           <ComScrollView className='IOO'>
-            {!Boolean(cart?.length) && <View className='dxy ww'><ComLoading className='mb10' isEmpty>1购物车空空如也 ~</ComLoading></View>}
+            {!Boolean(cart?.length) && <View className='dxy ww'><ComLoading className='mb10' isEmpty>购物车空空如也 ~</ComLoading></View>}
             {coo___arr_remove_duplicate_objects(cart, "id").map((item, index) => <IIIItem0 item={item} key={index}
               count={cart.filter(e => e.id === item.id).length}
               onAdd={() => {
