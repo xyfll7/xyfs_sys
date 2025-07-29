@@ -16,7 +16,7 @@ export const ComSearcher: FC<ViewProps & InputProps & {
 
   const [value, setValue] = useState("");
   return <View className={`${className} dy   ww dbtc`}>
-    <ComButton className='flx1 bccbacktab' hoverClass='none'>
+    <ComButton className='flx1 bccbackdeep' hoverClass='none'>
       <ComInput
         value={value}
         placeholder={placeholder ? placeholder : "请输入搜索关键字"} confirmType='search'

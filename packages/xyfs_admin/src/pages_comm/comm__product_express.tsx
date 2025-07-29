@@ -105,7 +105,7 @@ export const Index = () => {
             try_Taro_hideLoading();
           }} />
         <CPExpress.ExpressInfo />
-        <ComButton className='mb10 cccplh bccbacktab' hoverClass='none'>首重6元起，上门取件+2元</ComButton>
+        <ComButton className='mb10 cccplh bccbackdeep' hoverClass='none'>首重6元起，上门取件+2元</ComButton>
       </View>
     </ComScrollView>
     <IIIOrderPayRegiment />
@@ -355,13 +355,13 @@ const IIIPaoZhong = ({ onPaoZhong, divisor = 8000 }: { divisor?: number, onPaoZh
   const [width, setWidth] = useState("");
   const [height, setHeight] = useState("");
   return <View className='dy'>
-    <ComButton rr className='bccbacktab mb10' hoverClass='none'>
+    <ComButton rr className='bccbackdeep mb10' hoverClass='none'>
       <ComInput alwaysEmbed className='w3rem' placeholder='长cm' type='number' style={{}} value={length} onInput={(e) => { setLength(e.detail.value.replace(/[^0-9]/g, "")); }} />
     </ComButton>
-    <ComButton rr ll className='bccbacktab mb10' hoverClass='none'>
+    <ComButton rr ll className='bccbackdeep mb10' hoverClass='none'>
       <ComInput alwaysEmbed className='w3rem' placeholder='宽cm' type='number' style={{}} value={width} onInput={(e) => { setWidth(e.detail.value.replace(/[^0-9]/g, "")); }} />
     </ComButton>
-    <ComButton rr ll className='bccbacktab mb10' hoverClass='none'>
+    <ComButton rr ll className='bccbackdeep mb10' hoverClass='none'>
       <ComInput alwaysEmbed className='w3rem' placeholder='高cm' type='number' style={{}} value={height} onInput={(e) => { setHeight(e.detail.value.replace(/[^0-9]/g, "")); }} />
     </ComButton>
     <ComButton rr ll className='mb10 bccback cccplh'>/{divisor}</ComButton>

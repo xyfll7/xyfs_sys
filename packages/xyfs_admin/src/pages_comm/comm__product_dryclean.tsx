@@ -111,10 +111,10 @@ const Index: FC<{}> = ({ }) => {
             }
           }}>
             <View className='dy'>
-              <ComButton className='mb10 bccbacktab ww mr10' hoverClass='none'>
+              <ComButton className='mb10 bccbackdeep ww mr10' hoverClass='none'>
                 <ComInput cursorSpacing={100} placeholder='顾客姓名/可选' value={user.name} onInput={(e) => setUser(ee => ({ ...ee, name: e.detail.value }))} />
               </ComButton>
-              <ComButton ll className='mb10 bccbacktab ww mr10' hoverClass='none'>
+              <ComButton ll className='mb10 bccbackdeep ww mr10' hoverClass='none'>
                 <ComInput cursorSpacing={100} placeholder='顾客电话/必填' value={user.mobile} onInput={(e) => setUser(ee => ({ ...ee, mobile: e.detail.value }))} type='number' />
               </ComButton>
               <CPDryclean.Sharer ll key='Sharer' className='mb10 ' isShare={__isShare}

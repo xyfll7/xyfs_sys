@@ -70,7 +70,7 @@ export const IIIPublisherClient: FC = () => {
       </ComNavBarA>
     </ComNav>
     <ComScrollView>
-      <ComButton className='bccbacktab mb10 ww pbt10' hoverClass='none'>
+      <ComButton className='bccbackdeep mb10 ww pbt10' hoverClass='none'>
         <View className='ww '>
           <ComTextarea className='ww' minHeight='calc(2 * var(--rem_base))' confirmType='return' value={form.str} placeholder='简单介绍一下吧 ～'
             onInputText={(e) => { setForm({ str: e }); }} />
@@ -83,7 +83,7 @@ export const IIIPublisherClient: FC = () => {
         })));
         return [...res_cloud_files.map(ee => ee.fileID)];
       }} />
-      <ComButton className='bccbacktab mb10 dy' hoverClass='none'>
+      <ComButton className='bccbackdeep mb10 dy' hoverClass='none'>
         <Text className='nw cccplh'> 价格:</Text>
         <ComInput className='cccprice' type='digit' confirmType='done' value={form.price} placeholder='请输入价格' onBlur={() => { form.price === "" && setForm({ price: "0.00" }); }}
           onFocus={() => { form.price === "0.00" && setForm({ price: "" }); }}

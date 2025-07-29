@@ -102,11 +102,11 @@ const Index: FC = () => {
         <View className='dll ww IOO'>
           <View className='ww dll prl10'>
             <View className='ww dr'>
-              <ComButton rr className={`mb10 cccplh bccbacktab `} hoverClass='none' onClick={() => { setCart([]); }}>清空</ComButton>
-              <ComButton rr className={`mb10 cccplh bccbacktab nw ml10  `} hoverClass='none' onClick={() => {
+              <ComButton rr className={`mb10 cccplh bccbackdeep `} hoverClass='none' onClick={() => { setCart([]); }}>清空</ComButton>
+              <ComButton rr className={`mb10 cccplh bccbackdeep nw ml10  `} hoverClass='none' onClick={() => {
                 setType(type == "simpleEdition" ? "visualEdition" : "simpleEdition");
               }}>{new Map([["visualEdition", "图文版"], ["simpleEdition", "简洁版"]]).get(type)} </ComButton>
-              <ComButton rr className={`cccplh mb10 ml10 bccbacktab `} hoverClass='none' onClick={async () => {
+              <ComButton rr className={`cccplh mb10 ml10 bccbackdeep `} hoverClass='none' onClick={async () => {
                 Taro.showLoading({ title: "获取短链中...", mask: true });
                 const res = await Api_common_getShortLink_ctn({
                   pageUrl: `pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ G_D: G_D, R_D: Number(selfInfo_S.managerUser?.mobile).toString(36) })) })}`,
@@ -121,7 +121,7 @@ const Index: FC = () => {
                   <Text className='mr4'>短链</Text>
                 </View>
               </ComButton>
-              <ComButtonOpen rr className={`cccplh mb10 ml10  bccbacktab`} hoverClass='none' id='send_express'
+              <ComButtonOpen rr className={`cccplh mb10 ml10  bccbackdeep`} hoverClass='none' id='send_express'
                 shareTitle={`${selfInfo_S.managerUser?.name} 团长 邀您买东西啦`}
                 openType='share'
                 sharePath={`/pages/group_buy?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ G_D: G_D, R_D: Number(selfInfo_S.managerUser?.mobile).toString(36) })) })}`}>

@@ -21,7 +21,7 @@ export const ComImage: FC<Omit<ImageProps, "style" | "src"> & { compress?: boole
     <Image
       {...props}
       src={src ? `${src}${___comp}${___crop}` : ""}
-      className={`${props.className} ${icon === true ? "" : icon} ${utils_str_includes(["bcc"], props.className) ? "" : "bccbacktab"} transall ovh ioo`}
+      className={`${props.className} ${icon === true ? "" : icon} ${utils_str_includes(["bcc"], props.className) ? "" : "bccbackdeep"} transall ovh ioo`}
       style={{
         ...style,
         ...(() => {

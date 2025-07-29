@@ -272,7 +272,7 @@ const IIIDeptAdd = ({ dept, onSuccess, onClose }: { dept: any; onSuccess: () => 
     <View className='ww mb10 dll bccwhite ioo pl10 pt10'>
       <View className='mb10 ww dy'>
         <Text className="nw mr10">部门名称</Text>
-        <ComButton className='bccbacktab ww mr10' hoverClass='none'>
+        <ComButton className='bccbackdeep ww mr10' hoverClass='none'>
           <ComInput placeholder='请填写子部门名称' value={form.deptName} onInput={(e) => setForm({ deptName: e.detail.value })}></ComInput>
         </ComButton>
       </View>
@@ -308,7 +308,7 @@ const IIIDeptEdit = ({ dept, onSuccess, onClose }: { dept: any; onSuccess: () =>
     {!deptInfo && <ComLoading className='mb10'></ComLoading>}
     {deptInfo && <View className='ww mb10 dll'>
       <View className='mb10 ww dy'>
-        <ComButton className='bccbacktab ww mr10' hoverClass='none'>
+        <ComButton className='bccbackdeep ww mr10' hoverClass='none'>
           <ComInput placeholder='请填写子部门名称' value={form.deptName} onInput={(e) => setForm({ deptName: e.detail.value })}></ComInput>
         </ComButton>
 
@@ -324,7 +324,7 @@ const IIIDeptEdit = ({ dept, onSuccess, onClose }: { dept: any; onSuccess: () =>
       </View>
       <View className='ww dbtc '>
         <ComButton className='cccplh mb10 bccback'>是否为第一部门</ComButton>
-        <ComButton className={`bccbacktab  mb10 ${deptInfo?.mainDept == 1 ? "cccgreen" : "cccplh"}`} hoverClass='none'>
+        <ComButton className={`bccbackdeep  mb10 ${deptInfo?.mainDept == 1 ? "cccgreen" : "cccplh"}`} hoverClass='none'>
           {deptInfo?.mainDept == 1 ? '是' : '否'}
         </ComButton>
       </View>

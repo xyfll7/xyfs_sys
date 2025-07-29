@@ -200,26 +200,26 @@ const CartItemEditor: FC<{ cartItem: Product_Dryclean; onSetCart: (e: Product_Dr
           <ComButton className='mb10 mr10 bccback nw' hoverClass='none'>
             数量:  <Text className='nw w2rem dxy'>{quantity} </Text>  {cartItem.unit}
           </ComButton>
-          <ComButton className='mb10 bccbacktab ww dxy mr10' hoverClass='none' onClick={() => {
+          <ComButton className='mb10 bccbackdeep ww dxy mr10' hoverClass='none' onClick={() => {
             if (quantity === 1) { Taro.showToast({ icon: "none", title: "数量最少为1" }); return; }
             setQuantity(ee => ee - 1);
           }}>
             <Text className='mr6 cccplh nw'>-减</Text>
           </ComButton>
-          <ComButton className='mb10 bccbacktab ww dxy' hoverClass='none' onClick={() => setQuantity(ee => ee + 1)}>
+          <ComButton className='mb10 bccbackdeep ww dxy' hoverClass='none' onClick={() => setQuantity(ee => ee + 1)}>
             <Text className='mr6 cccplh nw'>+加</Text>
           </ComButton>
         </View>
         }
 
 
-        <ComButton className='mb10 bccbacktab' hoverClass='none'>
+        <ComButton className='mb10 bccbackdeep' hoverClass='none'>
           <Text className='mr6 cccplh nw'>备注:</Text>
           <ComInput placeholder='请输入备注内容' value={remark} onInput={(eee) => setRemark(eee.detail.value)}></ComInput>
         </ComButton>
         {form_list.map((e, i) => {
           return <View className='dy' key={e.key}>
-            <ComButton className='bccbacktab mb10 ww' hoverClass='none' onClick={() => { tabType !== i && setTabType(i); }}>
+            <ComButton className='bccbackdeep mb10 ww' hoverClass='none' onClick={() => { tabType !== i && setTabType(i); }}>
               <Text className={`${tabType === i ? "" : "cccplh"} mr6`}>{e.title}:</Text>
               {e.value.length ?
                 <Text>{e.value.map(ee => ee.label).join("/")}</Text> :
@@ -271,7 +271,7 @@ const ProductCategoryCard: FC<{ productCategory: Record<string, Product_Dryclean
           const cartItems = cart?.filter(eee => eee.productId == (ee.productId ?? ee.id));
           return <View className={`flx1  ioo ww  dll ${ii % 2 === 0 ? "mr10" : ""}`} style={{ minWidth: "30vw" }} key={ee.id}>
             <View className='ww dtl  ioo ovh mb10'>
-              <ComImage style={{ width: "20vw" }} className='ovh ol6 bccbacktab' src={ee.pictureUrl?.split(",")[0]} />
+              <ComImage style={{ width: "20vw" }} className='ovh ol6 bccbackdeep' src={ee.pictureUrl?.split(",")[0]} />
               <View className='ww hh  dbtl'>
                 <ComButton className='nw' hoverClass="none">{ee.intro ? ee.intro : e}</ComButton>
                 <View className='dbtc ww'>

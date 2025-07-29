@@ -74,7 +74,7 @@ export const Index = () => {
           try_Taro_hideLoading();
         }} />
       <CPExpress.ExpressInfo />
-      <ComButton className='mb10 cccplh bccbacktab' hoverClass='none'>首重6元起，上门取件+2元</ComButton>
+      <ComButton className='mb10 cccplh bccbackdeep' hoverClass='none'>首重6元起，上门取件+2元</ComButton>
     </ComScrollView>
     <IIIOrderPayUser />
     <ComPaySuccessCard />

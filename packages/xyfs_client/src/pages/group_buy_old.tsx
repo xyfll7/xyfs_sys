@@ -249,7 +249,7 @@ const IIIItem = ({ item, type, onAdd, onSub, onDetail, count }: { count: number,
         </View>
         <View className='dy'>
           <View>
-            <ComButton className={`bccbacktab cccgreen ${count > 0 ? "" : "vbh"}`} hoverClass='none' onClick={onSub}>-</ComButton>
+            <ComButton className={`bccbackdeep cccgreen ${count > 0 ? "" : "vbh"}`} hoverClass='none' onClick={onSub}>-</ComButton>
           </View>
           <ComButton rr className='bccwhite nw ml10 cccgreen' onClick={onAdd}>+ 加</ComButton>
         </View>
@@ -275,7 +275,7 @@ const IIIItem = ({ item, type, onAdd, onSub, onDetail, count }: { count: number,
         </View>
         <View className='dbl dr ww mb10' >
           <View>
-            <ComButton className={`bccbacktab cccgreen ${count > 0 ? "" : "vbh"}`} hoverClass='none' onClick={onSub}>-</ComButton>
+            <ComButton className={`bccbackdeep cccgreen ${count > 0 ? "" : "vbh"}`} hoverClass='none' onClick={onSub}>-</ComButton>
           </View>
           <ComButton rr className='ml10 bccyellow h2rem nw' onClick={onAdd} >+ 加购</ComButton>
         </View>

@@ -56,7 +56,7 @@ const Index: FC = () => {
 const IIIExpress: FC<{ managerUser: DeptInfo; }> = ({ managerUser }) => {
   return <View className='mb10 dy bccwhite ww ioo pt10 prl10'>
     <ComButton ll className='nw bccwhite mr10 bccwhite mb10' hoverClass='none'>快递</ComButton>
-    <ComButtonOpen rr className='cccgreen bccbacktab  mb10 slr' id='send_express'
+    <ComButtonOpen rr className='cccgreen bccbackdeep  mb10 slr' id='send_express'
       shareTitle={`${managerUser?.name} 团长 邀您6元起寄快递`}
       openType='share'
       sharePath={`/pages_comm/comm__product_express?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ R_D: Number(managerUser.mobile).toString(36) })) })}`}>
@@ -81,7 +81,7 @@ const IIIDryclean: FC<{ managerUser: DeptInfo; }> = ({ managerUser }) => {
     order && <View className='ww bccwhite ioo pt10 mb10'>
       <View className='dy ww prl10'>
         <ComButton ll className='nw bccwhite mr10 bccwhite mb10' hoverClass='none'>干洗</ComButton>
-        <ComButtonOpen rr className='cccgreen bccbacktab mb10 slr' id='send_dryclean'
+        <ComButtonOpen rr className='cccgreen bccbackdeep mb10 slr' id='send_dryclean'
           shareTitle={`${managerUser?.name} 团长 邀您支付快递订单`}
           openType='share'
           sharePath={`/pages_user/user_orders?${coo___objToUrl({ scene: `${encodeURIComponent(coo___objToUrl({ R_D: Number(managerUser.mobile).toString(36), O_D: O_D }))}` })}`}>
@@ -95,7 +95,7 @@ const IIIDryclean: FC<{ managerUser: DeptInfo; }> = ({ managerUser }) => {
 const IIIBringGoods: FC<{ managerUser: DeptInfo; }> = ({ managerUser }) => {
   return <View className='mb10 dy bccwhite ww ioo pt10 prl10'>
     <ComButton ll className='nw bccwhite mr10 bccwhite mb10' hoverClass='none'>带货</ComButton>
-    <ComButtonOpen rr className='cccgreen bccbacktab  mb10 slr' id='send_express'
+    <ComButtonOpen rr className='cccgreen bccbackdeep  mb10 slr' id='send_express'
       shareTitle={`${managerUser?.name} 团长 邀您买东西啦`}
       openType='share'
       sharePath={`/pages/index/index?${coo___objToUrl({ scene: encodeURIComponent(coo___objToUrl({ R_D: Number(managerUser.mobile).toString(36) })) })}`}>

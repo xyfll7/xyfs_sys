@@ -69,7 +69,7 @@ export const IIIPublisherAdmin: FC = () => {
       </ComNavBarA>
     </ComNav>
     <ComScrollView>
-      <ComButton className='bccbacktab mb10 ww pbt10 IOO' hoverClass='none'>
+      <ComButton className='bccbackdeep mb10 ww pbt10 IOO' hoverClass='none'>
         <View className='ww '>
           <ComTextarea className='ww ' minHeight='calc(2 * var(--rem_base))' confirmType='return' value={form.str} placeholder='请录入商品名称/简介 ~'
             onInputText={(e) => { setForm({ str: e }); }} />
@@ -82,13 +82,13 @@ export const IIIPublisherAdmin: FC = () => {
         })));
         return [...res_cloud_files.map(ee => ee.fileID)];
       }} />
-      <ComButton className='bccbacktab mb10 dy' hoverClass='none'>
+      <ComButton className='bccbackdeep mb10 dy' hoverClass='none'>
         <Text className='nw cccplh mr6'>价格</Text>
         <ComInput className='cccprice' type='digit' confirmType='done' value={form.price} placeholder='请输入价格' onBlur={() => { form.price === "" && setForm({ price: "0.00" }); }}
           onFocus={() => { form.price === "0.00" && setForm({ price: "" }); }}
           onInput={(e) => setForm({ price: coo___get_price(e.detail.value, form.price) })} />
       </ComButton>
-      <ComButton className='bccbacktab mb10 dy' hoverClass='none'>
+      <ComButton className='bccbackdeep mb10 dy' hoverClass='none'>
         <Text className='nw cccplh mr6'> {product ? "改后库存" : "库存"}</Text>
         <ComInput className='cccprice' type='digit' confirmType='done' value={form.stock} placeholder='请输入库存数量'
           onBlur={() => { form.stock === "" && setForm({ stock: "0" }); }}

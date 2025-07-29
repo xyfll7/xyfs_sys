@@ -21,7 +21,7 @@ export const ComImageUploader: FC<{
   const isLoading = _images.find(e => utils_str_includes(["http://", "wxfile://"], e));
   return <View className={`ds dwp ${className}`}>
     {[..._images, ""].slice(0, count).map((e, i) => {
-      return <View className='bccbacktab  mb10 mr10 ioo ovh pr' key={i}
+      return <View className='bccbackdeep  mb10 mr10 ioo ovh pr' key={i}
         style={{ width: size, height: size, border: "1rpx solid var(--color_back)" }}>
         {e && <ComImage className='ww hh ioo ovh' style={{ width: size }} compress='300' mode='aspectFill' src={e} onClick={() => {
           Taro.previewMedia({ current: i, sources: _images.map(ee => ({ url: ee })) });

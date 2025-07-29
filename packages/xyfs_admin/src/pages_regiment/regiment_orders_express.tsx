@@ -64,7 +64,7 @@ const Index: FC<{}> = ({ }) => {
       <View className='ww prl10 ww'>
         <ComNavBarA className='mb10 ww'>
           <ComButton ll className='bcctrans cccplh ml10 mr10'>快递订单/团长</ComButton>
-          <ComQRCode ll className='bccwhite cccgreen bccbacktab' params={{
+          <ComQRCode ll className='bccwhite cccgreen bccbackdeep' params={{
             buttonText: "收款码",
             title: "请顾客扫此二维码支付",
             desc: ["可将此二维码保存打印", "顾客扫此二维码打开“待付款”订单列表"],

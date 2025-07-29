@@ -24,7 +24,7 @@ function IIITreeChild<T extends { children: T[]; }>({ list, keyName, show, child
   return <View className='dll ww'>
     <View className='ds ww'>
       <View className='dll pl10'>
-        <View className='hh mb10 bccbacktab' style={{ width: "1rpx", }}></View>
+        <View className='hh mb10 bccbackdeep' style={{ width: "1rpx", }}></View>
       </View>
       <View className='pl10 dll ww'>
         {show && <ComTree list={list} keyName={keyName}>{children}</ComTree>}

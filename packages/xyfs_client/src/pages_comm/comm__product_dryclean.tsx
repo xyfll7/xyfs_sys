@@ -82,7 +82,7 @@ const IIIShopCartTabBarUser: FC<{ onToggle: () => void; onPay?: () => void; }> =
   return <View className=''>
     <View className='dll'>
       <ComButton className='mb10 bccback cccplh' hoverClass='none'>预约上门取衣服(无需添加购物车)</ComButton>
-      <ComButton className='bccbacktab mb10 ww' hoverClass='none'>
+      <ComButton className='bccbackdeep mb10 ww' hoverClass='none'>
         <View className='dy ww'>
           <Text className='nw mr6'>备注:</Text> <ComInput cursorSpacing={100} adjustPosition placeholder='给团长捎句话' onInput={e => setForm({ ...form, remark: e.detail.value })}></ComInput>
         </View>

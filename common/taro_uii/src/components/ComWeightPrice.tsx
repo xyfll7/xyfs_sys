@@ -16,7 +16,7 @@ export const ComWeightPrice: FC<ViewProps & {
   const [focus, setFocus] = useState(false);
   return (
     <View className={`${className} dy ww`}>
-      <ComButton ll={ll} className='bccbacktab flx1 mr10 dy' hoverClass='none'>
+      <ComButton ll={ll} className='bccbackdeep flx1 mr10 dy' hoverClass='none'>
         <ComInput
           type='digit'
           confirmType='done'

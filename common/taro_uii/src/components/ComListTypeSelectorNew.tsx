@@ -30,7 +30,7 @@ export const ComListTypeSelectorNew = <T,>({ tabType, disabled, setTab, typeList
   return (
     <>{coo___divide_array_to_n_parts(arr, Infinity).map((list, i) => {
       return <View className={`${props.className ?? ""} ds ww dwp`} key={i}>
-        {list.map((e) => <ComButton className={`mb10 mr10 ${tabType == e[value] ? "bccyellow" : "bccbacktab"}`}
+        {list.map((e) => <ComButton className={`mb10 mr10 ${tabType == e[value] ? "bccyellow" : "bccbackdeep"}`}
           rr={!(tabType == e[value])}
           key={String(e[value])}
           hoverClass='bccyellowtab'
