@@ -1,4 +1,4 @@
-// :: pages/group_buy
+// :: pages/index/index
 import { Text, Video, View, ViewProps } from '@tarojs/components';
 import Taro, { useDidShow } from '@tarojs/taro';
 import { Product_Publish } from '@xyfs/taro_uii';
