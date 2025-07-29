@@ -26,6 +26,7 @@ export function ComButton({
   onClickO,
   routeType,
   children,
+  hoverClass = "button-hover",
   ...props
 }: Omit<ViewProps, "onTouchStart"> & MyButtonProps & { children?: React.ReactNode; }) {
   const back = utils_str_includes(["bcc", "bborder"], props.className) ? "" : "bccwhite";
@@ -33,18 +34,7 @@ export function ComButton({
   props.disabled = props.disabled || loading;
   return <View {...props} id={props.id}
     className={`${props.className} ${back} ${rr ? "" : "pr10"} ${ll ? "" : "pl10"} ${props.disabled ? "disabled bccwhite" : ""} transall ioo dy`}
-
-    hoverClass={(() => {
-      if (props.hoverClass === "none") {
-        return "none";
-      } else if (props.disabled) {
-        return "none";
-      } else if (utils_str_includes(["bccyellow", "bccgreen"], props.className)) {
-        return "bccwhite cccplh";
-      } else {
-        return props.hoverClass ?? "button-hover";
-      }
-    })()}
+    hoverClass={hoverClass}
     style={{
       wordBreak: "break-all",
       wordWrap: "break-word",
@@ -56,7 +46,7 @@ export function ComButton({
         !props.disabled && await onClick?.(e);
         !props.disabled && url && await try_Taro_navigateTo({ url, routeType: routeType });
       });
-    }} >
+    }}  >
     {children}
   </View>;
 }
