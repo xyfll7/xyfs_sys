@@ -8,6 +8,6 @@ export const ComNavBarB: FC<ViewProps & { rr?: boolean, showClose?: boolean, onC
     <View className="ww">
       {_childrens?.[0]}
     </View>
-    {_childrens?.[1] ?? (showClose ? <ComButton rr={rr} className='cccgreen bccback nw' onClick={onClose}>关闭</ComButton> : null)}
+    {_childrens?.[1] ?? (showClose ? <ComButton rr={rr} className='cccgreen bccback nw ml10' onClick={onClose}>关闭</ComButton> : null)}
   </View>;
 };
