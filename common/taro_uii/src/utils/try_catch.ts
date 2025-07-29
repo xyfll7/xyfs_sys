@@ -1,4 +1,4 @@
-import Taro, { AuthSetting, } from "@tarojs/taro";
+import Taro, { AuthSetting } from "@tarojs/taro";
 import { coo___urlToObj } from "@xyfs/utils/util";
 import { Environment } from "../../types/type_index";
 import { AddressInfo } from "../../types/type_user";
@@ -286,14 +286,11 @@ export async function try_Taro_showModal(option?: Taro.showModal.Option & { edit
     if (res.errMsg === "showModal:ok" && res.confirm) {
       return res as Taro.showModal.SuccessCallbackResult & { content: string; };
     } else {
-      throw new Error(res.errMsg);
+      throw new Error(option?.cancelText || res.errMsg);
     }
   } catch (err) {
-    console.error("显示模态框失败", err);
     throw new ErrorR(err);
   }
-
-
 }
 export async function try_Taro_getClipboardData() {
   try {
