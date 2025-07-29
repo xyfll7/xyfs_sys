@@ -301,7 +301,7 @@ const IIIItem0 = ({ item, count, onAdd, onSub, onDetail, }: { count: number, ite
         <View className='ww hh dll ' onClick={onDetail} >
           <View className='dy mb1'>
             <ComTag className='bccblack cccwhitee'>精选</ComTag>
-            <ComTag className='bccprice cccwhite'>秒杀</ComTag>
+            <ComTag className='bccprice cccwhitee'>秒杀</ComTag>
           </View>
           <View className='dy mb1'><View className='cccbrown mr2 fwb nw'></View> <View className='fwb nw1'>{item.name?.split("#")[0]}</View> </View>
           <View className='dy mb2'>
