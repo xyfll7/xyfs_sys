@@ -163,6 +163,7 @@ const Index: FC = () => {
             </View>
           </ComNavBarB>
           <ComScrollView className='IOO'>
+            {!Boolean(cart?.length) && <ComLoading className='mb10' isEmpty>购物车空空如也 ~</ComLoading>}
             {coo___arr_remove_duplicate_objects(cart, "id").map((item, index) => <IIIItem0 item={item} key={index}
               count={cart.filter(e => e.id === item.id).length}
               onAdd={() => {
@@ -200,6 +201,7 @@ const Index: FC = () => {
             } finally {
               setCart([]);
               page_init();
+              setIsShowCart(false);
               try_Taro_hideLoading();
               // 如果个人信息中没有默认的用户收件地址，则更新用户收件地址
               if (!selfInfo_S.defaultRecManAddress) {
