@@ -195,7 +195,7 @@ const Index: FC = () => {
             if (!Boolean(cart?.length)) { throw new ErrorR("购物车为空", true); }
             if (!Boolean(address)) { throw new ErrorR("请选择收货地址", true); }
             Taro.showLoading({ mask: true, title: "支付中...", });
-            const { payParam } = await Api_goodsCart_preOrder_ctn({
+            const payParam = await Api_goodsCart_preOrder_ctn({
               goodsItems: cart?.map(e => ({ id: e.id }))!,
               recMan: address!,
             });
@@ -323,7 +323,7 @@ const IIIItem0 = ({ item, count, onAdd, onSub, onDetail, }: { count: number, ite
           </View>
           <View className='fs08 cccbrown nw1'>陕北苹果排行版第1名</View>
         </View>
-        <View className=' ww dbtc ioo ovh' style={{ minHeight: '2.5rem', }}>
+        <View className=' ww dbtc IOO ovh' style={{ minHeight: '2.5rem', }}>
           <View className='dll '>
             <ComPrice className='cccprice ml6' price={5.9} />
             <View className='fs08 cccplh fs07 cccprice ml6'>已售{item.totalSaleStock}件</View>

@@ -170,7 +170,7 @@ const Index: FC = () => {
           if (!Boolean(cart?.length)) { throw new ErrorR("购物车为空", true); }
           if (!Boolean(address)) { throw new ErrorR("请选择收货地址", true); }
           Taro.showLoading({ mask: true, title: "支付中...", });
-          const { payParam } = await Api_goodsCart_preOrder_ctn({
+          const payParam = await Api_goodsCart_preOrder_ctn({
             goodsItems: cart?.map(e => ({ id: e.id }))!,
             recMan: address!,
           });
