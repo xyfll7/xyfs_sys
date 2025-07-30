@@ -109,14 +109,16 @@ const Index: FC = () => {
             {selfInfo_S.depts?.map(e => {
               return <View key={e.deptId} className='mb10 bccwhite ww ioo pt10 dll prl10'>
                 <View className='dbtc ww mb10 '>
-                  <ComButton ll hoverClass="none">
-                    <Text className='nw1'>
-                      {e.deptName}
-                    </Text>
-                  </ComButton>
-                  {selfInfo_S.deptId === e.deptId &&
-                    <ComButton rr className='cccplh nw'>当前部门</ComButton>
-                  }
+                  <View className="dy">
+                    <ComButton ll hoverClass="none">
+                      <Text className='nw1'>
+                        {e.deptName}
+                      </Text>
+                    </ComButton>
+                    {selfInfo_S.deptId === e.deptId &&
+                      <ComButton ll className='cccplh nw' hoverClass="none">当前部门</ComButton>
+                    }
+                  </View>
                   {selfInfo_S.deptId !== e.deptId &&
                     <ComButton rr className='cccgreen nw' onClick={async () => {
                       Taro.showLoading({ mask: true, title: "切换中..." });

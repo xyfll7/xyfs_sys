@@ -96,11 +96,15 @@ const IIImyUserEditorAGENT: FC = () => {
         {userInfo.depts?.map(e => {
           return <View key={e.deptId} className='mb10 bccwhite ww ioo pt10 dll prl10'>
             <View className='dbtc ww mb10 '>
-              <ComButton ll className=''>
-                <Text className='nw1'>
-                  {e.deptName}
-                </Text>
-              </ComButton>
+              <View className="dy">
+                <ComButton ll hoverClass="none">
+                  <Text className='nw1'>
+                    {e.deptName}
+                  </Text>
+                </ComButton>
+                {userInfo.deptId === e.deptId && <ComButton ll className='cccplh nw' hoverClass="none">当前部门</ComButton>}
+              </View>
+
               {userInfo.deptId === e.deptId ?
                 <View className='dy'>
                   <ComButton rr className='cccplh nw' onClick={async () => {
@@ -112,7 +116,7 @@ const IIImyUserEditorAGENT: FC = () => {
                       Taro.showToast({ icon: "none", title: "完成" });
                     }
                   }}>移出</ComButton>
-                  <ComButton rr className='cccplh nw'>当前部门</ComButton>
+
                 </View>
                 :
                 <View className='dy'>
@@ -210,7 +214,7 @@ const IIIDeptList = ({ userInfo, onUpdateUserInfo }: { userInfo: DeptInfo; onUpd
     {depts?.length === 0 && <ComLoading isEmpty />}
     {depts && <ComTree list={depts} keyName='deptId'>
       {(e) => <View className='bccwhite ioo ovh pt10 dbtc ww mb10 ww' >
-        <ComButton className='mb10 ww'>
+        <ComButton className='mb10 ww' hoverClass="none">
           <View className='nw1'>{e.deptName}</View>
         </ComButton>
         <View className='dr pr10'>
