@@ -19,7 +19,7 @@ import { useSTSelf } from "@xyfs/taro_uii/store/store";
 import { try_Taro_hideLoading, try_Taro_navigateTo, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
 import { useHook_pageListNew } from "@xyfs/taro_uii/utils/useHooks";
 import { utils_get_qrcode } from "@xyfs/taro_uii/utils/util";
-import { coo___get_price, coo___objToUrl } from "@xyfs/utils/util";
+import { coo___get_price, coo___isNumber, coo___objToUrl } from "@xyfs/utils/util";
 import { FC, useCallback, useState } from "react";
 
 definePageConfig({ enableShareAppMessage: true, navigationStyle: "custom", disableScroll: true, });
@@ -160,6 +160,10 @@ const IIIStock = ({ onClose, product, onUpdateStock }: { onClose: () => void; pr
     </ComButton>
     <View className='ww prl10 dr'>
       <ComButton className='mb10   bccgreen  dxy cccwhite' onClick={async () => {
+        if (!coo___isNumber(stock) || Number(stock) <= 0) {
+          Taro.showToast({ icon: "none", title: "库存不能小于1" });
+          return;
+        }
         Taro.showLoading({ mask: true, title: "修改中..." });
         await Api_goods_stockSetting_ctn({ id: product.id!, stock: String(stock) });
         Taro.showToast({ icon: "none", title: "修改成功" });
