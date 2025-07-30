@@ -87,7 +87,7 @@ export const IIIPublisherClient: FC = () => {
         <Text className='nw cccplh'> 价格:</Text>
         <ComInput className='cccprice' type='digit' confirmType='done' value={form.price} placeholder='请输入价格' onBlur={() => { form.price === "" && setForm({ price: "0.00" }); }}
           onFocus={() => { form.price === "0.00" && setForm({ price: "" }); }}
-          onInput={(e) => setForm({ price: coo___get_price(e.detail.value, form.price) })} />
+          onInput={(e) => setForm({ price: coo___get_price(e.detail.value, form.price, { isDecimal: true }) })} />
       </ComButton>
       {roo___has_role(useSTSelf.getState().selfInfo, ["SUPPLIER"]) &&
         <IIIProductCategories categoryId={form.categoryId} onSetForm={(e) => {

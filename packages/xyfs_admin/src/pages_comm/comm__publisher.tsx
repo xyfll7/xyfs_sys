@@ -86,14 +86,14 @@ export const IIIPublisherAdmin: FC = () => {
         <Text className='nw cccplh mr6'>价格</Text>
         <ComInput className='cccprice' type='digit' confirmType='done' value={form.price} placeholder='请输入价格' onBlur={() => { form.price === "" && setForm({ price: "0.00" }); }}
           onFocus={() => { form.price === "0.00" && setForm({ price: "" }); }}
-          onInput={(e) => setForm({ price: coo___get_price(e.detail.value, form.price) })} />
+          onInput={(e) => setForm({ price: coo___get_price(e.detail.value, form.price, { isDecimal: true }) })} />
       </ComButton>
       <ComButton className='bccbackdeep mb10 dy' hoverClass='none'>
         <Text className='nw cccplh mr6'> {product ? "改后库存" : "库存"}</Text>
         <ComInput className='cccprice' type='digit' confirmType='done' value={form.stock} placeholder='请输入库存数量'
           onBlur={() => { form.stock === "" && setForm({ stock: "0" }); }}
           onFocus={() => { form.stock === "0" && setForm({ stock: "" }); }}
-          onInput={(e) => setForm({ stock: coo___get_price(e.detail.value, form.stock, { isDecimal: false, integerLength: 4 }) })} />
+          onInput={(e) => setForm({ stock: coo___get_price(e.detail.value, form.stock, { integerLength: 4 }) })} />
       </ComButton>
       {product &&
         <ComButton className='cccplh bccback' hoverClass="none">

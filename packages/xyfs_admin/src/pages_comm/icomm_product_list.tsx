@@ -140,7 +140,7 @@ const IIIStock = ({ onClose, product, onUpdateStock }: { onClose: () => void; pr
         <ComInput value={stock.toString()}
           onBlur={() => { stock === "" && setStock("0"); }}
           onFocus={() => { stock === "0" && setStock(""); }}
-          onInput={(e) => setStock(coo___get_price(e.detail.value, stock, { isDecimal: false, integerLength: 4 }))} />
+          onInput={(e) => setStock(coo___get_price(e.detail.value, stock, { allowNegative: true, integerLength: 4 }))} />
       </ComButton>
       <ComButton className='cccgreen w2rem dxy bccback ml10 mb10' onClick={async () => {
         if (Number(stock) > 0) {

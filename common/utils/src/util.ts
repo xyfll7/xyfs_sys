@@ -162,26 +162,36 @@ export function coo___urlToObj<T = {}>(url?: string): T {
   );
 }
 
-export function coo___get_price(value: string, price: string,
-  param: { isDecimal?: boolean; integerLength?: number, decimalLength?: number; } = { isDecimal: true }) {
+export function coo___get_price(
+  value: string,
+  price: string,
+  param?: {
+    isDecimal?: boolean;
+    integerLength?: number,
+    decimalLength?: number;
+    allowNegative?: boolean,
+  }) {
 
-  param.integerLength = param.integerLength || 3;
-  param.decimalLength = param.decimalLength || 2;
+  const _integerLength = param?.integerLength || 3;
+  const _decimalLength = param?.decimalLength || 2;
+  const _allowNegative = param?.allowNegative ?? false;
+  const _isDecimal = param?.isDecimal ?? false;
+  const _negative = (_allowNegative && value.startsWith("-")) ? "-" : "";
+  const _value = value.replace("-", "");
+  const regex = new RegExp(`^(.*\\..{${_decimalLength}}).*$`, '');
 
-  const regex = new RegExp(`^(.*\\..{${param.decimalLength}}).*$`, '');
-  console.log("pppppp", param);
-  if (param.isDecimal) {
-    return Number.isNaN(Number(value)) ? price : (() => {
-      const [v_0, v_1] = value.replace(regex, "$1").split('.');
-      return `${String(v_0 ? Number(v_0) : "").slice(0, param.integerLength)}${value.includes('.') ? '.' : ''}${v_1 ?? ''}`;
+  if (_isDecimal) {
+    const _num = Number.isNaN(Number(_value)) ? price : (() => {
+      const [v_0, v_1] = _value.replace(regex, "$1").split('.');
+      return `${String(v_0 ? Number(v_0) : "").slice(0, _integerLength)}${_value.includes('.') ? '.' : ''}${v_1 ?? ''}`;
     })();
-  } else {
-    return Number.isNaN(Number(value)) ? price : (() => {
-      const [v_0, v_1] = value.replace(regex, "$1").split('.');
-      return `${String(v_0 ? Number(v_0) : "").slice(0, param.integerLength)}`;
-    })();
+    return `${_negative}${_num}`;
   }
-
+  const _num = Number.isNaN(Number(_value)) ? price : (() => {
+    const [v_0, v_1] = _value.replace(regex, "$1").split('.');
+    return `${String(v_0 ? Number(v_0) : "").slice(0, _integerLength)}`;
+  })();
+  return `${_negative}${_num}`;
 }
 
 export function coo___obj_isEmpty(obj: object) {
