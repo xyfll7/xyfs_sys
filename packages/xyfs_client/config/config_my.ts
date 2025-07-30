@@ -35,7 +35,7 @@ export const config_my_common: UserConfigExport = {
   mini: {
     webpackChain(chain, webpack) {
       changeFileMiniprogramRoot();
-      console.log("----------修改miniprogramRoot完毕");
+      console.log("----------Change the miniprogramRoot field. Done.");
     },
     compile: {
       include: [
