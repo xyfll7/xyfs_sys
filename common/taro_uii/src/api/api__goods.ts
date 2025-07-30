@@ -85,6 +85,13 @@ export async function Api_goodsCart_clear_ctn(params: {
   });
   return res;
 }
+export async function Api_goods_fetch_ctn(ids: string[]): Promise<any> {
+  const res = await wx_call_container<any>({
+    path: "/goods/fetch",
+    data: ids
+  });
+  return res;
+}
 
 export async function Api_goodsCart_preOrder_ctn(params: {
   "goodsItems": { id: string; }[],

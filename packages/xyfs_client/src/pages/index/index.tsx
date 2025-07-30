@@ -2,7 +2,7 @@
 import { Text, Video, View, ViewProps } from '@tarojs/components';
 import Taro, { useDidShow } from '@tarojs/taro';
 import { Product_Publish } from '@xyfs/taro_uii';
-import { Api_goods_groupBuyingUserList_ctn, Api_goods_list_ctn, Api_goodsCart_preOrder_ctn } from "@xyfs/taro_uii/api/api__goods";
+import { Api_goods_fetch_ctn, Api_goods_groupBuyingUserList_ctn, Api_goods_list_ctn, Api_goodsCart_preOrder_ctn } from "@xyfs/taro_uii/api/api__goods";
 import { Api_common_getShortLink_ctn, Api_dept_info_ctn, Api_user_edit_ctn } from '@xyfs/taro_uii/api/api__users';
 import { ComAddressSwitchor } from '@xyfs/taro_uii/components/ComAddressSwitchor';
 import { ComBanner } from '@xyfs/taro_uii/components/ComBanner';
@@ -71,6 +71,7 @@ const Index: FC = () => {
   if (deptInfo) {
     deptInfo.shopAnnouncement = deptInfo.shopAnnouncement ? deptInfo.shopAnnouncement : "这个人很懒 🍒🐰​#这个人很懒,根本就不想写公告📝";
   }
+  const uniqueCart = coo___arr_remove_duplicate_objects(cart, "id");
   return <MMMAAPage className={`${isBanner ? "" : "bccback"}`}>
     <View className='ww'>
       {isBanner &&
@@ -132,7 +133,7 @@ const Index: FC = () => {
           {[...page.list].map((item, index) => <IIIItem0 item={item} key={index}
             count={cart.filter(e => e.id === item.id).length}
             onDetail={() => { setProduct(item); }}
-            onAdd={() => {
+            onAdd={async () => {
               // 添加数量不能超过剩余库存
               setCart((e) => {
                 const count = e.filter(ee => ee.id === item.id).length;
@@ -175,20 +176,30 @@ const Index: FC = () => {
           </ComNavBarB>
           <ComScrollView className='IOO'>
             {!Boolean(cart?.length) && <View className='dxy ww'><ComLoading className='mb10' isEmpty>购物车空空如也 ~</ComLoading></View>}
-            {coo___arr_remove_duplicate_objects(cart, "id").map((item, index) => <IIIItem0 item={item} key={index}
+            {uniqueCart.map((item, index) => <IIIItem0 item={item} key={index}
               count={cart.filter(e => e.id === item.id).length}
-              onAdd={() => {
+              onAdd={async () => {
+                Taro.showLoading({ mask: true, title: "加载中..." });
+                const res_newCartItems = await Api_goods_fetch_ctn(uniqueCart.map(e => e.id));
                 // 添加数量不能超过剩余库存
-                setCart((e) => {
-                  const count = e.filter(ee => ee.id === item.id).length;
+                setCart((_cart) => {
+                  const __cart = _cart.map(e => res_newCartItems.find(ee => ee.id === e.id) || e);
+                  const count = __cart.filter(ee => ee.id === item.id).length;
                   if (count >= item.stock) {
                     Taro.showToast({ icon: "none", title: "库存不足" });
-                    return e;
+                    return __cart;
                   }
-                  return [...e, { ...item }];
+                  return [...__cart, { ...item }];
                 });
+                Taro.hideLoading();
               }}
-              onSub={() => { setCart(coo___arr_remove_one_duplicate_by_id(cart, "id", item.id)); }} />)
+              onSub={async () => {
+                Taro.showLoading({ mask: true, title: "加载中..." });
+                const res_newCartItems = await Api_goods_fetch_ctn(uniqueCart.map(e => e.id));
+                const __cart = cart.map(e => res_newCartItems.find(ee => ee.id === e.id) || e);
+                setCart(coo___arr_remove_one_duplicate_by_id(__cart, "id", item.id));
+                Taro.hideLoading();
+              }} />)
             }
           </ComScrollView>
           <IIICartBar cart={cart} onClick={async () => {
