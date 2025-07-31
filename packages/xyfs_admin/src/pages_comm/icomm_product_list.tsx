@@ -144,13 +144,14 @@ const IIIStock = ({ onClose, product, onUpdateStock }: { onClose: () => void; pr
       </ComButton>
       <ComButton className='cccgreen w2rem dxy bccback ml10 mb10' onClick={async () => {
         if (Number(stock) > 0) {
-          setStock(String(Number(stock) - 1));
+          setStock(String(Number(!coo___isNumber(stock) ? 0 : stock) - 1));
         } else {
           Taro.showToast({ icon: "none", title: "库存不能小于0" });
         }
       }}>-</ComButton>
       <ComButton className='cccgreen  w2rem dxy bccback ml10 mb10' onClick={async () => {
-        setStock(String(Number(stock) + 1));
+        console.log("stock", stock, !coo___isNumber(stock) ? 0 : stock);
+        setStock(String(Number(!coo___isNumber(stock) ? 0 : stock) + 1));
       }}>+</ComButton>
     </View>
     <ComButton className='cccplh bccback' hoverClass="none">
