@@ -25,7 +25,7 @@ import { Pagination } from '@xyfs/taro_uii/type_index';
 import { AddressInfo, DeptInfo } from '@xyfs/taro_uii/type_user';
 import { try_Taro_chooseAddress, try_Taro_hideLoading, try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_setClipboardData, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
 import { useHook_pageListNew } from '@xyfs/taro_uii/utils/useHooks';
-import { coo___arr_remove_duplicate_objects, coo___arr_remove_one_duplicate_by_id, coo___objToUrl, coo___string_privacy, coo___urlToObj } from '@xyfs/utils/util';
+import { coo___arr_remove_duplicate_objects, coo___arr_remove_one_duplicate_by_id, coo___objToUrl, coo___privacy_phone, coo___urlToObj } from '@xyfs/utils/util';
 import React, { FC, useCallback, useEffect, useState } from 'react';
 
 definePageConfig({
@@ -239,12 +239,12 @@ const Index: FC = () => {
         <ComNavBarB className='mb10 ww' onClose={() => { setProduct(null); }} >
           <View className='ww dbtc'>
             <ComButton className='fwb bccback' hoverClass="none">详情</ComButton>
-            <View className='pr' onClick={() => {
-              setCart((e) => [...e, { ...product }]);
-              Taro.showToast({ icon: "none", title: "已加购" });
-            }} >
-              {Boolean(cart.filter(e => e.id === product.id).length) && <View className='pa z1 cccprice fs08 fwb' style={{ top: "0.1rem", left: "0.2rem" }}>{cart.filter(e => e.id === product.id).length}</View>}
-              <ComButton rr className=' bccyellow h2rem nw mr10 fwb' style={{ transform: `skewX(${"-7deg"})`, marginRight: '-0.1rem' }} >+ 加</ComButton>
+            <View className='dy' >
+              {Boolean(cart.filter(e => e.id === product.id).length) && <ComButton className='bcctrans fs08' hoverClass='none'>{cart.filter(e => e.id === product.id).length}</ComButton>}
+              <ComButton rr className='bccbackdeep cccgreen h2rem nw mr10 ' onClick={() => {
+                setCart((e) => [...e, { ...product }]);
+                Taro.showToast({ icon: "none", title: "已加购" });
+              }} >+加</ComButton>
             </View>
           </View>
         </ComNavBarB>
@@ -279,7 +279,7 @@ const IIICartBar = ({ cart, onClick }: { cart: any[]; onClick: () => void; }) =>
         onClick={() => { onClick(); }} />
       <ComButton className='bccyellow ml10 nw' onClickO={() => { onClick(); }}>
         <ComSquare style={{ width: "calc(1.3 * var(--rem_base))" }} className='icon-wxpay mr4' />
-        <Text>买</Text>
+        <Text className='fwb'>买</Text>
       </ComButton>
     </View>
   </View>;
@@ -309,7 +309,7 @@ const IIIUsers = React.memo(({ deptId }: { deptId: string; }) => {
     {users?.map((e, i) => {
       return <View className='dy mb10 ww' key={i}>
         <ComImage className='mr10 oo ovh' src={e.avatar}></ComImage>
-        <ComButton ll className='bcctrans cccplh' hoverClass="none">{e.name ? e.name : coo___string_privacy(e.mobile, { isPhone: true, placeholder: "该用户想匿名" })}</ComButton>
+        <ComButton ll className='bcctrans cccplh' hoverClass="none">{e.name ? e.name : coo___privacy_phone(e.mobile, 4, "该用户想匿名")}</ComButton>
       </View>;
     })}
     {users?.length === 0 && <ComLoading className='mb10' isEmpty >今天还没有人跟团哦 ~</ComLoading>}
@@ -332,19 +332,17 @@ const IIIItem0 = ({ item, count, onAdd, onSub, onDetail, }: { count: number, ite
             <ComTag className='cccbrown'>品质保证</ComTag>
             <ComTag className='cccplh'>极速退款</ComTag>
           </View>
-          <View className='fs08 cccbrown nw1'>陕北苹果排行版第1名</View>
+          <View className='fs08 nw1'>已卖{item.totalSaleStock}份</View>
         </View>
-        <View className=' ww dbtc IOO ovh' style={{ minHeight: '2.5rem', }}>
-          <View className='dll '>
+        <View className='ww dbl ioo' >
+          <View className='dll ww'>
             <ComPrice className='cccprice ml6' price={5.9} />
-            <View className='fs08 cccplh fs07 cccprice ml6'>已售{item.totalSaleStock}件</View>
+            <View className='fs08 cccplh cccprice ml6'>已售{item.totalSaleStock}件</View>
           </View>
-          <View className='dbr'>
-            {Boolean(count) && <ComButton className='bccbackdeep cccgreen mr10' style={{ transform: `skewX(${"-7deg"})` }} onClick={onSub}>  - </ComButton>}
-            <View className='pr' onClick={onAdd}>
-              {Boolean(count) && <View className='pa z1 cccprice fs08 fwb' style={{ top: "0.1rem", left: "0.2rem" }}>{count}</View>}
-              <ComButton className='bccyellow fwb' style={{ minHeight: '2.5rem', transform: `skewX(${"-7deg"})`, marginRight: '-0.1rem' }} >+ 加</ComButton>
-            </View>
+          <View className='dy'>
+            {Boolean(count) && <ComButton className='bcctrans fs08' hoverClass='none'>{count}</ComButton>}
+            {Boolean(count) && <ComButton className='bccbackdeep cccgreen mr10' onClick={onSub}>  - </ComButton>}
+            <ComButton className='bccyellow nw' onClick={onAdd}>+加</ComButton>
           </View>
         </View>
       </View>
