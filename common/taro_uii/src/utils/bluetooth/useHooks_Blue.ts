@@ -1,6 +1,6 @@
 import Taro from "@tarojs/taro";
 import GBK from "@xyfs/utils/gbk";
-import { coo___JSON_str_code, coo___async_sleep, coo___divide_array_to_n_parts, coo___ios_date, coo___privacy_phone, coo___string_privacy, coo___string_truncate_end } from "@xyfs/utils/util";
+import { coo___JSON_str_code, coo___async_sleep, coo___divide_array_to_n_parts, coo___ios_date, coo___privacy_phone, coo___privacy_string, coo___string_truncate_end } from "@xyfs/utils/util";
 import { format } from "date-fns";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { PreBarCodeDryclean } from "../../../types/type_index";
@@ -275,7 +275,7 @@ export function on_get_printer_str_order_express(_order: OrderInfo<Product_Expre
   const sendManName = `${_order.__product?.sendMan?.realName?.charAt(0)}* ${_order.__product?.sendMan?.mobile?.slice(0, 3)}****${_order.__product?.sendMan?.mobile?.slice(-4)}`.slice(0, 20);
 
 
-  const orderUserName = _order.appid == process.env.TARO_APP_CLIENT ? coo___string_privacy(_order.userName ?? '匿名') : `${_order.userName}`;
+  const orderUserName = _order.appid == process.env.TARO_APP_CLIENT ? coo___privacy_string(_order.userName) : `${_order.userName}`;
 
 
   if (type === "cpcl") {
@@ -312,7 +312,7 @@ export function on_get_printer_str_order_express(_order: OrderInfo<Product_Expre
       `SETMAG 2 2`,
       `${T_0} 0 ${X_} ${Y_ += 10} 收`,
       `SETMAG 0 0`,
-      `${T_0} 0 ${X_ + 60} ${Y_} ${_order.__product?.recMan?.name} ${coo___privacy_phone(_order.__product?.recMan?.mobile)}`,
+      `${T_0} 0 ${X_ + 60} ${Y_} ${_order.__product?.recMan?.name} ${coo___privacy_phone(_order.__product?.recMan?.mobile ?? "", 7)}`,
       ...(() => coo___divide_array_to_n_parts(recAddr.split(""), 20)
         .map(e => e.join(""))
         .map(e => `${T_0} 0 ${X_ + 60} ${Y_ += 30} ${e}`)
@@ -377,7 +377,7 @@ export function on_get_printer_str_order_express(_order: OrderInfo<Product_Expre
       `LINE ${X_} ${Y_ += 60} ${P_w} ${Y_} ${L_H}`, // -----------
 
       `TEXT ${X_},${Y_ += 10},"${font_3}",${rotation_0},1,1,"收"`,
-      `TEXT ${X_ + 60},${Y_},"${font_0}",${rotation_0},1,1,"${_order.__product?.recMan?.name} ${coo___privacy_phone(_order.__product?.recMan?.mobile)}"`,
+      `TEXT ${X_ + 60},${Y_},"${font_0}",${rotation_0},1,1,"${_order.__product?.recMan?.name} ${coo___privacy_phone(_order.__product?.recMan?.mobile ?? "", 7)}"`,
       ...(() => coo___divide_array_to_n_parts(recAddr.split(""), 20)
         .map(e => e.join(""))
         .map(e => `TEXT ${X_ + 60},${Y_ += 30},"${font_0}",${rotation_0},1,1,"${e}"`)
@@ -423,7 +423,7 @@ export function on_get_printer_str_order_bing_goods(_order: OrderInfo<Product_Dr
 
 
   const ___rec = _order.userAddress; // 用户地址
-  const recName = `${coo___string_privacy(___rec?.name!)} ${coo___privacy_phone(___rec?.mobile)}`.slice(0, 20);
+  const recName = `${coo___privacy_string(___rec?.name)} ${coo___privacy_phone(___rec?.mobile ?? "", 7)}`.slice(0, 20);
   const recAddr = utils_addressInfoToString(___rec);
 
 
@@ -523,7 +523,7 @@ export function on_get_printer_str_order_bing_goods_waybill(_order: OrderInfo<Pr
 
 
   const ___rec = _order.userAddress; // 用户地址
-  const recName = `${___rec?.name} ${coo___privacy_phone(___rec?.mobile)}`.slice(0, 20);
+  const recName = `${___rec?.name} ${coo___privacy_phone(___rec?.mobile ?? "", 7)}`.slice(0, 20);
   const recAddr = utils_addressInfoToString(___rec);
   const ___regiment = _order.deptAddress; // 团长地址
   const ___merchant = _order.__product?.merchantAddress; // 商家地址

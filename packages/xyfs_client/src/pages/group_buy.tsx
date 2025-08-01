@@ -24,7 +24,7 @@ import { Pagination } from '@xyfs/taro_uii/type_index';
 import { AddressInfo, DeptInfo } from '@xyfs/taro_uii/type_user';
 import { try_Taro_chooseAddress, try_Taro_hideLoading, try_Taro_navigateTo, try_Taro_requestPayment, try_Taro_setClipboardData, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
 import { useHook_getCurrentInstance, useHook_pageListNew } from '@xyfs/taro_uii/utils/useHooks';
-import { coo___objToUrl, coo___string_privacy, coo___urlToObj } from '@xyfs/utils/util';
+import { coo___objToUrl, coo___privacy_phone, coo___urlToObj } from '@xyfs/utils/util';
 import React, { FC, useCallback, useEffect, useState } from 'react';
 
 definePageConfig({
@@ -196,7 +196,7 @@ const Index: FC = () => {
           }
         }}>
           <ComSquare style={{ width: "calc(1.3 * var(--rem_base))" }} className='icon-wxpay mr4' />
-          <Text>买</Text>
+          <Text className='fwb'>买</Text>
         </ComButton>
       </View>
     </View>
@@ -306,7 +306,7 @@ const IIIUsers = React.memo(({ deptId }: { deptId: string; }) => {
     {users?.map((e, i) => {
       return <View className='dy mb10 ww' key={i}>
         <ComImage className='mr10 oo ovh' src={e.avatar}></ComImage>
-        <ComButton ll className='bcctrans cccplh' hoverClass="none">{e.name ? e.name : coo___string_privacy(e.mobile, { isPhone: true, placeholder: "该用户想匿名" })}</ComButton>
+        <ComButton ll className='bcctrans cccplh' hoverClass="none">{e.name ? e.name : coo___privacy_phone(e.mobile, 4, "该用户想匿名")}</ComButton>
       </View>;
     })}
     {users?.length === 0 && <ComLoading className='mb10' isEmpty >今天还没有人跟团哦 ~</ComLoading>}

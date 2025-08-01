@@ -213,9 +213,29 @@ export function coo___obj_to_enum<T extends Record<any, any>>(obj: T) {
   return _obj;
 }
 
+// 隐私手机号
+export function coo___privacy_phone(mobile: string, len: number, placeholder?: string) {
+  return mobile ? `${mobile?.slice(0, 7 - len)}${'*'.repeat(len)}${mobile?.slice(-4)}` : (placeholder ?? "***空号***");
+}
 
-export function coo___privacy_phone(mobile?: string) {
-  return mobile ? `${mobile?.slice(0, 3)}****${mobile?.slice(-4)}` : "***空号***";
+// 隐私字符串
+export function coo___privacy_string(str?: string, keepLast = false) {
+  if (!str) { return "匿名"; }
+  const surname = str.charAt(0);
+  const nameLength = str.length;
+
+  if (nameLength <= 1) return surname; // 只有姓的情况
+  if (nameLength === 2 || !keepLast) {
+    // 不保留最后一个字，或名字只有两个字
+    const stars = '*'.repeat(Math.min(nameLength - 1, 3));
+    return surname + stars;
+  } else {
+    // 保留最后一个字
+    const middleLength = nameLength - 2; // 除去姓和最后一个字
+    const stars = '*'.repeat(Math.min(middleLength, 3));
+    const lastChar = str.charAt(nameLength - 1);
+    return surname + stars + lastChar;
+  }
 }
 
 // 对象数组去重值
@@ -223,24 +243,7 @@ export function coo___unique_arr<T extends Record<string, any>>(arr: T[], key: s
   return [...new Map(arr.map((item) => [item[key], item])).values()];
 }
 
-// 隐私字符串
-export function coo___string_privacy(str: string, options: { isPhone?: boolean; placeholder?: string; } = { isPhone: false, }) {
-  if (!str) { return options.placeholder; }
-  if (options.isPhone) {
-    str = str.slice(0, 3) + '****' + str.slice(7);
-    return str;
-  }
-  if (str?.length == 2) {
-    str = str.substring(0, 1) + '*'; // 截取name 字符串截取第一个字符，
-    return str ? str : options.placeholder; // 张三显示为张*
-  } else if (str.length == 3) {
-    str = str.substring(0, 1) + '*' + str.substring(2, 3); // 截取第一个和第三个字符
-    return str ? str : options.placeholder; // 李思思显示为李*思
-  } else {
-    str = str.substring(0, 1) + '*' + '*' + str.substring(3, str.length); // 截取第一个和大于第4个字符
-    return str ? str : options.placeholder; // 王五哈哈显示为王**哈
-  }
-}
+
 
 // 当数字字符串长度小于设定长度时，在前面加0
 export function coo___string_pad_number(num: string | number, len: number) {
