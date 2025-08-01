@@ -29,7 +29,6 @@ const SERVICE_UUIDs: string[] = [
 const SERVICE_UUID = "49535343-FE7D-4AE5-8FA9-9FAFD205E455";
 const CHARACTERISTIC_UUID = "49535343-8841-43F4-A8D4-ECBE34729BB3";
 
-
 const bluetoothAdapterState_Store = {
   status: {
     available: false,
@@ -57,7 +56,6 @@ const bluetoothAdapterState_Store = {
     return () => { };
   },
 };
-
 export function useINHooks_Blue_devices() {
   const [devices, setDevices] = useState<Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice[]>();
   const state = useSyncExternalStore(bluetoothAdapterState_Store.sub, () => bluetoothAdapterState_Store.status);
@@ -128,7 +126,6 @@ export function useINHooks_Blue_devices() {
   }
   return { devices, state, startBlue, stopBlue, addPrinter };
 }
-
 export async function on_start_print(___cb: (blue_device?: Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice) => { cpcl: string[], tspl?: string[]; }, options?: { orderId?: string, selfInfo_S?: DeptInfo | null; }): Promise<void> {
   const tapIndex = await (async () => {
     if (options?.selfInfo_S && options.selfInfo_S.printers && options.selfInfo_S.printers.length && options.orderId) {
@@ -240,7 +237,6 @@ export async function on_start_print(___cb: (blue_device?: Taro.onBluetoothDevic
     }
   }
 }
-
 export function on_get_cpcl_str_test(blue_device?: Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice) {
   if (utils_str_includes(["Printer_"], blue_device?.name)) { // TSPL打印语法
     return [
@@ -267,16 +263,13 @@ export function on_get_cpcl_str_test(blue_device?: Taro.onBluetoothDeviceFound.C
   }
   throw new Error("不支持该打印机2");
 }
-
 export function on_get_printer_str_order_express(_order: OrderInfo<Product_Express>, type: "cpcl" | "tspl", blue_device?: Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice,) {
   _order = JSON.parse(JSON.stringify(_order, coo___JSON_str_code));
   const recAddr = `${_order.__product?.recMan?.province} ${_order.__product?.recMan?.city} ${_order.__product?.recMan?.area} ${_order.__product?.recMan?.address}`;
   const sendAddr = `${_order.__product?.sendMan?.province} ${_order.__product?.sendMan?.city} ${_order.__product?.sendMan?.area} ${_order.__product?.sendMan?.address}`;
-  const sendManName = `${_order.__product?.sendMan?.realName?.charAt(0)}* ${_order.__product?.sendMan?.mobile?.slice(0, 3)}****${_order.__product?.sendMan?.mobile?.slice(-4)}`.slice(0, 20);
-
+  const sendManName = `${coo___privacy_string(_order.__product?.sendMan?.name)} ${_order.__product?.sendMan?.mobile?.slice(0, 3)}****${_order.__product?.sendMan?.mobile?.slice(-4)}`.slice(0, 20);
 
   const orderUserName = _order.appid == process.env.TARO_APP_CLIENT ? coo___privacy_string(_order.userName) : `${_order.userName}`;
-
 
   if (type === "cpcl") {
     const T_0 = utils_str_includes(["快递100"], blue_device?.name) ? "TEXT 0" : "TEXT 1";
@@ -312,7 +305,7 @@ export function on_get_printer_str_order_express(_order: OrderInfo<Product_Expre
       `SETMAG 2 2`,
       `${T_0} 0 ${X_} ${Y_ += 10} 收`,
       `SETMAG 0 0`,
-      `${T_0} 0 ${X_ + 60} ${Y_} ${_order.__product?.recMan?.name} ${coo___privacy_phone(_order.__product?.recMan?.mobile ?? "", 7)}`,
+      `${T_0} 0 ${X_ + 60} ${Y_} ${coo___privacy_string(_order.__product?.recMan?.name)} ${coo___privacy_phone(_order.__product?.recMan?.mobile ?? "", 7)}`,
       ...(() => coo___divide_array_to_n_parts(recAddr.split(""), 20)
         .map(e => e.join(""))
         .map(e => `${T_0} 0 ${X_ + 60} ${Y_ += 30} ${e}`)
@@ -377,7 +370,7 @@ export function on_get_printer_str_order_express(_order: OrderInfo<Product_Expre
       `LINE ${X_} ${Y_ += 60} ${P_w} ${Y_} ${L_H}`, // -----------
 
       `TEXT ${X_},${Y_ += 10},"${font_3}",${rotation_0},1,1,"收"`,
-      `TEXT ${X_ + 60},${Y_},"${font_0}",${rotation_0},1,1,"${_order.__product?.recMan?.name} ${coo___privacy_phone(_order.__product?.recMan?.mobile ?? "", 7)}"`,
+      `TEXT ${X_ + 60},${Y_},"${font_0}",${rotation_0},1,1,"${coo___privacy_string(_order.__product?.recMan?.name)} ${coo___privacy_phone(_order.__product?.recMan?.mobile ?? "", 7)}"`,
       ...(() => coo___divide_array_to_n_parts(recAddr.split(""), 20)
         .map(e => e.join(""))
         .map(e => `TEXT ${X_ + 60},${Y_ += 30},"${font_0}",${rotation_0},1,1,"${e}"`)
@@ -411,7 +404,6 @@ export function on_get_printer_str_order_express(_order: OrderInfo<Product_Expre
 
 
 }
-
 export function on_get_printer_str_order_bing_goods(_order: OrderInfo<Product_Dryclean>, type: "divide" | "merge", blue_device?: Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice) {
   _order = JSON.parse(JSON.stringify(_order, coo___JSON_str_code));
   const T_0 = utils_str_includes(["快递100"], blue_device?.name) ? "TEXT 0" : "TEXT 1";
@@ -593,8 +585,6 @@ export function on_get_printer_str_order_bing_goods_waybill(_order: OrderInfo<Pr
   const arr_page = [`! 0 200 200 ${P_h} 1`];
   return [...arr_page, ...arr_content].reduce((str, e) => `${str}\r\n${e}`);
 }
-
-
 export function on_get_printer_str_order_dryclean_out_factory(_order: OrderInfo<Product_Dryclean>, blue_device?: Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice) {
   _order = JSON.parse(JSON.stringify(_order, coo___JSON_str_code));
   const T_0 = utils_str_includes(["快递100"], blue_device?.name) ? "TEXT 0" : "TEXT 1";
@@ -651,9 +641,6 @@ export function on_get_printer_str_order_dryclean_out_factory(_order: OrderInfo<
   const arr_page = [`! 0 200 200 ${P_h} 1`];
   return [...arr_page, ...arr_content].reduce((str, e) => `${str}\r\n${e}`);
 }
-
-
-
 export function on_get_printer_str_order_dryclean_pre_barcodes(_order: PreBarCodeDryclean, blue_device?: Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice) {
   if (utils_str_includes(["Printer_"], blue_device?.name)) {
     const is_DEV = getMyEnv().envVersion === "develop";
