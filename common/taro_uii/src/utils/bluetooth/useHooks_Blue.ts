@@ -267,7 +267,7 @@ export function on_get_printer_str_order_express(_order: OrderInfo<Product_Expre
   _order = JSON.parse(JSON.stringify(_order, coo___JSON_str_code));
   const recAddr = `${_order.__product?.recMan?.province} ${_order.__product?.recMan?.city} ${_order.__product?.recMan?.area} ${_order.__product?.recMan?.address}`;
   const sendAddr = `${_order.__product?.sendMan?.province} ${_order.__product?.sendMan?.city} ${_order.__product?.sendMan?.area} ${_order.__product?.sendMan?.address}`;
-  const sendManName = `${coo___privacy_string(_order.__product?.sendMan?.name)} ${_order.__product?.sendMan?.mobile?.slice(0, 3)}****${_order.__product?.sendMan?.mobile?.slice(-4)}`.slice(0, 20);
+  const sendManName = `${coo___privacy_string(_order.__product?.sendMan?.name)} ${coo___privacy_phone(_order.__product?.sendMan?.mobile ?? "", 7)}`.slice(0, 20);
 
   const orderUserName = _order.appid == process.env.TARO_APP_CLIENT ? coo___privacy_string(_order.userName) : `${_order.userName}`;
 
