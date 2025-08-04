@@ -15,6 +15,7 @@ import { ComNavBarB } from "@xyfs/taro_uii/components/ComNavBarB";
 import { ComPopupNew } from "@xyfs/taro_uii/components/ComPopupNew";
 import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
 import { ComSELFView, MMMAAPage } from "@xyfs/taro_uii/components/MMMAAPage";
+import { getMyEnv } from "@xyfs/taro_uii/src/env";
 import { useSTSelf } from "@xyfs/taro_uii/store/store";
 import { try_Taro_hideLoading, try_Taro_navigateTo, try_Taro_showModal } from "@xyfs/taro_uii/utils/try_catch";
 import { useHook_pageListNew } from "@xyfs/taro_uii/utils/useHooks";
@@ -161,7 +162,7 @@ const IIIStock = ({ onClose, product, onUpdateStock }: { onClose: () => void; pr
     </ComButton>
     <View className='ww prl10 dr'>
       <ComButton className='mb10   bccgreen  dxy cccwhite' onClick={async () => {
-        if (!coo___isNumber(stock) || Number(stock) <= 0) {
+        if (getMyEnv().platform != "devtools" && (!coo___isNumber(stock) || Number(stock) <= 0)) {
           Taro.showToast({ icon: "none", title: "库存不能小于1" });
           return;
         }
