@@ -1,5 +1,5 @@
 {
-  "name": "xyfs_image_croper",
+  "name": "@xyfs/image_croper",
   "version": "1.0.0",
   "main": ".eslintrc.js",
   "directories": {
