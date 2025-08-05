@@ -50,9 +50,8 @@ O_D 订单id
 ## VSCode正则搜索
 
 ```
-ABC[\w\W]*DEF // 跨行
-ABC(.|\n)*?DEF  // 行内
-ABC(.)*?DEF  // 行内
+[\w\W]* // 跨行ABC[\w\W]*DEF
+(.)*?   // 行内ABC(.)*?DEF
 ```
 
 ## todo-tree

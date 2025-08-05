@@ -16,7 +16,7 @@ import { ComScrollView } from "../components/ComScrollView";
 import { ComSearcher } from "../components/ComSearcher";
 import { MMMAAPage } from "../components/MMMAAPage";
 import { ComProvinceCityArea, initAddressData, MMMAddress } from "../components/MMMAddress";
-import { Address_T, ErrorR } from "../config";
+import { Address_T } from "../config";
 import { useSTSelf } from "../store/store";
 import { try_Taro_hideLoading, try_Taro_navigateBack, try_Taro_setClipboardData, try_Taro_showModal } from "../utils/try_catch";
 import { useHook_getCurrentInstance, useHook_pageListNew, useHook_Reducer } from "../utils/useHooks";
@@ -104,7 +104,7 @@ const CPAddressList: FC = () => {
             });
             page_init();
             Taro.showToast({ icon: "none", title: "保存成功" });
-          } else { throw new ErrorR(`请检查 ${["", "寄件地址", "收件地址"][addressType]}`, true); }
+          } else { throw new Error(`请检查 ${["", "寄件地址", "收件地址"][addressType]}`); }
         }}
         onClose={() => { setInitAddress(null); }}
         onSmartPast={async (text) => {

@@ -1,6 +1,5 @@
 import Taro from "@tarojs/taro";
 import { coo___objToUrl } from "@xyfs/utils/util";
-import { ErrorR } from "../config";
 import { base_url, getMyEnv } from "../env";
 import { try_Taro_getStorageSync } from "../utils/try_catch";
 
@@ -87,14 +86,14 @@ async function ___Taro_request<T>(option: Taro.request.Option<any, any>) {
   try {
     return await Taro.request<T>(option);
   } catch (err) {
-    throw new ErrorR(err);
+    throw new Error(err);
   }
 }
 async function ___Taro_callContainer<T>(_ctn: Taro.Cloud, option: Taro.cloud.CallContainerParam<any>) {
   try {
     return await _ctn.callContainer<T>(option);
   } catch (err) {
-    throw new ErrorR(err);
+    throw new Error(err);
   }
 }
 

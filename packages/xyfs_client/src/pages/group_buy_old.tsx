@@ -17,7 +17,7 @@ import { ComScrollView } from '@xyfs/taro_uii/components/ComScrollView';
 import { ComSquare } from '@xyfs/taro_uii/components/ComSquare';
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { MMMFooter } from '@xyfs/taro_uii/components/MMMFooter';
-import { ErrorR, Order_ST } from '@xyfs/taro_uii/src/config';
+import { Order_ST } from '@xyfs/taro_uii/src/config';
 import { roo___my_dept } from '@xyfs/taro_uii/src/roles';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
 import { Pagination } from '@xyfs/taro_uii/type_index';
@@ -168,8 +168,8 @@ const Index: FC = () => {
         <ComAddressSwitchor className="ww mr10 bcctrans" isShort title='团:' address={roo___my_dept(selfInfo_S)} url='/pages_user/user_regiment_list_map' />
         <ComCartPrice className='bcctrans' totalPrice={String(cart.reduce((sum, item) => sum + (item.price * 100), 0) / 100)} num={String(cart.length)} />
         <ComButton className='bccyellow ml10 nw' onClickO={async () => {
-          if (!Boolean(cart?.length)) { throw new ErrorR("购物车为空", true); }
-          if (!Boolean(address)) { throw new ErrorR("请选择收货地址", true); }
+          if (!Boolean(cart?.length)) { throw new Error("购物车为空",); }
+          if (!Boolean(address)) { throw new Error("请选择收货地址",); }
           Taro.showLoading({ mask: true, title: "支付中...", });
           const payParam = await Api_goodsCart_preOrder_ctn({
             goodsItems: cart?.map(e => ({ id: e.id }))!,

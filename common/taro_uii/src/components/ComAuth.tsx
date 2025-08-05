@@ -2,7 +2,6 @@
 import { View, ViewProps } from '@tarojs/components';
 import Taro, { AuthSetting } from "@tarojs/taro";
 import { useCallback, useEffect, useState } from 'react';
-import { ErrorR } from '../config';
 import { getMyEnv } from '../env';
 import { try_Taro_getLocation, try_Taro_getPrivacySetting, try_Taro_getSetting, try_Taro_openSetting } from '../utils/try_catch';
 import { ComButton } from './ComButton';
@@ -76,7 +75,7 @@ function useINHook_Auth(auth: keyof AuthSetting | "scope.bluetooth", success_mes
       const res_privacy = await try_Taro_getPrivacySetting();
       setPrivacy(!res_privacy.needAuthorization);
       setAuth(false);
-      throw new ErrorR(err);
+      throw new Error(err);
     }
   }, [auth]);
 

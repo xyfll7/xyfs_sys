@@ -8,7 +8,6 @@ import { ComNav } from '@xyfs/taro_uii/components/ComNav';
 import { ComNavBarA } from '@xyfs/taro_uii/components/ComNavBarA';
 import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
-import { ErrorR } from "@xyfs/taro_uii/src/config";
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
 import { try_Taro_scanCode, try_Taro_showActionSheet, try_Taro_showModal } from '@xyfs/taro_uii/utils/try_catch';
 import { coo___urlToObj } from "@xyfs/utils/util";
@@ -25,7 +24,7 @@ const Index: FC<{}> = ({ }) => {
   async function add_kuai_di_100() {
     const res_code = await try_Taro_scanCode<string>({ type: "QR_CODE" });
     const { siid } = coo___urlToObj<{ siid: string; }>(res_code);
-    if (!siid) { throw new ErrorR("没有识别到siid", true); }
+    if (!siid) { throw new Error("没有识别到siid",); }
     if (selfInfo_S?.printers?.find((e) => e.siid === siid)) {
       Taro.showToast({ icon: "none", title: "您已经添加过该打印机,请勿重复添加", });
       return;
@@ -71,7 +70,7 @@ const Index: FC<{}> = ({ }) => {
                 {printerIdDYY ? <Text>{printerIdDYY}</Text> : <Text className='cccplh'> 暂无ID请先扫打印机码</Text>}
               </ComButton>
               <ComButton className={`mb10  ${printerIdDYY ? 'cccgreen' : 'cccplh'}`} onClick={async () => {
-                if (!printerIdDYY) { throw new ErrorR("请先扫打印机码", true); }
+                if (!printerIdDYY) { throw new Error("请先扫打印机码",); }
                 const res_code = await try_Taro_scanCode<string>({ type: "QR_CODE" });
                 Taro.showLoading({ mask: true, title: "绑定打印机..." });
                 const res = await Api_user_printer_bind_ctn({ printerId: printerIdDYY, captcha: res_code });

@@ -2,7 +2,6 @@
 import { coo___deep } from "@xyfs/utils/util";
 import Schema, { ValidateError, Values } from "async-validator";
 import { AddressInfo, AddressManType } from "../../types";
-import { ErrorR } from "../config";
 import { roo___has_role } from "../roles";
 import { useSTSelf } from "../store/store";
 
@@ -37,7 +36,7 @@ export async function utils_validate_register<T extends Values>(obj: T): Promise
   } catch (err) {
     if (err instanceof Error) {
       const [error] = (err as any).errors as ValidateError[];
-      throw new ErrorR(error?.message ?? "未知错误", true);
+      throw new Error(error?.message ?? "未知错误");
     } else {
       throw err;
     }
@@ -65,7 +64,7 @@ export async function utils_validate_express(type: AddressManType, obj?: Address
   } catch (err) {
     if (err instanceof Error) {
       const [error] = (err as any).errors as ValidateError[];
-      throw new ErrorR(error?.message ?? "未知错误", true);
+      throw new Error(error?.message ?? "未知错误");
     } else {
       throw err;
     }
@@ -108,7 +107,7 @@ export async function utils_validate_realName<T extends Values>(obj: T): Promise
   } catch (err) {
     if (err instanceof Error) {
       const [error] = (err as any).errors as ValidateError[];
-      throw new ErrorR(error?.message ?? "未知错误", true);
+      throw new Error(error?.message ?? "未知错误");
     } else {
       throw err;
     }

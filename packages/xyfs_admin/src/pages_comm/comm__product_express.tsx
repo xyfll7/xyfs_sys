@@ -21,7 +21,7 @@ import { ComWeightPrice } from "@xyfs/taro_uii/components/ComWeightPrice";
 import { ComSELFView, MMMAAPage } from "@xyfs/taro_uii/components/MMMAAPage";
 import { ComProvinceCityArea, initAddressData, MMMAddress } from "@xyfs/taro_uii/components/MMMAddress";
 import { MMMPoster, MMMPosterExpress } from "@xyfs/taro_uii/components/MMMPoster";
-import { Address_T, ErrorR, Order_ST, PickUp_ST } from "@xyfs/taro_uii/src/config";
+import { Address_T, Order_ST, PickUp_ST } from "@xyfs/taro_uii/src/config";
 import { get_dev_value } from "@xyfs/taro_uii/src/env";
 import { IM_线上_收款码 } from "@xyfs/taro_uii/src/image";
 import { roo___has_role, roo___my_dept } from "@xyfs/taro_uii/src/roles";
@@ -173,18 +173,18 @@ const IIIOrderPayRegiment: FC<{}> = ({ }) => {
 
   async function ___pre_pay() {
     if (isShunFeng && !express_S.productList?.[0]?.expressType) {
-      throw new ErrorR(`顺丰请选择"特快"或"标快"`, true);
+      throw new Error(`顺丰请选择"特快"或"标快"`);
     }
     if (isJingDong && !express_S.productList?.[0]?.expressType) {
-      throw new ErrorR(`京东请选择"电商"或"标快"`, true);
+      throw new Error(`京东请选择"电商"或"标快"`);
     }
     await utils_validate_express("send", express_S?.productList![0]?.sendMan!);
     await utils_validate_express("rec", express_S?.productList![0]?.recMan!);
 
-    if (!express_S?.productList![0]?.sendMan?.realName) { throw new ErrorR("请先实名", true); }
-    if (!express_S?.productList?.[0]?.itemType) { throw new ErrorR("请输入品名", true); }
-    if (!express_S?.productList?.[0]?.weight) { throw new ErrorR("请输入重量", true); }
-    if (!express_S?.productList?.[0]?.deliveryId) { throw new ErrorR("请选择快递公司", true); }
+    if (!express_S?.productList![0]?.sendMan?.realName) { throw new Error("请先实名"); }
+    if (!express_S?.productList?.[0]?.itemType) { throw new Error("请输入品名"); }
+    if (!express_S?.productList?.[0]?.weight) { throw new Error("请输入重量"); }
+    if (!express_S?.productList?.[0]?.deliveryId) { throw new Error("请选择快递公司"); }
 
     Taro.showLoading({ mask: true, title: "检查地址...", });
     await Api_logistic_check_ctn(useSTExpress.getState().express);
@@ -263,21 +263,21 @@ const IIIOrderPayRegiment: FC<{}> = ({ }) => {
                   }]
                 });
               } else {
-                throw new ErrorR("上门费最高收2元", true);
+                throw new Error("上门费最高收2元",);
               }
             }
           }}>+上门费</ComButton>}
         <ComButton className='mb10 cccgreen nw' onClick={async () => {
           if (isShunFeng && !express_S.productList?.[0]?.expressType) {
-            throw new ErrorR(`顺丰请选择"特快"或"标快"`, true);
+            throw new Error(`顺丰请选择"特快"或"标快"`,);
           }
           if (isJingDong && !express_S.productList?.[0]?.expressType) {
-            throw new ErrorR(`京东请选择"电商"或"标快"`, true);
+            throw new Error(`京东请选择"电商"或"标快"`,);
           }
           await utils_validate_express("send", express_S.productList?.[0]?.sendMan);
           await utils_validate_express("rec", express_S.productList?.[0]?.recMan);
-          if (!express_S.productList?.[0]?.deliveryId) { throw new ErrorR("请选择快递公司", true); }
-          if (!express_S?.productList?.[0]?.weight) { throw new ErrorR("请输入重量", true); }
+          if (!express_S.productList?.[0]?.deliveryId) { throw new Error("请选择快递公司",); }
+          if (!express_S?.productList?.[0]?.weight) { throw new Error("请输入重量",); }
           Taro.showLoading({ mask: true, title: "正在获取价格...", });
 
           const res_price = await Api_order_previewPrice_ctn(express_S);

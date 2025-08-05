@@ -16,7 +16,7 @@ import { ComPopupNew } from "@xyfs/taro_uii/components/ComPopupNew";
 import { ComScrollView } from "@xyfs/taro_uii/components/ComScrollView";
 import { ComSELFView, MMMAAPage } from "@xyfs/taro_uii/components/MMMAAPage";
 import { ComProvinceCityArea, initAddressData, MMMAddress } from "@xyfs/taro_uii/components/MMMAddress";
-import { Address_T, ErrorR, Order_ST } from "@xyfs/taro_uii/src/config";
+import { Address_T, Order_ST } from "@xyfs/taro_uii/src/config";
 import { roo___has_role, roo___my_dept } from "@xyfs/taro_uii/src/roles";
 import { useSTExpress, useSTSelf } from "@xyfs/taro_uii/store/store";
 import { AddressInfo } from "@xyfs/taro_uii/type_user";
@@ -141,11 +141,11 @@ const IIIOrderPayUser: FC<{}> = ({ }) => {
         <ComAddressSwitchor className='bccback mr10 ww' isShort address={roo___my_dept(selfInfo_S)} url='/pages_user/user_regiment_list_map' />
         <ComButton className='bccyellow fwb nw'
           onClick={async () => {
-            if (!selfInfo_S?.mobile) { throw new ErrorR("请先“手机号快捷登录”!", true); }
+            if (!selfInfo_S?.mobile) { throw new Error("请先“手机号快捷登录”!",); }
             // 用户下单没有指定具体快递公司,不检查快递可达性
             await utils_validate_express("rec", express_S?.productList?.[0]?.recMan!);
             await utils_validate_express("send", express_S?.productList?.[0]?.sendMan!);
-            if (!express_S?.productList?.[0]?.itemType) { throw new ErrorR("请输入品名", true); }
+            if (!express_S?.productList?.[0]?.itemType) { throw new Error("请输入品名",); }
             Taro.showLoading({ mask: true, title: "提交中...", });
             await Api_order_pre_ctn({ ...useSTExpress.getState().express, nowPay: false });
             try_Taro_hideLoading();

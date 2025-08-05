@@ -3,7 +3,6 @@ import { coo___urlToObj } from "@xyfs/utils/util";
 import { Environment } from "../../types/type_index";
 import { AddressInfo } from "../../types/type_user";
 import { get_Taro_ctn } from "../api/wx_call";
-import { ErrorR } from "../config";
 import { getMyEnv } from "../env";
 import { utils_str_includes } from "./util";
 
@@ -23,7 +22,7 @@ async function try_Taro_scanCode<T>(params?: Taro.scanCode.Option & { type?: key
       throw new Error("没有识别到可用信息");
     }
   } catch (err) {
-    throw new ErrorR(err);
+    throw new Error(err);
   }
 }
 export { try_Taro_scanCode };
@@ -93,7 +92,7 @@ export function try_Taro_Promise_getFileSystemManager_writeFile(option: Taro.Fil
           reject(new Error("写入文件失败"));
         }
       },
-      fail: (err) => reject(new ErrorR(err)),
+      fail: (err) => reject(new Error(err)),
     });
   });
 }
@@ -108,7 +107,7 @@ export function try_Taro_Promise_getFileSystemManager_saveFile(option: Taro.File
           reject(new Error("保存文件失败"));
         }
       },
-      fail: (err) => reject(new ErrorR(err)),
+      fail: (err) => reject(new Error(err)),
     });
   });
 }
@@ -125,7 +124,7 @@ export async function try_Taro_navigateBack(extraData?: TaroGeneral.IAnyObject) 
         Taro.reLaunch({ url: "/pages/index/index" });
       }
     } catch (errr) {
-      throw new ErrorR(errr);
+      throw new Error(errr);
     }
   }
 }
@@ -133,14 +132,14 @@ export async function try_Taro_navigateTo(option: Taro.navigateTo.Option & { rou
   try {
     await Taro.navigateTo(option);
   } catch (err) {
-    throw new ErrorR(err);
+    throw new Error(err);
   }
 }
 export async function try_Taro_reLaunch(option: Taro.reLaunch.Option) {
   try {
     await Taro.reLaunch(option);
   } catch (err) {
-    throw new ErrorR(err);
+    throw new Error(err);
   }
 }
 export async function try_Taro_chooseMedia(option: Taro.chooseMedia.Option): Promise<Taro.chooseMedia.ChooseMedia[]> {
@@ -157,7 +156,7 @@ export async function try_Taro_chooseMedia(option: Taro.chooseMedia.Option): Pro
       throw new Error("加载图片/视频错误");
     }
   } catch (err) {
-    throw new ErrorR(err);
+    throw new Error(err);
   }
 }
 export async function try_Taro_chooseMessageFile(option: Taro.chooseMessageFile.Option): Promise<Taro.chooseMessageFile.ChooseFile[]> {
@@ -169,7 +168,7 @@ export async function try_Taro_chooseMessageFile(option: Taro.chooseMessageFile.
       throw new Error("选择文件错误");
     }
   } catch (err) {
-    throw new ErrorR(err);
+    throw new Error(err);
   }
 }
 export async function try_Taro_downloadFile({ url }: { url: string, }) {
@@ -188,7 +187,7 @@ export async function try_Taro_downloadFile({ url }: { url: string, }) {
       throw new Error("下载文件失败");
     }
   } catch (err) {
-    throw new ErrorR(err);
+    throw new Error(err);
   }
 }
 export async function try_Taro_openDocument(params: Taro.openDocument.Option) {
@@ -212,7 +211,7 @@ export async function try_Taro_showActionSheet<T>(option: Taro.showActionSheet.O
       throw new Error(`取消`);
     }
   } catch (err) {
-    throw new ErrorR(err);
+    throw new Error(err);
   }
 }
 export async function try_Taro_chooseAddress(isTest: boolean = false): Promise<Omit<AddressInfo, "id">> {
@@ -256,7 +255,7 @@ export async function try_Taro_chooseAddress(isTest: boolean = false): Promise<O
       throw new Error("取消选择地址");
     }
   } catch (err) {
-    throw new ErrorR(err);
+    throw new Error(err);
   }
 }
 export async function try_Taro_cloud_uploadFile(path: string, cloudPath?: string, isFileID: boolean = false) {
@@ -289,7 +288,7 @@ export async function try_Taro_showModal(option?: Taro.showModal.Option & { edit
       throw new Error(option?.cancelText || res.errMsg);
     }
   } catch (err) {
-    throw new ErrorR(err);
+    throw new Error(err);
   }
 }
 export async function try_Taro_getClipboardData() {
@@ -301,7 +300,7 @@ export async function try_Taro_getClipboardData() {
       throw new Error("剪切板为空");
     }
   } catch (err) {
-    throw new ErrorR(err);
+    throw new Error(err);
   }
 }
 export async function try_Taro_setClipboardData(option: Taro.setClipboardData.Option) {
@@ -314,7 +313,7 @@ export async function try_Taro_setClipboardData(option: Taro.setClipboardData.Op
       throw new Error("设置剪切板失败");
     }
   } catch (err) {
-    throw new ErrorR(err);
+    throw new Error(err);
   }
 }
 export async function try_Taro_getLocation(option: Taro.getLocation.Option & { errMsg?: string; } = {
@@ -324,7 +323,7 @@ export async function try_Taro_getLocation(option: Taro.getLocation.Option & { e
     const res = await Taro.getLocation(option);
     return res;
   } catch (err) {
-    throw new ErrorR(err);
+    throw new Error(err);
   }
 }
 export async function try_Taro_chooseLocation() {
@@ -336,7 +335,7 @@ export async function try_Taro_chooseLocation() {
       throw new Error("没有选择地址");
     }
   } catch (err) {
-    throw new ErrorR(err);
+    throw new Error(err);
   }
 
 }
@@ -352,7 +351,7 @@ export async function try_Taro_openSetting(auth?: keyof Taro.AuthSetting): Promi
       return false;
     }
   } catch (err) {
-    throw new ErrorR(err);
+    throw new Error(err);
   }
 }
 export async function try_Taro_getPrivacySetting(): Promise<Taro_.GetPrivacySettingSuccessCallbackResult> {
@@ -360,7 +359,7 @@ export async function try_Taro_getPrivacySetting(): Promise<Taro_.GetPrivacySett
     if (Taro.getPrivacySetting) {
       Taro.getPrivacySetting({
         success: (e) => resolve(e),
-        fail: (err) => reject(new ErrorR(err)),
+        fail: (err) => reject(new Error(err)),
         complete: () => { }
       });
     } else {
@@ -381,7 +380,7 @@ export async function try_Taro_getSetting(auth?: keyof AuthSetting): Promise<boo
       throw new Error("未授权");
     }
   } catch (err) {
-    throw new ErrorR(err);
+    throw new Error(err);
   }
 }
 export async function try_Taro_openEmbeddedMiniProgram(option?: (Taro.openEmbeddedMiniProgram.Option & { allowFullScreen?: boolean; }) | undefined) {
@@ -392,7 +391,7 @@ export async function try_Taro_openEmbeddedMiniProgram(option?: (Taro.openEmbedd
       ...option
     });
   } catch (err) {
-    throw new ErrorR(err);
+    throw new Error(err);
   }
 }
 export async function try_Taro_navigateToMiniProgram(option: Taro.navigateToMiniProgram.Option & { noRelaunchIfPathUnchanged?: boolean; }) {
@@ -403,7 +402,7 @@ export async function try_Taro_navigateToMiniProgram(option: Taro.navigateToMini
       ...option
     });
   } catch (err) {
-    throw new ErrorR(err);
+    throw new Error(err);
   }
 }
 export async function try_Taro_requestPayment(data: Taro.requestPayment.Option) {
@@ -413,7 +412,7 @@ export async function try_Taro_requestPayment(data: Taro.requestPayment.Option) 
       throw new Error("取消支付");
     }
   } catch (err) {
-    throw new ErrorR(err);
+    throw new Error(err);
   }
 }
 export async function try_Taro_hideLoading() {
@@ -421,7 +420,7 @@ export async function try_Taro_hideLoading() {
     await Taro.hideLoading();
   } catch (err) {
     console.log("隐藏加载失败", err);
-    throw new ErrorR(err);
+    throw new Error(err);
   }
 }
 export async function try_Taro_saveImageToPhotosAlbum(option: Taro.saveImageToPhotosAlbum.Option) {

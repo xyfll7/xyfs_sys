@@ -1,6 +1,5 @@
 import Taro from "@tarojs/taro";
 import { AddressInfo, DeptInfo, DICTS_KEYS, Pagination, Printer_Info, Product_Publish } from "../../types";
-import { ErrorR } from "../config";
 import { getMyEnv } from "../env";
 import { try_Taro_getStorageSync } from "../utils/try_catch";
 import { wx_call_container } from "./wx_call";
@@ -16,7 +15,7 @@ export async function ___Taro_login() {
       throw new Error(`${res.errMsg}_获取登录code失败`);
     }
   } catch (err) {
-    throw new ErrorR(err);
+    throw new Error(err);
   }
 }
 
