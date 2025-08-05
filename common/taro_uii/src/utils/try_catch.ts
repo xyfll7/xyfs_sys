@@ -92,7 +92,7 @@ export function try_Taro_Promise_getFileSystemManager_writeFile(option: Taro.Fil
           reject(new Error("写入文件失败"));
         }
       },
-      fail: (err) => reject(new Error(err)),
+      fail: (err) => reject(new Error(err.errMsg)),
     });
   });
 }
@@ -107,7 +107,7 @@ export function try_Taro_Promise_getFileSystemManager_saveFile(option: Taro.File
           reject(new Error("保存文件失败"));
         }
       },
-      fail: (err) => reject(new Error(err)),
+      fail: (err) => reject(new Error(err.errMsg)),
     });
   });
 }
@@ -359,7 +359,7 @@ export async function try_Taro_getPrivacySetting(): Promise<Taro_.GetPrivacySett
     if (Taro.getPrivacySetting) {
       Taro.getPrivacySetting({
         success: (e) => resolve(e),
-        fail: (err) => reject(new Error(err)),
+        fail: (err) => reject(new Error(err.errMsg)),
         complete: () => { }
       });
     } else {
