@@ -111,31 +111,5 @@ export class UT_Return<T> {
   }
 }
 
-// https://zhuanlan.zhihu.com/p/113019880
-// 使用 ErrorR 当作 base Error class
-export class ErrorR extends Error {
-  isShow?: boolean;
-  constructor(err: string | Error | { errMsg: string; }, isShow: boolean = false) {
-    if (err instanceof Error) {
-      super(err.message);
-    } else if (typeof err === "string") {
-      super(err);
-    } else if (typeof err === "object" && err.errMsg) {
-      super(err.errMsg.includes("cancel") ? "取消" : err.errMsg);
-      this.isShow = err.errMsg.includes("cancel");
-    } else {
-      super("未知错误");
-    }
-    this.isShow = this.isShow ? this.isShow : isShow;
-    this.name = new.target.name;
-    if (typeof (Error as any).captureStackTrace === 'function') {
-      (Error as any).captureStackTrace(this, new.target);
-    }
-    if (typeof Object.setPrototypeOf === 'function') {
-      Object.setPrototypeOf(this, new.target.prototype);
-    } else {
-      (this as any).__proto__ = new.target.prototype;
-    }
-  }
-}
+
 

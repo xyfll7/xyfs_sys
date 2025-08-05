@@ -2,7 +2,6 @@ import Taro, { useError, useShareAppMessage, useUnhandledRejection } from "@taro
 import { coo___ios_date, coo___obj_isEmpty } from "@xyfs/utils/util";
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { Pagination } from "../../types/type_index";
-import { ErrorR } from "../config";
 import { getMyEnv } from "../env";
 import { try_Taro_getLocation, try_Taro_getStorageSync } from "./try_catch";
 
@@ -66,13 +65,7 @@ export function useHook_shareAppMessage(params: { page?: string; imageUrl?: stri
   });
 }
 const logger = Taro.getRealtimeLogManager();
-export function useHook_Error(params?: { isShowBug?: boolean; isPrintBug?: boolean; }) {
-  const isShowBug = params?.isShowBug ?? true;
-  let isPrintBug = params?.isPrintBug ?? false;
-
-  if (getMyEnv().envVersion === "develop") {
-    isPrintBug = true;
-  }
+export function useHook_Error() {
 
   useError(async (e) => {
     const message = e.split("\n")[1];
@@ -81,19 +74,13 @@ export function useHook_Error(params?: { isShowBug?: boolean; isPrintBug?: boole
   });
 
   useUnhandledRejection(async (err) => {
-    if (err.reason instanceof ErrorR && Boolean(err.reason.isShow)) {
-      isShowBug &&
-        Taro.showToast({ icon: "none", title: `S_${err.reason.message}`, });
-      isPrintBug && console.info(`S_${err.reason.message}`);
-    } else if (err.reason instanceof Error) {
-      isShowBug &&
-        Taro.showToast({ icon: "none", title: `G_${err.reason.message}`, });
-      isPrintBug && console.error(`G_${err.reason.message}`);
+    if (err.reason instanceof Error) {
+      Taro.showToast({ icon: "none", title: `G_${err.reason.message}`, });
+      console.error(`G_${err.reason.message}`);
       logger.error({ ...err });
     } else {
-      isShowBug &&
-        Taro.showToast({ icon: "none", title: "W_未知错误", });
-      isPrintBug && console.error("W_未知错误", err);
+      Taro.showToast({ icon: "none", title: "W_未知错误", });
+      console.error("W_未知错误", err);
     }
   });
 }
