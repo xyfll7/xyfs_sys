@@ -185,7 +185,6 @@ const Index: FC = () => {
                     .map(e => ({ ...e, count_old: cart_old.filter(ee => ee.id === e.id).length }))
                     .map(item_old => {
                       const item_new = res_cart_new.find(e => e.id === item_old.id);
-                      console.log("item_old", item_new.stock, item_old.count_old, item_old.count_old - (item_new.stock >= 0 ? item_new.stock : 0));
                       return { ...item_new, need_sub: item_old.count_old - (item_new.stock >= 0 ? item_new.stock : 0) };
                     });
                   console.log("cart_new", cart_new);
@@ -213,6 +212,19 @@ const Index: FC = () => {
           <IIICartBar cart={cart} onClick={async () => {
             if (!Boolean(cart?.length)) { throw new Error("购物车为空"); }
             if (!Boolean(address)) { throw new Error("请选择收货地址"); }
+            const res_cart_new = await Api_goods_fetch_ctn(uniqueCart.map(e => e.id));
+            const cart_new = cart
+              .map(e => ({ ...e, count_old: cart.filter(ee => ee.id === e.id).length }))
+              .map(item_old => {
+                const item_new = res_cart_new.find(e => e.id === item_old.id);
+                return { ...item_new, need_sub: item_old.count_old - (item_new.stock >= 0 ? item_new.stock : 0) };
+              });
+            // 如果有元素的 need_sub 大于 0，则表示有元素的数量超过了库存
+            if (cart_new.some(e => e.need_sub > 0)) {
+              const cart_new_filter = filterByStock(cart_new);
+              setCart(cart_new_filter);
+              throw new Error("有商品库存不足，请减少购买数量");
+            }
             Taro.showLoading({ mask: true, title: "支付中...", });
             const payParam = await Api_goodsCart_preOrder_ctn({
               goodsItems: cart?.map(e => ({ id: e.id }))!,
