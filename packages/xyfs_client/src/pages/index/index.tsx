@@ -64,9 +64,7 @@ const Index: FC = () => {
   const { page, page_loading, page_init, page_list_get } = useHook_pageListNew(___page_getter,);
   const [cart, setCart] = useState<any[]>([]);
   const [isShowCart, setIsShowCart] = useState(false);
-  const [product, setProduct] = useState<any>(
-    // { "id": 6, "name": "延安山地苹果", "sketch": null, "intro": "重量6-7斤/12枚装/果径80-85", "keywords": null, "tags": null, "price": 58, "weight": 1, "marketPrice": null, "stock": 30, "warningStock": null, "limitQuantity": null, "attachUrl": "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/product_image/oGwbL5PVdCTyoE2sYHAq2bdNA9BY/_1731288105472_0.png", "userId": "oGwbL5PVdCTyoE2sYHAq2bdNA9BY", "status": 1, "sort": 2, "lastUpdateTime": "2024-11-11 09:21:56", "delFlag": "0", "createBy": "oGwbL5PVdCTyoE2sYHAq2bdNA9BY", "createTime": "2024-11-11 09:21:56", "updateBy": null, "updateTime": null, "remark": "", "userName": "王理代", "userMobile": "17319969379", "userAvatar": "https://7072-prod-5gx53h8v828f0170-1306790653.tcb.qcloud.la/comm_avatar/default/狗2@1x.webp", "totalSaleStock": null, "saleStock": null, "orderUser": null }
-  );
+  const [product, setProduct] = useState<any>();
   const ref_banner = React.useRef<{ setIsHeaderBack: (e: boolean) => void; }>(null);
   if (deptInfo) {
     deptInfo.shopAnnouncement = deptInfo.shopAnnouncement ? deptInfo.shopAnnouncement : "这个人很懒 🍒🐰​#这个人很懒,根本就不想写公告📝";
@@ -180,16 +178,26 @@ const Index: FC = () => {
               count={cart.filter(e => e.id === item.id).length}
               onAdd={async () => {
                 Taro.showLoading({ mask: true, title: "加载中..." });
-                const res_newCartItems = await Api_goods_fetch_ctn(uniqueCart.map(e => e.id));
+                const res_cart_new = await Api_goods_fetch_ctn(uniqueCart.map(e => e.id));
                 // 添加数量不能超过剩余库存
-                setCart((_cart) => {
-                  const __cart = _cart.map(e => res_newCartItems.find(ee => ee.id === e.id) || e);
-                  const count = __cart.filter(ee => ee.id === item.id).length;
+                setCart((cart_old) => {
+                  const cart_new = cart_old
+                    .map(e => ({ ...e, count_old: cart_old.filter(ee => ee.id === e.id).length }))
+                    .map(item_old => {
+                      const item_new = res_cart_new.find(e => e.id === item_old.id);
+                      console.log("item_old", item_new.stock, item_old.count_old, item_old.count_old - (item_new.stock >= 0 ? item_new.stock : 0));
+                      return { ...item_new, need_sub: item_old.count_old - (item_new.stock >= 0 ? item_new.stock : 0) };
+                    });
+                  console.log("cart_new", cart_new);
+                  const cart_new_filter = filterByStock(cart_new);
+
+                  const count = cart_new_filter.filter(ee => ee.id === item.id).length;
                   if (count >= item.stock) {
+                    Taro.hideLoading();
                     Taro.showToast({ icon: "none", title: "库存不足" });
-                    return __cart;
+                    return cart_new_filter;
                   }
-                  return [...__cart, { ...item }];
+                  return [...cart_new_filter, { ...item }];
                 });
                 Taro.hideLoading();
               }}
@@ -260,7 +268,7 @@ const Index: FC = () => {
               <View className='cccplh mb10 '>{product.name?.split("#")[1] ? product.name?.split("#")[1] : "没有简介"}</View>
             </View>
             {product.attachUrl.split(",").map((e, i) => {
-              return <ComImage className='mb10' style={{ width: "100%" }} compress="300" mode='widthFix' src={e}></ComImage>;
+              return <ComImage className='mb10' style={{ width: "100%" }} key={i} compress="300" mode='widthFix' src={e}></ComImage>;
             })}
           </View>
         </ComScrollView>
@@ -340,7 +348,7 @@ const IIIItem0 = ({ item, count, onAdd, onSub, onDetail, }: { count: number, ite
             <View className='fs08 cccplh cccprice ml6'>已售{item.totalSaleStock}件</View>
           </View>
           <View className='dy'>
-            {Boolean(count) && <ComButton className='bcctrans fs08' hoverClass='none'>{count}</ComButton>}
+            {Boolean(count) && <ComButton className='bcctrans fs08 nw' hoverClass='none'>{count}</ComButton>}
             {Boolean(count) && <ComButton className='bccbackdeep cccgreen mr10' onClick={onSub}>  - </ComButton>}
             <ComButton className='bccyellow nw' onClick={onAdd}>+加</ComButton>
           </View>
@@ -357,3 +365,25 @@ export const ComTag = ({ children, className = "bccprice cccwhite", style }: { c
 
 
 
+function filterByStock(array) {
+  const result: any[] = [];
+  const idCounts = {}; // 记录每个id已经添加的数量
+
+  for (const item of array) {
+    // 如果need_sub <= 0，直接保留
+    if (item.need_sub <= 0) {
+      result.push(item);
+      continue;
+    }
+
+    // 如果need_sub > 0，检查是否超过stock限制
+    const currentCount = idCounts[item.id] || 0;
+
+    if (currentCount < item.stock) {
+      result.push(item);
+      idCounts[item.id] = currentCount + 1;
+    }
+  }
+
+  return result;
+}
