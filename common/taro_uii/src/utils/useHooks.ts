@@ -74,14 +74,20 @@ export function useHook_Error() {
   });
 
   useUnhandledRejection(async (err) => {
-    if (err.reason instanceof Error) {
-      Taro.showToast({ icon: "none", title: `G_${err.reason.message}`, });
-      console.error(`G_${err.reason.message}`);
-      logger.error({ ...err });
-    } else {
-      Taro.showToast({ icon: "none", title: "W_未知错误", });
-      console.error("W_未知错误", err);
+    getMyEnv().platform !== "devtools" && logger.error(err);
+    const { errMsg } = err.reason as any;
+    if (errMsg) {
+      Taro.showToast({ icon: "none", title: `G.${errMsg}`, });
+      console.error(`G.${errMsg}`);
+      return;
     }
+    if (err.reason instanceof Error) {
+      Taro.showToast({ icon: "none", title: `G,${err.reason.message}`, });
+      console.error(`G,${err.reason.message}`);
+      return;
+    }
+    Taro.showToast({ icon: "none", title: "W,未知错误", });
+    console.error("W,未知错误", err);
   });
 }
 
