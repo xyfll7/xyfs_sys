@@ -223,7 +223,7 @@ const Index: FC = () => {
             if (cart_new.some(e => e.need_sub > 0)) {
               const cart_new_filter = filterByStock(cart_new);
               setCart(cart_new_filter);
-              throw new Error("有商品库存不足，请减少购买数量");
+              throw new Error("有商品库存不足，已为您调整购物车商品数量");
             }
             Taro.showLoading({ mask: true, title: "支付中...", });
             const payParam = await Api_goodsCart_preOrder_ctn({
