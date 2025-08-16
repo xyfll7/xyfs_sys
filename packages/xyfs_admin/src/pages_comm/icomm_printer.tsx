@@ -48,10 +48,10 @@ const Index: FC = () => {
     <ComNav>
       <View className='ww'>
         <ComNavBarA className='mb10 pl10'>
-          <ComButton ll className='bcctrans cccplh ml10' >蓝牙打印机管理</ComButton>
+          <ComButton ll className='bcctrans cccplh ml10' >蓝牙设备管理</ComButton>
         </ComNavBarA>
-        <View className='prl10 mb10 dbtc ww'>
-          <ComButton className='cccplh' >我的打印机设备</ComButton>
+        <View className='mb10 dbtc ww'>
+          <ComButton className='cccplh bcctrans' >我的打印机设备</ComButton>
           <ComButton className='cccgreen  bccwhite ' onClick={async () => {
             await on_start_print((blue_device) => ({ cpcl: [on_get_cpcl_str_test(blue_device)] }));
             Taro.showToast({ icon: "none", title: "打印任务提交成功", });
@@ -69,25 +69,15 @@ const Index: FC = () => {
 // 我的打印机设备
 const IIIComMyBluePrinter: FC = () => {
   const blueDevices_S = useSTBlueDevices((s) => s.blueDevices);
+  console.log("我的打印机设备:", blueDevices_S);
   return <>
     {(blueDevices_S === null || blueDevices_S.length === 0) && <ComLoading className='mb10 ioo  dy' isEmpty >您还没有添加任何打印机设备</ComLoading>}
-    {blueDevices_S?.map(e => <View className='dbtc mb10 pbt8  prl10 bccwhite ioo ww' key={e.deviceId}>
-      <View>
-        <View className='nw1'> {e.name} ({e.RSSI}) </View>
-        <View className='cccplh fs08'> {e.deviceId}</View>
-      </View>
-      <ComButton rr className='cccplh bborder' onClick={async () => {
-        if (await try_Taro_showModal({ title: "提示", content: "您确定要删除该蓝牙打印机吗？" })) {
-          useSTBlueDevices.getState().sett(blueDevices_S?.filter(ee => ee.deviceId !== e.deviceId));
-          Taro.showToast({ icon: "none", title: "删除成功", });
-        } else {
-          throw new Error("取消");
-        }
-      }}>删除</ComButton>
-    </View>)
-    }
+    {blueDevices_S?.map(e => <IIIBlueDeviceCard blueDevices={blueDevices_S} device={e} key={e.deviceId} />)}
   </>;
 };
+
+
+
 
 // 搜索打印机列表
 const IIIBlueList: FC = () => {
@@ -96,34 +86,46 @@ const IIIBlueList: FC = () => {
   return <View className='dll ww'>
     <IIIComMyBluePrinter />
     <View className='dbtc ww'>
-      <ComButton className='cccplh mb10 dy mr10' >扫描蓝牙设备
-        {state?.discovering && <ComLoadingiii className='ml2' />}
-      </ComButton>
+      <ComButton className='cccplh mb10 dy mr10 bcctrans' >扫描蓝牙设备 {state?.discovering && <ComLoadingiii className='ml2' />}</ComButton>
       <View className='dy'>
         <ComButton rr className='mb10 cccgreen mr10' onClick={async () => { await stopBlue(); }}>暂停</ComButton>
         <ComButton className='mb10 cccgreen' onClick={async () => { await startBlue(); }}>重新扫描</ComButton>
       </View>
     </View>
-
-    {devices?.filter(e => !blueDevices_S?.find(ee => ee.deviceId === e.deviceId)).map(e => {
-      return <View className='dbtt mb10 pbt8 prl10 bccwhite ioo ww' key={e.deviceId} >
-        <View className='dll mr10'>
-          <ComButton ll><Text className='nw1 wm15rem'>{e.name} ({e.RSSI})</Text>  </ComButton>
-          <View className='cccplh fs08'> {e.deviceId}</View>
-        </View>
-        <View>
-          <ComButton rr className='cccgreen bborder nw' onClick={async () => {
-            const res_device = await addPrinter(e);
-            useSTBlueDevices.getState().sett([...(blueDevices_S ?? []), res_device]);
-          }}> 添加打印机</ComButton>
-        </View>
-      </View>;
-    })}
+    {devices?.filter(e => !blueDevices_S?.find(ee => ee.deviceId === e.deviceId)).map(e => <IIIBlueDeviceCard device={e} key={e.deviceId}
+      addPrinter={async (device) => {
+        const res_device = await addPrinter(device);
+        console.log("添加蓝牙打印机设备:", res_device);
+        useSTBlueDevices.getState().sett([...(useSTBlueDevices.getState().blueDevices ?? []), res_device]);
+      }} />)}
   </View>;
 };
 
-
-
+const IIIBlueDeviceCard: FC<{
+  device: Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice;
+  blueDevices?: Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice[];
+  addPrinter?: (device: Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice) => void;
+}> = ({ device, blueDevices, addPrinter }) => {
+  return <View className='dbtt mb10 pbt8 prl10 bccwhite IOO ww'>
+    <View className='dll mr10'>
+      <ComButton ll><Text className='nw1 wm15rem'>{device.name} ({device.RSSI})</Text>  </ComButton>
+      <View className='cccplh fs08 nw1'> {device.deviceId}</View>
+    </View>
+    <View>
+      {blueDevices &&
+        <ComButton rr className='cccplh bborder nw' onClick={async () => {
+          if (await try_Taro_showModal({ title: "提示", content: "您确定要删除该蓝牙打印机吗？" })) {
+            useSTBlueDevices.getState().sett(blueDevices?.filter(ee => ee.deviceId !== device.deviceId));
+            Taro.showToast({ icon: "none", title: "删除成功", });
+          }
+        }}>删除</ComButton>
+      }
+      {!blueDevices &&
+        <ComButton rr className='cccgreen bborder nw' onClick={async () => { await addPrinter?.(device); }}>添加</ComButton>
+      }
+    </View>
+  </View>;
+};
 
 
 

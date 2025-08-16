@@ -39,7 +39,7 @@ export async function Blue_getBluetoothAdapterState() {
       throw new Error(res.errMsg);
     }
   } catch (err) {
-    throw new Error(err);
+    throw err;
   }
 }
 
@@ -64,7 +64,7 @@ export async function Blue_getConnectedBluetoothDevices(blue_services: string[])
       throw new Error("失败_获取已连接的蓝牙设备");
     }
   } catch (err) {
-    throw new Error(err);
+    throw err;
   }
 }
 
@@ -84,7 +84,7 @@ export async function Blue_getBluetoothDevices() {
       throw new Error("失败_获取已发现蓝牙设备列表");
     }
   } catch (err) {
-    throw new Error(err);
+    throw err;
   }
 }
 
@@ -110,7 +110,7 @@ export async function Blue_startBluetoothDevicesDiscovery(blue_services: string[
     } else if (err.errno === 1509008) {
       throw new Error("请打开手机定位");
     } else {
-      throw new Error(err);
+      throw err;
     }
   }
 }
@@ -155,8 +155,7 @@ export async function Blue___openBluetoothAdapter() {
     } else if (err.errno === 3) {
       throw new Error("附近设备权限未授权");
     } else {
-      console.log("打开蓝牙错误", err);
-      throw new Error(err);
+      throw err;
     }
   }
 }
@@ -171,7 +170,7 @@ export async function Blue___closeBluetoothAdapter() {
       throw new Error("蓝牙模块关闭失败");
     }
   } catch (err) {
-    throw new Error(err);
+    throw err;
   }
 }
 
@@ -219,7 +218,7 @@ export async function Blue_connect_createBLEConnection(device: Taro.onBluetoothD
         throw new Error("打印机连接失败");
       }
     } else {
-      throw new Error(err);
+      throw err;
     }
   }
 }
@@ -236,7 +235,7 @@ export async function Blue_connect_closeBLEConnection(device: Taro.onBluetoothDe
       throw new Error(`断开低功耗蓝牙设备_失败_${res.errMsg}_${res.errCode}`);
     }
   } catch (err) {
-    throw new Error(err);
+    throw err;
   }
 }
 
@@ -257,7 +256,7 @@ export async function Blue_connect_getBLEDeviceServices(device: Taro.onBluetooth
       throw new Error(`获取蓝牙设备所有服务_失败_${res.errMsg}_${res.errCode}`);
     }
   } catch (err) {
-    throw new Error(err);
+    throw err;
   }
 }
 
@@ -279,7 +278,7 @@ export async function Blue_connect_getBLEDeviceCharacteristics(device: Taro.onBl
       throw new Error(`获取蓝牙设备某个服务中所有特征值_失败_${res.errMsg}_${res.errCode}`);
     }
   } catch (err) {
-    throw new Error(err);
+    throw err;
   }
 }
 
@@ -309,6 +308,6 @@ export async function Blue_connect_writeBLECharacteristicValue(
     });
     return res;
   } catch (err) {
-    throw new Error(err);
+    throw err;
   }
 }

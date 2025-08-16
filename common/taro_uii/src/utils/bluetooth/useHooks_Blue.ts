@@ -35,17 +35,7 @@ const bluetoothAdapterState_Store = {
     discovering: false,
   } as Taro.onBluetoothAdapterStateChange.CallbackResult,
   sub(cb: () => void) {
-    // (async () => {
-    //   const res = await Blue_getBluetoothAdapterState();
-    //   bluetoothAdapterState_Store.status = {
-    //     available: res.available,
-    //     discovering: res.discovering
-    //   };
-    //   cb();
-    // })();
-
     Blue_onBluetoothAdapterStateChange(e => {
-
       bluetoothAdapterState_Store.status = {
         available: e.available,
         discovering: e.discovering
@@ -59,8 +49,7 @@ const bluetoothAdapterState_Store = {
 export function useINHooks_Blue_devices() {
   const [devices, setDevices] = useState<Taro.onBluetoothDeviceFound.CallbackResultBlueToothDevice[]>();
   const state = useSyncExternalStore(bluetoothAdapterState_Store.sub, () => bluetoothAdapterState_Store.status);
-
-  console.log("查找到的蓝牙设备列表:", devices);
+  console.log("查找到的蓝牙设备列表:", state);
   const startBlue = async (isOpen = true) => {
     setDevices(undefined);
     // 启动蓝牙模块
@@ -71,7 +60,7 @@ export function useINHooks_Blue_devices() {
     const res_devices0 = await Blue_getConnectedBluetoothDevices(SERVICE_UUIDs);
     console.info("2_获取已连接的蓝牙设备", res_devices0);
     setDevices((_devices) => ___device_filter([...(_devices ?? []), ...res_devices0]));
-    const res_devices1 = await Blue_getBluetoothDevices();
+    const res_devices1 = isOpen ? [] : await Blue_getBluetoothDevices();
     console.info("3_获取在蓝牙模块生效期间所有搜索到的蓝牙设备,包括已经和本机处于连接状态的设备", res_devices1);
     setDevices((_devices) => ___device_filter([...(_devices ?? []), ...res_devices1]));
     await Blue_startBluetoothDevicesDiscovery(SERVICE_UUIDs);
@@ -96,7 +85,7 @@ export function useINHooks_Blue_devices() {
     }
   };
   useEffect(() => {
-    if (state.available) {
+    if (state.discovering && state.available) {
       startBlue(false);
     }
   }, [state]);
@@ -116,9 +105,8 @@ export function useINHooks_Blue_devices() {
       Taro.showToast({ icon: "none", title: "添加成功", });
       return res_device;
     } finally {
-
       // 断开蓝牙连接
-      await Blue_connect_closeBLEConnection(e);
+      // await Blue_connect_closeBLEConnection(e);
     }
   }
   async function stopBlue() {
