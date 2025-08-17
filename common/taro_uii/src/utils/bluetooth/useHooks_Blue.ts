@@ -1,6 +1,6 @@
 import Taro from "@tarojs/taro";
 import GBK from "@xyfs/utils/gbk";
-import { coo___JSON_str_code, coo___async_sleep, coo___divide_array_to_n_parts, coo___ios_date, coo___privacy_phone, coo___privacy_string, coo___string_truncate_end } from "@xyfs/utils/util";
+import { coo___JSON_str_code, coo___async_sleep, coo___divide_array_to_n_parts, coo___filter_symbols, coo___ios_date, coo___privacy_phone, coo___privacy_string, coo___string_truncate_end } from "@xyfs/utils/util";
 import { format } from "date-fns";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { PreBarCodeDryclean } from "../../../types/type_index";
@@ -474,14 +474,14 @@ export function on_get_printer_str_order_bing_goods(_order: OrderInfo<Product_Dr
             .map(e => e.join(""))
             .map(e => `${T_0} 0 ${X_} ${nextY(30)} ${e}`)
           )(),
-          `${T_0} 0 ${X_} ${nextY(30)} ${_order.__index! + 1}/${_order.__count}${_order.__product?.name}`,
+          `${T_0} 0 ${X_} ${nextY(30)} ${_order.__index! + 1}/${_order.__count}${coo___filter_symbols(_order.__product?.name).substring(0, 10)}`,
         ];
       }
       if (type === "merge") {  // 合单打印
         return [
           `${T_0} 0 ${X_} ${nextY(30)} 商品总数量 共${_order.productList?.length}-${_order.__count}件   [[[合单]]]`,
           ...(() => _order.productList?.map((e, i) => [
-            `${T_0} 0 ${X_} ${nextY(30)} ${i + 1}/${_order.productList?.length}${e.name?.substring(0, 10)}`,
+            `${T_0} 0 ${X_} ${nextY(30)} ${i + 1}/${_order.productList?.length}${coo___filter_symbols(e.name).substring(0, 10)}`,
           ]).flat()!
           )(),
         ];
@@ -555,7 +555,7 @@ export function on_get_printer_str_order_bing_goods_waybill(_order: OrderInfo<Pr
         return [
           `${T_0} 0 ${X_} ${nextY(30)} 商品总数量 共${_order.__count}件`,
           ...(() => _order.productList?.filter((e) => e.waybillId === _order.__product?.waybillId)?.map((e, i) => [
-            `${T_0} 0 ${X_} ${nextY(30)} ${i + 1}/${_order.__count}${e.name?.substring(0, 10)}`,
+            `${T_0} 0 ${X_} ${nextY(30)} ${i + 1}/${_order.__count}${coo___filter_symbols(e.name).substring(0, 10)}`,
           ]).flat()!
           )(),
         ];
@@ -564,7 +564,7 @@ export function on_get_printer_str_order_bing_goods_waybill(_order: OrderInfo<Pr
         return [
           `${T_0} 0 ${X_} ${nextY(30)} 商品总数量 共${_order.productList?.length}件`,
           ...(() => _order.productList?.map((e, i) => [
-            `${T_0} 0 ${X_} ${nextY(30)} ${i + 1}/${_order.productList?.length}${e.name?.substring(0, 10)}`,
+            `${T_0} 0 ${X_} ${nextY(30)} ${i + 1}/${_order.productList?.length}${coo___filter_symbols(e.name).substring(0, 20)}`,
           ]).flat()!
           )(),
         ];

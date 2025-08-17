@@ -237,6 +237,8 @@ export function coo___privacy_string(str?: string, keepLast = false) {
     return surname + stars + lastChar;
   }
 }
+// 仅保留常见中文、英文、数字、标点
+export const coo___filter_symbols = (str?: string) => str?.replace(/[^\u4e00-\u9fa5a-zA-Z0-9\s，。！？；：、~#-]/g, "") ?? "";
 
 // 对象数组去重值
 export function coo___unique_arr<T extends Record<string, any>>(arr: T[], key: string) {
