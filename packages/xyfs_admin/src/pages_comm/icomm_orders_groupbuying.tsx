@@ -148,7 +148,7 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
         Taro.showToast({ icon: "none", title: "成功" });
       }}>
         <View className='cccprice'>{printProducts?.map(e => order.productList?.findIndex(ee => ee.id === e.id)! + 1).join(",")}</View>
-        <View className='cccgreen'>获取面单1</View>
+        <View className='cccgreen'>获取面单</View>
       </ComButton>}
       {model === "print" && order.orderStatus === Order_ST.已付款 && roo___has_role(selfInfo_S, ['MERCHANT', "GROUPLEADER"]) && <ComButton rr className='ml10 bborder mb10 nw' onClick={async () => {
         if (!printProducts.length) { Taro.showToast({ icon: "none", title: "至少选择一件商品" }); return; }
