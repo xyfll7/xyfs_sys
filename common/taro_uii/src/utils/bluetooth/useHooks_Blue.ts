@@ -264,6 +264,7 @@ export function on_get_printer_str_order_express(_order: OrderInfo<Product_Expre
     const L_H = 3;
     const X_ = 5;
     let Y_ = 0;
+    const nextY = (step: number) => (Y_ += step);
     const P_w = 72 * 8;
     const P_h = 127 * 8;
     const arr_page = [`! 0 200 200 ${P_h} 1`];
@@ -273,56 +274,56 @@ export function on_get_printer_str_order_express(_order: OrderInfo<Product_Expre
 
       `LEFT`,
       `${T_0} 0 ${X_} ${Y_ = 60} ${format(coo___ios_date(_order?.lastPrintTime ?? coo___ios_date().getTime()), "yyyy-MM-dd HH:mm:ss")}`,
-      `LINE ${X_} ${Y_ += 26} ${P_w} ${Y_} ${L_H}`, // -----------
+      `LINE ${X_} ${nextY(26)} ${P_w} ${Y_} ${L_H}`, // -----------
 
       `CENTER`,
-      `BARCODE 128 2 2 80 ${X_} ${Y_ += 10} ${_order.__product?.waybillId}`,
-      `${T_0} 0 ${X_} ${Y_ += 80 + 10} ${_order.__product?.waybillId}`,
-      `LINE ${X_} ${Y_ += 40} ${P_w} ${Y_} ${L_H}`, // -----------
+      `BARCODE 128 2 2 80 ${X_} ${nextY(10)} ${_order.__product?.waybillId}`,
+      `${T_0} 0 ${X_} ${nextY(90)} ${_order.__product?.waybillId}`,
+      `LINE ${X_} ${nextY(40)} ${P_w} ${Y_} ${L_H}`, // -----------
 
       `SETMAG 2 2`,
-      `${T_0} 0 ${X_} ${Y_ += 10} ${_order.__product?.bigWord ?? ""}`,
-      `LINE ${X_} ${Y_ += 60} ${P_w} ${Y_} ${L_H}`, // -----------
+      `${T_0} 0 ${X_} ${nextY(10)} ${_order.__product?.bigWord ?? ""}`,
+      `LINE ${X_} ${nextY(60)} ${P_w} ${Y_} ${L_H}`, // -----------
 
       `LEFT ${P_w}`,
-      `${T_0} 0 ${X_} ${Y_ += 10} 集`,
+      `${T_0} 0 ${X_} ${nextY(10)} 集`,
       `${T_0} 0 ${X_ + 60} ${Y_} ${_order.__product?.packagePlace ?? ""}`,
       `SETMAG 0 0`,
-      `LINE ${X_} ${Y_ += 60} ${P_w} ${Y_} ${L_H}`, // -----------
+      `LINE ${X_} ${nextY(60)} ${P_w} ${Y_} ${L_H}`, // -----------
 
       `SETMAG 2 2`,
-      `${T_0} 0 ${X_} ${Y_ += 10} 收`,
+      `${T_0} 0 ${X_} ${nextY(10)} 收`,
       `SETMAG 0 0`,
       `${T_0} 0 ${X_ + 60} ${Y_} ${coo___privacy_string(_order.__product?.recMan?.name)} ${coo___privacy_phone(_order.__product?.recMan?.mobile ?? "", 7)}`,
       ...(() => coo___divide_array_to_n_parts(recAddr.split(""), 20)
         .map(e => e.join(""))
-        .map(e => `${T_0} 0 ${X_ + 60} ${Y_ += 30} ${e}`)
+        .map(e => `${T_0} 0 ${X_ + 60} ${nextY(30)} ${e}`)
       )(),
-      `LINE ${X_} ${Y_ += 40} ${P_w} ${Y_} ${L_H}`, // -----------
+      `LINE ${X_} ${nextY(40)} ${P_w} ${Y_} ${L_H}`, // -----------
 
       `SETMAG 2 2`,
-      `${T_0} 0 ${X_} ${Y_ += 10} 寄`,
+      `${T_0} 0 ${X_} ${nextY(10)} 寄`,
       `SETMAG 0 0`,
       `${T_0} 0 ${X_ + 60} ${Y_} ${sendManName}`,
       ...(() => coo___divide_array_to_n_parts(sendAddr.split(""), 20)
         .map(e => e.join(""))
-        .map(e => `${T_0} 0 ${X_ + 60} ${Y_ += 30} ${e}`)
+        .map(e => `${T_0} 0 ${X_ + 60} ${nextY(30)} ${e}`)
       )(),
-      `LINE ${X_} ${Y_ += 40} ${P_w} ${Y_} ${L_H}`, // -----------
+      `LINE ${X_} ${nextY(40)} ${P_w} ${Y_} ${L_H}`, // -----------
 
       `CENTER`,
-      `BARCODE 128 2 2 80 ${X_} ${Y_ += 10} ${_order.__product?.waybillId}`,
-      `${T_0} 0 ${X_} ${Y_ += 80 + 10} ${_order.__product?.waybillId}`,
+      `BARCODE 128 2 2 80 ${X_} ${nextY(10)} ${_order.__product?.waybillId}`,
+      `${T_0} 0 ${X_} ${nextY(90)} ${_order.__product?.waybillId}`,
 
       `LEFT ${P_w}`,
       `SETMAG 2 2`,
-      `${T_0} 0 ${X_} ${Y_ += 40} 重量：${_order.__product?.weight} 公斤`,
+      `${T_0} 0 ${X_} ${nextY(40)} 重量：${_order.__product?.weight} 公斤`,
       `SETMAG 0 0`,
       `LEFT ${P_w}`,
-      `${T_0} 0 ${X_} ${Y_ += 60} 站点：${_order.deptName ?? '无'}`,
-      `${T_0} 0 ${X_} ${Y_ += 40} 用户：${orderUserName}`,
-      `${T_0} 0 ${X_} ${Y_ += 40} 品名：${_order.__product?.itemType}`,
-      `${T_0} 0 ${X_} ${Y_ += 40} 备注：${_order.__product?.itemNotes ?? "无"}`,
+      `${T_0} 0 ${X_} ${nextY(60)} 站点：${_order.deptName ?? '无'}`,
+      `${T_0} 0 ${X_} ${nextY(40)} 用户：${orderUserName}`,
+      `${T_0} 0 ${X_} ${nextY(40)} 品名：${_order.__product?.itemType}`,
+      `${T_0} 0 ${X_} ${nextY(40)} 备注：${_order.__product?.itemNotes ?? "无"}`,
       `FORM`,
       `PRINT`,
     ];
@@ -330,6 +331,7 @@ export function on_get_printer_str_order_express(_order: OrderInfo<Product_Expre
   } else if (type === "tspl") {
     const X_ = 5;
     let Y_ = 0;
+    const nextY = (step: number) => (Y_ += step);
     const font_0 = 0;
     const font_3 = 5;
     const rotation_0 = 0;
@@ -344,44 +346,44 @@ export function on_get_printer_str_order_express(_order: OrderInfo<Product_Expre
       `CODEPAGE 936`, // 该指令用于选择对应的国际代码页  936:Chinese
       `DIRECTION 0`, // 该指令用于定义打印时出纸和打印字体的方向
       `TEXT ${X_},${Y_ = 60},"${font_0}",${rotation_0},1,1,"${format(coo___ios_date(_order?.lastPrintTime ?? coo___ios_date().getTime()), "yyyy-MM-dd HH:mm:ss")}"`,
-      `LINE ${X_} ${Y_ += 26} ${P_w} ${Y_} ${L_H}`, // -----------
+      `LINE ${X_} ${nextY(26)} ${P_w} ${Y_} ${L_H}`, // -----------
 
-      `BARCODE ${X_},${Y_ += 10},"128",${80},1,${rotation_0},3,3,"${_order.__product?.waybillId}"`,
-      `TEXT ${X_},${Y_ += 80 + 10},"${font_0}",${rotation_0},1,1,"${_order.__product?.waybillId}"`,
-      `LINE ${X_} ${Y_ += 40} ${P_w} ${Y_} ${L_H}`, // -----------
+      `BARCODE ${X_},${nextY(10)},"128",${80},1,${rotation_0},3,3,"${_order.__product?.waybillId}"`,
+      `TEXT ${X_},${nextY(80 + 10)},"${font_0}",${rotation_0},1,1,"${_order.__product?.waybillId}"`,
+      `LINE ${X_} ${nextY(40)} ${P_w} ${Y_} ${L_H}`, // -----------
 
-      `TEXT ${X_},${Y_ += 10},"${font_3}",${rotation_0},1,1,"${_order.__product?.bigWord ?? ""}"`,
-      `LINE ${X_} ${Y_ += 60} ${P_w} ${Y_} ${L_H}`, // -----------
+      `TEXT ${X_},${nextY(10)},"${font_3}",${rotation_0},1,1,"${_order.__product?.bigWord ?? ""}"`,
+      `LINE ${X_} ${nextY(60)} ${P_w} ${Y_} ${L_H}`, // -----------
 
-      `TEXT ${X_},${Y_ += 10},"${font_3}",${rotation_0},1,1,"集"`,
+      `TEXT ${X_},${nextY(10)},"${font_3}",${rotation_0},1,1,"集"`,
       `TEXT ${X_ + 60},${Y_},"${font_3}",${rotation_0},1,1,"${_order.__product?.packagePlace ?? ""}"`,
-      `LINE ${X_} ${Y_ += 60} ${P_w} ${Y_} ${L_H}`, // -----------
+      `LINE ${X_} ${nextY(60)} ${P_w} ${Y_} ${L_H}`, // -----------
 
-      `TEXT ${X_},${Y_ += 10},"${font_3}",${rotation_0},1,1,"收"`,
+      `TEXT ${X_},${nextY(10)},"${font_3}",${rotation_0},1,1,"收"`,
       `TEXT ${X_ + 60},${Y_},"${font_0}",${rotation_0},1,1,"${coo___privacy_string(_order.__product?.recMan?.name)} ${coo___privacy_phone(_order.__product?.recMan?.mobile ?? "", 7)}"`,
       ...(() => coo___divide_array_to_n_parts(recAddr.split(""), 20)
         .map(e => e.join(""))
-        .map(e => `TEXT ${X_ + 60},${Y_ += 30},"${font_0}",${rotation_0},1,1,"${e}"`)
+        .map(e => `TEXT ${X_ + 60},${nextY(30)},"${font_0}",${rotation_0},1,1,"${e}"`)
       )(),
-      `LINE ${X_} ${Y_ += 40} ${P_w} ${Y_} ${L_H}`, // -----------
+      `LINE ${X_} ${nextY(40)} ${P_w} ${Y_} ${L_H}`, // -----------
 
-      `TEXT ${X_},${Y_ += 10},"${font_3}",${rotation_0},1,1,"寄"`,
+      `TEXT ${X_},${nextY(10)},"${font_3}",${rotation_0},1,1,"寄"`,
       `TEXT ${X_ + 60},${Y_},"${font_0}",${rotation_0},1,1,"${sendManName}"`,
       ...(() => coo___divide_array_to_n_parts(sendAddr.split(""), 20)
         .map(e => e.join(""))
-        .map(e => `TEXT ${X_ + 60},${Y_ += 30},"${font_0}",${rotation_0},1,1,"${e}"`)
+        .map(e => `TEXT ${X_ + 60},${nextY(30)},"${font_0}",${rotation_0},1,1,"${e}"`)
       )(),
-      `LINE ${X_} ${Y_ += 40} ${P_w} ${Y_} ${L_H}`, // -----------
+      `LINE ${X_} ${nextY(40)} ${P_w} ${Y_} ${L_H}`, // -----------
 
-      `BARCODE ${X_},${Y_ += 10},"128",${80},1,${rotation_0},3,3,"${_order.__product?.waybillId}"`,
-      `TEXT ${X_},${Y_ += 80 + 10},"${font_0}",${rotation_0},1,1,"${_order.__product?.waybillId}"`,
+      `BARCODE ${X_},${nextY(10)},"128",${80},1,${rotation_0},3,3,"${_order.__product?.waybillId}"`,
+      `TEXT ${X_},${nextY(80 + 10)},"${font_0}",${rotation_0},1,1,"${_order.__product?.waybillId}"`,
 
-      `TEXT ${X_},${Y_ += 40},"${font_3}",${rotation_0},1,1,"重量：${_order.__product?.weight} 公斤"`,
+      `TEXT ${X_},${nextY(40)},"${font_3}",${rotation_0},1,1,"重量：${_order.__product?.weight} 公斤"`,
 
-      `TEXT ${X_},${Y_ += 60},"${font_0}",${rotation_0},1,1,"站点：${_order.deptName ?? '无'}"`,
-      `TEXT ${X_},${Y_ += 40},"${font_0}",${rotation_0},1,1,"用户：${orderUserName}"`,
-      `TEXT ${X_},${Y_ += 40},"${font_0}",${rotation_0},1,1,"品名：${_order.__product?.itemType}"`,
-      `TEXT ${X_},${Y_ += 40},"${font_0}",${rotation_0},1,1,"备注：${_order.__product?.itemNotes ?? "无"}"`,
+      `TEXT ${X_},${nextY(60)},"${font_0}",${rotation_0},1,1,"站点：${_order.deptName ?? '无'}"`,
+      `TEXT ${X_},${nextY(40)},"${font_0}",${rotation_0},1,1,"用户：${orderUserName}"`,
+      `TEXT ${X_},${nextY(40)},"${font_0}",${rotation_0},1,1,"品名：${_order.__product?.itemType}"`,
+      `TEXT ${X_},${nextY(40)},"${font_0}",${rotation_0},1,1,"备注：${_order.__product?.itemNotes ?? "无"}"`,
 
       `PRINT 1,1`, //该指令用于打印出存储于影像缓冲区内的数据
     ].join("\r\n");
@@ -398,6 +400,7 @@ export function on_get_printer_str_order_bing_goods(_order: OrderInfo<Product_Dr
   const L_H = 3;
   const X_ = 5;
   let Y_ = 0;
+  const nextY = (step: number) => (Y_ += step);
   const P_w = 72 * 8;
   const P_h = 127 * 8;
 
@@ -425,60 +428,60 @@ export function on_get_printer_str_order_bing_goods(_order: OrderInfo<Product_Dr
 
     `LEFT`,
     `${T_0} 0 ${X_} ${Y_ = 60} ${format(coo___ios_date(_order?.lastPrintTime ?? coo___ios_date().getTime()), "yyyy-MM-dd HH:mm:ss")}`,
-    `LINE ${X_} ${Y_ += 26} ${P_w} ${Y_} ${L_H}`, // -----------
+    `LINE ${X_} ${nextY(26)} ${P_w} ${Y_} ${L_H}`, // -----------
 
-    `BARCODE 128 1 1 80 ${X_ + 60} ${Y_ += 10} ${_order.outTradeNo?.toUpperCase()}`,
-    `${T_0} 0 ${X_ + 60} ${Y_ += 80 + 10} ${_order.outTradeNo?.toUpperCase()}`,
-    `LINE ${X_} ${Y_ += 30} ${P_w} ${Y_} ${L_H}`, // -----------
+    `BARCODE 128 1 1 80 ${X_ + 60} ${nextY(10)} ${_order.outTradeNo?.toUpperCase()}`,
+    `${T_0} 0 ${X_ + 60} ${nextY(80 + 10)} ${_order.outTradeNo?.toUpperCase()}`,
+    `LINE ${X_} ${nextY(30)} ${P_w} ${Y_} ${L_H}`, // -----------
     `SETMAG 2 2`,
-    `${T_0} 0 ${X_} ${Y_ += 10} 收`,
+    `${T_0} 0 ${X_} ${nextY(10)} 收`,
     `SETMAG 0 0`,
     `${T_0} 0 ${X_ + 60} ${Y_} ${recName}`,
     ...(() => coo___divide_array_to_n_parts(recAddr?.split(""), 20)
       .map(e => e.join(""))
-      .map(e => `${T_0} 0 ${X_ + 60} ${Y_ += 30} ${e}`)
+      .map(e => `${T_0} 0 ${X_ + 60} ${nextY(30)} ${e}`)
     )(),
-    `LINE ${X_} ${Y_ += 30} ${P_w} ${Y_} ${L_H}`, // -----------
+    `LINE ${X_} ${nextY(30)} ${P_w} ${Y_} ${L_H}`, // -----------
 
     `SETMAG 2 2`,
-    `${T_0} 0 ${X_} ${Y_ += 10} 团`,
+    `${T_0} 0 ${X_} ${nextY(10)} 团`,
     `SETMAG 0 0`,
     `${T_0} 0 ${X_ + 60} ${Y_} ${regimentName}`,
     ...(() => coo___divide_array_to_n_parts(regimentAddr?.split(""), 20)
       .map(e => e.join(""))
-      .map(e => `${T_0} 0 ${X_ + 60} ${Y_ += 30} ${e}`)
+      .map(e => `${T_0} 0 ${X_ + 60} ${nextY(30)} ${e}`)
     )(),
-    `LINE ${X_} ${Y_ += 30} ${P_w} ${Y_} ${L_H}`, // -----------
+    `LINE ${X_} ${nextY(30)} ${P_w} ${Y_} ${L_H}`, // -----------
 
     `SETMAG 2 2`,
-    `${T_0} 0 ${X_} ${Y_ += 10} 商`,
+    `${T_0} 0 ${X_} ${nextY(10)} 商`,
     `SETMAG 0 0`,
     `${T_0} 0 ${X_ + 60} ${Y_} ${merchantName}`,
     ...(() => coo___divide_array_to_n_parts(merchantAddr?.split(""), 20)
       .map(e => e.join(""))
-      .map(e => `${T_0} 0 ${X_ + 60} ${Y_ += 30} ${e}`)
+      .map(e => `${T_0} 0 ${X_ + 60} ${nextY(30)} ${e}`)
     )(),
-    `LINE ${X_} ${Y_ += 30} ${P_w} ${Y_} ${L_H}`, // -----------
+    `LINE ${X_} ${nextY(30)} ${P_w} ${Y_} ${L_H}`, // -----------
 
-    `BARCODE 128 1 1 80 ${X_ + 60} ${Y_ += 10} ${_order.outTradeNo?.toUpperCase()}`,
-    `${T_0} 0 ${X_ + 60} ${Y_ += 80 + 10} ${_order.outTradeNo?.toUpperCase()}`,
+    `BARCODE 128 1 1 80 ${X_ + 60} ${nextY(10)} ${_order.outTradeNo?.toUpperCase()}`,
+    `${T_0} 0 ${X_ + 60} ${nextY(80 + 10)} ${_order.outTradeNo?.toUpperCase()}`,
 
     ... (() => {
       if (type === "divide") {  // 分单打印
         return [
-          `${T_0} 0 ${X_} ${Y_ += 30} 商品总数量 共${_order.__count}件   ---分单---`,
+          `${T_0} 0 ${X_} ${nextY(30)} 商品总数量 共${_order.__count}件   ---分单---`,
           ...(() => coo___divide_array_to_n_parts(___intro?.split(""), 20)
             .map(e => e.join(""))
-            .map(e => `${T_0} 0 ${X_} ${Y_ += 30} ${e}`)
+            .map(e => `${T_0} 0 ${X_} ${nextY(30)} ${e}`)
           )(),
-          `${T_0} 0 ${X_} ${Y_ += 30} ${_order.__index! + 1}/${_order.__count}${_order.__product?.name}`,
+          `${T_0} 0 ${X_} ${nextY(30)} ${_order.__index! + 1}/${_order.__count}${_order.__product?.name}`,
         ];
       }
       if (type === "merge") {  // 合单打印
         return [
-          `${T_0} 0 ${X_} ${Y_ += 30} 商品总数量 共${_order.productList?.length}-${_order.__count}件   [[[合单]]]`,
+          `${T_0} 0 ${X_} ${nextY(30)} 商品总数量 共${_order.productList?.length}-${_order.__count}件   [[[合单]]]`,
           ...(() => _order.productList?.map((e, i) => [
-            `${T_0} 0 ${X_} ${Y_ += 30} ${i + 1}/${_order.productList?.length}${e.name?.substring(0, 10)}`,
+            `${T_0} 0 ${X_} ${nextY(30)} ${i + 1}/${_order.productList?.length}${e.name?.substring(0, 10)}`,
           ]).flat()!
           )(),
         ];
@@ -498,6 +501,7 @@ export function on_get_printer_str_order_bing_goods_waybill(_order: OrderInfo<Pr
   const L_H = 3;
   const X_ = 5;
   let Y_ = 0;
+  const nextY = (step: number) => (Y_ += step);
   const P_w = 72 * 8;
   const P_h = 127 * 8;
 
@@ -516,51 +520,51 @@ export function on_get_printer_str_order_bing_goods_waybill(_order: OrderInfo<Pr
 
     `LEFT`,
     `${T_0} 0 ${X_} ${Y_ = 60} ${format(coo___ios_date(_order?.lastPrintTime ?? coo___ios_date().getTime()), "yyyy-MM-dd HH:mm:ss")}`,
-    `LINE ${X_} ${Y_ += 26} ${P_w} ${Y_} ${L_H}`, // -----------
+    `LINE ${X_} ${nextY(26)} ${P_w} ${Y_} ${L_H}`, // -----------
 
-    `BARCODE 128 1 1 80 ${X_ + 30} ${Y_ += 10} ${_order.__product?.waybillId?.toUpperCase()}`,
-    `${T_0} 0 ${X_ + 30} ${Y_ += 80 + 10} ${_order.__product?.waybillId?.toUpperCase()}`,
-    `LINE ${X_} ${Y_ += 30} ${P_w} ${Y_} ${L_H}`, // -----------
+    `BARCODE 128 1 1 80 ${X_ + 30} ${nextY(10)} ${_order.__product?.waybillId?.toUpperCase()}`,
+    `${T_0} 0 ${X_ + 30} ${nextY(80 + 10)} ${_order.__product?.waybillId?.toUpperCase()}`,
+    `LINE ${X_} ${nextY(30)} ${P_w} ${Y_} ${L_H}`, // -----------
     `SETMAG 2 2`,
-    `${T_0} 0 ${X_} ${Y_ += 10} 收`,
+    `${T_0} 0 ${X_} ${nextY(10)} 收`,
     `SETMAG 0 0`,
     `${T_0} 0 ${X_ + 60} ${Y_} ${recName}`,
     ...(() => coo___divide_array_to_n_parts(recAddr?.split(""), 20)
       .map(e => e.join(""))
-      .map(e => `${T_0} 0 ${X_ + 60} ${Y_ += 30} ${e}`)
+      .map(e => `${T_0} 0 ${X_ + 60} ${nextY(30)} ${e}`)
     )(),
-    `LINE ${X_} ${Y_ += 30} ${P_w} ${Y_} ${L_H}`, // -----------
+    `LINE ${X_} ${nextY(30)} ${P_w} ${Y_} ${L_H}`, // -----------
 
     `SETMAG 2 2`,
-    `${T_0} 0 ${X_} ${Y_ += 10} 寄`,
+    `${T_0} 0 ${X_} ${nextY(10)} 寄`,
     `SETMAG 0 0`,
     `${T_0} 0 ${X_ + 60} ${Y_} ${merchantName}`,
     ...(() => coo___divide_array_to_n_parts(merchantAddr?.split(""), 20)
       .map(e => e.join(""))
-      .map(e => `${T_0} 0 ${X_ + 60} ${Y_ += 30} ${e}`)
+      .map(e => `${T_0} 0 ${X_ + 60} ${nextY(30)} ${e}`)
     )(),
-    `LINE ${X_} ${Y_ += 30} ${P_w} ${Y_} ${L_H}`, // -----------
+    `LINE ${X_} ${nextY(30)} ${P_w} ${Y_} ${L_H}`, // -----------
 
-    `BARCODE 128 1 1 80 ${X_ + 30} ${Y_ += 10} ${_order.__product?.waybillId?.toUpperCase()}`,
-    `${T_0} 0 ${X_ + 30} ${Y_ += 80 + 10} ${_order.__product?.waybillId?.toUpperCase()}`,
+    `BARCODE 128 1 1 80 ${X_ + 30} ${nextY(10)} ${_order.__product?.waybillId?.toUpperCase()}`,
+    `${T_0} 0 ${X_ + 30} ${nextY(80 + 10)} ${_order.__product?.waybillId?.toUpperCase()}`,
 
-    `${T_0} 0 ${X_} ${Y_ += 30} 团长：${___regiment?.name?.slice(0, 10)} ${___regiment?.mobile}`,
+    `${T_0} 0 ${X_} ${nextY(30)} 团长：${___regiment?.name?.slice(0, 10)} ${___regiment?.mobile}`,
 
     ...(() => {
       if (type === "divide") {  // 分单打印
         return [
-          `${T_0} 0 ${X_} ${Y_ += 30} 商品总数量 共${_order.__count}件`,
+          `${T_0} 0 ${X_} ${nextY(30)} 商品总数量 共${_order.__count}件`,
           ...(() => _order.productList?.filter((e) => e.waybillId === _order.__product?.waybillId)?.map((e, i) => [
-            `${T_0} 0 ${X_} ${Y_ += 30} ${i + 1}/${_order.__count}${e.name?.substring(0, 10)}`,
+            `${T_0} 0 ${X_} ${nextY(30)} ${i + 1}/${_order.__count}${e.name?.substring(0, 10)}`,
           ]).flat()!
           )(),
         ];
       }
       if (type === "merge") { // 合单打印
         return [
-          `${T_0} 0 ${X_} ${Y_ += 30} 商品总数量 共${_order.productList?.length}件`,
+          `${T_0} 0 ${X_} ${nextY(30)} 商品总数量 共${_order.productList?.length}件`,
           ...(() => _order.productList?.map((e, i) => [
-            `${T_0} 0 ${X_} ${Y_ += 30} ${i + 1}/${_order.productList?.length}${e.name?.substring(0, 10)}`,
+            `${T_0} 0 ${X_} ${nextY(30)} ${i + 1}/${_order.productList?.length}${e.name?.substring(0, 10)}`,
           ]).flat()!
           )(),
         ];
@@ -579,6 +583,7 @@ export function on_get_printer_str_order_dryclean_out_factory(_order: OrderInfo<
   const L_H = 3;
   const X_ = 5;
   let Y_ = 15;
+  const nextY = (step: number) => (Y_ += step);
   const P_w = 72 * 8;
   const P_h = 127 * 8;
 
@@ -593,36 +598,36 @@ export function on_get_printer_str_order_dryclean_out_factory(_order: OrderInfo<
 
     `LEFT`,
     `${T_0} 0 ${X_} ${Y_} ${format(coo___ios_date(_order?.lastPrintTime ?? coo___ios_date().getTime()), "yyyy-MM-dd HH:mm:ss")} 码: ${_order.__product?.code}`,
-    `LINE ${X_} ${Y_ += 25} ${P_w} ${Y_} ${L_H}`, // -----------
+    `LINE ${X_} ${nextY(25)} ${P_w} ${Y_} ${L_H}`, // -----------
 
     `SETMAG 2 2`,
-    `${T_0} 0 ${X_} ${Y_ += 5} 码`,
+    `${T_0} 0 ${X_} ${nextY(5)} 码`,
     `SETMAG 0 0`,
 
     `LEFT`,
     `BARCODE 128 2 2 60 ${X_ + 60} ${Y_} ${_order.__product?.code}`,
-    `LINE ${X_} ${Y_ += 60 + 5} ${P_w} ${Y_} ${L_H}`, // -----------
+    `LINE ${X_} ${nextY(60 + 5)} ${P_w} ${Y_} ${L_H}`, // -----------
     `LEFT`,
     `SETMAG 2 2`,
-    `${T_0} 0 ${X_} ${Y_ += 5} 收`,
+    `${T_0} 0 ${X_} ${nextY(5)} 收`,
     `SETMAG 0 0`,
     `${T_0} 0 ${X_ + 60} ${Y_} ${recManName}`,
     ...(() => coo___divide_array_to_n_parts(recAddr.split(""), 20)
       .map(e => e.join(""))
-      .map(e => `${T_0} 0 ${X_ + 60} ${Y_ += 30} ${e}`)
+      .map(e => `${T_0} 0 ${X_ + 60} ${nextY(30)} ${e}`)
     )(),
-    `LINE ${X_} ${Y_ += 25} ${P_w} ${Y_} ${L_H}`, // -----------
+    `LINE ${X_} ${nextY(25)} ${P_w} ${Y_} ${L_H}`, // -----------
 
     `SETMAG 2 2`,
-    `${T_0} 0 ${X_} ${Y_ += 5} 团`,
+    `${T_0} 0 ${X_} ${nextY(5)} 团`,
     `SETMAG 0 0`,
     ...(() => coo___divide_array_to_n_parts(`${sendManName} ${sendAddr}`.split(""), 20)
       .map(e => e.join(""))
-      .map((e, i) => `${T_0} 0 ${X_ + 60} ${Y_ += (i === 0 ? 0 : 30)} ${e}`)
+      .map((e, i) => `${T_0} 0 ${X_ + 60} ${nextY((i === 0 ? 0 : 30))} ${e}`)
     )(),
-    `LINE ${X_} ${Y_ += 25} ${P_w} ${Y_} ${L_H}`, // -----------
+    `LINE ${X_} ${nextY(25)} ${P_w} ${Y_} ${L_H}`, // -----------
     `LEFT ${P_w}`,
-    `${T_0} 0 ${X_} ${Y_ += 5} 备注：${"无"}`,
+    `${T_0} 0 ${X_} ${nextY(5)} 备注：${"无"}`,
     `FORM`,
     `PRINT`,
   ];
@@ -633,6 +638,7 @@ export function on_get_printer_str_order_dryclean_pre_barcodes(_order: PreBarCod
   if (utils_str_includes(["Printer_"], blue_device?.name)) {
     const is_DEV = getMyEnv().envVersion === "develop";
     let Y_ = 150; // +左 -右
+    const nextY = (step: number) => (Y_ += step);
     const deptAddress = `${_order.name}`;
     const add = 60; // +上 -下
     const rotation = "90"; // 旋转角度
@@ -643,20 +649,9 @@ export function on_get_printer_str_order_dryclean_pre_barcodes(_order: PreBarCod
       `CLS`, // 清除缓冲区数据
       `TEXT ${Y_},${add},"TSS24.BF2",${rotation},${2},${2},"${_order.code.toUpperCase()}"`,
       `TEXT ${Y_},${330 + add},"TSS24.BF2",${rotation},${2},${2},"团:${deptAddress}"`,
-      `BARCODE ${Y_ += 105},${add},"128",100,0,${rotation},${4},${4},"${_order.code.toUpperCase()}"`,
+      `BARCODE ${nextY(105)},${add},"128",100,0,${rotation},${4},${4},"${_order.code.toUpperCase()}"`,
       `PRINT 1,1`,
     ];
-    // [
-    //   `SIZE 30 mm, 150 mm`
-    //   `DENSITY 1`,
-    //   `SET CUTTER OFF`, // 在 PRINT 命令结束后切纸
-    //   // `SET CUTTER BATCH`, // 在 PRINT 命令结束后切纸
-    //   `CLS`, // 清除缓冲区数据
-    //   `TEXT ${Y_ += 0},${30 + add},"TSS24.BF2",${rotation},${1},${1},"${_order.code.toUpperCase()}"`,
-    //   `TEXT ${Y_ += 0},${270 + add},"TSS24.BF2",${rotation},${1},${1},"团:${deptAddress}"`,
-    //   `BARCODE ${Y_ += 90},${30 + add},"128",83,0,${rotation},${2},${2},"${_order.code.toUpperCase()}"`,
-    //   `PRINT 1,1`,
-    // ]
     const arr = [`SIZE 30 mm, 150 mm`, ...__arr_new,];
     return arr!.reduce((str, e) => `${str}\r\n${e}`);
   } else {
