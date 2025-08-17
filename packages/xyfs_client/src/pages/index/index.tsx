@@ -10,7 +10,6 @@ import { ComButton, ComButtonOpen } from '@xyfs/taro_uii/components/ComButton';
 import { ComImage } from '@xyfs/taro_uii/components/ComImage';
 import { ComLoading } from '@xyfs/taro_uii/components/ComLoading';
 import { ComNav } from '@xyfs/taro_uii/components/ComNav';
-import { ComNavBarA } from '@xyfs/taro_uii/components/ComNavBarA';
 import { ComNavBarB } from '@xyfs/taro_uii/components/ComNavBarB';
 import { ComPopupNew } from '@xyfs/taro_uii/components/ComPopupNew';
 import { ComCartPrice, ComPrice } from '@xyfs/taro_uii/components/ComPrice';
@@ -18,6 +17,7 @@ import { ComScrollView } from '@xyfs/taro_uii/components/ComScrollView';
 import { ComSquare } from '@xyfs/taro_uii/components/ComSquare';
 import { ComSELFView, MMMAAPage } from '@xyfs/taro_uii/components/MMMAAPage';
 import { MMMFooter } from '@xyfs/taro_uii/components/MMMFooter';
+import { MMMLogo } from '@xyfs/taro_uii/components/MMMLogo';
 import { Order_ST } from '@xyfs/taro_uii/src/config';
 import { roo___my_dept } from '@xyfs/taro_uii/src/roles';
 import { useSTSelf } from '@xyfs/taro_uii/store/store';
@@ -76,14 +76,13 @@ const Index: FC = () => {
         <ComBanner ref={ref_banner} className={`${isBanner ? "" : "bccback"}`} maskHightT='70%' maskHightF='10vh' />
       }
       <ComNav className='mb10 prl10' isRight>
-        <ComNavBarA >
-          <View className='ww dbtc ml10'>
-            <View className='dy' >
-              <ComImage className='mr10' src={deptInfo?.avatar} />
-              <ComButton ll className="fs13 fwb bcctrans" hoverClass='none'><Text className='nw1'> {deptInfo?.deptName ?? "..."}</Text></ComButton>
-            </View>
+        <View className='ww dbtc ml10'>
+          <View className='dy' >
+            <MMMLogo />
+            {/* <ComImage className='mr10' src={deptInfo?.avatar} /> */}
+            <ComButton ll className="fs11 fwb bcctrans" hoverClass='none'><Text className='nw1'> {deptInfo?.deptName ?? "..."}</Text></ComButton>
           </View>
-        </ComNavBarA>
+        </View>
       </ComNav>
       <View className='ww dll prl10 bccback ' >
         <View className='ww dr'>
