@@ -1,0 +1,5 @@
+/* 让页面禁止滚动 */
+html,
+body {
+  overflow: hidden;
+}
