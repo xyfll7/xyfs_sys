@@ -293,7 +293,7 @@ const IIICartBar = ({ cart, onClick }: { cart: any[]; onClick: () => void; }) =>
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
   return <View className='ww  pt10'>
     <View className='ww dr mb10'>
-      <ComAddressSwitchor className="ww mr10 bcctrans" isShort title='团:' address={roo___my_dept(selfInfo_S)} url='/pages_user/user_regiment_list_map' />
+      <ComAddressSwitchor className="ww mr10 bcctrans" hoverClass='none' isShort title='团:' address={roo___my_dept(selfInfo_S)} />
       <ComCartPrice className='bcctrans' totalPrice={String(cart.reduce((sum, item) => sum + (item.price * 100), 0) / 100)} num={String(cart.length)}
         onClick={() => { onClick(); }} />
       <ComButton className='bccyellow ml10 nw' onClickO={() => { onClick(); }}>
