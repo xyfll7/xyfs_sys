@@ -73,9 +73,9 @@ const Index: FC<{}> = ({ }) => {
 const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: OrderInfo<any>; onUpdateOrderItem: (e: OrderInfo<Product_Dryclean>) => void, onDeleteOrderItem: (e: OrderInfo<Product_Dryclean>) => void; }) => {
   const selfInfo_S = useSTSelf(s => s.selfInfo!);
 
-  const IS_PURE_PRINT = roo___has_role(selfInfo_S, ["GROUPLEADER"]);
+  const IS_PURE_PRINT = !roo___has_role(selfInfo_S, ["GROUPLEADER"]);
   const model = (() => {
-    if (!IS_PURE_PRINT) {
+    if (IS_PURE_PRINT) {
       return "print";
     } else {
       return Boolean(order.productList?.filter(e => !e.waybillId)?.length) ? "waybill" : "print";
@@ -89,7 +89,13 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
   return <View className='dll ww mb10 bccwhite ioo' key={order.id}>
     <ComCardOrderBringGoods isPurePrint={IS_PURE_PRINT} className='ww mb10' model={model} isShowSelector={roo___has_role(selfInfo_S, ['MERCHANT', "GROUPLEADER"])} key={order.id} printProducts={printProducts} order={order}
       onSelectOrder={(e) => {
-        if (roo___has_role(selfInfo_S, ['MERCHANT'])) {
+        if (IS_PURE_PRINT) {
+          if (model === "print" && utils_arr_includes([e.id!], printProducts.map(ee => ee.id!))) {
+            setPrintProducts(printProducts.filter(ee => ee.id !== e.id));
+          } else {
+            setPrintProducts([...printProducts, e].sort((a, b) => Number(a.id) - Number(b.id)));
+          }
+        } else {
           if (model === "waybill" && utils_arr_includes([e.id!], printProducts.map(ee => ee.id!))) {
             setPrintProducts(printProducts.filter(ee => ee.id !== e.id));
           } else if (model === "print" && utils_arr_includes([e.waybillId!], printProducts.map(ee => ee.waybillId!))) {
@@ -97,14 +103,7 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
           } else {
             setPrintProducts([...printProducts, e].sort((a, b) => Number(a.id) - Number(b.id)));
           }
-        } else if (IS_PURE_PRINT) {
-          if (model === "print" && utils_arr_includes([e.id!], printProducts.map(ee => ee.id!))) {
-            setPrintProducts(printProducts.filter(ee => ee.id !== e.id));
-          } else {
-            setPrintProducts([...printProducts, e].sort((a, b) => Number(a.id) - Number(b.id)));
-          }
         }
-
       }} />
     <View className='dr prl10 ww dwp'>
       {order.orderStatus === Order_ST.已付款 && roo___has_role(selfInfo_S, ["GROUPLEADER"]) &&
@@ -153,9 +152,22 @@ const IIIOrderCard = ({ order, onDeleteOrderItem, onUpdateOrderItem }: { order: 
       </ComButton>}
       {model === "print" && order.orderStatus === Order_ST.已付款 && roo___has_role(selfInfo_S, ['MERCHANT', "GROUPLEADER"]) && <ComButton rr className='ml10 bborder mb10 nw' onClick={async () => {
         if (!printProducts.length) { Taro.showToast({ icon: "none", title: "至少选择一件商品" }); return; }
+        //  如果有多个面单账号，就只能分单打印,否则合单打印
+
+        const countUniqueWaybillIds = (arr: any[]) => {
+          const ids = arr.map(item => item.waybillId).filter(Boolean);
+          return ids.length === 0 ? 0 : new Set(ids).size;
+        };
+        const waybillId_count = countUniqueWaybillIds(printProducts);
+        console.log("waybillId_count", waybillId_count, printProducts);
         const [, res_item] = await try_Taro_showActionSheet<"合单打印" | "分单打印">({
           alertText: "请选择打印方式",
-          itemList: printProducts?.length === 1 ? ["合单打印"] : ["合单打印", "分单打印"],
+          itemList: (() => {
+            if (waybillId_count === 0) { // 没有面单ID
+              return printProducts?.length === 1 ? ["合单打印"] : ["合单打印", "分单打印"];
+            }
+            return waybillId_count === 1 ? ["合单打印"] : ["分单打印"];
+          })(),
         });
         if (res_item === "合单打印") {
           await on_start_print((blue_device) => {
