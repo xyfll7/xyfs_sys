@@ -1,10 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Slider } from "@/components/ui/slider";
 import { animate, motion, useMotionValue } from "framer-motion";
-import {
-  Play
-} from "lucide-react";
+import { Play } from "lucide-react";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
 /* ----------------- 类型定义 ----------------- */
@@ -26,33 +23,9 @@ export type VideoSwiperProps = {
   className?: string;
 };
 
-/* ----------------- 工具函数 ----------------- */
-function formatNum(n?: number) {
-  if (!n && n !== 0) return "";
-  if (n < 1000) return String(n);
-  if (n < 1_000_000)
-    return (n / 1000).toFixed(1).replace(/\.0$/, "") + "k";
-  return (n / 1_000_000).toFixed(1).replace(/\.0$/, "") + "M";
-}
 
-function formatTime(seconds: number): string {
-  const mins = Math.floor(seconds / 60);
-  const secs = Math.floor(seconds % 60);
-  return `${mins}:${secs.toString().padStart(2, "0")}`;
-}
 
 /* ----------------- 自定义 hooks ----------------- */
-function useVideoRefs(count: number) {
-  const refs = useRef<(HTMLVideoElement | null)[]>([]);
-  useEffect(() => {
-    refs.current = refs.current.slice(0, count);
-  }, [count]);
-  const setRef = useCallback((el: HTMLVideoElement | null, i: number) => {
-    refs.current[i] = el;
-  }, []);
-  return [refs, setRef] as const;
-}
-
 function useVideoController(video: HTMLVideoElement | null, onEnded?: () => void) {
   const [playing, setPlaying] = useState(true);
   const [muted, setMuted] = useState(true);
@@ -116,86 +89,61 @@ function useVideoController(video: HTMLVideoElement | null, onEnded?: () => void
 /* ----------------- VideoPlayer 子组件 ----------------- */
 function VideoPlayer({
   video,
-  setRef,
-  controller,
+  active,
+  onEnded,
 }: {
   video: VideoItem;
-  setRef: (el: HTMLVideoElement | null) => void;
-  controller: ReturnType<typeof useVideoController>;
+  active: boolean;
+  onEnded?: () => void;
 }) {
-  const { playing, muted, volume, progress, buffered, setMuted, setVolume, setPlaying } =
-    controller;
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const controller = useVideoController(
+    active ? videoRef.current : null,
+    onEnded
+  );
 
-  // 将 ref 绑定到 setRef 和本地 videoRef
-  const handleRef = (el: HTMLVideoElement | null) => {
-    setRef(el);
-    videoRef.current = el;
-  };
+  const {
+    playing,
+    muted,
+    setPlaying,
+  } = controller;
 
   return (
     <section className="h-screen w-full relative select-none">
       <video
-        ref={handleRef}
+        ref={videoRef}
         className="h-full w-full object-cover"
         src={video.src.trim()}
         poster={video.poster?.trim()}
         playsInline
-        autoPlay={playing}
+        autoPlay={active}
         loop={false}
         preload="metadata"
         muted={muted}
-        onClick={() => setPlaying((p) => !p)}
+        onClick={() => active && setPlaying((p) => !p)}
         onError={() => console.error(`[Video] Failed to load: ${video.id}`)}
       />
 
       {/* 顶部和底部渐变遮罩 */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/60 to-transparent" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/70 to-transparent" />
-      {/* 右侧操作区 */}
-      <div className="absolute right-4 bottom-24 flex flex-col items-center gap-5 text-white">
-        <div className="h-24">
-          <Slider
-            orientation="vertical"
-            value={[Math.round(volume * 100)]}
-            min={0}
-            max={100}
-            step={1}
-            onValueChange={(val) => {
-              setVolume(val[0] / 100);
-              setMuted(false);
-            }}
-            className="h-full"
-          />
-        </div>
-      </div>
+
       {/* 中间播放/暂停按钮 */}
-      {!playing && <div className="absolute inset-0 grid place-items-center">
-        <Button
-          variant="ghost"
-          size="icon"
-          className="h-16 w-16 rounded-full bg-black/30 hover:bg-black/40 text-white"
-          onClick={() => setPlaying((p) => !p)}
-        >
-          <Play className="h-8 w-8" />
-        </Button>
-      </div>
-      }
-
-
-      {/* 缓冲条 */}
-      <div className="absolute bottom-[84px] left-4 right-24">
-        <div className="h-0.5 bg-white/20">
-          <div
-            className="h-full bg-white/40"
-            style={{ width: `${buffered}%` }}
-          />
+      {active && !playing && (
+        <div className="absolute inset-0 grid place-items-center">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-16 w-16 rounded-full bg-black/30 hover:bg-black/40 text-white"
+            onClick={() => setPlaying((p) => !p)}
+          >
+            <Play className="h-8 w-8" />
+          </Button>
         </div>
-      </div>
+      )}
     </section>
   );
 }
-
 
 /* ----------------- 主组件 ----------------- */
 export default function VideoSwiper({
@@ -207,13 +155,6 @@ export default function VideoSwiper({
   const y = useMotionValue(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerHeight, setContainerHeight] = useState(0);
-
-  const [videoRefs, setVideoRef] = useVideoRefs(videos.length);
-
-  const activeVideo = videoRefs.current[index];
-  const controller = useVideoController(activeVideo, () =>
-    goTo(Math.min(index + 1, videos.length - 1))
-  );
 
   // 动态高度
   useEffect(() => {
@@ -267,29 +208,6 @@ export default function VideoSwiper({
     else goTo(index);
   };
 
-  // 键盘控制
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "ArrowDown") {
-        e.preventDefault();
-        next();
-      }
-      if (e.key === "ArrowUp") {
-        e.preventDefault();
-        prev();
-      }
-      if (e.key === " ") {
-        e.preventDefault();
-        controller.setPlaying((p) => !p);
-      }
-      if (e.key.toLowerCase() === "m") {
-        controller.setMuted((m) => !m);
-      }
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [next, prev, controller]);
-
   return (
     <div className={`relative h-screen w-full overflow-hidden bg-black ${className}`}>
       <motion.div ref={containerRef} className="absolute inset-0" onWheel={onWheel}>
@@ -309,8 +227,8 @@ export default function VideoSwiper({
             <VideoPlayer
               key={v.id}
               video={v}
-              setRef={(el) => setVideoRef(el, i)}
-              controller={controller}
+              active={i === index}
+              onEnded={() => goTo(Math.min(i + 1, videos.length - 1))}
             />
           ))}
         </motion.div>
@@ -319,31 +237,6 @@ export default function VideoSwiper({
       <div className="pointer-events-none absolute left-4 top-4 text-white/90 text-sm select-none">
         {index + 1} / {videos.length}
       </div>
-    </div>
-  );
-}
-
-/* ----------------- ActionIcon ----------------- */
-function ActionIcon({
-  icon,
-  label,
-  onClick,
-}: {
-  icon: React.ReactNode;
-  label?: React.ReactNode;
-  onClick?: () => void;
-}) {
-  return (
-    <div className="flex flex-col items-center gap-1">
-      <Button
-        size="icon"
-        variant="ghost"
-        className="h-12 w-12 rounded-full bg-black/30 hover:bg-black/40 text-white"
-        onClick={onClick}
-      >
-        {icon}
-      </Button>
-      {label ? <span className="text-xs">{label}</span> : null}
     </div>
   );
 }
