@@ -6,6 +6,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 // import { VideoPlayer0 } from "../components/videoPlayer0";
+import LoginPage from "../components/login";
 import VideoPlayer, { SAMPLE_VIDEOS } from "../components/videoPlayer";
 // import VideoPlayer, { SAMPLE_VIDEOS } from "../components/videoPlayer0";
 
@@ -59,7 +60,7 @@ const RsizeContainer = () => {
     <ResizableHandle />
     <ResizablePanel defaultSize={33}>
       <div className="flex h-screen items-center justify-center p-6">
-        <span className="font-semibold">One</span>
+        <LoginPage></LoginPage>
       </div>
     </ResizablePanel>
   </ResizablePanelGroup >;
