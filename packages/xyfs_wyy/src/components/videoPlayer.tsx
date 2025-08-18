@@ -1,18 +1,9 @@
 "use client";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import { Slider } from "@/components/ui/slider";
 import { animate, motion, useMotionValue } from "framer-motion";
 import {
-  Heart,
-  MessageCircle,
-  Pause,
-  Play,
-  Share2,
-  Volume2,
-  VolumeX,
+  Play
 } from "lucide-react";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
@@ -154,106 +145,43 @@ function VideoPlayer({
         loop={false}
         preload="metadata"
         muted={muted}
+        onClick={() => setPlaying((p) => !p)}
         onError={() => console.error(`[Video] Failed to load: ${video.id}`)}
       />
 
       {/* 顶部和底部渐变遮罩 */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/60 to-transparent" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/70 to-transparent" />
-
-      {/* 作者信息 */}
-      <div className="absolute bottom-4 left-4 right-24 text-white space-y-3">
-        <div className="flex items-center gap-3">
-          <Avatar className="h-9 w-9 ring-2 ring-white/40">
-            <AvatarImage src={video.avatar} />
-            <AvatarFallback>
-              {(video.author || "?").slice(0, 1).toUpperCase()}
-            </AvatarFallback>
-          </Avatar>
-          <div className="font-semibold drop-shadow">
-            @{video.author || "author"}
-          </div>
-          <Button size="sm" variant="secondary" className="rounded-2xl">
-            关注
-          </Button>
-        </div>
-        <div className="max-w-[80%] text-sm/5 opacity-95">
-          {video.title || "描述信息"}
-        </div>
-
-        {/* 进度条 */}
-        <div className="flex items-center gap-3 pr-10">
-          <div className="flex-1">
-            <Progress value={progress} className="h-1 bg-white/20" />
-          </div>
-          <div className="text-xs tabular-nums opacity-80">
-            {(() => {
-              const el = videoRef.current;
-              if (!el || !el.duration || isNaN(el.duration)) return "0:00 / 0:00";
-              return `${formatTime(el.currentTime)} / ${formatTime(el.duration)}`;
-            })()}
-          </div>
-        </div>
-      </div>
-
       {/* 右侧操作区 */}
       <div className="absolute right-4 bottom-24 flex flex-col items-center gap-5 text-white">
-        <ActionIcon
-          label={formatNum(video.likes)}
-          icon={<Heart className="h-6 w-6" />}
-        />
-        <ActionIcon
-          label={formatNum(video.comments)}
-          icon={<MessageCircle className="h-6 w-6" />}
-        />
-        <ActionIcon
-          label={formatNum(video.shares)}
-          icon={<Share2 className="h-6 w-6" />}
-        />
-
-        <Card className="bg-black/40 backdrop-blur border-white/10 w-12">
-          <CardContent className="p-2 flex flex-col items-center gap-2">
-            <Button
-              size="icon"
-              variant="ghost"
-              className="hover:bg-white/10"
-              onClick={() => setMuted((m) => !m)}
-            >
-              {muted ? (
-                <VolumeX className="h-5 w-5" />
-              ) : (
-                <Volume2 className="h-5 w-5" />
-              )}
-            </Button>
-            <div className="h-24">
-              <Slider
-                orientation="vertical"
-                value={[Math.round(volume * 100)]}
-                min={0}
-                max={100}
-                step={1}
-                onValueChange={(val) => {
-                  setVolume(val[0] / 100);
-                  setMuted(false);
-                }}
-                className="h-full"
-              />
-            </div>
-          </CardContent>
-        </Card>
+        <div className="h-24">
+          <Slider
+            orientation="vertical"
+            value={[Math.round(volume * 100)]}
+            min={0}
+            max={100}
+            step={1}
+            onValueChange={(val) => {
+              setVolume(val[0] / 100);
+              setMuted(false);
+            }}
+            className="h-full"
+          />
+        </div>
       </div>
-
       {/* 中间播放/暂停按钮 */}
-      <div className="absolute inset-0 grid place-items-center">
+      {!playing && <div className="absolute inset-0 grid place-items-center">
         <Button
           variant="ghost"
           size="icon"
           className="h-16 w-16 rounded-full bg-black/30 hover:bg-black/40 text-white"
           onClick={() => setPlaying((p) => !p)}
         >
-          {playing ? <Pause className="h-8 w-8" /> : <Play className="h-8 w-8" />}
+          <Play className="h-8 w-8" />
         </Button>
       </div>
+      }
+
 
       {/* 缓冲条 */}
       <div className="absolute bottom-[84px] left-4 right-24">
