@@ -19,7 +19,6 @@ export default function Home() {
 
 const RsizeContainer = () => {
   const ass = getAss();
-  console.log(getAss());
   return <ResizablePanelGroup
     direction="horizontal"
     className="w-screen rounded-lg border">
@@ -42,7 +41,7 @@ const RsizeContainer = () => {
           value="account"
           className="flex-1 overflow-hidden flex flex-col"
         >
-          <ScrollArea className="flex-1 w-full overflow-hidden ">
+          <ScrollArea className="flex-1 w-full overflow-hidden p-2">
             <div className="flex flex-col">
               {[...ass, ...ass, ...ass].map((e, i) => {
                 return <div key={i}>{e.Text}</div>;
