@@ -3,6 +3,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function Home() {
   return (
@@ -17,8 +18,7 @@ const RsizeContainer = () => {
   console.log(getAss());
   return <ResizablePanelGroup
     direction="horizontal"
-    className="w-screen rounded-lg border"
-  >
+    className="w-screen rounded-lg border">
     <ResizablePanel defaultSize={33}>
       <div className="flex h-screen justify-center">
         <iframe className="w-full" src="//player.bilibili.com/player.html?isOutside=true&aid=114964513685781&bvid=BV1uChVzJEdp&cid=31461736495&p=2"    ></iframe>
@@ -26,11 +26,19 @@ const RsizeContainer = () => {
     </ResizablePanel>
     <ResizableHandle />
     <ResizablePanel defaultSize={34}>
-      <div className="flex flex-col  h-screen p-2">
-        {ass.map(e => {
-          return <div key={e.Text}>{e.Text}</div>;
-        })}
-      </div>
+      <Tabs defaultValue="account" className="p-2 w-full h-full bg-amber-500">
+        <TabsList>
+          <TabsTrigger value="account">Account</TabsTrigger>
+          <TabsTrigger value="password">Password</TabsTrigger>
+        </TabsList>
+        <TabsContent value="account">
+          <div className="flex flex-col  h-screen ">
+            {ass.map(e => {
+              return <div key={e.Text}>{e.Text}</div>;
+            })}
+          </div></TabsContent>
+        <TabsContent value="password">Change your password here.</TabsContent>
+      </Tabs>
     </ResizablePanel>
     <ResizableHandle />
     <ResizablePanel defaultSize={33}>
@@ -141,3 +149,5 @@ Dialogue: 0,0:04:55.00,0:04:58.00,Default,,0,0,0,,第100行：终于到最后啦
 
   return assToJson(abc);
 }
+
+
