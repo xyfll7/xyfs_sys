@@ -3,7 +3,11 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+// import { VideoPlayer0 } from "../components/videoPlayer0";
+import VideoPlayer, { SAMPLE_VIDEOS } from "../components/videoPlayer";
+// import VideoPlayer, { SAMPLE_VIDEOS } from "../components/videoPlayer0";
 
 export default function Home() {
   return (
@@ -21,23 +25,35 @@ const RsizeContainer = () => {
     className="w-screen rounded-lg border">
     <ResizablePanel defaultSize={33}>
       <div className="flex h-screen justify-center">
-        <iframe className="w-full" src="//player.bilibili.com/player.html?isOutside=true&aid=114964513685781&bvid=BV1uChVzJEdp&cid=31461736495&p=2"    ></iframe>
+        <VideoPlayer videos={SAMPLE_VIDEOS} ></VideoPlayer>
       </div>
     </ResizablePanel>
     <ResizableHandle />
     <ResizablePanel defaultSize={34}>
-      <Tabs defaultValue="account" className="p-2 w-full h-full bg-amber-500">
-        <TabsList>
-          <TabsTrigger value="account">Account</TabsTrigger>
-          <TabsTrigger value="password">Password</TabsTrigger>
+      <Tabs
+        defaultValue="account"
+        className="w-full h-screen max-h-screen flex flex-col overflow-hidden pt-2 pb-2 bg-amber-500"
+      >
+        <TabsList className="ml-2">
+          <TabsTrigger value="account">字幕</TabsTrigger>
+          <TabsTrigger value="password">目录</TabsTrigger>
         </TabsList>
-        <TabsContent value="account">
-          <div className="flex flex-col  h-screen ">
-            {ass.map(e => {
-              return <div key={e.Text}>{e.Text}</div>;
-            })}
-          </div></TabsContent>
-        <TabsContent value="password">Change your password here.</TabsContent>
+        <TabsContent
+          value="account"
+          className="flex-1 overflow-hidden flex flex-col"
+        >
+          <ScrollArea className="flex-1 w-full overflow-hidden ">
+            <div className="flex flex-col">
+              {[...ass, ...ass, ...ass].map((e, i) => {
+                return <div key={i}>{e.Text}</div>;
+              })}
+            </div>
+          </ScrollArea>
+        </TabsContent>
+
+        <TabsContent value="password" className="p-2 flex-1 overflow-hidden">
+          Change your password here.
+        </TabsContent>
       </Tabs>
     </ResizablePanel>
     <ResizableHandle />
@@ -46,7 +62,7 @@ const RsizeContainer = () => {
         <span className="font-semibold">One</span>
       </div>
     </ResizablePanel>
-  </ResizablePanelGroup>;
+  </ResizablePanelGroup >;
 };
 
 
@@ -149,5 +165,7 @@ Dialogue: 0,0:04:55.00,0:04:58.00,Default,,0,0,0,,第100行：终于到最后啦
 
   return assToJson(abc);
 }
+
+
 
 

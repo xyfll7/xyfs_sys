@@ -1,0 +1,364 @@
+"use client";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { Slider } from "@/components/ui/slider";
+import { animate, motion, useMotionValue } from "framer-motion";
+import { Heart, MessageCircle, Pause, Play, Share2, Volume2, VolumeX } from "lucide-react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+
+export type VideoItem = {
+  id: string | number;
+  src: string;
+  poster?: string;
+  title?: string;
+  author?: string;
+  avatar?: string;
+  likes?: number;
+  comments?: number;
+  shares?: number;
+};
+
+export type VideoSwiperProps = {
+  videos: VideoItem[];
+  initialIndex?: number;
+  className?: string;
+};
+
+function formatNum(n?: number) {
+  if (!n && n !== 0) return "";
+  if (n < 1000) return String(n);
+  if (n < 1_000_000) return (n / 1000).toFixed(1).replace(/\.0$/, "") + "k";
+  return (n / 1_000_000).toFixed(1).replace(/\.0$/, "") + "M";
+}
+
+function formatTime(seconds: number): string {
+  const mins = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+  return `${mins}:${secs.toString().padStart(2, "0")}`;
+}
+
+export default function VideoSwiper({ videos, initialIndex = 0, className = "" }: VideoSwiperProps) {
+  const [index, setIndex] = useState(initialIndex);
+  const y = useMotionValue(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+
+  const [muted, setMuted] = useState(true);
+  const [playing, setPlaying] = useState(true);
+  const [volume, setVolume] = useState(0.6);
+  const [progress, setProgress] = useState(0);
+  const [buffered, setBuffered] = useState(0);
+  const [containerHeight, setContainerHeight] = useState(0);
+
+  const activeVideo = videoRefs.current[index];
+
+  // 动态设置容器高度
+  useEffect(() => {
+    const updateHeight = () => {
+      setContainerHeight(containerRef.current?.clientHeight || window.innerHeight);
+    };
+    updateHeight();
+    const ro = new ResizeObserver(updateHeight);
+    if (containerRef.current) ro.observe(containerRef.current);
+    return () => ro.disconnect();
+  }, []);
+
+  // 初始化 ref 数组长度
+  useEffect(() => {
+    videoRefs.current = videoRefs.current.slice(0, videos.length);
+  }, [videos.length]);
+
+  // 同步播放状态
+  useEffect(() => {
+    const v = activeVideo;
+    if (!v) return;
+    const onPlay = () => setPlaying(true);
+    const onPause = () => setPlaying(false);
+    v.addEventListener("play", onPlay);
+    v.addEventListener("pause", onPause);
+    return () => {
+      v.removeEventListener("play", onPlay);
+      v.removeEventListener("pause", onPause);
+    };
+  }, [activeVideo]);
+
+  // 控制播放/静音/音量
+  useEffect(() => {
+    videoRefs.current.forEach((v, i) => {
+      if (!v) return;
+      v.muted = muted;
+      v.volume = muted ? 0 : Math.max(0, Math.min(1, volume));
+      if (i === index) {
+        if (playing) v.play().catch(() => { });
+      } else {
+        v.pause();
+      }
+    });
+  }, [index, muted, playing, volume]);
+
+  // 进度与缓冲
+  useEffect(() => {
+    const v = activeVideo;
+    if (!v) return;
+    const onTime = () => setProgress((v.currentTime / (v.duration || 1)) * 100);
+    const onProgress = () => {
+      try {
+        if (v.buffered.length) {
+          const end = v.buffered.end(v.buffered.length - 1);
+          setBuffered((end / (v.duration || 1)) * 100);
+        }
+      } catch { }
+    };
+    const onEnded = () => goTo(Math.min(index + 1, videos.length - 1));
+    v.addEventListener("timeupdate", onTime);
+    v.addEventListener("progress", onProgress);
+    v.addEventListener("ended", onEnded);
+    onTime();
+    onProgress();
+    return () => {
+      v.removeEventListener("timeupdate", onTime);
+      v.removeEventListener("progress", onProgress);
+      v.removeEventListener("ended", onEnded);
+    };
+  }, [activeVideo, index, videos.length]);
+
+  const clampIndex = useCallback((i: number) => Math.max(0, Math.min(videos.length - 1, i)), [videos.length]);
+
+  const goTo = useCallback(
+    (next: number) => {
+      const targetIndex = clampIndex(next);
+      setIndex(targetIndex);
+      animate(y, -targetIndex * containerHeight, { type: "spring", bounce: 0.12, duration: 0.5 });
+    },
+    [clampIndex, y, containerHeight]
+  );
+
+  const next = useCallback(() => goTo(index + 1), [goTo, index]);
+  const prev = useCallback(() => goTo(index - 1), [goTo, index]);
+
+  const onWheel = useCallback(
+    (e: React.WheelEvent) => {
+      if (Math.abs(e.deltaY) < 20) return;
+      if (e.deltaY > 0) next();
+      else prev();
+    },
+    [next, prev]
+  );
+
+  const dragEnd = (_: any, info: { offset: { y: number; }; velocity: { y: number; }; }) => {
+    const threshold = 80;
+    const { y: vy } = info.velocity;
+    const { y: dy } = info.offset;
+    if (dy < -threshold || vy < -500) next();
+    else if (dy > threshold || vy > 500) prev();
+    else goTo(index);
+  };
+
+  // 键盘控制
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        next();
+      }
+      if (e.key === "ArrowUp") {
+        e.preventDefault();
+        prev();
+      }
+      if (e.key === " ") {
+        e.preventDefault();
+        setPlaying((p) => !p);
+      }
+      if (e.key.toLowerCase() === "m") {
+        setMuted((m) => !m);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [next, prev]);
+
+  const setVideoRef = useCallback((el: HTMLVideoElement | null, i: number) => {
+    videoRefs.current[i] = el;
+  }, []);
+
+  const active = videos[index];
+
+  return (
+    <div className={`relative h-screen w-full overflow-hidden bg-black ${className}`}>
+      <motion.div ref={containerRef} className="absolute inset-0" onWheel={onWheel}>
+        <motion.div
+          className="h-full w-full"
+          style={{ y }}
+          drag="y"
+          dragElastic={0.2}
+          dragMomentum={false}
+          onDragEnd={dragEnd}
+          dragConstraints={{ top: -(videos.length - 1) * containerHeight, bottom: 0 }}
+        >
+          {videos.map((v, i) => (
+            <section key={v.id} className="h-screen w-full relative select-none">
+              <video
+                ref={(el) => setVideoRef(el, i)}
+                className="h-full w-full object-cover"
+                src={v.src.trim()}
+                poster={v.poster?.trim()}
+                playsInline
+                muted={muted}
+                autoPlay={i === index && playing}
+                loop={false}
+                preload="metadata"
+                onError={() => console.error(`[Video] Failed to load: ${v.id}`)}
+              />
+
+              <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/60 to-transparent" />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/70 to-transparent" />
+
+              <div className="absolute bottom-4 left-4 right-24 text-white space-y-3">
+                <div className="flex items-center gap-3">
+                  <Avatar className="h-9 w-9 ring-2 ring-white/40">
+                    <AvatarImage src={v.avatar} />
+                    <AvatarFallback>{(v.author || "?").slice(0, 1).toUpperCase()}</AvatarFallback>
+                  </Avatar>
+                  <div className="font-semibold drop-shadow">@{v.author || "author"}</div>
+                  <Button size="sm" variant="secondary" className="rounded-2xl">
+                    关注
+                  </Button>
+                </div>
+                <div className="max-w-[80%] text-sm/5 opacity-95">{v.title || "描述信息"}</div>
+
+                <div className="flex items-center gap-3 pr-10">
+                  <div className="flex-1">
+                    <Progress value={i === index ? progress : 0} className="h-1 bg-white/20" />
+                  </div>
+                  <div className="text-xs tabular-nums opacity-80">
+                    {(() => {
+                      const el = videoRefs.current[i];
+                      if (!el || !el.duration || isNaN(el.duration)) return "0:00";
+                      const cur = i === index ? el.currentTime : 0;
+                      return `${formatTime(cur)} / ${formatTime(el.duration)}`;
+                    })()}
+                  </div>
+                </div>
+              </div>
+
+              <div className="absolute right-4 bottom-24 flex flex-col items-center gap-5 text-white">
+                <ActionIcon label={formatNum(v.likes)} icon={<Heart className="h-6 w-6" />} onClick={() => { }} />
+                <ActionIcon label={formatNum(v.comments)} icon={<MessageCircle className="h-6 w-6" />} onClick={() => { }} />
+                <ActionIcon label={formatNum(v.shares)} icon={<Share2 className="h-6 w-6" />} onClick={() => { }} />
+
+                <Card className="bg-black/40 backdrop-blur border-white/10 w-12">
+                  <CardContent className="p-2 flex flex-col items-center gap-2">
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      className="hover:bg-white/10"
+                      onClick={() => setMuted((m) => !m)}
+                    >
+                      {muted ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
+                    </Button>
+                    <div className="h-24">
+                      <Slider
+                        orientation="vertical"
+                        value={[Math.round(volume * 100)]}
+                        min={0}
+                        max={100}
+                        step={1}
+                        onValueChange={(val) => {
+                          setVolume(val[0] / 100);
+                          setMuted(false);
+                        }}
+                        className="h-full"
+                      />
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {i === index && (
+                <div className="absolute inset-0 grid place-items-center">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-16 w-16 rounded-full bg-black/30 hover:bg-black/40 text-white"
+                    onClick={() => setPlaying((p) => !p)}
+                  >
+                    {playing ? <Pause className="h-8 w-8" /> : <Play className="h-8 w-8" />}
+                  </Button>
+                </div>
+              )}
+
+              <div className="absolute bottom-[84px] left-4 right-24">
+                <div className="h-0.5 bg-white/20">
+                  <div className="h-full bg-white/40" style={{ width: `${i === index ? buffered : 0}%` }} />
+                </div>
+              </div>
+            </section>
+          ))}
+        </motion.div>
+      </motion.div>
+
+      <div className="pointer-events-none absolute left-4 top-4 text-white/90 text-sm select-none">
+        {index + 1} / {videos.length}
+      </div>
+    </div>
+  );
+}
+
+function ActionIcon({
+  icon,
+  label,
+  onClick,
+}: {
+  icon: React.ReactNode;
+  label?: React.ReactNode;
+  onClick?: () => void;
+}) {
+  return (
+    <div className="flex flex-col items-center gap-1">
+      <Button
+        size="icon"
+        variant="ghost"
+        className="h-12 w-12 rounded-full bg-black/30 hover:bg-black/40 text-white"
+        onClick={onClick}
+      >
+        {icon}
+      </Button>
+      {label ? <span className="text-xs">{label}</span> : null}
+    </div>
+  );
+}
+
+export const SAMPLE_VIDEOS = [
+  {
+    id: 1,
+    src: "https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    title: "森林里的小短片",
+    author: "bunny",
+    likes: 13200,
+    comments: 560,
+    shares: 120,
+    avatar: "https://i.pravatar.cc/100?img=1",
+  },
+  {
+    id: 2,
+    src: "https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+    title: "Elephant's Dream",
+    author: "elephant",
+    likes: 9800,
+    comments: 210,
+    shares: 88,
+    avatar: "https://i.pravatar.cc/100?img=2",
+  },
+  {
+    id: 3,
+    src: "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
+    title: "Joyrides",
+    author: "joy",
+    likes: 45200,
+    comments: 1200,
+    shares: 340,
+    avatar: "https://i.pravatar.cc/100?img=3",
+  },
+];
