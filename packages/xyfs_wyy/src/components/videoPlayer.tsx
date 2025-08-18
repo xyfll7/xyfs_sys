@@ -14,12 +14,7 @@ import {
   Volume2,
   VolumeX,
 } from "lucide-react";
-import React, {
-  useCallback,
-  useEffect,
-  useRef,
-  useState
-} from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 /* ----------------- 类型定义 ----------------- */
 export type VideoItem = {
@@ -130,26 +125,32 @@ function useVideoController(video: HTMLVideoElement | null, onEnded?: () => void
 /* ----------------- VideoPlayer 子组件 ----------------- */
 function VideoPlayer({
   video,
-  active,
   setRef,
   controller,
 }: {
   video: VideoItem;
-  active: boolean;
   setRef: (el: HTMLVideoElement | null) => void;
   controller: ReturnType<typeof useVideoController>;
 }) {
   const { playing, muted, volume, progress, buffered, setMuted, setVolume, setPlaying } =
     controller;
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  // 将 ref 绑定到 setRef 和本地 videoRef
+  const handleRef = (el: HTMLVideoElement | null) => {
+    setRef(el);
+    videoRef.current = el;
+  };
+
   return (
     <section className="h-screen w-full relative select-none">
       <video
-        ref={setRef}
+        ref={handleRef}
         className="h-full w-full object-cover"
         src={video.src.trim()}
         poster={video.poster?.trim()}
         playsInline
-        autoPlay={active}
+        autoPlay={playing}
         loop={false}
         preload="metadata"
         muted={muted}
@@ -183,14 +184,13 @@ function VideoPlayer({
         {/* 进度条 */}
         <div className="flex items-center gap-3 pr-10">
           <div className="flex-1">
-            <Progress value={active ? progress : 0} className="h-1 bg-white/20" />
+            <Progress value={progress} className="h-1 bg-white/20" />
           </div>
           <div className="text-xs tabular-nums opacity-80">
             {(() => {
-              const el = (setRef as any)?._el as HTMLVideoElement | null;
-              if (!el || !el.duration || isNaN(el.duration)) return "0:00";
-              const cur = active ? el.currentTime : 0;
-              return `${formatTime(cur)} / ${formatTime(el.duration)}`;
+              const el = videoRef.current;
+              if (!el || !el.duration || isNaN(el.duration)) return "0:00 / 0:00";
+              return `${formatTime(el.currentTime)} / ${formatTime(el.duration)}`;
             })()}
           </div>
         </div>
@@ -244,31 +244,30 @@ function VideoPlayer({
       </div>
 
       {/* 中间播放/暂停按钮 */}
-      {active && (
-        <div className="absolute inset-0 grid place-items-center">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-16 w-16 rounded-full bg-black/30 hover:bg-black/40 text-white"
-            onClick={() => setPlaying((p) => !p)}
-          >
-            {playing ? <Pause className="h-8 w-8" /> : <Play className="h-8 w-8" />}
-          </Button>
-        </div>
-      )}
+      <div className="absolute inset-0 grid place-items-center">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-16 w-16 rounded-full bg-black/30 hover:bg-black/40 text-white"
+          onClick={() => setPlaying((p) => !p)}
+        >
+          {playing ? <Pause className="h-8 w-8" /> : <Play className="h-8 w-8" />}
+        </Button>
+      </div>
 
       {/* 缓冲条 */}
       <div className="absolute bottom-[84px] left-4 right-24">
         <div className="h-0.5 bg-white/20">
           <div
             className="h-full bg-white/40"
-            style={{ width: `${active ? buffered : 0}%` }}
+            style={{ width: `${buffered}%` }}
           />
         </div>
       </div>
     </section>
   );
 }
+
 
 /* ----------------- 主组件 ----------------- */
 export default function VideoSwiper({
@@ -328,7 +327,10 @@ export default function VideoSwiper({
     [next, prev]
   );
 
-  const dragEnd = (_: any, info: { offset: { y: number; }; velocity: { y: number; }; }) => {
+  const dragEnd = (
+    _: MouseEvent | TouchEvent | PointerEvent,
+    info: { offset: { y: number; }; velocity: { y: number; }; }
+  ) => {
     const threshold = 80;
     const { y: vy } = info.velocity;
     const { y: dy } = info.offset;
@@ -379,7 +381,6 @@ export default function VideoSwiper({
             <VideoPlayer
               key={v.id}
               video={v}
-              active={i === index}
               setRef={(el) => setVideoRef(el, i)}
               controller={controller}
             />

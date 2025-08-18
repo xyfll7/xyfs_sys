@@ -1,8 +1,6 @@
 "use client";
 
 export default function LoginPage() {
-  console.log("微信扫码登录", process.env);
-  console.log("微信扫码登录", process.env.NEXT_PUBLIC_WECHAT_APPID);
   const handleWechatLogin = () => {
 
     const appid = process.env.NEXT_PUBLIC_WECHAT_APPID;

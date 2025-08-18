@@ -8,7 +8,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 // import { VideoPlayer0 } from "../components/videoPlayer0";
 import LoginPage from "../components/login";
 import VideoPlayer, { SAMPLE_VIDEOS } from "../components/videoPlayer";
-// import VideoPlayer, { SAMPLE_VIDEOS } from "../components/videoPlayer0";
 
 export default function Home() {
   return (

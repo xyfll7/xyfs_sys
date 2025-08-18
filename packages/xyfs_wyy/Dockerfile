@@ -13,15 +13,19 @@ RUN npm config set registry https://registry.npmmirror.com
 # 将 package.json 拷贝到容器中
 COPY package.json .
 
+# 将包括源文件在内的所有文件拷贝到容器中（在 .dockerignore 中的文件除外）
+COPY . .
+
 # 安装依赖
 RUN npm install
 
-# 将包括源文件在内的所有文件拷贝到容器中（在 .dockerignore 中的文件除外）
-COPY . .
-# ⭐ 这一步很关键，生成 .next 目录
-RUN npm run build
+
+
 # 设置环境变量
 ENV NODE_ENV=production HOST=0.0.0.0
+
+# ⭐ 这一步很关键，生成 .next 目录
+RUN npm run build
 
 # 运行项目
 CMD ["npm", "run", "start"]
