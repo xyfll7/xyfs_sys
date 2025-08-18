@@ -19,28 +19,24 @@ const RsizeContainer = () => {
     direction="horizontal"
     className="w-screen rounded-lg border"
   >
-    <ResizablePanel defaultSize={50}>
+    <ResizablePanel defaultSize={33}>
       <div className="flex h-screen justify-center">
         <iframe className="w-full" src="//player.bilibili.com/player.html?isOutside=true&aid=114964513685781&bvid=BV1uChVzJEdp&cid=31461736495&p=2"    ></iframe>
       </div>
     </ResizablePanel>
     <ResizableHandle />
-    <ResizablePanel defaultSize={50}>
-      <ResizablePanel defaultSize={25}>
-        <div className="flex flex-col  h-screen p-2">
-          {ass.map(e => {
-            return <div key={e.Text}>{e.Text}</div>;
-          })}
-        </div>
-      </ResizablePanel>
+    <ResizablePanel defaultSize={34}>
+      <div className="flex flex-col  h-screen p-2">
+        {ass.map(e => {
+          return <div key={e.Text}>{e.Text}</div>;
+        })}
+      </div>
     </ResizablePanel>
     <ResizableHandle />
-    <ResizablePanel defaultSize={50}>
-      <ResizablePanel defaultSize={25}>
-        <div className="flex h-screen items-center justify-center p-6">
-          <span className="font-semibold">One</span>
-        </div>
-      </ResizablePanel>
+    <ResizablePanel defaultSize={33}>
+      <div className="flex h-screen items-center justify-center p-6">
+        <span className="font-semibold">One</span>
+      </div>
     </ResizablePanel>
   </ResizablePanelGroup>;
 };
