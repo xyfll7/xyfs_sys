@@ -3,7 +3,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 // import { VideoPlayer0 } from "../components/videoPlayer0";
 import LoginPage from "../components/login";
@@ -16,29 +16,30 @@ export default function Home() {
     </div>
   );
 }
-
+const main_len = 50;
 const RsizeContainer = () => {
   const ass = getAss();
   return <ResizablePanelGroup
     direction="horizontal"
     className="w-screen rounded-lg border">
-    <ResizablePanel defaultSize={33}>
+    <ResizablePanel defaultSize={main_len}>
       <div className="flex h-screen justify-center">
         <VideoPlayer videos={SAMPLE_VIDEOS} ></VideoPlayer>
       </div>
     </ResizablePanel>
-    <ResizableHandle />
-    <ResizablePanel defaultSize={34}>
+    <ResizableHandle withHandle />
+    <ResizablePanel defaultSize={(100 - main_len) / 2}>
       <Tabs
-        defaultValue="account"
-        className="w-full h-screen max-h-screen flex flex-col overflow-hidden pt-2 pb-2 bg-amber-500"
+        defaultValue="captions"
+        className="w-full h-screen max-h-screen flex flex-col overflow-hidden pt-2 pb-2 "
       >
-        <TabsList className="ml-2">
-          <TabsTrigger value="account">字幕</TabsTrigger>
-          <TabsTrigger value="password">目录</TabsTrigger>
+        <TabsList className="ml-2 bg-transparent">
+          <TabsTrigger value="captions">字幕</TabsTrigger>
+          <TabsTrigger value="password">推荐</TabsTrigger>
+          <TabsTrigger value="mine">我的</TabsTrigger>
         </TabsList>
         <TabsContent
-          value="account"
+          value="captions"
           className="flex-1 overflow-hidden flex flex-col"
         >
           <ScrollArea className="flex-1 w-full overflow-hidden p-2">
@@ -47,6 +48,7 @@ const RsizeContainer = () => {
                 return <div key={i}>{e.Text}</div>;
               })}
             </div>
+            <ScrollBar className="w-0 "></ScrollBar>
           </ScrollArea>
         </TabsContent>
 
@@ -55,8 +57,8 @@ const RsizeContainer = () => {
         </TabsContent>
       </Tabs>
     </ResizablePanel>
-    <ResizableHandle />
-    <ResizablePanel defaultSize={33}>
+    <ResizableHandle withHandle />
+    <ResizablePanel defaultSize={(100 - main_len) / 2}>
       <div className="flex h-screen items-center justify-center p-6">
         <LoginPage></LoginPage>
       </div>

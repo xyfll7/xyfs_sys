@@ -109,10 +109,10 @@ function VideoPlayer({
   } = controller;
 
   return (
-    <section className="h-screen w-full relative select-none">
+    <section className="h-screen w-full flex flex-col items-center justify-center relative select-none">
       <video
         ref={videoRef}
-        className="h-full w-full object-cover"
+        className="w-full object-cover"
         src={video.src.trim()}
         poster={video.poster?.trim()}
         playsInline
