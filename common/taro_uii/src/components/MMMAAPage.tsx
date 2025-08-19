@@ -3,11 +3,11 @@ import Taro, { useDidShow, useLoad } from "@tarojs/taro";
 import { coo___urlToObj } from "@xyfs/utils/util";
 import React, { CSSProperties, FC, useState, useSyncExternalStore } from "react";
 import { DeptInfo } from "../../types/type_user";
-import { Api_login_rqs } from "../api/api__users";
+import { Api_login_rqs, Api_user_edit_ctn } from "../api/api__users";
 import { getMyEnv } from "../env";
 import { roo___has_role } from "../roles";
 import { useSTSelf } from "../store/store";
-import { try_Taro_navigateBack, try_Taro_navigateTo, try_Taro_navigateToMiniProgram } from "../utils/try_catch";
+import { try_Taro_hideLoading, try_Taro_navigateBack, try_Taro_navigateTo, try_Taro_navigateToMiniProgram } from "../utils/try_catch";
 import { useHook_getCurrentInstance, useHook_shareAppMessage } from "../utils/useHooks";
 import { ComButton } from "./ComButton";
 import { ComLoading } from "./ComLoading";
@@ -175,13 +175,21 @@ const IIIUserHasNoRegiment: FC<{ className: string; }> = ({ className }) => {
       <MMMLogo className='mb10'></MMMLogo>
     </ComNav>
     <View className='dll'>
-      <ComButton className='mb10 cccplh bcctrans' hoverClass="none">
+      <ComButton className='mb10 cccplh bcctrans' hoverClass='none'>
         <View className='dll'>
           <View>只有团长才能为您提供服务</View>
           <View>请先选择一个团长</View>
         </View>
       </ComButton>
       <ComButton className='bccyellow mb10' url='/pages_user/user_regiment_list_map'>去选择</ComButton>
+      {getMyEnv().platform === "devtools" && <ComButton className='bccyellow mb10' onClick={async () => {
+        Taro.showLoading({ mask: true, title: "更新中...", });
+        const res_userInfo = await Api_user_edit_ctn({ deptId: "181" });
+        useSTSelf.getState().sett(res_userInfo);
+        try_Taro_hideLoading();
+        try_Taro_navigateBack();
+      }}>去选择</ComButton>
+      }
       <MMMFooter></MMMFooter>
     </View>
   </View>;
@@ -272,10 +280,10 @@ const IIISystemUPdate: FC<{ className?: string; step: 0 | 1 | 2 | 3; }> = ({ cla
       <View className='ww prl10'>
         <MMMLogo className='mb10' />
         <View className='dll mb10'>
-          {step === 1 && <ComButton className='cccplh bccback' hoverClass="none">系统升级中: 正在下载新版本...</ComButton>}
-          {step === 2 && <><ComButton className='cccplh mb10 bccback' hoverClass="none">系统升级: 下载成功</ComButton>
+          {step === 1 && <ComButton className='cccplh bccback' hoverClass='none'>系统升级中: 正在下载新版本...</ComButton>}
+          {step === 2 && <><ComButton className='cccplh mb10 bccback' hoverClass='none'>系统升级: 下载成功</ComButton>
             <ComButton className='bccyellow mb10' onClick={() => Taro.getUpdateManager().applyUpdate()}>立即重启</ComButton></>}
-          {step === 3 && <><ComButton className='cccplh mb10 bccback' hoverClass="none">系统升级: 下载失败</ComButton>
+          {step === 3 && <><ComButton className='cccplh mb10 bccback' hoverClass='none'>系统升级: 下载失败</ComButton>
             <ComButton className='bccyellow mb10' onClick={() => Taro.getUpdateManager().applyUpdate()}>稍后重试</ComButton></>}
         </View>
         <MMMFooter />
@@ -373,7 +381,7 @@ export function ComSELFView({ isRefreshSelfInfo_SEveryTime, ...props }: ViewProp
         {
           !selfInfo_S ?
             <ComNav className='prl10'><ComLoading className='ml10 mb10' /></ComNav>
-            : (isInApp ? <View className="ww">
+            : (isInApp ? <View className='ww'>
               <View className='z1 pa'>
                 {isLoading && <ComNav style={{ marginTop: "0.5rem" }}><View className='ml20 oo bccgreen' style={{ minWidth: "0.5rem", minHeight: "0.5rem" }}></View> </ComNav>}
               </View>
