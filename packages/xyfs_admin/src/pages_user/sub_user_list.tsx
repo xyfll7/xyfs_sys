@@ -54,7 +54,7 @@ const Index: FC<{}> = ({ }) => {
           setSearchValue(`${e}`);
         }} />
         <View className='cccplh ww dbtc mb10'>
-          <ComButton>共{page.total ? page.total : "..."}个子用户</ComButton>
+          <ComButton className="bcctrans" hoverClass="none">共{page.total ? page.total : "..."}个子用户</ComButton>
         </View>
       </View>
     </ComNav>
