@@ -191,20 +191,20 @@ const Index: FC = () => {
 
                   const count = cart_new_filter.filter(ee => ee.id === item.id).length;
                   if (count >= item.stock) {
-                    Taro.hideLoading();
+                    try_Taro_hideLoading();
                     Taro.showToast({ icon: "none", title: "库存不足" });
                     return cart_new_filter;
                   }
                   return [...cart_new_filter, { ...item }];
                 });
-                Taro.hideLoading();
+                try_Taro_hideLoading();
               }}
               onSub={async () => {
                 Taro.showLoading({ mask: true, title: "加载中..." });
                 const res_newCartItems = await Api_goods_fetch_ctn(uniqueCart.map(e => e.id));
                 const __cart = cart.map(e => res_newCartItems.find(ee => ee.id === e.id) || e);
                 setCart(coo___arr_remove_one_duplicate_by_id(__cart, "id", item.id));
-                Taro.hideLoading();
+                try_Taro_hideLoading();
               }} />)
             }
           </ComScrollView>

@@ -123,8 +123,8 @@ export async function try_Taro_navigateBack(extraData?: TaroGeneral.IAnyObject) 
       if (route !== "pages/index/index") {
         Taro.reLaunch({ url: "/pages/index/index" });
       }
-    } catch (err) {
-      throw err;
+    } catch (errr) {
+      throw errr;
     }
   }
 }
