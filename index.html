@@ -3,44 +3,46 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>黄金棕色示例</title>
-  <style>
-    .color-box {
-      width: 150px;
-      height: 100px;
-      margin: 10px;
-      display: inline-block;
-      color: white;
-      font-weight: bold;
-      line-height: 100px;
-      text-align: center;
-      border-radius: 8px;
-    }
+  <title>test</title>
 
-    .golden-brown {
-      background-color: #996515;
-    }
-
-    .dark-goldenrod {
-      background-color: #B8860B;
-    }
-
-    .bronze {
-      background-color: #CD7F32;
-    }
-
-    .ochre {
-      background-color: #CC7722;
-    }
-  </style>
 </head>
 
 <body>
-  <h2>黄金棕色展示</h2>
-  <div class="color-box golden-brown">#996515</div>
-  <div class="color-box dark-goldenrod">#B8860B</div>
-  <div class="color-box bronze">#CD7F32</div>
-  <div class="color-box ochre">#CC7722</div>
+
+
 </body>
+<script>
+  function copyText(text) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+  }
+  function getMicroAppElement() {
+    const microApp = document.querySelector('micro-app[name="goods"]');
+    if (microApp && microApp.shadowRoot) {
+      const draggableContent = microApp.shadowRoot.querySelector('#props-editor > div.default_box.goods_details > div.box_content > div > form > div:nth-child(1) > div.weui-desktop-form__control-group > div > div.weui-desktop-new-upload__wrp > div');
+      if (draggableContent) {
+        console.log('成功选中目标元素：', draggableContent);
+        return draggableContent;
+      }
+    }
+  }
+  const images = getMicroAppElement().querySelectorAll('img');
+  // 提取所有图片的 src 属性
+  const imageUrls = Array.from(images).map(img => img.src).filter(src => src); // 过滤空 src
+  if (imageUrls.length > 0) {
+    const images = imageUrls.filter(url => !url.includes('.svg')).map(e => e.split(/[?|#]/)[0]);
+    console.log('找到的图片链接地址：', images);
+    console.log('图片数量：', images.length);
+    // 将图片链接复制到剪贴板
+    copyText(images.join('\n'));
+    console.log('已将图片链接复制到剪贴板');
+  } else {
+    console.log('draggable_content 内未找到图片');
+  }
+</script>
 
 </html>
