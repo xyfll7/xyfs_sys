@@ -178,7 +178,14 @@ export async function Api_user_info_ctn(params: { userId: string; }): Promise<De
     method: "GET"
   });
   return res;
-
+}
+export async function Api_user_clean_ctn(params: { id: string; }): Promise<any> {
+  const res = await wx_call_container<any>({
+    path: "/user/clean ",
+    data: { ...params },
+    method: "POST"
+  });
+  return res;
 }
 export async function Api_dept_info_ctn(params: { deptId: string; }): Promise<DeptInfo> {
   const res = await wx_call_container<DeptInfo>({

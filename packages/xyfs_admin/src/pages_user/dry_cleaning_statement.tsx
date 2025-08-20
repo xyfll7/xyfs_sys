@@ -117,7 +117,7 @@ const IIIPaymentDetailToday: FC<{
   return <>
     {paymentDetailToday && Boolean(paymentDetailToday.length) &&
       <View className={`prl10  IOO  ww pt10 pb10 ${className}`}>
-        {Boolean(paymentDetailToday?.length) && <ComButton ll className=' cccplh mb10'>支持查看近10条收款明细，更多请→查看明细</ComButton>}
+        {Boolean(paymentDetailToday?.length) && <ComButton ll className=' cccplh mb10' hoverClass="none">支持查看近10条收款明细，更多请→查看明细</ComButton>}
         {paymentDetailToday?.map((e) => <IIIPaymentDetailItem key={e.id} item={e}></IIIPaymentDetailItem>)}
       </View>
     }
@@ -213,7 +213,7 @@ const IIIWallet = () => {
   const [showWithdraw, setShowWithdraw] = useState(false);
   return <>
     <View className='dll ww bccwhite IOO mb10 pt10 prl10'>
-      <ComButton ll className='cccplh mb10'>当前余额</ComButton>
+      <ComButton ll className='cccplh mb10' hoverClass="none">当前余额</ComButton>
       <View className='dbtc ww'>
         <ComButton ll className='mb10 fwb fs13'>
           XX.XX元

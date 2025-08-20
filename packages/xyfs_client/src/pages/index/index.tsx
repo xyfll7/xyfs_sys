@@ -355,7 +355,7 @@ const IIIItem0 = ({ item, count, onAdd, onSub, onDetail, }: { count: number, ite
         </View>
         <View className='ww dbl ioo' >
           <View className='dll ww'>
-            <ComPrice className='cccprice ml6' price={5.9} />
+            <ComPrice className='cccprice ml6' price={Number(item.price)} />
             <View className='fs08 cccplh cccprice ml6'>已售{item.totalSaleStock}件</View>
           </View>
           <View className='dy'>

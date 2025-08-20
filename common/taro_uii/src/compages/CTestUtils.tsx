@@ -1,13 +1,14 @@
 import Taro from "@tarojs/taro";
 import { FC, useState } from "react";
 import { Api_common_setJumpPath_ctn } from "../api/api__orders";
+import { Api_user_clean_ctn } from "../api/api__users";
 import { ComButton } from "../components/ComButton";
 import { ComImage } from "../components/ComImage";
 import { ComNav } from "../components/ComNav";
 import { ComNavBarA } from "../components/ComNavBarA";
 import { ComScrollView } from "../components/ComScrollView";
 import { MMMAAPage } from "../components/MMMAAPage";
-import { try_Taro_saveImageToPhotosAlbum } from "../utils/try_catch";
+import { try_Taro_hideLoading, try_Taro_saveImageToPhotosAlbum } from "../utils/try_catch";
 import { utils_get_qrcode } from "../utils/util";
 
 const CTestUtils: FC = () => {
@@ -18,7 +19,27 @@ const CTestUtils: FC = () => {
         <ComButton ll className='bcctrans cccplh ml10' >小工具</ComButton>
       </ComNavBarA>
     </ComNav>
-    <ComScrollView >
+    <ComScrollView>
+      <ComButton className='mb10' onClick={async () => {
+        Taro.showLoading({ mask: true, title: "删除中...", });
+        const ids = [
+          // cSpell: disable;
+          "oHt125MvoWdG9pJTs4-afQzSQmCY", // 猪
+          "oHt125HhPApUOFdlnMnuVC7BV_S0", // 狗
+          "oHt125F7joofZ4Tc77SG95cWWE7w", // 熊
+          "oHt125BPE9c8A3tXnMw4BbMD8s58", // 猴
+          // cSpell: enable;
+        ];
+        try {
+          const results = await Promise.all(ids.map(id => Api_user_clean_ctn({ id })));
+          console.log("全部执行完成 ✅", results);
+        } catch (err) {
+          console.error("有任务执行失败 ❌", err);
+        }
+        try_Taro_hideLoading();
+
+        Taro.showToast({ icon: "none", title: "已删除", });
+      }}>删除用户</ComButton>
       <ComButton className='mb10' onClick={async () => {
         Taro.showLoading({ mask: true, title: "处理中...", });
         const res = await Api_common_setJumpPath_ctn({ path: "pages_comm/comm__product_express" });

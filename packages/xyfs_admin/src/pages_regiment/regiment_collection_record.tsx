@@ -56,7 +56,7 @@ const Index: FC<{}> = ({ }) => {
     <ComNav>
       <View className='ww'>
         <ComNavBarA className='mb10 pl10'>
-          <ComButton ll className='bcctrans cccplh ml10'>收款记录</ComButton>
+          <ComButton ll className='bcctrans cccplh ml10' hoverClass="none">收款记录</ComButton>
         </ComNavBarA>
         <View className='prl10 dbtc  ww'>
           <ComButton rr className='slr mb10 cccplh mr10' url='/pages_comm/icomm_download_list'>历史下载记录</ComButton>
@@ -213,7 +213,7 @@ const IIIWallet = () => {
   const [showWithdraw, setShowWithdraw] = useState(false);
   return <>
     <View className='dll ww bccwhite IOO mb10 pt10 prl10'>
-      <ComButton ll className='cccplh mb10'>当前余额</ComButton>
+      <ComButton ll className='cccplh mb10' hoverClass="none">当前余额</ComButton>
       <View className='dbtc ww'>
         <ComButton ll className='mb10 fwb fs13'>
           XX.XX元

@@ -3,9 +3,9 @@ import "@xyfs/utils/init";
 import Package from "../package.json";
 import { Environment, EnvVersion } from "../types/type_index";
 
-export const base_url: string = "";
+export const base_url: string = "http://192.168.6.137:8080";
 
-const ___envSimulate = "release";
+const ___envSimulate = "develop";
 
 // cSpell: disable;
 const OPENID_DEV___ =
@@ -30,13 +30,15 @@ const OPENID_DEV___ =
   // "oGwbL5FchK3nw0rvAJOb-PY-11iE" ||  // 猪儿 揽收员
   // "oGwbL5Lak_bditPcNT7qnmgmWHeo" ||  // 狗子 司机
   // "oGwbL5PVdCTyoE2sYHAq2bdNA9BY" ||  // 王理代 商家
-  // "oGwbL5FKCrALVPc-XBeBspHo_gMw" ||  // 熊猫 导游
-  // "oGwbL5MUeSNxxA4o0oOmb_FUjE7g" ||  // 任会
 
-  // "oGwbL5PA_c0S56GYdqE_62bGnNDQ" ||  // 猴猴 注册新用户测试
+
+  // "oHt125MvoWdG9pJTs4-afQzSQmCY" ||  // 猪
+  // "oHt125HhPApUOFdlnMnuVC7BV_S0" ||  // 狗
+  // "oHt125F7joofZ4Tc77SG95cWWE7w" ||  // 熊
+  // "oHt125BPE9c8A3tXnMw4BbMD8s58" ||  // 猴
   "";
 // cSpell: enable;
-
+console.log("OPENID_DEV___1", OPENID_DEV___);
 process.env.NODE_ENV === "development" && Taro.clearStorageSync();
 // Package.version = "1.0.47";
 const envObj: Record<EnvVersion, Environment> = {
