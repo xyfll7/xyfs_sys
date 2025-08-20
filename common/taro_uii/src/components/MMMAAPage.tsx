@@ -188,7 +188,7 @@ const IIIUserHasNoRegiment: FC<{ className: string; }> = ({ className }) => {
         useSTSelf.getState().sett(res_userInfo);
         try_Taro_hideLoading();
         try_Taro_navigateBack();
-      }}>去选择</ComButton>
+      }}>设置为关注181导游</ComButton>
       }
       <MMMFooter></MMMFooter>
     </View>
