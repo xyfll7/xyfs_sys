@@ -6,10 +6,23 @@ import {
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 // import { VideoPlayer0 } from "../components/videoPlayer0";
-import LoginPage from "../components/login";
-import VideoPlayer, { SAMPLE_VIDEOS } from "../components/videoPlayer";
+import LoginPage from "../../components/login";
+import VideoPlayer, { SAMPLE_VIDEOS } from "../../components/videoPlayer";
+import { getDictionary } from "./dictionaries";
 
-export default function Home() {
+
+
+
+
+
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ lang: 'en' | 'zh'; }>;
+}) {
+  const { lang } = await params;
+  const dict = await getDictionary(lang); // en
+
   return (
     <div className="w-screen h-screen">
       <RsizeContainer />
@@ -33,10 +46,12 @@ const RsizeContainer = () => {
         defaultValue="captions"
         className="w-full h-screen max-h-screen flex flex-col overflow-hidden pt-2 pb-2 "
       >
-        <TabsList className="ml-2 bg-transparent">
+        <TabsList className="pl-2 pr-2 bg-transparent w-full">
           <TabsTrigger value="captions">字幕</TabsTrigger>
-          <TabsTrigger value="password">推荐</TabsTrigger>
+          <TabsTrigger value="trend">推荐</TabsTrigger>
           <TabsTrigger value="mine">我的</TabsTrigger>
+          <div className="w-full"></div>
+          <TabsTrigger value="upload">上传</TabsTrigger>
         </TabsList>
         <TabsContent
           value="captions"
@@ -51,9 +66,14 @@ const RsizeContainer = () => {
             <ScrollBar className="w-0 "></ScrollBar>
           </ScrollArea>
         </TabsContent>
-
-        <TabsContent value="password" className="p-2 flex-1 overflow-hidden">
-          Change your password here.
+        <TabsContent value="trend" className="p-2 flex-1 overflow-hidden">
+          推荐
+        </TabsContent>
+        <TabsContent value="mine" className="p-2 flex-1 overflow-hidden">
+          我的
+        </TabsContent>
+        <TabsContent value="upload" className="p-2 flex-1 overflow-hidden">
+          上传
         </TabsContent>
       </Tabs>
     </ResizablePanel>
