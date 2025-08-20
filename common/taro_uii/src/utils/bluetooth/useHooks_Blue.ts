@@ -507,7 +507,7 @@ export function on_get_printer_str_order_bing_goods_waybill(_order: OrderInfo<Pr
 
 
   const ___rec = _order.userAddress; // 用户地址
-  const recName = `${___rec?.name} ${coo___privacy_phone(___rec?.mobile ?? "", 7)}`.slice(0, 20);
+  const recName = `${coo___privacy_string(___rec?.name)} ${coo___privacy_phone(___rec?.mobile ?? "", 7)}`.slice(0, 20);
   const recAddr = utils_addressInfoToString(___rec);
   const ___regiment = _order.deptAddress; // 团长地址
   const ___merchant = _order.__product?.merchantAddress; // 商家地址
@@ -553,7 +553,7 @@ export function on_get_printer_str_order_bing_goods_waybill(_order: OrderInfo<Pr
     ...(() => {
       if (type === "divide") {  // 分单打印
         return [
-          `${T_0} 0 ${X_} ${nextY(30)} 商品总数量 共${_order.__count}件`,
+          `${T_0} 0 ${X_} ${nextY(30)} 商品总数量 共${_order.__count}件   ---分单---`,
           ...(() => _order.productList?.filter((e) => e.waybillId === _order.__product?.waybillId)?.map((e, i) => [
             `${T_0} 0 ${X_} ${nextY(30)} ${i + 1}/${_order.__count}${coo___filter_symbols(e.name).substring(0, 10)}`,
           ]).flat()!
@@ -562,7 +562,7 @@ export function on_get_printer_str_order_bing_goods_waybill(_order: OrderInfo<Pr
       }
       if (type === "merge") { // 合单打印
         return [
-          `${T_0} 0 ${X_} ${nextY(30)} 商品总数量 共${_order.productList?.length}件`,
+          `${T_0} 0 ${X_} ${nextY(30)} 商品总数量 共${_order.productList?.length}件   [[[合单]]]`,
           ...(() => _order.productList?.map((e, i) => [
             `${T_0} 0 ${X_} ${nextY(30)} ${i + 1}/${_order.productList?.length}${coo___filter_symbols(e.name).substring(0, 20)}`,
           ]).flat()!
