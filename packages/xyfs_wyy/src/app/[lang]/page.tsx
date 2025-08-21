@@ -21,12 +21,9 @@ export default async function Home({
 }: {
   params: Promise<{ lang: Lang; }>;
 }) {
-  const { lang } = await params;
-
-
   return (
     <div className="w-screen h-screen">
-      <RsizeContainer lang={lang} />
+      <RsizeContainer lang={(await params).lang} />
     </div>
   );
 }
@@ -49,11 +46,11 @@ const RsizeContainer = async ({ lang }: { lang: Lang; }) => {
         className="w-full h-screen max-h-screen flex flex-col overflow-hidden pt-2 pb-2 "
       >
         <TabsList className="pl-2 pr-2 bg-transparent w-full">
-          <TabsTrigger value="captions">字幕</TabsTrigger>
-          <TabsTrigger value="trend">推荐</TabsTrigger>
-          <TabsTrigger value="mine">我的</TabsTrigger>
+          <TabsTrigger value="captions">{dict.products.subtitles}</TabsTrigger>
+          <TabsTrigger value="trend">{dict.products.trend}</TabsTrigger>
+          <TabsTrigger value="mine">{dict.products.my}</TabsTrigger>
           <div className="w-full"></div>
-          <TabsTrigger value="upload">上传</TabsTrigger>
+          <TabsTrigger value="upload">{dict.products.upload}</TabsTrigger>
         </TabsList>
         <TabsContent
           value="captions"
