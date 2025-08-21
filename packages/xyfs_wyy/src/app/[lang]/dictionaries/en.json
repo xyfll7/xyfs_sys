@@ -1,5 +1,8 @@
 {
   "products": {
-    "cart": "Add to Cart"
+    "subtitles": "Subtitles",
+    "trend": "Trend",
+    "my": "My",
+    "upload": "Upload"
   }
 }

@@ -1,5 +1,8 @@
 {
   "products": {
-    "cart": "添加到购物车"
+    "subtitles": "字幕",
+    "trend": "推荐",
+    "my": "我的",
+    "upload": "上传"
   }
 }
