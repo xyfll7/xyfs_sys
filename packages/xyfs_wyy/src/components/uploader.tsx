@@ -16,6 +16,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+import { Lang } from "../middleware";
 
 // 扩展 Zod schema，支持文件验证（注意：Zod 不直接验证 File，需自定义逻辑）
 const FormSchema = z.object({
@@ -37,7 +38,7 @@ const FormSchema = z.object({
     }, "Video must be no larger than 100MB."),
 });
 
-export function VideoUploadForm() {
+export default function VideoUploadForm({ lang }: { lang: Lang; }) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
