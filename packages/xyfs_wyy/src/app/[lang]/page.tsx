@@ -7,6 +7,7 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 // import { VideoPlayer0 } from "../components/videoPlayer0";
 import LoginPage from "../../components/login";
+import Uploader from "../../components/uploader";
 import VideoPlayer, { SAMPLE_VIDEOS } from "../../components/videoPlayer";
 import { Lang } from "../../middleware";
 import { getDictionary } from "./dictionaries";
@@ -46,11 +47,11 @@ const RsizeContainer = async ({ lang }: { lang: Lang; }) => {
         className="w-full h-screen max-h-screen flex flex-col overflow-hidden pt-2 pb-2 "
       >
         <TabsList className="pl-2 pr-2 bg-transparent w-full">
-          <TabsTrigger value="captions">{dict.products.subtitles}</TabsTrigger>
-          <TabsTrigger value="trend">{dict.products.trend}</TabsTrigger>
-          <TabsTrigger value="mine">{dict.products.my}</TabsTrigger>
+          <TabsTrigger className=" border-0" value="captions">{dict.products.subtitles}</TabsTrigger>
+          <TabsTrigger className=" border-0" value="trend">{dict.products.trend}</TabsTrigger>
+          <TabsTrigger className=" border-0" value="mine">{dict.products.my}</TabsTrigger>
           <div className="w-full"></div>
-          <TabsTrigger value="upload">{dict.products.upload}</TabsTrigger>
+          <TabsTrigger className=" border-0" value="upload">{dict.products.upload}</TabsTrigger>
         </TabsList>
         <TabsContent
           value="captions"
@@ -72,7 +73,7 @@ const RsizeContainer = async ({ lang }: { lang: Lang; }) => {
           {dict.products.my}
         </TabsContent>
         <TabsContent value="upload" className="p-2 flex-1 overflow-hidden">
-          {dict.products.upload}
+          <Uploader lang={lang} />
         </TabsContent>
       </Tabs>
     </ResizablePanel>
