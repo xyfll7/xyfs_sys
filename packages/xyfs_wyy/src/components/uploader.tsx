@@ -20,9 +20,6 @@ import { Lang } from "../middleware";
 
 // 扩展 Zod schema，支持文件验证（注意：Zod 不直接验证 File，需自定义逻辑）
 const FormSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
   video: z
     .custom<File | null>((val) => val instanceof File, {
       message: "Video file is required.",
@@ -34,8 +31,9 @@ const FormSchema = z.object({
     }, "Only .mp4, .webm, .mov, .mkv formats are supported.")
     .refine((file) => {
       if (!file) return false;
-      return file.size <= 100 * 1024 * 1024; // 100MB max
-    }, "Video must be no larger than 100MB."),
+      const MAX_FILE_SIZE = 5 * 1024 * 1024 * 1024; // 5GB
+      return file.size <= MAX_FILE_SIZE; // 5GB max
+    }, "Video must be no larger than 5GB."),
 });
 
 export default function VideoUploadForm({ lang }: { lang: Lang; }) {
@@ -45,7 +43,6 @@ export default function VideoUploadForm({ lang }: { lang: Lang; }) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      username: "",
       video: null,
     },
   });
@@ -64,7 +61,7 @@ export default function VideoUploadForm({ lang }: { lang: Lang; }) {
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    const { username, video } = data;
+    const { video } = data;
 
     if (!video || !(video instanceof File)) {
       toast.error("No video file selected.");
@@ -75,7 +72,6 @@ export default function VideoUploadForm({ lang }: { lang: Lang; }) {
 
     // 创建 FormData 用于上传
     const formData = new FormData();
-    formData.append("username", username);
     formData.append("video", video);
 
     // 示例：上传到 API
@@ -108,22 +104,6 @@ export default function VideoUploadForm({ lang }: { lang: Lang; }) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
-        {/* Username Field */}
-        <FormField
-          control={form.control}
-          name="username"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Username</FormLabel>
-              <FormControl>
-                <Input placeholder="shadcn" {...field} />
-              </FormControl>
-              <FormDescription>This is your public display name.</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
         {/* Video Upload Field */}
         <FormField
           control={form.control}
