@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 // import { VideoPlayer0 } from "../components/videoPlayer0";
 import LoginPage from "../../components/login";
 import VideoPlayer, { SAMPLE_VIDEOS } from "../../components/videoPlayer";
+import { Lang } from "../../middleware";
 import { getDictionary } from "./dictionaries";
 
 
@@ -18,20 +19,21 @@ import { getDictionary } from "./dictionaries";
 export default async function Home({
   params,
 }: {
-  params: Promise<{ lang: 'en' | 'zh'; }>;
+  params: Promise<{ lang: Lang; }>;
 }) {
   const { lang } = await params;
-  const dict = await getDictionary(lang); // en
+
 
   return (
     <div className="w-screen h-screen">
-      <RsizeContainer />
+      <RsizeContainer lang={lang} />
     </div>
   );
 }
 const main_len = 50;
-const RsizeContainer = () => {
+const RsizeContainer = async ({ lang }: { lang: Lang; }) => {
   const ass = getAss();
+  const dict = await getDictionary(lang); // en
   return <ResizablePanelGroup
     direction="horizontal"
     className="w-screen rounded-lg border">
