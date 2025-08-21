@@ -66,13 +66,13 @@ const RsizeContainer = async ({ lang }: { lang: Lang; }) => {
           </ScrollArea>
         </TabsContent>
         <TabsContent value="trend" className="p-2 flex-1 overflow-hidden">
-          推荐
+          {dict.products.trend}
         </TabsContent>
         <TabsContent value="mine" className="p-2 flex-1 overflow-hidden">
-          我的
+          {dict.products.my}
         </TabsContent>
         <TabsContent value="upload" className="p-2 flex-1 overflow-hidden">
-          上传
+          {dict.products.upload}
         </TabsContent>
       </Tabs>
     </ResizablePanel>
