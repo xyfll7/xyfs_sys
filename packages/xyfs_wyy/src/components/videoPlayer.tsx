@@ -1,42 +1,42 @@
 "use client";
-
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { Swiper as SwiperType } from "swiper";
-import { Keyboard, Mousewheel } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
-
 import "swiper/css";
 import "swiper/css/keyboard";
 import "swiper/css/mousewheel";
+import { Keyboard, Mousewheel } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 import type { VideoItem } from "@/types";
 
-type Props = {
-  videos: VideoItem[];
-};
+import { MOCK_SAMPLE_VIDEOS } from "../lib/mock";
 
-export default function VideoSwiper({ videos }: Props) {
+export default function VideoSwiper() {
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
-  // 播放指定下标的视频，暂停其它视频
-  const playVideoAt = (index: number) => {
+  const [videos, setVideos] = useState<VideoItem[]>(MOCK_SAMPLE_VIDEOS.slice(0, 1));
+
+  const playVideoAt = useCallback((index: number) => {
     videoRefs.current.forEach((video, i) => {
       if (!video) return;
       if (i === index) {
+        console.log("videoRefs.current:", videoRefs.current);
         video.muted = true;
-        video.play().catch(() => { });
+        video.play().catch((error) => {
+          console.error(`无法播放视频 ${i}:`, error);
+        });
       } else {
+
         video.pause();
         video.currentTime = 0;
       }
     });
-  };
+  }, []); // 依赖为空，因为 playVideoAt 仅依赖 videoRefs（useRef 稳定）
 
   // 初始播放第一个视频
   useEffect(() => {
     playVideoAt(0);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [playVideoAt]);
 
   return (
     <Swiper
@@ -63,7 +63,7 @@ export default function VideoSwiper({ videos }: Props) {
             playsInline
             muted
             preload="auto"
-            controls={false}
+            controls={true}
           />
         </SwiperSlide>
       ))}

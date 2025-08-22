@@ -8,7 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import LoginPage from "../../components/login";
 import Uploader from "../../components/uploader";
 import VideoPlayer from "../../components/videoPlayer";
-import { MOCK_SAMPLE_ASS, MOCK_SAMPLE_VIDEOS } from "../../lib/mock";
+import { MOCK_SAMPLE_ASS } from "../../lib/mock";
 import { Lang } from "../../middleware";
 import { getDictionary } from "./dictionaries";
 
@@ -33,7 +33,7 @@ const RsizeContainer = async ({ lang }: { lang: Lang; }) => {
     className="w-screen rounded-lg border">
     <ResizablePanel defaultSize={main_len}>
       <div className="flex h-screen justify-center">
-        <VideoPlayer videos={MOCK_SAMPLE_VIDEOS} ></VideoPlayer>
+        <VideoPlayer />
       </div>
     </ResizablePanel>
     <ResizableHandle withHandle />
