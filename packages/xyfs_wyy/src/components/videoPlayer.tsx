@@ -1,21 +1,9 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { VideoItem } from "@/types";
 import { animate, motion, useMotionValue } from "framer-motion";
 import { Play } from "lucide-react";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-
-/* ----------------- 类型定义 ----------------- */
-export type VideoItem = {
-  id: string | number;
-  src: string;
-  poster?: string;
-  title?: string;
-  author?: string;
-  avatar?: string;
-  likes?: number;
-  comments?: number;
-  shares?: number;
-};
 
 export type VideoSwiperProps = {
   videos: VideoItem[];
@@ -113,7 +101,7 @@ function VideoPlayer({
       <video
         ref={videoRef}
         className="w-full object-cover"
-        src={video.src.trim()}
+        src={`http://localhost:8080/videos/${encodeURIComponent(video.src.trim())}`}
         poster={video.poster?.trim()}
         playsInline
         autoPlay={active}
@@ -233,7 +221,6 @@ export default function VideoSwiper({
           ))}
         </motion.div>
       </motion.div>
-
       <div className="pointer-events-none absolute left-4 top-4 text-white/90 text-sm select-none">
         {index + 1} / {videos.length}
       </div>
@@ -241,56 +228,4 @@ export default function VideoSwiper({
   );
 }
 
-/* ----------------- 示例数据 ----------------- */
-export const SAMPLE_VIDEOS: VideoItem[] = [
-  {
-    id: 1,
-    src: "https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-    title: "森林里的小短片",
-    author: "bunny",
-    likes: 13200,
-    comments: 560,
-    shares: 120,
-    avatar: "https://i.pravatar.cc/100?img=1",
-  },
-  {
-    id: 2,
-    src: "https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-    title: "Elephant's Dream",
-    author: "elephant",
-    likes: 9800,
-    comments: 210,
-    shares: 88,
-    avatar: "https://i.pravatar.cc/100?img=2",
-  },
-  {
-    id: 3,
-    src: "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
-    title: "Joyrides",
-    author: "joy",
-    likes: 45200,
-    comments: 1200,
-    shares: 340,
-    avatar: "https://i.pravatar.cc/100?img=3",
-  },
-  {
-    id: 4,
-    src: "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
-    title: "Joyrides",
-    author: "joy",
-    likes: 45200,
-    comments: 1200,
-    shares: 340,
-    avatar: "https://i.pravatar.cc/100?img=3",
-  },
-  {
-    id: 5,
-    src: "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
-    title: "Joyrides",
-    author: "joy",
-    likes: 45200,
-    comments: 1200,
-    shares: 340,
-    avatar: "https://i.pravatar.cc/100?img=3",
-  },
-];
+
