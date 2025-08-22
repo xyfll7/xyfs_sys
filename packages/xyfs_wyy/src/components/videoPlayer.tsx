@@ -17,7 +17,11 @@ export type VideoSwiperProps = {
 };
 
 /* ----------------- 自定义 hooks ----------------- */
-function useVideoController(video: HTMLVideoElement | null, onEnded?: () => void) {
+function useVideoController(
+  video: HTMLVideoElement | null,
+  active: boolean,
+  onEnded?: () => void
+) {
   const [playing, setPlaying] = useState(true);
   const [muted, setMuted] = useState(true);
   const [volume, setVolume] = useState(0.6);
@@ -26,6 +30,7 @@ function useVideoController(video: HTMLVideoElement | null, onEnded?: () => void
 
   useEffect(() => {
     if (!video) return;
+
     const onTime = () =>
       setProgress((video.currentTime / (video.duration || 1)) * 100);
     const onProgress = () => {
@@ -59,11 +64,21 @@ function useVideoController(video: HTMLVideoElement | null, onEnded?: () => void
 
   useEffect(() => {
     if (!video) return;
+    if (!active) {
+      video.pause();
+      return;
+    }
+
     video.muted = muted;
     video.volume = volume;
-    if (playing) video.play().catch(() => { });
-    else video.pause();
-  }, [video, muted, volume, playing]);
+    if (playing) {
+      video.play().catch((err) =>
+        console.warn("[VideoController] play failed:", err)
+      );
+    } else {
+      video.pause();
+    }
+  }, [video, active, muted, volume, playing]);
 
   return {
     playing,
@@ -88,10 +103,7 @@ function VideoPlayer({
   onEnded?: () => void;
 }) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const controller = useVideoController(
-    active ? videoRef.current : null,
-    onEnded
-  );
+  const controller = useVideoController(videoRef.current, active, onEnded);
 
   const { playing, muted, setPlaying } = controller;
 
@@ -202,10 +214,8 @@ export default function VideoSwiper({
         ease: "easeOut",
         duration: 0.5,
         onComplete: () => {
-          if (isAnimatingRef.current) {
-            setIsAnimating(false);
-            isAnimatingRef.current = false;
-          }
+          setIsAnimating(false);
+          isAnimatingRef.current = false;
         },
       });
 
@@ -227,25 +237,15 @@ export default function VideoSwiper({
     const container = scrollContainerRef.current;
     if (!container) return;
 
-    let wheelTimeout: NodeJS.Timeout | null = null;
-
     const handleWheel = (e: WheelEvent) => {
       e.preventDefault();
       if (isAnimatingRef.current) return;
 
       const deltaY = e.deltaY;
-      if (Math.abs(deltaY) < 50) return; // 设置阈值，避免轻微滚动触发
+      if (Math.abs(deltaY) < 50) return;
 
-      if (deltaY > 0) {
-        next();
-      } else {
-        prev();
-      }
-
-      if (wheelTimeout) clearTimeout(wheelTimeout);
-      wheelTimeout = setTimeout(() => {
-        wheelTimeout = null;
-      }, 500); // 简单节流，0.5s 内只触发一次
+      if (deltaY > 0) next();
+      else prev();
     };
 
     container.addEventListener("wheel", handleWheel, { passive: false });
@@ -260,7 +260,7 @@ export default function VideoSwiper({
   ) => {
     if (isAnimatingRef.current) return;
 
-    const threshold = 80;
+    const threshold = containerHeight * 0.15; // 自适应阈值：15% 高度
     const { y: vy } = info.velocity;
     const { y: dy } = info.offset;
 
