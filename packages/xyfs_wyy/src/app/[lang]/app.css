@@ -3,3 +3,6 @@ html,
 body {
   overflow: hidden;
 }
+nextjs-portal {
+  display: none;
+}
