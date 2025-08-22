@@ -18,9 +18,9 @@ const geistMono = Geist_Mono({
 export async function generateMetadata({ params }: { params: Promise<{ lang: Lang; }>; }) {
   return {
     en: {
-      title: "How to Say in English",
+      title: "Say it in English",
       description: "let people say English in life scene",
-      keywords: ["English", "say English", "How to Say in English"],
+      keywords: ["English", "say English", "Say it in English"],
     },
     zh: {
       title: "英语怎么说",
