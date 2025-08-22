@@ -93,11 +93,7 @@ function VideoPlayer({
     onEnded
   );
 
-  const {
-    playing,
-    muted,
-    setPlaying,
-  } = controller;
+  const { playing, muted, setPlaying } = controller;
 
   return (
     <section className="h-screen w-full flex flex-col items-center justify-center relative select-none">
@@ -107,7 +103,6 @@ function VideoPlayer({
         src={`http://localhost:8080/videos/${encodeURIComponent(video.src.trim())}`}
         poster={video.poster?.trim()}
         playsInline
-        autoPlay={active}
         loop={false}
         preload="metadata"
         muted={muted}
@@ -186,27 +181,25 @@ export default function VideoSwiper({
     [videos.length]
   );
 
-  // 改进的 goTo 函数：移除 animationId，仅依赖 isAnimatingRef
   const goTo = useCallback(
-    (next: number, forceDirection?: 'up' | 'down') => {
+    (next: number, forceDirection?: "up" | "down") => {
       const targetIndex = clampIndex(next);
       const currentIndex = currentIndexRef.current;
 
-      // 严格的状态检查
       if (isAnimatingRef.current || targetIndex === currentIndex) {
         return false;
       }
 
-      // 方向验证（防止反向翻页）
       if (forceDirection) {
-        const expectedDirection = targetIndex > currentIndex ? 'down' : 'up';
+        const expectedDirection = targetIndex > currentIndex ? "down" : "up";
         if (forceDirection !== expectedDirection) {
-          console.warn(`Direction mismatch: expected ${expectedDirection}, got ${forceDirection}`);
+          console.warn(
+            `Direction mismatch: expected ${expectedDirection}, got ${forceDirection}`
+          );
           return false;
         }
       }
 
-      // 立即更新所有状态
       setIsAnimating(true);
       isAnimatingRef.current = true;
       setIndex(targetIndex);
@@ -217,7 +210,6 @@ export default function VideoSwiper({
         ease: "easeOut",
         duration: 0.5,
         onComplete: () => {
-          // 只有当前仍处于动画状态时才结束
           if (isAnimatingRef.current) {
             setIsAnimating(false);
             isAnimatingRef.current = false;
@@ -230,16 +222,14 @@ export default function VideoSwiper({
     [clampIndex, y, containerHeight]
   );
 
-  // 安全的翻页函数
   const next = useCallback(() => {
-    return goTo(currentIndexRef.current + 1, 'down');
+    return goTo(currentIndexRef.current + 1, "down");
   }, [goTo]);
 
   const prev = useCallback(() => {
-    return goTo(currentIndexRef.current - 1, 'up');
+    return goTo(currentIndexRef.current - 1, "up");
   }, [goTo]);
 
-  // 健壮的滚轮事件处理
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
@@ -248,25 +238,17 @@ export default function VideoSwiper({
       e.preventDefault();
 
       const now = Date.now();
-
-      // 如果正在动画中，直接忽略
       if (isAnimatingRef.current) return;
-
-      // 冷却期检查（防止过快触发）
       if (wheelCooldownRef.current) return;
 
-      // 标准化 deltaY 值
       let delta = e.deltaY;
-      if (e.deltaMode === 1) { // 按行滚动
+      if (e.deltaMode === 1) {
         delta *= 10;
-      } else if (e.deltaMode === 2) { // 按页面滚动
+      } else if (e.deltaMode === 2) {
         delta *= 100;
       }
 
-      // 累积滚动量处理
       accumulatedDeltaRef.current += delta;
-
-      // 如果累积滚动量不足，等待更多滚动
       const threshold = 80;
       if (Math.abs(accumulatedDeltaRef.current) < threshold) {
         setTimeout(() => {
@@ -277,38 +259,34 @@ export default function VideoSwiper({
         return;
       }
 
-      // 确定滚动方向
-      const direction = accumulatedDeltaRef.current > 0 ? 'down' : 'up';
+      const direction = accumulatedDeltaRef.current > 0 ? "down" : "up";
       const currentIndex = currentIndexRef.current;
 
-      // 边界检查
-      if (direction === 'down' && currentIndex >= videos.length - 1) {
+      if (direction === "down" && currentIndex >= videos.length - 1) {
         accumulatedDeltaRef.current = 0;
         return;
       }
-      if (direction === 'up' && currentIndex <= 0) {
+      if (direction === "up" && currentIndex <= 0) {
         accumulatedDeltaRef.current = 0;
         return;
       }
 
-      // 方向锁定检查
-      if (wheelDirectionRef.current && wheelDirectionRef.current !== direction) {
+      if (
+        wheelDirectionRef.current &&
+        wheelDirectionRef.current !== direction
+      ) {
         const timeSinceLastWheel = now - lastWheelTimeRef.current;
         if (timeSinceLastWheel < 200) {
           return;
         }
       }
 
-      // 更新方向和时间戳
       wheelDirectionRef.current = direction;
       lastWheelTimeRef.current = now;
       accumulatedDeltaRef.current = 0;
-
-      // 设置冷却期
       wheelCooldownRef.current = true;
 
-      // 执行翻页
-      const success = direction === 'down' ? next() : prev();
+      const success = direction === "down" ? next() : prev();
 
       if (success) {
         setTimeout(() => {
@@ -329,7 +307,6 @@ export default function VideoSwiper({
     };
   }, [next, prev, videos.length]);
 
-  // 拖拽结束逻辑
   const dragEnd = (
     _: MouseEvent | TouchEvent | PointerEvent,
     info: { offset: { y: number; }; velocity: { y: number; }; }
@@ -348,7 +325,9 @@ export default function VideoSwiper({
   };
 
   return (
-    <div className={`relative h-screen w-full overflow-hidden bg-black ${className}`}>
+    <div
+      className={`relative h-screen w-full overflow-hidden bg-black ${className}`}
+    >
       <div ref={containerRef} className="h-full w-full" />
       <motion.div ref={scrollContainerRef} className="absolute inset-0">
         <motion.div
