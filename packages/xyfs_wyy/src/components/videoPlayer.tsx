@@ -16,19 +16,6 @@ export type VideoSwiperProps = {
   className?: string;
 };
 
-/* ----------------- 自定义 debounce 函数 ----------------- */
-function debounce<T extends (...args: any[]) => void>(func: T, wait: number) {
-  let timeout: NodeJS.Timeout | null = null;
-  const debounced = (...args: Parameters<T>) => {
-    if (timeout) clearTimeout(timeout);
-    timeout = setTimeout(() => func(...args), wait);
-  };
-  debounced.cancel = () => {
-    if (timeout) clearTimeout(timeout);
-  };
-  return debounced;
-}
-
 /* ----------------- 自定义 hooks ----------------- */
 function useVideoController(video: HTMLVideoElement | null, onEnded?: () => void) {
   const [playing, setPlaying] = useState(true);
@@ -147,7 +134,7 @@ function VideoPlayer({
   );
 }
 
-/* ----------------- 主组件：VideoSwiper (移除回弹效果) ----------------- */
+/* ----------------- 主组件：VideoSwiper (修复反向翻页问题) ----------------- */
 export default function VideoSwiper({
   videos,
   initialIndex = 0,
@@ -159,6 +146,19 @@ export default function VideoSwiper({
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [containerHeight, setContainerHeight] = useState(0);
+
+  // 使用 ref 来存储最新的状态，避免闭包问题
+  const isAnimatingRef = useRef(false);
+  const currentIndexRef = useRef(initialIndex);
+
+  // 同步 ref 和 state
+  useEffect(() => {
+    isAnimatingRef.current = isAnimating;
+  }, [isAnimating]);
+
+  useEffect(() => {
+    currentIndexRef.current = index;
+  }, [index]);
 
   // 动态高度
   useEffect(() => {
@@ -181,65 +181,95 @@ export default function VideoSwiper({
   const goTo = useCallback(
     (next: number) => {
       const targetIndex = clampIndex(next);
-      if (targetIndex === index || isAnimating) return;
+      if (targetIndex === currentIndexRef.current || isAnimatingRef.current) return;
 
       setIsAnimating(true);
+      isAnimatingRef.current = true;
       setIndex(targetIndex);
+      currentIndexRef.current = targetIndex;
 
       animate(y, -targetIndex * containerHeight, {
         type: "tween",
         ease: "easeOut",
         duration: 0.5,
-        onComplete: () => setIsAnimating(false),
+        onComplete: () => {
+          setIsAnimating(false);
+          isAnimatingRef.current = false;
+        },
       });
     },
-    [clampIndex, y, containerHeight, index, isAnimating]
+    [clampIndex, y, containerHeight]
   );
 
-  const next = useCallback(() => goTo(index + 1), [goTo, index]);
-  const prev = useCallback(() => goTo(index - 1), [goTo, index]);
+  const next = useCallback(() => {
+    goTo(currentIndexRef.current + 1);
+  }, [goTo]);
 
-  // 滚轮事件（优化版，带防抖和 deltaMode 处理）
+  const prev = useCallback(() => {
+    goTo(currentIndexRef.current - 1);
+  }, [goTo]);
+
+  // 滚轮事件（修复版本，移除防抖，使用直接状态检查）
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
 
-    const handleWheel = debounce((e: WheelEvent) => {
-      if (isAnimating) return;
+    let wheelTimeout: NodeJS.Timeout | null = null;
+
+    const handleWheel = (e: WheelEvent) => {
+      // 立即检查动画状态，避免闭包问题
+      if (isAnimatingRef.current) {
+        e.preventDefault();
+        return;
+      }
+
       e.preventDefault();
 
-      // 标准化 deltaY，考虑 deltaMode
+      // 清除之前的超时
+      if (wheelTimeout) {
+        clearTimeout(wheelTimeout);
+      }
+
+      // 标准化 deltaY
       let delta = e.deltaY;
       if (e.deltaMode === 1) { // 按行滚动
-        delta *= 10; // 放大到像素级别
+        delta *= 10;
       } else if (e.deltaMode === 2) { // 按页面滚动
         delta *= 100;
       }
 
       // 提高阈值，过滤微小滚动
-      if (Math.abs(delta) < 30) return;
+      if (Math.abs(delta) < 50) return;
 
-      if (delta > 0) {
-        next(); // 向下滚 → 下一页
-      } else if (delta < 0) {
-        prev(); // 向上滚 → 上一页
-      }
-    }, 100);
+      // 使用超时来避免过快的连续触发
+      wheelTimeout = setTimeout(() => {
+        // 再次检查动画状态
+        if (isAnimatingRef.current) return;
+
+        if (delta > 0) {
+          next(); // 向下滚 → 下一页
+        } else {
+          prev(); // 向上滚 → 上一页
+        }
+      }, 50);
+    };
 
     container.addEventListener("wheel", handleWheel, { passive: false });
 
     return () => {
       container.removeEventListener("wheel", handleWheel);
-      handleWheel.cancel(); // 清理防抖定时器
+      if (wheelTimeout) {
+        clearTimeout(wheelTimeout);
+      }
     };
-  }, [next, prev, isAnimating]);
+  }, [next, prev]);
 
-  // 拖拽结束逻辑
+  // 拖拽结束逻辑（无回弹版本）
   const dragEnd = (
     _: MouseEvent | TouchEvent | PointerEvent,
     info: { offset: { y: number; }; velocity: { y: number; }; }
   ) => {
-    if (isAnimating) return;
+    if (isAnimatingRef.current) return;
 
     const threshold = 80;
     const { y: vy } = info.velocity;
@@ -252,9 +282,8 @@ export default function VideoSwiper({
     // 向下拖：dy > 0 → 页面下移 → 上一页
     else if (dy > threshold || vy > 300) {
       prev();
-    } else {
-      goTo(index); // 回弹
     }
+    // 移除回弹逻辑，拖拽不足时保持当前位置不变
   };
 
   return (
