@@ -3,15 +3,18 @@ import { Button } from "@/components/ui/button";
 import { VideoItem } from "@/types";
 import { animate, motion, useMotionValue } from "framer-motion";
 import { Play } from "lucide-react";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 export type VideoSwiperProps = {
   videos: VideoItem[];
   initialIndex?: number;
   className?: string;
 };
-
-
 
 /* ----------------- 自定义 hooks ----------------- */
 function useVideoController(video: HTMLVideoElement | null, onEnded?: () => void) {
@@ -133,21 +136,26 @@ function VideoPlayer({
   );
 }
 
-/* ----------------- 主组件 ----------------- */
+/* ----------------- 主组件：VideoSwiper ----------------- */
 export default function VideoSwiper({
   videos,
   initialIndex = 0,
   className = "",
 }: VideoSwiperProps) {
   const [index, setIndex] = useState(initialIndex);
+  const [isAnimating, setIsAnimating] = useState(false);
   const y = useMotionValue(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [containerHeight, setContainerHeight] = useState(0);
 
   // 动态高度
   useEffect(() => {
-    const updateHeight = () =>
-      setContainerHeight(containerRef.current?.clientHeight || window.innerHeight);
+    const updateHeight = () => {
+      setContainerHeight(
+        containerRef.current?.clientHeight || window.innerHeight
+      );
+    };
     updateHeight();
     const ro = new ResizeObserver(updateHeight);
     if (containerRef.current) ro.observe(containerRef.current);
@@ -162,43 +170,75 @@ export default function VideoSwiper({
   const goTo = useCallback(
     (next: number) => {
       const targetIndex = clampIndex(next);
+      if (targetIndex === index || isAnimating) return;
+
+      setIsAnimating(true);
       setIndex(targetIndex);
+
       animate(y, -targetIndex * containerHeight, {
         type: "spring",
         bounce: 0.12,
         duration: 0.5,
+        onComplete: () => setIsAnimating(false),
       });
     },
-    [clampIndex, y, containerHeight]
+    [clampIndex, y, containerHeight, index, isAnimating]
   );
 
   const next = useCallback(() => goTo(index + 1), [goTo, index]);
   const prev = useCallback(() => goTo(index - 1), [goTo, index]);
 
-  const onWheel = useCallback(
-    (e: React.WheelEvent) => {
-      if (Math.abs(e.deltaY) < 20) return;
-      if (e.deltaY > 0) next();
-      else prev();
-    },
-    [next, prev]
-  );
+  // 手动绑定 wheel 事件，passive: false
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      if (Math.abs(e.deltaY) < 20 || isAnimating) return;
+      e.preventDefault(); // ✅ 现在可以阻止页面滚动
+
+      if (e.deltaY > 0) {
+        next();
+      } else {
+        prev();
+      }
+    };
+
+    container.addEventListener("wheel", handleWheel, { passive: false });
+
+    return () => {
+      container.removeEventListener("wheel", handleWheel);
+    };
+  }, [next, prev, isAnimating]);
 
   const dragEnd = (
     _: MouseEvent | TouchEvent | PointerEvent,
     info: { offset: { y: number; }; velocity: { y: number; }; }
   ) => {
+    if (isAnimating) return;
+
     const threshold = 80;
     const { y: vy } = info.velocity;
     const { y: dy } = info.offset;
-    if (dy < -threshold || vy < -500) next();
-    else if (dy > threshold || vy > 500) prev();
-    else goTo(index);
+    if (dy < -threshold || vy < -500) {
+      next();
+    } else if (dy > threshold || vy > 500) {
+      prev();
+    } else {
+      goTo(index);
+    }
   };
 
   return (
     <div className={`relative h-screen w-full overflow-hidden bg-black ${className}`}>
-      <motion.div ref={containerRef} className="absolute inset-0" onWheel={onWheel}>
+      {/* 主容器：用于测量高度 */}
+      <div ref={containerRef} className="h-full w-full" />
+
+      {/* 可滚动区域：绑定 wheel 事件 */}
+      <motion.div
+        ref={scrollContainerRef}
+        className="absolute inset-0"
+      >
         <motion.div
           className="h-full w-full"
           style={{ y }}
@@ -221,11 +261,11 @@ export default function VideoSwiper({
           ))}
         </motion.div>
       </motion.div>
+
+      {/* 页码指示器 */}
       <div className="pointer-events-none absolute left-4 top-4 text-white/90 text-sm select-none">
         {index + 1} / {videos.length}
       </div>
     </div>
   );
 }
-
-
