@@ -60,7 +60,7 @@ function useVideoController(video: HTMLVideoElement | null, onEnded?: () => void
   useEffect(() => {
     if (!video) return;
     video.muted = muted;
-    video.volume = muted ? 0 : volume;
+    video.volume = volume;
     if (playing) video.play().catch(() => { });
     else video.pause();
   }, [video, muted, volume, playing]);
@@ -134,7 +134,7 @@ function VideoPlayer({
   );
 }
 
-/* ----------------- 主组件：VideoSwiper (健壮的滚轮处理方案) ----------------- */
+/* ----------------- 主组件：VideoSwiper ----------------- */
 export default function VideoSwiper({
   videos,
   initialIndex = 0,
@@ -150,7 +150,6 @@ export default function VideoSwiper({
   // 核心状态管理
   const isAnimatingRef = useRef(false);
   const currentIndexRef = useRef(initialIndex);
-  const animationIdRef = useRef<number>(0);
 
   // 滚轮事件序列化
   const wheelDirectionRef = useRef<'up' | 'down' | null>(null);
@@ -187,7 +186,7 @@ export default function VideoSwiper({
     [videos.length]
   );
 
-  // 改进的 goTo 函数，带有更严格的状态检查
+  // 改进的 goTo 函数：移除 animationId，仅依赖 isAnimatingRef
   const goTo = useCallback(
     (next: number, forceDirection?: 'up' | 'down') => {
       const targetIndex = clampIndex(next);
@@ -207,9 +206,6 @@ export default function VideoSwiper({
         }
       }
 
-      // 生成唯一的动画ID，用于防止动画冲突
-      const animationId = ++animationIdRef.current;
-
       // 立即更新所有状态
       setIsAnimating(true);
       isAnimatingRef.current = true;
@@ -221,8 +217,8 @@ export default function VideoSwiper({
         ease: "easeOut",
         duration: 0.5,
         onComplete: () => {
-          // 确保这是最新的动画
-          if (animationId === animationIdRef.current) {
+          // 只有当前仍处于动画状态时才结束
+          if (isAnimatingRef.current) {
             setIsAnimating(false);
             isAnimatingRef.current = false;
           }
@@ -267,13 +263,12 @@ export default function VideoSwiper({
         delta *= 100;
       }
 
-      // 累积滚动量处理（适配高精度滚轮）
+      // 累积滚动量处理
       accumulatedDeltaRef.current += delta;
 
       // 如果累积滚动量不足，等待更多滚动
       const threshold = 80;
       if (Math.abs(accumulatedDeltaRef.current) < threshold) {
-        // 设置一个短暂的重置定时器，避免小量滚动永久累积
         setTimeout(() => {
           if (Math.abs(accumulatedDeltaRef.current) < threshold) {
             accumulatedDeltaRef.current = 0;
@@ -296,10 +291,10 @@ export default function VideoSwiper({
         return;
       }
 
-      // 方向锁定检查（防止快速切换方向）
+      // 方向锁定检查
       if (wheelDirectionRef.current && wheelDirectionRef.current !== direction) {
         const timeSinceLastWheel = now - lastWheelTimeRef.current;
-        if (timeSinceLastWheel < 200) { // 200ms内不允许方向切换
+        if (timeSinceLastWheel < 200) {
           return;
         }
       }
@@ -307,8 +302,6 @@ export default function VideoSwiper({
       // 更新方向和时间戳
       wheelDirectionRef.current = direction;
       lastWheelTimeRef.current = now;
-
-      // 重置累积值
       accumulatedDeltaRef.current = 0;
 
       // 设置冷却期
@@ -318,13 +311,11 @@ export default function VideoSwiper({
       const success = direction === 'down' ? next() : prev();
 
       if (success) {
-        // 翻页成功，设置较长的冷却期
         setTimeout(() => {
           wheelCooldownRef.current = false;
           wheelDirectionRef.current = null;
-        }, 600); // 等待动画完成后再允许新的滚轮事件
+        }, 600);
       } else {
-        // 翻页失败，短暂冷却后允许重试
         setTimeout(() => {
           wheelCooldownRef.current = false;
         }, 100);
@@ -349,12 +340,9 @@ export default function VideoSwiper({
     const { y: vy } = info.velocity;
     const { y: dy } = info.offset;
 
-    // 向上拖：dy < 0 → 页面上移 → 下一页
     if (dy < -threshold || vy < -300) {
       next();
-    }
-    // 向下拖：dy > 0 → 页面下移 → 上一页
-    else if (dy > threshold || vy > 300) {
+    } else if (dy > threshold || vy > 300) {
       prev();
     }
   };
