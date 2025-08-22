@@ -146,14 +146,6 @@ export default function VideoSwiper({
   const isAnimatingRef = useRef(false);
   const currentIndexRef = useRef(initialIndex);
 
-  // 滚轮事件序列化
-  const wheelDirectionRef = useRef<'up' | 'down' | null>(null);
-  const wheelCooldownRef = useRef(false);
-  const lastWheelTimeRef = useRef(0);
-
-  // 累积滚动量（用于处理高精度滚轮）
-  const accumulatedDeltaRef = useRef(0);
-
   // 同步 ref 和 state
   useEffect(() => {
     isAnimatingRef.current = isAnimating;
@@ -230,82 +222,37 @@ export default function VideoSwiper({
     return goTo(currentIndexRef.current - 1, "up");
   }, [goTo]);
 
+  /* ----------------- 滚轮逻辑（简化版） ----------------- */
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
 
+    let wheelTimeout: NodeJS.Timeout | null = null;
+
     const handleWheel = (e: WheelEvent) => {
       e.preventDefault();
-
-      const now = Date.now();
       if (isAnimatingRef.current) return;
-      if (wheelCooldownRef.current) return;
 
-      let delta = e.deltaY;
-      if (e.deltaMode === 1) {
-        delta *= 10;
-      } else if (e.deltaMode === 2) {
-        delta *= 100;
-      }
+      const deltaY = e.deltaY;
+      if (Math.abs(deltaY) < 50) return; // 设置阈值，避免轻微滚动触发
 
-      accumulatedDeltaRef.current += delta;
-      const threshold = 80;
-      if (Math.abs(accumulatedDeltaRef.current) < threshold) {
-        setTimeout(() => {
-          if (Math.abs(accumulatedDeltaRef.current) < threshold) {
-            accumulatedDeltaRef.current = 0;
-          }
-        }, 150);
-        return;
-      }
-
-      const direction = accumulatedDeltaRef.current > 0 ? "down" : "up";
-      const currentIndex = currentIndexRef.current;
-
-      if (direction === "down" && currentIndex >= videos.length - 1) {
-        accumulatedDeltaRef.current = 0;
-        return;
-      }
-      if (direction === "up" && currentIndex <= 0) {
-        accumulatedDeltaRef.current = 0;
-        return;
-      }
-
-      if (
-        wheelDirectionRef.current &&
-        wheelDirectionRef.current !== direction
-      ) {
-        const timeSinceLastWheel = now - lastWheelTimeRef.current;
-        if (timeSinceLastWheel < 200) {
-          return;
-        }
-      }
-
-      wheelDirectionRef.current = direction;
-      lastWheelTimeRef.current = now;
-      accumulatedDeltaRef.current = 0;
-      wheelCooldownRef.current = true;
-
-      const success = direction === "down" ? next() : prev();
-
-      if (success) {
-        setTimeout(() => {
-          wheelCooldownRef.current = false;
-          wheelDirectionRef.current = null;
-        }, 600);
+      if (deltaY > 0) {
+        next();
       } else {
-        setTimeout(() => {
-          wheelCooldownRef.current = false;
-        }, 100);
+        prev();
       }
+
+      if (wheelTimeout) clearTimeout(wheelTimeout);
+      wheelTimeout = setTimeout(() => {
+        wheelTimeout = null;
+      }, 500); // 简单节流，0.5s 内只触发一次
     };
 
     container.addEventListener("wheel", handleWheel, { passive: false });
-
     return () => {
       container.removeEventListener("wheel", handleWheel);
     };
-  }, [next, prev, videos.length]);
+  }, [next, prev]);
 
   const dragEnd = (
     _: MouseEvent | TouchEvent | PointerEvent,
