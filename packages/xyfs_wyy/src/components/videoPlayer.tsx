@@ -43,10 +43,11 @@ function useVideoController(
     };
     const onPlay = () => setPlaying(true);
     const onPause = () => setPlaying(false);
+    const handleEnded = () => onEnded?.();
 
     video.addEventListener("timeupdate", onTime);
     video.addEventListener("progress", onProgress);
-    video.addEventListener("ended", onEnded || (() => { }));
+    video.addEventListener("ended", handleEnded);
     video.addEventListener("play", onPlay);
     video.addEventListener("pause", onPause);
 
@@ -56,7 +57,7 @@ function useVideoController(
     return () => {
       video.removeEventListener("timeupdate", onTime);
       video.removeEventListener("progress", onProgress);
-      video.removeEventListener("ended", onEnded || (() => { }));
+      video.removeEventListener("ended", handleEnded);
       video.removeEventListener("play", onPlay);
       video.removeEventListener("pause", onPause);
     };
@@ -117,7 +118,6 @@ function VideoPlayer({
         playsInline
         loop={false}
         preload="metadata"
-        muted={muted}
         onClick={() => active && setPlaying((p) => !p)}
         onError={() => console.error(`[Video] Failed to load: ${video.id}`)}
       />
@@ -148,7 +148,6 @@ export default function VideoSwiper({
   className = "",
 }: VideoSwiperProps) {
   const [index, setIndex] = useState(initialIndex);
-  const [isAnimating, setIsAnimating] = useState(false);
   const y = useMotionValue(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -157,11 +156,6 @@ export default function VideoSwiper({
   // 核心状态管理
   const isAnimatingRef = useRef(false);
   const currentIndexRef = useRef(initialIndex);
-
-  // 同步 ref 和 state
-  useEffect(() => {
-    isAnimatingRef.current = isAnimating;
-  }, [isAnimating]);
 
   useEffect(() => {
     currentIndexRef.current = index;
@@ -204,7 +198,6 @@ export default function VideoSwiper({
         }
       }
 
-      setIsAnimating(true);
       isAnimatingRef.current = true;
       setIndex(targetIndex);
       currentIndexRef.current = targetIndex;
@@ -214,7 +207,6 @@ export default function VideoSwiper({
         ease: "easeOut",
         duration: 0.5,
         onComplete: () => {
-          setIsAnimating(false);
           isAnimatingRef.current = false;
         },
       });
