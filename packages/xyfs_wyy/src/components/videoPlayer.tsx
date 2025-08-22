@@ -265,7 +265,7 @@ export default function VideoSwiper({
           className="h-full w-full"
           style={{ y }}
           drag="y"
-          dragElastic={0.2}
+          dragElastic={0}
           dragMomentum={false}
           onDragEnd={dragEnd}
           dragConstraints={{
