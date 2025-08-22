@@ -16,6 +16,19 @@ export type VideoSwiperProps = {
   className?: string;
 };
 
+/* ----------------- 自定义 debounce 函数 ----------------- */
+function debounce<T extends (...args: any[]) => void>(func: T, wait: number) {
+  let timeout: NodeJS.Timeout | null = null;
+  const debounced = (...args: Parameters<T>) => {
+    if (timeout) clearTimeout(timeout);
+    timeout = setTimeout(() => func(...args), wait);
+  };
+  debounced.cancel = () => {
+    if (timeout) clearTimeout(timeout);
+  };
+  return debounced;
+}
+
 /* ----------------- 自定义 hooks ----------------- */
 function useVideoController(video: HTMLVideoElement | null, onEnded?: () => void) {
   const [playing, setPlaying] = useState(true);
@@ -115,11 +128,9 @@ function VideoPlayer({
         onError={() => console.error(`[Video] Failed to load: ${video.id}`)}
       />
 
-      {/* 顶部和底部渐变遮罩 */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/60 to-transparent" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/70 to-transparent" />
 
-      {/* 中间播放/暂停按钮 */}
       {active && !playing && (
         <div className="absolute inset-0 grid place-items-center">
           <Button
@@ -136,7 +147,7 @@ function VideoPlayer({
   );
 }
 
-/* ----------------- 主组件：VideoSwiper ----------------- */
+/* ----------------- 主组件：VideoSwiper (修复滚轮反向问题) ----------------- */
 export default function VideoSwiper({
   videos,
   initialIndex = 0,
@@ -188,29 +199,42 @@ export default function VideoSwiper({
   const next = useCallback(() => goTo(index + 1), [goTo, index]);
   const prev = useCallback(() => goTo(index - 1), [goTo, index]);
 
-  // 手动绑定 wheel 事件，passive: false
+  // 滚轮事件（优化版，带防抖和 deltaMode 处理）
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
 
-    const handleWheel = (e: WheelEvent) => {
-      if (Math.abs(e.deltaY) < 20 || isAnimating) return;
-      e.preventDefault(); // ✅ 现在可以阻止页面滚动
+    const handleWheel = debounce((e: WheelEvent) => {
+      if (isAnimating) return;
+      e.preventDefault();
 
-      if (e.deltaY > 0) {
-        next();
-      } else {
-        prev();
+      // 标准化 deltaY，考虑 deltaMode
+      let delta = e.deltaY;
+      if (e.deltaMode === 1) { // 按行滚动
+        delta *= 10; // 放大到像素级别
+      } else if (e.deltaMode === 2) { // 按页面滚动
+        delta *= 100;
       }
-    };
+
+      // 提高阈值，过滤微小滚动
+      if (Math.abs(delta) < 30) return;
+
+      if (delta > 0) {
+        next(); // 向下滚 → 下一页
+      } else if (delta < 0) {
+        prev(); // 向上滚 → 上一页
+      }
+    }, 100);
 
     container.addEventListener("wheel", handleWheel, { passive: false });
 
     return () => {
       container.removeEventListener("wheel", handleWheel);
+      handleWheel.cancel(); // 清理防抖定时器
     };
   }, [next, prev, isAnimating]);
 
+  // 拖拽结束逻辑
   const dragEnd = (
     _: MouseEvent | TouchEvent | PointerEvent,
     info: { offset: { y: number; }; velocity: { y: number; }; }
@@ -220,25 +244,23 @@ export default function VideoSwiper({
     const threshold = 80;
     const { y: vy } = info.velocity;
     const { y: dy } = info.offset;
-    if (dy < -threshold || vy < -500) {
+
+    // 向上拖：dy < 0 → 页面上移 → 下一页
+    if (dy < -threshold || vy < -300) {
       next();
-    } else if (dy > threshold || vy > 500) {
+    }
+    // 向下拖：dy > 0 → 页面下移 → 上一页
+    else if (dy > threshold || vy > 300) {
       prev();
     } else {
-      goTo(index);
+      goTo(index); // 回弹
     }
   };
 
   return (
     <div className={`relative h-screen w-full overflow-hidden bg-black ${className}`}>
-      {/* 主容器：用于测量高度 */}
       <div ref={containerRef} className="h-full w-full" />
-
-      {/* 可滚动区域：绑定 wheel 事件 */}
-      <motion.div
-        ref={scrollContainerRef}
-        className="absolute inset-0"
-      >
+      <motion.div ref={scrollContainerRef} className="absolute inset-0">
         <motion.div
           className="h-full w-full"
           style={{ y }}
@@ -262,7 +284,6 @@ export default function VideoSwiper({
         </motion.div>
       </motion.div>
 
-      {/* 页码指示器 */}
       <div className="pointer-events-none absolute left-4 top-4 text-white/90 text-sm select-none">
         {index + 1} / {videos.length}
       </div>
