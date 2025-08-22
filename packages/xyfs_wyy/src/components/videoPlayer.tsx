@@ -147,7 +147,7 @@ function VideoPlayer({
   );
 }
 
-/* ----------------- 主组件：VideoSwiper (修复滚轮反向问题) ----------------- */
+/* ----------------- 主组件：VideoSwiper (移除回弹效果) ----------------- */
 export default function VideoSwiper({
   videos,
   initialIndex = 0,
@@ -187,8 +187,8 @@ export default function VideoSwiper({
       setIndex(targetIndex);
 
       animate(y, -targetIndex * containerHeight, {
-        type: "spring",
-        bounce: 0.12,
+        type: "tween",
+        ease: "easeOut",
         duration: 0.5,
         onComplete: () => setIsAnimating(false),
       });
