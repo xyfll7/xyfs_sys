@@ -134,7 +134,7 @@ function VideoPlayer({
   );
 }
 
-/* ----------------- 主组件：VideoSwiper (修复反向翻页问题) ----------------- */
+/* ----------------- 主组件：VideoSwiper (健壮的滚轮处理方案) ----------------- */
 export default function VideoSwiper({
   videos,
   initialIndex = 0,
@@ -147,9 +147,18 @@ export default function VideoSwiper({
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [containerHeight, setContainerHeight] = useState(0);
 
-  // 使用 ref 来存储最新的状态，避免闭包问题
+  // 核心状态管理
   const isAnimatingRef = useRef(false);
   const currentIndexRef = useRef(initialIndex);
+  const animationIdRef = useRef<number>(0);
+
+  // 滚轮事件序列化
+  const wheelDirectionRef = useRef<'up' | 'down' | null>(null);
+  const wheelCooldownRef = useRef(false);
+  const lastWheelTimeRef = useRef(0);
+
+  // 累积滚动量（用于处理高精度滚轮）
+  const accumulatedDeltaRef = useRef(0);
 
   // 同步 ref 和 state
   useEffect(() => {
@@ -178,11 +187,30 @@ export default function VideoSwiper({
     [videos.length]
   );
 
+  // 改进的 goTo 函数，带有更严格的状态检查
   const goTo = useCallback(
-    (next: number) => {
+    (next: number, forceDirection?: 'up' | 'down') => {
       const targetIndex = clampIndex(next);
-      if (targetIndex === currentIndexRef.current || isAnimatingRef.current) return;
+      const currentIndex = currentIndexRef.current;
 
+      // 严格的状态检查
+      if (isAnimatingRef.current || targetIndex === currentIndex) {
+        return false;
+      }
+
+      // 方向验证（防止反向翻页）
+      if (forceDirection) {
+        const expectedDirection = targetIndex > currentIndex ? 'down' : 'up';
+        if (forceDirection !== expectedDirection) {
+          console.warn(`Direction mismatch: expected ${expectedDirection}, got ${forceDirection}`);
+          return false;
+        }
+      }
+
+      // 生成唯一的动画ID，用于防止动画冲突
+      const animationId = ++animationIdRef.current;
+
+      // 立即更新所有状态
       setIsAnimating(true);
       isAnimatingRef.current = true;
       setIndex(targetIndex);
@@ -193,44 +221,45 @@ export default function VideoSwiper({
         ease: "easeOut",
         duration: 0.5,
         onComplete: () => {
-          setIsAnimating(false);
-          isAnimatingRef.current = false;
+          // 确保这是最新的动画
+          if (animationId === animationIdRef.current) {
+            setIsAnimating(false);
+            isAnimatingRef.current = false;
+          }
         },
       });
+
+      return true;
     },
     [clampIndex, y, containerHeight]
   );
 
+  // 安全的翻页函数
   const next = useCallback(() => {
-    goTo(currentIndexRef.current + 1);
+    return goTo(currentIndexRef.current + 1, 'down');
   }, [goTo]);
 
   const prev = useCallback(() => {
-    goTo(currentIndexRef.current - 1);
+    return goTo(currentIndexRef.current - 1, 'up');
   }, [goTo]);
 
-  // 滚轮事件（修复版本，移除防抖，使用直接状态检查）
+  // 健壮的滚轮事件处理
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
 
-    let wheelTimeout: NodeJS.Timeout | null = null;
-
     const handleWheel = (e: WheelEvent) => {
-      // 立即检查动画状态，避免闭包问题
-      if (isAnimatingRef.current) {
-        e.preventDefault();
-        return;
-      }
-
       e.preventDefault();
 
-      // 清除之前的超时
-      if (wheelTimeout) {
-        clearTimeout(wheelTimeout);
-      }
+      const now = Date.now();
 
-      // 标准化 deltaY
+      // 如果正在动画中，直接忽略
+      if (isAnimatingRef.current) return;
+
+      // 冷却期检查（防止过快触发）
+      if (wheelCooldownRef.current) return;
+
+      // 标准化 deltaY 值
       let delta = e.deltaY;
       if (e.deltaMode === 1) { // 按行滚动
         delta *= 10;
@@ -238,33 +267,78 @@ export default function VideoSwiper({
         delta *= 100;
       }
 
-      // 提高阈值，过滤微小滚动
-      if (Math.abs(delta) < 50) return;
+      // 累积滚动量处理（适配高精度滚轮）
+      accumulatedDeltaRef.current += delta;
 
-      // 使用超时来避免过快的连续触发
-      wheelTimeout = setTimeout(() => {
-        // 再次检查动画状态
-        if (isAnimatingRef.current) return;
+      // 如果累积滚动量不足，等待更多滚动
+      const threshold = 80;
+      if (Math.abs(accumulatedDeltaRef.current) < threshold) {
+        // 设置一个短暂的重置定时器，避免小量滚动永久累积
+        setTimeout(() => {
+          if (Math.abs(accumulatedDeltaRef.current) < threshold) {
+            accumulatedDeltaRef.current = 0;
+          }
+        }, 150);
+        return;
+      }
 
-        if (delta > 0) {
-          next(); // 向下滚 → 下一页
-        } else {
-          prev(); // 向上滚 → 上一页
+      // 确定滚动方向
+      const direction = accumulatedDeltaRef.current > 0 ? 'down' : 'up';
+      const currentIndex = currentIndexRef.current;
+
+      // 边界检查
+      if (direction === 'down' && currentIndex >= videos.length - 1) {
+        accumulatedDeltaRef.current = 0;
+        return;
+      }
+      if (direction === 'up' && currentIndex <= 0) {
+        accumulatedDeltaRef.current = 0;
+        return;
+      }
+
+      // 方向锁定检查（防止快速切换方向）
+      if (wheelDirectionRef.current && wheelDirectionRef.current !== direction) {
+        const timeSinceLastWheel = now - lastWheelTimeRef.current;
+        if (timeSinceLastWheel < 200) { // 200ms内不允许方向切换
+          return;
         }
-      }, 50);
+      }
+
+      // 更新方向和时间戳
+      wheelDirectionRef.current = direction;
+      lastWheelTimeRef.current = now;
+
+      // 重置累积值
+      accumulatedDeltaRef.current = 0;
+
+      // 设置冷却期
+      wheelCooldownRef.current = true;
+
+      // 执行翻页
+      const success = direction === 'down' ? next() : prev();
+
+      if (success) {
+        // 翻页成功，设置较长的冷却期
+        setTimeout(() => {
+          wheelCooldownRef.current = false;
+          wheelDirectionRef.current = null;
+        }, 600); // 等待动画完成后再允许新的滚轮事件
+      } else {
+        // 翻页失败，短暂冷却后允许重试
+        setTimeout(() => {
+          wheelCooldownRef.current = false;
+        }, 100);
+      }
     };
 
     container.addEventListener("wheel", handleWheel, { passive: false });
 
     return () => {
       container.removeEventListener("wheel", handleWheel);
-      if (wheelTimeout) {
-        clearTimeout(wheelTimeout);
-      }
     };
-  }, [next, prev]);
+  }, [next, prev, videos.length]);
 
-  // 拖拽结束逻辑（无回弹版本）
+  // 拖拽结束逻辑
   const dragEnd = (
     _: MouseEvent | TouchEvent | PointerEvent,
     info: { offset: { y: number; }; velocity: { y: number; }; }
@@ -283,7 +357,6 @@ export default function VideoSwiper({
     else if (dy > threshold || vy > 300) {
       prev();
     }
-    // 移除回弹逻辑，拖拽不足时保持当前位置不变
   };
 
   return (
