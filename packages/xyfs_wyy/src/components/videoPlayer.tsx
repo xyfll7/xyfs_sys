@@ -16,7 +16,6 @@ export type VideoSwiperProps = {
   className?: string;
 };
 
-/* ----------------- 自定义 hooks ----------------- */
 function useVideoController(
   video: HTMLVideoElement | null,
   active: boolean,
@@ -93,7 +92,6 @@ function useVideoController(
   };
 }
 
-/* ----------------- VideoPlayer 子组件 ----------------- */
 function VideoPlayer({
   video,
   active,
@@ -141,7 +139,7 @@ function VideoPlayer({
   );
 }
 
-/* ----------------- 主组件：VideoSwiper ----------------- */
+
 export default function VideoSwiper({
   videos,
   initialIndex = 0,
@@ -153,7 +151,6 @@ export default function VideoSwiper({
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [containerHeight, setContainerHeight] = useState(0);
 
-  // 核心状态管理
   const isAnimatingRef = useRef(false);
   const currentIndexRef = useRef(initialIndex);
 
@@ -216,15 +213,9 @@ export default function VideoSwiper({
     [clampIndex, y, containerHeight]
   );
 
-  const next = useCallback(() => {
-    return goTo(currentIndexRef.current + 1, "down");
-  }, [goTo]);
+  const next = useCallback(() => goTo(currentIndexRef.current + 1, "down"), [goTo]);
+  const prev = useCallback(() => goTo(currentIndexRef.current - 1, "up"), [goTo]);
 
-  const prev = useCallback(() => {
-    return goTo(currentIndexRef.current - 1, "up");
-  }, [goTo]);
-
-  /* ----------------- 滚轮逻辑（简化版） ----------------- */
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
@@ -252,7 +243,7 @@ export default function VideoSwiper({
   ) => {
     if (isAnimatingRef.current) return;
 
-    const threshold = containerHeight * 0.15; // 自适应阈值：15% 高度
+    const threshold = containerHeight * 0.15;
     const { y: vy } = info.velocity;
     const { y: dy } = info.offset;
 
