@@ -10,9 +10,11 @@ const __dirname = dirname(__filename);
 
 const commandsDir = join(__dirname, "commands");
 
+
 const argv = yargs(hideBin(process.argv));
 
 for (const file of readdirSync(commandsDir)) {
+
   if (file.endsWith(".ts") || file.endsWith(".js")) {
     const modulePath = pathToFileURL(join(commandsDir, file)).href;
     const commandModule = await import(modulePath);
