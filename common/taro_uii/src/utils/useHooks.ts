@@ -136,7 +136,7 @@ export function useHook_pageListNew<P, T extends Pagination<P[]>>(cb: (a: Pagina
     ___isLoading.current = true;
     setPageLoading(true);
     const res = await cb({
-      pageSize: ___options?.pageSize ?? 5,
+      pageSize: ___options?.pageSize ?? 7,
       pageNum: _page?.nextPage ?? 1,
       refreshTime: refreshTime,
     } as T);

@@ -132,7 +132,7 @@ const Index: FC<{}> = ({ }) => {
         </View>;
       })
       }
-      <ComLoading className='mb10 bcctrans' isLastPage={page?.isLastPage} loading={page_loading} onLoadMore={() => page_list_get(page)} />
+      <ComLoading className='mb10' isLastPage={page?.isLastPage} loading={page_loading} onLoadMore={() => page_list_get(page)} />
     </ComScrollView>
   </MMMAAPage >;
 };
