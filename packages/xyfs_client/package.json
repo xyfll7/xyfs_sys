@@ -1,6 +1,6 @@
 {
 	"name": "@xyfs/xyfs_client",
-	"version": "2.3.21",
+	"version": "2.3.22",
 	"private": true,
 	"description": "小象心选_顾客端",
 	"templateInfo": {
