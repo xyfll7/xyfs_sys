@@ -217,8 +217,7 @@ export async function try_Taro_showActionSheet<T>(option: Taro.showActionSheet.O
 export async function try_Taro_chooseAddress(isTest: boolean = false): Promise<Omit<AddressInfo, "id">> {
   try {
     const res = await Taro.chooseAddress();
-    console.log("选择地址：", res);
-    if (isTest) {
+    if (getMyEnv().platform == "devtools" && isTest) {
       return {
         name: "王肇",
         mobile: "17709205222",
