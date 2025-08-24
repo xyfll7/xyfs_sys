@@ -8,12 +8,15 @@
   },
   "scripts": {
     "build": "tsc",
-    "dev": "tsx src/cli.ts"
+    "dev": "tsx src/cli.ts",
+    "mcp": "tsx src/utils/utils_mcp.ts",
+    "mcp-test": "mcp tools tsx src/utils/utils_mcp.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@modelcontextprotocol/inspector": "^0.16.5",
     "@modelcontextprotocol/sdk": "^1.17.4",
     "yargs": "^18.0.0"
   },

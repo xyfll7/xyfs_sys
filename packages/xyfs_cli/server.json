@@ -1,0 +1,6 @@
+{
+  "command": "node",
+  "args": [
+    "/绝对路径/到/你的/dist/index.js"
+  ]
+}
