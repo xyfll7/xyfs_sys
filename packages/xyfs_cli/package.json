@@ -11,7 +11,7 @@
     "dev": "tsx src/cli.ts",
     "start": "tsx src/utils/mcp_client.ts",
     "mcp": "tsx src/utils/mcp_server.ts",
-    "mcp-test": "mcp tools tsx src/utils/utils_mcp.ts"
+    "mcp-test": "mcp tools tsx src/utils/mcp_server.ts"
   },
   "keywords": [],
   "author": "",
