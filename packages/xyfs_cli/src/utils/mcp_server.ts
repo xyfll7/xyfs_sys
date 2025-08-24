@@ -53,7 +53,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       content: [
         {
           type: 'text',
-          text: `Hello, ${userName}! This is your MCP agent speaking.`,
+          text: `Hello, ${userName}! This is your MCP agent speaking....`,
         },
       ],
     };
