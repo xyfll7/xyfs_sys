@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "default-server": {
+      "command": "npx",
+      "args": ["tsx", "src/utils/mcp_server.ts"]
+    }
+  }
+}
