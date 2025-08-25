@@ -12,7 +12,8 @@
     "start": "tsx src/utils/mcp_client.ts",
     "mcp": "tsx src/utils/mcp_server.ts",
     "mcp-list-tools": "npx @modelcontextprotocol/inspector --cli --transport stdio --config mcp-inspector.config.json --method tools/list",
-    "mcp-call-greet": "npx @modelcontextprotocol/inspector --cli --transport stdio --config mcp-inspector.config.json --method tools/call --tool-name greet --tool-arguments '{\"name\":\"小洋粉\"}'"
+    "mcp-call-greet": "npx @modelcontextprotocol/inspector --cli --transport stdio --config mcp-inspector.config.json --method tools/call --tool-name greet --tool-arguments '{\"name\":\"小洋粉\"}'",
+    "mcp_test": "tsx src/utils/mcp_server.ts"
   },
   "keywords": [],
   "author": "",
