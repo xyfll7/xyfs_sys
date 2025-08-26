@@ -1,74 +1,41 @@
-import { Server } from '@modelcontextprotocol/sdk/server/index.js';
-import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import {
-  CallToolRequestSchema,
-  ListToolsRequestSchema,
-  type Tool
-} from '@modelcontextprotocol/sdk/types.js';
+import { McpServer, ResourceTemplate } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { z } from "zod";
 
-// 1. 创建一个 MCP 服务器实例
-const server = new Server(
-  {
-    name: 'my-first-mcp-agent',
-    version: '1.0.0',
-  },
-  {
-    capabilities: {
-      tools: {},
-    },
-  }
-);
-
-// 2. 定义工具列表
-const tools: Tool[] = [
-  {
-    name: 'greet',
-    description: 'Generate a friendly greeting for a person.',
-    inputSchema: {
-      type: 'object',
-      properties: {
-        name: {
-          type: 'string',
-          description: 'The name of the person to greet.',
-        },
-      },
-      required: ['name'],
-    },
-  },
-];
-
-// 3. 处理客户端请求列出所有可用工具
-server.setRequestHandler(ListToolsRequestSchema, async () => ({
-  tools,
-}));
-
-// 4. 处理客户端调用工具的请求
-server.setRequestHandler(CallToolRequestSchema, async (request) => {
-  const { name, arguments: args } = request.params;
-
-  if (name === 'greet') {
-    const userName = (args as { name: string; })?.name || 'World';
-
-    return {
-      content: [
-        {
-          type: 'text',
-          text: `Hello, ${userName}! This is your MCP agent speaking....`,
-        },
-      ],
-    };
-  }
-
-  throw new Error(`Tool ${name} not found`);
+// Create an MCP server
+const server = new McpServer({
+  name: "demo-server",
+  version: "1.0.0"
 });
 
-// 5. 启动服务器
-const transport = new StdioServerTransport();
-server.connect(transport)
-  .then(() => {
-    console.log('MCP Server running on STDIO'); // 成功信息
+// Add an addition tool
+server.registerTool("add",
+  {
+    title: "Addition Tool",
+    description: "Add two numbers",
+    inputSchema: { a: z.number(), b: z.number() }
+  },
+  async ({ a, b }) => ({
+    content: [{ type: "text", text: String(a + b) }]
   })
-  .catch((error) => {
-    console.error('Failed to start server:', error); // 真正的错误信息
-    process.exit(1);
-  });
+);
+
+// Add a dynamic greeting resource
+server.registerResource(
+  "greeting",
+  new ResourceTemplate("greeting://{name}", { list: undefined }),
+  {
+    title: "Greeting Resource",      // Display name for UI
+    description: "Dynamic greeting generator"
+  },
+  async (uri, { name }) => ({
+    contents: [{
+      uri: uri.href,
+      text: `Hello, ${name}!`
+    }]
+  })
+);
+
+// Start receiving messages on stdin and sending messages on stdout
+const transport = new StdioServerTransport();
+await server.connect(transport);

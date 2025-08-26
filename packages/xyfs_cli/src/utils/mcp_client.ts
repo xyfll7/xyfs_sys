@@ -30,14 +30,18 @@ async function runMCPClient() {
     const toolList = await client.listTools();
     console.log("工具列表:", toolList);
 
-    // 5. 调用 greet 工具
+    // 5. 调用 add 工具
     const result = await client.callTool({
-      name: "greet",
-      arguments: { name: "小洋粉" }
+      name: "add",
+      arguments: { a: 5, b: 3 }
     });
     console.log("调用结果:", result);
 
-    // 6. 关闭
+    // 6. 请求列出资源
+    const resourceList = await client.listResources();
+    console.log("资源列表:", resourceList);
+
+    // 7. 关闭
     await client.close();
   } catch (error) {
     console.error("MCP Client error:", error);
