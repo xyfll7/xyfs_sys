@@ -16,9 +16,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@langchain/community": "^0.3.53",
+    "@langchain/core": "^0.3.72",
+    "@langchain/openai": "^0.6.9",
     "@modelcontextprotocol/inspector": "^0.16.5",
     "@modelcontextprotocol/sdk": "^1.17.4",
     "express": "^5.1.0",
+    "langchain": "^0.3.31",
     "yargs": "^18.0.0"
   },
   "packageManager": "pnpm@10.14.0",

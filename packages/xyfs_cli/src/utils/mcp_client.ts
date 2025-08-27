@@ -1,6 +1,51 @@
 // mcp_client.ts
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
+import OpenAI from "openai";
+
+// 千问 API 调用函数
+async function callQwenAPI(prompt: string) {
+  // 注意：你需要设置 Qwen API Key
+  const apiKey = "sk-3ab003e0b90346e58d4072f402a15b13"; // process.env.QWEN_API_KEY;
+  if (!apiKey) {
+    throw new Error("请设置 QWEN_API_KEY 环境变量");
+  }
+  
+  try {
+    const openai = new OpenAI({
+      apiKey: apiKey,
+      baseURL: "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    });
+
+    const response = await openai.chat.completions.create({
+      model: "qwen-plus",
+      messages: [
+        {
+          role: "user",
+          content: prompt
+        }
+      ],
+      max_tokens: 1500,
+      temperature: 0.8,
+      top_p: 0.8
+    });
+
+    // 添加检查确保响应内容存在
+    if (response.choices && response.choices.length > 0) {
+      const choice = response.choices[0];
+      if (choice && choice.message && choice.message.content) {
+        return choice.message.content;
+      } else {
+        throw new Error("Qwen API 返回的响应中没有内容");
+      }
+    } else {
+      throw new Error("Qwen API 返回的响应中没有选择项");
+    }
+  } catch (error) {
+    console.error("Error in callQwenAPI:", error);
+    throw error;
+  }
+}
 
 async function runMCPClient() {
   try {
@@ -41,7 +86,16 @@ async function runMCPClient() {
     const resourceList = await client.listResources();
     console.log("资源列表:", resourceList);
 
-    // 7. 关闭
+    // 7. 调用千问大模型
+    try {
+      console.log("正在调用千问大模型...");
+      const qwenResponse = await callQwenAPI("你好，我是MCP客户端，请简单介绍一下自己。");
+      console.log("千问大模型回复:", qwenResponse);
+    } catch (error) {
+      console.error("调用千问大模型时出错:", error);
+    }
+
+    // 8. 关闭
     await client.close();
   } catch (error) {
     console.error("MCP Client error:", error);
