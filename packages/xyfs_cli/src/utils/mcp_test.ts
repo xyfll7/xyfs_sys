@@ -1,46 +1,80 @@
-import { ChatOpenAI } from "@langchain/openai";
-import 'dotenv/config';
+import { HumanMessage } from "@langchain/core/messages";
+import { DynamicStructuredTool, tool } from "@langchain/core/tools";
+import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
+import "dotenv/config";
 import { z } from "zod";
 
-console.log("Testing MCP Client...", process.env.DASHSCOPE_API_KEY);
-const model = new ChatOpenAI({
-  model: "qwen-plus-latest",
-  apiKey: process.env.DASHSCOPE_API_KEY!,
-  temperature: 0,
-  configuration: {
-    baseURL: "https://dashscope.aliyuncs.com/compatible-mode/v1",
-  },
-  modelKwargs: {
-    max_tokens: 1500,
-    type: "json_object"
+// 定义工具
+const addTool = tool(
+  async ({ a, b }) => {
+    console.log("Adding", a, b);
+    return `--------${String(323333)}--------`;
+  }, // 确保返回字符串
+  {
+    name: "add",
+    schema: z.object({
+      a: z.number(),
+      b: z.number(),
+    }),
+    description: "Use the exact output string provided.",
   }
-});
+);
 
+const multiplyTool = tool(
+  async ({ a, b }) => {
+    console.log("Multiplying", a, b);
+    return `==========${String(2222)}============`;
+  }, // 确保返回字符串
+  {
+    name: "multiply",
+    schema: z.object({
+      a: z.number(),
+      b: z.number(),
+    }),
+    description: "Multiplies a and b.",
+  }
+);
 
-await test_1();
+// 将顶级 await 包装在异步函数中
+async function main() {
+  const tools = [addTool, multiplyTool];
+  const toolsByName: { [key: string]: DynamicStructuredTool; } = {
+    add: addTool,
+    multiply: multiplyTool
+  };
 
-
-async function test_1() {
-  const res = await model.invoke(`attractions`);
-  console.log("Joke:", res.content);
-}
-
-
-async function test_0() {
-  const joke = z.object({
-    setup: z.string().describe("The setup of the joke"),
-    punchline: z.string().describe("The punchline to the joke"),
-    rating: z.number().describe("How funny the joke is, from 1 to 10"),
+  // 初始化模型
+  const llm = new ChatGoogleGenerativeAI({
+    model: "gemini-2.0-flash",
+    temperature: 0,
+    apiKey: process.env.GOOGLE_API_KEY!, // 确保设置了正确的 API 密钥
   });
 
-  const structuredLlm = model.withStructuredOutput(joke, {
-    method: "json_object",
-    name: "joke"
-  });
+  // 绑定工具
+  const llmWithTools = llm.bindTools(tools);
 
+  // 用户查询
+  const messages = [new HumanMessage("What is 3 * 12? Also, what is 11 + 49?")];
 
-  const res = await structuredLlm.invoke(`Tell me a joke about cats.`);
+  // 第一次调用，获取工具调用
+  const aiMessage = await llmWithTools.invoke(messages);
+  messages.push(aiMessage);
 
-  console.log("Joke:", res.setup, res.punchline, "Rating:", res.rating);
+  // 处理工具调用
+  if ('tool_calls' in aiMessage && Array.isArray(aiMessage.tool_calls)) {
+    for (const toolCall of aiMessage.tool_calls) {
+      const selectedTool = toolsByName[toolCall.name];
+      if (selectedTool) {
+        const result = await selectedTool.invoke(toolCall);
+        messages.push(result);
+      }
+    }
+  }
+
+  // 第二次调用，传递工具结果
+  const finalResponse = await llmWithTools.invoke(messages);
+  console.log("Final response:", finalResponse.content);
 }
 
+// 调用主函数
+main().catch(console.error);
