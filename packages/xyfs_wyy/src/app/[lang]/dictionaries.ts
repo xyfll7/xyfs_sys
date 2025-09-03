@@ -1,5 +1,5 @@
-import 'server-only';
-import { Lang } from '../../middleware';
+import { Lang } from '../../lib/utils';
+
 
 const dictionaries = {
   en: () => import('./dictionaries/en.json').then((module) => module.default),
@@ -8,3 +8,5 @@ const dictionaries = {
 
 export const getDictionary = async (locale: Lang) =>
   dictionaries[locale]();
+
+export type Dictionary = Awaited<ReturnType<typeof getDictionary>>;

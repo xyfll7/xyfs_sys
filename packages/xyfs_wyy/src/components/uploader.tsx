@@ -16,7 +16,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import { Lang } from "../middleware";
+import { Lang } from "../lib/utils";
 
 // 扩展 Zod schema，支持文件验证（注意：Zod 不直接验证 File，需自定义逻辑）
 const FormSchema = z.object({

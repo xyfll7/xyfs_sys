@@ -1,6 +1,6 @@
 import { ThemeProvider } from "@/components/theme-provider";
 import { Geist, Geist_Mono } from "next/font/google";
-import { Lang } from "../../middleware";
+import { Lang } from "../../lib/utils";
 import "./app.css";
 import "./globals.css";
 

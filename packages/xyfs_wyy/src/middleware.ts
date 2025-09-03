@@ -2,10 +2,10 @@
 import { match } from '@formatjs/intl-localematcher';
 import Negotiator from 'negotiator';
 import { NextRequest, NextResponse } from 'next/server';
+import { locales } from './lib/utils';
 
 /* -------------------- 支持的语言配置 -------------------- */
-const locales = ['en', 'zh'] as const;
-export type Lang = typeof locales[number];
+
 const defaultLocale = 'en';
 
 /* -------------------- 获取最佳匹配语言 -------------------- */
