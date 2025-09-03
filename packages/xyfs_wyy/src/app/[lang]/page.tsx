@@ -8,7 +8,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import LoginPage from "../../components/login";
 import Uploader from "../../components/uploader";
 import VideoPlayer from "../../components/videoPlayer";
-import { MOCK_SAMPLE_ASS } from "../../lib/mock";
+
+import { Subtitle } from "../../components/subtitle";
 import { Lang } from "../../middleware";
 import { getDictionary } from "./dictionaries";
 
@@ -26,7 +27,6 @@ export default async function Home({
 }
 const main_len = 50;
 const RsizeContainer = async ({ lang }: { lang: Lang; }) => {
-  const ass = MOCK_SAMPLE_ASS;
   const dict = await getDictionary(lang); // en
   return <ResizablePanelGroup
     direction="horizontal"
@@ -54,11 +54,7 @@ const RsizeContainer = async ({ lang }: { lang: Lang; }) => {
           className="flex-1 overflow-hidden flex flex-col"
         >
           <ScrollArea className="flex-1 w-full overflow-hidden p-2">
-            <div className="flex flex-col">
-              {[...ass, ...ass, ...ass].map((e, i) => {
-                return <div key={i}>{e.Text}</div>;
-              })}
-            </div>
+            <Subtitle />
             <ScrollBar className="w-0 "></ScrollBar>
           </ScrollArea>
         </TabsContent>
