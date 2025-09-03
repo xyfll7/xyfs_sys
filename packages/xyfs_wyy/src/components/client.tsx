@@ -13,10 +13,23 @@ import { Dictionary } from "../app/[lang]/dictionaries";
 import { Subtitle } from "../components/subtitle";
 import { Lang } from "../lib/utils";
 
+// 为Markdown内容添加样式
+const markdownStyles = `
+  .markdown-content {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    // color: #333;
+    max-width: 100%;
+  }
+
+
+`;
+
 const main_len = 50;
 export function ClientComponent({ dict, lang }: { dict: Dictionary; lang: Lang; }) {
   const [explanation, setExplanation] = useState<string>("");
   const html = marked.parse(explanation);
+
   return <>
     <ResizablePanel defaultSize={(100 - main_len) / 2}>
       <Tabs
@@ -54,8 +67,9 @@ export function ClientComponent({ dict, lang }: { dict: Dictionary; lang: Lang; 
     <ResizablePanel className="w-full h-screen max-h-screen flex flex-col overflow-hidden pt-2 pb-2 " defaultSize={(100 - main_len) / 2}>
       <div className="flex-1 overflow-hidden flex flex-col">
         <ScrollArea className="flex-1 w-full overflow-hidden p-2">
-          {/* 此处输出的markdown样式不好看，有没有解决办法 */}
-          <div dangerouslySetInnerHTML={{ __html: html }} />
+          {/* 为Markdown输出添加更好的样式 */}
+          <style>{markdownStyles}</style>
+          <div className="markdown-content prose prose-sm sm:prose lg:prose-lg mx-auto p-6" dangerouslySetInnerHTML={{ __html: html }} />
           <ScrollBar className="w-0 "></ScrollBar>
         </ScrollArea>
       </div>
