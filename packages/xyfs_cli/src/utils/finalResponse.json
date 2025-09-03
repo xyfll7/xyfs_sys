@@ -1,0 +1,77 @@
+{
+  "lc": 1,
+  "type": "constructor",
+  "id": [
+    "langchain_core",
+    "messages",
+    "AIMessage"
+  ],
+  "kwargs": {
+    "content": [
+      {
+        "functionCall": {
+          "name": "calculateTotal",
+          "args": {
+            "items": [
+              {
+                "quantity": 2,
+                "name": "宫保鸡丁"
+              },
+              {
+                "name": "麻婆豆腐",
+                "quantity": 1
+              },
+              {
+                "name": "可乐",
+                "quantity": 3
+              }
+            ]
+          }
+        },
+        "thoughtSignature": "CqMDAVSoXO6JVOv8XHIpVu2WYrsvihM9ZrSrowngc/++UrXW9hhQCkV6ZIawERoT9rS9gbQ0nc467MA2xzu838yHyi/giVg2+7Xx6bAJzfdoF68EP7vTvQdaSVq30xZ6Io90WFW9JNvImwNSupritjBHrGUyV2xzbNQFzm85+AZEHWARgfcyT3Tg3668ggTb1QS63Eex0r5byPH7nLdb0WatbAYfAOQZutXQfS4SYshy3qR7DxrNQABNKwtNNhsA/ftAl4c/owpiWGvZQtLhMVSsHRxusCTUZ3FC3feyIbthJeSp1Tn6KWqGj7cqALiu7gT6Bf1hoKCUWPDw4DdAayHyxp7S0bPuub8DeKUZICh/3lAhfKjMLtTaTLhU8dBN+XUIqlGNzcJAN3Y6uZ/ujlA+HCb5nfq5axGz4FCShYvWKpE1AxiawPLcrSLTuhqO8J3KydccNRrHYXYOnOn6PB39H0yzixLAI5esiQ+14AVQgaJAwgwyM09QA9p2wPY1IZfwmT66NTXOZKgKS/49x1+yYTAjRWL7izPUf27hTZ8J4mxYfkc="
+      }
+    ],
+    "tool_calls": [
+      {
+        "name": "calculateTotal",
+        "args": {
+          "items": [
+            {
+              "quantity": 2,
+              "name": "宫保鸡丁"
+            },
+            {
+              "name": "麻婆豆腐",
+              "quantity": 1
+            },
+            {
+              "name": "可乐",
+              "quantity": 3
+            }
+          ]
+        },
+        "type": "tool_call",
+        "id": "3ec84427-2f98-4db9-a0dd-2162dd360612"
+      }
+    ],
+    "additional_kwargs": {
+      "finishReason": "STOP",
+      "index": 0
+    },
+    "usage_metadata": {
+      "input_tokens": 527,
+      "output_tokens": 54,
+      "total_tokens": 696
+    },
+    "invalid_tool_calls": [],
+    "response_metadata": {
+      "tokenUsage": {
+        "promptTokens": 527,
+        "completionTokens": 54,
+        "totalTokens": 696
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  }
+}

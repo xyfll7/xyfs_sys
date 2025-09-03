@@ -2,6 +2,7 @@ import { HumanMessage, SystemMessage } from "@langchain/core/messages";
 import { DynamicStructuredTool, tool } from "@langchain/core/tools";
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import "dotenv/config";
+import { writeFileSync } from "fs";
 import { z } from "zod";
 
 // ========================
@@ -111,7 +112,7 @@ async function main() {
 
   // 初始化模型
   const llm = new ChatGoogleGenerativeAI({
-    model: "gemini-2.0-flash",
+    model: "gemini-2.5-flash",
     temperature: 0.3,
     apiKey: process.env.GOOGLE_API_KEY!,
   });
@@ -131,9 +132,13 @@ async function main() {
 
   // 第一次调用：模型决定使用哪些工具
   const aiMessage = await llmWithTools.invoke(messages);
+
   messages.push(aiMessage);
 
-  console.log("AI 决定调用工具:", aiMessage.tool_calls);
+  // 将aiMessage写入message.json 文件，便于调试
+
+  writeFileSync("src/utils/aiMessage.json", JSON.stringify(aiMessage.toJSON(), null, 2));
+  writeFileSync("src/utils/tool_calls.json", JSON.stringify(aiMessage.tool_calls, null, 2));
 
   // 收集中间结果
   let calculatedTotal: number | null = null;
@@ -146,31 +151,19 @@ async function main() {
       if (!selectedTool) continue;
 
       try {
+        writeFileSync("src/utils/messages.json", JSON.stringify(messages, null, 2));
         const result = await selectedTool.invoke(toolCall);
         messages.push(result);
 
-        // 解析结果，用于后续判断是否需要下单
-        if (toolCall.name === "calculateTotal") {
-          const parsed = JSON.parse(result.content as string);
-          calculatedTotal = parsed.total;
-          orderItems = parsed.details
-            .filter((d: any) => d.found)
-            .map((d: any) => ({ name: d.name, quantity: d.quantity }));
-        }
+        writeFileSync("src/utils/messages0.json", JSON.stringify(messages, null, 2));
+        writeFileSync("src/utils/tool_calls.json", JSON.stringify(result, null, 2));
+        const finalResponse = await llmWithTools.invoke(messages);
+        writeFileSync("src/utils/finalResponse.json", JSON.stringify(finalResponse, null, 2));
       } catch (err) {
         console.error(`调用工具 ${toolCall.name} 失败:`, err);
         messages.push(new HumanMessage(`工具调用失败: `));
       }
     }
-  }
-
-  // 如果计算出总价，自动触发下单
-  if (calculatedTotal !== null && orderItems.length > 0) {
-    const placeOrderCall = await placeOrderTool.invoke({
-      name: "placeOrder",
-      args: { items: orderItems, total: calculatedTotal },
-    });
-    messages.push(placeOrderCall);
   }
 
   // 最终调用，生成自然语言回复

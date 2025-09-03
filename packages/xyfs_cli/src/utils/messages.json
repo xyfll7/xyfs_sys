@@ -1,0 +1,77 @@
+[
+  {
+    "lc": 1,
+    "type": "constructor",
+    "id": [
+      "langchain_core",
+      "messages",
+      "SystemMessage"
+    ],
+    "kwargs": {
+      "content": "你是一个餐厅点餐助手。当用户点菜时，必须调用 getMenu 工具确认菜品是否存在，然后调用 calculateTotal 计算总价，最后自动提交订单。",
+      "additional_kwargs": {},
+      "response_metadata": {}
+    }
+  },
+  {
+    "lc": 1,
+    "type": "constructor",
+    "id": [
+      "langchain_core",
+      "messages",
+      "HumanMessage"
+    ],
+    "kwargs": {
+      "content": "我想点两份宫保鸡丁、一份麻婆豆腐和三瓶可乐，请帮我下单。",
+      "additional_kwargs": {},
+      "response_metadata": {}
+    }
+  },
+  {
+    "lc": 1,
+    "type": "constructor",
+    "id": [
+      "langchain_core",
+      "messages",
+      "AIMessage"
+    ],
+    "kwargs": {
+      "content": [
+        {
+          "functionCall": {
+            "name": "getMenu",
+            "args": {}
+          },
+          "thoughtSignature": "CqMEAVSoXO5tI6QuxUwo+Cw2EIrOWI7EaYsCNm7cZBxPNbBn5H1rWiq/3kSkjvktO3BH7UXT71oRV7LFN2Wgr161ZVeCeMriRZg4CRB+P56uGZWRtwXJSKq/YPzT8/qSDuocJH+baIAbt+aHE2pmwLanQg3dxZPVeBDejR2Pmf9Gg/TsHACXl+uA2NXEB6pwSU4uOz9V0XRoFQW02FgvYB5c3daDmZ/jvjnw3RzqIminZL0hoHjf2lQPxyzeitdSkFHsAQI7NijS3hEVqa4Tleii8/Y4WASNr0o3PTQq68iZOO/H8+/6CkDJwK7wzZu5maRoefWAkW/maX3qRxc7f4VMWOozKgt+u1WMcjH1AIkUVBbD9SxPBbSibRHZjhHaxpEsoOmFolaBH/OTb60KGLCpbeGPn3SuUQOjFfVpQFYd7vZ8a4knU3RQdq8c8zLHuTmghXDAeuncHIozXbEe26yqYh7+xqQKvhMBn5xmHcCLXH8R7Wr9jlxNGF4ubjyDmBhec/iT7XtVhHjR2/JpR3gHEGE7PtkiEexLUtdnH2FdC+T3s3AJzu/ZTgiCffzEfILXcC8TLDbHLyufgydzQsuS8qS+NaPrR2LZYRBuZPYNl6f4BGzqpUK98DOIqPXV8QvL+hF09LdEdchX+HUW/xcoU2+gMFVWXiRsnbobWTaArhWNpZhZR5MS7/K3BBt3IJ23NygT3HwkKmYVRnmXRLGm0A/znw=="
+        }
+      ],
+      "tool_calls": [
+        {
+          "name": "getMenu",
+          "args": {},
+          "type": "tool_call",
+          "id": "f826b9ff-7684-4863-a183-53dade9adca0"
+        }
+      ],
+      "additional_kwargs": {
+        "finishReason": "STOP",
+        "index": 0
+      },
+      "usage_metadata": {
+        "input_tokens": 296,
+        "output_tokens": 9,
+        "total_tokens": 438
+      },
+      "invalid_tool_calls": [],
+      "response_metadata": {
+        "tokenUsage": {
+          "promptTokens": 296,
+          "completionTokens": 9,
+          "totalTokens": 438
+        },
+        "finishReason": "STOP",
+        "index": 0
+      }
+    }
+  }
+]

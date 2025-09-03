@@ -1,0 +1,18 @@
+{
+  "lc": 1,
+  "type": "constructor",
+  "id": [
+    "langchain_core",
+    "messages",
+    "ToolMessage"
+  ],
+  "kwargs": {
+    "status": "success",
+    "content": "[\n  {\n    \"name\": \"宫保鸡丁\",\n    \"price\": 32\n  },\n  {\n    \"name\": \"鱼香肉丝\",\n    \"price\": 30\n  },\n  {\n    \"name\": \"麻婆豆腐\",\n    \"price\": 18\n  },\n  {\n    \"name\": \"红烧肉\",\n    \"price\": 38\n  },\n  {\n    \"name\": \"清炒时蔬\",\n    \"price\": 15\n  },\n  {\n    \"name\": \"可乐\",\n    \"price\": 5\n  },\n  {\n    \"name\": \"雪碧\",\n    \"price\": 5\n  },\n  {\n    \"name\": \"酸梅汤\",\n    \"price\": 8\n  }\n]",
+    "tool_call_id": "f826b9ff-7684-4863-a183-53dade9adca0",
+    "name": "getMenu",
+    "metadata": {},
+    "additional_kwargs": {},
+    "response_metadata": {}
+  }
+}
