@@ -57,6 +57,20 @@ export function ClientComponent({ dict, lang }: { dict: Dictionary; lang: Lang; 
       <div className="flex-1 overflow-hidden flex flex-col">
         <ScrollArea className="flex-1 w-full overflow-hidden p-2">
           {/* 为Markdown输出添加更好的样式 */}
+
+          <article className="prose lg:prose-xl">
+            <h1>Garlic bread with cheese: What the science tells us</h1>
+            <p>
+              For years parents have espoused the health benefits of eating garlic bread with cheese to their
+              children, with the food earning such an iconic status in our culture that kids will often dress
+              up as warm, cheesy loaf for Halloween.
+            </p>
+            <p>
+              But a recent study shows that the celebrated appetizer may be linked to a series of rabies cases
+              springing up around the country.
+            </p>
+          </article>
+
           <div className="prose lg:prose-xl" dangerouslySetInnerHTML={{ __html: html }} />
           <ScrollBar className="w-0 "></ScrollBar>
         </ScrollArea>

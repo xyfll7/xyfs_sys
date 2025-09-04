@@ -1,14 +1,13 @@
-import typography from "@tailwindcss/typography";
-console.log("-------------------------------------------------------------");
-/** @type {import('tailwindcss').Config} */
+import typography from '@tailwindcss/typography';
+
 const config = {
   content: [
-    "./src/**/*.{js,ts,jsx,tsx,mdx}", // 确保包含你的页面和组件
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {},
   },
   plugins: [typography],
 };
-
 export default config;
