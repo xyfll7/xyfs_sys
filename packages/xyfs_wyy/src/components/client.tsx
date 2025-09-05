@@ -3,7 +3,7 @@ import {
   ResizableHandle,
   ResizablePanel
 } from "@/components/ui/resizable";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Uploader from "../components/uploader";
 
@@ -36,9 +36,8 @@ export function ClientComponent({ dict, lang }: { dict: Dictionary; lang: Lang; 
           value="captions"
           className="flex-1 overflow-hidden flex flex-col"
         >
-          <ScrollArea className="flex-1 w-full overflow-hidden p-2">
+          <ScrollArea className="flex-1 w-full overflow-hidden p-2" >
             <Subtitle translateStream={(e) => { setExplanation(e); }} />
-            <ScrollBar className="w-0 "></ScrollBar>
           </ScrollArea>
         </TabsContent>
         <TabsContent value="trend" className="p-2 flex-1 overflow-hidden">
@@ -55,10 +54,10 @@ export function ClientComponent({ dict, lang }: { dict: Dictionary; lang: Lang; 
     <ResizableHandle withHandle />
     <ResizablePanel className="w-full h-screen max-h-screen flex flex-col overflow-hidden pt-2 pb-2 " defaultSize={(100 - main_len) / 2}>
       <div className="flex-1 overflow-hidden flex flex-col">
-        <ScrollArea className="flex-1 w-full overflow-hidden p-2">
+        <ScrollArea className="flex-1 w-full overflow-hidden p-2" >
           {/* 为Markdown输出添加更好的样式 */}
 
-          <article className="prose lg:prose-xl">
+          <article className="prose ">
             <h1>Garlic bread with cheese: What the science tells us</h1>
             <p>
               For years parents have espoused the health benefits of eating garlic bread with cheese to their
@@ -71,8 +70,9 @@ export function ClientComponent({ dict, lang }: { dict: Dictionary; lang: Lang; 
             </p>
           </article>
 
+
           <div className="prose lg:prose-xl" dangerouslySetInnerHTML={{ __html: html }} />
-          <ScrollBar className="w-0 "></ScrollBar>
+
         </ScrollArea>
       </div>
     </ResizablePanel>
