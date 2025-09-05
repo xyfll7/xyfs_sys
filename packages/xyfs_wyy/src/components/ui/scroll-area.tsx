@@ -8,9 +8,9 @@ import { cn } from "@/lib/utils";
 function ScrollArea({
   className,
   children,
-  type = "hover",
+  type = "always",
   ...props
-}: React.ComponentProps<typeof ScrollAreaPrimitive.Root> & { type?: ScrollAreaPrimitive.ScrollAreaProps['type']; }) {
+}: React.ComponentProps<typeof ScrollAreaPrimitive.Root>) {
   return (
     <ScrollAreaPrimitive.Root
       data-slot="scroll-area"
@@ -51,7 +51,7 @@ function ScrollBar({
     >
       <ScrollAreaPrimitive.ScrollAreaThumb
         data-slot="scroll-area-thumb"
-        className="bg-border relative flex-1 rounded-full"
+        className="bg-border relative flex-1 rounded-full hover:cursor-grab active:cursor-grabbing"
       />
     </ScrollAreaPrimitive.ScrollAreaScrollbar>
   );

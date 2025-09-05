@@ -120,3 +120,19 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .scrollbar-track-transparent::-webkit-scrollbar {
+      width: calc(var(--spacing) * 2.5);
+  }
+  .scrollbar-track-transparent::-webkit-scrollbar-thumb:hover {
+      cursor: grab;
+  }
+  .scrollbar-track-transparent::-webkit-scrollbar-thumb:active {
+      cursor: grabbing;
+  }
+  .scrollbar-track-transparent::-webkit-scrollbar-thumb {
+      background-color: var(--border);
+      border-radius: calc(infinity * 1px);
+  }
+}
