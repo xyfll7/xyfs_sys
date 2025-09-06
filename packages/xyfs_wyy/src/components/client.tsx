@@ -13,7 +13,7 @@ import { Dictionary } from "../app/[lang]/dictionaries";
 import { Subtitle } from "../components/subtitle";
 import { Lang } from "../lib/utils";
 import { Button } from "./ui/button";
-import { TextareaBorder, Textarea as TextareaNew } from "./ui/textarea_new";
+import { Textarea, TextareaBorder } from "./ui/textarea";
 
 
 const main_len = 50;
@@ -56,21 +56,7 @@ export function ClientComponent({ dict, lang }: { dict: Dictionary; lang: Lang; 
     <ResizableHandle withHandle />
     <ResizablePanel className="w-full h-screen max-h-screen flex flex-col overflow-hidden pt-2 " defaultSize={(100 - main_len) / 2}>
       <div className="flex-1 overflow-hidden flex flex-col">
-        <ScrollArea className="flex-1 w-full overflow-hidden p-2" >
-          {/* 为Markdown输出添加更好的样式 */}
-
-          <article className="prose ">
-            <h1>Garlic bread with cheese: What the science tells us</h1>
-            <p>
-              For years parents have espoused the health benefits of eating garlic bread with cheese to their
-              children, with the food earning such an iconic status in our culture that kids will often dress
-              up as warm, cheesy loaf for Halloween.
-            </p>
-            <p>
-              But a recent study shows that the celebrated appetizer may be linked to a series of rabies cases
-              springing up around the country.
-            </p>
-          </article>
+        <ScrollArea className="flex-1/2 w-full overflow-hidden p-2" >
           <article className="prose ">
             <h1>Garlic bread with cheese: What the science tells us</h1>
             <p>
@@ -109,9 +95,9 @@ export function ClientComponent({ dict, lang }: { dict: Dictionary; lang: Lang; 
           </article>
           <div className="prose lg:prose-xl" dangerouslySetInnerHTML={{ __html: html }} />
         </ScrollArea>
-        <div className="px-2 pb-2 ">
-          <TextareaBorder className="display:flex flex-col rounded-3xl">
-            <TextareaNew className="max-h-48 overflow-y-auto scrollbar-track-transparent " id="textarea" aria-label="textarea" />
+        <div className="px-2 pb-2">
+          <TextareaBorder className="display:flex flex-col rounded-2xl">
+            <Textarea className="scrollbar-track-transparent  max-h-72" id="textarea" aria-label="textarea" />
             <div className="flex justify-end p-2">
               <Button type="button" size="sm">Send</Button>
             </div>
