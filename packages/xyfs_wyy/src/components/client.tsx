@@ -3,7 +3,7 @@ import {
   ResizableHandle,
   ResizablePanel
 } from "@/components/ui/resizable";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area_new";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Uploader from "../components/uploader";
 
@@ -12,6 +12,7 @@ import { useState } from "react";
 import { Dictionary } from "../app/[lang]/dictionaries";
 import { Subtitle } from "../components/subtitle";
 import { Lang } from "../lib/utils";
+import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { Textarea, TextareaBorder } from "./ui/textarea";
 
@@ -40,6 +41,7 @@ export function ClientComponent({ dict, lang }: { dict: Dictionary; lang: Lang; 
         >
           <ScrollArea className="flex-1 w-full overflow-hidden p-2" >
             <Subtitle translateStream={(e) => { setExplanation(e); }} />
+            <ScrollBar />
           </ScrollArea>
         </TabsContent>
         <TabsContent value="trend" className="p-2 flex-1 overflow-hidden">
@@ -56,13 +58,33 @@ export function ClientComponent({ dict, lang }: { dict: Dictionary; lang: Lang; 
     <ResizableHandle withHandle />
     <ResizablePanel className="w-full h-screen max-h-screen flex flex-col overflow-hidden pt-2 " defaultSize={(100 - main_len) / 2}>
       <div className="flex-1 overflow-hidden flex flex-col">
-        <ScrollArea className="flex-1/2 w-full overflow-hidden p-2" >
+        <ScrollArea className="w-full flex-1/2 overflow-hidden p-2" >
           <article className="prose dark:prose-invert" dangerouslySetInnerHTML={{ __html: html }} />
+          <ScrollBar />
         </ScrollArea>
-        <div className="px-2 pb-2">
+        <div className="w-full px-2 pb-2">
+          <div className="w-full mb-2 truncate" onClick={(e) => {
+            function isTextTruncated(element: any) {
+              // 确保元素存在
+              if (!element) return false;
+              // scrollWidth 是内容的实际宽度，offsetWidth 是元素的可见宽度
+              return element.scrollWidth > element.offsetWidth;
+            }
+            const res = isTextTruncated(e.currentTarget);
+            console.log('是否溢出:', res);
+          }}>
+            <Badge className="mr-2 max-w-full truncate" variant="outline"><div className="w-full truncate">Outline</div></Badge>
+            <Badge className="mr-2 max-w-full truncate" variant="outline"><div className="w-full truncate">Outline</div></Badge>
+            <Badge className="mr-2 max-w-full truncate" variant="outline"><div className="w-full truncate">Outline</div></Badge>
+            <Badge className="mr-2 max-w-full truncate" variant="outline"><div className="w-full truncate">Outline</div></Badge>
+            <Badge className="mr-2 max-w-full truncate" variant="outline"><div className="w-full truncate">Outline</div></Badge>
+            <Badge className="mr-2 max-w-full truncate" variant="outline"><div className="w-full truncate">Outline</div></Badge>
+            <Badge className="mr-2 max-w-full truncate" variant="outline"><div className="w-full truncate">Outline</div></Badge>
+          </div>
           <TextareaBorder className="display:flex flex-col rounded-2xl">
             <Textarea className="scrollbar-track-transparent  max-h-72" id="textarea" aria-label="textarea" />
-            <div className="flex justify-end p-2">
+            <div className="flex justify-between items-center p-2">
+              <div>@</div>
               <Button type="button" size="sm">Send</Button>
             </div>
           </TextareaBorder>

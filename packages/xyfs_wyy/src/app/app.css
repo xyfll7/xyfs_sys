@@ -6,3 +6,9 @@ body {
 nextjs-portal {
   display: none;
 }
+
+@media (max-width: 10px) {
+  button {
+    display: none;
+  }
+}
