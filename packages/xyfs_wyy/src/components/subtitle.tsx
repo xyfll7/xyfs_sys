@@ -46,10 +46,8 @@ export function Subtitle({ translateStream }: { translateStream: (e: string) => 
   }
 
   return (
-    <div className="flex flex-col" onMouseUp={handleMouseUp}>
-      {[...MOCK_SAMPLE_ASS, ...MOCK_SAMPLE_ASS, ...MOCK_SAMPLE_ASS].map((e, i) => {
-        return <div key={i}>{e.Text}</div>;
-      })}
+    <div className="prose dark:prose-invert flex flex-col" onMouseUp={handleMouseUp}>
+      {[...MOCK_SAMPLE_ASS, ...MOCK_SAMPLE_ASS, ...MOCK_SAMPLE_ASS].map((e, i) => <div key={i}>{e.Text}</div>)}
     </div>
   );
 }
