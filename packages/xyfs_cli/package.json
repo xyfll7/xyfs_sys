@@ -40,11 +40,5 @@
     "@types/yargs": "^17.0.33",
     "tsx": "^4.20.4",
     "typescript": "^5.9.2"
-  },
-  "pnpm": {
-    "overrides": {
-      "dotenv": "^16.4.5",
-      "@langchain/core": "0.3.0"
-    }
   }
 }

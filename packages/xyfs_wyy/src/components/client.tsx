@@ -62,24 +62,30 @@ export function ClientComponent({ dict, lang }: { dict: Dictionary; lang: Lang; 
           <article className="prose dark:prose-invert" dangerouslySetInnerHTML={{ __html: html }} />
           <ScrollBar />
         </ScrollArea>
-        <div className="w-full px-2 pb-2">
-          <div className="w-full mb-2 truncate" onClick={(e) => {
-            function isTextTruncated(element: any) {
+        <div className="w-full ">
+          <div className="w-full truncate bg-red-600" onClick={(e) => {
+
+          }} onMouseOver={(e) => {
+            function isTextTruncated(element: HTMLDivElement) {
               // 确保元素存在
               if (!element) return false;
               // scrollWidth 是内容的实际宽度，offsetWidth 是元素的可见宽度
               return element.scrollWidth > element.offsetWidth;
             }
             const res = isTextTruncated(e.currentTarget);
-            console.log('是否溢出:', res);
+            console.log('hover', res, e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+          }} onMouseOut={(e) => {
+            console.log('out');
           }}>
-            <Badge className="mr-2 max-w-full truncate" variant="outline"><div className="w-full truncate">Outline</div></Badge>
-            <Badge className="mr-2 max-w-full truncate" variant="outline"><div className="w-full truncate">Outline</div></Badge>
-            <Badge className="mr-2 max-w-full truncate" variant="outline"><div className="w-full truncate">Outline</div></Badge>
-            <Badge className="mr-2 max-w-full truncate" variant="outline"><div className="w-full truncate">Outline</div></Badge>
-            <Badge className="mr-2 max-w-full truncate" variant="outline"><div className="w-full truncate">Outline</div></Badge>
-            <Badge className="mr-2 max-w-full truncate" variant="outline"><div className="w-full truncate">Outline</div></Badge>
-            <Badge className="mr-2 max-w-full truncate" variant="outline"><div className="w-full truncate">Outline</div></Badge>
+            <Badge className="max-w-full truncate bg-yellow-500 pointer-events-none" variant="outline"><div className="w-full truncate">Outline</div></Badge>
+            <Badge className="max-w-full truncate bg-yellow-500 pointer-events-none" variant="outline"><div className="w-full truncate">Outline</div></Badge>
+            <Badge className="max-w-full truncate bg-yellow-500 pointer-events-none" variant="outline"><div className="w-full truncate">Outline</div></Badge>
+            <Badge className="max-w-full truncate bg-yellow-500 pointer-events-none" variant="outline"><div className="w-full truncate">Outline</div></Badge>
+            <Badge className="max-w-full truncate bg-yellow-500 pointer-events-none" variant="outline"><div className="w-full truncate">Outline</div></Badge>
+            <Badge className="max-w-full truncate bg-yellow-500 pointer-events-none" variant="outline"><div className="w-full truncate">Outline</div></Badge>
+            <Badge className="max-w-full truncate bg-yellow-500 pointer-events-none" variant="outline"><div className="w-full truncate">Outline</div></Badge>
+            <Badge className="max-w-full truncate bg-yellow-500 pointer-events-none" variant="outline"><div className="w-full truncate">Outline</div></Badge>
+            <Badge className="max-w-full truncate bg-yellow-500 pointer-events-none" variant="outline"><div className="w-full truncate">Outline</div></Badge>
           </div>
           <TextareaBorder className="display:flex flex-col rounded-2xl">
             <Textarea className="scrollbar-track-transparent  max-h-72" id="textarea" aria-label="textarea" />

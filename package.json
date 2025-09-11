@@ -36,5 +36,11 @@
   "packageManager": "pnpm@10.15.0",
   "dependencies": {
     "@wxcloud/cli": "^2.3.3"
+  },
+  "pnpm": {
+    "overrides": {
+      "dotenv": "^16.4.5",
+      "@langchain/core": "0.3.0"
+    }
   }
 }

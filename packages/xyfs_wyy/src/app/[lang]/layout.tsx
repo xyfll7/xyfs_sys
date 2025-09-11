@@ -1,18 +1,17 @@
 import { ThemeProvider } from "@/components/theme-provider";
-import { Geist, Geist_Mono } from "next/font/google";
 import { Lang } from "../../lib/utils";
 import "../app.css";
 import "../globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+// const geistSans = Geist({
+//   variable: "--font-geist-sans",
+//   subsets: ["latin"],
+// });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// const geistMono = Geist_Mono({
+//   variable: "--font-geist-mono",
+//   subsets: ["latin"],
+// });
 
 // 动态生成元数据
 export async function generateMetadata({ params }: { params: Promise<{ lang: Lang; }>; }) {
@@ -45,7 +44,7 @@ export default async function RootLayout({
   return (
     <html lang={(await params).lang} suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={` antialiased`}
       >
         <ThemeProvider
           attribute="class"
