@@ -111,7 +111,7 @@ const Index: FC = () => {
 
         {getMyEnv().platform === "devtools" &&
           <ComButton rr className='mb10 cccprice nw' onClick={async () => {
-            for (const item of ["819711856524"]) {
+            for (const item of ["1000001"]) {
               Taro.showLoading({ mask: true, title: "加载中...", });
               await Api_logistic_add_ctn({
                 roleId: role!.id!,
