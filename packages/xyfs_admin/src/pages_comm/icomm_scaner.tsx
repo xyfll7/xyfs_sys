@@ -1,5 +1,5 @@
 // :: pages_comm/icomm_scaner
-import { Camera, View } from '@tarojs/components';
+import { Camera, Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import { OrderInfo, Pagination, Product_Dryclean } from '@xyfs/taro_uii';
 import { Api_logistic_add_ctn, Api_logistic_confirm_ctn, Api_logistic_list_ctn, Api_logistic_refund_ctn, Api_logistic_remove_ctn } from '@xyfs/taro_uii/api/api__logistics';
@@ -7,6 +7,7 @@ import { Api_order_incrPrintTimes_ctn } from '@xyfs/taro_uii/api/api__orders';
 import { ComAuth } from '@xyfs/taro_uii/components/ComAuth';
 import { ComButton } from '@xyfs/taro_uii/components/ComButton';
 import { ComCardOrderDryclean } from '@xyfs/taro_uii/components/ComCardOrder';
+import { ComInput } from '@xyfs/taro_uii/components/ComInput';
 import { ComListTypeSelectorNew } from '@xyfs/taro_uii/components/ComListTypeSelectorNew';
 import { ComLoading } from '@xyfs/taro_uii/components/ComLoading';
 import { ComNav } from '@xyfs/taro_uii/components/ComNav';
@@ -54,25 +55,48 @@ const Index: FC = () => {
       keyword: "", status: 0
     }), []);
   const { page, page_loading, page_list_get, page_list_update, page_init } = useHook_pageListNew(___page_getter);
+  const [code, setCode] = useState("");
   return <MMMAAPage>
     <View className='ww '>
       <ComNav className='pa z9'>
         <ComNavBarA className='mb10 pl10' />
       </ComNav>
       <ComNav isOnlyTop />
-      <IIICameraScaner className='mb10' onScanCode={async (e) => {
-
-        Taro.showLoading({ mask: true, title: "加载中...", });
-        await Api_logistic_add_ctn({
-          roleId: role!.id!,
-          carNo: "",
-          location: "",
-          outTradeNo: e, // 84VLQ75_SC9VAR
-          signer: useSTSelf.getState().selfInfo!.name!,
-        });
-        page_init();
-        try_Taro_hideLoading();
-      }} />
+      <View className='bccwhite IOO dll prl10'>
+        <IIICameraScaner className='mb10' onScanCode={async (e) => {
+          Taro.showLoading({ mask: true, title: "加载中...", });
+          await Api_logistic_add_ctn({
+            roleId: role!.id!,
+            carNo: "",
+            location: "",
+            outTradeNo: e, // 84VLQ75_SC9VAR
+            signer: useSTSelf.getState().selfInfo!.name!,
+          });
+          page_init();
+          try_Taro_hideLoading();
+        }} />
+        <View className='dbtc ww'>
+          <ComButton className='bccback mb10 ww mr10' hoverClass='none'>
+            <ComInput placeholder='请输入条形码数字' value={code} onInput={(e) => {
+              setCode(e.detail.value);
+            }}></ComInput>
+          </ComButton>
+          <ComButton className='mb10 bborder' onClick={async () => {
+            Taro.showLoading({ mask: true, title: "加载中...", });
+            await Api_logistic_add_ctn({
+              roleId: role!.id!,
+              carNo: "",
+              location: "",
+              outTradeNo: code, // 84VLQ75_SC9VAR
+              signer: useSTSelf.getState().selfInfo!.name!,
+            });
+            page_init();
+            try_Taro_hideLoading();
+          }}>
+            <Text className='nw'>手工扫码</Text>
+          </ComButton>
+        </View>
+      </View>
     </View>
     <ComScrollView onScrollToLower={async () => { page_list_get(page); }}>
       {page.list?.map((order) => {
@@ -225,6 +249,7 @@ const IIICameraScaner = (prams: { className?: string, onScanCode: (e: string) =>
 
         }} />
     }
+
   </View>;
 
 }
