@@ -62,7 +62,7 @@ const Index: FC = () => {
         <ComNavBarA className='mb10 pl10' />
       </ComNav>
       <ComNav isOnlyTop />
-      <View className='bccwhite IOO dll prl10'>
+      <View className='bccwhite IOO dll prl10 mb10'>
         <IIICameraScaner className='mb10' onScanCode={async (e) => {
           Taro.showLoading({ mask: true, title: "加载中...", });
           await Api_logistic_add_ctn({
@@ -75,7 +75,7 @@ const Index: FC = () => {
           page_init();
           try_Taro_hideLoading();
         }} />
-        <View className='dbtc ww'>
+        <View className='dbtc ww '>
           <ComButton className='bccback mb10 ww mr10' hoverClass='none'>
             <ComInput placeholder='请输入条形码数字' value={code} onInput={(e) => {
               setCode(e.detail.value);
