@@ -115,16 +115,16 @@ const Index: FC = () => {
               }
             }}>删除</ComButton>
             {(_order1.eventType === 3 || (_order1.orderStatus === Order_ST.已退款 && _order1.eventType === 2)) && <ComButton rr className='mb10 bborder cccgreen ml10' onClick={async () => {
-              await on_start_print((blue_device) => {
-                return { cpcl: _order1.productList!.map(eee => on_get_printer_str_order_dryclean_out_factory({ ..._order1, __product: eee }, blue_device)) };
-              }, { orderId: order.id!, selfInfo_S: useSTSelf.getState().selfInfo });
+              // await on_start_print((blue_device) => {
+              //   return { cpcl: _order1.productList!.map(eee => on_get_printer_str_order_dryclean_out_factory({ ..._order1, __product: eee }, blue_device)) };
+              // }, { orderId: order.id!, selfInfo_S: useSTSelf.getState().selfInfo });
               Taro.showLoading({ mask: true, title: "订单出厂" });
               await Api_logistic_refund_ctn({ orderProductId: _order1.productList![0]!.id!, orderId: _order1.id! });
-              Taro.showLoading({ mask: true, title: "更新打印次数..." });
-              await Api_order_incrPrintTimes_ctn({ orderId: _order1.id!, orderProductId: _order1.productList?.[0]?.id });
+              // Taro.showLoading({ mask: true, title: "更新打印次数..." });
+              // await Api_order_incrPrintTimes_ctn({ orderId: _order1.id!, orderProductId: _order1.productList?.[0]?.id });
               page_list_update((p) => ({ ...p, list: p.list.filter(e => e.productList![0]!.id !== _order1.productList![0]!.id) }));
               Taro.showToast({ icon: "none", title: "订单已出厂", });
-            }}>打印→出厂</ComButton>}
+            }}>出厂</ComButton>}
           </View>
         </View>;
       })}
