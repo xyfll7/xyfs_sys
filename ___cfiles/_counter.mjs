@@ -10,7 +10,8 @@ const files = fs.readdirSync(dir);
 try {
   // Postal_Order_Form();
   // ShunFeng_Order_Form();
-  Salary_Statistics_Table();
+  Sum_xinjiang();
+  // Salary_Statistics_Table();
 } catch (err) {
   console.log(err);
 }
@@ -79,5 +80,31 @@ function ShunFeng_Order_Form() {
   });
   const result = strs.join('\n');
   fs.writeFileSync(`${__dirname}/_test_shun_feng.csv`, result);
+  console.log("Done!");
+}
+
+
+function Sum_xinjiang() {
+
+  const strs = [];
+  files.filter(e => e.includes(".csv")).forEach((file, index) => {
+    const workSheetsFromFile = xlsx.parse(`${__dirname}/${dir}/${file}`);
+    const sheet = workSheetsFromFile[0];
+    const count = sheet.data.filter((iii, index) => {
+      if (iii[18]?.includes("新疆")) {
+        return true;
+      }
+      return false;
+    });
+
+    if (count[0]) {
+    console.log(count);
+      for(let i=0;i<count.length;i++){
+        strs.push(`${count[i].join(',')}`);
+      }
+    }
+  });
+  const result = strs.join('\n');
+  fs.writeFileSync(`${__dirname}/_test_新疆.csv`, result);
   console.log("Done!");
 }
