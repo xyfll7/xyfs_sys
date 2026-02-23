@@ -10,8 +10,8 @@ const files = fs.readdirSync(dir);
 try {
   // Postal_Order_Form();
   // ShunFeng_Order_Form();
-  Sum_xinjiang();
-  // Salary_Statistics_Table();
+  // Sum_xinjiang();
+  Salary_Statistics_Table();
 } catch (err) {
   console.log(err);
 }
@@ -98,8 +98,8 @@ function Sum_xinjiang() {
     });
 
     if (count[0]) {
-    console.log(count);
-      for(let i=0;i<count.length;i++){
+      console.log(count);
+      for (let i = 0; i < count.length; i++) {
         strs.push(`${count[i].join(',')}`);
       }
     }
