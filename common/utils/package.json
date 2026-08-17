@@ -8,6 +8,7 @@
   "publishConfig": {
     "access": "public"
   },
+  "types": "./types/index.d.ts",
   "exports": {
     "./base64Utils": {
       "types": "./src/base64Utils.ts",

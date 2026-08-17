@@ -16,6 +16,7 @@ download:
 	@if [ ! -f "$(URL_FILE)" ]; then \
 		echo "找不到 URL 列表文件: $(URL_FILE)"; exit 1; \
 	fi
+	@rm -rf "$(DEST_DIR)"
 	@mkdir -p "$(DEST_DIR)"
 	@total=$$(grep -cve '^[[:space:]]*$$' "$(URL_FILE)"); \
 	idx=0; fail=0; \

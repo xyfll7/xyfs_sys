@@ -4,7 +4,7 @@
     "module": "ESNext",
     "removeComments": false,
     "preserveConstEnums": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "experimentalDecorators": true,
     "noImplicitAny": false,
     "allowSyntheticDefaultImports": true,
@@ -19,6 +19,10 @@
     "resolveJsonModule": true,
     "typeRoots": [
       "node_modules/@types"
+    ],
+    "types": [
+      "node",
+      "react"
     ],
     "paths": {
       // TS5090 leading './'
